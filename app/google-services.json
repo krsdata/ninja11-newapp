@@ -1,0 +1,77 @@
+{
+  "project_info": {
+    "project_number": "590171786183",
+    "firebase_url": "https://mega11-c1d35.firebaseio.com",
+    "project_id": "mega11-c1d35",
+    "storage_bucket": "mega11-c1d35.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590171786183:android:01d43ccb0b2eadf609a7e2",
+        "android_client_info": {
+          "package_name": "mega.cricket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "590171786183-e43m4h10qp3a2122sh03ngajusn3pi0h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHsUPV-krHE2FZTCxiK89BWyEP99ieGGo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "590171786183-e43m4h10qp3a2122sh03ngajusn3pi0h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590171786183:android:1caa9d7b6a961d5409a7e2",
+        "android_client_info": {
+          "package_name": "mega.cricks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "590171786183-niak7imik6dqfflkffnk038e9bhg82cp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mega.cricks",
+            "certificate_hash": "3da4ee13b414e0fe4fc6acf84c6a8d80ea264cd3"
+          }
+        },
+        {
+          "client_id": "590171786183-e43m4h10qp3a2122sh03ngajusn3pi0h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHsUPV-krHE2FZTCxiK89BWyEP99ieGGo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "590171786183-e43m4h10qp3a2122sh03ngajusn3pi0h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

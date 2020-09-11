@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="mega.cricks"
+    tools:ignore="LockedOrientationActivity">
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera"
+        android:required="true" />
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:hardwareAccelerated="true"
+        android:name="mega.cricks.SportsFightApplication"
+        android:theme="@style/AppTheme_app"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:usesCleartextTraffic="true"
+        tools:replace="android:icon,android:theme"
+        tools:ignore="GoogleAppIndexingWarning,MissingDefaultResource"
+        android:requestLegacyExternalStorage="true">
+        <activity
+            android:name="mega.cricks.SplashScreenActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="uiMode"
+          >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="mega.cricks.ui.login.LoginScreenActivity"
+            android:label="@string/screen_name_login"
+            android:screenOrientation="portrait"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+           >
+<!--            <intent-filter android:label="deeplink">-->
+<!--                      <action android:name="android.intent.action.VIEW"/>-->
+<!--                     <category android:name="android.intent.category.BROWSABLE"/>-->
+<!--                     <category android:name="android.intent.category.DEFAULT"/>-->
+<!--                  <data android:scheme="https" android:host="www.mega.in" android:pathPrefix="/apks"/>-->
+<!--            </intent-filter>-->
+
+        </activity>
+        <activity
+            android:name="mega.cricks.ui.login.RegisterScreenActivity"
+            android:label="@string/screen_name_register"
+            android:screenOrientation="portrait"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            />
+        <activity
+            android:name="mega.cricks.MainActivity"
+            android:theme="@style/dashboard_theme"
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name="mega.cricks.ContestActivity"
+            android:label="@string/activity_type_contest"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name="mega.cricks.MaintainanceActivity"
+            android:label="@string/activity_type_contest"
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name="mega.cricks.QuizContestActivity"
+            android:label="@string/activity_type_contest"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name="mega.cricks.CreateTeamActivity"
+            android:label="@string/activity_type_create_team"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name="mega.cricks.TeamPreviewActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name="mega.cricks.NotificationListActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name="mega.cricks.SaveTeamActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name="mega.cricks.SelectTeamActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name="mega.cricks.MyBalanceActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name="mega.cricks.AddMoneyActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name="mega.cricks.UpdateApplicationActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name="mega.cricks.WebActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name="mega.cricks.LeadersBoardActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name="mega.cricks.MoreContestActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name="mega.cricks.InviteFriendsActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name="mega.cricks.SupportActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name="mega.cricks.FullScreenImageViewActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name="mega.cricks.VerifyDocumentsActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name="mega.cricks.WithdrawAmountsActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name="mega.cricks.DocumentsListActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name="mega.cricks.MyTransactionHistoryActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name="mega.cricks.EditProfileActivity"
+            android:label="Update Profile"
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name="mega.cricks.ChangePasswordActivity"
+            android:label="Change Password"
+            android:screenOrientation="portrait"
+            />
+         <activity
+            android:name="mega.cricks.RefferalFriendsListActivity"
+            android:label="Update Profile"
+            android:screenOrientation="portrait"
+            />
+
+        <activity
+            android:name="mega.cricks.OtpVerifyActivity"
+            android:label="Update Profile"
+            android:screenOrientation="portrait"/>
+
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths" />
+        </provider>
+
+        <service
+            android:name="mega.cricks.fcm.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@mipmap/ic_launcher" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id"/>
+
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
+
+        <meta-data
+            android:name="fontProviderRequests"
+            android:value="Noto Color Emoji Compat" />
+
+        <meta-data
+            android:name="com.google.android.gms.wallet.api.enabled"
+            android:value="true" />
+    </application>
+
+</manifest>
