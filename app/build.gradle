@@ -8,11 +8,11 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "mega.cricks"
+        applicationId "ninja.cricks"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1001
-        versionName "megaV3.0"
+        versionCode 3001
+        versionName "ninjaV1.0"
         multiDexEnabled  true
         vectorDrawables.useSupportLibrary = true
         android.applicationVariants.all { variant ->
@@ -121,6 +121,8 @@ dependencies {
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.+'
     implementation 'com.android.support:customtabs:27.1.1'
     implementation 'com.google.android.gms:play-services-wallet:18.0.0'
+
+    implementation 'com.razorpay:checkout:1.5.16'
 
 }
 apply plugin: 'com.google.gms.google-services'

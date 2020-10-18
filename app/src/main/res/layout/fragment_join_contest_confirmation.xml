@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="mega.cricks.ui.JoinContestDialogFragment" />
+            type="ninja.cricks.ui.JoinContestDialogFragment" />
     </data>
 <RelativeLayout
     android:layout_width="match_parent"

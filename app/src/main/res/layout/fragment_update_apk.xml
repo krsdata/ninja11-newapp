@@ -4,7 +4,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="mega.cricks.ui.UpdateAppDialogFragment" />
+            type="ninja.cricks.ui.UpdateAppDialogFragment" />
     </data>
 <RelativeLayout
     android:layout_width="match_parent"

@@ -7,7 +7,7 @@
 
         <variable
             name="onRefernEarn"
-            type="mega.cricks.SupportActivity" />
+            type="ninja.cricks.SupportActivity" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

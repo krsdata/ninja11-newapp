@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="mega.cricks.ui.mymatches.MyUpcomingMatchesFragment" />
+            type="ninja.cricks.ui.mymatches.MyUpcomingMatchesFragment" />
     </data>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     android:layout_width="match_parent"

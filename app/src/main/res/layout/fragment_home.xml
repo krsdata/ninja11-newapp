@@ -5,7 +5,7 @@
     <data>
         <variable
             name="homemodel"
-            type="mega.cricks.ui.home.HomeFragment" />
+            type="ninja.cricks.ui.home.HomeFragment" />
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             app:tabGravity="center"
             app:tabMode="scrollable" />
 
-        <mega.cricks.customviews.CustomViewPager
+        <ninja.cricks.customviews.CustomViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

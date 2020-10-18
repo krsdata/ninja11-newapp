@@ -6,7 +6,7 @@
 
         <variable
             name="viewmodel"
-            type="mega.cricks.ui.contest.ContestFragment" />
+            type="ninja.cricks.ui.contest.ContestFragment" />
     </data>
 
     <RelativeLayout

@@ -4,7 +4,7 @@
     <data>
         <variable
             name="onRefernEarn"
-            type="mega.cricks.InviteFriendsActivity.OnClickListners" />
+            type="ninja.cricks.InviteFriendsActivity.OnClickListners" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

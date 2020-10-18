@@ -6,6 +6,6 @@
         </trust-anchors>
     </base-config>
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">api.mega.in</domain>
+        <domain includeSubdomains="true">api.ninja.in</domain>
     </domain-config>
 </network-security-config>

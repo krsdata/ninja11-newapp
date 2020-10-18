@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="mega.cricks.ui.leadersboard.LeadersBoardFragment" />
+            type="ninja.cricks.ui.leadersboard.LeadersBoardFragment" />
     </data>
 
         <LinearLayout

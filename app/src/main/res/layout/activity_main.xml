@@ -6,7 +6,7 @@
     <data>
         <variable
             name="contentviews"
-            type="mega.cricks.MainActivity" />
+            type="ninja.cricks.MainActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,16 +39,12 @@
                     android:layout_height="35dp"
                     android:layout_gravity="center_vertical"
                     android:src="@drawable/ic_account_circle_black_24dp"/>
-                <TextView
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/white"
-                    android:layout_marginLeft="3dp"
-                    android:text="@string/app_name"
-                    android:textSize="@dimen/login_text_size_18sp"
-                    android:fontFamily="@font/catamaran_extrabold"
-                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/_30sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ninja_logo"
                     />
                 <LinearLayout
                     android:layout_width="0dp"
@@ -58,14 +54,14 @@
                     android:gravity="center_vertical|right"
                     android:layout_marginRight="10dip">
 
-                    <TextView
-                        android:id="@+id/wallet_amount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="₹0"
-                        android:visibility="gone"
-                        android:textColor="@color/white" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/wallet_amount"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center_vertical"-->
+<!--                        android:text="₹0"-->
+<!--                        android:visibility="gone"-->
+<!--                        android:textColor="@color/white" />-->
                     <ImageView
                         android:id="@+id/img_wallet_amount"
                         android:layout_width="wrap_content"

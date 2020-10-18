@@ -5,7 +5,7 @@
     <data>
         <variable
             name="contentviews"
-            type="mega.cricks.AddMoneyActivity" />
+            type="ninja.cricks.AddMoneyActivity" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
-            tools:context="mega.cricks.CreateTeamActivity"
+            tools:context="winning.cricks.CreateTeamActivity"
             android:orientation="vertical"
             android:background="@color/light_grey_bg"
             >
@@ -235,6 +235,7 @@
                         android:text="Paytm"
                         android:checked="true"
                         android:drawablePadding="10dp"
+                        android:visibility="visible"
                         android:drawableLeft="@drawable/icon_paytm"
                         android:textSize="@dimen/_12sdp"
                         />
@@ -258,11 +259,6 @@
                         android:drawableLeft="@drawable/icon_google"
                         android:textSize="@dimen/_12sdp" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.8dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@color/greyish" />
                     <RadioButton
                         android:id="@+id/use_wallet_phonepay"
                         android:layout_width="match_parent"
@@ -270,9 +266,10 @@
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="PhonePay"
-                        android:visibility="gone"
+                        android:text="Credit Card/ Debit Card/ Netbanking/ Wallets"
                         android:drawablePadding="10dp"
+                        android:checked="false"
+                        android:visibility="gone"
                         android:drawableLeft="@drawable/icon_phonepay"
                         android:textSize="@dimen/_12sdp" />
 

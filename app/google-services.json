@@ -1,71 +1,58 @@
 {
   "project_info": {
-    "project_number": "590171786183",
-    "firebase_url": "https://mega11-c1d35.firebaseio.com",
-    "project_id": "mega11-c1d35",
-    "storage_bucket": "mega11-c1d35.appspot.com"
+    "project_number": "701940049916",
+    "firebase_url": "https://ninja11-bd832.firebaseio.com",
+    "project_id": "ninja11-bd832",
+    "storage_bucket": "ninja11-bd832.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:590171786183:android:01d43ccb0b2eadf609a7e2",
+        "mobilesdk_app_id": "1:701940049916:android:07d0dc999865afacbdf479",
         "android_client_info": {
-          "package_name": "mega.cricket"
+          "package_name": "ninja.cricks"
         }
       },
       "oauth_client": [
         {
-          "client_id": "590171786183-e43m4h10qp3a2122sh03ngajusn3pi0h.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAHsUPV-krHE2FZTCxiK89BWyEP99ieGGo"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "590171786183-e43m4h10qp3a2122sh03ngajusn3pi0h.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:590171786183:android:1caa9d7b6a961d5409a7e2",
-        "android_client_info": {
-          "package_name": "mega.cricks"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "590171786183-niak7imik6dqfflkffnk038e9bhg82cp.apps.googleusercontent.com",
+          "client_id": "701940049916-1dr80tqrrik2iipdv938m7iicqb05t5i.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "mega.cricks",
+            "package_name": "ninja.cricks",
             "certificate_hash": "3da4ee13b414e0fe4fc6acf84c6a8d80ea264cd3"
           }
         },
         {
-          "client_id": "590171786183-e43m4h10qp3a2122sh03ngajusn3pi0h.apps.googleusercontent.com",
+          "client_id": "701940049916-25817ik1el3n3mr1sp7aqto88sad6gek.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ninja.cricks",
+            "certificate_hash": "8101239ec8a09aba908ecc71b5e4eee7d6432f63"
+          }
+        },
+        {
+          "client_id": "701940049916-5vkd5dkf23aenpsl892eus4dbfq4reql.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ninja.cricks",
+            "certificate_hash": "f1b976f3394c4e4d3bc57f68c5f52a7fb879da4d"
+          }
+        },
+        {
+          "client_id": "701940049916-je9ne0m9ld1k4i91cm2s3vbqhgqfegdf.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAHsUPV-krHE2FZTCxiK89BWyEP99ieGGo"
+          "current_key": "AIzaSyBwWrnxQwOdD2Z0YvqxCytkwAhf7_-xCzU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "590171786183-e43m4h10qp3a2122sh03ngajusn3pi0h.apps.googleusercontent.com",
+              "client_id": "701940049916-je9ne0m9ld1k4i91cm2s3vbqhgqfegdf.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

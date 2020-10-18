@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android:com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/spin_kit"
-    style="@style/SpinKitView.Large.WanderingCubes"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    app:SpinKit_Color="@color/blue"
-    tools:ignore="MissingClass" />
-<!--
-<pl.droidsonroids.gif.GifTextView
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="55dp"
-    android:layout_height="55dp"
-    android:layout_gravity="center"
-    android:background="@drawable/loading"
-    />-->
+    android:orientation="vertical"
+    android:background="@drawable/rounded_corner_white"
+    android:padding="25dp"
+    >
+    <ProgressBar
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please wait.."
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"/>
+</LinearLayout>

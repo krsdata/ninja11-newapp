@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="mega.cricks.ui.contest.MoreContestFragment" />
+            type="ninja.cricks.ui.contest.MoreContestFragment" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mega11</string>
+    <string name="app_name">Ninja11</string>
     <string name="title_home">Home</string>
     <string name="title_mymatches">Matches</string>
     <string name="title_account">Accounts</string>
@@ -107,17 +107,19 @@
         <item>West Bengal</item>
     </string-array>
 
-    <string name="gcm_default_sender_id">"590171786183"</string>
-    <string name="label_login_agree">By creating an account or logging in, you agree to Mega11</string>
-    <string name="label_policy">READ Mega11 Policies</string>
-    <string name="label_acceptance1">By joining this,you accept Mega11 </string>
+    <string name="gcm_default_sender_id">"701940049916"</string>
+    <string name="razorpaythemecolor">"#ED1C24"</string>
+    <string name="razorpay_key">rzp_live_v5pQspX6sKUtub</string>
+    <string name="label_login_agree">By creating an account or logging in, you agree to ninja11</string>
+    <string name="label_policy">READ ninja11 Policies</string>
+    <string name="label_acceptance1">By joining this,you accept ninja11 </string>
     <string name="label_acceptance2">and confirm that you are not a resident of
-                assam, Odisha, Telangana, nagaland and Sikkim. I also agree to be contancted by mega11 and their partner</string>
-    <string name="label_document_safe">Your documents are safe with mega11.in, we do not share this documents with anyone else nor we disclose the personal identifications.</string>
-    <string name="label_register_on_sf">"Register on mega11 application with referral code "</string>
-    <string name="label_supportteam">"mega11 Support Team "</string>
-    <string name="warning_mobilenumber">"Please enter valid mobile number , to authenticate with mega11 system"</string>
-    <string name="warning_somethingwentwront">"Something went wrong, please contact mega11 team"</string>
-    <string name="contact_support_Team">"Contact mega11 Support Team"</string>
-    <string name="label_update">"mega11 Update"</string>
+                Andhra Pradesh,assam, Odisha, Telangana, nagaland and Sikkim. I also agree to be contancted by ninja11 and their partner</string>
+    <string name="label_document_safe">Your documents are safe with ninja11.in, we do not share this documents with anyone else nor we disclose the personal identifications.</string>
+    <string name="label_register_on_sf">"Register on ninja11 application with referral code "</string>
+    <string name="label_supportteam">"ninja11 Support Team "</string>
+    <string name="warning_mobilenumber">"Please enter valid mobile number , to authenticate with ninja11 system"</string>
+    <string name="warning_somethingwentwront">"Something went wrong, please contact ninja11 team"</string>
+    <string name="contact_support_Team">"Contact ninja11 Support Team"</string>
+    <string name="label_update">"ninja11 Update"</string>
 </resources>

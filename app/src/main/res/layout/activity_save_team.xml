@@ -6,7 +6,7 @@
     <data>
         <variable
             name="contentviews"
-            type="mega.cricks.TeamPreviewActivity" />
+            type="ninja.cricks.TeamPreviewActivity" />
     </data>
 
     <RelativeLayout
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="mega.cricks.CreateTeamActivity"
+        tools:context="ninja.cricks.CreateTeamActivity"
         android:orientation="vertical"
         >
         <LinearLayout

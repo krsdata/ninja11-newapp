@@ -6,14 +6,14 @@
     <data>
         <variable
             name="contentviews"
-            type="mega.cricks.DocumentsListActivity" />
+            type="ninja.cricks.DocumentsListActivity" />
     </data>
     <RelativeLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="mega.cricks.DocumentsListActivity"
+        tools:context="ninja.cricks.DocumentsListActivity"
         android:orientation="vertical"
         android:background="@color/light_grey_bg"
         >
