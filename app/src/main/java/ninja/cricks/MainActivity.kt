@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
 import androidx.databinding.DataBindingUtil
@@ -60,18 +61,19 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        mBinding!!.navView.setupWithNavController(navController)
+        mBinding!!.navView1.bottomNavigationView.setupWithNavController(navController)
+//        navController.addOnDestinationChangedListener(this)
 
         mBinding!!.imgWalletAmount.setOnClickListener(View.OnClickListener {
             val intent = Intent(this@MainActivity, MyBalanceActivity::class.java)
-            startActivityForResult(intent,MyBalanceActivity.REQUEST_CODE_ADD_MONEY)
+            startActivityForResult(intent, MyBalanceActivity.REQUEST_CODE_ADD_MONEY)
         })
         mBinding!!.notificationId.setOnClickListener(View.OnClickListener {
             val intent = Intent(this@MainActivity, NotificationListActivity::class.java)
             startActivityForResult(intent,MyBalanceActivity.REQUEST_CODE_ADD_MONEY)
         })
 
-        //getWalletBalances()
+        getWalletBalances()
 
         mBinding!!.profileImage.setOnClickListener(object: View.OnClickListener{
             override fun onClick(p0: View?) {
@@ -81,9 +83,51 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             }
 
         })
-        //viewAllMatches()
+
+      //  viewAllMatches()
+        mBinding!!.navView1.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    mBinding!!.navView1.updateFabPosition2(0)
+                }
+                R.id.navigation_dashboard -> {
+                    mBinding!!.navView1.updateFabPosition2(1)
+                }
+                R.id.navigation_myaccount -> {
+                    mBinding!!.navView1.updateFabPosition2(2)
+                }
+                R.id.navigation_notifications -> {
+                    mBinding!!.navView1.updateFabPosition2(3)
+                }
+            }
+            if(navController.currentDestination!!.id!= item.itemId)
+                navController.navigate(item.itemId)
+            false
+        }
     }
 
+
+//    override fun onDestinationChanged(
+//        controller: NavController,
+//        destination: NavDestination,
+//        arguments: Bundle?
+//    ) {
+//        when(destination.id){
+//            R.id.navigation_home->{
+//                mBinding!!.navView1.updateFabPosition(0)
+//            }
+//            R.id.navigation_dashboard->{
+//                mBinding!!.navView1.updateFabPosition(1)
+//            }
+//            R.id.navigation_myaccount->{
+//                mBinding!!.navView1.updateFabPosition(2)
+//            }
+//            R.id.navigation_more->{
+//                mBinding!!.navView1.updateFabPosition(3)
+//            }
+//        }
+//
+//    }
 
     override fun onResume() {
         super.onResume()
@@ -94,37 +138,35 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 .into(mBinding!!.profileImage)
         }
     }
-    fun viewUpcomingMatches(){
-        mBinding!!.navView.selectedItemId = R.id.navigation_home
+
+    fun viewUpcomingMatches() {
+        mBinding!!.navView1.bottomNavigationView.selectedItemId = R.id.navigation_home
     }
 
-    fun viewAllMatches(){
-        mBinding!!.navView.selectedItemId = R.id.navigation_dashboard
+    fun viewAllMatches() {
+        mBinding!!.navView1.bottomNavigationView.selectedItemId = R.id.navigation_dashboard
     }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == MyBalanceActivity.REQUEST_CODE_ADD_MONEY) {
-            //getWalletBalances()
-            //setWalletBalanceValue()
+            getWalletBalances()
+            setWalletBalanceValue()
         }
     }
 
-//    private fun setWalletBalanceValue() {
-//
+
+    private fun setWalletBalanceValue() {
+
 //        var walletInfo = (application as SportsFightApplication).walletInfo
 //        if(walletInfo!=null){
 //            var totalBalance =
-//                walletInfo.depositAmount + walletInfo.prizeAmount + walletInfo.bonusAmount +walletInfo.referralAmount
-//
-////            var walletInfo = (application as SportsFightApplication).walletInfo
-////            var totalBalance = walletInfo.depositAmount.toDouble() + walletInfo.prizeAmount.toDouble() + walletInfo.bonusAmount.toDouble()
-//
-//            mBinding!!.walletAmount.text = String.format("₹%s",totalBalance.toString())
+//                walletInfo.depositAmount + walletInfo.prizeAmount + walletInfo.bonusAmount
+//            mBinding!!.walletAmount.setText(String.format("₹%s",totalBalance.toString()))
 //        }
-//
-//    }
+
+    }
 
     override fun onBitmapSelected(bitmap: Bitmap) {
         TODO("Not yet implemented")
@@ -136,56 +178,41 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     override fun onStart() {
         super.onStart()
-
-        if(CHECK_WALLET_ONCE==false){
-            CHECK_WALLET_ONCE =true
-            getWalletBalances()
-        }
-
-      //  setWalletBalanceValue()
-        if(CHECK_APK_UPDATE_API) {
-            CHECK_APK_UPDATE_API =false
+        setWalletBalanceValue()
+        if (CHECK_APK_UPDATE_API) {
+            CHECK_APK_UPDATE_API = false
             val fm = supportFragmentManager
             val pioneersFragment =
-                UpdateAppDialogFragment(updatedApkUrl,releaseNote)
-            pioneersFragment.setCancelable(!CHECK_FORCE_UPDATE)
+                UpdateAppDialogFragment(updatedApkUrl, releaseNote)
             pioneersFragment.show(fm, "updateapp_tag")
         }
-
-//        var infomodel = (application as SportsFightApplication).userInformations
-//        if(infomodel!=null) {
-//            BindingUtils.logFireBaseEvents(
-//                this,
-//                BindingUtils.FIREBASE_EVENT_ITEM_ID_HOME_ACTIVITY,
-//                infomodel!!.userId,
-//                infomodel.fullName,
-//                infomodel.userEmail
-//            )
-//        }
     }
-    fun getWalletBalances() {
 
+    fun getWalletBalances() {
+        //var userInfo = (activity as PlugSportsApplication).userInformations
         var models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
-        models.token = MyPreferences.getToken(this)!!
+        // models.token = MyPreferences.getToken(this)!!
 
         WebServiceClient(this).client.create(IApiMethod::class.java).getWallet(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                    CHECK_APK_UPDATE_API =false
+                    CHECK_APK_UPDATE_API = false
                 }
 
                 override fun onResponse(
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    CHECK_APK_UPDATE_API =false
+                    CHECK_APK_UPDATE_API = false
                     var res = response!!.body()
-                    if(res!=null) {
+                    if (res != null) {
                         var responseModel = res.walletObjects
-                        if(responseModel!=null) {
-                            (application as SportsFightApplication).saveWalletInformation(responseModel)
-                           // setWalletBalanceValue()
+                        if (responseModel != null) {
+                            (application as SportsFightApplication).saveWalletInformation(
+                                responseModel
+                            )
+                            setWalletBalanceValue()
                         }
                     }
 
@@ -201,10 +228,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 // Handle the camera action
             }
 
+
             R.id.nav_wallet -> {
                 val intent = Intent(this@MainActivity, MyBalanceActivity::class.java)
-                startActivityForResult(intent,MyBalanceActivity.REQUEST_CODE_ADD_MONEY)
-                if (Build.VERSION.SDK_INT > 20) {
+                startActivityForResult(intent, MyBalanceActivity.REQUEST_CODE_ADD_MONEY)
+                if (Build.VERSION.SDK_INT > 21) {
                     val options =
                         ActivityOptions.makeSceneTransitionAnimation(this)
                     startActivity(intent, options.toBundle())
@@ -215,8 +243,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
             R.id.nav_referenearn -> {
                 val intent = Intent(this@MainActivity, MyTransactionHistoryActivity::class.java)
-                startActivityForResult(intent,MyBalanceActivity.REQUEST_CODE_ADD_MONEY)
-                if (Build.VERSION.SDK_INT > 20) {
+                startActivityForResult(intent, MyBalanceActivity.REQUEST_CODE_ADD_MONEY)
+                if (Build.VERSION.SDK_INT > 21) {
                     val options =
                         ActivityOptions.makeSceneTransitionAnimation(this)
                     startActivity(intent, options.toBundle())
@@ -227,9 +255,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
             R.id.nav_tnc -> {
                 val intent = Intent(this@MainActivity, WebActivity::class.java)
-                intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_TERMS_CONDITION)
-                intent.putExtra(WebActivity.KEY_URL,BindingUtils.WEBVIEW_TNC)
-                if (Build.VERSION.SDK_INT > 20) {
+                intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_TNC)
+                if (Build.VERSION.SDK_INT > 21) {
                     val options =
                         ActivityOptions.makeSceneTransitionAnimation(this)
                     startActivity(intent, options.toBundle())
@@ -239,9 +266,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             }
             R.id.nav_privacy -> {
                 val intent = Intent(this@MainActivity, WebActivity::class.java)
-                intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_PRIVACY_POLICY)
-                intent.putExtra(WebActivity.KEY_URL,BindingUtils.WEBVIEW_PRIVACY)
-                if (Build.VERSION.SDK_INT > 20) {
+                intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_PRIVACY)
+                if (Build.VERSION.SDK_INT > 21) {
                     val options =
                         ActivityOptions.makeSceneTransitionAnimation(this)
                     startActivity(intent, options.toBundle())
@@ -252,9 +278,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
             R.id.nav_aboutus -> {
                 val intent = Intent(this@MainActivity, WebActivity::class.java)
-                intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_ABOUT_US)
-                intent.putExtra(WebActivity.KEY_URL,BindingUtils.WEBVIEW_ABOUT_US)
-                if (Build.VERSION.SDK_INT > 20) {
+                intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_ABOUT_US)
+                if (Build.VERSION.SDK_INT > 21) {
                     val options =
                         ActivityOptions.makeSceneTransitionAnimation(this)
                     startActivity(intent, options.toBundle())
@@ -262,7 +287,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     startActivity(intent)
                 }
             }
-
 
 
 //            R.id.nav_logout -> {
@@ -301,7 +325,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         }
 
-       // mBinding!!.drawerLayout.closeDrawer(GravityCompat.START)
+        // mBinding!!.drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 
@@ -314,9 +338,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
 
-
-
-
     fun showToolbar() {
         mBinding!!.toolbar.visibility = View.VISIBLE
     }
@@ -324,6 +345,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     fun hideToolbar() {
         mBinding!!.toolbar.visibility = View.GONE
     }
+
+
+
 
 
 }

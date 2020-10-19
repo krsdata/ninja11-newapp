@@ -9,116 +9,196 @@
             type="ninja.cricks.MainActivity" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="0dp"
+        <RelativeLayout
+            android:id="@+id/tool_layout"
+            android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            app:contentInsetLeft="0dp"
-            app:contentInsetStart="0dp"
-            app:contentInsetStartWithNavigation="0dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:layout_marginLeft="@dimen/_8sdp"
-                >
-                <com.mikhaellopez.circularimageview.CircularImageView
-                    android:id="@+id/profile_image"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/ic_account_circle_black_24dp"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_30sdp"
-                    android:layout_gravity="center_horizontal"
-                    android:src="@drawable/ninja_logo"
-                    />
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical|right"
-                    android:layout_marginRight="10dip">
+            android:layout_alignParentTop="true"
+            android:background="@color/colorPrimary">
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/wallet_amount"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_gravity="center_vertical"-->
-<!--                        android:text="₹0"-->
-<!--                        android:visibility="gone"-->
-<!--                        android:textColor="@color/white" />-->
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_alignParentTop="true"
+                android:fitsSystemWindows="true"
+                android:orientation="vertical"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:gravity="top"
+                    android:layout_marginEnd="@dimen/_12sdp"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_34sdp"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerVertical="true"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ninja_logo" />
+
+                    <com.mikhaellopez.circularimageview.CircularImageView
+                        android:id="@+id/profile_image"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_account_circle_black_24dp"/>
+
                     <ImageView
                         android:id="@+id/img_wallet_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:tint="@color/white"
-                        android:layout_marginRight="20dp"
-                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/_25sdp"
+                       android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
                         android:src="@drawable/ic_account_balance_wallet_black_24dp"/>
                     <ImageView
                         android:id="@+id/notification_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:src="@drawable/ic_notifications_black_24dp"
                         android:tint="@color/white"
-                        android:layout_alignParentRight="true"/>
-                </LinearLayout>
+                        android:layout_alignParentEnd="true"/>
+                </RelativeLayout>
+            </androidx.appcompat.widget.Toolbar>
 
-            </LinearLayout>
 
-        </androidx.appcompat.widget.Toolbar>
+        </RelativeLayout>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/nav_view"
-            android:layout_width="0dp"
+
+        <!--        <RelativeLayout-->
+        <!--            android:id="@+id/tool"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="@dimen/_130sdp"-->
+        <!--            android:layout_alignParentTop="true"-->
+        <!--            android:background="@drawable/gradient">-->
+
+        <!--            <androidx.appcompat.widget.Toolbar-->
+        <!--                android:id="@+id/toolbar"-->
+        <!--                style="@style/ToolbarTheme3"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="@dimen/_100sdp"-->
+        <!--                android:layout_alignParentTop="true"-->
+        <!--                android:fitsSystemWindows="true">-->
+
+        <!--                <RelativeLayout-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="wrap_content"-->
+        <!--                    android:layout_marginStart="@dimen/_20sdp"-->
+        <!--                    android:layout_marginTop="@dimen/_22sdp"-->
+        <!--                    android:orientation="horizontal">-->
+
+        <!--                    <ImageView-->
+        <!--                        android:layout_width="@dimen/_75sdp"-->
+        <!--                        android:layout_height="@dimen/_34sdp"-->
+        <!--                        android:layout_alignParentTop="true"-->
+        <!--                        android:layout_centerInParent="true"-->
+        <!--                        android:src="@drawable/sport" />-->
+
+        <!--                    <ImageView-->
+        <!--                        android:id="@+id/profile_image"-->
+        <!--                        android:layout_width="@dimen/_36sdp"-->
+        <!--                        android:layout_height="@dimen/_36sdp"-->
+        <!--                        android:layout_alignParentStart="true"-->
+        <!--                        android:layout_alignParentTop="true"-->
+        <!--                        android:layout_centerVertical="true"-->
+        <!--                        android:background="@drawable/bg_text"-->
+        <!--                        android:src="@drawable/dummy_two" />-->
+
+        <!--                    <ImageView-->
+        <!--                        android:id="@+id/img_wallet_amount"-->
+        <!--                        android:layout_width="@dimen/_24sdp"-->
+        <!--                        android:layout_height="@dimen/_24sdp"-->
+        <!--                        android:layout_alignParentTop="true"-->
+        <!--                        android:layout_alignParentEnd="true"-->
+        <!--                        android:layout_centerVertical="true"-->
+        <!--                        android:src="@drawable/wallet_new"-->
+        <!--                        android:tint="@color/white" />-->
+
+        <!--                </RelativeLayout>-->
+
+
+        <!--            </androidx.appcompat.widget.Toolbar>-->
+
+        <!--            <RelativeLayout-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="@dimen/_30sdp"-->
+        <!--                android:layout_alignParentStart="true"-->
+        <!--                android:layout_alignParentBottom="true"-->
+        <!--                android:background="@drawable/bottom"-->
+        <!--                android:backgroundTint="@color/background_default"/>-->
+
+
+        <!--        </RelativeLayout>-->
+
+
+
+
+
+
+        <ninja.cricks.bottom_nav.BottomNavBar
+            android:id="@+id/nav_view1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="0dp"
-            android:layout_marginEnd="0dp"
-            android:background="?android:attr/windowBackground"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:labelVisibilityMode="labeled"
-            app:menu="@menu/bottom_nav_menu"
-            />
+            android:layout_gravity="bottom"
+            app:bn_curve_margin="6dp"
+            app:bn_item_color="@color/white_transperent"
+            android:layout_alignParentBottom="true"
+            app:bn_curve_rounded_corner_radius="8dp"
+            app:bn_curve_vertical_offset="0dp"
+            app:bn_fab_background_color="@color/gossip"
+            app:bn_fab_icon_color="@color/white"
+            app:bn_fab_menu_index="2"
+            app:bn_fab_size="normal"
+            app:bn_menu="@menu/bottom_nav_menu"
+            app:menu="@menu/bottom_nav_menu" />
+        <!--    <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/nav_view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_54sdp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="0dp"
+
+                app:fabAlignmentMode="center"
+                app:itemIconTint="@color/white"
+                app:itemTextColor="@color/white"
+                app:labelVisibilityMode="labeled"
+                app:menu="@menu/bottom_nav_menu" />-->
 
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar"
-            app:layout_constraintBottom_toTopOf="@+id/nav_view"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/nav_view1"
+            android:layout_below="@id/tool_layout"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:orientation="vertical">
 
             <fragment
                 android:id="@+id/nav_host_fragment"
                 android:name="androidx.navigation.fragment.NavHostFragment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 app:defaultNavHost="true"
                 app:navGraph="@navigation/mobile_navigation" />
 
-
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
+
+
+
 
 </layout>
