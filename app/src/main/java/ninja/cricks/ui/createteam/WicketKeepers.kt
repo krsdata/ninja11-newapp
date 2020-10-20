@@ -33,38 +33,52 @@ import ninja.cricks.utils.MyUtils
 
 
 class WicketKeepers : Fragment() {
-    var originalWicketKeepers: ArrayList<PlayersInfoModel>?=null
-    var matchObject: UpcomingMatchesModel?=null
-    var count=0
+    var originalWicketKeepers: ArrayList<PlayersInfoModel>? = null
+    var matchObject: UpcomingMatchesModel? = null
+    var count = 0
     private lateinit var mListener: OnTeamCreateListener
-    var filteredWicketKeepers :ArrayList<PlayersInfoModel>?= ArrayList()
+    var filteredWicketKeepers: ArrayList<PlayersInfoModel>? = ArrayList()
     private var mBinding: FragmentCreateTeamListBinding? = null
     lateinit var adapter: PlayersContestAdapter
 
-    companion object{
-        fun newInstance(bundle : Bundle) : WicketKeepers {
+    companion object {
+        fun newInstance(bundle: Bundle): WicketKeepers {
             val fragment = WicketKeepers()
-            fragment.arguments=bundle
+            fragment.arguments = bundle
             return fragment
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        originalWicketKeepers = arguments!!.get(CreateTeamActivity.SERIALIZABLE_KEY_PLAYERS) as ArrayList<PlayersInfoModel>
-        matchObject = arguments!!.get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
+        originalWicketKeepers =
+            arguments!!.get(CreateTeamActivity.SERIALIZABLE_KEY_PLAYERS) as ArrayList<PlayersInfoModel>
+        matchObject =
+            arguments!!.get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
     }
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        mBinding  = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_create_team_list, container, false)
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        mBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_create_team_list, container, false
+        )
         return mBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        filteredWicketKeepers =CricketPlayersFilters.getPlayersbyOddEvenPositions(originalWicketKeepers!!,matchObject!!,CREATE_TEAM_WICKET_KEEPER)
-        mBinding!!.labelPlayersCounts.text =  String.format( "Select %d - %d Wicket Keeper",
-            MAX_WICKET_KEEPER[0], MAX_WICKET_KEEPER[1])
+        filteredWicketKeepers = CricketPlayersFilters.getPlayersbyOddEvenPositions(
+            originalWicketKeepers!!,
+            matchObject!!,
+            CREATE_TEAM_WICKET_KEEPER
+        )
+        mBinding!!.labelPlayersCounts.text = String.format(
+            "Select %d - %d Wicket Keeper",
+            MAX_WICKET_KEEPER[0], MAX_WICKET_KEEPER[1]
+        )
         resetSorting()
         mBinding!!.recyclerCreatePlayersList.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
@@ -81,33 +95,37 @@ class WicketKeepers : Fragment() {
             matchObject!!
         )
         mBinding!!.recyclerCreatePlayersList.adapter = adapter
-        adapter.onItemClick = {
-                objects ->
+        adapter.onItemClick = { objects ->
             CreateTeamActivity.isEditMode = false
-            if(objects.isSelected) {
+            if (objects.isSelected) {
                 count--
                 objects.isSelected = false
                 mListener.onWicketKeeperDeSelected(objects)
-            }else{
-                if(!isAllPlayersSelected!!) {
-                    if(count < MAX_WICKET_KEEPER[1]) {
-                        if(isMaxPlayersValid(objects)) {
-                            if(isMinimumPlayerSelected()) {
+            } else {
+                if (!isAllPlayersSelected!!) {
+                    if (count < MAX_WICKET_KEEPER[1]) {
+                        if (isMaxPlayersValid(objects)) {
+                            if (isMinimumPlayerSelected()) {
                                 count++
                                 objects.isSelected = true
                                 mListener.onWicketKeeperSelected(objects)
                             }
-                        }else {
-                            MyUtils.showToast(activity!! as AppCompatActivity,"MAX Player Reached limit  "+objects.teamShortName)
+                        } else {
+                            MyUtils.showToast(
+                                activity!! as AppCompatActivity,
+                                "MAX Player Reached limit  " + objects.teamShortName
+                            )
                         }
-                    }else {
-                        MyUtils.showToast(activity!! as AppCompatActivity,"MAX ALLOWED is "+MAX_WICKET_KEEPER[1])
+                    } else {
+                        MyUtils.showToast(
+                            activity!! as AppCompatActivity,
+                            "MAX ALLOWED is " + MAX_WICKET_KEEPER[1]
+                        )
                     }
 
 
-
-                }else {
-                    MyUtils.showToast(activity!! as AppCompatActivity,"ALL 11 Players Selected")
+                } else {
+                    MyUtils.showToast(activity!! as AppCompatActivity, "ALL 11 Players Selected")
                 }
             }
             adapter.notifyDataSetChanged()
@@ -119,6 +137,7 @@ class WicketKeepers : Fragment() {
         activatePointsSorting()
         activateCreditSorting()
     }
+
     private fun resetSorting() {
         mBinding!!.sortBySelectedBy.setOnClickListener(View.OnClickListener {
             (activity as CreateTeamActivity).sortBySelections()
@@ -145,8 +164,9 @@ class WicketKeepers : Fragment() {
 
 
     }
+
     private fun activateCreditSorting() {
-        if(CreateTeamActivity.isSortByCreditsActive!!) {
+        if (CreateTeamActivity.isSortByCreditsActive!!) {
             mBinding!!.sortByPointsArrow.visibility = View.GONE
             mBinding!!.sortByCreditsArrow.visibility = View.VISIBLE
             mBinding!!.sortBySelectedArrow.visibility = View.GONE
@@ -169,7 +189,7 @@ class WicketKeepers : Fragment() {
     }
 
     private fun activatePointsSorting() {
-        if(CreateTeamActivity.isSortByPointsActive!!) {
+        if (CreateTeamActivity.isSortByPointsActive!!) {
             mBinding!!.sortByPointsArrow.visibility = View.VISIBLE
             mBinding!!.sortByCreditsArrow.visibility = View.GONE
             mBinding!!.sortBySelectedArrow.visibility = View.GONE
@@ -192,7 +212,7 @@ class WicketKeepers : Fragment() {
     }
 
     private fun activateSelectionSorting() {
-        if(CreateTeamActivity.isSortBySelectionActive!!) {
+        if (CreateTeamActivity.isSortBySelectionActive!!) {
             mBinding!!.sortByPointsArrow.visibility = View.GONE
             mBinding!!.sortByCreditsArrow.visibility = View.GONE
             mBinding!!.sortBySelectedArrow.visibility = View.VISIBLE
@@ -214,18 +234,27 @@ class WicketKeepers : Fragment() {
     }
 
     private fun isMinimumPlayerSelected(): Boolean {
-        if((activity!! as CreateTeamActivity).isSpotAvailable(CreateTeamActivity.WANT_WK)) {
+        if ((activity!! as CreateTeamActivity).isSpotAvailable(CreateTeamActivity.WANT_WK)) {
             if (CreateTeamActivity.COUNT_WICKET_KEEPER < MAX_WICKET_KEEPER[0]) {
-               // MyUtils.showToast(activity!!.getWindow().getDecorView().getRootView(),"Minimum "+MAX_WICKET_KEEPER[0]+" "+"Wicket Keeper Required")
+                // MyUtils.showToast(activity!!.getWindow().getDecorView().getRootView(),"Minimum "+MAX_WICKET_KEEPER[0]+" "+"Wicket Keeper Required")
                 return true
             } else if (CreateTeamActivity.COUNT_BATS_MAN < MAX_BATSMAN[0]) {
-                MyUtils.showToast(activity!! as AppCompatActivity,"Minimum "+MAX_BATSMAN[0]+" "+"BatsMan Required")
+                MyUtils.showToast(
+                    activity!! as AppCompatActivity,
+                    "Minimum " + MAX_BATSMAN[0] + " " + "BatsMan Required"
+                )
                 return false
-            } else if (CreateTeamActivity.COUNT_ALL_ROUNDER <  MAX_ALL_ROUNDER[0]) {
-                MyUtils.showToast(activity!! as AppCompatActivity,"Minimum "+MAX_ALL_ROUNDER[0]+" "+"All Rounder Required")
+            } else if (CreateTeamActivity.COUNT_ALL_ROUNDER < MAX_ALL_ROUNDER[0]) {
+                MyUtils.showToast(
+                    activity!! as AppCompatActivity,
+                    "Minimum " + MAX_ALL_ROUNDER[0] + " " + "All Rounder Required"
+                )
                 return false
             } else if (CreateTeamActivity.COUNT_BOWLER < MAX_BOWLER[0]) {
-                MyUtils.showToast(activity!! as AppCompatActivity,"Minimum "+MAX_BOWLER[0]+" "+"BOWLER Required")
+                MyUtils.showToast(
+                    activity!! as AppCompatActivity,
+                    "Minimum " + MAX_BOWLER[0] + " " + "BOWLER Required"
+                )
                 return false
 
             }
@@ -235,11 +264,11 @@ class WicketKeepers : Fragment() {
     }
 
     private fun isMaxPlayersValid(objects: PlayersInfoModel): Boolean {
-          if(objects.teamId == CreateTeamActivity.teamAId && TEAMA<MAX_PLAYERS_FROM_TEAM){
-              return true
-          }else if(objects.teamId == CreateTeamActivity.teamBId && TEAMB<MAX_PLAYERS_FROM_TEAM){
-              return true
-          }
+        if (objects.teamId == CreateTeamActivity.teamAId && TEAMA < MAX_PLAYERS_FROM_TEAM) {
+            return true
+        } else if (objects.teamId == CreateTeamActivity.teamBId && TEAMB < MAX_PLAYERS_FROM_TEAM) {
+            return true
+        }
         return false
     }
 
@@ -254,8 +283,6 @@ class WicketKeepers : Fragment() {
         }
 
     }
-
-
 
 
 }

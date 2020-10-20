@@ -166,8 +166,6 @@ interface IApiMethod {
     @POST("api/v2/withdrawAmount")
     fun withdrawAmount(@Body request: RequestModel): Call<UsersPostDBResponse>
 
-
-
     @Headers("Content-Type: application/json")
     @POST("api/v2/createRazorPayOrder")
     fun createRazorPayOrder(@Body request: RequestModel): Call<UsersPostDBResponse>

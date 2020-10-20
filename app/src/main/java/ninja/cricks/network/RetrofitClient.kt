@@ -17,7 +17,7 @@ class RetrofitClient(val  context:Context) {
                 if(BuildConfig.DEBUG) {
                     val logging = HttpLoggingInterceptor()
                     logging.level = HttpLoggingInterceptor.Level.BODY
-                    var httpClient = OkHttpClient.Builder()
+                    val httpClient = OkHttpClient.Builder()
                     httpClient.addInterceptor(logging);
                     retrofit = Retrofit.Builder()
                         .baseUrl(BASE_URL_API)

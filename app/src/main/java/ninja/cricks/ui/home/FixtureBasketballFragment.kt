@@ -35,7 +35,7 @@ class FixtureBasketballFragment : Fragment() {
         initDummyContent()
 
         adapter =
-            MatchesAdapter(activity!!, checkinArrayList)
+            MatchesAdapter(requireActivity(), checkinArrayList)
         mBinding!!.allGameViewRecycler.adapter = adapter
 
     }

@@ -50,7 +50,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         )
         userInfo = (application as SportsFightApplication).userInformations
         setSupportActionBar(mBinding!!.toolbar)
-       // setUpDrawerLayout()
+        // setUpDrawerLayout()
 
         navController = findNavController(R.id.nav_host_fragment)
         val appBarConfiguration = AppBarConfiguration(
@@ -340,14 +340,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     fun showToolbar() {
         mBinding!!.toolbar.visibility = View.VISIBLE
+        mBinding!!.toolLayout.visibility = View.VISIBLE
     }
 
     fun hideToolbar() {
         mBinding!!.toolbar.visibility = View.GONE
+        mBinding!!.toolLayout.visibility = View.GONE
     }
-
-
-
-
-
 }

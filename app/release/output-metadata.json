@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "ninja.cricks",
+  "variantName": "release",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "properties": [],
+      "versionCode": 3002,
+      "versionName": "ninjaV1.0",
+      "enabled": true,
+      "outputFile": "release-ninjaV1.0.apk"
+    }
+  ]
+}

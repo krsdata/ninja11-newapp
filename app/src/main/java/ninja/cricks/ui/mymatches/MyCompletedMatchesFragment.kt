@@ -192,16 +192,11 @@ class MyCompletedMatchesFragment : Fragment() {
                 .load(objectVal.teamBInfo!!.logoUrl)
                 .placeholder(R.drawable.placeholder_player_teama)
                 .into(viewHolder.teamBLogo)
-
-
-
         }
-
 
         override fun getItemCount(): Int {
             return matchesListObject.size
         }
-
 
         inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             init {
@@ -223,8 +218,6 @@ class MyCompletedMatchesFragment : Fragment() {
 
             val totalTeamCreated = itemView.findViewById<TextView>(R.id.total_team_created)
             val totalContestJoined = itemView.findViewById<TextView>(R.id.total_contest_joined)
-
-
         }
     }
 }

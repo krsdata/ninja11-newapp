@@ -19,3 +19,61 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+#-keep class com.address_package.** { *; }
+#
+#-keep class com.squareup.okhttp.** { *; }
+#-keep interface com.squareup.okhttp.** { *; }
+#
+#-dontwarn com.squareup.okhttp.**
+#-dontwarn okio.**
+#
+#-keepattributes Signature
+#-keepattributes *Annotation*
+#-keep class okhttp3.** { *; }
+#-keep interface okhttp3.** { *; }
+#
+#-dontwarn okhttp3.**
+#
+#-keep class com.google.** { *; }
+#-dontwarn com.google.**
+#
+#-keep class com.crashlytics.** { *; }
+#-dontwarn com.crashlytics.**
+#
+#-keepattributes *Annotation*
+#-keepattributes SourceFile,LineNumberTable
+#-renamesourcefileattribute SourceFile
+#-keep public class * extends java.lang.Exception
+#
+### razor pay proguard rules start here 06-09-20 ==========================
+#-keepclassmembers class * {
+#    @android.webkit.JavascriptInterface <methods>;
+#}
+#
+#-keepattributes JavascriptInterface
+#-keepattributes *Annotation*
+#
+#-dontwarn com.razorpay.**
+#-keep class com.razorpay.** {*;}
+#
+#-optimizations !method/inlining/*
+#
+#-keepclasseswithmembers class * {
+#  public void onPayment*(...);
+#}
+### razor pay proguard rules end here 06-09-20 ==========================
+#
+#
+###---------------Begin: proguard configuration common for all Android apps ----------
+#-optimizationpasses 5
+#-dontusemixedcaseclassnames
+#-dontskipnonpubliclibraryclasses
+#-dontskipnonpubliclibraryclassmembers
+#-dontpreverify
+#-verbose
+#-dump class_files.txt
+#-printseeds seeds.txt
+#-printusage unused.txt
+#-printmapping mapping.txt
+#-optimizations !code/simplification/arithmetic,!field/*,!class/merging/*

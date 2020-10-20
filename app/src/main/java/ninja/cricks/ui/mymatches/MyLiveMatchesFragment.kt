@@ -18,9 +18,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ninja.cricks.ContestActivity
 import ninja.cricks.MainActivity
-import ninja.cricks.models.JoinedMatchModel
 import ninja.cricks.R
 import ninja.cricks.databinding.FragmentMyLiveBinding
+import ninja.cricks.models.JoinedMatchModel
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
@@ -41,11 +41,15 @@ class MyLiveMatchesFragment : Fragment() {
     lateinit var adapter: MyMatchesAdapter
     var checkinArrayList = ArrayList<JoinedMatchModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-        mBinding  = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_my_live, container, false)
+        mBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_my_live, container, false
+        )
 
         return mBinding!!.root
     }
@@ -54,29 +58,27 @@ class MyLiveMatchesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         mBinding!!.recyclerMyUpcoming.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-
         //initDummyContent()
 
-        adapter = MyMatchesAdapter(activity!!,checkinArrayList)
+        adapter = MyMatchesAdapter(activity!!, checkinArrayList)
         mBinding!!.recyclerMyUpcoming.adapter = adapter
 
         adapter.onItemClick = { objects ->
             val intent = Intent(activity!!, ContestActivity::class.java)
             //intent.putExtra(ContestActivity.SERIALIZABLE_KEY_UPCOMING_MATCHES,objects)
-            intent.putExtra(ContestActivity.SERIALIZABLE_KEY_JOINED_CONTEST,objects)
+            intent.putExtra(ContestActivity.SERIALIZABLE_KEY_JOINED_CONTEST, objects)
             startActivity(intent)
 
         }
-        if(checkinArrayList.size>0){
+        if (checkinArrayList.size > 0) {
             mBinding!!.linearEmptyContest.visibility = View.GONE
-        }else {
+        } else {
             mBinding!!.linearEmptyContest.visibility = View.VISIBLE
         }
 
         mBinding!!.btnEmptyView.setOnClickListener(View.OnClickListener {
             (activity as MainActivity).viewUpcomingMatches()
         })
-
         getMatchHistory()
     }
 
@@ -84,25 +86,24 @@ class MyLiveMatchesFragment : Fragment() {
         super.onPause()
         BindingUtils.stopTimer()
     }
-    fun getMatchHistory() {
-        if(!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
-            MyUtils.showToast(activity as AppCompatActivity,"No Internet connection found")
+
+    private fun getMatchHistory() {
+        if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
+            MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-        if(checkinArrayList.size==0) {
+        if (checkinArrayList.size == 0) {
             mBinding!!.progressBar.visibility = View.VISIBLE
         }
-        mBinding!!.linearEmptyContest.visibility=View.GONE
+        mBinding!!.linearEmptyContest.visibility = View.GONE
         var models = RequestModel()
         models.user_id = MyPreferences.getUserID(activity!!)!!
-        models.action_type ="live"
-
+        models.action_type = "live"
 
         WebServiceClient(activity!!).client.create(IApiMethod::class.java).getMatchHistory(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-
-                    if(isAdded) {
+                    if (isAdded) {
                         updateEmptyViews()
                     }
                 }
@@ -111,12 +112,12 @@ class MyLiveMatchesFragment : Fragment() {
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    if(isAdded) {
+                    if (isAdded) {
                         mBinding!!.progressBar.visibility = View.GONE
                         var res = response!!.body()
-                        if(res!=null) {
+                        if (res != null) {
                             var responseModel = res.responseObject
-                            if(responseModel!=null) {
+                            if (responseModel != null) {
                                 if (responseModel.matchdatalist != null && responseModel.matchdatalist!!.size > 0) {
                                     checkinArrayList.clear()
                                     checkinArrayList.addAll(responseModel.matchdatalist!!.get(0).liveMatchHistory!!)
@@ -126,23 +127,16 @@ class MyLiveMatchesFragment : Fragment() {
                         }
                         updateEmptyViews()
                     }
-
-
-
                 }
-
             })
-
     }
 
     private fun updateEmptyViews() {
-        if(checkinArrayList.size>0){
+        if (checkinArrayList.size > 0) {
             mBinding!!.linearEmptyContest.visibility = View.GONE
-        }else {
+        } else {
             mBinding!!.linearEmptyContest.visibility = View.VISIBLE
         }
-
-
     }
 
     inner class MyMatchesAdapter(
@@ -153,7 +147,6 @@ class MyLiveMatchesFragment : Fragment() {
         var onItemClick: ((JoinedMatchModel) -> Unit)? = null
         private var matchesListObject = tradeinfoModels
 
-
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             var view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.matches_row_upcoming_inner, parent, false)
@@ -161,12 +154,13 @@ class MyLiveMatchesFragment : Fragment() {
 
         }
 
-        fun getRandomColor():Int {
+        fun getRandomColor(): Int {
             val rnd = Random()
             val color: Int = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
 
             return color
         }
+
         override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
             var objectVal = matchesListObject[viewType]
             val viewHolder: DataViewHolder = parent as DataViewHolder
@@ -177,8 +171,9 @@ class MyLiveMatchesFragment : Fragment() {
             viewHolder.opponent2?.text = objectVal.teamBInfo!!.teamShortName
             viewHolder.freeView?.visibility = View.GONE
             viewHolder.matchtime?.visibility = View.GONE
-            viewHolder.teamAColorView?.setColorFilter(getRandomColor(), android.graphics.PorterDuff.Mode.MULTIPLY)
-            viewHolder.teamBColorView?.setColorFilter(getRandomColor(), android.graphics.PorterDuff.Mode.MULTIPLY)
+
+            viewHolder.teamAColorView?.setBackgroundColor(getRandomColor())
+            viewHolder.teamBColorView?.setBackgroundColor(getRandomColor())
 
             viewHolder.matchProgress.text = objectVal.statusString
 //            BindingUtils.countDownStartForAdaptors(objectVal.timestampStart,object : OnMatchTimerStarted{
@@ -196,7 +191,7 @@ class MyLiveMatchesFragment : Fragment() {
 //                viewHolder?.contestName?.text = "" + objectVal.contestName
 //                viewHolder?.contestPrice?.text = "" + objectVal.contestPrize
 //            } else {
-                viewHolder.upcomingLinearContestView.visibility = View.INVISIBLE
+            viewHolder.upcomingLinearContestView.visibility = View.INVISIBLE
             //  }
 
             Glide.with(context)
@@ -212,12 +207,9 @@ class MyLiveMatchesFragment : Fragment() {
 
         }
 
-
-
         override fun getItemCount(): Int {
             return matchesListObject.size
         }
-
 
         inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             init {
@@ -230,16 +222,15 @@ class MyLiveMatchesFragment : Fragment() {
             val teamBLogo = itemView.findViewById<ImageView>(R.id.teamb_logo)
             val matchTitle = itemView.findViewById<TextView>(R.id.upcoming_match_title)
             val tournamentTitle = itemView.findViewById<TextView>(R.id.tournament_title)
-            val teamAColorView = itemView.findViewById<ImageView>(R.id.countrycolorview)
-            val teamBColorView = itemView.findViewById<ImageView>(R.id.countrybcolorview)
+            val teamAColorView = itemView.findViewById<View>(R.id.countrycolorview)
+            val teamBColorView = itemView.findViewById<View>(R.id.countrybcolorview)
             val opponent1 = itemView.findViewById<TextView>(R.id.upcoming_opponent1)
             val opponent2 = itemView.findViewById<TextView>(R.id.upcoming_opponent2)
             val freeView = itemView.findViewById<TextView>(R.id.free_view)
             val matchProgress = itemView.findViewById<TextView>(R.id.upcoming_match_progress)
-            val upcomingLinearContestView = itemView.findViewById<LinearLayout>(R.id.upcoming_linear_contest_view)
+            val upcomingLinearContestView =
+                itemView.findViewById<LinearLayout>(R.id.upcoming_linear_contest_view)
             val matchtime = itemView.findViewById<TextView>(R.id.match_time)
-
-
         }
     }
 }

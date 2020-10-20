@@ -69,7 +69,7 @@ class MyUpcomingMatchesFragment : Fragment() {
 
             //MyUtils.logd("MatchesAdapter",objects.country1Name+" Vs "+objects.country1Name)
             val intent = Intent(activity!!, ContestActivity::class.java)
-            intent.putExtra(ContestActivity.SERIALIZABLE_KEY_UPCOMING_MATCHES,objects)
+            intent.putExtra(ContestActivity.SERIALIZABLE_KEY_UPCOMING_MATCHES, objects)
             startActivity(intent)
         }
         if (checkinArrayList.size > 0) {
@@ -86,24 +86,24 @@ class MyUpcomingMatchesFragment : Fragment() {
     }
 
     fun getMatchHistory() {
-        if(!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
-            MyUtils.showToast(activity as AppCompatActivity,"No Internet connection found")
+        if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
+            MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-        if(checkinArrayList.size==0) {
+        if (checkinArrayList.size == 0) {
             mBinding!!.progressBar.visibility = View.VISIBLE
         }
-        mBinding!!.linearEmptyContest.visibility=View.GONE
+        mBinding!!.linearEmptyContest.visibility = View.GONE
         var models = RequestModel()
         models.user_id = MyPreferences.getUserID(activity!!)!!
-        models.action_type ="upcoming"
+        models.action_type = "upcoming"
 
 
         WebServiceClient(activity!!).client.create(IApiMethod::class.java).getMatchHistory(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
 
-                    if(isAdded) {
+                    if (isAdded) {
                         updateEmptyViews()
                     }
                 }
@@ -112,12 +112,12 @@ class MyUpcomingMatchesFragment : Fragment() {
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    if(isAdded) {
+                    if (isAdded) {
                         mBinding!!.progressBar.visibility = View.GONE
                         var res = response!!.body()
-                        if(res!=null) {
+                        if (res != null) {
                             var responseModel = res.responseObject
-                            if(responseModel!=null) {
+                            if (responseModel != null) {
                                 if (responseModel.matchdatalist != null && responseModel.matchdatalist!!.size > 0) {
                                     checkinArrayList.clear()
                                     checkinArrayList.addAll(responseModel.matchdatalist!!.get(0).upcomingMatchHistory!!)
@@ -127,25 +127,17 @@ class MyUpcomingMatchesFragment : Fragment() {
                         }
                         updateEmptyViews()
                     }
-
-
-
                 }
-
             })
-
     }
 
     private fun updateEmptyViews() {
-        if(checkinArrayList.size>0){
+        if (checkinArrayList.size > 0) {
             mBinding!!.linearEmptyContest.visibility = View.GONE
-        }else {
+        } else {
             mBinding!!.linearEmptyContest.visibility = View.VISIBLE
         }
-
-
     }
-
 
     inner class MyMatchesAdapter(
         val context: Context,
@@ -163,18 +155,19 @@ class MyUpcomingMatchesFragment : Fragment() {
 
         }
 
-        fun getRandomColor():Int {
+        fun getRandomColor(): Int {
             val rnd = Random()
             val color: Int = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
 
             return color
         }
+
         override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
             var objectVal = matchesListObject[viewType]
             val viewHolder: DataViewHolder = parent as DataViewHolder
-            if(objectVal.isLineup) {
+            if (objectVal.isLineup) {
                 viewHolder.matchTitle?.visibility = View.VISIBLE
-            }else {
+            } else {
                 viewHolder.matchTitle?.visibility = View.GONE
             }
             viewHolder.tournamentTitle?.text = objectVal.leagueTitle
@@ -182,32 +175,32 @@ class MyUpcomingMatchesFragment : Fragment() {
             viewHolder.opponent1?.text = objectVal.teamAInfo!!.teamShortName
             viewHolder.opponent2?.text = objectVal.teamBInfo!!.teamShortName
 
-            if(!TextUtils.isEmpty(objectVal.dateStart)) {
+            if (!TextUtils.isEmpty(objectVal.dateStart)) {
                 viewHolder.matchtime.visibility = View.VISIBLE
                 viewHolder.matchtime.text = objectVal.dateStart
-            }else {
+            } else {
                 viewHolder.matchtime.visibility = View.GONE
             }
 
-            if(objectVal.freeContest) {
+            if (objectVal.freeContest) {
                 viewHolder.freeView?.visibility = View.VISIBLE
-            }
-            else {
+            } else {
                 viewHolder.freeView?.visibility = View.GONE
             }
-            viewHolder.teamAColorView?.setColorFilter(getRandomColor(), android.graphics.PorterDuff.Mode.MULTIPLY)
-            viewHolder.teamBColorView?.setColorFilter(getRandomColor(), android.graphics.PorterDuff.Mode.MULTIPLY)
+            viewHolder.teamAColorView?.setBackgroundColor(getRandomColor())
+            viewHolder.teamBColorView?.setBackgroundColor(getRandomColor())
 
-            BindingUtils.countDownStartForAdaptors(objectVal.timestampStart,object : OnMatchTimerStarted{
-                override fun onTimeFinished() {
-                    viewHolder.matchProgress.text = objectVal.statusString
-                }
+            BindingUtils.countDownStartForAdaptors(objectVal.timestampStart,
+                object : OnMatchTimerStarted {
+                    override fun onTimeFinished() {
+                        viewHolder.matchProgress.text = objectVal.statusString
+                    }
 
-                override fun onTicks(time:String) {
-                    viewHolder.matchProgress.text = time
-                }
+                    override fun onTicks(time: String) {
+                        viewHolder.matchProgress.text = time
+                    }
 
-            })
+                })
             if (!TextUtils.isEmpty(objectVal.contestName)) {
                 viewHolder.upcomingLinearContestView.visibility = View.VISIBLE
                 viewHolder.contestName?.text = "" + objectVal.contestName
@@ -246,19 +239,17 @@ class MyUpcomingMatchesFragment : Fragment() {
             val teamBLogo = itemView.findViewById<ImageView>(R.id.teamb_logo)
             val matchTitle = itemView.findViewById<TextView>(R.id.upcoming_match_title)
             val tournamentTitle = itemView.findViewById<TextView>(R.id.tournament_title)
-            val teamAColorView = itemView.findViewById<ImageView>(R.id.countrycolorview)
-            val teamBColorView = itemView.findViewById<ImageView>(R.id.countrybcolorview)
+            val teamAColorView = itemView.findViewById<View>(R.id.countrycolorview)
+            val teamBColorView = itemView.findViewById<View>(R.id.countrybcolorview)
             val opponent1 = itemView.findViewById<TextView>(R.id.upcoming_opponent1)
             val opponent2 = itemView.findViewById<TextView>(R.id.upcoming_opponent2)
             val matchtime = itemView.findViewById<TextView>(R.id.match_time)
             val freeView = itemView.findViewById<TextView>(R.id.free_view)
             val matchProgress = itemView.findViewById<TextView>(R.id.upcoming_match_progress)
-            val upcomingLinearContestView = itemView.findViewById<LinearLayout>(R.id.upcoming_linear_contest_view)
+            val upcomingLinearContestView =
+                itemView.findViewById<LinearLayout>(R.id.upcoming_linear_contest_view)
             val contestName = itemView.findViewById<TextView>(R.id.upcoming_contest_name)
             val contestPrice = itemView.findViewById<TextView>(R.id.upcoming_contest_price)
-
-
-
         }
     }
 }

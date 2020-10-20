@@ -15,11 +15,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.deliverdas.customers.utils.HardwareInfoManager
 import com.edify.atrist.listener.OnContestEvents
 import com.edify.atrist.listener.OnContestLoadedListener
-import ninja.cricks.ContestActivity
-import ninja.cricks.CreateTeamActivity
-import ninja.cricks.MaintainanceActivity
-import ninja.cricks.WebActivity
-import ninja.cricks.R
+import ninja.cricks.*
 import ninja.cricks.databinding.FragmentAllContestBinding
 import ninja.cricks.models.ContestsParentModels
 import ninja.cricks.models.UpcomingMatchesModel
@@ -50,6 +46,8 @@ class ContestFragment : Fragment() {
     var allContestListData = ArrayList<ContestsParentModels>()
     var filterSpotsListData = ArrayList<ContestModelLists>()
     var isEntryAscending = false
+    private var isVisibleToUser: Boolean = false
+
     companion object {
         fun newInstance(bundle: Bundle): ContestFragment {
             val fragment = ContestFragment()
@@ -57,7 +55,6 @@ class ContestFragment : Fragment() {
             return fragment
         }
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -145,7 +142,7 @@ class ContestFragment : Fragment() {
             mBinding!!.filterByAll.setTextColor(resources.getColor(R.color.black))
 
             mBinding!!.linearEntryPrizeSort.setBackgroundResource(R.drawable.circle_grey)
-            mBinding!!.prizeArrow.visibility =  View.GONE
+            mBinding!!.prizeArrow.visibility = View.GONE
             mBinding!!.rupees.setTextColor(resources.getColor(R.color.black))
 
             showRecyclerListBySpotSize(2)
@@ -166,7 +163,7 @@ class ContestFragment : Fragment() {
             mBinding!!.filterByAll.setTextColor(resources.getColor(R.color.black))
 
             mBinding!!.linearEntryPrizeSort.setBackgroundResource(R.drawable.circle_grey)
-            mBinding!!.prizeArrow.visibility =  View.GONE
+            mBinding!!.prizeArrow.visibility = View.GONE
             mBinding!!.rupees.setTextColor(resources.getColor(R.color.black))
 
             showRecyclerListBySpotSize(3)
@@ -188,7 +185,7 @@ class ContestFragment : Fragment() {
             mBinding!!.filterByAll.setTextColor(resources.getColor(R.color.black))
 
             mBinding!!.linearEntryPrizeSort.setBackgroundResource(R.drawable.circle_grey)
-            mBinding!!.prizeArrow.visibility =  View.GONE
+            mBinding!!.prizeArrow.visibility = View.GONE
             mBinding!!.rupees.setTextColor(resources.getColor(R.color.black))
 
             showRecyclerListBySpotSize(4)
@@ -211,7 +208,7 @@ class ContestFragment : Fragment() {
 
 
             mBinding!!.linearEntryPrizeSort.setBackgroundResource(R.drawable.circle_app_color)
-            mBinding!!.prizeArrow.visibility =  View.VISIBLE
+            mBinding!!.prizeArrow.visibility = View.VISIBLE
 
             mBinding!!.rupees.setTextColor(resources.getColor(R.color.white))
 
@@ -231,7 +228,7 @@ class ContestFragment : Fragment() {
 
         mBinding!!.linearEntryPrizeSort.setBackgroundResource(R.drawable.circle_grey)
         mBinding!!.rupees.setTextColor(resources.getColor(R.color.black))
-        mBinding!!.prizeArrow.visibility =  View.GONE
+        mBinding!!.prizeArrow.visibility = View.GONE
 
         mBinding!!.sortBy2spots.setBackgroundResource(R.drawable.circle_grey)
         mBinding!!.sortBy2spots.setTextColor(resources.getColor(R.color.black))
@@ -253,14 +250,10 @@ class ContestFragment : Fragment() {
 
     private fun filterByEntryPrize() {
 
-        if(isEntryAscending){
-            isEntryAscending = false
-        }else {
-            isEntryAscending = true
-        }
-        if(isEntryAscending){
+        isEntryAscending = !isEntryAscending
+        if (isEntryAscending) {
             mBinding!!.prizeArrow.setImageResource(R.drawable.ic_baseline_arrow_upward_24)
-        }else {
+        } else {
             mBinding!!.prizeArrow.setImageResource(R.drawable.ic_baseline_arrow_downward_24)
         }
         mBinding!!.contestViewRecycler.visibility = View.GONE
@@ -271,10 +264,10 @@ class ContestFragment : Fragment() {
             var values = allContestListData.get(i).allContestsRunning
             if (values != null && values.size > 0) {
 
-                if(isEntryAscending) {
+                if (isEntryAscending) {
                     var sortedEntryPrizes = values.sortedBy { it -> it.entryFees }
                     sortedEntryPrizes.forEach { s -> filterValues.add(s) }
-                }else {
+                } else {
                     var sortedEntryPrizes = values.sortedByDescending { it -> it.entryFees }
                     sortedEntryPrizes.forEach { s -> filterValues.add(s) }
                 }
@@ -290,18 +283,17 @@ class ContestFragment : Fragment() {
             }
         }
         //mBinding!!.recyclerBySpotsize.scrollToPosition(filterSpotsListData!!.size - 1)
-        if(isEntryAscending) {
-            var  objectPrize =  filterValues.sortedBy { it -> it.entryFees }
+        if (isEntryAscending) {
+            var objectPrize = filterValues.sortedBy { it -> it.entryFees }
             objectPrize.forEach { s -> filterSpotsListData.add(s) }
-        }else {
-            var  objectPrize =  filterValues.sortedByDescending { it -> it.entryFees }
+        } else {
+            var objectPrize = filterValues.sortedByDescending { it -> it.entryFees }
             objectPrize.forEach { s -> filterSpotsListData.add(s) }
         }
         spotSizeFilterAdaptor.notifyDataSetChanged()
         mBinding!!.recyclerBySpotsize.scheduleLayoutAnimation()
-       // mBinding!!.recyclerBySpotsize.smoothScrollToPosition(spotSizeFilterAdaptor.getItemCount() - 1);
+        // mBinding!!.recyclerBySpotsize.smoothScrollToPosition(spotSizeFilterAdaptor.getItemCount() - 1);
     }
-
 
     private fun showRecyclerListBySpotSize(spotSize: Int) {
         mBinding!!.contestViewRecycler.visibility = View.GONE
@@ -312,7 +304,7 @@ class ContestFragment : Fragment() {
             if (values != null && values.size > 0) {
                 for (j in 0..values.size - 1) {
                     var spotObject = values.get(j)
-                    if (4 == spotSize && spotObject.totalSpots>=4) {
+                    if (4 == spotSize && spotObject.totalSpots >= 4) {
                         filterSpotsListData.add(spotObject)
                     } else {
                         if (spotObject.totalSpots == spotSize) {
@@ -326,7 +318,7 @@ class ContestFragment : Fragment() {
 
         spotSizeFilterAdaptor.notifyDataSetChanged()
         //mBinding!!.recyclerBySpotsize.scheduleLayoutAnimation()
-        mBinding!!.recyclerBySpotsize.smoothScrollToPosition(spotSizeFilterAdaptor.getItemCount() - 1);
+        mBinding!!.recyclerBySpotsize.smoothScrollToPosition(spotSizeFilterAdaptor.itemCount - 1)
     }
 
     override fun onResume() {
@@ -335,9 +327,15 @@ class ContestFragment : Fragment() {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-        getAllContest()
+        //if (isVisibleToUser) {
+            getAllContest()
+        //}
     }
 
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        this.isVisibleToUser = isVisibleToUser
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -389,7 +387,7 @@ class ContestFragment : Fragment() {
                     mBinding!!.contestRefresh.isRefreshing = false
                     //mBinding!!.filterBar.visibility = View.VISIBLE
                     var res = response!!.body()
-                    if (res != null && res!!.appMaintainance) {
+                    if (res != null && res.appMaintainance) {
                         var intent = Intent(activity, MaintainanceActivity::class.java)
                         intent.flags =
                             Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -419,7 +417,6 @@ class ContestFragment : Fragment() {
 
     }
 
-
     fun updateEmptyViews() {
         if (allContestListData.size == 0) {
             mBinding!!.linearEmptyContest.visibility = View.VISIBLE
@@ -427,6 +424,4 @@ class ContestFragment : Fragment() {
             mBinding!!.linearEmptyContest.visibility = View.GONE
         }
     }
-
-
 }

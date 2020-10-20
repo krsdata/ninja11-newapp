@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="contentviews"
             type="ninja.cricks.ui.login.RegisterScreenActivity" />
@@ -13,22 +14,25 @@
         android:layout_height="match_parent"
         android:background="@color/colorAccent"
         android:fitsSystemWindows="true">
+
         <ninja.cricks.customviews.ArcBackgroundView
             android:id="@+id/arc_view"
             android:layout_width="match_parent"
             android:layout_height="220dp"
             android:layout_alignParentBottom="true"
+            android:visibility="gone"
             app:ArcBackgroundViewEndColor="@color/colorAccent_light"
             app:ArcBackgroundViewStartColor="@color/colorAccent"
             app:ArcBackgroundViewTopHeight="60dp" />
+
         <LinearLayout
             android:id="@+id/tnc_policy"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_alignParentBottom="true"
-            android:paddingBottom="10dp"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="10dp">
 
             <TextView
                 android:id="@+id/checkbox_tnc"
@@ -69,11 +73,7 @@
                     android:fontFamily="@font/montserrat_bold"
                     android:text="Privacy Policy"
                     android:textColor="@color/white" />
-
-
             </LinearLayout>
-
-
         </LinearLayout>
 
         <ImageView
@@ -85,6 +85,7 @@
             android:gravity="center_horizontal"
             android:src="@mipmap/ic_launcher"
             android:textColor="@color/white" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -97,10 +98,12 @@
                 android:background="?attr/colorPrimary"
                 android:fitsSystemWindows="true"
                 app:theme="@style/ToolbarTheme" />
+
             <RelativeLayout
                 android:id="@+id/user_info_bar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -154,15 +157,14 @@
                         </LinearLayout>
 
 
-
-
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/open_sans"
                             android:text="Your Nick Name , People will know you by this name"
                             android:textColor="@color/red"
-                            android:textSize="8sp"
-                            android:fontFamily="@font/open_sans"/>
+                            android:textSize="8sp" />
+
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
@@ -174,8 +176,8 @@
                                 android:fontFamily="@font/open_sans_semibold"
                                 android:hint="Team Name(Nick Name)"
                                 android:inputType="textCapWords"
-                                android:maxLines="1"
                                 android:maxLength="8"
+                                android:maxLines="1"
                                 android:singleLine="true"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/login_text_size_18sp" />
@@ -246,6 +248,7 @@
                             </com.google.android.material.textfield.TextInputLayout>
 
                         </RelativeLayout>
+
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/input_refferal"
                             android:layout_width="match_parent"
@@ -257,7 +260,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/open_sans_semibold"
-                                android:hint="REFERAL CODE"
+                                android:hint="REFERRAL CODE"
                                 android:inputType="textCapCharacters"
                                 android:maxLength="24"
                                 android:maxLines="1"
@@ -275,8 +278,8 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="25dip"
                             android:background="@drawable/default_rounded_button_sportsfight"
-                            android:text="Register"
                             android:fontFamily="@font/tungab"
+                            android:text="Register"
                             android:textColor="@color/white" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -284,12 +287,6 @@
             </RelativeLayout>
 
         </LinearLayout>
-
-
-
-
-
-
     </RelativeLayout>
 
 </layout>

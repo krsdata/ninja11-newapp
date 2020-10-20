@@ -145,17 +145,13 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="right|center_vertical"
                         android:fontFamily="@font/montserrat_regular"
-
                         android:gravity="right"
                         android:text="progress"
                         android:textColor="@color/red"
                         android:textSize="12sp" />
                 </LinearLayout>
-
             </RelativeLayout>
-
         </LinearLayout>
-
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/mycontest_refresh"
@@ -187,7 +183,5 @@
 
             </LinearLayout>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
     </RelativeLayout>
-
 </layout>

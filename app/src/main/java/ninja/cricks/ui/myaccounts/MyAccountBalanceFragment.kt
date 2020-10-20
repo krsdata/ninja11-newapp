@@ -62,7 +62,7 @@ class MyAccountBalanceFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         mBinding!!.btnAddCash.setOnClickListener(View.OnClickListener {
-            val intent = Intent(activity!!, AddMoneyActivity::class.java)
+            val intent = Intent(requireActivity(), AddMoneyActivity::class.java)
             startActivity(intent)
         })
 
@@ -70,11 +70,11 @@ class MyAccountBalanceFragment : BaseFragment() {
             if (walletInfo.bankAccountVerified == BindingUtils.BANK_DOCUMENTS_STATUS_VERIFIED) {
                 var amount = walletInfo.walletAmount
                 if (amount >= 200) {
-                    val intent = Intent(activity!!, WithdrawAmountsActivity::class.java)
+                    val intent = Intent(requireActivity(), WithdrawAmountsActivity::class.java)
                     startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
                 } else {
                     MyUtils.showToast(
-                        activity!! as AppCompatActivity,
+                        requireActivity() as AppCompatActivity,
                         "Amount is less than 200 INR"
                     )
                 }
@@ -86,13 +86,13 @@ class MyAccountBalanceFragment : BaseFragment() {
                 } else if (walletInfo.bankAccountVerified == BindingUtils.BANK_DOCUMENTS_STATUS_REJECTED) {
                     message = "Your Document Rejected Please contact admin"
                 }
-                MyUtils.showToast(activity!! as AppCompatActivity, message)
+                MyUtils.showToast(requireActivity() as AppCompatActivity, message)
             }
 
         })
 
         mBinding!!.refferalList.setOnClickListener(View.OnClickListener {
-            val intent = Intent(activity!!, RefferalFriendsListActivity::class.java)
+            val intent = Intent(requireActivity(), RefferalFriendsListActivity::class.java)
             startActivity(intent)
         })
 
@@ -102,7 +102,7 @@ class MyAccountBalanceFragment : BaseFragment() {
     }
 
     fun initViews() {
-        walletInfo = (activity!!.applicationContext as SportsFightApplication).walletInfo
+        walletInfo = (requireActivity().applicationContext as SportsFightApplication).walletInfo
         if (walletInfo != null) {
             mBinding!!.progressBarPlayingHistory.visibility = View.GONE
             initWalletViews(walletInfo)
@@ -142,10 +142,10 @@ class MyAccountBalanceFragment : BaseFragment() {
         customeProgressDialog!!.show()
         //mBinding!!.progressBarPlayingHistory.visibility  =View.VISIBLE
         var models = RequestModel()
-        models.user_id = MyPreferences.getUserID(activity!!)!!
-        models.token = MyPreferences.getToken(activity!!)!!
+        models.user_id = MyPreferences.getUserID(requireActivity())!!
+        models.token = MyPreferences.getToken(requireActivity())!!
 
-        WebServiceClient(activity!!).client.create(IApiMethod::class.java).getWallet(models)
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getWallet(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     if (isAdded) {

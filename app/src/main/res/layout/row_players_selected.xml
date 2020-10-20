@@ -48,7 +48,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@color/error_color_material_dark"
+                    android:background="@color/colorPrimaryDark"
                     android:gravity="center"
                     android:padding="3dp"
                     android:text="BAT"

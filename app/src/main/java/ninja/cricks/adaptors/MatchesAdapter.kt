@@ -25,8 +25,8 @@ import ninja.cricks.utils.MyUtils
 class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<MatchesModels>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var onItemClick: ((MatchesModels) -> Unit)? = null
-    var mContext:Context ? =context
-    private var matchesListObject =  tradeinfoModels
+    var mContext: Context? = context
+    private var matchesListObject = tradeinfoModels
 
     companion object {
         const val TYPE_JOINED = 1
@@ -36,20 +36,20 @@ class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<Matche
 
     override fun getItemViewType(position: Int): Int {
         val comparable = matchesListObject.get(position)
-            return comparable.viewType
+        return comparable.viewType
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if(viewType== TYPE_JOINED){
-            var view = LayoutInflater.from(parent.context)
+        if (viewType == TYPE_JOINED) {
+            val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.matches_row_joined_matches, parent, false)
             return ViewHolderJoinedMatches(view)
-        }else if(viewType== TYPE_BANNERS){
-            var view = LayoutInflater.from(parent.context)
+        } else if (viewType == TYPE_BANNERS) {
+            val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.matches_row_banners_matches, parent, false)
             return BannersViewHolder(view)
-        }else if(viewType== TYPE_UPCOMING_MATCHES){
-            var view = LayoutInflater.from(parent.context)
+        } else if (viewType == TYPE_UPCOMING_MATCHES) {
+            val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.matches_row_upcoming_matches, parent, false)
             return UpcomingMatchesViewHolder(view)
         }
@@ -58,11 +58,11 @@ class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<Matche
 
     override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
         var objectVal = matchesListObject[viewType]
-        if(objectVal.viewType== TYPE_JOINED){
+        if (objectVal.viewType == TYPE_JOINED) {
             val viewJoinedMatches: ViewHolderJoinedMatches = parent as ViewHolderJoinedMatches
             viewJoinedMatches.recyclerView.layoutManager =
                 LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false)
-            if(objectVal.joinedMatchModel!=null){
+            if (objectVal.joinedMatchModel != null) {
                 var adapter = JoinedMatchesAdapter(
                     mContext!!,
                     objectVal.joinedMatchModel!!
@@ -71,25 +71,21 @@ class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<Matche
                 adapter.onItemClick = { objects ->
                     //MyUtils.logd("MatchesAdapter","Joined Contest"+objects.country1Name+" Vs "+objects.country1Name)
                     val intent = Intent(mContext, ContestActivity::class.java)
-                    intent.putExtra(ContestActivity.SERIALIZABLE_KEY_JOINED_CONTEST,objects)
+                    intent.putExtra(ContestActivity.SERIALIZABLE_KEY_JOINED_CONTEST, objects)
                     mContext!!.startActivity(intent)
                     // MyUtils.showToast(parent.recyclerView,"Open New Joined Contest Activity")
                 }
             }
 
-
             Glide.with(context)
-                .load(BindingUtils.BASE_URL_MAIN+"banners/joined_contest_bg.jpg")
+                .load(BindingUtils.BASE_URL_MAIN + "banners/joined_contest_bg.jpg")
                 .placeholder(R.drawable.placeholder_player_teama)
                 .into(viewJoinedMatches.backgroundImage)
 
-            viewJoinedMatches.txtViewAll.setOnClickListener({
+            viewJoinedMatches.txtViewAll.setOnClickListener {
                 (mContext as MainActivity).viewAllMatches()
-            })
-
-
-
-        }else  if(objectVal.viewType== TYPE_BANNERS){
+            }
+        } else if (objectVal.viewType == TYPE_BANNERS) {
             var objectVal = matchesListObject[viewType]
             val viewBanners: BannersViewHolder = parent as BannersViewHolder
             viewBanners.recyclerView.layoutManager =
@@ -101,7 +97,7 @@ class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<Matche
             viewBanners.recyclerView.adapter = adapter
 
 
-        }else  if(objectVal.viewType== TYPE_UPCOMING_MATCHES) {
+        } else if (objectVal.viewType == TYPE_UPCOMING_MATCHES) {
             var objectVal = matchesListObject[viewType]
             val viewUpcomingMatches: UpcomingMatchesViewHolder = parent as UpcomingMatchesViewHolder
             viewUpcomingMatches.recyclerView.layoutManager =
@@ -113,16 +109,16 @@ class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<Matche
                     mContext!!,
                     objectVal.upcomingMatches!!
                 )
-                viewUpcomingMatches.recyclerView.setHasFixedSize(true);
-               // viewUpcomingMatches.recyclerView.setDrawingCacheEnabled(true);
-               // viewUpcomingMatches.recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+                viewUpcomingMatches.recyclerView.setHasFixedSize(true)
+                // viewUpcomingMatches.recyclerView.setDrawingCacheEnabled(true);
+                // viewUpcomingMatches.recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
                 viewUpcomingMatches.recyclerView.adapter = adapter
                 //(viewUpcomingMatches.recyclerView.adapter as UpcomingMatchesAdapter).setHasStableIds(true)
                 adapter.onItemClick = { objects ->
 
                     //MyUtils.logd("MatchesAdapter",objects.country1Name+" Vs "+objects.country1Name)
                     val intent = Intent(mContext, ContestActivity::class.java)
-                    intent.putExtra(ContestActivity.SERIALIZABLE_KEY_UPCOMING_MATCHES,objects)
+                    intent.putExtra(ContestActivity.SERIALIZABLE_KEY_UPCOMING_MATCHES, objects)
                     mContext!!.startActivity(intent)
                 }
 
@@ -135,7 +131,7 @@ class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<Matche
 
     fun setMatchesList(matchesList: java.util.ArrayList<MatchesModels>?) {
         this.matchesListObject = matchesList!!
-       // this.mContext = mContext
+        // this.mContext = mContext
         notifyDataSetChanged()
     }
 
@@ -155,17 +151,17 @@ class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<Matche
         return matchesListObject.size
     }
 
-    inner  class ViewHolderJoinedMatches(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolderJoinedMatches(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val recyclerView = itemView.findViewById<RecyclerView>(R.id.recycler_joined_matches)
         val txtViewAll = itemView.findViewById<TextView>(R.id.txtViewAll)
         val backgroundImage = itemView.findViewById<ImageView>(R.id.imageView4)
     }
 
-    inner  class BannersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class BannersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val recyclerView = itemView.findViewById<RecyclerView>(R.id.recycler_banners)
     }
 
-    inner  class UpcomingMatchesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class UpcomingMatchesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val recyclerView = itemView.findViewById<RecyclerView>(R.id.recycler_upcoming_matches)
         val linearEmptyView = itemView.findViewById<LinearLayout>(R.id.linear_empty_view)
 

@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <variable
             name="viewmodel"
             type="ninja.cricks.ui.contest.ContestFragment" />
@@ -204,7 +203,7 @@
             android:fontFamily="@font/montserratsemibold"
             android:padding="10dp"
             android:text="CREATE A TEAM"
-            android:textColor="@color/secondery_color"
+            android:textColor="@color/green"
             android:textSize="10sp"
             android:textStyle="bold" />
 

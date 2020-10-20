@@ -4,7 +4,7 @@
     android:id="@+id/recycler_banners"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardElevation="12dp"
+    android:layout_marginStart="@dimen/matches_view_left_margin"
     android:layout_marginTop="@dimen/matches_view_top_margin"
-    android:layout_marginLeft="@dimen/matches_view_left_margin"
-    android:layout_marginRight="@dimen/matches_view_right_margin" />
+    android:layout_marginEnd="@dimen/matches_view_right_margin"
+    app:cardElevation="12dp" />

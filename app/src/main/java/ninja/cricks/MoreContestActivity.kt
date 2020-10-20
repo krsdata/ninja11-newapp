@@ -152,7 +152,7 @@ class MoreContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEv
         mBinding!!.mycontestRefresh.isRefreshing=true
         var models = RequestModel()
         models.user_id = MyPreferences.getUserID(this@MoreContestActivity)!!
-        // models.token =MyPreferences.getToken(activity!!)!!
+        // models.token =MyPreferences.getToken(requireActivity())!!
         models.match_id = "" + matchObject!!.matchId
         models.token =MyPreferences.getToken(this@MoreContestActivity)!!
         models.deviceDetails = HardwareInfoManager(this@MoreContestActivity).collectData()

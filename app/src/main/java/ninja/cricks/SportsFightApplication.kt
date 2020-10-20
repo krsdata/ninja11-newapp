@@ -5,6 +5,8 @@ import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
+import com.google.firebase.FirebaseApp
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import ninja.cricks.models.MatchesModels
@@ -26,13 +28,16 @@ class SportsFightApplication : MultiDexApplication() {
             "com.google.android.gms.fonts",
             "com.google.android.gms",
             "Noto Color Emoji Compat",
-            R.array.com_google_android_gms_fonts_certs)
+            R.array.com_google_android_gms_fonts_certs
+        )
         val config = FontRequestEmojiCompatConfig(this, fontRequest)
             .setReplaceAll(true)
             .setEmojiSpanIndicatorEnabled(true)
 
         EmojiCompat.init(config)
 
+        FirebaseApp.initializeApp(this)
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
     }
 
     fun saveUserInformations(value: UserInfo?) {
@@ -89,7 +94,7 @@ class SportsFightApplication : MultiDexApplication() {
         if (value != null) {
             val gson = Gson()
             val data = gson.toJson(value)
-            MyPreferences.setSFApiCaches(applicationContext, KEY_UPCOMING_MATCHES,data)
+            MyPreferences.setSFApiCaches(applicationContext, KEY_UPCOMING_MATCHES, data)
         }
     }
 
@@ -100,7 +105,7 @@ class SportsFightApplication : MultiDexApplication() {
 
             }.type
             val gson = Gson()
-            val gsonObject = MyPreferences.getSFApiCaches(this,KEY_UPCOMING_MATCHES)
+            val gsonObject = MyPreferences.getSFApiCaches(this, KEY_UPCOMING_MATCHES)
             if (gsonObject != null) {
                 mStoreListModels = gson.fromJson<ArrayList<MatchesModels>>(gsonObject, type)
             }
@@ -116,7 +121,7 @@ class SportsFightApplication : MultiDexApplication() {
         if (value != null) {
             val gson = Gson()
             val data = gson.toJson(value)
-            MyPreferences.setSFApiCaches(applicationContext, data,KEY_TRANSACTION_HISTORY)
+            MyPreferences.setSFApiCaches(applicationContext, data, KEY_TRANSACTION_HISTORY)
         }
     }
 
@@ -127,7 +132,7 @@ class SportsFightApplication : MultiDexApplication() {
 
             }.type
             val gson = Gson()
-            val gsonObject = MyPreferences.getSFApiCaches(this,KEY_TRANSACTION_HISTORY)
+            val gsonObject = MyPreferences.getSFApiCaches(this, KEY_TRANSACTION_HISTORY)
             if (gsonObject != null) {
                 mStoreListModels = gson.fromJson<ArrayList<TransactionModel>>(gsonObject, type)
             }

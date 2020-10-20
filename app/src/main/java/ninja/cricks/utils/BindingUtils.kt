@@ -10,35 +10,35 @@ import java.util.*
 class BindingUtils {
 
     companion object {
-        val UNLIMITED_SPOT_MARGIN: Int= 6
+        val UNLIMITED_SPOT_MARGIN: Int = 6
         val MINIMUM_DEPOSIT_AMOUNT: Int = 25
-        private var isCountedObjectCreated: Boolean=false
-        var timer: CountDownTimer?=null
-        val REUEST_STATUS_CODE_FRAUD: Int=420
-        val MATCH_STATUS_UPCOMING: Int=1
-        val MATCH_STATUS_LIVE: Int=3
+        private var isCountedObjectCreated: Boolean = false
+        var timer: CountDownTimer? = null
+        val REUEST_STATUS_CODE_FRAUD: Int = 420
+        val MATCH_STATUS_UPCOMING: Int = 1
+        val MATCH_STATUS_LIVE: Int = 3
 
-        val BANK_DOCUMENTS_STATUS_REJECTED: Int=3
-        val BANK_DOCUMENTS_STATUS_VERIFIED: Int=2
-        val BANK_DOCUMENTS_STATUS_APPROVAL_PENDING: Int=1
-        val BANNERS_KEY_ADD:String? = "ADD"
-        val BANNERS_KEY_REFFER:String? = "reffer"
-        val BANNERS_KEY_SUPPORT:String? = "support"
-        val BANNERS_KEY_BROWSERS:String? = "browser"
-        val EMAIL: String?="support@ninja11.in"
-        val PHONE_NUMBER: String?="=+91"
+        val BANK_DOCUMENTS_STATUS_REJECTED: Int = 3
+        val BANK_DOCUMENTS_STATUS_VERIFIED: Int = 2
+        val BANK_DOCUMENTS_STATUS_APPROVAL_PENDING: Int = 1
+        val BANNERS_KEY_ADD: String? = "ADD"
+        val BANNERS_KEY_REFFER: String? = "reffer"
+        val BANNERS_KEY_SUPPORT: String? = "support"
+        val BANNERS_KEY_BROWSERS: String? = "browser"
+        val EMAIL: String? = "support@ninja11.in"
+        val PHONE_NUMBER: String? = "=+91"
         val GOOGLE_TEZ_PACKAGE_NAME = "com.google.android.apps.nbu.paisa.user"
         val PAYMENT_GOOGLEPAY_UPI = "jangrasachin091999-2@okicici"
-        val BASE_URL_MAIN  ="https://ninja11.in/"
-        val BASE_URL_API  ="https://api.ninja11.in/"
-        val WEBVIEW_FANTASY_POINTS  = BASE_URL_MAIN+"fantasy-points-system/index.html"
-        val WEBVIEW_FANTASY_HOW_TO_PLAY  =BASE_URL_MAIN+"how-to-play?request=mobile"
-        val WEBVIEW_TNC  =BASE_URL_MAIN+"terms-and-conditions?request=mobile"
-        val WEBVIEW_PRIVACY  =BASE_URL_MAIN+"privacy-policy?request=mobile"
-        val WEBVIEW_ABOUT_US  =BASE_URL_MAIN+"about-us?request=mobile"
-        val WEBVIEW_LEGALITY  =BASE_URL_MAIN+"legality?request=mobile"
+        val BASE_URL_MAIN = "https://ninja11.in/"
+        val BASE_URL_API = "https://app.ninja11.in/"
+        val WEBVIEW_FANTASY_POINTS = BASE_URL_MAIN + "fantasy-points-system/index.html"
+        val WEBVIEW_FANTASY_HOW_TO_PLAY = BASE_URL_MAIN + "how-to-play?request=mobile"
+        val WEBVIEW_TNC = BASE_URL_MAIN + "terms-and-conditions?request=mobile"
+        val WEBVIEW_PRIVACY = BASE_URL_MAIN + "privacy-policy?request=mobile"
+        val WEBVIEW_ABOUT_US = BASE_URL_MAIN + "about-us?request=mobile"
+        val WEBVIEW_LEGALITY = BASE_URL_MAIN + "legality?request=mobile"
         const val NOTIFICATION_ID_BIG_IMAGE = 101
-        val BILTY_APK_LINK: String = BASE_URL_API+"apk"
+        val BILTY_APK_LINK: String = BASE_URL_API + "apk"
         val WEB_TITLE_PRIVACY_POLICY: String = "Privacy Policy"
         val WEB_TITLE_TERMS_CONDITION: String = "Terms & Conditions"
         val WEB_TITLE_HOW_TO_PLAY: String = "How To Play"
@@ -46,7 +46,7 @@ class BindingUtils {
         val WEB_TITLE_FANTASY_POINTS: String = "Fantasy Point System"
         val WEB_TITLE_LEGALITY: String = "LEGALITY"
 
-        var currentTimeStamp : Long=0
+        var currentTimeStamp: Long = 0
 
         fun logD(tag: String, message: String) {
             if (BuildConfig.MLOG) {
@@ -55,19 +55,19 @@ class BindingUtils {
         }
 
         fun countDownStart(
-            starttimeStamp:Long,
+            starttimeStamp: Long,
             listeners: OnMatchTimerStarted
         ) {
-            if (starttimeStamp > currentTimeStamp && !isCountedObjectCreated){
-                isCountedObjectCreated  = true
+            if (starttimeStamp > currentTimeStamp && !isCountedObjectCreated) {
+                isCountedObjectCreated = true
                 //BindingUtils.logD("TimerLogs","Count Down timer Called")
-                timer = object: CountDownTimer(starttimeStamp, 1000) {
+                timer = object : CountDownTimer(starttimeStamp, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val itemLong = starttimeStamp
                         val date = Date(itemLong * 1000L)
                         //val date2 = Date(currentTimeStamp*1000L)
                         val date2 = Date()
-                        if (date2.before(date)){
+                        if (date2.before(date)) {
                             val l8 = date.time - date2.time
                             val l2 = l8 / 86400000L
                             java.lang.Long.signum(l2)
@@ -79,16 +79,16 @@ class BindingUtils {
                                 val l7 = (l5 - 60000L * l6) / 1000L
                                 //val customTextView2: CustomTextView = customTextView
                                 val stringBuilder = StringBuilder()
-                                if(l2!=0L) {
+                                if (l2 != 0L) {
                                     stringBuilder.append(l2)
                                     stringBuilder.append("d ")
                                 }
 
-                                if(l4!=0L) {
+                                if (l4 != 0L) {
                                     stringBuilder.append(l4)
                                     stringBuilder.append("h ")
                                 }
-                                if(l6!=0L) {
+                                if (l6 != 0L) {
                                     stringBuilder.append(l6)
                                     stringBuilder.append("m ")
                                 }
@@ -97,10 +97,10 @@ class BindingUtils {
                                 // upcomingMatchesAdapter.notifyItemChanged(viewType)
                                 listeners.onTicks(stringBuilder.toString())
                             } catch (exception: Exception) {
-                               // MyUtils.logd("timestamp",exception.message)
+                                // MyUtils.logd("timestamp",exception.message)
                                 exception.printStackTrace()
                             }
-                        }else {
+                        } else {
                             listeners.onTimeFinished()
                         }
 
@@ -112,28 +112,27 @@ class BindingUtils {
                     }
                 }
                 timer!!.start()
-            }else {
+            } else {
                 listeners.onTimeFinished()
                 isCountedObjectCreated = false
             }
 
         }
 
-        fun stopTimer(){
-            if(timer!=null) {
+        fun stopTimer() {
+            if (timer != null) {
                 isCountedObjectCreated = false
                 timer!!.cancel()
-                timer=null
+                timer = null
             }
         }
 
 
-
         fun countDownStartForAdaptors(
-            starttimeStamp:Long,
+            starttimeStamp: Long,
             listeners: OnMatchTimerStarted
         ) {
-            if (starttimeStamp > currentTimeStamp){
+            if (starttimeStamp > currentTimeStamp) {
                 //BindingUtils.logD("TimerLogs","Count Down timer Called Adaptors")
                 var timerAdapters = object : CountDownTimer(starttimeStamp, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
@@ -170,7 +169,7 @@ class BindingUtils {
                                 stringBuilder.append("s left")
                                 listeners.onTicks(stringBuilder.toString())
                             } catch (exception: Exception) {
-                               // MyUtils.logd("TimerLogs", exception.message)
+                                // MyUtils.logd("TimerLogs", exception.message)
                                 exception.printStackTrace()
                             }
                         } else {
@@ -184,7 +183,7 @@ class BindingUtils {
                     }
                 }
                 timerAdapters.start()
-            }else {
+            } else {
                 listeners.onTimeFinished()
             }
 

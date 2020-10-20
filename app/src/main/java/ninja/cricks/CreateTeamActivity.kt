@@ -42,7 +42,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-
 class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
 
@@ -64,7 +63,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         val SERIALIZABLE_MATCH_KEY: String = "matchObject"
         val SERIALIZABLE_CONTEST_KEY: String = "contest"
         val SERIALIZABLE_SELECTED_TEAMS: String = "selected_teams"
-        val SERIALIZABLE_KEY_PLAYERS:String = "playerslist"
+        val SERIALIZABLE_KEY_PLAYERS: String = "playerslist"
         val CREATE_TEAM_WICKET_KEEPER: String = "wk"
         val CREATE_TEAM_BATSMAN: String = "bat"
         val CREATE_TEAM_ALLROUNDER: String = "all"
@@ -97,27 +96,13 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         var WANT_BOWL: Int = 4
 
         var isSortBySelectionActive: Boolean? = false
-        var isSortBySelectionActiveDecending: Boolean?=false
+        var isSortBySelectionActiveDecending: Boolean? = false
 
         var isSortByPointsActive: Boolean? = false
         var isSortByPointsActiveDecending: Boolean? = false
 
         var isSortByCreditsActive: Boolean? = false
         var isSortByCreditsActiveDecending: Boolean? = false
-    }
-
-    override fun onStart() {
-        super.onStart()
-//        var infomodel = (application as SportsFightApplication).userInformations
-//        if(infomodel!=null) {
-//            BindingUtils.logFireBaseEvents(
-//                this,
-//                BindingUtils.FIREBASE_EVENT_ITEM_ID_CREATE_TEAM_ACTIVITY,
-//                infomodel!!.userId,
-//                infomodel.fullName,
-//                infomodel.userEmail
-//            )
-//        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -198,8 +183,6 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
             builder.setPositiveButton("OK") { dialogInterface, which ->
                 ressetPlayers()
                 initViewPager()
-
-
             }
             builder.setNegativeButton("Cancel") { dialogInterface, which ->
 
@@ -234,8 +217,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
     }
 
-
-    fun updatePlayersCountBar(count: Int) {
+    private fun updatePlayersCountBar(count: Int) {
         when (count) {
             0 -> {
                 mBinding!!.clearAllPlayer.isEnabled = false
@@ -271,7 +253,12 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
                 mBinding!!.playerSelected11.text = "11"
                 mBinding!!.playerSelected11.setBackgroundResource(R.drawable.rectangle_right_top_curve)
-                mBinding!!.playerSelected11.setTextColor(ContextCompat.getColor(this, R.color.black))
+                mBinding!!.playerSelected11.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.black
+                    )
+                )
             }
             1 -> {
                 mBinding!!.clearAllPlayer.isEnabled = true
@@ -313,11 +300,21 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
                 mBinding!!.playerSelected10.text = ""
                 mBinding!!.playerSelected10.setBackgroundResource(R.drawable.rectangle_no_curve)
-                mBinding!!.playerSelected10.setTextColor(ContextCompat.getColor(this, R.color.black))
+                mBinding!!.playerSelected10.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.black
+                    )
+                )
 
                 mBinding!!.playerSelected11.text = "11"
                 mBinding!!.playerSelected11.setBackgroundResource(R.drawable.rectangle_right_top_curve)
-                mBinding!!.playerSelected11.setTextColor(ContextCompat.getColor(this, R.color.black))
+                mBinding!!.playerSelected11.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.black
+                    )
+                )
             }
             2 -> {
                 mBinding!!.playerSelected1.text = "1"
@@ -358,11 +355,21 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
                 mBinding!!.playerSelected10.text = ""
                 mBinding!!.playerSelected10.setBackgroundResource(R.drawable.rectangle_no_curve)
-                mBinding!!.playerSelected10.setTextColor(ContextCompat.getColor(this, R.color.black))
+                mBinding!!.playerSelected10.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.black
+                    )
+                )
 
                 mBinding!!.playerSelected11.text = "11"
                 mBinding!!.playerSelected11.setBackgroundResource(R.drawable.rectangle_right_top_curve)
-                mBinding!!.playerSelected11.setTextColor(ContextCompat.getColor(this, R.color.black))
+                mBinding!!.playerSelected11.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.black
+                    )
+                )
 
             }
             3 -> {
@@ -404,11 +411,21 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
                 mBinding!!.playerSelected10.text = ""
                 mBinding!!.playerSelected10.setBackgroundResource(R.drawable.rectangle_no_curve)
-                mBinding!!.playerSelected10.setTextColor(ContextCompat.getColor(this, R.color.black))
+                mBinding!!.playerSelected10.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.black
+                    )
+                )
 
                 mBinding!!.playerSelected11.text = "11"
                 mBinding!!.playerSelected11.setBackgroundResource(R.drawable.rectangle_right_top_curve)
-                mBinding!!.playerSelected11.setTextColor(ContextCompat.getColor(this, R.color.black))
+                mBinding!!.playerSelected11.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.black
+                    )
+                )
             }
             4 -> {
                 mBinding!!.playerSelected1.text = "1"
@@ -449,11 +466,21 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
                 mBinding!!.playerSelected10.text = ""
                 mBinding!!.playerSelected10.setBackgroundResource(R.drawable.rectangle_no_curve)
-                mBinding!!.playerSelected10.setTextColor(ContextCompat.getColor(this, R.color.black))
+                mBinding!!.playerSelected10.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.black
+                    )
+                )
 
                 mBinding!!.playerSelected11.text = "11"
                 mBinding!!.playerSelected11.setBackgroundResource(R.drawable.rectangle_right_top_curve)
-                mBinding!!.playerSelected11.setTextColor(ContextCompat.getColor(this, R.color.black))
+                mBinding!!.playerSelected11.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.black
+                    )
+                )
 
             }
             5 -> {
@@ -495,11 +522,21 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
                 mBinding!!.playerSelected10.text = ""
                 mBinding!!.playerSelected10.setBackgroundResource(R.drawable.rectangle_no_curve)
-                mBinding!!.playerSelected10.setTextColor(ContextCompat.getColor(this, R.color.black))
+                mBinding!!.playerSelected10.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.black
+                    )
+                )
 
                 mBinding!!.playerSelected11.text = "11"
                 mBinding!!.playerSelected11.setBackgroundResource(R.drawable.rectangle_right_top_curve)
-                mBinding!!.playerSelected11.setTextColor(ContextCompat.getColor(this, R.color.black))
+                mBinding!!.playerSelected11.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.black
+                    )
+                )
             }
             6 -> {
                 mBinding!!.playerSelected1.text = "1"
@@ -540,11 +577,21 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
                 mBinding!!.playerSelected10.text = ""
                 mBinding!!.playerSelected10.setBackgroundResource(R.drawable.rectangle_no_curve)
-                mBinding!!.playerSelected10.setTextColor(ContextCompat.getColor(this, R.color.black))
+                mBinding!!.playerSelected10.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.black
+                    )
+                )
 
                 mBinding!!.playerSelected11.text = "11"
                 mBinding!!.playerSelected11.setBackgroundResource(R.drawable.rectangle_right_top_curve)
-                mBinding!!.playerSelected11.setTextColor(ContextCompat.getColor(this, R.color.black))
+                mBinding!!.playerSelected11.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.black
+                    )
+                )
             }
             7 -> {
                 mBinding!!.playerSelected1.text = "1"
@@ -585,11 +632,21 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
                 mBinding!!.playerSelected10.text = ""
                 mBinding!!.playerSelected10.setBackgroundResource(R.drawable.rectangle_no_curve)
-                mBinding!!.playerSelected10.setTextColor(ContextCompat.getColor(this, R.color.black))
+                mBinding!!.playerSelected10.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.black
+                    )
+                )
 
                 mBinding!!.playerSelected11.text = "11"
                 mBinding!!.playerSelected11.setBackgroundResource(R.drawable.rectangle_right_top_curve)
-                mBinding!!.playerSelected11.setTextColor(ContextCompat.getColor(this, R.color.black))
+                mBinding!!.playerSelected11.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.black
+                    )
+                )
 
             }
             8 -> {
@@ -631,11 +688,21 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
                 mBinding!!.playerSelected10.text = ""
                 mBinding!!.playerSelected10.setBackgroundResource(R.drawable.rectangle_no_curve)
-                mBinding!!.playerSelected10.setTextColor(ContextCompat.getColor(this, R.color.black))
+                mBinding!!.playerSelected10.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.black
+                    )
+                )
 
                 mBinding!!.playerSelected11.text = "11"
                 mBinding!!.playerSelected11.setBackgroundResource(R.drawable.rectangle_right_top_curve)
-                mBinding!!.playerSelected11.setTextColor(ContextCompat.getColor(this, R.color.black))
+                mBinding!!.playerSelected11.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.black
+                    )
+                )
             }
             9 -> {
                 mBinding!!.playerSelected1.text = "1"
@@ -676,11 +743,21 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
                 mBinding!!.playerSelected10.text = ""
                 mBinding!!.playerSelected10.setBackgroundResource(R.drawable.rectangle_no_curve)
-                mBinding!!.playerSelected10.setTextColor(ContextCompat.getColor(this, R.color.black))
+                mBinding!!.playerSelected10.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.black
+                    )
+                )
 
                 mBinding!!.playerSelected11.text = "11"
                 mBinding!!.playerSelected11.setBackgroundResource(R.drawable.rectangle_right_top_curve)
-                mBinding!!.playerSelected11.setTextColor(ContextCompat.getColor(this, R.color.black))
+                mBinding!!.playerSelected11.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.black
+                    )
+                )
             }
             10 -> {
                 mBinding!!.playerSelected1.text = "1"
@@ -721,11 +798,21 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
                 mBinding!!.playerSelected10.text = "10"
                 mBinding!!.playerSelected10.setBackgroundResource(R.drawable.rectangle_no_curve_filled)
-                mBinding!!.playerSelected10.setTextColor(ContextCompat.getColor(this, R.color.white))
+                mBinding!!.playerSelected10.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.white
+                    )
+                )
 
                 mBinding!!.playerSelected11.text = "11"
                 mBinding!!.playerSelected11.setBackgroundResource(R.drawable.rectangle_right_top_curve)
-                mBinding!!.playerSelected11.setTextColor(ContextCompat.getColor(this, R.color.black))
+                mBinding!!.playerSelected11.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.black
+                    )
+                )
 
             }
             11 -> {
@@ -767,11 +854,21 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
                 mBinding!!.playerSelected10.text = "10"
                 mBinding!!.playerSelected10.setBackgroundResource(R.drawable.rectangle_no_curve_filled)
-                mBinding!!.playerSelected10.setTextColor(ContextCompat.getColor(this, R.color.white))
+                mBinding!!.playerSelected10.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.white
+                    )
+                )
 
                 mBinding!!.playerSelected11.text = "11"
                 mBinding!!.playerSelected11.setBackgroundResource(R.drawable.rectangle_right_top_curve_filled)
-                mBinding!!.playerSelected11.setTextColor(ContextCompat.getColor(this, R.color.white))
+                mBinding!!.playerSelected11.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.white
+                    )
+                )
             }
         }
     }
@@ -838,13 +935,11 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
     private fun ressetPlayers() {
         isSortBySelectionActive = false
-        isSortBySelectionActiveDecending=false
+        isSortBySelectionActiveDecending = false
         isSortByPointsActive = false
-        isSortByPointsActiveDecending= false
-        isSortByCreditsActive= false
-        isSortByCreditsActiveDecending= false
-
-
+        isSortByPointsActiveDecending = false
+        isSortByCreditsActive = false
+        isSortByCreditsActiveDecending = false
 
         totalPlayers = 0
         TEAMA = 0
@@ -861,19 +956,16 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
     private fun showLoading() {
         mBinding!!.relativeViewpager.visibility = View.GONE
         mBinding!!.progressBar.visibility = View.VISIBLE
-
     }
 
     private fun hideLoading() {
         mBinding!!.relativeViewpager.visibility = View.VISIBLE
         mBinding!!.progressBar.visibility = View.GONE
-
     }
-
 
     fun getAllPlayers() {
 
-        var models = RequestModel()
+        val models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
         models.token = MyPreferences.getToken(this)!!
         models.match_id = "" + matchObject!!.matchId
@@ -886,7 +978,6 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     MyUtils.showToast(this@CreateTeamActivity, t!!.localizedMessage)
-
                 }
 
                 override fun onResponse(
@@ -912,8 +1003,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
     private fun initViewPager() {
         setupViewPager(mBinding!!.viewpager)
         mBinding!!.tabs.setupWithViewPager(mBinding!!.viewpager)
-
-        mBinding!!.viewpager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
+        mBinding!!.viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {
 
             }
@@ -929,46 +1019,37 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
             override fun onPageSelected(position: Int) {
 
                 val fragment = viewPagerAdapter.getItem(position)
-                if(fragment!=null){
-                    when(position){
-                        0->{
-                            var objectsWicketKeeper = fragment as WicketKeepers
-                            if(objectsWicketKeeper!=null) {
+                if (fragment != null) {
+                    when (position) {
+                        0 -> {
+                            val objectsWicketKeeper = fragment as WicketKeepers
+                            if (objectsWicketKeeper != null) {
                                 objectsWicketKeeper.setFilterIfActive()
                             }
                         }
-                        1->{
-                            var objectsBatsMan = fragment as Batsman
-                            if(objectsBatsMan!=null) {
+                        1 -> {
+                            val objectsBatsMan = fragment as Batsman
+                            if (objectsBatsMan != null) {
                                 objectsBatsMan.setFilterIfActive()
                             }
                         }
-                        2->{
-                            var objectsAllRounder = fragment as AllRounder
-                            if(objectsAllRounder!=null) {
+                        2 -> {
+                            val objectsAllRounder = fragment as AllRounder
+                            if (objectsAllRounder != null) {
                                 objectsAllRounder.setFilterIfActive()
                             }
                         }
-                        3->{
+                        3 -> {
                             var objectsbowler = fragment as Bowlers
-                            if(objectsbowler!=null) {
+                            if (objectsbowler != null) {
                                 objectsbowler.setFilterIfActive()
                             }
                         }
                     }
-
-
-
-
-
-
-
                 }
             }
-
         })
     }
-
 
     private fun setupViewPager(
         viewPager: ViewPager
@@ -983,19 +1064,24 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
             titleTabs = getString(R.string.createteam_type_wk)
         }
         var bundleWicketKeepers = Bundle()
-        bundleWicketKeepers.putSerializable(SERIALIZABLE_KEY_PLAYERS,wkList)
-        bundleWicketKeepers.putSerializable(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT,matchObject)
+        bundleWicketKeepers.putSerializable(SERIALIZABLE_KEY_PLAYERS, wkList)
+        bundleWicketKeepers.putSerializable(
+            ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT,
+            matchObject
+        )
 
         viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
         viewPagerAdapter.addFragment(WicketKeepers.newInstance(bundleWicketKeepers), titleTabs)
 
 
-
         var batsManList = parseEditTeamModel(playersList!!.batsmen!!, 2)
 
         var bundleBatsMatchesModel = Bundle()
-        bundleBatsMatchesModel.putSerializable(SERIALIZABLE_KEY_PLAYERS,batsManList)
-        bundleBatsMatchesModel.putSerializable(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT,matchObject)
+        bundleBatsMatchesModel.putSerializable(SERIALIZABLE_KEY_PLAYERS, batsManList)
+        bundleBatsMatchesModel.putSerializable(
+            ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT,
+            matchObject
+        )
 
         if (isEditMode || isCopyTeam) {
             titleTabs = String.format("BAT(%d)", myTeamModel!!.batsmen!!.size)
@@ -1014,8 +1100,8 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
             )
         }
         var bundleAllRounder = Bundle()
-        bundleAllRounder.putSerializable(SERIALIZABLE_KEY_PLAYERS,allList)
-        bundleAllRounder.putSerializable(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT,matchObject)
+        bundleAllRounder.putSerializable(SERIALIZABLE_KEY_PLAYERS, allList)
+        bundleAllRounder.putSerializable(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT, matchObject)
         viewPagerAdapter.addFragment(AllRounder.newInstance(bundleAllRounder), titleTabs)
 
         var bowlerList = parseEditTeamModel(playersList!!.bowlers!!, 4)
@@ -1028,8 +1114,8 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
             )
         }
         var bundleBowlers = Bundle()
-        bundleBowlers.putSerializable(SERIALIZABLE_KEY_PLAYERS,bowlerList)
-        bundleBowlers.putSerializable(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT,matchObject)
+        bundleBowlers.putSerializable(SERIALIZABLE_KEY_PLAYERS, bowlerList)
+        bundleBowlers.putSerializable(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT, matchObject)
         viewPagerAdapter.addFragment(Bowlers.newInstance(bundleBowlers), titleTabs)
 
         viewPager.adapter = viewPagerAdapter
@@ -1276,7 +1362,6 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         mBinding!!.teambCounts.text = String.format("%d", TEAMB)
     }
 
-
     override fun removeTeamPlayers(objects: PlayersInfoModel) {
         //if(objects.teamId==matchObject!!.teamAInfo!!.teamId){
         if (objects.teamId == teamAId) {
@@ -1291,88 +1376,72 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
     fun isSpotAvailable(wantPlayerFrom: Int): Boolean {
         var remainingSpots = MAX_PLAYERS_CRICKET - totalPlayers
-        if (remainingSpots <= (COUNT_BATS_MAN + COUNT_BOWLER + COUNT_ALL_ROUNDER+ COUNT_WICKET_KEEPER)) {
+        if (remainingSpots <= (COUNT_BATS_MAN + COUNT_BOWLER + COUNT_ALL_ROUNDER + COUNT_WICKET_KEEPER)) {
             var totalWKRemaining = MAX_WICKET_KEEPER[0] - COUNT_WICKET_KEEPER
             var totalBatsRemaining = MAX_BATSMAN[0] - COUNT_BATS_MAN
             var totalAllRounderRemaining = MAX_ALL_ROUNDER[0] - COUNT_ALL_ROUNDER
             var totalBowlerRemainig = MAX_BOWLER[0] - COUNT_BOWLER
 
-            if(WANT_WK==wantPlayerFrom){
+            if (WANT_WK == wantPlayerFrom) {
                 var countnow = 0
 //                if(totalWKRemaining>0){
 //                    countnow +=totalWKRemaining
 //                }
-                if(totalBatsRemaining>0){
-                    countnow +=totalBatsRemaining
+                if (totalBatsRemaining > 0) {
+                    countnow += totalBatsRemaining
                 }
-                if(totalAllRounderRemaining>0){
-                    countnow +=totalAllRounderRemaining
+                if (totalAllRounderRemaining > 0) {
+                    countnow += totalAllRounderRemaining
                 }
-                if(totalBowlerRemainig>0){
-                    countnow +=totalBowlerRemainig
+                if (totalBowlerRemainig > 0) {
+                    countnow += totalBowlerRemainig
                 }
-                if(remainingSpots > countnow ){
-                    return false
-                }else {
-                    return true
-                }
-            }else if(WANT_BAT==wantPlayerFrom){
+                return remainingSpots <= countnow
+            } else if (WANT_BAT == wantPlayerFrom) {
                 var countnow = 0
-                if(totalWKRemaining>0){
-                    countnow +=totalWKRemaining
+                if (totalWKRemaining > 0) {
+                    countnow += totalWKRemaining
                 }
 //                if(totalBatsRemaining>0){
 //                    countnow +=totalBatsRemaining
 //                }
-                if(totalAllRounderRemaining>0){
-                    countnow +=totalAllRounderRemaining
+                if (totalAllRounderRemaining > 0) {
+                    countnow += totalAllRounderRemaining
                 }
-                if(totalBowlerRemainig>0){
-                    countnow +=totalBowlerRemainig
+                if (totalBowlerRemainig > 0) {
+                    countnow += totalBowlerRemainig
                 }
-                if(remainingSpots > countnow ){
-                    return false
-                }else {
-                    return true
-                }
-            }else if(WANT_ALL==wantPlayerFrom){
+                return remainingSpots <= countnow
+            } else if (WANT_ALL == wantPlayerFrom) {
                 var countnow = 0
-                if(totalWKRemaining>0){
-                    countnow +=totalWKRemaining
+                if (totalWKRemaining > 0) {
+                    countnow += totalWKRemaining
                 }
-                if(totalBatsRemaining>0){
-                    countnow +=totalBatsRemaining
+                if (totalBatsRemaining > 0) {
+                    countnow += totalBatsRemaining
                 }
 //                if(totalAllRounderRemaining>0){
 //                    countnow +=totalAllRounderRemaining
 //                }
-                if(totalBowlerRemainig>0){
-                    countnow +=totalBowlerRemainig
+                if (totalBowlerRemainig > 0) {
+                    countnow += totalBowlerRemainig
                 }
-                if(remainingSpots > countnow ){
-                    return false
-                }else {
-                    return true
-                }
-            }else if(WANT_BOWL==wantPlayerFrom){
+                return remainingSpots <= countnow
+            } else if (WANT_BOWL == wantPlayerFrom) {
                 var countnow = 0
-                if(totalWKRemaining>0){
-                    countnow +=totalWKRemaining
+                if (totalWKRemaining > 0) {
+                    countnow += totalWKRemaining
                 }
-                if(totalBatsRemaining>0){
-                    countnow +=totalBatsRemaining
+                if (totalBatsRemaining > 0) {
+                    countnow += totalBatsRemaining
                 }
-                if(totalAllRounderRemaining>0){
-                    countnow +=totalAllRounderRemaining
+                if (totalAllRounderRemaining > 0) {
+                    countnow += totalAllRounderRemaining
                 }
 //                  if(totalBowlerRemainig>0){
 //                    countnow +=totalBowlerRemainig
 //                  }
-                if(remainingSpots > countnow ){
-                    return false
-                }else {
-                    return true
-                }
+                return remainingSpots <= countnow
             }
         }
         return false
@@ -1382,36 +1451,22 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         isSortBySelectionActive = true
         isSortByPointsActive = false
         isSortByCreditsActive = false
-        if (isSortBySelectionActiveDecending!!) {
-            isSortBySelectionActiveDecending = false
-        } else {
-            isSortBySelectionActiveDecending = true
-        }
+        isSortBySelectionActiveDecending = !isSortBySelectionActiveDecending!!
     }
 
     fun sortByPoints() {
         isSortBySelectionActive = false
         isSortByPointsActive = true
         isSortByCreditsActive = false
-        if (isSortByPointsActiveDecending!!) {
-            isSortByPointsActiveDecending = false
-        } else {
-            isSortByPointsActiveDecending = true
-        }
+        isSortByPointsActiveDecending = !isSortByPointsActiveDecending!!
     }
 
     fun sortByCredits() {
         isSortBySelectionActive = false
         isSortByPointsActive = false
         isSortByCreditsActive = true
-        if (isSortByCreditsActiveDecending!!) {
-            isSortByCreditsActiveDecending = false
-        } else {
-            isSortByCreditsActiveDecending = true
-        }
-
+        isSortByCreditsActiveDecending = !isSortByCreditsActiveDecending!!
     }
-
 
     internal inner class ViewPagerAdapter(manager: FragmentManager) :
         FragmentPagerAdapter(manager) {
@@ -1437,4 +1492,3 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
     }
 
 }
-

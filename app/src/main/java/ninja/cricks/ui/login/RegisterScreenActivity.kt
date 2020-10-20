@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -15,6 +14,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.deliverdas.customers.utils.HardwareInfoManager
 import ninja.cricks.*
+import ninja.cricks.databinding.ActivityRegisterBinding
 import ninja.cricks.models.ResponseModel
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.RequestModel
@@ -27,20 +27,18 @@ import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import ninja.cricks.R
-import ninja.cricks.databinding.ActivityRegisterBinding
 
 class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
 
-    private var photoUrl: String=""
-    private var isActivityRequiredResult: Boolean?=false
-    var name =""
+    private var photoUrl: String = ""
+    private var isActivityRequiredResult: Boolean? = false
+    var name = ""
     var binding: ActivityRegisterBinding? = null
     var viewmodel: LoginViewModel? = null
 
-    companion object{
+    companion object {
         var ISACTIVITYRESULT = "activityresult"
-        val REQUESTCODE_LOGIN : Int = 1005
+        val REQUESTCODE_LOGIN: Int = 1005
     }
 
 
@@ -61,7 +59,7 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
 
-        if(intent.hasExtra(ISACTIVITYRESULT)) {
+        if (intent.hasExtra(ISACTIVITYRESULT)) {
             isActivityRequiredResult =
                 intent.getBooleanExtra(RegisterScreenActivity.ISACTIVITYRESULT, false)
         }
@@ -80,36 +78,23 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
 
     private fun bindUI() {
         binding!!.inputRefferal.visibility = View.VISIBLE
-        if(!TextUtils.isEmpty(userInfo!!.userEmail)){
+        if (!TextUtils.isEmpty(userInfo!!.userEmail)) {
             binding!!.editEmail.setText(userInfo!!.userEmail)
             binding!!.editEmail.isEnabled = false
             binding!!.editEmail.isFocusable = false
         }
-        if(!TextUtils.isEmpty(userInfo!!.mobileNumber)){
+        if (!TextUtils.isEmpty(userInfo!!.mobileNumber)) {
             binding!!.editMobile.setText(userInfo!!.mobileNumber)
         }
 
-        if(!TextUtils.isEmpty(userInfo!!.fullName)){
+        if (!TextUtils.isEmpty(userInfo!!.fullName)) {
             binding!!.editName.setText(userInfo!!.fullName)
         }
 
     }
 
-    override fun onStart() {
-        super.onStart()
-//        var infomodel = (application as SportsFightApplication).userInformations
-//        if(infomodel!=null) {
-//            BindingUtils.logFireBaseEvents(
-//                this,
-//                BindingUtils.FIREBASE_EVENT_ITEM_ID_REGISTER_ACTIVITY,
-//                infomodel!!.userId,
-//                infomodel.fullName,
-//                infomodel.userEmail
-//            )
-//        }
-    }
     private fun initClicks() {
-        binding!!.txtTnc.setOnClickListener(object:View.OnClickListener{
+        binding!!.txtTnc.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
 
                 val intent = Intent(this@RegisterScreenActivity, WebActivity::class.java)
@@ -128,29 +113,29 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
         binding!!.registerButton.setOnClickListener(View.OnClickListener {
 
             var referralCode = binding!!.editInvitecode.text.toString()
-            var teamName = binding!!.editTeamName.text.toString()
-            var editName = binding!!.editName.text.toString()
-            var mobileNumber = binding!!.editMobile.text.toString()
-            var emailAddress = binding!!.editEmail.text.toString()
+            val teamName = binding!!.editTeamName.text.toString()
+            val editName = binding!!.editName.text.toString()
+            val mobileNumber = binding!!.editMobile.text.toString()
+            val emailAddress = binding!!.editEmail.text.toString()
 
-            if(TextUtils.isEmpty(teamName)){
-                MyUtils.showToast(this@RegisterScreenActivity,"Enter Your Team Name(Nick Name)")
+            if (TextUtils.isEmpty(teamName)) {
+                MyUtils.showToast(this@RegisterScreenActivity, "Enter Your Team Name(Nick Name)")
                 return@OnClickListener
-            }else if(TextUtils.isEmpty(editName)){
-                MyUtils.showToast(this@RegisterScreenActivity,"Please enter your real name")
+            } else if (TextUtils.isEmpty(editName)) {
+                MyUtils.showToast(this@RegisterScreenActivity, "Please enter your real name")
                 return@OnClickListener
-            }else if(TextUtils.isEmpty(mobileNumber)){
-                MyUtils.showToast(this@RegisterScreenActivity,"Please enter valid mobile number")
+            } else if (TextUtils.isEmpty(mobileNumber)) {
+                MyUtils.showToast(this@RegisterScreenActivity, "Please enter valid mobile number")
                 return@OnClickListener
-            }else if(mobileNumber.length<10){
-                MyUtils.showToast(this@RegisterScreenActivity,"Please enter valid mobile number")
+            } else if (mobileNumber.length < 10) {
+                MyUtils.showToast(this@RegisterScreenActivity, "Please enter valid mobile number")
                 return@OnClickListener
-            }else if(TextUtils.isEmpty(emailAddress) || !MyUtils.isEmailValid(emailAddress)){
-                MyUtils.showToast(this@RegisterScreenActivity,"Please enter valid email address")
+            } else if (TextUtils.isEmpty(emailAddress) || !MyUtils.isEmailValid(emailAddress)) {
+                MyUtils.showToast(this@RegisterScreenActivity, "Please enter valid email address")
                 return@OnClickListener
             }
             name = editName
-            register(mobileNumber,emailAddress)
+            register(mobileNumber, emailAddress)
         })
     }
 
@@ -177,11 +162,11 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
         request.image_url = photoUrl
         request.email = email!!
         request.mobile_number = mobile!!
-        if (intent.hasExtra(OtpVerifyActivity.EXTRA_KEY_PROVIDER_ID)){
+        if (intent.hasExtra(OtpVerifyActivity.EXTRA_KEY_PROVIDER_ID)) {
             request.provider_id = intent.getStringExtra(OtpVerifyActivity.EXTRA_KEY_PROVIDER_ID)
         }
-        request.referral_code =binding!!.editInvitecode.text.toString()
-        request.team_name =binding!!.editTeamName.text.toString()
+        request.referral_code = binding!!.editInvitecode.text.toString()
+        request.team_name = binding!!.editTeamName.text.toString()
         request.device_id = notificationToken
         print(notificationToken)
         request.deviceDetails = HardwareInfoManager(this).collectData()
@@ -190,17 +175,17 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
     }
 
     override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
-        if(!isFinishing) {
+        if (!isFinishing) {
             customeProgressDialog.dismiss()
 
-            var responseb = response!!.body()
+            val responseb = response!!.body()
             if (responseb != null) {
                 if (responseb.status) {
-                    var infoModels = responseb.infomodel
+                    val infoModels = responseb.infomodel
                     if (infoModels != null) {
                         if (TextUtils.isEmpty(responseb.infomodel!!.profileImage)) {
-                           //MyPreferences.setProfilePicture(this, photoUrl)
-                            responseb!!.infomodel!!.profileImage = photoUrl
+                            //MyPreferences.setProfilePicture(this, photoUrl)
+                            responseb.infomodel!!.profileImage = photoUrl
                         }
                         MyPreferences.setOtpAuthRequired(this, responseb.isOTPRequired)
                         MyPreferences.setToken(this, responseb.token)
@@ -210,44 +195,58 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
                         MyPreferences.setGooglePayId(this, responseb.gpayid)
 
 
-                        (applicationContext as SportsFightApplication).saveUserInformations(responseb.infomodel)
-                        if (TextUtils.isEmpty(infoModels.mobileNumber) || TextUtils.isEmpty(infoModels.userEmail) || TextUtils.isEmpty(
+                        (applicationContext as SportsFightApplication).saveUserInformations(
+                            responseb.infomodel
+                        )
+                        if (TextUtils.isEmpty(infoModels.mobileNumber) || TextUtils.isEmpty(
+                                infoModels.userEmail
+                            ) || TextUtils.isEmpty(
                                 infoModels.fullName
                             )
                         ) {
                             val intent =
-                                Intent(this@RegisterScreenActivity, RegisterScreenActivity::class.java)
+                                Intent(
+                                    this@RegisterScreenActivity,
+                                    RegisterScreenActivity::class.java
+                                )
                             startActivity(intent)
                         } else
                             if (infoModels.isOtpVerified) {
                                 MyPreferences.setLoginStatus(this@RegisterScreenActivity, true)
-                                var intent = Intent(this@RegisterScreenActivity, MainActivity::class.java)
-                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                val intent =
+                                    Intent(this@RegisterScreenActivity, MainActivity::class.java)
+                                intent.flags =
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 setResult(Activity.RESULT_OK)
                                 startActivity(intent)
                                 finish()
                             } else {
-                                var intent = Intent(this, OtpVerifyActivity::class.java)
-                                startActivityForResult(intent, RegisterScreenActivity.REQUESTCODE_LOGIN)
+                                val intent = Intent(this, OtpVerifyActivity::class.java)
+                                startActivityForResult(
+                                    intent,
+                                    RegisterScreenActivity.REQUESTCODE_LOGIN
+                                )
                             }
                     } else {
                         MyUtils.showToast(this@RegisterScreenActivity, responseb.message)
                     }
-                }else {
+                } else {
                     MyUtils.showToast(this@RegisterScreenActivity, responseb.message)
                 }
-
             } else {
-                MyUtils.showToast(this@RegisterScreenActivity, getString(R.string.warning_somethingwentwront))
+                MyUtils.showToast(
+                    this@RegisterScreenActivity,
+                    getString(R.string.warning_somethingwentwront)
+                )
             }
         }
-
     }
 
     override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
         customeProgressDialog.dismiss()
-        Toast.makeText(this
-            , "Warning , ${t?.message}", Toast.LENGTH_LONG).show()
+        Toast.makeText(
+            this, "Warning , ${t?.message}", Toast.LENGTH_LONG
+        ).show()
 
 
     }

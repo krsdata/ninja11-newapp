@@ -82,12 +82,12 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
         mBinding!!.allGameViewRecycler.layoutManager = linearLayoutManager
 
         var upcomingmatchlist =
-            (activity!!.applicationContext as SportsFightApplication).getUpcomingMatches
+            (requireActivity().applicationContext as SportsFightApplication).getUpcomingMatches
         if(upcomingmatchlist!=null && upcomingmatchlist.size>0){
             allmatchesArrayList.clear()
             allmatchesArrayList.addAll(upcomingmatchlist)
         }
-        adapter = MatchesAdapter(activity!!, allmatchesArrayList)
+        adapter = MatchesAdapter(requireActivity(), allmatchesArrayList)
         mBinding!!.allGameViewRecycler.adapter = adapter
         getAllMatches()
 

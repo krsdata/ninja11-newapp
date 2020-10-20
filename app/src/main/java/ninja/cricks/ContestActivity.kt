@@ -33,34 +33,35 @@ import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.collections.ArrayList
 
 
-class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents{
+class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents {
 
     //private var isMatchLive: Boolean = false
-    var matchObject : UpcomingMatchesModel?=null
-    var isTimeUp :Boolean =false
-    var joinedTeamList: java.util.ArrayList<MyTeamModels>?=null
-    var contestObjects: ArrayList<ContestModelLists>?=null
+    var matchObject: UpcomingMatchesModel? = null
+    var isTimeUp: Boolean = false
+    var joinedTeamList: java.util.ArrayList<MyTeamModels>? = null
+    var contestObjects: ArrayList<ContestModelLists>? = null
     private var mBinding: ActivityContestBinding? = null
-    companion object{
+
+    companion object {
         val SERIALIZABLE_KEY_UPCOMING_MATCHES: String = "contest"
         val SERIALIZABLE_KEY_JOINED_CONTEST: String = "joinedcontest"
         val SERIALIZABLE_KEY_MATCH_OBJECT: String = "matchobject"
         val SERIALIZABLE_KEY_CONTEST_OBJECT: String = "contestmodel"
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this,R.layout.activity_contest)
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_contest)
 
-        if(intent.hasExtra(SERIALIZABLE_KEY_UPCOMING_MATCHES)) {
-            matchObject = intent.getSerializableExtra(SERIALIZABLE_KEY_UPCOMING_MATCHES) as UpcomingMatchesModel
+        if (intent.hasExtra(SERIALIZABLE_KEY_UPCOMING_MATCHES)) {
+            matchObject =
+                intent.getSerializableExtra(SERIALIZABLE_KEY_UPCOMING_MATCHES) as UpcomingMatchesModel
         }
-        if(intent.hasExtra(SERIALIZABLE_KEY_JOINED_CONTEST)) {
-            var joinedMatchObject = intent.getSerializableExtra(SERIALIZABLE_KEY_JOINED_CONTEST) as JoinedMatchModel
+        if (intent.hasExtra(SERIALIZABLE_KEY_JOINED_CONTEST)) {
+            var joinedMatchObject =
+                intent.getSerializableExtra(SERIALIZABLE_KEY_JOINED_CONTEST) as JoinedMatchModel
             matchObject = UpcomingMatchesModel()
             matchObject!!.teamAInfo = joinedMatchObject.teamAInfo
             matchObject!!.teamBInfo = joinedMatchObject.teamBInfo
@@ -71,7 +72,7 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
             matchObject!!.status = joinedMatchObject.status
             matchObject!!.statusString = joinedMatchObject.statusString
         }
-        if(matchObject!=null) {
+        if (matchObject != null) {
             initViewUpcomingMatches()
         }
 
@@ -85,34 +86,30 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
         })
         setupViewPager(mBinding!!.viewpagerContest)
         mBinding!!.tabs.setupWithViewPager(mBinding!!.viewpagerContest)
-
-
     }
-    private fun initViewUpcomingMatches() {
 
+    private fun initViewUpcomingMatches() {
         mBinding!!.teamsa.text = matchObject!!.teamAInfo!!.teamShortName
         mBinding!!.teamsb.text = matchObject!!.teamBInfo!!.teamShortName
-
     }
 
     override fun onResume() {
         super.onResume()
-        if(matchObject!!.status==BindingUtils.MATCH_STATUS_UPCOMING) {
+        if (matchObject!!.status == BindingUtils.MATCH_STATUS_UPCOMING) {
             pauseCountDown()
             startCountDown()
-        }else {
+        } else {
             updateTimerHeader()
         }
     }
 
     private fun startCountDown() {
-        BindingUtils.logD("TimerLogs","initViewUpcomingMatches() called in ContestActivity")
+        BindingUtils.logD("TimerLogs", "initViewUpcomingMatches() called in ContestActivity")
         //matchObject!!.timestampStart = 1591371412 + 300
-        BindingUtils.countDownStart(matchObject!!.timestampStart,object :OnMatchTimerStarted{
-
+        BindingUtils.countDownStart(matchObject!!.timestampStart, object : OnMatchTimerStarted {
             override fun onTimeFinished() {
-                if(!isTimeUp) {
-                    isTimeUp =true
+                if (!isTimeUp) {
+                    isTimeUp = true
                     updateTimerHeader()
                     if (matchObject!!.status.equals(BindingUtils.MATCH_STATUS_UPCOMING)) {
                         showMatchTimeUpDialog()
@@ -120,11 +117,11 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
                 }
             }
 
-            override fun onTicks(time:String) {
+            override fun onTicks(time: String) {
                 mBinding!!.matchTimer.text = time
                 mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.red))
-                mBinding!!.watchTimerImg.visibility =View.VISIBLE
-                BindingUtils.logD("TimerLogs","ContestScreen: "+time)
+                mBinding!!.watchTimerImg.visibility = View.VISIBLE
+                BindingUtils.logD("TimerLogs", "ContestScreen: " + time)
             }
         })
     }
@@ -132,10 +129,10 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
     private fun updateTimerHeader() {
         mBinding!!.matchTimer.text = matchObject!!.statusString.toUpperCase()
         mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.green))
-        mBinding!!.watchTimerImg.visibility =View.GONE
+        mBinding!!.watchTimerImg.visibility = View.GONE
     }
 
-    fun pauseCountDown(){
+    fun pauseCountDown() {
         BindingUtils.stopTimer()
     }
 
@@ -144,7 +141,7 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
         pauseCountDown()
     }
 
-    fun changeTabsPositions(postion:Int){
+    fun changeTabsPositions(postion: Int) {
         mBinding!!.viewpagerContest.currentItem = postion
     }
 
@@ -157,8 +154,8 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
 //            getCon
 //        }
         mBinding!!.viewpagerContest.currentItem = 0
-       // mBinding!!.viewpagerContest.get
-       // getAllContest()
+        // mBinding!!.viewpagerContest.get
+        // getAllContest()
     }
 
     override fun onBitmapSelected(bitmap: Bitmap) {
@@ -176,27 +173,33 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
 //        this.collapseMenu = menu
         return true
     }
+
     private fun setupViewPager(viewPager: ViewPager) {
-        var bundle = Bundle()
-        bundle.putSerializable(SERIALIZABLE_KEY_MATCH_OBJECT,matchObject)
+        val bundle = Bundle()
+        bundle.putSerializable(SERIALIZABLE_KEY_MATCH_OBJECT, matchObject)
         val adapter = ViewPagerAdapter(supportFragmentManager)
-        if(matchObject!!.status==BindingUtils.MATCH_STATUS_UPCOMING) {
+        if (matchObject!!.status == BindingUtils.MATCH_STATUS_UPCOMING) {
             adapter.addFragment(
                 ContestFragment.newInstance(bundle), getString(
                     R.string.contest_type_contests
                 )
             )
         }
-        adapter.addFragment(MyContestFragment.newInstance(bundle), getString(
-            R.string.contest_type_mycontest
-        ))
-        adapter.addFragment(MyTeamFragment.newInstance(bundle), getString(
-            R.string.contest_type_myteam
-        ))
+        adapter.addFragment(
+            MyContestFragment.newInstance(bundle), getString(
+                R.string.contest_type_mycontest
+            )
+        )
+        adapter.addFragment(
+            MyTeamFragment.newInstance(bundle), getString(
+                R.string.contest_type_myteam
+            )
+        )
         viewPager.adapter = adapter
     }
 
-    internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
+    internal inner class ViewPagerAdapter(manager: FragmentManager) :
+        FragmentPagerAdapter(manager) {
         private val mFragmentList = ArrayList<Fragment>()
         private val mFragmentTitleList = ArrayList<String>()
 
@@ -220,31 +223,35 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
 
     override fun onMyContest(contestObjects: ArrayList<ContestModelLists>) {
         this.contestObjects = contestObjects
-        if(matchObject!!.status==BindingUtils.MATCH_STATUS_UPCOMING) {
-            mBinding!!.tabs.getTabAt(1)!!.text = String.format("My Contest(%d)", contestObjects.size)
-        }else {
-            mBinding!!.tabs.getTabAt(0)!!.text = String.format("My Contest(%d)", contestObjects.size)
+        if (matchObject!!.status == BindingUtils.MATCH_STATUS_UPCOMING) {
+            mBinding!!.tabs.getTabAt(1)!!.text =
+                String.format("My Contest(%d)", contestObjects.size)
+        } else {
+            mBinding!!.tabs.getTabAt(0)!!.text =
+                String.format("My Contest(%d)", contestObjects.size)
         }
     }
 
     override fun onMyTeam(objects: ArrayList<MyTeamModels>) {
-        this.joinedTeamList =objects
-        if(matchObject!!.status==BindingUtils.MATCH_STATUS_UPCOMING) {
-            mBinding!!.tabs.getTabAt(2)!!.text = String.format("MyTeam(%d)", this.joinedTeamList!!.size)
-        }else {
-            mBinding!!.tabs.getTabAt(1)!!.text = String.format("MyTeam(%d)", this.joinedTeamList!!.size)
+        this.joinedTeamList = objects
+        if (matchObject!!.status == BindingUtils.MATCH_STATUS_UPCOMING) {
+            mBinding!!.tabs.getTabAt(2)!!.text =
+                String.format("MyTeam(%d)", this.joinedTeamList!!.size)
+        } else {
+            mBinding!!.tabs.getTabAt(1)!!.text =
+                String.format("MyTeam(%d)", this.joinedTeamList!!.size)
         }
     }
 
-    override fun onContestJoinning(objects: ContestModelLists,position: Int) {
+    override fun onContestJoinning(objects: ContestModelLists, position: Int) {
         customeProgressDialog.show()
         var models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
-      //  models.token =MyPreferences.getToken(this)!!
-        models.match_id =""+matchObject!!.matchId
-        models.contest_id =""+ objects.id
-        if(!MyUtils.isConnectedWithInternet(this)) {
-            MyUtils.showToast(this,"No Internet connection found")
+        //  models.token =MyPreferences.getToken(this)!!
+        models.match_id = "" + matchObject!!.matchId
+        models.contest_id = "" + objects.id
+        if (!MyUtils.isConnectedWithInternet(this)) {
+            MyUtils.showToast(this, "No Internet connection found")
             return
         }
         WebServiceClient(this).client.create(IApiMethod::class.java).joinNewContestStatus(models)
@@ -259,33 +266,40 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
                 ) {
                     customeProgressDialog.dismiss()
                     var res = response!!.body()
-                    if(res!=null) {
-                        if(res.actionForTeam==1){
-                            val intent = Intent(this@ContestActivity, CreateTeamActivity::class.java)
+                    if (res != null) {
+                        if (res.actionForTeam == 1) {
+                            val intent =
+                                Intent(this@ContestActivity, CreateTeamActivity::class.java)
                             intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
-                            startActivityForResult(intent, CreateTeamActivity.CREATETEAM_REQUESTCODE)
-                        }else if(res.actionForTeam==2){
-                            val intent = Intent(this@ContestActivity, SelectTeamActivity::class.java)
+                            startActivityForResult(
+                                intent,
+                                CreateTeamActivity.CREATETEAM_REQUESTCODE
+                            )
+                        } else if (res.actionForTeam == 2) {
+                            val intent =
+                                Intent(this@ContestActivity, SelectTeamActivity::class.java)
                             intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
                             intent.putExtra(CreateTeamActivity.SERIALIZABLE_CONTEST_KEY, objects)
-                            intent.putExtra(CreateTeamActivity.SERIALIZABLE_SELECTED_TEAMS, res.selectedTeamModel)
-                            startActivityForResult(intent, CreateTeamActivity.CREATETEAM_REQUESTCODE)
-                        }else {
-                            Toast.makeText(this@ContestActivity,res.message,Toast.LENGTH_LONG).show()
+                            intent.putExtra(
+                                CreateTeamActivity.SERIALIZABLE_SELECTED_TEAMS,
+                                res.selectedTeamModel
+                            )
+                            startActivityForResult(
+                                intent,
+                                CreateTeamActivity.CREATETEAM_REQUESTCODE
+                            )
+                        } else {
+                            Toast.makeText(this@ContestActivity, res.message, Toast.LENGTH_LONG)
+                                .show()
                         }
                     }
-
                 }
-
             })
-
-
     }
 
     override fun onShareContest(objects: ContestModelLists) {
 
     }
-
 
 
 }

@@ -13,11 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.edify.atrist.listener.OnMatchTimerStarted
 import com.edify.atrist.listener.OnRolesSelected
-import ninja.cricks.databinding.ActivitySaveTeamBinding
 import ninja.cricks.CreateTeamActivity.Companion.CREATE_TEAM_ALLROUNDER
 import ninja.cricks.CreateTeamActivity.Companion.CREATE_TEAM_BATSMAN
 import ninja.cricks.CreateTeamActivity.Companion.CREATE_TEAM_BOWLER
 import ninja.cricks.CreateTeamActivity.Companion.CREATE_TEAM_WICKET_KEEPER
+import ninja.cricks.databinding.ActivitySaveTeamBinding
 import ninja.cricks.models.MyTeamModels
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.network.IApiMethod
@@ -39,33 +39,21 @@ import retrofit2.Response
 
 
 class SaveTeamActivity : BaseActivity(), OnRolesSelected {
-    private var mCreateTeamRequest: RequestCreateTeamModel?=null
-    var myTeamModel: MyTeamModels?=null
-    private var isTrumpSelected: Boolean=false
-    private var isCaptainSelected: Boolean=false
-    private var isViceCaptainSelected: Boolean=false
+
+    private var mCreateTeamRequest: RequestCreateTeamModel? = null
+    var myTeamModel: MyTeamModels? = null
+    private var isTrumpSelected: Boolean = false
+    private var isCaptainSelected: Boolean = false
+    private var isViceCaptainSelected: Boolean = false
     private lateinit var matchObject: UpcomingMatchesModel
     private lateinit var hasmapPlayers: java.util.HashMap<String, java.util.ArrayList<PlayersInfoModel>>
     private var mBinding: ActivitySaveTeamBinding? = null
     var savedTeamList = ArrayList<PlayersInfoModel>()
     lateinit var adapter: PlayersSelectedAdapter
 
-    override fun onStart() {
-        super.onStart()
-
-//        if(userInfo!=null) {
-//            BindingUtils.logFireBaseEvents(
-//                this,
-//                BindingUtils.FIREBASE_EVENT_ITEM_ID_SAVE_TEAM_ACTIVITY,
-//                userInfo!!.userId,
-//                userInfo!!.fullName,
-//                userInfo!!.userEmail
-//            )
-//        }
-    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode==RegisterScreenActivity.REQUESTCODE_LOGIN && resultCode==Activity.RESULT_OK){
+        if (requestCode == RegisterScreenActivity.REQUESTCODE_LOGIN && resultCode == Activity.RESULT_OK) {
             mCreateTeamRequest = getRequest()
             createTeam(mCreateTeamRequest!!)
         }
@@ -83,20 +71,24 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this,
+        mBinding = DataBindingUtil.setContentView(
+            this,
             R.layout.activity_save_team
         )
         customeProgressDialog = CustomeProgressDialog(this)
-        matchObject = intent.getSerializableExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY) as UpcomingMatchesModel
-        hasmapPlayers = intent.getSerializableExtra(TeamPreviewActivity.SERIALIZABLE_TEAM_PREVIEW_KEY) as HashMap<String, ArrayList<PlayersInfoModel>>
+        matchObject =
+            intent.getSerializableExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY) as UpcomingMatchesModel
+        hasmapPlayers =
+            intent.getSerializableExtra(TeamPreviewActivity.SERIALIZABLE_TEAM_PREVIEW_KEY) as HashMap<String, ArrayList<PlayersInfoModel>>
 
-        if(intent.hasExtra(MyTeamFragment.SERIALIZABLE_EDIT_TEAM)){
-            CreateTeamActivity.isEditMode =true
-            myTeamModel = intent.getSerializableExtra(MyTeamFragment.SERIALIZABLE_EDIT_TEAM) as MyTeamModels
+        if (intent.hasExtra(MyTeamFragment.SERIALIZABLE_EDIT_TEAM)) {
+            CreateTeamActivity.isEditMode = true
+            myTeamModel =
+                intent.getSerializableExtra(MyTeamFragment.SERIALIZABLE_EDIT_TEAM) as MyTeamModels
         }
 
         mBinding!!.imageBack.setOnClickListener(View.OnClickListener {
-           finish()
+            finish()
         })
         mBinding!!.imgWallet.setOnClickListener(View.OnClickListener {
             val intent = Intent(this@SaveTeamActivity, MyBalanceActivity::class.java)
@@ -117,7 +109,8 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
         })
         initPlayers()
 
-        mBinding!!.recyclerSaveTeam.layoutManager =LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        mBinding!!.recyclerSaveTeam.layoutManager =
+            LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
         adapter = PlayersSelectedAdapter(
             this,
@@ -130,21 +123,21 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
 
         mBinding!!.teamPreview.setOnClickListener(View.OnClickListener {
             val intent = Intent(this@SaveTeamActivity, TeamPreviewActivity::class.java)
-            intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY,matchObject)
-            intent.putExtra(TeamPreviewActivity.SERIALIZABLE_TEAM_PREVIEW_KEY,hasmapPlayers)
+            intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
+            intent.putExtra(TeamPreviewActivity.SERIALIZABLE_TEAM_PREVIEW_KEY, hasmapPlayers)
             startActivity(intent)
         })
 
         mBinding!!.teamContinue.setOnClickListener(View.OnClickListener {
             mCreateTeamRequest = getRequest()
-            if(MyPreferences.getLoginStatus(this@SaveTeamActivity)!!){
-                if(mCreateTeamRequest!=null){
+            if (MyPreferences.getLoginStatus(this@SaveTeamActivity)!!) {
+                if (mCreateTeamRequest != null) {
                     createTeam(mCreateTeamRequest!!)
                 }
-            }else {
+            } else {
                 val intent = Intent(this@SaveTeamActivity, RegisterScreenActivity::class.java)
-                intent.putExtra(RegisterScreenActivity.ISACTIVITYRESULT,true)
-                startActivityForResult(intent,RegisterScreenActivity.REQUESTCODE_LOGIN)
+                intent.putExtra(RegisterScreenActivity.ISACTIVITYRESULT, true)
+                startActivityForResult(intent, RegisterScreenActivity.REQUESTCODE_LOGIN)
             }
 
         })
@@ -153,9 +146,9 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
 
     override fun onResume() {
         super.onResume()
-        if(matchObject.status==BindingUtils.MATCH_STATUS_UPCOMING) {
+        if (matchObject.status == BindingUtils.MATCH_STATUS_UPCOMING) {
             startCountDown()
-        }else {
+        } else {
             updateTimerHeader()
         }
     }
@@ -166,28 +159,28 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
     }
 
     private fun startCountDown() {
-        BindingUtils.logD("TimerLogs","initViewUpcomingMatches() called in ContestActivity")
+        BindingUtils.logD("TimerLogs", "initViewUpcomingMatches() called in ContestActivity")
         //matchObject!!.timestampStart = 1591158573 + 300
-        BindingUtils.countDownStart(matchObject.timestampStart,object :OnMatchTimerStarted{
+        BindingUtils.countDownStart(matchObject.timestampStart, object : OnMatchTimerStarted {
 
             override fun onTimeFinished() {
                 updateTimerHeader()
                 //           mBinding!!.watchTimerImg.visibility =View.GONE
-                if(matchObject.status.equals(BindingUtils.MATCH_STATUS_UPCOMING)){
+                if (matchObject.status.equals(BindingUtils.MATCH_STATUS_UPCOMING)) {
                     showMatchTimeUpDialog()
                 }
             }
 
-            override fun onTicks(time:String) {
+            override fun onTicks(time: String) {
                 mBinding!!.matchTimer.text = time
                 mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.white))
                 //         mBinding!!.watchTimerImg.visibility =View.VISIBLE
-                BindingUtils.logD("TimerLogs","ContestScreen: "+time)
+                BindingUtils.logD("TimerLogs", "ContestScreen: " + time)
             }
         })
     }
 
-    fun pauseCountDown(){
+    fun pauseCountDown() {
         BindingUtils.stopTimer()
     }
 
@@ -197,40 +190,40 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
     }
 
     private fun getRequest(): RequestCreateTeamModel? {
-        var trump=0
-        var captain=0
-        var viceCaptain=0
-        var teams:ArrayList<Int>?= ArrayList()
-        var isTrump=false
-        var isCaptain=false
-        var isViceCaptain=false
-        var team_id=false
+        var trump = 0
+        var captain = 0
+        var viceCaptain = 0
+        var teams: ArrayList<Int>? = ArrayList()
+        var isTrump = false
+        var isCaptain = false
+        var isViceCaptain = false
+        var team_id = false
 
-          for(x in 0..savedTeamList.size-1){
-              var obj = savedTeamList.get(x)
-              teams!!.add(obj.playerId.toInt())
-              if(obj.isTrump){
-                  isTrump = true
-                  trump = obj.playerId
-              }else if(obj.isCaptain){
-                  isCaptain = true
-                  captain = obj.playerId
-              }else if(obj.isViceCaptain){
-                  isViceCaptain = true
-                  viceCaptain = obj.playerId
-              }
-          }
+        for (x in 0..savedTeamList.size - 1) {
+            var obj = savedTeamList.get(x)
+            teams!!.add(obj.playerId.toInt())
+            if (obj.isTrump) {
+                isTrump = true
+                trump = obj.playerId
+            } else if (obj.isCaptain) {
+                isCaptain = true
+                captain = obj.playerId
+            } else if (obj.isViceCaptain) {
+                isViceCaptain = true
+                viceCaptain = obj.playerId
+            }
+        }
 
 //        if(!isTrump){
 //            MyUtils.showToast(this@SaveTeamActivity,"Please select Trump")
 //            return null
 //        }
-        if(!isCaptain){
-            MyUtils.showToast(this@SaveTeamActivity,"Please select Captain")
+        if (!isCaptain) {
+            MyUtils.showToast(this@SaveTeamActivity, "Please select Captain")
             return null
         }
-        if(!isViceCaptain){
-            MyUtils.showToast(this@SaveTeamActivity,"Please select Vice Captain")
+        if (!isViceCaptain) {
+            MyUtils.showToast(this@SaveTeamActivity, "Please select Vice Captain")
             return null
         }
         var teamIds = ArrayList<Int>()
@@ -238,12 +231,12 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
         teamIds.add(matchObject.teamBInfo!!.teamId)
         var models = RequestCreateTeamModel()
         models.user_id = MyPreferences.getUserID(this)!!
-       // models.token = MyPreferences.getToken(this)!!
-        models.match_id =""+ matchObject.matchId
+        // models.token = MyPreferences.getToken(this)!!
+        models.match_id = "" + matchObject.matchId
         models.trump = 0//trump @passing value as 0 for trump
         models.captain = captain
         models.vice_captain = viceCaptain
-        if(myTeamModel!=null) {
+        if (myTeamModel != null) {
             models.create_team_id = myTeamModel!!.teamId!!.teamId
         }
         models.teams = teams
@@ -253,99 +246,100 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
 
     private fun initPlayers() {
         var captainId = 0
-       // var trumpId = 0
-        var viceCaptainId =0
-        if(myTeamModel!=null){
+        // var trumpId = 0
+        var viceCaptainId = 0
+        if (myTeamModel != null) {
             isCaptainSelected = true
-            isTrumpSelected =true
-            isViceCaptainSelected =true
+            isTrumpSelected = true
+            isViceCaptainSelected = true
             captainId = myTeamModel!!.captain!!.playerId
-          //  trumpId = myTeamModel!!.trump!!.playerId
+            //  trumpId = myTeamModel!!.trump!!.playerId
             viceCaptainId = myTeamModel!!.viceCaptain!!.playerId
         }
-            if(hasmapPlayers.containsKey(CREATE_TEAM_WICKET_KEEPER)){
-                var objList = hasmapPlayers.get(CREATE_TEAM_WICKET_KEEPER) as ArrayList<PlayersInfoModel>
-                var playersLabel = PlayersInfoModel()
-                playersLabel.viewType = PlayersSelectedAdapter.TYPE_LABEL
-                playersLabel.playerRole = "Wicket Keeper"
-                savedTeamList.add(playersLabel)
+        if (hasmapPlayers.containsKey(CREATE_TEAM_WICKET_KEEPER)) {
+            var objList =
+                hasmapPlayers.get(CREATE_TEAM_WICKET_KEEPER) as ArrayList<PlayersInfoModel>
+            var playersLabel = PlayersInfoModel()
+            playersLabel.viewType = PlayersSelectedAdapter.TYPE_LABEL
+            playersLabel.playerRole = "Wicket Keeper"
+            savedTeamList.add(playersLabel)
 
-                for(x in 0..objList.size-1){
-                    var listPlayers = objList.get(x)
-                    listPlayers.playerRole = CREATE_TEAM_WICKET_KEEPER
-                    if(captainId==listPlayers.playerId){
-                        listPlayers.isCaptain=true
-                    }else
-                     if(viceCaptainId==listPlayers.playerId){
-                        listPlayers.isViceCaptain=true
+            for (x in 0..objList.size - 1) {
+                var listPlayers = objList.get(x)
+                listPlayers.playerRole = CREATE_TEAM_WICKET_KEEPER
+                if (captainId == listPlayers.playerId) {
+                    listPlayers.isCaptain = true
+                } else
+                    if (viceCaptainId == listPlayers.playerId) {
+                        listPlayers.isViceCaptain = true
                     }
 
-                    savedTeamList.add(listPlayers)
-                }
+                savedTeamList.add(listPlayers)
             }
-            if(hasmapPlayers.containsKey(CREATE_TEAM_BATSMAN)){
-                var objList =
-                    hasmapPlayers.get(CREATE_TEAM_BATSMAN) as ArrayList<PlayersInfoModel>
-                var playersLabel = PlayersInfoModel()
-                playersLabel.viewType = PlayersSelectedAdapter.TYPE_LABEL
-                playersLabel.playerRole = "BATSMAN"
-                savedTeamList.add(playersLabel)
-                for(x in 0..objList.size-1){
-                    var listPlayers = objList.get(x)
-                    listPlayers.playerRole = CREATE_TEAM_BATSMAN
-                    if(captainId==listPlayers.playerId){
-                        listPlayers.isCaptain=true
-                    }else
-                        if(viceCaptainId==listPlayers.playerId){
-                            listPlayers.isViceCaptain=true
-                        }
-                    savedTeamList.add(listPlayers)
+        }
+        if (hasmapPlayers.containsKey(CREATE_TEAM_BATSMAN)) {
+            var objList =
+                hasmapPlayers.get(CREATE_TEAM_BATSMAN) as ArrayList<PlayersInfoModel>
+            var playersLabel = PlayersInfoModel()
+            playersLabel.viewType = PlayersSelectedAdapter.TYPE_LABEL
+            playersLabel.playerRole = "BATSMAN"
+            savedTeamList.add(playersLabel)
+            for (x in 0..objList.size - 1) {
+                var listPlayers = objList.get(x)
+                listPlayers.playerRole = CREATE_TEAM_BATSMAN
+                if (captainId == listPlayers.playerId) {
+                    listPlayers.isCaptain = true
+                } else
+                    if (viceCaptainId == listPlayers.playerId) {
+                        listPlayers.isViceCaptain = true
+                    }
+                savedTeamList.add(listPlayers)
 
-                }
             }
-           if(hasmapPlayers.containsKey(CREATE_TEAM_ALLROUNDER)){
-                var objList =
-                    hasmapPlayers.get(CREATE_TEAM_ALLROUNDER) as ArrayList<PlayersInfoModel>
-               var playersLabel = PlayersInfoModel()
-               playersLabel.viewType = PlayersSelectedAdapter.TYPE_LABEL
-               playersLabel.playerRole = "ALL ROUNDER"
-               savedTeamList.add(playersLabel)
-                for(x in 0..objList.size-1){
-                    var listPlayers = objList.get(x)
-                    listPlayers.playerRole = CREATE_TEAM_ALLROUNDER
-                    if(captainId==listPlayers.playerId){
-                        listPlayers.isCaptain=true
-                    }else
-                         if(viceCaptainId==listPlayers.playerId){
-                            listPlayers.isViceCaptain=true
-                        }
-                    savedTeamList.add(listPlayers)
-                }
+        }
+        if (hasmapPlayers.containsKey(CREATE_TEAM_ALLROUNDER)) {
+            var objList =
+                hasmapPlayers.get(CREATE_TEAM_ALLROUNDER) as ArrayList<PlayersInfoModel>
+            var playersLabel = PlayersInfoModel()
+            playersLabel.viewType = PlayersSelectedAdapter.TYPE_LABEL
+            playersLabel.playerRole = "ALL ROUNDER"
+            savedTeamList.add(playersLabel)
+            for (x in 0..objList.size - 1) {
+                var listPlayers = objList.get(x)
+                listPlayers.playerRole = CREATE_TEAM_ALLROUNDER
+                if (captainId == listPlayers.playerId) {
+                    listPlayers.isCaptain = true
+                } else
+                    if (viceCaptainId == listPlayers.playerId) {
+                        listPlayers.isViceCaptain = true
+                    }
+                savedTeamList.add(listPlayers)
             }
-           if(hasmapPlayers.containsKey(CREATE_TEAM_BOWLER)){
-                var objList =
-                    hasmapPlayers.get(CREATE_TEAM_BOWLER) as ArrayList<PlayersInfoModel>
-               var playersLabel = PlayersInfoModel()
-               playersLabel.viewType = PlayersSelectedAdapter.TYPE_LABEL
-               playersLabel.playerRole = "BOWLER"
-               savedTeamList.add(playersLabel)
-                for(x in 0..objList.size-1){
-                    var listPlayers = objList.get(x)
-                    listPlayers.playerRole = CREATE_TEAM_BOWLER
-                    if(captainId==listPlayers.playerId){
-                        listPlayers.isCaptain=true
-                    }else
-                        if(viceCaptainId==listPlayers.playerId){
-                            listPlayers.isViceCaptain=true
-                        }
-                    savedTeamList.add(listPlayers)
-                }
+        }
+        if (hasmapPlayers.containsKey(CREATE_TEAM_BOWLER)) {
+            var objList =
+                hasmapPlayers.get(CREATE_TEAM_BOWLER) as ArrayList<PlayersInfoModel>
+            var playersLabel = PlayersInfoModel()
+            playersLabel.viewType = PlayersSelectedAdapter.TYPE_LABEL
+            playersLabel.playerRole = "BOWLER"
+            savedTeamList.add(playersLabel)
+            for (x in 0..objList.size - 1) {
+                var listPlayers = objList.get(x)
+                listPlayers.playerRole = CREATE_TEAM_BOWLER
+                if (captainId == listPlayers.playerId) {
+                    listPlayers.isCaptain = true
+                } else
+                    if (viceCaptainId == listPlayers.playerId) {
+                        listPlayers.isViceCaptain = true
+                    }
+                savedTeamList.add(listPlayers)
             }
+        }
 
         onReady()
     }
 
-    override fun onTrumpSelected(objects: PlayersInfoModel,position: Int) {
+    override fun onTrumpSelected(objects: PlayersInfoModel, position: Int) {
 
 //          for(X in 0..savedTeamList.size-1){
 //              var values = savedTeamList.get(X)
@@ -363,16 +357,16 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
 //        onReady()
     }
 
-    override fun onCaptainSelected(objects: PlayersInfoModel,position: Int) {
+    override fun onCaptainSelected(objects: PlayersInfoModel, position: Int) {
         isCaptainSelected = true
-        for(X in 0..savedTeamList.size-1){
+        for (X in 0..savedTeamList.size - 1) {
             var values = savedTeamList.get(X)
-            if(position==X) {
+            if (position == X) {
                 values.isCaptain = true
                 values.isTrump = false
                 values.isViceCaptain = false
                 savedTeamList.set(X, values)
-            }else {
+            } else {
                 values.isCaptain = false
                 savedTeamList.set(X, values)
             }
@@ -381,16 +375,16 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
         onReady()
     }
 
-    override fun onViceCaptainSelected(objects: PlayersInfoModel,position: Int) {
+    override fun onViceCaptainSelected(objects: PlayersInfoModel, position: Int) {
         isViceCaptainSelected = true
-        for(X in 0..savedTeamList.size-1){
+        for (X in 0..savedTeamList.size - 1) {
             var values = savedTeamList.get(X)
-            if(position==X) {
+            if (position == X) {
                 values.isViceCaptain = true
                 values.isCaptain = false
                 values.isTrump = false
                 savedTeamList.set(X, values)
-            }else {
+            } else {
                 values.isViceCaptain = false
                 savedTeamList.set(X, values)
             }
@@ -400,33 +394,31 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
     }
 
 
-
-
-
     override fun onReady() {
 
-          if(isCaptainSelected&&isViceCaptainSelected){
-              mBinding!!.teamContinue.isEnabled =true
-              mBinding!!.teamContinue.setBackgroundResource(R.drawable.default_rounded_button_sportsfight)
-          }else {
-              mBinding!!.teamContinue.isEnabled =false
-              mBinding!!.teamContinue.setBackgroundResource(R.drawable.button_selector_grey)
-          }
+        if (isCaptainSelected && isViceCaptainSelected) {
+            mBinding!!.teamContinue.isEnabled = true
+            mBinding!!.teamContinue.setBackgroundResource(R.drawable.default_rounded_button_sportsfight)
+        } else {
+            mBinding!!.teamContinue.isEnabled = false
+            mBinding!!.teamContinue.setBackgroundResource(R.drawable.button_selector_grey)
+        }
     }
 
 
     fun createTeam(
-        request: RequestCreateTeamModel) {
-        if(!MyUtils.isConnectedWithInternet(this)) {
-            MyUtils.showToast(this,"No Internet connection found")
+        request: RequestCreateTeamModel
+    ) {
+        if (!MyUtils.isConnectedWithInternet(this)) {
+            MyUtils.showToast(this, "No Internet connection found")
             return
         }
-        request.token =MyPreferences.getToken(this)!!
+        request.token = MyPreferences.getToken(this)!!
         customeProgressDialog.show()
         WebServiceClient(this).client.create(IApiMethod::class.java).createTeam(request)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                    MyUtils.showToast(this@SaveTeamActivity,t!!.localizedMessage)
+                    MyUtils.showToast(this@SaveTeamActivity, t!!.localizedMessage)
 
                 }
 
@@ -436,19 +428,24 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
                 ) {
                     customeProgressDialog.dismiss()
                     var res = response!!.body()
-                    if(res!=null ) {
-                        if(res.status){
+                    if (res != null) {
+                        if (res.status) {
 //                            BindingUtils.sendEventLogs(
 //                                this@SaveTeamActivity,
 //                                matchObject!!.matchId,0,
 //                                userInfo!!,
 //                                BindingUtils.FIREBASE_EVENT_ITEM_ID_SAVE_TEAM_ACTIVITY
 //                            )
-                            Toast.makeText(this@SaveTeamActivity,"Team Created Successfully",Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                this@SaveTeamActivity,
+                                "Team Created Successfully",
+                                Toast.LENGTH_LONG
+                            ).show()
                             setResult(Activity.RESULT_OK)
                             finish()
-                        }else {
-                            Toast.makeText(this@SaveTeamActivity,res.message,Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(this@SaveTeamActivity, res.message, Toast.LENGTH_LONG)
+                                .show()
                         }
                     }
                 }

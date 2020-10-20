@@ -22,13 +22,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.edify.atrist.listener.OnContestEvents
 import com.edify.atrist.listener.OnContestLoadedListener
-import ninja.cricks.ContestActivity
-import ninja.cricks.CreateTeamActivity
-import ninja.cricks.LeadersBoardActivity
-import ninja.cricks.TeamPreviewActivity
-import ninja.cricks.models.MyTeamModels
-import ninja.cricks.R
+import ninja.cricks.*
 import ninja.cricks.databinding.FragmentMyContestBinding
+import ninja.cricks.models.MyTeamModels
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.RequestModel
@@ -45,35 +41,41 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class MyContestFragment: Fragment() {
+class MyContestFragment : Fragment() {
     //private var isMatchStarted: Boolean= false
-    var objectMatches: UpcomingMatchesModel?=null
+    var objectMatches: UpcomingMatchesModel? = null
     private lateinit var customeProgressDialog: CustomeProgressDialog
     private lateinit var mListener: OnContestLoadedListener
-    var mContestListeners: OnContestEvents? =null
+    var mContestListeners: OnContestEvents? = null
     private var mBinding: FragmentMyContestBinding? = null
     lateinit var adapter: MyContestAdapter
     var checkinArrayList = ArrayList<ContestModelLists>()
-    private var teamName: String?=""
+    private var teamName: String? = ""
+    private var isVisibleToUser: Boolean = false
 
-    companion object{
-        fun newInstance(bundle : Bundle) : MyContestFragment{
+    companion object {
+        fun newInstance(bundle: Bundle): MyContestFragment {
             val fragment = MyContestFragment()
-            fragment.arguments=bundle
+            fragment.arguments = bundle
             return fragment
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        objectMatches = arguments!!.get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
+        objectMatches =
+            arguments!!.get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        mBinding  = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_my_contest, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        mBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_my_contest, container, false
+        )
         return mBinding!!.root
     }
 
@@ -81,18 +83,19 @@ class MyContestFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         customeProgressDialog = CustomeProgressDialog(activity)
 
-        mBinding!!.recyclerMyContest.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        mBinding!!.linearEmptyContest.visibility=View.GONE
+        mBinding!!.recyclerMyContest.layoutManager =
+            LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        mBinding!!.linearEmptyContest.visibility = View.GONE
         adapter = MyContestAdapter(activity!!, checkinArrayList)
         mBinding!!.recyclerMyContest.adapter = adapter
 
-        adapter.onItemClick= { objects ->
+        adapter.onItemClick = { objects ->
             val intent = Intent(context, LeadersBoardActivity::class.java)
             intent.putExtra(LeadersBoardActivity.SERIALIZABLE_MATCH_KEY, objectMatches)
             intent.putExtra(LeadersBoardActivity.SERIALIZABLE_CONTEST_KEY, objects)
             activity!!.startActivityForResult(intent, LeadersBoardActivity.CREATETEAM_REQUESTCODE)
         }
-        mBinding!!.linearEmptyContest.visibility=View.GONE
+        mBinding!!.linearEmptyContest.visibility = View.GONE
 
         mBinding!!.btnJoinContest.setOnClickListener(View.OnClickListener {
             (activity as ContestActivity).changeTabsPositions(0)
@@ -117,17 +120,21 @@ class MyContestFragment: Fragment() {
 
     override fun onResume() {
         super.onResume()
-        getMyJoinedContest()
+        //if (isVisibleToUser) {
+            getMyJoinedContest()
+        //}
     }
 
-
-
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        this.isVisibleToUser = isVisibleToUser
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnContestLoadedListener) {
             mListener = context
-        }else {
+        } else {
             throw RuntimeException(
                 "$context must implement OnContestLoadedListener"
             )
@@ -135,33 +142,32 @@ class MyContestFragment: Fragment() {
 
         if (context is OnContestEvents) {
             mContestListeners = context
-        }else{
+        } else {
             throw RuntimeException(
                 "$context must implement OnContestEvents"
             )
         }
-
     }
 
     fun getMyJoinedContest() {
-        if(!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
-            MyUtils.showToast(activity as AppCompatActivity,"No Internet connection found")
+        if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
+            MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
         //var userInfo = (activity as PlugSportsApplication).userInformations
-        mBinding!!.linearEmptyContest.visibility=View.GONE
+        mBinding!!.linearEmptyContest.visibility = View.GONE
         mBinding!!.progressContest.visibility = View.VISIBLE
         var models = RequestModel()
         models.user_id = MyPreferences.getUserID(activity!!)!!
         models.token = MyPreferences.getToken(activity!!)!!
-        models.match_id =""+objectMatches!!.matchId
+        models.match_id = "" + objectMatches!!.matchId
 
 
         WebServiceClient(activity!!).client.create(IApiMethod::class.java).getMyContest(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                    mBinding!!.mycontestRefresh.isRefreshing=false
-                   // MyUtils.showToast(activity!!.getWindow().getDecorView().getRootView(),t!!.localizedMessage)
+                    mBinding!!.mycontestRefresh.isRefreshing = false
+                    // MyUtils.showToast(activity!!.getWindow().getDecorView().getRootView(),t!!.localizedMessage)
                     //updateEmptyViews()
                 }
 
@@ -169,12 +175,12 @@ class MyContestFragment: Fragment() {
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    mBinding!!.mycontestRefresh.isRefreshing=false
+                    mBinding!!.mycontestRefresh.isRefreshing = false
                     mBinding!!.progressContest.visibility = View.GONE
                     var res = response!!.body()
-                    if(res!=null) {
+                    if (res != null) {
                         var responseModel = res.responseObject
-                        if(responseModel!=null) {
+                        if (responseModel != null) {
                             if (responseModel.myJoinedContest != null && responseModel.myJoinedContest!!.size > 0) {
                                 checkinArrayList.clear()
                                 checkinArrayList.addAll(responseModel.myJoinedContest!!)
@@ -190,14 +196,13 @@ class MyContestFragment: Fragment() {
 
     }
 
-    fun updateEmptyViews(){
-        if(checkinArrayList.size==0){
-            mBinding!!.linearEmptyContest.visibility=View.VISIBLE
-        }else {
-            mBinding!!.linearEmptyContest.visibility=View.GONE
+    fun updateEmptyViews() {
+        if (checkinArrayList.size == 0) {
+            mBinding!!.linearEmptyContest.visibility = View.VISIBLE
+        } else {
+            mBinding!!.linearEmptyContest.visibility = View.GONE
         }
     }
-
 
 
     inner class MyContestAdapter(
@@ -206,7 +211,7 @@ class MyContestFragment: Fragment() {
     ) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         var onItemClick: ((ContestModelLists) -> Unit)? = null
-        private var matchesListObject =  tradeinfoModels
+        private var matchesListObject = tradeinfoModels
 
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -218,31 +223,32 @@ class MyContestFragment: Fragment() {
         override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
             var objectVal = matchesListObject[viewType]
             val viewHolder: MyMatchViewHolder = parent as MyMatchViewHolder
-            viewHolder.contestPrizePool.text = String.format("₹%d",objectVal.totalWinningPrize)
-            viewHolder.contestEntryPrize.text = String.format("%d",objectVal.entryFees)
-            if(objectVal.isContestCancelled) {
+            viewHolder.contestPrizePool.text = String.format("₹%d", objectVal.totalWinningPrize)
+            viewHolder.contestEntryPrize.text = String.format("%d", objectVal.entryFees)
+            if (objectVal.isContestCancelled) {
                 viewHolder.contestInfo.text = "Cancelled"
                 viewHolder.contestInfo.textSize = 18.0f
                 viewHolder.contestInfo.setTextColor(Color.RED)
-            }else {
+            } else {
                 viewHolder.contestInfo.text = "Entry"
                 viewHolder.contestInfo.setTextColor(Color.BLACK)
             }
 
-            if(objectVal.totalSpots==0){
-                viewHolder.contestProgressBar.max =objectVal.totalSpots +15
-                viewHolder.contestProgressBar.progress =objectVal.filledSpots
+            if (objectVal.totalSpots == 0) {
+                viewHolder.contestProgressBar.max = objectVal.totalSpots + 15
+                viewHolder.contestProgressBar.progress = objectVal.filledSpots
                 viewHolder.totalSpots?.text = String.format("unlimited spots")
-                viewHolder.totalSpotLeft?.text = String.format("%d spot filled",objectVal.filledSpots)
-            }else {
-                viewHolder.contestProgressBar.max =objectVal.totalSpots
-                viewHolder.contestProgressBar.progress =objectVal.filledSpots
+                viewHolder.totalSpotLeft?.text =
+                    String.format("%d spot filled", objectVal.filledSpots)
+            } else {
+                viewHolder.contestProgressBar.max = objectVal.totalSpots
+                viewHolder.contestProgressBar.progress = objectVal.filledSpots
                 viewHolder.totalSpots?.text = String.format("%d spots", objectVal.totalSpots)
 
-                if(objectVal.totalSpots == objectVal.filledSpots){
+                if (objectVal.totalSpots == objectVal.filledSpots) {
                     viewHolder.totalSpotLeft?.text = "Contest Full"
                     viewHolder.totalSpotLeft?.setTextColor(Color.RED)
-                }else {
+                } else {
                     viewHolder.totalSpotLeft?.text =
                         String.format("%d spot left", objectVal.totalSpots - objectVal.filledSpots)
                 }
@@ -253,20 +259,20 @@ class MyContestFragment: Fragment() {
                 //MyUtils.showToast(activity!!,""+objectVal.cancellation)
             })
 
-            if(objectMatches!!.status == BindingUtils.MATCH_STATUS_UPCOMING) {
+            if (objectMatches!!.status == BindingUtils.MATCH_STATUS_UPCOMING) {
                 viewHolder.contestEntryPrize?.setOnClickListener(View.OnClickListener {
                     mContestListeners!!.onContestJoinning(objectVal, viewType)
 
                 })
-            }else {
+            } else {
                 viewHolder.contestEntryPrize?.setBackgroundResource(R.drawable.button_selector_grey)
                 viewHolder.progressLinear?.visibility = View.GONE
             }
             //viewHolder.maxAllowedTeam?.text = String.format("%s %d %s","Upto",objectVal.winnerPercentage,"teams")
-            viewHolder.firstPrize?.text = String.format("%s%d","₹",objectVal.firstPrice)
+            viewHolder.firstPrize?.text = String.format("%s%d", "₹", objectVal.firstPrice)
 
 
-            if(objectVal.joinedTeams!=null && objectVal.joinedTeams!!.size>0) {
+            if (objectVal.joinedTeams != null && objectVal.joinedTeams!!.size > 0) {
                 viewHolder.recyclerTeamList.layoutManager =
                     LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
                 val dividerItemDecoration = DividerItemDecoration(
@@ -288,28 +294,29 @@ class MyContestFragment: Fragment() {
         }
 
 
-
         override fun getItemCount(): Int {
             return matchesListObject.size
         }
 
-        inner  class MyMatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        inner class MyMatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             init {
                 itemView.setOnClickListener {
                     onItemClick?.invoke(matchesListObject[adapterPosition])
                 }
             }
-             val contestInfo = itemView.findViewById<TextView>(R.id.contest_info)
-             val contestProgressBar = itemView.findViewById<ProgressBar>(R.id.contest_progress)
-             val contestPrizePool = itemView.findViewById<TextView>(R.id.contest_prize_pool)
 
-             val teamaName = itemView.findViewById<TextView>(R.id.teama_name)
-             val progressLinear = itemView.findViewById<LinearLayout>(R.id.upcoming_linear_contest_view)
-             val contestEntryPrize = itemView.findViewById<TextView>(R.id.contest_entry_prize)
-             val totalSpotLeft = itemView.findViewById<TextView>(R.id.total_spot_left)
-             val totalSpots = itemView.findViewById<TextView>(R.id.total_spot)
+            val contestInfo = itemView.findViewById<TextView>(R.id.contest_info)
+            val contestProgressBar = itemView.findViewById<ProgressBar>(R.id.contest_progress)
+            val contestPrizePool = itemView.findViewById<TextView>(R.id.contest_prize_pool)
 
-           // val maxAllowedTeam = itemView.findViewById<TextView>(R.id.max_allowed_team)
+            val teamaName = itemView.findViewById<TextView>(R.id.teama_name)
+            val progressLinear =
+                itemView.findViewById<LinearLayout>(R.id.upcoming_linear_contest_view)
+            val contestEntryPrize = itemView.findViewById<TextView>(R.id.contest_entry_prize)
+            val totalSpotLeft = itemView.findViewById<TextView>(R.id.total_spot_left)
+            val totalSpots = itemView.findViewById<TextView>(R.id.total_spot)
+
+            // val maxAllowedTeam = itemView.findViewById<TextView>(R.id.max_allowed_team)
             val contestCancellation = itemView.findViewById<ImageView>(R.id.contest_cancellation)
             val firstPrize = itemView.findViewById<TextView>(R.id.first_prize)
             val recyclerTeamList = itemView.findViewById<RecyclerView>(R.id.recycler_team_list)
@@ -327,7 +334,7 @@ class MyContestFragment: Fragment() {
     ) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         var onItemClick: ((MyTeamModels) -> Unit)? = null
-        private var matchesListObject =  tradeinfoModels
+        private var matchesListObject = tradeinfoModels
 
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -382,20 +389,22 @@ class MyContestFragment: Fragment() {
                 viewHolder.teamWonStatus.visibility = View.GONE
             }
             viewHolder.teamPoints.text = objectVal.teamPoints
-            viewHolder.teamRanks.text = "#"+objectVal.teamRanks
+            viewHolder.teamRanks.text = "#" + objectVal.teamRanks
 
 
         }
+
         override fun getItemCount(): Int {
             return matchesListObject.size
         }
 
-        inner  class MyMatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        inner class MyMatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             init {
                 itemView.setOnClickListener {
                     onItemClick?.invoke(matchesListObject[adapterPosition])
                 }
             }
+
             val txtTeamName = itemView.findViewById<TextView>(R.id.team_name)
             val teamWonStatus = itemView.findViewById<TextView>(R.id.team_won_status)
             val teamPoints = itemView.findViewById<TextView>(R.id.team_points)
@@ -408,18 +417,18 @@ class MyContestFragment: Fragment() {
 
 
     fun getPoints(teamId: Int) {
-        if(!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
-            MyUtils.showToast(activity as AppCompatActivity,"No Internet connection found")
+        if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
+            MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
         customeProgressDialog.show()
         var models = RequestModel()
         models.user_id = MyPreferences.getUserID(activity!!)!!
-       // models.token =MyPreferences.getToken(activity!!)!!
-        models.team_id =teamId
+        // models.token =MyPreferences.getToken(activity!!)!!
+        models.team_id = teamId
 
         WebServiceClient(activity!!).client.create(IApiMethod::class.java).getPoints(models)
-            .enqueue(object : Callback<UsersPostDBResponse?>{
+            .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     customeProgressDialog.dismiss()
                 }
@@ -430,40 +439,57 @@ class MyContestFragment: Fragment() {
                 ) {
                     customeProgressDialog.dismiss()
                     var res = response!!.body()
-                    if(res!=null) {
+                    if (res != null) {
                         var totalPoints = res.totalPoints
                         var responseModel = res.responseObject
-                        if(responseModel!=null){
+                        if (responseModel != null) {
                             var playerPointsList = responseModel.playerPointsList
-                            var hasmapPlayers: HashMap<String, ArrayList<PlayersInfoModel>> = HashMap<String, ArrayList<PlayersInfoModel>>()
+                            var hasmapPlayers: HashMap<String, ArrayList<PlayersInfoModel>> =
+                                HashMap<String, ArrayList<PlayersInfoModel>>()
 
-                            var wktKeeperList:ArrayList<PlayersInfoModel> = ArrayList<PlayersInfoModel>()
-                            var batsManList:ArrayList<PlayersInfoModel> = ArrayList<PlayersInfoModel>()
-                            var allRounderList:ArrayList<PlayersInfoModel> = ArrayList<PlayersInfoModel>()
-                            var allbowlerList:ArrayList<PlayersInfoModel> = ArrayList<PlayersInfoModel>()
+                            var wktKeeperList: ArrayList<PlayersInfoModel> =
+                                ArrayList<PlayersInfoModel>()
+                            var batsManList: ArrayList<PlayersInfoModel> =
+                                ArrayList<PlayersInfoModel>()
+                            var allRounderList: ArrayList<PlayersInfoModel> =
+                                ArrayList<PlayersInfoModel>()
+                            var allbowlerList: ArrayList<PlayersInfoModel> =
+                                ArrayList<PlayersInfoModel>()
 
-                            for(x in 0..playerPointsList!!.size-1){
+                            for (x in 0..playerPointsList!!.size - 1) {
                                 var plyObj = playerPointsList.get(x)
-                                if(plyObj.playerRole.equals("wk")){
+                                if (plyObj.playerRole.equals("wk")) {
                                     wktKeeperList.add(plyObj)
-                                }else if(plyObj.playerRole.equals("bat")){
+                                } else if (plyObj.playerRole.equals("bat")) {
                                     batsManList.add(plyObj)
-                                }else if(plyObj.playerRole.equals("all")){
+                                } else if (plyObj.playerRole.equals("all")) {
                                     allRounderList.add(plyObj)
-                                }else if(plyObj.playerRole.equals("bowl")){
+                                } else if (plyObj.playerRole.equals("bowl")) {
                                     allbowlerList.add(plyObj)
                                 }
                             }
-                            hasmapPlayers.put(CreateTeamActivity.CREATE_TEAM_WICKET_KEEPER,wktKeeperList)
-                            hasmapPlayers.put(CreateTeamActivity.CREATE_TEAM_BATSMAN,batsManList)
-                            hasmapPlayers.put(CreateTeamActivity.CREATE_TEAM_ALLROUNDER,allRounderList)
-                            hasmapPlayers.put(CreateTeamActivity.CREATE_TEAM_BOWLER,allbowlerList)
+                            hasmapPlayers.put(
+                                CreateTeamActivity.CREATE_TEAM_WICKET_KEEPER,
+                                wktKeeperList
+                            )
+                            hasmapPlayers.put(CreateTeamActivity.CREATE_TEAM_BATSMAN, batsManList)
+                            hasmapPlayers.put(
+                                CreateTeamActivity.CREATE_TEAM_ALLROUNDER,
+                                allRounderList
+                            )
+                            hasmapPlayers.put(CreateTeamActivity.CREATE_TEAM_BOWLER, allbowlerList)
 
                             val intent = Intent(activity, TeamPreviewActivity::class.java)
-                            intent.putExtra(TeamPreviewActivity.KEY_TEAM_ID,teamId)
-                            intent.putExtra(TeamPreviewActivity.KEY_TEAM_NAME,teamName)
-                            intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY,objectMatches)
-                            intent.putExtra(TeamPreviewActivity.SERIALIZABLE_TEAM_PREVIEW_KEY,hasmapPlayers)
+                            intent.putExtra(TeamPreviewActivity.KEY_TEAM_ID, teamId)
+                            intent.putExtra(TeamPreviewActivity.KEY_TEAM_NAME, teamName)
+                            intent.putExtra(
+                                CreateTeamActivity.SERIALIZABLE_MATCH_KEY,
+                                objectMatches
+                            )
+                            intent.putExtra(
+                                TeamPreviewActivity.SERIALIZABLE_TEAM_PREVIEW_KEY,
+                                hasmapPlayers
+                            )
                             startActivity(intent)
                         }
 

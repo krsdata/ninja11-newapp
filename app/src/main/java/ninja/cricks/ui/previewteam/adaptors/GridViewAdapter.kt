@@ -18,7 +18,7 @@ class GridViewAdapter(
     val context: Context,
     val listImageURLs: List<PlayersInfoModel>,
     matchObject: UpcomingMatchesModel
-): BaseAdapter() {
+) : BaseAdapter() {
 
     var matchObject = matchObject
     override fun getItem(position: Int): Any {
@@ -36,7 +36,7 @@ class GridViewAdapter(
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var convertView = convertView
         val viewHolder: ViewHolder
-        if (convertView == null){
+        if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.preview_player_info, null)
             viewHolder =
                 ViewHolder()
@@ -46,20 +46,20 @@ class GridViewAdapter(
             viewHolder.playerRole = convertView.findViewById(R.id.player_role)
             viewHolder.playing11 = convertView.findViewById(R.id.playing11)
             convertView.tag = viewHolder
-        }else{
+        } else {
             viewHolder = convertView.tag as ViewHolder
         }
         var objects = listImageURLs.get(position)
         viewHolder.playerName.text = objects.shortName
-        if(matchObject.status== BindingUtils.MATCH_STATUS_UPCOMING){
-            viewHolder.playerFantasyPoints.text = ""+objects.fantasyPlayerRating+" Cr"
-        }else {
-            viewHolder.playerFantasyPoints.text = objects.playerPoints+" Pt"
+        if (matchObject.status == BindingUtils.MATCH_STATUS_UPCOMING) {
+            viewHolder.playerFantasyPoints.text = "" + objects.fantasyPlayerRating + " Cr"
+        } else {
+            viewHolder.playerFantasyPoints.text = objects.playerPoints + " Pt"
         }
 
         var defaultIcon = objects.getPlayerIcon()
-        if(defaultIcon==0){
-            defaultIcon =  R.drawable.player_blue
+        if (defaultIcon == 0) {
+            defaultIcon = R.drawable.player_blue
         }
 
         Glide.with(context)
@@ -67,40 +67,38 @@ class GridViewAdapter(
             .placeholder(defaultIcon)
             .into(viewHolder.imageView)
 
-          if(matchObject.teamAInfo!!.teamId==objects.teamId){
-              viewHolder.playerName.setBackgroundColor(Color.WHITE)
-              viewHolder.playerName.setTextColor(context.resources.getColor(R.color.black))
-          }else {
-              viewHolder.playerName.setBackgroundColor(Color.BLACK)
-              viewHolder.playerName.setTextColor(context.resources.getColor(R.color.white))
-          }
+        if (matchObject.teamAInfo!!.teamId == objects.teamId) {
+            viewHolder.playerName.setBackgroundColor(Color.WHITE)
+            viewHolder.playerName.setTextColor(context.resources.getColor(R.color.black))
+        } else {
+            viewHolder.playerName.setBackgroundColor(Color.BLACK)
+            viewHolder.playerName.setTextColor(context.resources.getColor(R.color.white))
+        }
 
-        if(objects.isPlaying11){
+        if (objects.isPlaying11) {
             viewHolder.playing11.visibility = View.GONE
-        }else {
+        } else {
             viewHolder.playing11.visibility = View.VISIBLE
         }
-        if(objects.isCaptain){
+        if (objects.isCaptain) {
             viewHolder.playerRole.visibility = View.VISIBLE
             viewHolder.playerRole.text = "C"
             viewHolder.playerRole.textSize = 6.0f
-        }else if(objects.isViceCaptain){
+        } else if (objects.isViceCaptain) {
             viewHolder.playerRole.visibility = View.VISIBLE
             viewHolder.playerRole.text = "VC"
             viewHolder.playerRole.textSize = 4.0f
-        }else if(objects.isTrump){
+        } else if (objects.isTrump) {
             viewHolder.playerRole.visibility = View.VISIBLE
             viewHolder.playerRole.text = "T"
             viewHolder.playerRole.textSize = 6.0f
-        }else {
+        } else {
             viewHolder.playerRole.visibility = View.GONE
         }
-
-
         return convertView
     }
 
-    class ViewHolder{
+    class ViewHolder {
         lateinit var imageView: ImageView
         lateinit var playerName: TextView
         lateinit var playerFantasyPoints: TextView

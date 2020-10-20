@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="ninja.cricks"
     tools:ignore="LockedOrientationActivity">
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -10,28 +11,29 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera"
+
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="true" />
 
     <application
+        android:name="ninja.cricks.SportsFightApplication"
         android:allowBackup="false"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:hardwareAccelerated="true"
-        android:name="ninja.cricks.SportsFightApplication"
         android:theme="@style/AppTheme_app"
-        android:networkSecurityConfig="@xml/network_security_config"
         android:usesCleartextTraffic="true"
-        tools:replace="android:icon,android:theme"
         tools:ignore="GoogleAppIndexingWarning,MissingDefaultResource"
-        android:requestLegacyExternalStorage="true">
+        tools:replace="android:icon,android:theme">
         <activity
             android:name="ninja.cricks.SplashScreenActivity"
-            android:screenOrientation="portrait"
             android:configChanges="uiMode"
-          >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -41,173 +43,144 @@
 
         <activity
             android:name="ninja.cricks.ui.login.LoginScreenActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/screen_name_login"
-            android:screenOrientation="portrait"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-           >
-<!--            <intent-filter android:label="deeplink">-->
-<!--                      <action android:name="android.intent.action.VIEW"/>-->
-<!--                     <category android:name="android.intent.category.BROWSABLE"/>-->
-<!--                     <category android:name="android.intent.category.DEFAULT"/>-->
-<!--                  <data android:scheme="https" android:host="www.ninja.in" android:pathPrefix="/apks"/>-->
-<!--            </intent-filter>-->
+            android:screenOrientation="portrait">
+            <!--            <intent-filter android:label="deeplink">-->
+            <!--                      <action android:name="android.intent.action.VIEW"/>-->
+            <!--                     <category android:name="android.intent.category.BROWSABLE"/>-->
+            <!--                     <category android:name="android.intent.category.DEFAULT"/>-->
+            <!--                  <data android:scheme="https" android:host="www.ninja.in" android:pathPrefix="/apks"/>-->
+            <!--            </intent-filter>-->
 
         </activity>
         <activity
             android:name="ninja.cricks.ui.login.RegisterScreenActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/screen_name_register"
-            android:screenOrientation="portrait"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name="ninja.cricks.MainActivity"
-            android:theme="@style/dashboard_theme"
             android:screenOrientation="portrait"
-            />
+            android:theme="@style/dashboard_theme" />
 
         <activity
             android:name="ninja.cricks.ContestActivity"
             android:label="@string/activity_type_contest"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name="ninja.cricks.MaintainanceActivity"
             android:label="@string/activity_type_contest"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="ninja.cricks.QuizContestActivity"
             android:label="@string/activity_type_contest"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name="ninja.cricks.CreateTeamActivity"
             android:label="@string/activity_type_create_team"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name="ninja.cricks.TeamPreviewActivity"
             android:label=""
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="ninja.cricks.NotificationListActivity"
             android:label=""
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="ninja.cricks.SaveTeamActivity"
             android:label=""
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="ninja.cricks.SelectTeamActivity"
             android:label=""
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="ninja.cricks.MyBalanceActivity"
             android:label=""
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name="ninja.cricks.AddMoneyActivity"
             android:label=""
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="ninja.cricks.UpdateApplicationActivity"
             android:label=""
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="ninja.cricks.WebActivity"
             android:label=""
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name="ninja.cricks.LeadersBoardActivity"
             android:label=""
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name="ninja.cricks.MoreContestActivity"
             android:label=""
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="ninja.cricks.InviteFriendsActivity"
             android:label=""
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="ninja.cricks.SupportActivity"
             android:label=""
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="ninja.cricks.FullScreenImageViewActivity"
             android:label=""
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="ninja.cricks.VerifyDocumentsActivity"
             android:label=""
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="ninja.cricks.WithdrawAmountsActivity"
             android:label=""
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="ninja.cricks.DocumentsListActivity"
             android:label=""
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="ninja.cricks.MyTransactionHistoryActivity"
             android:label=""
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="ninja.cricks.EditProfileActivity"
             android:label="Update Profile"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="ninja.cricks.ChangePasswordActivity"
             android:label="Change Password"
-            android:screenOrientation="portrait"
-            />
-         <activity
+            android:screenOrientation="portrait" />
+        <activity
             android:name="ninja.cricks.RefferalFriendsListActivity"
             android:label="Update Profile"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="ninja.cricks.OtpVerifyActivity"
             android:label="Update Profile"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
 
         <provider
@@ -220,16 +193,15 @@
                 android:resource="@xml/file_provider_paths" />
         </provider>
 
-        <service
-            android:name="ninja.cricks.fcm.MyFirebaseMessagingService">
+        <service android:name="ninja.cricks.fcm.MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
 
         <meta-data
@@ -243,11 +215,12 @@
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/default_notification_channel_id"/>
+            android:value="@string/default_notification_channel_id" />
 
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
         <meta-data
             android:name="fontProviderRequests"
@@ -259,8 +232,11 @@
 
         <meta-data
             android:name="com.razorpay.ApiKey"
-            android:value="@string/razorpay_key"
-            />
+            android:value="@string/razorpay_key" />
+
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="true" />
     </application>
 
 </manifest>

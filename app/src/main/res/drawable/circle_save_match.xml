@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval">
 
-     <stroke android:color="@color/secondery_color" android:width="2dp"/>
+     <stroke android:color="@color/colorPrimaryDark" android:width="2dp"/>
     <solid
         android:color="@color/white"/>
 

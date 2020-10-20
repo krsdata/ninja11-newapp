@@ -13,7 +13,10 @@ import android.graphics.ImageDecoder
 import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
-import android.os.*
+import android.os.Build
+import android.os.Bundle
+import android.os.Environment
+import android.os.Handler
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Base64
@@ -27,9 +30,7 @@ import com.andrognito.flashbar.Flashbar
 import com.andrognito.flashbar.anim.FlashAnim
 import com.deliverdas.customers.utils.HardwareInfoManager
 import com.google.firebase.iid.FirebaseInstanceId
-import ninja.cricks.MainActivity
-import ninja.cricks.SplashScreenActivity
-import ninja.cricks.SportsFightApplication
+import ninja.cricks.*
 import ninja.cricks.models.ResponseModel
 import ninja.cricks.models.UserInfo
 import ninja.cricks.network.IApiMethod
@@ -42,8 +43,6 @@ import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import ninja.cricks.BuildConfig
-import ninja.cricks.R
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
@@ -56,14 +55,14 @@ abstract class BaseActivity : AppCompatActivity() {
     /**
      * Android Q
      */
-    private var imageUri: Uri?=null
+    private var imageUri: Uri? = null
 
     private var sizeofImage: Int = 0
-    var userInfo: UserInfo?=null
-    var notificationToken: String=""
+    var userInfo: UserInfo? = null
+    var notificationToken: String = ""
     lateinit var customeProgressDialog: CustomeProgressDialog
     private var image_uri: Uri? = null
-    var mBitmap:Bitmap?  =null
+    var mBitmap: Bitmap? = null
     var mDocumentType = ""
 
     companion object {
@@ -77,6 +76,7 @@ abstract class BaseActivity : AppCompatActivity() {
         val PICK_IMAGE_REQUEST_GALLERY = 1002
         private val PERMISSION_CODE = 1001
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         customeProgressDialog = CustomeProgressDialog(this)
@@ -84,16 +84,16 @@ abstract class BaseActivity : AppCompatActivity() {
         userInfo = (application as SportsFightApplication).userInformations
     }
 
-    fun showDeadLineAlert(message: String){
+    fun showDeadLineAlert(message: String) {
         val builder = AlertDialog.Builder(this)
         //set title for alert dialog
-       // builder.setTitle("Warning")
+        // builder.setTitle("Warning")
         //set message for alert dialog
         builder.setMessage(message)
         builder.setIcon(android.R.drawable.ic_dialog_alert)
 
         //performing positive action
-        builder.setPositiveButton("OK"){dialogInterface, which ->
+        builder.setPositiveButton("OK") { dialogInterface, which ->
             finish()
         }
         // Create the AlertDialog
@@ -141,14 +141,14 @@ abstract class BaseActivity : AppCompatActivity() {
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     mBitmap = data!!.extras!!.get("data") as Bitmap
-                }else {
+                } else {
                     mBitmap =
                         MediaStore.Images.Media.getBitmap(this.contentResolver, image_uri)
                 }
                 onBitmapSelected(mBitmap!!)
                 uploadBase64ImageToServer(mBitmap!!)
 
-            }else if (requestCode == PICK_IMAGE_REQUEST_GALLERY) {
+            } else if (requestCode == PICK_IMAGE_REQUEST_GALLERY) {
 
                 val selectedImage = data!!.data
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -166,7 +166,7 @@ abstract class BaseActivity : AppCompatActivity() {
                     }
 
                     if (path != null) {
-                        mBitmap = modifyOrientation(BitmapFactory.decodeFile(path),path)
+                        mBitmap = modifyOrientation(BitmapFactory.decodeFile(path), path)
                         onBitmapSelected(mBitmap!!)
                         uploadBase64ImageToServer(mBitmap!!)
                     }
@@ -214,18 +214,18 @@ abstract class BaseActivity : AppCompatActivity() {
         var orientationH = 0.0f
         var orientationV = 0.0f
         if (horizontal) {
-            orientationH =  -1.0f
+            orientationH = -1.0f
         } else {
-            orientationH =  1.0f
+            orientationH = 1.0f
         }
 
         if (vertical) {
-            orientationV =  -1.0f
+            orientationV = -1.0f
         } else {
-            orientationV =  1.0f
+            orientationV = 1.0f
         }
 
-        matrix.preScale(orientationH,orientationV)
+        matrix.preScale(orientationH, orientationV)
         return Bitmap.createBitmap(
             bitmap,
             0,
@@ -237,49 +237,52 @@ abstract class BaseActivity : AppCompatActivity() {
         )
     }
 
-fun getRealPathFromURI(contentUri: Uri?): String? {
-    val proj = arrayOf(MediaStore.Images.Media.DATA)
-    val cursor: Cursor = managedQuery(contentUri, proj, null, null, null) ?: return null
-    val column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-    cursor.moveToFirst()
-    return cursor.getString(column_index)
-}
+    fun getRealPathFromURI(contentUri: Uri?): String? {
+        val proj = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor: Cursor = managedQuery(contentUri, proj, null, null, null) ?: return null
+        val column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        cursor.moveToFirst()
+        return cursor.getString(column_index)
+    }
+
     private fun uploadBase64ImageToServer(bitmap: Bitmap) {
         var base64Images = getImageUrl(bitmap)
-          if(sizeofImage>2){
-              showCommonAlert("Image size cannot be greater than 2MB,  Current is "+sizeofImage+" MB")
-              return
-          }
+        if (sizeofImage > 2) {
+            showCommonAlert("Image size cannot be greater than 2MB,  Current is " + sizeofImage + " MB")
+            return
+        }
 
-            customeProgressDialog.show()
-            WebServiceClient(this).client.create(IApiMethod::class.java).uploadImage(base64Images,MyPreferences.getUserID(this)!!,mDocumentType)
-                .enqueue(object : Callback<ResponseModel?> {
-                    override fun onFailure(call: Call<ResponseModel?>?, t: Throwable?) {
+        customeProgressDialog.show()
+        WebServiceClient(this).client.create(IApiMethod::class.java)
+            .uploadImage(base64Images, MyPreferences.getUserID(this)!!, mDocumentType)
+            .enqueue(object : Callback<ResponseModel?> {
+                override fun onFailure(call: Call<ResponseModel?>?, t: Throwable?) {
+                    customeProgressDialog.dismiss()
+                    Toast.makeText(this@BaseActivity, "" + t!!.message, Toast.LENGTH_LONG).show()
+                }
+
+                override fun onResponse(
+                    call: Call<ResponseModel?>?,
+                    response: Response<ResponseModel?>?
+                ) {
+                    if (!isFinishing) {
                         customeProgressDialog.dismiss()
-                        Toast.makeText(this@BaseActivity,""+t!!.message, Toast.LENGTH_LONG).show()
-                    }
-
-                    override fun onResponse(
-                        call: Call<ResponseModel?>?,
-                        response: Response<ResponseModel?>?
-                    ) {
-                        if(!isFinishing) {
-                            customeProgressDialog.dismiss()
-                            var res = response!!.body()
-                            if (res != null && res.status) {
-                                var photoUrl = res.image_url
-                                onBitmapSelected(mBitmap!!)
-                                onUploadedImageUrl(photoUrl)
-                                Toast.makeText(this@BaseActivity,""+ res.message, Toast.LENGTH_LONG).show()
-                            }else {
-                                Toast.makeText(this@BaseActivity,""+res!!.message, Toast.LENGTH_LONG).show()
-                            }
+                        var res = response!!.body()
+                        if (res != null && res.status) {
+                            var photoUrl = res.image_url
+                            onBitmapSelected(mBitmap!!)
+                            onUploadedImageUrl(photoUrl)
+                            Toast.makeText(this@BaseActivity, "" + res.message, Toast.LENGTH_LONG)
+                                .show()
+                        } else {
+                            Toast.makeText(this@BaseActivity, "" + res!!.message, Toast.LENGTH_LONG)
+                                .show()
                         }
-
                     }
 
-                })
+                }
 
+            })
 
 
     }
@@ -301,9 +304,10 @@ fun getRealPathFromURI(contentUri: Uri?): String? {
             BuildConfig.APPLICATION_ID + getString(R.string.file_provider),
             file
         )
-       // imgPath = file.absolutePath
+        // imgPath = file.absolutePath
         return imageUri!!
     }
+
     /**
      * End of android Q impelemntations
      */
@@ -316,8 +320,7 @@ fun getRealPathFromURI(contentUri: Uri?): String? {
         builder.setIcon(android.R.drawable.ic_btn_speak_now)
 
         //performing positive action
-        builder.setPositiveButton("Ok"){
-                dialogInterface, which ->
+        builder.setPositiveButton("Ok") { dialogInterface, which ->
 
         }
         // Create the AlertDialog
@@ -327,6 +330,7 @@ fun getRealPathFromURI(contentUri: Uri?): String? {
         alertDialog.setCanceledOnTouchOutside(false)
         alertDialog.show()
     }
+
     fun getImageUrl(bitmap: Bitmap): String {
         val byteArrayOutputStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
@@ -337,7 +341,7 @@ fun getRealPathFromURI(contentUri: Uri?): String? {
     }
 
     private fun setSizeOfImage(sizeofIamge: Int) {
-        this.sizeofImage = (sizeofIamge/1024)/1024
+        this.sizeofImage = (sizeofIamge / 1024) / 1024
     }
 
 
@@ -367,20 +371,21 @@ fun getRealPathFromURI(contentUri: Uri?): String? {
         return true
     }
 
-    fun selectImage(mDocumentType:String) {
-        if(!checkAndRequestPermissions()){
-              return
+    fun selectImage(mDocumentType: String) {
+        if (!checkAndRequestPermissions()) {
+            return
         }
 
         this.mDocumentType = mDocumentType
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-           options =
+            options =
                 arrayOf<CharSequence>("Choose from Gallery", "Cancel")
-        }else {
+        } else {
             options = arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
         }
 
-        val builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this@BaseActivity)
+        val builder: android.app.AlertDialog.Builder =
+            android.app.AlertDialog.Builder(this@BaseActivity)
         builder.setTitle("Add Photo!")
         builder.setItems(options, object : DialogInterface.OnClickListener {
             override fun onClick(dialog: DialogInterface?, items: Int) {
@@ -411,20 +416,19 @@ fun getRealPathFromURI(contentUri: Uri?): String? {
 
     private fun selectGalleryImage() {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
-                PackageManager.PERMISSION_DENIED){
+                PackageManager.PERMISSION_DENIED
+            ) {
                 //permission denied
                 val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
                 //show popup to request runtime permission
                 requestPermissions(permissions, PERMISSION_CODE)
-            }
-            else{
+            } else {
                 //permission already granted
                 pickImageFromGallery()
             }
-        }
-        else{
+        } else {
             //system OS is < Marshmallow
             pickImageFromGallery()
         }
@@ -442,19 +446,25 @@ fun getRealPathFromURI(contentUri: Uri?): String? {
         FirebaseInstanceId.getInstance().instanceId
             .addOnSuccessListener { instanceIdResult ->
                 val deviceToken = instanceIdResult.token
-
+                if (!TextUtils.isEmpty(deviceToken)) {
+                    notificationToken = deviceToken
+                }
 //                    var notid =  FirebaseInstanceId.getInstance()
 //                        .getToken(getString(R.string.gcm_default_sender_id), "FCM")
                 var userId = MyPreferences.getUserID(this@BaseActivity)!!
                 if (!TextUtils.isEmpty(deviceToken) && !TextUtils.isEmpty(userId)) {
                     var request = RequestModel()
                     request.user_id = userId
-                    request.device_id = deviceToken!!
-                    request.token =MyPreferences.getToken(this@BaseActivity)!!
+                    request.device_id = deviceToken
+                    request.token = MyPreferences.getToken(this@BaseActivity)!!
                     request.deviceDetails = HardwareInfoManager(this@BaseActivity).collectData()
-                    WebServiceClient(this@BaseActivity).client.create(IApiMethod::class.java).deviceNotification(request)
+                    WebServiceClient(this@BaseActivity).client.create(IApiMethod::class.java)
+                        .deviceNotification(request)
                         .enqueue(object : Callback<UsersPostDBResponse?> {
-                            override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
+                            override fun onFailure(
+                                call: Call<UsersPostDBResponse?>?,
+                                t: Throwable?
+                            ) {
 
                             }
 
@@ -463,7 +473,7 @@ fun getRealPathFromURI(contentUri: Uri?): String? {
                                 response: Response<UsersPostDBResponse?>?
                             ) {
 
-                                MyUtils.logd("deviceId","Posted successfully")
+                                MyUtils.logd("deviceId", "Posted successfully")
                             }
 
                         })
@@ -473,14 +483,12 @@ fun getRealPathFromURI(contentUri: Uri?): String? {
     }
 
 
-
-
-    fun logoutApp(message: String,boolean: Boolean) {
+    fun logoutApp(message: String, boolean: Boolean) {
         if (!MyUtils.isConnectedWithInternet(this@BaseActivity)) {
             MyUtils.showToast(this@BaseActivity, "No Internet connection found")
             return
         }
-        genericAlertDialog(message,boolean)
+        genericAlertDialog(message, boolean)
     }
 
 
@@ -494,17 +502,17 @@ fun getRealPathFromURI(contentUri: Uri?): String? {
         builder.setIcon(android.R.drawable.ic_dialog_alert)
 
         //performing positive action
-        if(boolean) {
+        if (boolean) {
             builder.setNegativeButton("Cancel", null)
         }
-        builder.setPositiveButton("OK"){
-                dialogInterface, which ->
+        builder.setPositiveButton("OK") { dialogInterface, which ->
 
             customeProgressDialog.show()
             var request = RequestModel()
             request.user_id = MyPreferences.getUserID(this@BaseActivity)!!
             request.token = MyPreferences.getToken(this@BaseActivity)!!
-            WebServiceClient(this@BaseActivity).client.create(IApiMethod::class.java).logout(request)
+            WebServiceClient(this@BaseActivity).client.create(IApiMethod::class.java)
+                .logout(request)
                 .enqueue(object : Callback<UsersPostDBResponse?> {
                     override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
 
@@ -541,10 +549,11 @@ fun getRealPathFromURI(contentUri: Uri?): String? {
         return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB_MR1) {
             data.rowBytes * data.height
         } else {
-            (data.byteCount/1024)/1024
+            (data.byteCount / 1024) / 1024
         }
     }
-    abstract fun onBitmapSelected(bitmap:Bitmap)
-    abstract fun onUploadedImageUrl(url:String)
+
+    abstract fun onBitmapSelected(bitmap: Bitmap)
+    abstract fun onUploadedImageUrl(url: String)
 
 }

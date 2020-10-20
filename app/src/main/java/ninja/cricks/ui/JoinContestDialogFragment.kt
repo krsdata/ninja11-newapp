@@ -67,7 +67,7 @@ class JoinContestDialogFragment(
         super.onViewCreated(view, savedInstanceState)
         customeProgressDialog = CustomeProgressDialog(activity)
         mBinding!!.imgClose.setOnClickListener(View.OnClickListener {
-            activity!!.finish()
+            requireActivity().finish()
         })
          initWalletInfo()
 
@@ -77,8 +77,8 @@ class JoinContestDialogFragment(
 
 
     private fun initWalletInfo() {
-        var walletInfo = (activity!!.applicationContext as SportsFightApplication).walletInfo
-        userInfo = (activity!!.applicationContext as SportsFightApplication).userInformations
+        var walletInfo = (requireActivity().applicationContext as SportsFightApplication).walletInfo
+        userInfo = (requireActivity().applicationContext as SportsFightApplication).userInformations
         DISCOUNT_ON_BONUS = contestModel.usableBonus
         walletAmount = walletInfo.walletAmount
         bonusAmount = walletInfo.bonusAmount
@@ -147,7 +147,7 @@ class JoinContestDialogFragment(
         })
 
         mBinding!!.termsCondition.setOnClickListener(View.OnClickListener {
-            val intent = Intent(activity!!, WebActivity::class.java)
+            val intent = Intent(requireActivity(), WebActivity::class.java)
             intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_TERMS_CONDITION)
             intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_TNC)
             if (Build.VERSION.SDK_INT > 20) {
@@ -172,17 +172,17 @@ class JoinContestDialogFragment(
         }
         customeProgressDialog.show()
         var models = RequestModel()
-        models.user_id = MyPreferences.getUserID(activity!!)!!
+        models.user_id = MyPreferences.getUserID(requireActivity())!!
         //models.token = MyPreferences.getToken(activity!!)!!
         models.match_id =""+matchObject.matchId
         models.contest_id =""+contestModel.id
         models.created_team_id =createdTeamIdList
-        models.token = MyPreferences.getToken(activity!!)!!
+        models.token = MyPreferences.getToken(requireActivity())!!
         models.entryFees =totalEntryFees.toString()
         models.totalPaidAmount =totalPayable.toString()
         models.discountOnBonusAmount =discountFromBonusAmount.toString()
 
-        WebServiceClient(activity!!).client.create(IApiMethod::class.java).joinContest(models)
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).joinContest(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     if(isVisible) {
@@ -234,10 +234,10 @@ class JoinContestDialogFragment(
         }
         customeProgressDialog.show()
         var models = RequestModel()
-        models.user_id = MyPreferences.getUserID(activity!!)!!
-        models.token = MyPreferences.getToken(activity!!)!!
+        models.user_id = MyPreferences.getUserID(requireActivity())!!
+        models.token = MyPreferences.getToken(requireActivity())!!
 
-        WebServiceClient(activity!!).client.create(IApiMethod::class.java).getWallet(models)
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getWallet(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     customeProgressDialog.dismiss()
@@ -281,7 +281,7 @@ class JoinContestDialogFragment(
 
 
     fun genericAlertDialog(message: String, boolean: Boolean) {
-        val builder = AlertDialog.Builder(activity!!)
+        val builder = AlertDialog.Builder(requireActivity())
         //set title for alert dialog
         // builder.setTitle("Warning")
         //set message for alert dialog
@@ -298,9 +298,9 @@ class JoinContestDialogFragment(
 
             customeProgressDialog.show()
             var request = RequestModel()
-            request.user_id = MyPreferences.getUserID(activity!!)!!
-            request.token = MyPreferences.getToken(activity!!)!!
-            WebServiceClient(activity!!).client.create(IApiMethod::class.java).logout(request)
+            request.user_id = MyPreferences.getUserID(requireActivity())!!
+            request.token = MyPreferences.getToken(requireActivity())!!
+            WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).logout(request)
                 .enqueue(object : Callback<UsersPostDBResponse?> {
                     override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
 

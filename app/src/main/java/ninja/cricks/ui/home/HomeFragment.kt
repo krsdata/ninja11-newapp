@@ -37,13 +37,11 @@ class HomeFragment : Fragment() {
         (activity as MainActivity).showToolbar()
         setupViewPager(mBinding!!.viewpager)
         mBinding!!.tabs.setupWithViewPager(mBinding!!.viewpager)
-
-
     }
 
 
     private fun setupViewPager(viewPager: ViewPager) {
-         adapter = ViewPagerAdapter(activity!!.supportFragmentManager)
+         adapter = ViewPagerAdapter(requireActivity().supportFragmentManager)
         adapter.addFragment(FixtureCricketFragment(),getString(R.string.game_type_cricket))
         adapter.addFragment(FixtureFootBallFragment(), getString(R.string.game_type_football))
 //        adapter.addFragment(FixtureBasketballFragment(), getString(R.string.game_type_basketball))

@@ -25,35 +25,44 @@ import ninja.cricks.utils.MyUtils
 
 
 class Batsman : Fragment() {
-    var batsmenListFilter: ArrayList<PlayersInfoModel>?=null
-    var matchObject: UpcomingMatchesModel?=null
-    var count=0
+    var batsmenListFilter: ArrayList<PlayersInfoModel>? = null
+    var matchObject: UpcomingMatchesModel? = null
+    var count = 0
     private lateinit var mListener: OnTeamCreateListener
     private var mBinding: FragmentCreateTeamListBinding? = null
     lateinit var adapter: PlayersContestAdapter
 
-    companion object{
-        fun newInstance(bundle : Bundle) : Batsman {
+    companion object {
+        fun newInstance(bundle: Bundle): Batsman {
             val fragment = Batsman()
-            fragment.arguments=bundle
+            fragment.arguments = bundle
             return fragment
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        batsmenListFilter = arguments!!.get(CreateTeamActivity.SERIALIZABLE_KEY_PLAYERS) as ArrayList<PlayersInfoModel>
-        matchObject = arguments!!.get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
+        batsmenListFilter =
+            arguments!!.get(CreateTeamActivity.SERIALIZABLE_KEY_PLAYERS) as ArrayList<PlayersInfoModel>
+        matchObject =
+            arguments!!.get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
     }
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        mBinding  = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_create_team_list, container, false)
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        mBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_create_team_list, container, false
+        )
         return mBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mBinding!!.labelPlayersCounts.text = String.format( "Select %d - %d Batsmen",MAX_BATSMAN[0],MAX_BATSMAN[1])
+        mBinding!!.labelPlayersCounts.text =
+            String.format("Select %d - %d Batsmen", MAX_BATSMAN[0], MAX_BATSMAN[1])
         batsmenListFilter = CricketPlayersFilters.getPlayersbyOddEvenPositions(
             batsmenListFilter!!,
             matchObject!!,
@@ -77,27 +86,33 @@ class Batsman : Fragment() {
 
         adapter.onItemClick = { objects ->
             CreateTeamActivity.isEditMode = false
-            if(objects.isSelected) {
+            if (objects.isSelected) {
                 count--
                 objects.isSelected = false
                 mListener.onBatsManDeSelected(objects)
-            }else{
-                if(!CreateTeamActivity.isAllPlayersSelected!!) {
-                    if(count < CreateTeamActivity.MAX_BATSMAN[1]) {
-                        if(isMaxPlayersValid(objects)) {
-                            if(isMinimumPlayerSelected()) {
+            } else {
+                if (!CreateTeamActivity.isAllPlayersSelected!!) {
+                    if (count < CreateTeamActivity.MAX_BATSMAN[1]) {
+                        if (isMaxPlayersValid(objects)) {
+                            if (isMinimumPlayerSelected()) {
                                 count++
                                 objects.isSelected = true
                                 mListener.onBatsManSelected(objects)
                             }
-                        }else {
-                            MyUtils.showToast(activity!! as AppCompatActivity,"MAX Player Reached limit  "+objects.teamShortName)
+                        } else {
+                            MyUtils.showToast(
+                                activity!! as AppCompatActivity,
+                                "MAX Player Reached limit  " + objects.teamShortName
+                            )
                         }
-                    }else {
-                        MyUtils.showToast(activity!! as AppCompatActivity,"MAX ALLOWED is "+ CreateTeamActivity.MAX_BATSMAN[1])
+                    } else {
+                        MyUtils.showToast(
+                            activity!! as AppCompatActivity,
+                            "MAX ALLOWED is " + CreateTeamActivity.MAX_BATSMAN[1]
+                        )
                     }
-                }else {
-                    MyUtils.showToast(activity!! as AppCompatActivity,"ALL 11 Players Selected")
+                } else {
+                    MyUtils.showToast(activity!! as AppCompatActivity, "ALL 11 Players Selected")
                 }
             }
             adapter.notifyDataSetChanged()
@@ -137,8 +152,9 @@ class Batsman : Fragment() {
 
 
     }
+
     private fun activateCreditSorting() {
-        if(CreateTeamActivity.isSortByCreditsActive!!) {
+        if (CreateTeamActivity.isSortByCreditsActive!!) {
             mBinding!!.sortByPointsArrow.visibility = View.GONE
             mBinding!!.sortByCreditsArrow.visibility = View.VISIBLE
             mBinding!!.sortBySelectedArrow.visibility = View.GONE
@@ -161,7 +177,7 @@ class Batsman : Fragment() {
     }
 
     private fun activatePointsSorting() {
-        if(CreateTeamActivity.isSortByPointsActive!!) {
+        if (CreateTeamActivity.isSortByPointsActive!!) {
             mBinding!!.sortByPointsArrow.visibility = View.VISIBLE
             mBinding!!.sortByCreditsArrow.visibility = View.GONE
             mBinding!!.sortBySelectedArrow.visibility = View.GONE
@@ -184,7 +200,7 @@ class Batsman : Fragment() {
     }
 
     private fun activateSelectionSorting() {
-        if(CreateTeamActivity.isSortBySelectionActive!!) {
+        if (CreateTeamActivity.isSortBySelectionActive!!) {
             mBinding!!.sortByPointsArrow.visibility = View.GONE
             mBinding!!.sortByCreditsArrow.visibility = View.GONE
             mBinding!!.sortBySelectedArrow.visibility = View.VISIBLE
@@ -204,19 +220,29 @@ class Batsman : Fragment() {
             adapter.notifyDataSetChanged()
         }
     }
+
     private fun isMinimumPlayerSelected(): Boolean {
-        if((activity!! as CreateTeamActivity).isSpotAvailable(CreateTeamActivity.WANT_BAT)) {
+        if ((activity!! as CreateTeamActivity).isSpotAvailable(CreateTeamActivity.WANT_BAT)) {
             if (CreateTeamActivity.COUNT_WICKET_KEEPER < CreateTeamActivity.MAX_WICKET_KEEPER[0]) {
-                MyUtils.showToast(activity!! as AppCompatActivity,"Minimum "+ CreateTeamActivity.MAX_WICKET_KEEPER[0]+" "+"Wicket Keeper Required")
+                MyUtils.showToast(
+                    activity!! as AppCompatActivity,
+                    "Minimum " + CreateTeamActivity.MAX_WICKET_KEEPER[0] + " " + "Wicket Keeper Required"
+                )
                 return false
             } else if (CreateTeamActivity.COUNT_BATS_MAN < CreateTeamActivity.MAX_BATSMAN[0]) {
                 //MyUtils.showToast(activity!!.getWindow().getDecorView().getRootView(),"Minimum "+ CreateTeamActivity.MAX_BATSMAN[0]+" "+"BatsMan Required")
                 return true
             } else if (CreateTeamActivity.COUNT_ALL_ROUNDER < CreateTeamActivity.MAX_ALL_ROUNDER[0]) {
-                MyUtils.showToast(activity!! as AppCompatActivity,"Minimum "+ CreateTeamActivity.MAX_ALL_ROUNDER[0]+" "+"All Rounder Required")
+                MyUtils.showToast(
+                    activity!! as AppCompatActivity,
+                    "Minimum " + CreateTeamActivity.MAX_ALL_ROUNDER[0] + " " + "All Rounder Required"
+                )
                 return false
-            } else if (CreateTeamActivity.COUNT_BOWLER <  CreateTeamActivity.MAX_BOWLER[0]) {
-                MyUtils.showToast(activity!! as AppCompatActivity,"Minimum "+ CreateTeamActivity.MAX_BOWLER[0]+" "+"BOWLER Required")
+            } else if (CreateTeamActivity.COUNT_BOWLER < CreateTeamActivity.MAX_BOWLER[0]) {
+                MyUtils.showToast(
+                    activity!! as AppCompatActivity,
+                    "Minimum " + CreateTeamActivity.MAX_BOWLER[0] + " " + "BOWLER Required"
+                )
                 return false
 
             }
@@ -224,14 +250,16 @@ class Batsman : Fragment() {
         }
         return true
     }
+
     private fun isMaxPlayersValid(objects: PlayersInfoModel): Boolean {
-        if(objects.teamId == CreateTeamActivity.teamAId && CreateTeamActivity.TEAMA < CreateTeamActivity.MAX_PLAYERS_FROM_TEAM){
+        if (objects.teamId == CreateTeamActivity.teamAId && CreateTeamActivity.TEAMA < CreateTeamActivity.MAX_PLAYERS_FROM_TEAM) {
             return true
-        }else if(objects.teamId == CreateTeamActivity.teamBId && CreateTeamActivity.TEAMB < CreateTeamActivity.MAX_PLAYERS_FROM_TEAM){
+        } else if (objects.teamId == CreateTeamActivity.teamBId && CreateTeamActivity.TEAMB < CreateTeamActivity.MAX_PLAYERS_FROM_TEAM) {
             return true
         }
         return false
     }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnTeamCreateListener) {

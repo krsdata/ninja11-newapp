@@ -2,55 +2,53 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="@dimen/matches_view_top_margin"
     android:orientation="vertical">
-<TextView
-    android:id="@+id/textView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="UPCOMING MATCHES"
-    android:fontFamily="@font/montserrat_bold"
-    android:layout_marginLeft="@dimen/matches_view_left_margin_consolidated"
-    android:layout_marginRight="@dimen/matches_view_right_margin"
-    android:textColor="@color/black"
-    android:textSize="@dimen/header_size" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/matches_view_left_margin_consolidated"
+        android:layout_marginEnd="@dimen/matches_view_right_margin"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="UPCOMING MATCHES"
+        android:textColor="@color/black"
+        android:textSize="@dimen/header_size" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_upcoming_matches"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="50dp"
-            android:clipToPadding="false"/>
+            android:clipToPadding="false"
+            android:paddingBottom="50dp" />
 
         <LinearLayout
             android:id="@+id/linear_empty_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:orientation="vertical"
-            android:layout_marginTop="25dp">
+            android:layout_marginTop="25dp"
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/msg_no_matches"
                 android:fontFamily="@font/montserrat_medium"
-                android:textColor="@color/black"/>
+                android:text="@string/msg_no_matches"
+                android:textColor="@color/black" />
 
-             <ImageView
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_gravity="center_horizontal"
-                 android:tint="@color/colorPrimaryDark"
-                 android:layout_marginTop="20dip"
-                 android:src="@drawable/ic_gamepad_black_24dp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dip"
+                android:src="@drawable/ic_gamepad_black_24dp"
+                android:tint="@color/colorPrimaryDark" />
         </LinearLayout>
-
     </RelativeLayout>
-
-
-
 </LinearLayout>

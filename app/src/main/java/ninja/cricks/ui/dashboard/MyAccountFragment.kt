@@ -56,12 +56,12 @@ class MyAccountFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        userInfo = (activity!!.applicationContext as SportsFightApplication).userInformations
-        walletInfo = (activity!!.applicationContext as SportsFightApplication).walletInfo
+        userInfo = (requireActivity().applicationContext as SportsFightApplication).userInformations
+        walletInfo = (requireActivity().applicationContext as SportsFightApplication).walletInfo
         (activity as MainActivity).hideToolbar()
 
         mBinding!!.notificationClick.setOnClickListener(View.OnClickListener {
-            val intent = Intent(activity!!, NotificationListActivity::class.java)
+            val intent = Intent(requireActivity(), NotificationListActivity::class.java)
             startActivityForResult(intent,MyBalanceActivity.REQUEST_CODE_ADD_MONEY)
         })
         val viewpager: ViewPager = view.findViewById(R.id.account_viewpager)
@@ -95,10 +95,10 @@ class MyAccountFragment : BaseFragment() {
         }
         //mBinding!!.progressBarPlayingHistory.visibility  =View.VISIBLE
         var models = RequestModel()
-        models.user_id = MyPreferences.getUserID(activity!!)!!
-        models.token = MyPreferences.getToken(activity!!)!!
+        models.user_id = MyPreferences.getUserID(requireActivity())!!
+        models.token = MyPreferences.getToken(requireActivity())!!
 
-        WebServiceClient(activity!!).client.create(IApiMethod::class.java).getWallet(models)
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getWallet(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     if(isAdded) {
@@ -142,7 +142,7 @@ class MyAccountFragment : BaseFragment() {
         }
         if(userInfo!=null) {
             mBinding!!.profileName.text = userInfo.fullName
-            Glide.with(activity!!)
+            Glide.with(requireActivity())
                 .load(userInfo.profileImage)
                 .placeholder(R.drawable.player_blue)
                 .into(mBinding!!.profileImage)
@@ -151,10 +151,10 @@ class MyAccountFragment : BaseFragment() {
         }
 
         mBinding!!.btnEditProfile.setOnClickListener(View.OnClickListener {
-            val intent = Intent(activity!!, EditProfileActivity::class.java)
+            val intent = Intent(requireActivity(), EditProfileActivity::class.java)
             startActivity(intent)
         })
-        walletInfo = (activity!!.applicationContext as SportsFightApplication).walletInfo
+        walletInfo = (requireActivity().applicationContext as SportsFightApplication).walletInfo
         if(walletInfo!=null){
             var accountStatus = walletInfo.accountStatus
             if(accountStatus!=null){
@@ -186,33 +186,30 @@ class MyAccountFragment : BaseFragment() {
                     })
                 }else {
                     mBinding!!.btnVerifyAccount.setOnClickListener(View.OnClickListener {
-                        val intent = Intent(activity!!, VerifyDocumentsActivity::class.java)
+                        val intent = Intent(requireActivity(), VerifyDocumentsActivity::class.java)
                         startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
                     })
                 }
             }
         }else {
             mBinding!!.btnVerifyAccount.setOnClickListener(View.OnClickListener {
-                val intent = Intent(activity!!, VerifyDocumentsActivity::class.java)
+                val intent = Intent(requireActivity(), VerifyDocumentsActivity::class.java)
                 startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
             })
         }
-
-
-
     }
 
     private fun gotoDocumentsListActivity() {
-        val intent = Intent(activity!!, DocumentsListActivity::class.java)
+        val intent = Intent(requireActivity(), DocumentsListActivity::class.java)
         startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
     }
 
     private fun setupViewPager(viewPager: ViewPager) {
-        val adapter = MyAccountViewPagerAdapter(activity!!.supportFragmentManager)
-        var bundle = Bundle()
+        val adapter = MyAccountViewPagerAdapter(requireActivity().supportFragmentManager)
+        val bundle = Bundle()
        // bundle.putSerializable(SERIALIZABLE_ACCOUNT_BAL,this)
         adapter.addFragment(MyAccountBalanceFragment.newInstance(bundle),"BALANCE")
-        adapter.addFragment(PlayingHistoryFragment.newInstance(bundle),"PLAYING HISTORY")
+        //adapter.addFragment(PlayingHistoryFragment.newInstance(bundle),"PLAYING HISTORY")
         adapter.addFragment(TransactionFragment.newInstance(bundle),"TRANSACTION")
         viewPager.adapter = adapter
     }

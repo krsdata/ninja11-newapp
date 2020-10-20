@@ -36,7 +36,7 @@ open class BaseFragment : Fragment() {
 
 
     fun genericAlertDialog(message: String, boolean: Boolean) {
-        val builder = AlertDialog.Builder(activity!!)
+        val builder = AlertDialog.Builder(requireActivity())
         //set title for alert dialog
         // builder.setTitle("Warning")
         //set message for alert dialog
@@ -53,9 +53,9 @@ open class BaseFragment : Fragment() {
 
             customeProgressDialog!!.show()
             var request = RequestModel()
-            request.user_id = MyPreferences.getUserID(activity!!)!!
-            request.token = MyPreferences.getToken(activity!!)!!
-            WebServiceClient(activity!!).client.create(IApiMethod::class.java).logout(request)
+            request.user_id = MyPreferences.getUserID(requireActivity())!!
+            request.token = MyPreferences.getToken(requireActivity())!!
+            WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).logout(request)
                 .enqueue(object : Callback<UsersPostDBResponse?> {
                     override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
 
@@ -67,9 +67,9 @@ open class BaseFragment : Fragment() {
                     ) {
 
                         customeProgressDialog!!.dismiss()
-                        MyPreferences.clear(activity!!)
+                        MyPreferences.clear(requireActivity())
                         val intent = Intent(
-                            activity!!,
+                            requireActivity(),
                             SplashScreenActivity::class.java
                         )
                         intent.flags =

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ninja.cricks.R
@@ -24,15 +25,14 @@ class PlayersContestAdapter(
     private var playerListObject = playerList
     private var matchObject = matchObject
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        var view = LayoutInflater.from(parent.context)
+        val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.createteam_row_players, parent, false)
         return DataViewHolder(view)
     }
 
     override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
-        var objectVal = playerListObject[viewType]
+        val objectVal = playerListObject[viewType]
         val viewHolder: DataViewHolder = parent as DataViewHolder
         if (objectVal.analyticsModel != null) {
             viewHolder.playerSelectionPercentage?.text =
@@ -49,8 +49,8 @@ class PlayersContestAdapter(
             viewHolder.teamName?.setBackgroundColor(context.resources.getColor(R.color.player_bg_dark_yellow))
             viewHolder.teamName?.setTextColor(context.resources.getColor(R.color.white))
         }
-        viewHolder.fantasyPoints?.text = "" + objectVal.fantasyPlayerRating
-        viewHolder.playerPoints?.text = "" + objectVal.playerSeriesPoints
+        viewHolder.fantasyPoints?.text = "${objectVal.fantasyPlayerRating}"
+        viewHolder.playerPoints?.text = "${objectVal.playerSeriesPoints}"
 
         if (objectVal.isPlaying11 && matchObject.isLineup) {
             viewHolder.anouncedIndicatorCircle?.setBackgroundResource(R.drawable.circle_green)
@@ -73,7 +73,6 @@ class PlayersContestAdapter(
             viewHolder.addImage.setImageResource(R.drawable.ic_add_circle_outline_black_24dp)
             viewHolder.linearTradesStatus.setBackgroundColor(context.resources.getColor(R.color.white))
         }
-
     }
 
 
@@ -100,10 +99,6 @@ class PlayersContestAdapter(
             itemView.findViewById<TextView>(R.id.anounced_indicator_circle)
         val anouncedIndicatorText = itemView.findViewById<TextView>(R.id.anounced_indicator_text)
         val addImage = itemView.findViewById<ImageView>(R.id.add_image)
-
-
     }
-
-
 }
 

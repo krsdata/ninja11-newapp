@@ -7,9 +7,9 @@ import android.util.TypedValue
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import ninja.cricks.databinding.ActivityMyBallanceBinding
 import ninja.cricks.models.AccountDocumentStatus
 import ninja.cricks.models.WalletInfo
-import ninja.cricks.databinding.ActivityMyBallanceBinding
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
@@ -27,17 +27,18 @@ import retrofit2.Response
 class MyBalanceActivity : AppCompatActivity() {
 
     private lateinit var walletInfo: WalletInfo
-    private var customeProgressDialog: CustomeProgressDialog?=null
+    private var customeProgressDialog: CustomeProgressDialog? = null
     private var mBinding: ActivityMyBallanceBinding? = null
 
-    companion object{
+    companion object {
 
-        val REQUEST_CODE_ADD_MONEY : Int = 9001
+        val REQUEST_CODE_ADD_MONEY: Int = 9001
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this,
+        mBinding = DataBindingUtil.setContentView(
+            this,
             R.layout.activity_my_ballance
         )
         walletInfo = (application as SportsFightApplication).walletInfo
@@ -56,15 +57,14 @@ class MyBalanceActivity : AppCompatActivity() {
         initWalletInfo()
 
         mBinding!!.addCash.setOnClickListener(View.OnClickListener {
-            if(MyPreferences.getLoginStatus(this@MyBalanceActivity)!!){
+            if (MyPreferences.getLoginStatus(this@MyBalanceActivity)!!) {
                 val intent = Intent(this@MyBalanceActivity, AddMoneyActivity::class.java)
-                startActivityForResult(intent,REQUEST_CODE_ADD_MONEY)
-            }else {
+                startActivityForResult(intent, REQUEST_CODE_ADD_MONEY)
+            } else {
                 val intent = Intent(this@MyBalanceActivity, RegisterScreenActivity::class.java)
-                intent.putExtra(RegisterScreenActivity.ISACTIVITYRESULT,true)
+                intent.putExtra(RegisterScreenActivity.ISACTIVITYRESULT, true)
                 startActivityForResult(intent, RegisterScreenActivity.REQUESTCODE_LOGIN)
             }
-
 
 
         })
@@ -72,24 +72,24 @@ class MyBalanceActivity : AppCompatActivity() {
 
 
         mBinding!!.btnWithdraw.setOnClickListener(View.OnClickListener {
-            if(walletInfo.bankAccountVerified==BindingUtils.BANK_DOCUMENTS_STATUS_VERIFIED){
-                var value =  walletInfo.walletAmount
-                var amount =  value.toDouble()
-                if(amount >=200){
+            if (walletInfo.bankAccountVerified == BindingUtils.BANK_DOCUMENTS_STATUS_VERIFIED) {
+                var value = walletInfo.walletAmount
+                var amount = value.toDouble()
+                if (amount >= 200) {
                     val intent = Intent(this@MyBalanceActivity, WithdrawAmountsActivity::class.java)
                     startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
-                }else {
-                    MyUtils.showToast(this@MyBalanceActivity,"Amount is less than 200 INR")
+                } else {
+                    MyUtils.showToast(this@MyBalanceActivity, "Amount is less than 200 INR")
                 }
 
-            }else {
+            } else {
                 var message = "Please Verify your account"
-                if(walletInfo.bankAccountVerified==BindingUtils.BANK_DOCUMENTS_STATUS_APPROVAL_PENDING){
+                if (walletInfo.bankAccountVerified == BindingUtils.BANK_DOCUMENTS_STATUS_APPROVAL_PENDING) {
                     message = "Documents Approvals Pending"
-                }else if(walletInfo.bankAccountVerified==BindingUtils.BANK_DOCUMENTS_STATUS_REJECTED){
+                } else if (walletInfo.bankAccountVerified == BindingUtils.BANK_DOCUMENTS_STATUS_REJECTED) {
                     message = "Your Document Rejected Please contact admin"
                 }
-                MyUtils.showToast(this@MyBalanceActivity,message)
+                MyUtils.showToast(this@MyBalanceActivity, message)
             }
 
         })
@@ -97,13 +97,13 @@ class MyBalanceActivity : AppCompatActivity() {
         mBinding!!.txtRecentTransaction.setOnClickListener(View.OnClickListener {
 
             val intent = Intent(this@MyBalanceActivity, MyTransactionHistoryActivity::class.java)
-            startActivityForResult(intent,REQUEST_CODE_ADD_MONEY)
+            startActivityForResult(intent, REQUEST_CODE_ADD_MONEY)
         })
     }
 
     private fun updateAccountVerification(accountStatus: AccountDocumentStatus?) {
-        if(accountStatus!=null){
-            if(accountStatus.documentsVerified== BindingUtils.BANK_DOCUMENTS_STATUS_REJECTED){
+        if (accountStatus != null) {
+            if (accountStatus.documentsVerified == BindingUtils.BANK_DOCUMENTS_STATUS_REJECTED) {
                 mBinding!!.verifyAccountMessage.visibility = View.GONE
                 mBinding!!.verifyAccount.text = "REJECTED"
                 mBinding!!.verifyAccount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.0f)
@@ -113,8 +113,8 @@ class MyBalanceActivity : AppCompatActivity() {
                     gotoDocumentsListActivity()
                 })
 
-            }else
-                if(accountStatus.documentsVerified==BindingUtils.BANK_DOCUMENTS_STATUS_VERIFIED){
+            } else
+                if (accountStatus.documentsVerified == BindingUtils.BANK_DOCUMENTS_STATUS_VERIFIED) {
                     mBinding!!.verifyAccountMessage.visibility = View.GONE
                     mBinding!!.verifyAccount.text = "Account Verified"
                     mBinding!!.verifyAccount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.0f)
@@ -124,7 +124,7 @@ class MyBalanceActivity : AppCompatActivity() {
                         gotoDocumentsListActivity()
                     })
 
-                }else if(accountStatus.documentsVerified==BindingUtils.BANK_DOCUMENTS_STATUS_APPROVAL_PENDING){
+                } else if (accountStatus.documentsVerified == BindingUtils.BANK_DOCUMENTS_STATUS_APPROVAL_PENDING) {
                     mBinding!!.verifyAccountMessage.visibility = View.GONE
                     mBinding!!.verifyAccount.text = "Approval Pending"
                     mBinding!!.verifyAccount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.0f)
@@ -133,11 +133,15 @@ class MyBalanceActivity : AppCompatActivity() {
                     mBinding!!.verifyAccount.setOnClickListener(View.OnClickListener {
                         gotoDocumentsListActivity()
                     })
-                }else {
+                } else {
                     mBinding!!.verifyAccountMessage.visibility = View.VISIBLE
                     mBinding!!.verifyAccount.setOnClickListener(View.OnClickListener {
-                        val intent = Intent(this@MyBalanceActivity, VerifyDocumentsActivity::class.java)
-                        startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
+                        val intent =
+                            Intent(this@MyBalanceActivity, VerifyDocumentsActivity::class.java)
+                        startActivityForResult(
+                            intent,
+                            VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC
+                        )
                     })
                 }
         }
@@ -152,17 +156,20 @@ class MyBalanceActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         getWalletBalances()
     }
+
     private fun initWalletInfo() {
         var walletInfo = (application as SportsFightApplication).walletInfo
-        var totalBalance = walletInfo.depositAmount + walletInfo.prizeAmount + walletInfo.bonusAmount
-        mBinding!!.walletTotalAmount.text = String.format("₹%.2f",totalBalance)
-        mBinding!!.amountAdded.text = String.format("₹%.2f",walletInfo.depositAmount + walletInfo.prizeAmount)
-        mBinding!!.bonusAmount.text = String.format("₹%.2f",walletInfo.bonusAmount)
+        var totalBalance =
+            walletInfo.depositAmount + walletInfo.prizeAmount + walletInfo.bonusAmount
+        mBinding!!.walletTotalAmount.text = String.format("₹%.2f", totalBalance)
+        mBinding!!.amountAdded.text = String.format("₹%.2f", walletInfo.prizeAmount)
+        mBinding!!.depositAmount.text = String.format("₹%.2f", walletInfo.depositAmount)
+        mBinding!!.bonusAmount.text = String.format("₹%.2f", walletInfo.bonusAmount)
 
-        if(walletInfo!=null){
+        if (walletInfo != null) {
             var accountStatus = walletInfo.accountStatus
             updateAccountVerification(accountStatus)
-        }else {
+        } else {
             mBinding!!.verifyAccountMessage.visibility = View.VISIBLE
             mBinding!!.verifyAccount.setOnClickListener(View.OnClickListener {
                 val intent = Intent(this@MyBalanceActivity, VerifyDocumentsActivity::class.java)
@@ -172,12 +179,12 @@ class MyBalanceActivity : AppCompatActivity() {
     }
 
     fun getWalletBalances() {
-        if(!MyUtils.isConnectedWithInternet(this)) {
-            MyUtils.showToast(this,"No Internet connection found")
+        if (!MyUtils.isConnectedWithInternet(this)) {
+            MyUtils.showToast(this, "No Internet connection found")
             return
         }
         customeProgressDialog!!.show()
-        var models = RequestModel()
+        val models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
         models.token = MyPreferences.getToken(this)!!
 
@@ -193,21 +200,16 @@ class MyBalanceActivity : AppCompatActivity() {
                 ) {
                     customeProgressDialog!!.dismiss()
                     var res = response!!.body()
-                    if(res!=null) {
+                    if (res != null) {
                         var responseModel = res.walletObjects
-                        if(responseModel!=null) {
-                            (application as SportsFightApplication).saveWalletInformation(responseModel)
+                        if (responseModel != null) {
+                            (application as SportsFightApplication).saveWalletInformation(
+                                responseModel
+                            )
                             initWalletInfo()
                         }
                     }
-
                 }
-
             })
-
     }
-
-
-
-
 }

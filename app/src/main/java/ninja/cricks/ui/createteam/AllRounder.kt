@@ -24,31 +24,38 @@ import ninja.cricks.utils.MyUtils
 
 
 class AllRounder : Fragment() {
-    var allRounders: ArrayList<PlayersInfoModel>?=null
-    var matchObject: UpcomingMatchesModel?=null
+    var allRounders: ArrayList<PlayersInfoModel>? = null
+    var matchObject: UpcomingMatchesModel? = null
 
-    var count=0
+    var count = 0
     private lateinit var mListener: OnTeamCreateListener
     private var mBinding: FragmentCreateTeamListBinding? = null
     lateinit var adapter: PlayersContestAdapter
 
-    companion object{
-        fun newInstance(bundle : Bundle) : AllRounder {
+    companion object {
+        fun newInstance(bundle: Bundle): AllRounder {
             val fragment = AllRounder()
-            fragment.arguments=bundle
+            fragment.arguments = bundle
             return fragment
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        allRounders = arguments!!.get(CreateTeamActivity.SERIALIZABLE_KEY_PLAYERS) as ArrayList<PlayersInfoModel>
-        matchObject = arguments!!.get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
+        allRounders =
+            requireArguments().get(CreateTeamActivity.SERIALIZABLE_KEY_PLAYERS) as ArrayList<PlayersInfoModel>
+        matchObject =
+            requireArguments().get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        mBinding  = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_create_team_list, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        mBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_create_team_list, container, false
+        )
         return mBinding!!.root
     }
 
@@ -60,9 +67,11 @@ class AllRounder : Fragment() {
             CreateTeamActivity.CREATE_TEAM_ALLROUNDER
         )
         resetSorting()
-        mBinding!!.labelPlayersCounts.text = String.format( "Select %d - %d All Rounder",
+        mBinding!!.labelPlayersCounts.text = String.format(
+            "Select %d - %d All Rounder",
             CreateTeamActivity.MAX_ALL_ROUNDER[0],
-            CreateTeamActivity.MAX_ALL_ROUNDER[1])
+            CreateTeamActivity.MAX_ALL_ROUNDER[1]
+        )
         mBinding!!.recyclerCreatePlayersList.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         val dividerItemDecoration = DividerItemDecoration(
@@ -72,7 +81,7 @@ class AllRounder : Fragment() {
         mBinding!!.recyclerCreatePlayersList.addItemDecoration(dividerItemDecoration)
 
         adapter = PlayersContestAdapter(
-            activity!!,
+            requireActivity(),
             allRounders!!,
             matchObject!!
         )
@@ -80,27 +89,33 @@ class AllRounder : Fragment() {
 
         adapter.onItemClick = { objects ->
             CreateTeamActivity.isEditMode = false
-            if(objects.isSelected) {
+            if (objects.isSelected) {
                 count--
                 objects.isSelected = false
                 mListener.onAllRounderDeSelected(objects)
-            }else{
-                if(!CreateTeamActivity.isAllPlayersSelected!!) {
-                    if(count < CreateTeamActivity.MAX_ALL_ROUNDER[1]) {
-                        if(isMaxPlayersValid(objects)) {
-                            if(isMinimumPlayerSelected()) {
+            } else {
+                if (!CreateTeamActivity.isAllPlayersSelected!!) {
+                    if (count < CreateTeamActivity.MAX_ALL_ROUNDER[1]) {
+                        if (isMaxPlayersValid(objects)) {
+                            if (isMinimumPlayerSelected()) {
                                 count++
                                 objects.isSelected = true
                                 mListener.onAllRounderSelected(objects)
                             }
-                        }else {
-                            MyUtils.showToast(activity!! as AppCompatActivity,"MAX Player Reached limit  "+objects.teamShortName)
+                        } else {
+                            MyUtils.showToast(
+                                requireActivity() as AppCompatActivity,
+                                "MAX Player Reached limit  " + objects.teamShortName
+                            )
                         }
-                    }else {
-                        MyUtils.showToast(activity!! as AppCompatActivity,"MAX ALLOWED is "+ CreateTeamActivity.MAX_ALL_ROUNDER[1])
+                    } else {
+                        MyUtils.showToast(
+                            requireActivity() as AppCompatActivity,
+                            "MAX ALLOWED is " + CreateTeamActivity.MAX_ALL_ROUNDER[1]
+                        )
                     }
-                }else {
-                    MyUtils.showToast(activity!! as AppCompatActivity,"ALL 11 Players Selected")
+                } else {
+                    MyUtils.showToast(requireActivity() as AppCompatActivity, "ALL 11 Players Selected")
                 }
             }
             adapter.notifyDataSetChanged()
@@ -139,8 +154,9 @@ class AllRounder : Fragment() {
 
 
     }
+
     private fun activateCreditSorting() {
-        if(CreateTeamActivity.isSortByCreditsActive!!) {
+        if (CreateTeamActivity.isSortByCreditsActive!!) {
             mBinding!!.sortByPointsArrow.visibility = View.GONE
             mBinding!!.sortByCreditsArrow.visibility = View.VISIBLE
             mBinding!!.sortBySelectedArrow.visibility = View.GONE
@@ -163,7 +179,7 @@ class AllRounder : Fragment() {
     }
 
     private fun activatePointsSorting() {
-        if(CreateTeamActivity.isSortByPointsActive!!) {
+        if (CreateTeamActivity.isSortByPointsActive!!) {
             mBinding!!.sortByPointsArrow.visibility = View.VISIBLE
             mBinding!!.sortByCreditsArrow.visibility = View.GONE
             mBinding!!.sortBySelectedArrow.visibility = View.GONE
@@ -186,7 +202,7 @@ class AllRounder : Fragment() {
     }
 
     private fun activateSelectionSorting() {
-        if(CreateTeamActivity.isSortBySelectionActive!!) {
+        if (CreateTeamActivity.isSortBySelectionActive!!) {
             mBinding!!.sortByPointsArrow.visibility = View.GONE
             mBinding!!.sortByCreditsArrow.visibility = View.GONE
             mBinding!!.sortBySelectedArrow.visibility = View.VISIBLE
@@ -206,19 +222,29 @@ class AllRounder : Fragment() {
             adapter.notifyDataSetChanged()
         }
     }
+
     private fun isMinimumPlayerSelected(): Boolean {
-        if((activity!! as CreateTeamActivity).isSpotAvailable(CreateTeamActivity.WANT_ALL)){
+        if ((requireActivity() as CreateTeamActivity).isSpotAvailable(CreateTeamActivity.WANT_ALL)) {
             if (CreateTeamActivity.COUNT_WICKET_KEEPER < CreateTeamActivity.MAX_WICKET_KEEPER[0]) {
-                MyUtils.showToast(activity!! as AppCompatActivity,"Minimum "+ CreateTeamActivity.MAX_WICKET_KEEPER[0]+" "+"Wicket Keeper Required")
+                MyUtils.showToast(
+                    requireActivity() as AppCompatActivity,
+                    "Minimum " + CreateTeamActivity.MAX_WICKET_KEEPER[0] + " " + "Wicket Keeper Required"
+                )
                 return false
             } else if (CreateTeamActivity.COUNT_BATS_MAN < CreateTeamActivity.MAX_BATSMAN[0]) {
-                MyUtils.showToast(activity!! as AppCompatActivity,"Minimum "+ CreateTeamActivity.MAX_BATSMAN[0]+" "+"BatsMan Required")
+                MyUtils.showToast(
+                    requireActivity() as AppCompatActivity,
+                    "Minimum " + CreateTeamActivity.MAX_BATSMAN[0] + " " + "BatsMan Required"
+                )
                 return false
-            } else if (CreateTeamActivity.COUNT_ALL_ROUNDER <  CreateTeamActivity.MAX_ALL_ROUNDER[0]) {
-               // MyUtils.showToast(activity!!.getWindow().getDecorView().getRootView(),"Minimum "+ CreateTeamActivity.MAX_ALL_ROUNDER[0]+" "+"All Rounder Required")
+            } else if (CreateTeamActivity.COUNT_ALL_ROUNDER < CreateTeamActivity.MAX_ALL_ROUNDER[0]) {
+                // MyUtils.showToast(activity!!.getWindow().getDecorView().getRootView(),"Minimum "+ CreateTeamActivity.MAX_ALL_ROUNDER[0]+" "+"All Rounder Required")
                 return true
-            } else if (CreateTeamActivity.COUNT_BOWLER <  CreateTeamActivity.MAX_BOWLER[0]) {
-                MyUtils.showToast(activity!! as AppCompatActivity,"Minimum "+ CreateTeamActivity.MAX_BOWLER[0]+" "+"BOWLER Required")
+            } else if (CreateTeamActivity.COUNT_BOWLER < CreateTeamActivity.MAX_BOWLER[0]) {
+                MyUtils.showToast(
+                    requireActivity() as AppCompatActivity,
+                    "Minimum " + CreateTeamActivity.MAX_BOWLER[0] + " " + "BOWLER Required"
+                )
                 return false
 
             }
@@ -228,13 +254,14 @@ class AllRounder : Fragment() {
     }
 
     private fun isMaxPlayersValid(objects: PlayersInfoModel): Boolean {
-        if(objects.teamId == CreateTeamActivity.teamAId && CreateTeamActivity.TEAMA < CreateTeamActivity.MAX_PLAYERS_FROM_TEAM){
+        if (objects.teamId == CreateTeamActivity.teamAId && CreateTeamActivity.TEAMA < CreateTeamActivity.MAX_PLAYERS_FROM_TEAM) {
             return true
-        }else if(objects.teamId == CreateTeamActivity.teamBId && CreateTeamActivity.TEAMB < CreateTeamActivity.MAX_PLAYERS_FROM_TEAM){
+        } else if (objects.teamId == CreateTeamActivity.teamBId && CreateTeamActivity.TEAMB < CreateTeamActivity.MAX_PLAYERS_FROM_TEAM) {
             return true
         }
         return false
     }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnTeamCreateListener) {
