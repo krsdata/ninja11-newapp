@@ -57,14 +57,9 @@ class GridViewAdapter(
             viewHolder.playerFantasyPoints.text = objects.playerPoints + " Pt"
         }
 
-        var defaultIcon = objects.getPlayerIcon()
-        if (defaultIcon == 0) {
-            defaultIcon = R.drawable.player_blue
-        }
-
         Glide.with(context)
             .load(objects.playerImage)
-            .placeholder(defaultIcon)
+            .placeholder(R.drawable.player_blue)
             .into(viewHolder.imageView)
 
         if (matchObject.teamAInfo!!.teamId == objects.teamId) {

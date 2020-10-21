@@ -173,8 +173,8 @@ class WithdrawAmountsActivity : BaseActivity() {
             .gravity(Flashbar.Gravity.TOP)
             .title(getString(R.string.app_name))
             .message(message)
-            .backgroundDrawable(R.color.red)
-            .showIcon()
+            .backgroundDrawable(R.color.green)
+            /*.showIcon()
             .icon(R.drawable.ic_photo_camera_black_24dp)
             .iconAnimation(
                 FlashAnim.with(this@WithdrawAmountsActivity)
@@ -183,7 +183,7 @@ class WithdrawAmountsActivity : BaseActivity() {
                     .alpha()
                     .duration(750)
                     .accelerate()
-            )
+            )*/
             .build()
         flashbar.show()
         Handler().postDelayed(Runnable {

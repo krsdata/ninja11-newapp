@@ -265,32 +265,55 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
                     response: Response<UsersPostDBResponse?>?
                 ) {
                     customeProgressDialog.dismiss()
-                    var res = response!!.body()
+                    val res = response!!.body()
                     if (res != null) {
-                        if (res.actionForTeam == 1) {
-                            val intent =
-                                Intent(this@ContestActivity, CreateTeamActivity::class.java)
-                            intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
-                            startActivityForResult(
-                                intent,
-                                CreateTeamActivity.CREATETEAM_REQUESTCODE
-                            )
-                        } else if (res.actionForTeam == 2) {
-                            val intent =
-                                Intent(this@ContestActivity, SelectTeamActivity::class.java)
-                            intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
-                            intent.putExtra(CreateTeamActivity.SERIALIZABLE_CONTEST_KEY, objects)
-                            intent.putExtra(
-                                CreateTeamActivity.SERIALIZABLE_SELECTED_TEAMS,
-                                res.selectedTeamModel
-                            )
-                            startActivityForResult(
-                                intent,
-                                CreateTeamActivity.CREATETEAM_REQUESTCODE
-                            )
+                        if (!res.status) {
+                            if (res.code == 401) {
+                                MyUtils.showToast(
+                                    this@ContestActivity,
+                                    res.message
+                                )
+                            } else {
+                                MyUtils.showMessage(
+                                    this@ContestActivity,
+                                    res.message
+                                )
+                            }
                         } else {
-                            Toast.makeText(this@ContestActivity, res.message, Toast.LENGTH_LONG)
-                                .show()
+                            if (res.actionForTeam == 1) {
+                                val intent =
+                                    Intent(this@ContestActivity, CreateTeamActivity::class.java)
+                                intent.putExtra(
+                                    CreateTeamActivity.SERIALIZABLE_MATCH_KEY,
+                                    matchObject
+                                )
+                                startActivityForResult(
+                                    intent,
+                                    CreateTeamActivity.CREATETEAM_REQUESTCODE
+                                )
+                            } else if (res.actionForTeam == 2) {
+                                val intent =
+                                    Intent(this@ContestActivity, SelectTeamActivity::class.java)
+                                intent.putExtra(
+                                    CreateTeamActivity.SERIALIZABLE_MATCH_KEY,
+                                    matchObject
+                                )
+                                intent.putExtra(
+                                    CreateTeamActivity.SERIALIZABLE_CONTEST_KEY,
+                                    objects
+                                )
+                                intent.putExtra(
+                                    CreateTeamActivity.SERIALIZABLE_SELECTED_TEAMS,
+                                    res.selectedTeamModel
+                                )
+                                startActivityForResult(
+                                    intent,
+                                    CreateTeamActivity.CREATETEAM_REQUESTCODE
+                                )
+                            } else {
+                                Toast.makeText(this@ContestActivity, res.message, Toast.LENGTH_LONG)
+                                    .show()
+                            }
                         }
                     }
                 }

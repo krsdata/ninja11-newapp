@@ -145,8 +145,8 @@ class MyUtils {
                     .gravity(Flashbar.Gravity.TOP)
 //                    .title(activity!!.getString(R.string.app_name))
                     .message(message)
-                    .backgroundDrawable(R.color.red)
-                    .showIcon()
+                    .backgroundDrawable(R.color.secondery_color)
+                    /*.showIcon()
                     .icon(R.drawable.ic_photo_camera_black_24dp)
                     .iconAnimation(
                         FlashAnim.with(activity)
@@ -155,7 +155,7 @@ class MyUtils {
                             .alpha()
                             .duration(750)
                             .accelerate()
-                    )
+                    )*/
                     .build()
                 flashbar.show()
                 Handler().postDelayed(Runnable { flashbar.dismiss() }, 2000L)

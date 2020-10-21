@@ -72,8 +72,6 @@
                         app:tint="@color/white" />
                 </RelativeLayout>
             </androidx.appcompat.widget.Toolbar>
-
-
         </RelativeLayout>
 
 

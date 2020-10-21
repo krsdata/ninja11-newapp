@@ -52,35 +52,36 @@ class EditProfileActivity : BaseActivity() {
             .into(mBinding!!.profileImage)
 
         updateUserOtherInfo()
-        mBinding!!.profileImage.setOnClickListener(object: View.OnClickListener{
-            override fun onClick(p0: View?) {
-                if(!TextUtils.isEmpty(photoUrl)){
-                    val intent = Intent(this@EditProfileActivity, FullScreenImageViewActivity::class.java)
-                    intent.putExtra(FullScreenImageViewActivity.KEY_IMAGE_URL,photoUrl)
-                    startActivity(intent)
-                }else
-                    if (checkAndRequestPermissions()) {
-                        selectImage(BaseActivity.DOCUMENTS_TYPE_PROFILES)
-                    } else {
-                        Toast.makeText(this@EditProfileActivity, "Permission required ", Toast.LENGTH_LONG)
-                            .show()
-                    }
-            }
 
-        })
 
-        mBinding!!.imageEdit.setOnClickListener(object: View.OnClickListener{
-            override fun onClick(p0: View?) {
-                if (checkAndRequestPermissions()) {
-                    selectImage(DOCUMENTS_TYPE_PROFILES)
-                } else {
-                    Toast.makeText(this@EditProfileActivity, "Permission required ", Toast.LENGTH_LONG)
-                        .show()
-                }
+        mBinding!!.profileImage.setOnClickListener {
+//            if (!TextUtils.isEmpty(photoUrl)) {
+//                val intent =
+//                    Intent(this@EditProfileActivity, FullScreenImageViewActivity::class.java)
+//                intent.putExtra(FullScreenImageViewActivity.KEY_IMAGE_URL, photoUrl)
+//                startActivity(intent)
+//            } else {
+//                if (checkAndRequestPermissions()) {
+//                    selectImage(BaseActivity.DOCUMENTS_TYPE_PROFILES)
+//                } else {
+//                    Toast.makeText(
+//                        this@EditProfileActivity,
+//                        "Permission required ",
+//                        Toast.LENGTH_LONG
+//                    )
+//                        .show()
+//                }
+//            }
+        }
 
-            }
-
-        })
+//        mBinding!!.imageEdit.setOnClickListener {
+//            if (checkAndRequestPermissions()) {
+//                selectImage(DOCUMENTS_TYPE_PROFILES)
+//            } else {
+//                Toast.makeText(this@EditProfileActivity, "Permission required ", Toast.LENGTH_LONG)
+//                    .show()
+//            }
+//        }
 
         mBinding!!.dateOfBirth.setOnClickListener(View.OnClickListener {
             val c = Calendar.getInstance()

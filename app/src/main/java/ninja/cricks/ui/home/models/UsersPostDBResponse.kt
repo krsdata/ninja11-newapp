@@ -11,39 +11,39 @@ import ninja.cricks.ui.leadersboard.models.PrizeBreakUpModels
 class UsersPostDBResponse {
     @SerializedName("status")
     @Expose
-    var status: Boolean=false
+    var status: Boolean = false
 
     @SerializedName("order_id")
     @Expose
-    var orderId: String=""
+    var orderId: String = ""
 
     @SerializedName("maintainance")
     @Expose
-    var appMaintainance: Boolean=false
+    var appMaintainance: Boolean = false
 
     @SerializedName("session_expired")
     @Expose
-    var sessionExpired: Boolean=false
+    var sessionExpired: Boolean = false
 
     @SerializedName("url")
     @Expose
-    var updatedApkUrl: String=""
+    var updatedApkUrl: String = ""
 
     @SerializedName("splashScreen")
     @Expose
-    var splash: String=""
+    var splash: String = ""
 
     @SerializedName("force_update")
     @Expose
-    var forceupdate: Boolean=false
+    var forceupdate: Boolean = false
 
     @SerializedName("release_note")
     @Expose
-    var releaseNote: String=""
+    var releaseNote: String = ""
 
     @SerializedName("action")
     @Expose
-    var actionForTeam: Int=0
+    var actionForTeam: Int = 0
 
     @SerializedName("team_list")
     @Expose
@@ -55,19 +55,19 @@ class UsersPostDBResponse {
 
     @SerializedName("system_time")
     @Expose
-    var systemTime: Long=0
+    var systemTime: Long = 0
 
     @SerializedName("total_points")
     @Expose
-    var totalPoints: String=""
+    var totalPoints: String = ""
 
     @SerializedName("message")
     @Expose
-    var message: String=""
+    var message: String = ""
 
     @SerializedName("code")
     @Expose
-    var code: Int=0
+    var code: Int = 0
 
     @SerializedName("walletInfo")
     @Expose
@@ -93,7 +93,7 @@ class UsersPostDBResponse {
     @Expose
     var leaderBoardList: ArrayList<LeadersBoardModels>? = null
 
-    inner class  Response {
+    inner class Response {
 
         @SerializedName("total_team_joined")
         @Expose
@@ -154,7 +154,6 @@ class UsersPostDBResponse {
         var joinedContestDetails: ArrayList<ContestModelLists>? = null
 
 
-
         @SerializedName("player_points")
         @Expose
         var playerPointsList: ArrayList<PlayersInfoModel>? = null
@@ -178,8 +177,7 @@ class UsersPostDBResponse {
     }
 
 
-
-    inner class  ScoresBoardModels {
+    inner class ScoresBoardModels {
 
         @SerializedName("status")
         @Expose
@@ -191,12 +189,11 @@ class UsersPostDBResponse {
 
         @SerializedName("teama")
         @Expose
-        var teama: TeamAInfo?= null
+        var teama: TeamAInfo? = null
 
         @SerializedName("teamb")
         @Expose
-        var teamb: TeamBInfo?= null
-
+        var teamb: TeamBInfo? = null
 
 
     }

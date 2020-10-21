@@ -110,8 +110,8 @@ abstract class BaseActivity : AppCompatActivity() {
             .gravity(Flashbar.Gravity.BOTTOM)
             .title(getString(R.string.app_name))
             .message("Time Up Editing your team, match went to live.")
-            .backgroundDrawable(R.color.red)
-            .showIcon()
+            .backgroundDrawable(R.color.secondery_color)
+            /*.showIcon()
             .icon(R.mipmap.ic_launcher)
             .iconAnimation(
                 FlashAnim.with(this)
@@ -120,7 +120,7 @@ abstract class BaseActivity : AppCompatActivity() {
                     .alpha()
                     .duration(750)
                     .accelerate()
-            )
+            )*/
             .build()
         flashbar.show()
         Handler().postDelayed(Runnable {

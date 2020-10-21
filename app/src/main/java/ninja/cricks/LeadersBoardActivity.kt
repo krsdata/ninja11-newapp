@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.edify.atrist.listener.OnMatchTimerStarted
+import ninja.cricks.databinding.ActivityLeadersBoardBinding
 import ninja.cricks.models.PlayerModels
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.network.IApiMethod
@@ -34,21 +35,20 @@ import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import ninja.cricks.databinding.ActivityLeadersBoardBinding
 
 
 class LeadersBoardActivity : BaseActivity() {
 
     var mainHandler: Handler? = Handler()
-    private var playersList: PlayerModels?=null
+    private var playersList: PlayerModels? = null
     private lateinit var viewPagerAdapter: ViewPagerAdapter
-    var contestObject: ContestModelLists?=null
-    var matchObject: UpcomingMatchesModel?=null
+    var contestObject: ContestModelLists? = null
+    var matchObject: UpcomingMatchesModel? = null
     private var mBinding: ActivityLeadersBoardBinding? = null
     private val updateScoresHandler = object : Runnable {
         override fun run() {
             Log.d("leadersboard", "hitting to server")
-            if(!isFinishing) {
+            if (!isFinishing) {
                 updateScores()
                 mainHandler!!.postDelayed(this, 60000)
             }
@@ -56,9 +56,9 @@ class LeadersBoardActivity : BaseActivity() {
     }
 
 
-    companion object{
-        var CREATETEAM_REQUESTCODE: Int=2001
-        var REFRESH_TIME: Int=60000
+    companion object {
+        var CREATETEAM_REQUESTCODE: Int = 2001
+        var REFRESH_TIME: Int = 60000
 
         val SERIALIZABLE_MATCH_KEY: String = "matchObject"
         val SERIALIZABLE_CONTEST_KEY: String = "contest"
@@ -68,7 +68,8 @@ class LeadersBoardActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this,
+        mBinding = DataBindingUtil.setContentView(
+            this,
             R.layout.activity_leaders_board
         )
         contestObject = intent.getSerializableExtra(SERIALIZABLE_CONTEST_KEY) as ContestModelLists
@@ -77,7 +78,7 @@ class LeadersBoardActivity : BaseActivity() {
         mBinding!!.imgFantasyPoints.setOnClickListener(View.OnClickListener {
             val intent = Intent(this@LeadersBoardActivity, WebActivity::class.java)
             intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_FANTASY_POINTS)
-            intent.putExtra(WebActivity.KEY_URL,BindingUtils.WEBVIEW_FANTASY_POINTS)
+            intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_FANTASY_POINTS)
             if (Build.VERSION.SDK_INT > 20) {
                 val options = ActivityOptions.makeSceneTransitionAnimation(this)
                 startActivity(intent, options.toBundle())
@@ -90,11 +91,11 @@ class LeadersBoardActivity : BaseActivity() {
             finish()
         })
 
-        if(matchObject!!.status==BindingUtils.MATCH_STATUS_UPCOMING){
+        if (matchObject!!.status == BindingUtils.MATCH_STATUS_UPCOMING) {
             mBinding!!.includeContestRow.linearTradesStatus.visibility = View.VISIBLE
             mBinding!!.includeLiveMatchRow.liveMatchesRow.visibility = View.GONE
             initUpcomingMatchData()
-        }else {
+        } else {
             mBinding!!.includeContestRow.linearTradesStatus.visibility = View.GONE
             mBinding!!.includeLiveMatchRow.liveMatchesRow.visibility = View.VISIBLE
             customeProgressDialog.show()
@@ -105,32 +106,18 @@ class LeadersBoardActivity : BaseActivity() {
         mBinding!!.tabs.setupWithViewPager(mBinding!!.viewpager)
 
 
-       initContestDetails()
+        initContestDetails()
 
-    }
-
-    override fun onStart() {
-        super.onStart()
-//        var infomodel = (application as SportsFightApplication).userInformations
-//        if(infomodel!=null) {
-//            BindingUtils.logFireBaseEvents(
-//                this,
-//                BindingUtils.FIREBASE_EVENT_ITEM_ID_LEADERS_BOARD,
-//                infomodel!!.userId,
-//                infomodel.fullName,
-//                infomodel.userEmail
-//            )
-//        }
     }
 
     override fun onResume() {
         super.onResume()
-        if(matchObject!!.status==BindingUtils.MATCH_STATUS_UPCOMING) {
+        if (matchObject!!.status == BindingUtils.MATCH_STATUS_UPCOMING) {
             startCountDown()
-        }else {
+        } else {
             updateTimerHeader()
         }
-        if(matchObject!!.status.equals(BindingUtils.MATCH_STATUS_LIVE)) {
+        if (matchObject!!.status.equals(BindingUtils.MATCH_STATUS_LIVE)) {
             mainHandler!!.post(updateScoresHandler)
         }
     }
@@ -138,21 +125,21 @@ class LeadersBoardActivity : BaseActivity() {
     private fun updateTimerHeader() {
         mBinding!!.matchTimer.text = matchObject!!.statusString.toUpperCase()
         mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.green))
-        mBinding!!.watchTimerImg.visibility =View.GONE
+        mBinding!!.watchTimerImg.visibility = View.GONE
     }
 
     private fun startCountDown() {
-        BindingUtils.logD("TimerLogs","initViewUpcomingMatches() called in ContestActivity")
-       // matchObject!!.timestampStart = 1591158573 + 300
-        BindingUtils.countDownStart(matchObject!!.timestampStart,object : OnMatchTimerStarted{
+        BindingUtils.logD("TimerLogs", "initViewUpcomingMatches() called in ContestActivity")
+        // matchObject!!.timestampStart = 1591158573 + 300
+        BindingUtils.countDownStart(matchObject!!.timestampStart, object : OnMatchTimerStarted {
             override fun onTimeFinished() {
                 updateTimerHeader()
-                if(matchObject!!.status.equals(BindingUtils.MATCH_STATUS_UPCOMING)){
+                if (matchObject!!.status.equals(BindingUtils.MATCH_STATUS_UPCOMING)) {
                     showMatchTimeUpDialog()
                 }
             }
 
-            override fun onTicks(time:String) {
+            override fun onTicks(time: String) {
                 mBinding!!.matchTimer.text = time
             }
 
@@ -160,15 +147,18 @@ class LeadersBoardActivity : BaseActivity() {
 
     }
 
-    fun pauseCountDown(){
+    fun pauseCountDown() {
         BindingUtils.stopTimer()
     }
 
 
     private fun initContestDetails() {
-        mBinding!!.includeLiveMatchRow.contestPrizePool.text= String.format("%s%d","₹",contestObject!!.totalWinningPrize)
-        mBinding!!.includeLiveMatchRow.contestSpots.text= String.format("%d",contestObject!!.totalSpots)
-        mBinding!!.includeLiveMatchRow.contestEntryPrize.text=  String.format("%s%d","₹",contestObject!!.entryFees)
+        mBinding!!.includeLiveMatchRow.contestPrizePool.text =
+            String.format("%s%d", "₹", contestObject!!.totalWinningPrize)
+        mBinding!!.includeLiveMatchRow.contestSpots.text =
+            String.format("%d", contestObject!!.totalSpots)
+        mBinding!!.includeLiveMatchRow.contestEntryPrize.text =
+            String.format("%s%d", "₹", contestObject!!.entryFees)
     }
 
     private fun initScoreCard() {
@@ -186,7 +176,7 @@ class LeadersBoardActivity : BaseActivity() {
 
         mBinding!!.matchTimer.text = matchObject!!.statusString.toUpperCase()
         mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.green))
-        mBinding!!.watchTimerImg.visibility =View.GONE
+        mBinding!!.watchTimerImg.visibility = View.GONE
 
         mBinding!!.includeLiveMatchRow.teamAName.text = matchObject!!.teamAInfo!!.teamShortName
         mBinding!!.includeLiveMatchRow.teamBName.text = matchObject!!.teamBInfo!!.teamShortName
@@ -204,7 +194,7 @@ class LeadersBoardActivity : BaseActivity() {
     override fun onPause() {
         super.onPause()
         pauseCountDown()
-        if(matchObject!!.status.equals(BindingUtils.MATCH_STATUS_LIVE)) {
+        if (matchObject!!.status.equals(BindingUtils.MATCH_STATUS_LIVE)) {
             mainHandler!!.removeCallbacks(updateScoresHandler)
         }
     }
@@ -213,14 +203,14 @@ class LeadersBoardActivity : BaseActivity() {
     fun updateScores() {
         var models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
-       // models.token = MyPreferences.getToken(this)!!
-        models.contest_id =""+contestObject!!.id
-        models.match_id =""+matchObject!!.matchId
+        // models.token = MyPreferences.getToken(this)!!
+        models.contest_id = "" + contestObject!!.id
+        models.match_id = "" + matchObject!!.matchId
 
         WebServiceClient(this).client.create(IApiMethod::class.java).getScore(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                    if(customeProgressDialog!=null) {
+                    if (customeProgressDialog != null) {
                         customeProgressDialog.dismiss()
                     }
                 }
@@ -229,37 +219,42 @@ class LeadersBoardActivity : BaseActivity() {
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    if(customeProgressDialog!=null) {
+                    if (customeProgressDialog != null) {
                         customeProgressDialog.dismiss()
                     }
                     var res = response!!.body()
-                    if(res!=null) {
-                        if(res.scoresModel!=null){
-                            if(res.sessionExpired){
-                                logoutApp("Session Expired Please login again!!",false)
-                            }else {
-                                mBinding!!.includeLiveMatchRow.statusNote.text = res.scoresModel!!.statusNote
-                                if(res.scoresModel!!.teama!!.scores!=null){
-                                    mBinding!!.includeLiveMatchRow.teamAScore.text = res.scoresModel!!.teama!!.scores
-                                }else {
+                    if (res != null) {
+                        if (res.scoresModel != null) {
+                            if (res.sessionExpired) {
+                                logoutApp("Session Expired Please login again!!", false)
+                            } else {
+                                mBinding!!.includeLiveMatchRow.statusNote.text =
+                                    res.scoresModel!!.statusNote
+                                if (res.scoresModel!!.teama!!.scores != null) {
+                                    mBinding!!.includeLiveMatchRow.teamAScore.text =
+                                        res.scoresModel!!.teama!!.scores
+                                } else {
                                     mBinding!!.includeLiveMatchRow.teamAScore.text = ""
                                 }
 
-                                if(res.scoresModel!!.teama!!.overs!=null){
+                                if (res.scoresModel!!.teama!!.overs != null) {
                                     mBinding!!.includeLiveMatchRow.teamAOver.text =
-                                        String.format("(%s)",res.scoresModel!!.teama!!.overs)
-                                }else {
+                                        String.format("(%s)", res.scoresModel!!.teama!!.overs)
+                                } else {
                                     mBinding!!.includeLiveMatchRow.teamAOver.text =
-                                        String.format("(%s)","")
+                                        String.format("(%s)", "")
                                 }
 
 
-                                mBinding!!.includeLiveMatchRow.teamBScore.text = res.scoresModel!!.teamb!!.scores
-                                mBinding!!.includeLiveMatchRow.teamBOver.text = String.format("(%s)",res.scoresModel!!.teamb!!.overs)
+                                mBinding!!.includeLiveMatchRow.teamBScore.text =
+                                    res.scoresModel!!.teamb!!.scores
+                                mBinding!!.includeLiveMatchRow.teamBOver.text =
+                                    String.format("(%s)", res.scoresModel!!.teamb!!.overs)
 
-                                val fragment: Fragment = viewPagerAdapter.getItem(mBinding!!.viewpager.currentItem)
-                                if(fragment!=null){
-                                    if(fragment is LeadersBoardFragment){
+                                val fragment: Fragment =
+                                    viewPagerAdapter.getItem(mBinding!!.viewpager.currentItem)
+                                if (fragment != null) {
+                                    if (fragment is LeadersBoardFragment) {
                                         fragment.getLeadersBoards()
                                     }
                                 }
@@ -280,49 +275,57 @@ class LeadersBoardActivity : BaseActivity() {
         mBinding!!.teamsb.text = matchObject!!.teamBInfo!!.teamShortName
         var totalSpots = contestObject!!.totalSpots
         var filledSpots = contestObject!!.filledSpots
-        mBinding!!.includeContestRow.contestPrizePool.text= String.format("%s%d","₹ ",contestObject!!.totalWinningPrize)
+        mBinding!!.includeContestRow.contestPrizePool.text =
+            String.format("%s%d", "₹ ", contestObject!!.totalWinningPrize)
 
-        if(contestObject!!.entryFees==0 && contestObject!!.winnerCounts>0){
-            mBinding!!.includeContestRow.contestEntryPrize?.text = "Free"
-        }else if(contestObject!!.entryFees==0 && contestObject!!.winnerCounts==0){
-            mBinding!!.includeContestRow.contestEntryPrize?.text = "Join"
-        }else{
-            mBinding!!.includeContestRow.contestEntryPrize?.text = String.format("%s%d", "₹", contestObject!!.entryFees)
+        if (contestObject!!.entryFees == 0 && contestObject!!.winnerCounts > 0) {
+            mBinding!!.includeContestRow.contestEntryPrize.text = "Free"
+        } else if (contestObject!!.entryFees == 0 && contestObject!!.winnerCounts == 0) {
+            mBinding!!.includeContestRow.contestEntryPrize.text = "Join"
+        } else {
+            mBinding!!.includeContestRow.contestEntryPrize.text =
+                String.format("%s%d", "₹", contestObject!!.entryFees)
         }
 
-        if(totalSpots==0){
-            mBinding!!.includeContestRow.contestProgress.max =filledSpots +BindingUtils.UNLIMITED_SPOT_MARGIN
-            mBinding!!.includeContestRow.contestProgress.progress =filledSpots
-            mBinding!!.includeContestRow.totalSpot.text= String.format("Unlimited spots")
-            mBinding!!.includeContestRow.totalSpotLeft.text= String.format("%d spots filled",filledSpots)
+        if (totalSpots == 0) {
+            mBinding!!.includeContestRow.contestProgress.max =
+                filledSpots + BindingUtils.UNLIMITED_SPOT_MARGIN
+            mBinding!!.includeContestRow.contestProgress.progress = filledSpots
+            mBinding!!.includeContestRow.totalSpot.text = String.format("Unlimited spots")
+            mBinding!!.includeContestRow.totalSpotLeft.text =
+                String.format("%d spots filled", filledSpots)
 
-        }else {
-            mBinding!!.includeContestRow.contestProgress.max =totalSpots
-            mBinding!!.includeContestRow.contestProgress.progress =filledSpots
-            mBinding!!.includeContestRow.totalSpot.text= String.format("%d spots",totalSpots)
-            if(contestObject!!.totalSpots == contestObject!!.filledSpots){
+        } else {
+            mBinding!!.includeContestRow.contestProgress.max = totalSpots
+            mBinding!!.includeContestRow.contestProgress.progress = filledSpots
+            mBinding!!.includeContestRow.totalSpot.text = String.format("%d spots", totalSpots)
+            if (contestObject!!.totalSpots == contestObject!!.filledSpots) {
                 mBinding!!.includeContestRow.totalSpotLeft.text = "Contest Full"
                 mBinding!!.includeContestRow.totalSpotLeft.setTextColor(Color.RED)
-            }else {
+            } else {
                 mBinding!!.includeContestRow.totalSpotLeft.text =
                     String.format("%d spots left", (totalSpots - filledSpots))
             }
         }
 
-        if(contestObject!!.usableBonus==0) {
-            mBinding!!.includeContestRow.linearBonues?.visibility = View.GONE
-        }else {
-            mBinding!!.includeContestRow.linearBonues?.visibility = View.VISIBLE
-            mBinding!!.includeContestRow.contestBonus?.text = String.format("%d%s", contestObject!!.usableBonus, "%")
+        if (contestObject!!.usableBonus == 0) {
+            mBinding!!.includeContestRow.linearBonues.visibility = View.GONE
+        } else {
+            mBinding!!.includeContestRow.linearBonues.visibility = View.VISIBLE
+            mBinding!!.includeContestRow.contestBonus.text =
+                String.format("%d%s", contestObject!!.usableBonus, "%")
         }
-        mBinding!!.includeContestRow.contestEntryPrize.text=  String.format("%s%d","₹",contestObject!!.entryFees)
-        mBinding!!.includeContestRow.firstPrize.text = String.format("%s%d","₹",contestObject!!.firstPrice)
-        mBinding!!.includeContestRow.winningPercentage.text = ""+contestObject!!.winnerCounts//String.format("%d%s",contestObject!!.winnerPercentage,"%")
-       // mBinding!!.includeContestRow.maxAllowedTeam.text = String.format("%s %d %s","Upto",contestObject!!.maxAllowedTeam,"teams")
-        if(contestObject!!.cancellation){
-            mBinding!!.includeContestRow.contestCancellation?.visibility = View.INVISIBLE
-        }else {
-            mBinding!!.includeContestRow.contestCancellation?.visibility = View.VISIBLE
+        mBinding!!.includeContestRow.contestEntryPrize.text =
+            String.format("%s%d", "₹", contestObject!!.entryFees)
+        mBinding!!.includeContestRow.firstPrize.text =
+            String.format("%s%d", "₹", contestObject!!.firstPrice)
+        mBinding!!.includeContestRow.winningPercentage.text =
+            "" + contestObject!!.winnerCounts//String.format("%d%s",contestObject!!.winnerPercentage,"%")
+        // mBinding!!.includeContestRow.maxAllowedTeam.text = String.format("%s %d %s","Upto",contestObject!!.maxAllowedTeam,"teams")
+        if (contestObject!!.cancellation) {
+            mBinding!!.includeContestRow.contestCancellation.visibility = View.INVISIBLE
+        } else {
+            mBinding!!.includeContestRow.contestCancellation.visibility = View.VISIBLE
         }
 //        if(contestObject!!.maxAllowedTeam>1){
 //            mBinding!!.includeContestRow.contestMultiplayer.text = "M"
@@ -331,27 +334,31 @@ class LeadersBoardActivity : BaseActivity() {
 //            mBinding!!.includeContestRow.contestMultiplayer.text = "S"
 //            mBinding!!.includeContestRow.contestMultiplayer.visibility = View.GONE
 //        }
-        if(contestObject!!.maxAllowedTeam>1){
+        if (contestObject!!.maxAllowedTeam > 1) {
             mBinding!!.includeContestRow.allowedTeamType.text = "M"
-            mBinding!!.includeContestRow.contestMultiplayer.text = ""+contestObject!!.maxAllowedTeam
-        }else {
+            mBinding!!.includeContestRow.contestMultiplayer.text =
+                "" + contestObject!!.maxAllowedTeam
+        } else {
             mBinding!!.includeContestRow.allowedTeamType.text = "S"
-            mBinding!!.includeContestRow.contestMultiplayer.text = ""+contestObject!!.maxAllowedTeam
+            mBinding!!.includeContestRow.contestMultiplayer.text =
+                "" + contestObject!!.maxAllowedTeam
         }
-        mBinding!!.includeContestRow.contestBonus?.text = String.format("%d%s",contestObject!!.usableBonus,"%")
+        mBinding!!.includeContestRow.contestBonus.text =
+            String.format("%d%s", contestObject!!.usableBonus, "%")
 
         mBinding!!.includeContestRow.contestEntryPrize.setOnClickListener(View.OnClickListener {
-            if(!MyUtils.isConnectedWithInternet(this)) {
-                MyUtils.showToast(this,"No Internet connection found")
-            }else {
+            if (!MyUtils.isConnectedWithInternet(this)) {
+                MyUtils.showToast(this, "No Internet connection found")
+            } else {
                 customeProgressDialog.show()
                 var models = RequestModel()
                 models.user_id = MyPreferences.getUserID(this)!!
                 // models.token =MyPreferences.getToken(this)!!
-                models.match_id =""+matchObject!!.matchId
-                models.contest_id =""+contestObject!!.id
+                models.match_id = "" + matchObject!!.matchId
+                models.contest_id = "" + contestObject!!.id
 
-                WebServiceClient(this).client.create(IApiMethod::class.java).joinNewContestStatus(models)
+                WebServiceClient(this).client.create(IApiMethod::class.java)
+                    .joinNewContestStatus(models)
                     .enqueue(object : Callback<UsersPostDBResponse?> {
                         override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                             customeProgressDialog.dismiss()
@@ -362,28 +369,65 @@ class LeadersBoardActivity : BaseActivity() {
                             response: Response<UsersPostDBResponse?>?
                         ) {
                             customeProgressDialog.dismiss()
-                            var res = response!!.body()
-                            if(res!=null) {
-                                if(res.actionForTeam==1){
-                                    val intent = Intent(this@LeadersBoardActivity, CreateTeamActivity::class.java)
-                                    intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
-                                    startActivityForResult(intent, CreateTeamActivity.CREATETEAM_REQUESTCODE)
-                                }else if(res.actionForTeam==2){
-                                    val intent = Intent(this@LeadersBoardActivity, SelectTeamActivity::class.java)
-                                    intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
-                                    intent.putExtra(CreateTeamActivity.SERIALIZABLE_CONTEST_KEY, contestObject)
-                                    intent.putExtra(CreateTeamActivity.SERIALIZABLE_SELECTED_TEAMS, res.selectedTeamModel)
-                                    startActivityForResult(intent, CreateTeamActivity.CREATETEAM_REQUESTCODE)
+                            val res = response!!.body()
+                            if (res != null) {
+                                if (!res.status) {
+                                    if (res.code == 401) {
+                                        MyUtils.showToast(
+                                            this@LeadersBoardActivity,
+                                            res.message
+                                        )
+                                    } else {
+                                        MyUtils.showMessage(
+                                            this@LeadersBoardActivity,
+                                            res.message
+                                        )
+                                    }
+                                } else {
+                                    if (res.actionForTeam == 1) {
+                                        val intent = Intent(
+                                            this@LeadersBoardActivity,
+                                            CreateTeamActivity::class.java
+                                        )
+                                        intent.putExtra(
+                                            CreateTeamActivity.SERIALIZABLE_MATCH_KEY,
+                                            matchObject
+                                        )
+                                        startActivityForResult(
+                                            intent,
+                                            CreateTeamActivity.CREATETEAM_REQUESTCODE
+                                        )
+                                    } else if (res.actionForTeam == 2) {
+                                        val intent = Intent(
+                                            this@LeadersBoardActivity,
+                                            SelectTeamActivity::class.java
+                                        )
+                                        intent.putExtra(
+                                            CreateTeamActivity.SERIALIZABLE_MATCH_KEY,
+                                            matchObject
+                                        )
+                                        intent.putExtra(
+                                            CreateTeamActivity.SERIALIZABLE_CONTEST_KEY,
+                                            contestObject
+                                        )
+                                        intent.putExtra(
+                                            CreateTeamActivity.SERIALIZABLE_SELECTED_TEAMS,
+                                            res.selectedTeamModel
+                                        )
+                                        startActivityForResult(
+                                            intent,
+                                            CreateTeamActivity.CREATETEAM_REQUESTCODE
+                                        )
 
-                                }else {
-                                    Toast.makeText(
-                                        this@LeadersBoardActivity,
-                                        res.message,
-                                        Toast.LENGTH_LONG
-                                    ).show()
+                                    } else {
+                                        Toast.makeText(
+                                            this@LeadersBoardActivity,
+                                            res.message,
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
                                 }
                             }
-
                         }
 
                     })
@@ -397,10 +441,9 @@ class LeadersBoardActivity : BaseActivity() {
     }
 
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(CREATETEAM_REQUESTCODE==requestCode && resultCode== Activity.RESULT_OK){
+        if (CREATETEAM_REQUESTCODE == requestCode && resultCode == Activity.RESULT_OK) {
             setResult(Activity.RESULT_OK)
             finish()
         }
@@ -423,19 +466,20 @@ class LeadersBoardActivity : BaseActivity() {
         viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
 
         var bundle = Bundle()
-        bundle.putSerializable(ContestActivity.SERIALIZABLE_KEY_CONTEST_OBJECT,contestObject)
-        bundle.putSerializable(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT,matchObject)
+        bundle.putSerializable(ContestActivity.SERIALIZABLE_KEY_CONTEST_OBJECT, contestObject)
+        bundle.putSerializable(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT, matchObject)
 
-        viewPagerAdapter.addFragment(PrizeBreakupFragment.newInstance(bundle),"Prize Breakup")
+        viewPagerAdapter.addFragment(PrizeBreakupFragment.newInstance(bundle), "Prize Breakup")
         viewPagerAdapter.addFragment(LeadersBoardFragment.newInstance(bundle), "Leaderboard")
-       // viewPagerAdapter.addFragment(ContestStatsFragment(matchObject!!), "Leaderboard")
+        // viewPagerAdapter.addFragment(ContestStatsFragment(matchObject!!), "Leaderboard")
 
         viewPager.adapter = viewPagerAdapter
 
 
     }
 
-    internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
+    internal inner class ViewPagerAdapter(manager: FragmentManager) :
+        FragmentPagerAdapter(manager) {
         private val mFragmentList = ArrayList<Fragment>()
         private val mFragmentTitleList = ArrayList<String>()
 
@@ -456,7 +500,6 @@ class LeadersBoardActivity : BaseActivity() {
             return mFragmentTitleList[position]
         }
     }
-
 
 
 }
