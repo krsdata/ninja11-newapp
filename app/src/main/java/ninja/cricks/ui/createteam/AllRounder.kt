@@ -271,7 +271,5 @@ class AllRounder : Fragment() {
                 "$context must implement OnTeamCreateListener"
             )
         }
-
     }
-
 }

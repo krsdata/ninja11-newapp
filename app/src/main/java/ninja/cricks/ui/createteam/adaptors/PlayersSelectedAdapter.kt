@@ -34,11 +34,11 @@ class PlayersSelectedAdapter(
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == TYPE_LABEL) {
-            var view = LayoutInflater.from(parent.context)
+            val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.savematch_row_label, parent, false)
             return ViewLabelsHolders(view)
         } else if (viewType == TYPE_DATA) {
-            var view = LayoutInflater.from(parent.context)
+            val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.row_players_selected, parent, false)
             return DataViewHolder(view)
         }
@@ -47,7 +47,7 @@ class PlayersSelectedAdapter(
 
     override fun onBindViewHolder(parent: RecyclerView.ViewHolder, position: Int) {
 
-        var objectVal = matchesListObject[position]
+        val objectVal = matchesListObject[position]
         if(objectVal.viewType== TYPE_LABEL){
             val viewHolder: ViewLabelsHolders = parent as ViewLabelsHolders
             viewHolder.roleType.text = objectVal.playerRole
@@ -80,7 +80,7 @@ class PlayersSelectedAdapter(
 
             Glide.with(context)
                 .load(objectVal.playerImage)
-                .placeholder(objectVal.getPlayerIcon())
+                .placeholder(R.drawable.player_blue)
                 .into(viewHolder.selectedPlayerImage)
 
             setSelections(objectVal, viewHolder, position)

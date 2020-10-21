@@ -35,8 +35,7 @@ class PlayersContestAdapter(
         val objectVal = playerListObject[viewType]
         val viewHolder: DataViewHolder = parent as DataViewHolder
         if (objectVal.analyticsModel != null) {
-            viewHolder.playerSelectionPercentage?.text =
-                "Sel by " + objectVal.analyticsModel!!.selectionPc + "%"
+            viewHolder.playerSelectionPercentage?.text = "Sel by ${objectVal.analyticsModel!!.selectionPc}%"
         } else {
             viewHolder.playerSelectionPercentage?.text = ""
         }
@@ -63,7 +62,7 @@ class PlayersContestAdapter(
 
         Glide.with(context)
             .load(objectVal.playerImage)
-            .placeholder(objectVal.getPlayerIcon())
+            .placeholder(R.drawable.player_blue)
             .into(viewHolder.playerImage)
 
         if (objectVal.isSelected) {
@@ -74,7 +73,6 @@ class PlayersContestAdapter(
             viewHolder.linearTradesStatus.setBackgroundColor(context.resources.getColor(R.color.white))
         }
     }
-
 
     override fun getItemCount(): Int {
         return playerListObject.size

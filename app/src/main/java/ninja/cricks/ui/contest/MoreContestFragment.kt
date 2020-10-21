@@ -15,37 +15,38 @@ import com.edify.atrist.listener.OnContestLoadedListener
 import ninja.cricks.ContestActivity
 import ninja.cricks.LeadersBoardActivity
 import ninja.cricks.R
+import ninja.cricks.databinding.FragmentMoreContestBinding
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.ui.contest.adaptors.ContestListAdapter
 import ninja.cricks.ui.contest.models.ContestModelLists
 import ninja.cricks.utils.CustomeProgressDialog
-import ninja.cricks.databinding.FragmentMoreContestBinding
 
 
-class MoreContestFragment: Fragment() {
-    var mListenerContestEvents: OnContestLoadedListener?=null
-    var mListener: OnContestLoadedListener?=null
+class MoreContestFragment : Fragment() {
+    var mListenerContestEvents: OnContestLoadedListener? = null
+    var mListener: OnContestLoadedListener? = null
 
     private lateinit var allContestList: java.util.ArrayList<ContestModelLists>
-    var objectMatches: UpcomingMatchesModel?=null
+    var objectMatches: UpcomingMatchesModel? = null
     private lateinit var customeProgressDialog: CustomeProgressDialog
     private var mBinding: FragmentMoreContestBinding? = null
     lateinit var adapter: ContestListAdapter
 
-    companion object{
-        val CONTEST_LIST: String?="contestlist"
+    companion object {
+        val CONTEST_LIST: String? = "contestlist"
 
-        fun newInstance(bundle : Bundle) : MoreContestFragment{
+        fun newInstance(bundle: Bundle): MoreContestFragment {
             val fragment = MoreContestFragment()
-            fragment.arguments=bundle
+            fragment.arguments = bundle
             return fragment
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        objectMatches = arguments!!.get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
-        allContestList = arguments!!.get(CONTEST_LIST) as  ArrayList<ContestModelLists>
+        objectMatches =
+            arguments!!.get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
+        allContestList = arguments!!.get(CONTEST_LIST) as ArrayList<ContestModelLists>
 
     }
 
@@ -53,7 +54,7 @@ class MoreContestFragment: Fragment() {
         super.onAttach(context)
         if (context is OnContestLoadedListener) {
             mListener = context
-        }else {
+        } else {
             throw RuntimeException(
                 "$context must implement OnContestLoadedListener"
             )
@@ -61,16 +62,21 @@ class MoreContestFragment: Fragment() {
 
         if (context is OnContestEvents) {
             mListenerContestEvents = context
-        }else {
+        } else {
             throw RuntimeException(
                 "$context must implement OnContestLoadedListener"
             )
         }
     }
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        mBinding  = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_more_contest, container, false)
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        mBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_more_contest, container, false
+        )
         return mBinding!!.root
     }
 
@@ -78,17 +84,27 @@ class MoreContestFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         customeProgressDialog = CustomeProgressDialog(activity)
 
-        mBinding!!.recyclerMyContest.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        var  colorCode =  activity!!.resources.getColor(R.color.white)
-        adapter = ContestListAdapter(activity!!, allContestList, objectMatches!!, mListenerContestEvents as OnContestEvents, colorCode)
+        mBinding!!.recyclerMyContest.layoutManager =
+            LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        val colorCode = requireActivity().resources.getColor(R.color.white)
+        adapter = ContestListAdapter(
+            requireActivity(),
+            allContestList,
+            objectMatches!!,
+            mListenerContestEvents as OnContestEvents,
+            colorCode
+        )
         mBinding!!.recyclerMyContest.adapter = adapter
 
 
-        adapter.onItemClick= { objects ->
+        adapter.onItemClick = { objects ->
             val intent = Intent(context, LeadersBoardActivity::class.java)
             intent.putExtra(LeadersBoardActivity.SERIALIZABLE_MATCH_KEY, objectMatches)
             intent.putExtra(LeadersBoardActivity.SERIALIZABLE_CONTEST_KEY, objects)
-            activity!!.startActivityForResult(intent, LeadersBoardActivity.CREATETEAM_REQUESTCODE)
+            requireActivity().startActivityForResult(
+                intent,
+                LeadersBoardActivity.CREATETEAM_REQUESTCODE
+            )
         }
 
     }

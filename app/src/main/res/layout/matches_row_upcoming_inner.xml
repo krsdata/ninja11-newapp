@@ -75,8 +75,11 @@
                         android:scaleType="fitCenter"
                         android:src="@drawable/flag_indian"
                         app:civ_border="true"
-                        app:civ_border_color="@color/colorPrimaryDark"
-                        app:civ_border_width="0.5dp" />
+                        app:civ_border_color="@color/white"
+                        app:civ_circle_color_end="@color/colorPrimaryDark"
+                        app:civ_circle_color_start="@color/colorPrimaryDark"
+                        app:civ_circle_color="@color/colorPrimaryDark"
+                        app:civ_border_width="3dp" />
                 </RelativeLayout>
 
                 <TextView
@@ -119,7 +122,7 @@
                     android:fontFamily="@font/montserrat_bold"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
                     android:text="1D:24H:30M:40S"
                     android:textColor="@color/text"
                     android:textSize="@dimen/_10sdp" />
@@ -129,15 +132,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_20sdp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:background="@drawable/orange_button_bg"
                     android:fontFamily="@font/montserrat_medium"
                     android:gravity="center"
                     android:minWidth="@dimen/_60sdp"
                     android:paddingStart="@dimen/_7sdp"
                     android:paddingEnd="@dimen/_7sdp"
                     android:text="7:30PM"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="12sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -181,13 +182,13 @@
                         android:scaleType="fitCenter"
                         android:src="@drawable/flag_newzeland"
                         app:civ_border="true"
-                        app:civ_border_color="@color/colorPrimaryDark"
-                        app:civ_border_width="0.5dp" />
+                        app:civ_border_color="@color/white"
+                        app:civ_circle_color_end="@color/colorPrimaryDark"
+                        app:civ_circle_color_start="@color/colorPrimaryDark"
+                        app:civ_circle_color="@color/colorPrimaryDark"
+                        app:civ_border_width="3dp" />
                 </RelativeLayout>
-
-
             </LinearLayout>
-
         </RelativeLayout>
     </RelativeLayout>
 
@@ -208,9 +209,9 @@
         android:id="@+id/upcoming_linear_contest_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/matches_view_left_margin_inner"
+        android:layout_marginStart="@dimen/matches_view_left_margin_inner"
         android:layout_marginTop="@dimen/matches_gap_between_each_views"
-        android:layout_marginRight="@dimen/matches_view_right_margin_inner"
+        android:layout_marginEnd="@dimen/matches_view_right_margin_inner"
         android:orientation="horizontal"
         android:visibility="gone">
 
@@ -230,12 +231,11 @@
             android:id="@+id/upcoming_contest_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
+            android:layout_marginStart="10dip"
             android:fontFamily="@font/montserrat_bold"
             android:text="₹1Crore"
             android:textColor="@color/black"
             android:textSize="@dimen/small_info_size" />
-
     </LinearLayout>
 
     <TextView
@@ -251,235 +251,4 @@
         android:text="FREE"
         android:textColor="@color/white"
         android:textSize="@dimen/small_info_size" />
-
 </androidx.cardview.widget.CardView>
-
-    <!--
-    <?xml version="1.0" encoding="utf-8"?>
-    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/matches_view_left_margin_consolidated"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="@dimen/matches_view_left_margin_consolidated"
-        app:cardCornerRadius="6dp"
-        app:cardElevation="12dp">
-
-        <LinearLayout
-            android:id="@+id/linear_trades_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:id="@+id/countrycolorview"
-                    android:layout_width="@dimen/_65sdp"
-                    android:layout_height="@dimen/_60sdp"
-                    android:layout_marginStart="-8dp"
-                    android:src="@drawable/left_triangle"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/tournament_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
-                    android:layout_toStartOf="@+id/countrybcolorview"
-                    android:layout_toEndOf="@+id/countrycolorview"
-                    android:fontFamily="@font/montserrat_medium"
-                    android:gravity="center"
-                    android:text="South Africa vs England ODI"
-                    android:textColor="@color/material_grey_600"
-                    android:textSize="@dimen/small_info_size" />
-
-                <TextView
-                    android:id="@+id/upcoming_match_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tournament_title"
-                    android:layout_toStartOf="@+id/countrybcolorview"
-                    android:layout_toEndOf="@+id/countrycolorview"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:gravity="center"
-                    android:text="LINE UP"
-                    android:textColor="@color/green"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:id="@+id/countrybcolorview"
-                    android:layout_width="@dimen/_65sdp"
-                    android:layout_height="@dimen/_60sdp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="-10dp"
-                    android:src="@drawable/right_triangle"
-                    android:visibility="gone" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="@dimen/_10sdp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:orientation="vertical">
-
-                        <com.mikhaellopez.circularimageview.CircularImageView
-                            android:id="@+id/teama_logo"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/placeholder_player_teama" />
-
-                        <TextView
-                            android:id="@+id/upcoming_opponent1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/teama_logo"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="@dimen/_8sdp"
-                            android:fontFamily="@font/montserrat_bold"
-                            android:maxLines="1"
-                            android:singleLine="true"
-                            android:text="IND"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginLeft="14dp"
-                        android:layout_marginTop="10dp"
-                        android:orientation="vertical">
-
-                        <com.mikhaellopez.circularimageview.CircularImageView
-                            android:id="@+id/teamb_logo"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:layout_gravity="right"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/placeholder_player_teama" />
-
-                        <TextView
-                            android:id="@+id/upcoming_opponent2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="@dimen/_8sdp"
-                            android:fontFamily="@font/montserrat_bold"
-                            android:maxLines="1"
-                            android:singleLine="true"
-                            android:text="NZ"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/upcoming_match_progress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:text="1D:24H:30M:40S"
-                        android:textColor="@color/red"
-                        android:textSize="@dimen/small_info_size" />
-
-
-                </RelativeLayout>
-
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-                <RelativeLayout
-                    android:id="@+id/opp2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-
-                </RelativeLayout>
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/upcoming_linear_contest_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/matches_view_left_margin_inner"
-                android:layout_marginTop="@dimen/matches_gap_between_each_views"
-                android:layout_marginRight="@dimen/matches_view_right_margin_inner"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/upcoming_contest_name"
-                    android:layout_width="45dp"
-                    android:layout_height="wrap_content"
-                    android:background="@color/green_light"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:gravity="center"
-                    android:padding="3dip"
-                    android:text="Mega"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/small_info_size" />
-
-                <TextView
-                    android:id="@+id/upcoming_contest_price"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:text="₹1Crore"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/small_info_size" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/free_view"
-            android:layout_width="@dimen/_65sdp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:background="@color/green_light"
-            android:fontFamily="@font/montserrat_bold"
-            android:gravity="center"
-            android:padding="3dip"
-            android:src="@drawable/left_triangle"
-            android:text="FREE"
-            android:textColor="@color/white"
-            android:textSize="@dimen/small_info_size" />
-
-        <TextView
-            android:id="@+id/match_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:fontFamily="@font/montserrat_bold"
-            android:text="7:30PM"
-            android:textColor="@color/colorAccent"
-            android:textSize="@dimen/_12sdp" />
-
-    </androidx.cardview.widget.CardView>-->

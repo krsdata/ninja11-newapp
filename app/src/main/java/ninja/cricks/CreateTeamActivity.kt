@@ -1113,7 +1113,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
                 R.string.createteam_type_bowl
             )
         }
-        var bundleBowlers = Bundle()
+        val bundleBowlers = Bundle()
         bundleBowlers.putSerializable(SERIALIZABLE_KEY_PLAYERS, bowlerList)
         bundleBowlers.putSerializable(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT, matchObject)
         viewPagerAdapter.addFragment(Bowlers.newInstance(bundleBowlers), titleTabs)

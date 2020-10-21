@@ -80,7 +80,7 @@ class ContestFragment : Fragment() {
         mBinding!!.contestViewRecycler.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         adapter = ContestAdapter(
-            activity!!,
+            requireActivity(),
             allContestListData,
             matchObject,
             mListenerContestEvents!!
@@ -95,7 +95,7 @@ class ContestFragment : Fragment() {
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
 
         spotSizeFilterAdaptor = ContestListAdapter(
-            activity!!,
+            requireActivity(),
             filterSpotsListData,
             matchObject!!,
             mListenerContestEvents,
@@ -110,19 +110,18 @@ class ContestFragment : Fragment() {
         mBinding!!.btnCreateTeam.setOnClickListener(View.OnClickListener {
             val intent = Intent(activity, CreateTeamActivity::class.java)
             intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
-            activity!!.startActivityForResult(intent, CreateTeamActivity.CREATETEAM_REQUESTCODE)
+            requireActivity().startActivityForResult(intent, CreateTeamActivity.CREATETEAM_REQUESTCODE)
         })
 
         mBinding!!.btnEmptyView.setOnClickListener(View.OnClickListener {
             val intent = Intent(activity, WebActivity::class.java)
             intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_PRIVACY_POLICY)
             intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_PRIVACY)
-            activity!!.startActivity(intent)
+            requireActivity().startActivity(intent)
         })
         mBinding!!.contestRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
             getAllContest()
         })
-
     }
 
     fun registerSpotSizeSelection() {
@@ -363,12 +362,12 @@ class ContestFragment : Fragment() {
         mBinding!!.contestRefresh.isRefreshing = true
         //mBinding!!.filterBar.visibility = View.GONE
         var models = RequestModel()
-        models.user_id = MyPreferences.getUserID(activity!!)!!
+        models.user_id = MyPreferences.getUserID(requireActivity())!!
         // models.token =MyPreferences.getToken(activity!!)!!
         models.match_id = "" + matchObject!!.matchId
-        models.token = MyPreferences.getToken(activity!!)!!
+        models.token = MyPreferences.getToken(requireActivity())!!
         models.deviceDetails = HardwareInfoManager(activity).collectData()
-        WebServiceClient(activity!!).client.create(IApiMethod::class.java).getContestByMatch(models)
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getContestByMatch(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     if (isVisible) {
@@ -386,9 +385,9 @@ class ContestFragment : Fragment() {
                     }
                     mBinding!!.contestRefresh.isRefreshing = false
                     //mBinding!!.filterBar.visibility = View.VISIBLE
-                    var res = response!!.body()
+                    val res = response!!.body()
                     if (res != null && res.appMaintainance) {
-                        var intent = Intent(activity, MaintainanceActivity::class.java)
+                        val intent = Intent(activity, MaintainanceActivity::class.java)
                         intent.flags =
                             Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
@@ -396,7 +395,7 @@ class ContestFragment : Fragment() {
                     } else
                         if (res != null) {
                             BindingUtils.currentTimeStamp = res.systemTime
-                            var responseModel = res.responseObject
+                            val responseModel = res.responseObject
                             if (responseModel!!.matchContestlist != null && responseModel.matchContestlist!!.size > 0) {
                                 allContestListData.clear()
                                 allContestListData.addAll(responseModel.matchContestlist!!)

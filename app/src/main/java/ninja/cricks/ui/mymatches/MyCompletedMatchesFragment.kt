@@ -17,9 +17,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ninja.cricks.ContestActivity
 import ninja.cricks.MainActivity
-import ninja.cricks.models.JoinedMatchModel
 import ninja.cricks.R
 import ninja.cricks.databinding.FragmentMyCompletedBinding
+import ninja.cricks.models.JoinedMatchModel
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
@@ -39,11 +39,15 @@ class MyCompletedMatchesFragment : Fragment() {
     lateinit var adapter: MyMatchesAdapter
     var checkinArrayList = ArrayList<JoinedMatchModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-        mBinding  = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_my_completed, container, false)
+        mBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_my_completed, container, false
+        )
 
         return mBinding!!.root
     }
@@ -53,44 +57,45 @@ class MyCompletedMatchesFragment : Fragment() {
         mBinding!!.recyclerMyUpcoming.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
 
-        adapter = MyMatchesAdapter(activity!!,checkinArrayList)
+        adapter = MyMatchesAdapter(requireActivity(), checkinArrayList)
         mBinding!!.recyclerMyUpcoming.adapter = adapter
         adapter.onItemClick = { objects ->
-            val intent = Intent(activity!!, ContestActivity::class.java)
-            intent.putExtra(ContestActivity.SERIALIZABLE_KEY_JOINED_CONTEST,objects)
-            activity!!.startActivity(intent)
+            val intent = Intent(requireActivity(), ContestActivity::class.java)
+            intent.putExtra(ContestActivity.SERIALIZABLE_KEY_JOINED_CONTEST, objects)
+            requireActivity().startActivity(intent)
         }
-        if(checkinArrayList.size>0){
+        if (checkinArrayList.size > 0) {
             mBinding!!.linearEmptyContest.visibility = View.GONE
-        }else {
+        } else {
             mBinding!!.linearEmptyContest.visibility = View.VISIBLE
         }
 
-        mBinding!!.btnEmptyView.setOnClickListener(View.OnClickListener {
+        mBinding!!.btnEmptyView.setOnClickListener {
             (activity as MainActivity).viewUpcomingMatches()
-        })
+        }
 
         getMatchHistory()
     }
-    fun getMatchHistory() {
-        if(!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
-            MyUtils.showToast(activity as AppCompatActivity,"No Internet connection found")
+
+    private fun getMatchHistory() {
+        if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
+            MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-        if(checkinArrayList.size==0) {
+        if (checkinArrayList.size == 0) {
             mBinding!!.progressBar.visibility = View.VISIBLE
         }
-        mBinding!!.linearEmptyContest.visibility=View.GONE
-        var models = RequestModel()
-        models.user_id = MyPreferences.getUserID(activity!!)!!
-        models.action_type ="completed"
+        mBinding!!.linearEmptyContest.visibility = View.GONE
+        val models = RequestModel()
+        models.user_id = MyPreferences.getUserID(requireActivity())!!
+        models.action_type = "completed"
 
 
-        WebServiceClient(activity!!).client.create(IApiMethod::class.java).getMatchHistory(models)
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getMatchHistory(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
 
-                    if(isAdded) {
+                    if (isAdded) {
                         updateEmptyViews()
                     }
                 }
@@ -99,12 +104,12 @@ class MyCompletedMatchesFragment : Fragment() {
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    if(isAdded) {
+                    if (isAdded) {
                         mBinding!!.progressBar.visibility = View.GONE
-                        var res = response!!.body()
-                        if(res!=null) {
-                            var responseModel = res.responseObject
-                            if(responseModel!=null) {
+                        val res = response!!.body()
+                        if (res != null) {
+                            val responseModel = res.responseObject
+                            if (responseModel != null) {
                                 if (responseModel.matchdatalist != null && responseModel.matchdatalist!!.size > 0) {
                                     checkinArrayList.clear()
                                     checkinArrayList.addAll(responseModel.matchdatalist!!.get(0).completedMatchHistory!!)
@@ -114,24 +119,18 @@ class MyCompletedMatchesFragment : Fragment() {
                         }
                         updateEmptyViews()
                     }
-
-
-
                 }
-
             })
-
     }
 
     private fun updateEmptyViews() {
-        if(checkinArrayList.size>0){
+        if (checkinArrayList.size > 0) {
             mBinding!!.linearEmptyContest.visibility = View.GONE
-        }else {
+        } else {
             mBinding!!.linearEmptyContest.visibility = View.VISIBLE
         }
-
-
     }
+
     inner class MyMatchesAdapter(
         val context: Context,
         val tradeinfoModels: ArrayList<JoinedMatchModel>
@@ -140,33 +139,31 @@ class MyCompletedMatchesFragment : Fragment() {
         var onItemClick: ((JoinedMatchModel) -> Unit)? = null
         private var matchesListObject = tradeinfoModels
 
-
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            var view = LayoutInflater.from(parent.context)
+            val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.matches_row_completed, parent, false)
             return DataViewHolder(view)
-
         }
 
-        fun getRandomColor():Int {
+        private fun getRandomColor(): Int {
             val rnd = Random()
-            val color: Int = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
-
-            return color
+            return Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
         }
+
         override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
-            var objectVal = matchesListObject[viewType]
-            val viewHolder: MyMatchesAdapter.DataViewHolder = parent as MyMatchesAdapter.DataViewHolder
+            val objectVal = matchesListObject[viewType]
+            val viewHolder: MyMatchesAdapter.DataViewHolder =
+                parent as MyMatchesAdapter.DataViewHolder
             viewHolder.matchTitle?.text = objectVal.matchTitle
-            viewHolder.matchStatus?.text = ""+objectVal.statusString
+            viewHolder.matchStatus?.text = objectVal.statusString
             viewHolder.matchProgress.text = objectVal.dateStart
             // viewHolder?.matchProgress?.text = ""+objectVal.timestampEnd
             viewHolder.opponent1?.text = objectVal.teamAInfo!!.teamShortName
             viewHolder.opponent2?.text = objectVal.teamBInfo!!.teamShortName
-            viewHolder.winningPrice?.text = String.format("You Won ₹%s",objectVal.prizeAmount)
+            viewHolder.winningPrice?.text = String.format("You Won ₹%s", objectVal.prizeAmount)
 
-            viewHolder.totalTeamCreated?.text = String.format("%d",objectVal.totalTeams)
-            viewHolder.totalContestJoined?.text = String.format("%d",objectVal.totalJoinContests)
+            viewHolder.totalTeamCreated?.text = String.format("%d", objectVal.totalTeams)
+            viewHolder.totalContestJoined?.text = String.format("%d", objectVal.totalJoinContests)
 
             viewHolder.teamAColorView?.setBackgroundColor(getRandomColor())
             viewHolder.teamBColorView?.setBackgroundColor(getRandomColor())
@@ -186,7 +183,6 @@ class MyCompletedMatchesFragment : Fragment() {
                 .load(objectVal.teamAInfo!!.logoUrl)
                 .placeholder(R.drawable.placeholder_player_teama)
                 .into(viewHolder.teamALogo)
-
 
             Glide.with(context)
                 .load(objectVal.teamBInfo!!.logoUrl)
@@ -215,7 +211,6 @@ class MyCompletedMatchesFragment : Fragment() {
             val opponent2 = itemView.findViewById<TextView>(R.id.upcoming_opponent2)
             val matchProgress = itemView.findViewById<TextView>(R.id.completed_match_date)
             val winningPrice = itemView.findViewById<TextView>(R.id.winning_price)
-
             val totalTeamCreated = itemView.findViewById<TextView>(R.id.total_team_created)
             val totalContestJoined = itemView.findViewById<TextView>(R.id.total_contest_joined)
         }

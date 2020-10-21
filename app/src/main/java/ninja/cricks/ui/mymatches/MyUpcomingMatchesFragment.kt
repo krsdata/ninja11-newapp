@@ -63,12 +63,12 @@ class MyUpcomingMatchesFragment : Fragment() {
 
         //initDummyContent()
 
-        adapter = MyMatchesAdapter(activity!!, checkinArrayList)
+        adapter = MyMatchesAdapter(requireActivity(), checkinArrayList)
         mBinding!!.recyclerMyUpcoming.adapter = adapter
         adapter.onItemClick = { objects ->
 
             //MyUtils.logd("MatchesAdapter",objects.country1Name+" Vs "+objects.country1Name)
-            val intent = Intent(activity!!, ContestActivity::class.java)
+            val intent = Intent(requireActivity(), ContestActivity::class.java)
             intent.putExtra(ContestActivity.SERIALIZABLE_KEY_UPCOMING_MATCHES, objects)
             startActivity(intent)
         }
@@ -94,12 +94,12 @@ class MyUpcomingMatchesFragment : Fragment() {
             mBinding!!.progressBar.visibility = View.VISIBLE
         }
         mBinding!!.linearEmptyContest.visibility = View.GONE
-        var models = RequestModel()
-        models.user_id = MyPreferences.getUserID(activity!!)!!
+        val models = RequestModel()
+        models.user_id = MyPreferences.getUserID(requireActivity())!!
         models.action_type = "upcoming"
 
 
-        WebServiceClient(activity!!).client.create(IApiMethod::class.java).getMatchHistory(models)
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getMatchHistory(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
 
@@ -114,9 +114,9 @@ class MyUpcomingMatchesFragment : Fragment() {
                 ) {
                     if (isAdded) {
                         mBinding!!.progressBar.visibility = View.GONE
-                        var res = response!!.body()
+                        val res = response!!.body()
                         if (res != null) {
-                            var responseModel = res.responseObject
+                            val responseModel = res.responseObject
                             if (responseModel != null) {
                                 if (responseModel.matchdatalist != null && responseModel.matchdatalist!!.size > 0) {
                                     checkinArrayList.clear()
@@ -149,7 +149,7 @@ class MyUpcomingMatchesFragment : Fragment() {
 
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            var view = LayoutInflater.from(parent.context)
+            val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.matches_row_upcoming_inner, parent, false)
             return DataViewHolder(view)
 
@@ -157,18 +157,16 @@ class MyUpcomingMatchesFragment : Fragment() {
 
         fun getRandomColor(): Int {
             val rnd = Random()
-            val color: Int = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
-
-            return color
+            return Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
         }
 
         override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
-            var objectVal = matchesListObject[viewType]
+            val objectVal = matchesListObject[viewType]
             val viewHolder: DataViewHolder = parent as DataViewHolder
             if (objectVal.isLineup) {
                 viewHolder.matchTitle?.visibility = View.VISIBLE
             } else {
-                viewHolder.matchTitle?.visibility = View.GONE
+                viewHolder.matchTitle?.visibility = View.INVISIBLE
             }
             viewHolder.tournamentTitle?.text = objectVal.leagueTitle
             // viewHolder?.matchProgress?.text = ""+objectVal.timestampEnd

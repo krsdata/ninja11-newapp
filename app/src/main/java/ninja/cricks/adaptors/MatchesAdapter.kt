@@ -57,13 +57,13 @@ class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<Matche
     }
 
     override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
-        var objectVal = matchesListObject[viewType]
+        val objectVal = matchesListObject[viewType]
         if (objectVal.viewType == TYPE_JOINED) {
             val viewJoinedMatches: ViewHolderJoinedMatches = parent as ViewHolderJoinedMatches
             viewJoinedMatches.recyclerView.layoutManager =
                 LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false)
             if (objectVal.joinedMatchModel != null) {
-                var adapter = JoinedMatchesAdapter(
+                val adapter = JoinedMatchesAdapter(
                     mContext!!,
                     objectVal.joinedMatchModel!!
                 )
@@ -86,11 +86,11 @@ class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<Matche
                 (mContext as MainActivity).viewAllMatches()
             }
         } else if (objectVal.viewType == TYPE_BANNERS) {
-            var objectVal = matchesListObject[viewType]
+            val objectVal = matchesListObject[viewType]
             val viewBanners: BannersViewHolder = parent as BannersViewHolder
             viewBanners.recyclerView.layoutManager =
                 LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false)
-            var adapter = BannersMatchesAdapter(
+            val adapter = BannersMatchesAdapter(
                 mContext!!,
                 objectVal.matchBanners!!
             )
@@ -98,14 +98,14 @@ class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<Matche
 
 
         } else if (objectVal.viewType == TYPE_UPCOMING_MATCHES) {
-            var objectVal = matchesListObject[viewType]
+            val objectVal = matchesListObject[viewType]
             val viewUpcomingMatches: UpcomingMatchesViewHolder = parent as UpcomingMatchesViewHolder
             viewUpcomingMatches.recyclerView.layoutManager =
                 LinearLayoutManager(mContext, RecyclerView.VERTICAL, false)
 
             if (objectVal.upcomingMatches != null && objectVal.upcomingMatches!!.size > 0) {
                 viewUpcomingMatches.linearEmptyView.visibility = GONE
-                var adapter = UpcomingMatchesAdapter(
+                val adapter = UpcomingMatchesAdapter(
                     mContext!!,
                     objectVal.upcomingMatches!!
                 )
@@ -121,7 +121,6 @@ class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<Matche
                     intent.putExtra(ContestActivity.SERIALIZABLE_KEY_UPCOMING_MATCHES, objects)
                     mContext!!.startActivity(intent)
                 }
-
             } else {
                 MyUtils.logd("ADaptor", "Draw Empty View Here")
                 viewUpcomingMatches.linearEmptyView.visibility = VISIBLE
@@ -166,7 +165,5 @@ class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<Matche
         val linearEmptyView = itemView.findViewById<LinearLayout>(R.id.linear_empty_view)
 
     }
-
-
 }
 
