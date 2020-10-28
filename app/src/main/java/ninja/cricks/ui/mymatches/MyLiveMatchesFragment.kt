@@ -165,8 +165,9 @@ class MyLiveMatchesFragment : Fragment() {
             var objectVal = matchesListObject[viewType]
             val viewHolder: DataViewHolder = parent as DataViewHolder
             viewHolder.matchTitle?.visibility = View.GONE
-            viewHolder.tournamentTitle?.visibility = View.GONE
+            viewHolder.tournamentTitle?.visibility = View.VISIBLE
             // viewHolder?.matchProgress?.text = ""+objectVal.timestampEnd
+            viewHolder.tournamentTitle?.text = objectVal.matchTitle
             viewHolder.opponent1?.text = objectVal.teamAInfo!!.teamShortName
             viewHolder.opponent2?.text = objectVal.teamBInfo!!.teamShortName
             viewHolder.freeView?.visibility = View.GONE

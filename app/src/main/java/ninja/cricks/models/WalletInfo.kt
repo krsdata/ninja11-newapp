@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 
- class WalletInfo :Serializable,Cloneable {
+class WalletInfo : Serializable, Cloneable {
 
 
     @SerializedName("wallet_amount")
@@ -30,12 +30,11 @@ import java.io.Serializable
 
     @SerializedName("is_account_verified")
     @Expose
-    var accountStatus: AccountDocumentStatus?=null
+    var accountStatus: AccountDocumentStatus? = null
 
     @SerializedName("refferal_friends_count")
     @Expose
     var refferalCounts: Int = 0
-
 
 
     @SerializedName("bank_account_verified")
@@ -60,13 +59,28 @@ import java.io.Serializable
 
     @SerializedName("transaction")
     @Expose
-    var transactionList: ArrayList<TransactionModel> ? =null
+    var transactionList: ArrayList<TransactionModel>? = null
+
+    @SerializedName("rozar_key")
+    @Expose
+    var razorPay: String = ""
+
+    @SerializedName("paytm_show")
+    @Expose
+    var paytm_show: Boolean = true
+
+    @SerializedName("rozarpay_show")
+    @Expose
+    var rozarpay_show: Boolean = true
+
+    @SerializedName("gpay_show")
+    @Expose
+    var gpay_show: Boolean = true
 
 
     public override fun clone(): WalletInfo {
         return super.clone() as WalletInfo
     }
-
 
 
 }

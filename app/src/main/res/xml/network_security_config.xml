@@ -6,6 +6,6 @@
         </trust-anchors>
     </base-config>
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">api.ninja.in</domain>
+        <domain includeSubdomains="true">app.ninja.in</domain>
     </domain-config>
 </network-security-config>

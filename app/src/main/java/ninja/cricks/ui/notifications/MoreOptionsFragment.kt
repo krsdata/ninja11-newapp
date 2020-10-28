@@ -48,7 +48,7 @@ class MoreOptionsFragment : BaseFragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).showToolbar()
-        mBinding!!.appVersion.text = MyUtils.getAppVersionName(activity!!)
+        mBinding!!.appVersion.text = MyUtils.getAppVersionName(requireActivity())
         mBinding!!.recyclerMoreoptions.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
 
@@ -63,45 +63,45 @@ class MoreOptionsFragment : BaseFragment(){
     private fun initContent() {
         allOptionsList.clear()
 
-        var upcomingMModle1 = MoreOptionsModel()
+        val upcomingMModle1 = MoreOptionsModel()
         upcomingMModle1.drawable = R.drawable.more_refern_earn
         upcomingMModle1.id = 0
         upcomingMModle1.title = "Refer & Earn"
         allOptionsList.add(upcomingMModle1)
 
-        var upcomingMModle7 = MoreOptionsModel()
+        val upcomingMModle7 = MoreOptionsModel()
         upcomingMModle7.drawable = R.drawable.more_support
         upcomingMModle7.id = 6
         upcomingMModle7.title = getString(R.string.label_supportteam)
         allOptionsList.add(upcomingMModle7)
 
 
-        var upcomingMModle2 = MoreOptionsModel()
+        val upcomingMModle2 = MoreOptionsModel()
         upcomingMModle2.drawable = R.drawable.more_point_system
         upcomingMModle2.id = 1
         upcomingMModle2.title = "Fantasy Points System"
         allOptionsList.add(upcomingMModle2)
 
 
-        var upcomingMModle3 = MoreOptionsModel()
+        val upcomingMModle3 = MoreOptionsModel()
         upcomingMModle3.drawable = R.drawable.more_terms_conditions
         upcomingMModle3.id = 2
         upcomingMModle3.title = "How to Play"
         allOptionsList.add(upcomingMModle3)
 
-        var upcomingMModle4 = MoreOptionsModel()
+        val upcomingMModle4 = MoreOptionsModel()
         upcomingMModle4.drawable = R.drawable.more_about_us
         upcomingMModle4.id = 3
         upcomingMModle4.title = "About Us"
         allOptionsList.add(upcomingMModle4)
 
-        var upcomingMModle5 = MoreOptionsModel()
+        val upcomingMModle5 = MoreOptionsModel()
         upcomingMModle5.drawable = R.drawable.more_legality
         upcomingMModle5.id = 4
         upcomingMModle5.title = "Legality"
         allOptionsList.add(upcomingMModle5)
 
-        var upcomingMModle6 = MoreOptionsModel()
+        val upcomingMModle6 = MoreOptionsModel()
         upcomingMModle6.drawable = R.drawable.more_terms_conditions
         upcomingMModle6.id = 5
         upcomingMModle6.title = "Terms and Conditions"
@@ -113,10 +113,10 @@ class MoreOptionsFragment : BaseFragment(){
 //        upcomingMModle9.title = "Chat with Sports Fight"
 //        allOptionsList.add(upcomingMModle9)
 
-        var upcomingMModle8 = MoreOptionsModel()
+        val upcomingMModle8 = MoreOptionsModel()
         upcomingMModle8.drawable = R.drawable.more_logout
         upcomingMModle8.id = 8
-        var userId = MyPreferences.getUserID(activity!!)!!
+        val userId = MyPreferences.getUserID(requireActivity())!!
         if (!TextUtils.isEmpty(userId)) {
             upcomingMModle8.title = "Logout"
         }else {
@@ -124,12 +124,6 @@ class MoreOptionsFragment : BaseFragment(){
         }
 
         allOptionsList.add(upcomingMModle8)
-
-
-
-
-
-
     }
 
     inner class MoreOptionsAdaptor(
@@ -142,24 +136,22 @@ class MoreOptionsFragment : BaseFragment(){
 
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            var view = LayoutInflater.from(parent.context)
+            val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.row_more_options, parent, false)
             return DataViewHolder(view)
 
         }
 
         override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
-            var objectVal = optionListObject[viewType]
+            val objectVal = optionListObject[viewType]
             val viewHolder: DataViewHolder = parent as DataViewHolder
             viewHolder.optionsTitle?.text = objectVal.title
             viewHolder.optionIcon.setImageResource(objectVal.drawable)
         }
 
-
         override fun getItemCount(): Int {
             return optionListObject.size
         }
-
 
         inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             init {
@@ -167,15 +159,10 @@ class MoreOptionsFragment : BaseFragment(){
                     onItemClick?.invoke(optionListObject[adapterPosition])
                 }
             }
-
             val optionsTitle = itemView.findViewById<TextView>(R.id.options_title)
             val optionIcon = itemView.findViewById<ImageView>(R.id.option_icon)
         }
-
-
     }
-
-
 
     inner class BackgroundLoading : AsyncTask<Unit, Unit, String>() {
 
@@ -186,7 +173,7 @@ class MoreOptionsFragment : BaseFragment(){
         override fun onPostExecute(result: String) {
             mBinding!!.progressBar.visibility = View.INVISIBLE
 
-            var itemDecoration = DividerItemDecoration(activity!!, VERTICAL)
+            val itemDecoration = DividerItemDecoration(activity!!, VERTICAL)
             mBinding!!.recyclerMoreoptions.addItemDecoration(itemDecoration)
             adapter = MoreOptionsAdaptor(activity!!, allOptionsList)
             mBinding!!.recyclerMoreoptions.adapter = adapter
@@ -195,96 +182,63 @@ class MoreOptionsFragment : BaseFragment(){
                 when(objects.id){
                     0->{
                         val intent = Intent(activity!!, InviteFriendsActivity::class.java)
-                        if (Build.VERSION.SDK_INT > 20) {
-                            val options =
-                                ActivityOptions.makeSceneTransitionAnimation(activity)
-                            startActivity(intent, options.toBundle())
-                        } else {
-                            startActivity(intent)
-                        }
+                        val options =
+                            ActivityOptions.makeSceneTransitionAnimation(activity)
+                        startActivity(intent, options.toBundle())
                     }
                     1->{
                         val intent = Intent(activity!!, WebActivity::class.java)
                         intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_FANTASY_POINTS)
                         intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_FANTASY_POINTS)
-                        if (Build.VERSION.SDK_INT > 20) {
-                            val options =
-                                ActivityOptions.makeSceneTransitionAnimation(activity)
-                            startActivity(intent, options.toBundle())
-                        } else {
-                            startActivity(intent)
-                        }
+                        val options =
+                            ActivityOptions.makeSceneTransitionAnimation(activity)
+                        startActivity(intent, options.toBundle())
                     }
                     2->{
                         val intent = Intent(activity!!, WebActivity::class.java)
                         intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_HOW_TO_PLAY)
                         intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_FANTASY_HOW_TO_PLAY)
-                        if (Build.VERSION.SDK_INT > 20) {
-                            val options =
-                                ActivityOptions.makeSceneTransitionAnimation(activity)
-                            startActivity(intent, options.toBundle())
-                        } else {
-                            startActivity(intent)
-                        }
+                        val options =
+                            ActivityOptions.makeSceneTransitionAnimation(activity)
+                        startActivity(intent, options.toBundle())
                     }
                     3->{
                         val intent = Intent(activity!!, WebActivity::class.java)
                         intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_ABOUT_US)
                         intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_ABOUT_US)
-                        if (Build.VERSION.SDK_INT > 20) {
-                            val options =
-                                ActivityOptions.makeSceneTransitionAnimation(activity)
-                            startActivity(intent, options.toBundle())
-                        } else {
-                            startActivity(intent)
-                        }
+                        val options =
+                            ActivityOptions.makeSceneTransitionAnimation(activity)
+                        startActivity(intent, options.toBundle())
                     }
                     4->{
                         val intent = Intent(activity!!, WebActivity::class.java)
                         intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_LEGALITY)
                         intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_LEGALITY)
-                        if (Build.VERSION.SDK_INT > 20) {
-                            val options =
-                                ActivityOptions.makeSceneTransitionAnimation(activity)
-                            startActivity(intent, options.toBundle())
-                        } else {
-                            startActivity(intent)
-                        }
+                        val options =
+                            ActivityOptions.makeSceneTransitionAnimation(activity)
+                        startActivity(intent, options.toBundle())
                     }
                     5->{
                         val intent = Intent(activity!!, WebActivity::class.java)
                         intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_TERMS_CONDITION)
                         intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_TNC)
-                        if (Build.VERSION.SDK_INT > 20) {
-                            val options =
-                                ActivityOptions.makeSceneTransitionAnimation(activity)
-                            startActivity(intent, options.toBundle())
-                        } else {
-                            startActivity(intent)
-                        }
+                        val options =
+                            ActivityOptions.makeSceneTransitionAnimation(activity)
+                        startActivity(intent, options.toBundle())
                     }
 
                     6->{
                         val intent = Intent(activity!!, SupportActivity::class.java)
-                        if (Build.VERSION.SDK_INT > 20) {
-                            val options =
-                                ActivityOptions.makeSceneTransitionAnimation(activity)
-                            startActivity(intent, options.toBundle())
-                        } else {
-                            startActivity(intent)
-                        }
+                        val options =
+                            ActivityOptions.makeSceneTransitionAnimation(activity)
+                        startActivity(intent, options.toBundle())
                     }
 
                     8->{
                         logoutApp("Are you sure you want to logout",true)
                     }
-
-
                 }
             }
-
-
         }
-
     }
 }

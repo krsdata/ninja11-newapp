@@ -1,17 +1,21 @@
 package ninja.cricks
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.text.Html
 import android.text.TextUtils
 import android.view.View
 import android.widget.RadioButton
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import com.andrognito.flashbar.Flashbar
-import com.andrognito.flashbar.anim.FlashAnim
+import com.deliverdas.customers.utils.HardwareInfoManager
+import com.google.gson.JsonObject
 import ninja.cricks.databinding.ActivityWithdrawAmountBinding
 import ninja.cricks.models.WalletInfo
 import ninja.cricks.network.IApiMethod
@@ -22,6 +26,7 @@ import ninja.cricks.ui.home.models.UsersPostDBResponse
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,6 +37,7 @@ class WithdrawAmountsActivity : BaseActivity() {
     private var walletInfo: WalletInfo? = null
     private var mBinding: ActivityWithdrawAmountBinding? = null
     private var pageType: String = ""
+    private var mContext: Context? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +48,9 @@ class WithdrawAmountsActivity : BaseActivity() {
             this,
             R.layout.activity_withdraw_amount
         )
+
+        mContext = this
+
         mBinding!!.toolbar.title = "Withdraw Money"
         mBinding!!.toolbar.setTitleTextColor(resources.getColor(R.color.white))
         mBinding!!.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
@@ -95,6 +104,8 @@ class WithdrawAmountsActivity : BaseActivity() {
             val intent = Intent(this@WithdrawAmountsActivity, SupportActivity::class.java)
             startActivity(intent)
         })
+
+        getMessage()
     }
 
     private fun showWithdrawalAlert(amount: Int, type: String) {
@@ -201,5 +212,69 @@ class WithdrawAmountsActivity : BaseActivity() {
 
     override fun onUploadedImageUrl(url: String) {
 
+    }
+
+    private fun getMessage() {
+        if (!MyUtils.isConnectedWithInternet(this)) {
+            return
+        }
+        val models = RequestModel()
+        models.user_id = MyPreferences.getUserID(mContext!!)!!
+        models.token = MyPreferences.getToken(mContext!!)!!
+        models.deviceDetails = HardwareInfoManager(mContext).collectData()
+
+        WebServiceClient(mContext!!).client.create(IApiMethod::class.java).getMessages(models)
+            .enqueue(object : Callback<JsonObject?> {
+                override fun onFailure(call: Call<JsonObject?>?, t: Throwable?) {
+                    // customeProgressDialog.dismiss()
+                }
+
+                override fun onResponse(
+                    call: Call<JsonObject?>?,
+                    response: Response<JsonObject?>?
+                ) {
+
+                    val resObje = response!!.body().toString()
+                    val jsonObject = JSONObject(resObje)
+                    if (jsonObject.optBoolean("status")) {
+                        val array = jsonObject.getJSONArray("data")
+                        val data = array.getJSONObject(1)
+                        if (data.optInt("message_status") == 0) {
+                            mBinding!!.withdrawMessage.visibility = View.GONE
+                        } else {
+                            if (data.getString("message_type") == "HTML") {
+                                //mBinding!!.withdrawMessage.linksClickable = true
+                                //mBinding!!.withdrawMessage.movementMethod = LinkMovementMethod.getInstance()
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                    mBinding!!.withdrawMessage.text =
+                                        Html.fromHtml(
+                                            data.getString("message"), Html.FROM_HTML_MODE_COMPACT
+                                        )
+                                } else {
+                                    mBinding!!.withdrawMessage.text = Html.fromHtml(
+                                        data.getString("message")
+                                    )
+                                }
+                            } else {
+                                mBinding!!.withdrawMessage.text = data.getString("message")
+                            }
+                            mBinding!!.withdrawMessage.visibility = View.VISIBLE
+                        }
+
+                        val withdrawData = array.getJSONObject(2)
+
+                        if (withdrawData.optInt("message_status") == 0) {
+                            mBinding!!.walletCard.visibility = View.GONE
+                            mBinding!!.viewAmount.visibility = View.GONE
+                            mBinding!!.showAlert.visibility = View.VISIBLE
+                            mBinding!!.alertMessage.text = withdrawData.getString("message")
+                        } else {
+                            mBinding!!.walletCard.visibility = View.VISIBLE
+                            mBinding!!.viewAmount.visibility = View.VISIBLE
+                            mBinding!!.showAlert.visibility = View.GONE
+                        }
+                    }
+                }
+            })
     }
 }

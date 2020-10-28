@@ -193,7 +193,7 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
                         MyPreferences.setPaytmMid(this, responseb.paytmMid)
                         MyPreferences.setPaytmCallback(this, responseb.callbackurrl)
                         MyPreferences.setGooglePayId(this, responseb.gpayid)
-
+                        MyPreferences.setRazorPayId(this, responseb.razorPay)
 
                         (applicationContext as SportsFightApplication).saveUserInformations(
                             responseb.infomodel

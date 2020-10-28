@@ -13,26 +13,29 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ninja.cricks.AddMoneyActivity
 import ninja.cricks.InviteFriendsActivity
+import ninja.cricks.R
 import ninja.cricks.SupportActivity
 import ninja.cricks.models.MatchBannersModel
 import ninja.cricks.utils.BindingUtils
-import ninja.cricks.R
 
 
-class BannersMatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<MatchBannersModel>) :
+class BannersMatchesAdapter(
+    val context: Context,
+    val tradeinfoModels: ArrayList<MatchBannersModel>
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var onItemClick: ((MatchBannersModel) -> Unit)? = null
-    private var matchesListObject =  tradeinfoModels
+    private var matchesListObject = tradeinfoModels
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        var view = LayoutInflater.from(parent.context)
+        val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.matches_row_banners_inner, parent, false)
         return BannerMatchesViewHolder(view)
     }
 
     override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
-        var objectVal = matchesListObject[viewType]
+        val objectVal = matchesListObject[viewType]
         val viewHolder: BannerMatchesViewHolder = parent as BannerMatchesViewHolder
 
         Glide.with(context)
@@ -43,20 +46,20 @@ class BannersMatchesAdapter(val context: Context, val tradeinfoModels: ArrayList
             .into(viewHolder.imageBanners)
 
         viewHolder.imageBanners.setOnClickListener(View.OnClickListener {
-            if(objectVal.title.equals(BindingUtils.BANNERS_KEY_ADD)){
+            if (objectVal.title.equals(BindingUtils.BANNERS_KEY_ADD)) {
                 val intent = Intent(context, AddMoneyActivity::class.java)
-                    context.startActivity(intent)
+                context.startActivity(intent)
             }
-            if(objectVal.title.equals(BindingUtils.BANNERS_KEY_REFFER)){
+            if (objectVal.title.equals(BindingUtils.BANNERS_KEY_REFFER)) {
                 val intent = Intent(context, InviteFriendsActivity::class.java)
-                    context.startActivity(intent)
+                context.startActivity(intent)
             }
-            if(objectVal.title.equals(BindingUtils.BANNERS_KEY_SUPPORT)){
+            if (objectVal.title.equals(BindingUtils.BANNERS_KEY_SUPPORT)) {
                 val intent = Intent(context, SupportActivity::class.java)
                 context.startActivity(intent)
             }
 
-            if(objectVal.title.equals(BindingUtils.BANNERS_KEY_BROWSERS)){
+            if (objectVal.title.equals(BindingUtils.BANNERS_KEY_BROWSERS)) {
 
                 val builder = CustomTabsIntent.Builder()
                 builder.setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
@@ -64,7 +67,7 @@ class BannersMatchesAdapter(val context: Context, val tradeinfoModels: ArrayList
                 customTabsIntent.intent.setPackage("com.android.chrome")
                 customTabsIntent.launchUrl(context, Uri.parse(objectVal.descriptions))
 
-               // BindingUtils.sendEventLogs(context!!, 0,0,(context!!.applicationContext as SportsFightApplication).userInformations,"GAMEZOP-BANNER-FREE")
+                // BindingUtils.sendEventLogs(context!!, 0,0,(context!!.applicationContext as SportsFightApplication).userInformations,"GAMEZOP-BANNER-FREE")
 
 //                val urlString = objectVal.descriptions
 //                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(urlString))
@@ -83,12 +86,11 @@ class BannersMatchesAdapter(val context: Context, val tradeinfoModels: ArrayList
     }
 
 
-
     override fun getItemCount(): Int {
         return matchesListObject.size
     }
 
-    inner  class BannerMatchesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class BannerMatchesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val imageBanners = itemView.findViewById<ImageView>(R.id.image_banner)
 

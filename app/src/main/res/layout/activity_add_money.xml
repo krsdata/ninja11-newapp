@@ -236,9 +236,11 @@
                         android:visibility="visible" />
 
                     <View
+                        android:id="@+id/view1"
                         android:layout_width="match_parent"
                         android:layout_height="0.8dp"
                         android:layout_marginTop="5dp"
+                        android:visibility="gone"
                         android:background="@color/greyish" />
 
                     <RadioButton
@@ -252,7 +254,15 @@
                         android:fontFamily="@font/montserrat_bold"
                         android:text="Gpay"
                         android:textSize="@dimen/_12sdp"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
+
+                    <View
+                        android:id="@+id/view2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.8dp"
+                        android:layout_marginTop="5dp"
+                        android:visibility="gone"
+                        android:background="@color/greyish" />
 
                     <RadioButton
                         android:id="@+id/use_wallet_phonepay"
@@ -266,7 +276,7 @@
                         android:fontFamily="@font/montserrat_bold"
                         android:text="Credit Card/ Debit Card/ Netbanking/ Wallets"
                         android:textSize="@dimen/_12sdp"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
 
                     <View
                         android:layout_width="match_parent"

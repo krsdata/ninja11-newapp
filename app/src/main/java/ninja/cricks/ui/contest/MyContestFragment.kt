@@ -64,7 +64,7 @@ class MyContestFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         objectMatches =
-            arguments!!.get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
+            arguments?.get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
 
     }
 
@@ -86,14 +86,14 @@ class MyContestFragment : Fragment() {
         mBinding!!.recyclerMyContest.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         mBinding!!.linearEmptyContest.visibility = View.GONE
-        adapter = MyContestAdapter(activity!!, checkinArrayList)
+        adapter = MyContestAdapter(requireActivity(), checkinArrayList)
         mBinding!!.recyclerMyContest.adapter = adapter
 
         adapter.onItemClick = { objects ->
             val intent = Intent(context, LeadersBoardActivity::class.java)
             intent.putExtra(LeadersBoardActivity.SERIALIZABLE_MATCH_KEY, objectMatches)
             intent.putExtra(LeadersBoardActivity.SERIALIZABLE_CONTEST_KEY, objects)
-            activity!!.startActivityForResult(intent, LeadersBoardActivity.CREATETEAM_REQUESTCODE)
+            requireActivity().startActivityForResult(intent, LeadersBoardActivity.CREATETEAM_REQUESTCODE)
         }
         mBinding!!.linearEmptyContest.visibility = View.GONE
 
@@ -158,12 +158,12 @@ class MyContestFragment : Fragment() {
         mBinding!!.linearEmptyContest.visibility = View.GONE
         mBinding!!.progressContest.visibility = View.VISIBLE
         var models = RequestModel()
-        models.user_id = MyPreferences.getUserID(activity!!)!!
-        models.token = MyPreferences.getToken(activity!!)!!
+        models.user_id = MyPreferences.getUserID(requireActivity())!!
+        models.token = MyPreferences.getToken(requireActivity())!!
         models.match_id = "" + objectMatches!!.matchId
 
 
-        WebServiceClient(activity!!).client.create(IApiMethod::class.java).getMyContest(models)
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getMyContest(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     mBinding!!.mycontestRefresh.isRefreshing = false
@@ -423,11 +423,11 @@ class MyContestFragment : Fragment() {
         }
         customeProgressDialog.show()
         var models = RequestModel()
-        models.user_id = MyPreferences.getUserID(activity!!)!!
+        models.user_id = MyPreferences.getUserID(requireActivity())!!
         // models.token =MyPreferences.getToken(activity!!)!!
         models.team_id = teamId
 
-        WebServiceClient(activity!!).client.create(IApiMethod::class.java).getPoints(models)
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getPoints(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     customeProgressDialog.dismiss()
@@ -492,14 +492,8 @@ class MyContestFragment : Fragment() {
                             )
                             startActivity(intent)
                         }
-
                     }
-
                 }
-
             })
-
     }
-
-
 }

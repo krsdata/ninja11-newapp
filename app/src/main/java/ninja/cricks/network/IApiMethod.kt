@@ -1,4 +1,5 @@
 package ninja.cricks.network
+import com.google.gson.JsonObject
 import ninja.cricks.models.DocumentsModel
 import ninja.cricks.models.ResponseModel
 import ninja.cricks.payments.RequestPaytmModel
@@ -169,5 +170,9 @@ interface IApiMethod {
     @Headers("Content-Type: application/json")
     @POST("api/v2/createRazorPayOrder")
     fun createRazorPayOrder(@Body request: RequestModel): Call<UsersPostDBResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST("api/v2/messageApi")
+    fun getMessages(@Body request: RequestModel): Call<JsonObject>
 }
 

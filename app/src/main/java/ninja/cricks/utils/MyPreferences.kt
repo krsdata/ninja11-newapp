@@ -29,6 +29,10 @@ object MyPreferences {
     private val KEY_PREF_MINIMUM_DEPOSIT = "mindeposit"
     private val KEY_PREF_APP_WALLET_AMOUNT = "wallet"
     private val KEY_PREF_APP_WALLET_BONUS = "bwallet"
+    private val KEY_PREF_RAZOR_PAY_ID = "razorpayid"
+    private val KEY_PREF_IS_PAYTM = "ispaytm"
+    private val KEY_PREF_IS_GPAY = "isgpay"
+    private val KEY_PREF_IS_RAZOR_PAY = "israzorpay"
 
     /**
      * @author Manoj Prasad
@@ -71,7 +75,8 @@ object MyPreferences {
         val pref = getPreferences(context)
         if (pref != null) {
             getPreferences(context)!!.edit().putInt(
-                KEY_PREF_VALUE + key, value).commit()
+                KEY_PREF_VALUE + key, value
+            ).commit()
         }
     }
 
@@ -79,7 +84,8 @@ object MyPreferences {
         val pref = getPreferences(context)
         return if (pref != null) {
             getPreferences(context)!!.getBoolean(
-                KEY_PREF_VALUE + key, def)
+                KEY_PREF_VALUE + key, def
+            )
         } else false
     }
 
@@ -87,7 +93,8 @@ object MyPreferences {
         val pref = getPreferences(context)
         if (pref != null) {
             getPreferences(context)!!.edit().putBoolean(
-                KEY_PREF_VALUE + key, value).commit()
+                KEY_PREF_VALUE + key, value
+            ).commit()
         }
     }
 
@@ -123,7 +130,7 @@ object MyPreferences {
     }
 
     fun getLoginStatus(context: Context): Boolean? {
-        return getBoolean(context, KEY_PREF_LOGIN_STATUS,false)
+        return getBoolean(context, KEY_PREF_LOGIN_STATUS, false)
     }
 
     fun setOtpAuthRequired(context: Context, value: Boolean) {
@@ -135,7 +142,7 @@ object MyPreferences {
     }
 
     fun getOtpAuthRequired(context: Context): Boolean? {
-        return getBoolean(context, KEY_PREF_OTP_REQUIRED,false)
+        return getBoolean(context, KEY_PREF_OTP_REQUIRED, false)
     }
 
     fun saveUserInformations(context: Context, value: String) {
@@ -170,8 +177,6 @@ object MyPreferences {
             KEY_DEVICEID
         )
     }
-
-
 
 
     fun setNotificationToken(context: Context, value: String) {
@@ -221,7 +226,7 @@ object MyPreferences {
     }
 
     fun setGooglePayId(context: Context, value: String) {
-        if(!TextUtils.isEmpty(value)) {
+        if (!TextUtils.isEmpty(value)) {
             setStringPrefrence(
                 context,
                 KEY_PREF_GPAY_ID,
@@ -231,13 +236,13 @@ object MyPreferences {
     }
 
     fun getGooglePayId(context: Context): String? {
-        var gpayid = getStringPrefrence(
+        val gpayid = getStringPrefrence(
             context,
             KEY_PREF_GPAY_ID
         )
-        if(TextUtils.isEmpty(gpayid)){
+        if (TextUtils.isEmpty(gpayid)) {
             return PAYMENT_GOOGLEPAY_UPI
-        }else {
+        } else {
             return gpayid
         }
     }
@@ -258,8 +263,10 @@ object MyPreferences {
     }
 
     fun setMinimumDeposit(context: Context, value: Int) {
-        putInt( context,
-            KEY_PREF_MINIMUM_DEPOSIT,value)
+        putInt(
+            context,
+            KEY_PREF_MINIMUM_DEPOSIT, value
+        )
 //        setStringPrefrence(
 //            context,
 //            KEY_PREF_MINIMUM_DEPOSIT,
@@ -272,9 +279,9 @@ object MyPreferences {
             context,
             KEY_PREF_MINIMUM_DEPOSIT
         )
-        if(mindeposit==0){
+        if (mindeposit == 0) {
             return BindingUtils.MINIMUM_DEPOSIT_AMOUNT
-        }else {
+        } else {
             return mindeposit
         }
 
@@ -326,7 +333,7 @@ object MyPreferences {
             context,
             KEY_PREF_USERID
         )
-        if(TextUtils.isEmpty(useid)){
+        if (TextUtils.isEmpty(useid)) {
             useid = ""
         }
         return useid
@@ -417,7 +424,7 @@ object MyPreferences {
     }
 
 
-    fun setSFApiCaches(context: Context, key:String,value: String) {
+    fun setSFApiCaches(context: Context, key: String, value: String) {
         setStringPrefrence(
             context,
             key,
@@ -425,7 +432,7 @@ object MyPreferences {
         )
     }
 
-    fun getSFApiCaches(context: Context,key:String): String? {
+    fun getSFApiCaches(context: Context, key: String): String? {
         return getStringPrefrence(
             context,
             key
@@ -433,7 +440,7 @@ object MyPreferences {
     }
 
 
-    fun setSplashScreen(context: Context,value: String) {
+    fun setSplashScreen(context: Context, value: String) {
         setStringPrefrence(
             context,
             KEY_SPLASH_SCREEN,
@@ -448,4 +455,77 @@ object MyPreferences {
         )
     }
 
+
+    fun setRazorPayId(context: Context, value: String) {
+        if (!TextUtils.isEmpty(value)) {
+            setStringPrefrence(
+                context,
+                KEY_PREF_RAZOR_PAY_ID,
+                value
+            )
+        }
+    }
+
+    fun getRazorPayId(context: Context): String? {
+        val razorPayId = getStringPrefrence(
+            context,
+            KEY_PREF_RAZOR_PAY_ID
+        )
+        if (TextUtils.isEmpty(razorPayId)) {
+            return BindingUtils.PAYMENT_RAZOR_PAY_KEY
+        } else {
+            return razorPayId
+        }
+    }
+
+    fun setShowPaytm(context: Context, value: Boolean) {
+        putBoolean(
+            context,
+            KEY_PREF_IS_PAYTM,
+            value
+        )
+    }
+
+    fun getShowPaytm(context: Context): Boolean {
+        val isShow = getBoolean(
+            context,
+            KEY_PREF_IS_PAYTM,
+            true
+        )
+        return isShow
+    }
+
+    fun setShowGpay(context: Context, value: Boolean) {
+        putBoolean(
+            context,
+            KEY_PREF_IS_GPAY,
+            value
+        )
+    }
+
+    fun getShowGpay(context: Context): Boolean {
+        val isShow = getBoolean(
+            context,
+            KEY_PREF_IS_GPAY,
+            true
+        )
+        return isShow
+    }
+
+    fun setShowRazorPay(context: Context, value: Boolean) {
+        putBoolean(
+            context,
+            KEY_PREF_IS_GPAY,
+            value
+        )
+    }
+
+    fun getShowRazorPay(context: Context): Boolean {
+        val isShow = getBoolean(
+            context,
+            KEY_PREF_IS_GPAY,
+            true
+        )
+        return isShow
+    }
 }

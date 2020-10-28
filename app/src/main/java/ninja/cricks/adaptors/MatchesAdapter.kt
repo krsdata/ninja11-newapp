@@ -20,6 +20,7 @@ import ninja.cricks.R
 import ninja.cricks.models.MatchesModels
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyUtils
+import pl.pzienowicz.autoscrollviewpager.AutoScrollViewPager
 
 
 class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<MatchesModels>) :
@@ -56,8 +57,8 @@ class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<Matche
         return null!!
     }
 
-    override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
-        val objectVal = matchesListObject[viewType]
+    override fun onBindViewHolder(parent: RecyclerView.ViewHolder, position: Int) {
+        val objectVal = matchesListObject[position]
         if (objectVal.viewType == TYPE_JOINED) {
             val viewJoinedMatches: ViewHolderJoinedMatches = parent as ViewHolderJoinedMatches
             viewJoinedMatches.recyclerView.layoutManager =
@@ -86,7 +87,7 @@ class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<Matche
                 (mContext as MainActivity).viewAllMatches()
             }
         } else if (objectVal.viewType == TYPE_BANNERS) {
-            val objectVal = matchesListObject[viewType]
+            val objectVal = matchesListObject[position]
             val viewBanners: BannersViewHolder = parent as BannersViewHolder
             viewBanners.recyclerView.layoutManager =
                 LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false)
@@ -96,9 +97,24 @@ class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<Matche
             )
             viewBanners.recyclerView.adapter = adapter
 
+            /*val scrollViewAdapter = BannerSliderAdapter(mContext!!, objectVal.matchBanners!!)
+            viewBanners.recyclerView.adapter = scrollViewAdapter
+            scrollViewAdapter.notifyDataSetChanged()
+
+            if (objectVal.matchBanners!!.size == 1) {
+                viewBanners.recyclerView.stopAutoScroll()
+            } else {
+                viewBanners.recyclerView.startAutoScroll()
+            }
+
+            viewBanners.recyclerView.setInterval(3000)
+            viewBanners.recyclerView.setDirection(AutoScrollViewPager.Direction.RIGHT)
+            viewBanners.recyclerView.setCycle(true)
+            viewBanners.recyclerView.setBorderAnimation(true)
+            viewBanners.recyclerView.visibility = View.VISIBLE*/
 
         } else if (objectVal.viewType == TYPE_UPCOMING_MATCHES) {
-            val objectVal = matchesListObject[viewType]
+            val objectVal = matchesListObject[position]
             val viewUpcomingMatches: UpcomingMatchesViewHolder = parent as UpcomingMatchesViewHolder
             viewUpcomingMatches.recyclerView.layoutManager =
                 LinearLayoutManager(mContext, RecyclerView.VERTICAL, false)
@@ -158,6 +174,7 @@ class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<Matche
 
     inner class BannersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val recyclerView = itemView.findViewById<RecyclerView>(R.id.recycler_banners)
+        //val recyclerView: AutoScrollViewPager = itemView.findViewById(R.id.recycler_banners)
     }
 
     inner class UpcomingMatchesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

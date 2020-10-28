@@ -65,16 +65,12 @@ class MyBalanceActivity : AppCompatActivity() {
                 intent.putExtra(RegisterScreenActivity.ISACTIVITYRESULT, true)
                 startActivityForResult(intent, RegisterScreenActivity.REQUESTCODE_LOGIN)
             }
-
-
         })
-
-
 
         mBinding!!.btnWithdraw.setOnClickListener(View.OnClickListener {
             if (walletInfo.bankAccountVerified == BindingUtils.BANK_DOCUMENTS_STATUS_VERIFIED) {
-                var value = walletInfo.walletAmount
-                var amount = value.toDouble()
+                val value = walletInfo.walletAmount
+                val amount = value.toDouble()
                 if (amount >= 200) {
                     val intent = Intent(this@MyBalanceActivity, WithdrawAmountsActivity::class.java)
                     startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
@@ -158,8 +154,8 @@ class MyBalanceActivity : AppCompatActivity() {
     }
 
     private fun initWalletInfo() {
-        var walletInfo = (application as SportsFightApplication).walletInfo
-        var totalBalance =
+        val walletInfo = (application as SportsFightApplication).walletInfo
+        val totalBalance =
             walletInfo.depositAmount + walletInfo.prizeAmount + walletInfo.bonusAmount
         mBinding!!.walletTotalAmount.text = String.format("₹%.2f", totalBalance)
         mBinding!!.amountAdded.text = String.format("₹%.2f", walletInfo.prizeAmount)
@@ -167,7 +163,7 @@ class MyBalanceActivity : AppCompatActivity() {
         mBinding!!.bonusAmount.text = String.format("₹%.2f", walletInfo.bonusAmount)
 
         if (walletInfo != null) {
-            var accountStatus = walletInfo.accountStatus
+            val accountStatus = walletInfo.accountStatus
             updateAccountVerification(accountStatus)
         } else {
             mBinding!!.verifyAccountMessage.visibility = View.VISIBLE
@@ -199,9 +195,9 @@ class MyBalanceActivity : AppCompatActivity() {
                     response: Response<UsersPostDBResponse?>?
                 ) {
                     customeProgressDialog!!.dismiss()
-                    var res = response!!.body()
+                    val res = response!!.body()
                     if (res != null) {
-                        var responseModel = res.walletObjects
+                        val responseModel = res.walletObjects
                         if (responseModel != null) {
                             (application as SportsFightApplication).saveWalletInformation(
                                 responseModel

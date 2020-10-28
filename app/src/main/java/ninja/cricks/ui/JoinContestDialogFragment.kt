@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import ninja.cricks.*
+import ninja.cricks.databinding.FragmentJoinContestConfirmationBinding
 import ninja.cricks.models.MyTeamModels
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.models.UserInfo
@@ -32,8 +33,6 @@ import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import ninja.cricks.R
-import ninja.cricks.databinding.FragmentJoinContestConfirmationBinding
 
 class JoinContestDialogFragment(
     val myTeamArrayList: ArrayList<MyTeamModels>,
@@ -43,13 +42,13 @@ class JoinContestDialogFragment(
 
     private lateinit var userInfo: UserInfo
     private lateinit var customeProgressDialog: CustomeProgressDialog
-    var walletAmount:Double = 0.0
-    var bonusAmount:Double = 0.0
-    var createdTeamIdList :ArrayList<Int> ? =null
+    var walletAmount: Double = 0.0
+    var bonusAmount: Double = 0.0
+    var createdTeamIdList: ArrayList<Int>? = null
     private var mBinding: FragmentJoinContestConfirmationBinding? = null
 
-    companion object{
-        var DISCOUNT_ON_BONUS : Int = 0
+    companion object {
+        var DISCOUNT_ON_BONUS: Int = 0
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,9 +56,16 @@ class JoinContestDialogFragment(
         setStyle(STYLE_NORMAL, R.style.dialog_theme)
 
     }
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mBinding  = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_join_contest_confirmation, container, false)
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        mBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_join_contest_confirmation, container, false
+        )
         return mBinding!!.root
     }
 
@@ -69,7 +75,7 @@ class JoinContestDialogFragment(
         mBinding!!.imgClose.setOnClickListener(View.OnClickListener {
             requireActivity().finish()
         })
-         initWalletInfo()
+        initWalletInfo()
 
         getWalletBalances()
 
@@ -84,65 +90,64 @@ class JoinContestDialogFragment(
         bonusAmount = walletInfo.bonusAmount
         createdTeamIdList = ArrayList<Int>()
         var totalEntryFees = 0.0
-        var discountFromBonusAmount=0.0
+        var discountFromBonusAmount = 0.0
         var totalPayable = 0.0
-        if(contestModel.isBonusContest){
-            mBinding!!.walletTotalAmount.text = String.format("Bonus Amount =₹%.2f",bonusAmount)
-        }else {
-            mBinding!!.walletTotalAmount.text = String.format("Amount Added + Bonus =₹%.2f",walletAmount+bonusAmount)
+        if (contestModel.isBonusContest) {
+            mBinding!!.walletTotalAmount.text = String.format("Bonus Amount =₹%.2f", bonusAmount)
+        } else {
+            mBinding!!.walletTotalAmount.text =
+                String.format("Amount Added + Bonus =₹%.2f", walletAmount + bonusAmount)
         }
 
-
-        for(x in 0..myTeamArrayList.size-1){
+        for (x in 0..myTeamArrayList.size - 1) {
             var objects = myTeamArrayList.get(x)
-            if(objects.isSelected!!){
+            if (objects.isSelected!!) {
                 createdTeamIdList!!.add(objects.teamId!!.teamId)
-                totalEntryFees+= contestModel.entryFees
+                totalEntryFees += contestModel.entryFees
             }
         }
 
 
         var actualPayable = 0.0
-        if(contestModel.isBonusContest){
-            actualPayable =  totalEntryFees
+        if (contestModel.isBonusContest) {
+            actualPayable = totalEntryFees
             mBinding!!.entryFees.text = "0"
-            mBinding!!.usableCashbonus.text = String.format("₹%.2f",actualPayable)
-        }else {
+            mBinding!!.usableCashbonus.text = String.format("₹%.2f", actualPayable)
+        } else {
 
-           discountFromBonusAmount = ((totalEntryFees*DISCOUNT_ON_BONUS))/100
+            discountFromBonusAmount = ((totalEntryFees * DISCOUNT_ON_BONUS)) / 100
 
-            if(bonusAmount>=discountFromBonusAmount) {
+            if (bonusAmount >= discountFromBonusAmount) {
                 totalPayable = totalEntryFees - discountFromBonusAmount
-            }else {
+            } else {
                 discountFromBonusAmount = 0.0
-                totalPayable =totalEntryFees - discountFromBonusAmount
+                totalPayable = totalEntryFees - discountFromBonusAmount
             }
 //            if (totalPayable <= walletAmount) {
 //                actualPayable = 0.0
 //            } else {
-                actualPayable = totalPayable
-           // }
-            mBinding!!.entryFees.text = String.format("₹%.2f",totalEntryFees)
-            mBinding!!.usableCashbonus.text = String.format("₹%.2f",discountFromBonusAmount)
+            actualPayable = totalPayable
+            // }
+            mBinding!!.entryFees.text = String.format("₹%.2f", totalEntryFees)
+            mBinding!!.usableCashbonus.text = String.format("₹%.2f", discountFromBonusAmount)
         }
 
 
-
         //var finalAmount = walletAmount - totalPayable
-        mBinding!!.usableTopay.text = String.format("₹%.2f",Math.abs(actualPayable))
-        if(actualPayable > walletAmount){
+        mBinding!!.usableTopay.text = String.format("₹%.2f", Math.abs(actualPayable))
+        if (actualPayable > walletAmount) {
             mBinding!!.joinContest.text = "Pay Now"
             mBinding!!.joinContest.setBackgroundResource(R.drawable.default_flat_button_sportsfight)
         }
         mBinding!!.joinContest.setOnClickListener(View.OnClickListener {
 
-            if(actualPayable> walletAmount && !contestModel.isBonusContest){
+            if (actualPayable > walletAmount && !contestModel.isBonusContest) {
                 val intent = Intent(activity, AddMoneyActivity::class.java)
-                intent.putExtra(AddMoneyActivity.ADD_EXTRA_AMOUNT,Math.abs(actualPayable)+10)
+                intent.putExtra(AddMoneyActivity.ADD_EXTRA_AMOUNT, Math.abs(actualPayable) + 10)
                 startActivityForResult(intent, MyBalanceActivity.REQUEST_CODE_ADD_MONEY)
                 dismiss()
-            }else {
-                placeOrders(totalEntryFees, actualPayable,discountFromBonusAmount)
+            } else {
+                placeOrders(totalEntryFees, actualPayable, discountFromBonusAmount)
             }
         })
 
@@ -158,34 +163,37 @@ class JoinContestDialogFragment(
                 startActivity(intent)
             }
         })
-
     }
 
-
-    private fun placeOrders(totalEntryFees: Double,totalPayable: Double,discountFromBonusAmount: Double) {
-        if(!isVisible){
-          return
+    private fun placeOrders(
+        totalEntryFees: Double,
+        totalPayable: Double,
+        discountFromBonusAmount: Double
+    ) {
+        if (!isVisible) {
+            return
         }
-        if(!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
-            MyUtils.showToast(activity as AppCompatActivity,"No Internet connection found")
+        if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
+            MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
         customeProgressDialog.show()
         var models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         //models.token = MyPreferences.getToken(activity!!)!!
-        models.match_id =""+matchObject.matchId
-        models.contest_id =""+contestModel.id
-        models.created_team_id =createdTeamIdList
+        models.match_id = "" + matchObject.matchId
+        models.contest_id = "" + contestModel.id
+        models.created_team_id = createdTeamIdList
         models.token = MyPreferences.getToken(requireActivity())!!
-        models.entryFees =totalEntryFees.toString()
-        models.totalPaidAmount =totalPayable.toString()
-        models.discountOnBonusAmount =discountFromBonusAmount.toString()
+        models.entryFees = totalEntryFees.toString()
+        models.totalPaidAmount = totalPayable.toString()
+        models.discountOnBonusAmount = discountFromBonusAmount.toString()
 
-        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).joinContest(models)
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
+            .joinContest(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                    if(isVisible) {
+                    if (isVisible) {
                         customeProgressDialog.dismiss()
                     }
                 }
@@ -194,13 +202,13 @@ class JoinContestDialogFragment(
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    if(isVisible){
+                    if (isVisible) {
                         customeProgressDialog.dismiss()
                         var res = response!!.body()
-                        if(res!=null && res!!.status) {
+                        if (res != null && res.status) {
                             activity!!.setResult(RESULT_OK)
                             activity!!.finish()
-                        }else {
+                        } else {
                             MyUtils.showMessage(activity!!, res!!.message)
                         }
                     }
@@ -228,8 +236,8 @@ class JoinContestDialogFragment(
 
     fun getWalletBalances() {
         //var userInfo = (activity as PlugSportsApplication).userInformations
-        if(!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
-            MyUtils.showToast(activity as AppCompatActivity,"No Internet connection found")
+        if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
+            MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
         customeProgressDialog.show()
@@ -247,16 +255,18 @@ class JoinContestDialogFragment(
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    if(isVisible){
+                    if (isVisible) {
                         customeProgressDialog.dismiss()
                         var res = response!!.body()
-                        if(res!=null && res.status) {
-                            if(res.sessionExpired){
-                                logoutApp("Session Expired Please login again!!",false)
-                            }else {
+                        if (res != null && res.status) {
+                            if (res.sessionExpired) {
+                                logoutApp("Session Expired Please login again!!", false)
+                            } else {
                                 var responseModel = res.walletObjects
-                                if(responseModel!=null) {
-                                    (activity!!.applicationContext as SportsFightApplication).saveWalletInformation(responseModel)
+                                if (responseModel != null) {
+                                    (activity!!.applicationContext as SportsFightApplication).saveWalletInformation(
+                                        responseModel
+                                    )
                                     initWalletInfo()
                                 }
                             }
@@ -271,12 +281,12 @@ class JoinContestDialogFragment(
 
     }
 
-    fun logoutApp(message: String,boolean: Boolean) {
+    fun logoutApp(message: String, boolean: Boolean) {
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-        genericAlertDialog(message,boolean)
+        genericAlertDialog(message, boolean)
     }
 
 
@@ -290,17 +300,17 @@ class JoinContestDialogFragment(
         builder.setIcon(android.R.drawable.ic_dialog_alert)
 
         //performing positive action
-        if(boolean) {
+        if (boolean) {
             builder.setNegativeButton("Cancel", null)
         }
-        builder.setPositiveButton("OK"){
-                dialogInterface, which ->
+        builder.setPositiveButton("OK") { dialogInterface, which ->
 
             customeProgressDialog.show()
             var request = RequestModel()
             request.user_id = MyPreferences.getUserID(requireActivity())!!
             request.token = MyPreferences.getToken(requireActivity())!!
-            WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).logout(request)
+            WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
+                .logout(request)
                 .enqueue(object : Callback<UsersPostDBResponse?> {
                     override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
 

@@ -15,8 +15,8 @@ class CustomeProgressDialog(context: Context?) : Dialog(context!!) {
         super.onCreate(savedInstanceState)
         getWindow()!!.setBackgroundDrawableResource(android.R.color.transparent);
         setContentView(R.layout.dialog_progress)
-        setCancelable(true)
-        setCanceledOnTouchOutside(true)
+        setCancelable(false)
+        setCanceledOnTouchOutside(false)
 
     }
 

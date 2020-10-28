@@ -46,7 +46,7 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
     var orderId = ""
     private lateinit var paymentsClient: PaymentsClient
     val LOAD_PAYMENT_DATA_REQUEST_CODE = 0
-    val TAG: String = AddMoneyActivity::class.toString()
+    private val TAG: String? = AddMoneyActivity::class.java.simpleName
 
     companion object {
         val ADD_EXTRA_AMOUNT: String? = "add_extra_amount"
@@ -70,8 +70,6 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
         if (requestCode == TEZ_REQUEST_CODE) {
             if (data != null && data.extras != null) {
                 if (data.extras!!.getString("Status").equals("SUCCESS", ignoreCase = true)) {
-//                    val rand = Random()
-//                    val rand_int1 = rand.nextInt(1000000)
                     transactionId = data.extras!!.getString("txnId")!!
                     addWalletBalance()
                 } else {
@@ -140,7 +138,7 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
         })
 
         if (intent.hasExtra(ADD_EXTRA_AMOUNT)) {
-            var additionalAmount = intent.getDoubleExtra(ADD_EXTRA_AMOUNT, 0.0)
+            val additionalAmount = intent.getDoubleExtra(ADD_EXTRA_AMOUNT, 0.0)
             mBinding!!.editAmounts.setText("" + additionalAmount)
 
         }
@@ -215,10 +213,10 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
         })
 
         mBinding!!.addCash.setOnClickListener(View.OnClickListener {
-            var amount = mBinding!!.editAmounts.text.toString()
+            val amount = mBinding!!.editAmounts.text.toString()
             if (!TextUtils.isEmpty(amount)) {
-                var amt = amount.toDouble()
-                var minimumAmount = MyPreferences.getMinimumDeposit(this@AddMoneyActivity)
+                val amt = amount.toDouble()
+                val minimumAmount = MyPreferences.getMinimumDeposit(this@AddMoneyActivity)
                 if (amt >= minimumAmount!!) {
                     if (mBinding!!.usePaytmWallet.isChecked) {
                         payUsingPaytm(amt)
@@ -240,7 +238,6 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
         })
         //checkGpayAvalable()
     }
-
 
     private fun payUsingPaytm(amount: Double) {
 
@@ -311,7 +308,7 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
     private fun payUsingRazorPay(amount: Int) {
         customeProgressDialog.show()
         paymentMode = PAYEMENT_TYPE_RAZORPAY
-        var amt = amount * 100
+        val amt = amount * 100
         val models = RequestModel()
         models.amount = amt
         //models.currency = "INR"
@@ -333,28 +330,26 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
                     response: Response<UsersPostDBResponse?>?
                 ) {
                     customeProgressDialog.dismiss()
-                    var res = response!!.body()
+                    val res = response!!.body()
                     if (res != null && res.status) {
                         val co = Checkout()
                         co.setImage(R.mipmap.ic_launcher)
+                        co.setKeyID(MyPreferences.getRazorPayId(this@AddMoneyActivity)!!)
+                        Checkout.clearUserData(applicationContext)
                         try {
                             val options = JSONObject()
+                            options.put("key", MyPreferences.getRazorPayId(this@AddMoneyActivity)!!)
                             options.put("name", getString(R.string.app_name))
                             options.put(
                                 "description",
                                 "Adding amount to play " + getString(R.string.app_name)
                             )
-
-                            options.put("currency", "INR")
-                            options.put("theme.color", getString(R.string.razorpaythemecolor))
-                            options.put("amount", amt.toString())  //1000 means 10rs
                             options.put("order_id", res.orderId) //order Id
-
-                            val prefill = JSONObject()
-                            prefill.put("email", userInfo!!.userEmail)
-                            prefill.put("contact", userInfo!!.mobileNumber)
-
-                            options.put("prefill", prefill)
+                            options.put("theme.color", getString(R.string.razorpaythemecolor))
+                            options.put("currency", "INR")
+                            options.put("amount", amt.toString())  //1000 means 10rs
+                            options.put("prefill.email", userInfo!!.userEmail)
+                            options.put("prefill.contact", userInfo!!.mobileNumber)
                             co.open(this@AddMoneyActivity, options)
                         } catch (e: Exception) {
                             Toast.makeText(
@@ -365,12 +360,8 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
                             e.printStackTrace()
                         }
                     }
-
                 }
-
             })
-
-
     }
 
     fun createPaymentsClient(activity: Activity): PaymentsClient {
@@ -466,13 +457,27 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
 
         if (isAppInstalled(GOOGLE_TEZ_PACKAGE_NAME)) {
             // showProgress();
-            var upiId: String = MyPreferences.getGooglePayId(this@AddMoneyActivity)!!
-
+            val upiId: String = MyPreferences.getGooglePayId(this@AddMoneyActivity)!!
+            //Log.e(TAG, "upiId =======> $upiId")
+            /*Uri.Builder()
+                .scheme("upi")
+                .authority("pay")
+                .appendQueryParameter("pa", "your-merchant-vpa@xxx")
+                .appendQueryParameter("pn", "your-merchant-name")
+                .appendQueryParameter("mc", "your-merchant-code")
+                .appendQueryParameter("tr", "your-transaction-ref-id")
+                .appendQueryParameter("tn", "your-transaction-note")
+                .appendQueryParameter("am", "your-order-amount")
+                .appendQueryParameter("cu", "INR")
+                .appendQueryParameter("url", "your-transaction-url")
+                .build()*/
             val uri = Uri.Builder()
                 .scheme("upi")
                 .authority("pay")
                 .appendQueryParameter("pa", upiId)
-                .appendQueryParameter("pn", "Deliverdas grocory service")
+                .appendQueryParameter("pn", "Ninja 11 Service")
+                .appendQueryParameter("mc", "BCR2DN6T4XOJNV")
+                .appendQueryParameter("tr", System.currentTimeMillis().toString())
                 .appendQueryParameter("tn", "Thank you for being our valued customers.")
                 .appendQueryParameter("am", amount.toString())
                 .appendQueryParameter("cu", "INR")
@@ -508,21 +513,41 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
     }
 
     private fun initWalletInfo() {
-        var walletInfo = (application as SportsFightApplication).walletInfo
+        val walletInfo = (application as SportsFightApplication).walletInfo
 
         MyPreferences.setGooglePayId(this, walletInfo.gPay)
+        MyPreferences.setRazorPayId(this, walletInfo.razorPay)
         MyPreferences.setPaytmMid(this, walletInfo.paytmMid)
         MyPreferences.setPaytmCallback(this, walletInfo.callUrl)
         MyPreferences.setMinimumDeposit(this, walletInfo.minDeposit)
 
-        var walletAmount = walletInfo.walletAmount
+        MyPreferences.setShowPaytm(this, walletInfo.paytm_show)
+        MyPreferences.setShowGpay(this, walletInfo.gpay_show)
+        MyPreferences.setShowRazorPay(this, walletInfo.rozarpay_show)
+
+        val walletAmount = walletInfo.walletAmount
         mBinding!!.walletTotalAmount.text = String.format("₹%.2f", walletAmount)
-        //mBinding!!.amountAdded.text = ""
+
+        if (MyPreferences.getShowPaytm(this)) {
+            mBinding!!.usePaytmWallet.visibility = View.VISIBLE
+        } else {
+            mBinding!!.usePaytmWallet.visibility = View.GONE
+        }
+        if (MyPreferences.getShowGpay(this)) {
+            mBinding!!.useWalletGpay.visibility = View.VISIBLE
+        } else {
+            mBinding!!.useWalletGpay.visibility = View.GONE
+        }
+        if (MyPreferences.getShowRazorPay(this)) {
+            mBinding!!.useWalletPhonepay.visibility = View.VISIBLE
+        } else {
+            mBinding!!.useWalletPhonepay.visibility = View.GONE
+        }
     }
 
     fun getWalletBalances() {
         customeProgressDialog.show()
-        var models = RequestModel()
+        val models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
         models.token = MyPreferences.getToken(this)!!
 
@@ -537,9 +562,9 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
                     response: Response<UsersPostDBResponse?>?
                 ) {
                     customeProgressDialog.dismiss()
-                    var res = response!!.body()
+                    val res = response!!.body()
                     if (res != null) {
-                        var responseModel = res.walletObjects
+                        val responseModel = res.walletObjects
                         if (responseModel != null) {
                             (application as SportsFightApplication).saveWalletInformation(
                                 responseModel
@@ -578,10 +603,10 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
                     response: Response<UsersPostDBResponse?>?
                 ) {
                     customeProgressDialog.dismiss()
-                    var res = response!!.body()
+                    val res = response!!.body()
                     if (res != null) {
 
-                        var responseModel = res.walletObjects
+                        val responseModel = res.walletObjects
                         if (responseModel != null) {
                             (application as SportsFightApplication).saveWalletInformation(
                                 responseModel
@@ -591,11 +616,8 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
                             finish()
                         }
                     }
-
                 }
-
             })
-
     }
 
     override fun onPaymentError(errorCode: Int, response: String?) {

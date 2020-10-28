@@ -51,7 +51,7 @@ class PlayersContestAdapter(
         viewHolder.fantasyPoints?.text = "${objectVal.fantasyPlayerRating}"
         viewHolder.playerPoints?.text = "${objectVal.playerSeriesPoints}"
 
-        if (objectVal.isPlaying11 && matchObject.isLineup) {
+        if (objectVal.isPlaying11 /*&& matchObject.isLineup*/) {
             viewHolder.anouncedIndicatorCircle?.setBackgroundResource(R.drawable.circle_green)
             viewHolder.anouncedIndicatorText?.text = "Announced"
             viewHolder.anouncedIndicatorText?.setTextColor(context.resources.getColor(R.color.green))

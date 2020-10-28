@@ -53,6 +53,10 @@ class ResponseModel :Serializable {
     @Expose
     var responseModels: Response? = null
 
+    @SerializedName("rozar_key")
+    @Expose
+    var razorPay: String = ""
+
     inner class  Response {
 
         @SerializedName("matchcontests")

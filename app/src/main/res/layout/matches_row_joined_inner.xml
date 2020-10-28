@@ -6,6 +6,7 @@
     android:layout_marginLeft="@dimen/matches_view_left_margin_consolidated"
     android:layout_marginTop="@dimen/matches_view_top_margin"
     android:layout_marginRight="@dimen/matches_view_left_margin_consolidated"
+    android:layout_marginBottom="@dimen/_5sdp"
     app:cardCornerRadius="6dp"
     app:cardElevation="12dp">
 
@@ -27,7 +28,7 @@
                 android:id="@+id/completed_match_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/circular_medium"
+                android:fontFamily="@font/montserrat_medium"
                 android:text="South Africa vs England ODI"
                 android:textColor="@color/text"
                 android:textSize="@dimen/small_info_size" />
