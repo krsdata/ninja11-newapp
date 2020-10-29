@@ -184,5 +184,8 @@
     <color name="fab">#ffb02858</color>
     <color name="fab_red">#EC1616</color>
 
+    <color name="purple">#673BB7</color>
+
+    <color name="orange">#f0a015</color>
 
 </resources>

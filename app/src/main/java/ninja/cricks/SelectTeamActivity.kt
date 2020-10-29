@@ -15,6 +15,7 @@ import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
+import ninja.cricks.ui.JoinContestActivity
 import ninja.cricks.ui.JoinContestDialogFragment
 import ninja.cricks.ui.contest.models.ContestModelLists
 import ninja.cricks.ui.home.models.UsersPostDBResponse
@@ -34,7 +35,6 @@ class SelectTeamActivity : AppCompatActivity() {
     private var mBinding: ActivitySelectTeamBinding? = null
     lateinit var adapter: SelectedTeamAdapter
     var selectedTeamList: ArrayList<SelectedTeamModels> = ArrayList<SelectedTeamModels>()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,23 +68,22 @@ class SelectTeamActivity : AppCompatActivity() {
         mBinding!!.recyclerSelectTeam.adapter = adapter
 
         mBinding!!.teamContinue.setOnClickListener(View.OnClickListener {
-
             joinMatch()
         })
 
         if (selectedTeamList != null && selectedTeamList.size > 0) {
-            var openMatchListPos0 = selectedTeamList.get(0).openTeamList
+            val openMatchListPos0 = selectedTeamList.get(0).openTeamList
             if (openMatchListPos0 != null && openMatchListPos0.size == 1) {
-                var obj = selectedTeamList.get(0).openTeamList!!
-                var otl = obj.get(0)
+                val obj = selectedTeamList.get(0).openTeamList!!
+                val otl = obj.get(0)
                 otl.isSelected = true
                 obj.set(0, otl)
                 joinMatch()
             } else {
                 if (selectedTeamList.size == 2) {
-                    var openMatchListPos1 = selectedTeamList.get(1).openTeamList
+                    val openMatchListPos1 = selectedTeamList.get(1).openTeamList
                     if (openMatchListPos1 != null && openMatchListPos1.size == 1) {
-                        var otl = openMatchListPos1.get(0)
+                        val otl = openMatchListPos1.get(0)
                         otl.isSelected = true
                         openMatchListPos1.set(0, otl)
                         joinMatch()
@@ -92,24 +91,44 @@ class SelectTeamActivity : AppCompatActivity() {
                 }
             }
         }
-
-
     }
 
     private fun joinMatch() {
         var isTeamFound = false
-        var seelctedTeamList = getSelectedOpenList()
-        for (x in 0..seelctedTeamList.size - 1) {
-            var objects = seelctedTeamList.get(x)
+        val seelctedTeamList = getSelectedOpenList()
+        for (x in 0 until seelctedTeamList.size) {
+            val objects = seelctedTeamList[x]
             if (objects.isSelected!!) {
                 isTeamFound = true
             }
         }
         if (isTeamFound) {
-            val fm = supportFragmentManager
+            // comment by  nilesh for new activity on 30-10-20
+            /*val fm = supportFragmentManager
             val pioneersFragment =
                 JoinContestDialogFragment(seelctedTeamList, matchObject, contestModel)
-            pioneersFragment.show(fm, "PioneersFragment_tag")
+            pioneersFragment.show(fm, "PioneersFragment_tag")*/
+
+            val intent =
+                Intent(this@SelectTeamActivity, JoinContestActivity::class.java)
+            intent.putExtra(
+                CreateTeamActivity.SERIALIZABLE_MATCH_KEY,
+                matchObject
+            )
+            intent.putExtra(
+                CreateTeamActivity.SERIALIZABLE_CONTEST_KEY,
+                contestModel
+            )
+            intent.putExtra(
+                CreateTeamActivity.SERIALIZABLE_SELECTED_TEAMS,
+                seelctedTeamList
+            )
+            startActivityForResult(
+                intent,
+                CreateTeamActivity.CREATETEAM_REQUESTCODE
+            )
+
+
         } else {
             MyUtils.showToast(
                 this@SelectTeamActivity,
@@ -128,7 +147,7 @@ class SelectTeamActivity : AppCompatActivity() {
             return
         }
         customeProgressDialog!!.show()
-        var models = RequestModel()
+        val models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
         // models.token =MyPreferences.getToken(this)!!
         models.match_id = "" + matchObject.matchId
@@ -172,5 +191,13 @@ class SelectTeamActivity : AppCompatActivity() {
                 }
 
             })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            setResult(RESULT_OK)
+            finish()
+        }
     }
 }

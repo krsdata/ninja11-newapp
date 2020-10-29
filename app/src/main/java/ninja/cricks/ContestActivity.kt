@@ -33,6 +33,8 @@ import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents {
@@ -119,20 +121,20 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
 
             override fun onTicks(time: String) {
                 mBinding!!.matchTimer.text = time
-                mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.red))
+                mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.white))
                 mBinding!!.watchTimerImg.visibility = View.VISIBLE
-                BindingUtils.logD("TimerLogs", "ContestScreen: " + time)
+                BindingUtils.logD("TimerLogs", "ContestScreen: $time")
             }
         })
     }
 
     private fun updateTimerHeader() {
-        mBinding!!.matchTimer.text = matchObject!!.statusString.toUpperCase()
-        mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.green))
+        mBinding!!.matchTimer.text = matchObject!!.statusString.toUpperCase(Locale.getDefault())
+        mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.white))
         mBinding!!.watchTimerImg.visibility = View.GONE
     }
 
-    fun pauseCountDown() {
+    private fun pauseCountDown() {
         BindingUtils.stopTimer()
     }
 
@@ -141,8 +143,8 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
         pauseCountDown()
     }
 
-    fun changeTabsPositions(postion: Int) {
-        mBinding!!.viewpagerContest.currentItem = postion
+    fun changeTabsPositions(position: Int) {
+        mBinding!!.viewpagerContest.currentItem = position
     }
 
 
@@ -245,7 +247,7 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
 
     override fun onContestJoinning(objects: ContestModelLists, position: Int) {
         customeProgressDialog.show()
-        var models = RequestModel()
+        val models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
         //  models.token =MyPreferences.getToken(this)!!
         models.match_id = "" + matchObject!!.matchId

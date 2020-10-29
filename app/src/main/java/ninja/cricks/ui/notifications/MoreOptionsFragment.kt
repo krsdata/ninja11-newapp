@@ -60,6 +60,12 @@ class MoreOptionsFragment : BaseFragment() {
     private fun initContent() {
         allOptionsList.clear()
 
+        val upcomingMModle10 = MoreOptionsModel()
+        upcomingMModle10.drawable = R.drawable.more_terms_conditions
+        upcomingMModle10.id = 10
+        upcomingMModle10.title = "Offers"
+        allOptionsList.add(upcomingMModle10)
+
         val upcomingMModle1 = MoreOptionsModel()
         upcomingMModle1.drawable = R.drawable.more_refern_earn
         upcomingMModle1.id = 0
@@ -252,10 +258,19 @@ class MoreOptionsFragment : BaseFragment() {
                         logoutApp("Are you sure you want to logout", true)
                     }
 
-                    9->{
+                    9 -> {
                         val intent = Intent(activity!!, WebActivity::class.java)
                         intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_FAQ)
                         intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_FAQ)
+                        val options =
+                            ActivityOptions.makeSceneTransitionAnimation(activity)
+                        startActivity(intent, options.toBundle())
+                    }
+
+                    10 -> {
+                        val intent = Intent(activity!!, WebActivity::class.java)
+                        intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_OFFERS)
+                        intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_OFFERS)
                         val options =
                             ActivityOptions.makeSceneTransitionAnimation(activity)
                         startActivity(intent, options.toBundle())

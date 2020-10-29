@@ -2,6 +2,7 @@ package plug.cricket.ui.createteam
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,7 @@ class AllRounder : Fragment() {
     private lateinit var mListener: OnTeamCreateListener
     private var mBinding: FragmentCreateTeamListBinding? = null
     lateinit var adapter: PlayersContestAdapter
+    private var TAG: String = AllRounder::class.java.simpleName
 
     companion object {
         fun newInstance(bundle: Bundle): AllRounder {
@@ -46,6 +48,15 @@ class AllRounder : Fragment() {
             requireArguments().get(CreateTeamActivity.SERIALIZABLE_KEY_PLAYERS) as ArrayList<PlayersInfoModel>
         matchObject =
             requireArguments().get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
+
+        if (allRounders!!.size > 0) {
+            for (i in allRounders!!.indices) {
+                if (allRounders!![i].isSelected) {
+                    count++
+                }
+            }
+        }
+        Log.e(TAG, "count =========> $count")
     }
 
     override fun onCreateView(
@@ -115,7 +126,10 @@ class AllRounder : Fragment() {
                         )
                     }
                 } else {
-                    MyUtils.showToast(requireActivity() as AppCompatActivity, "ALL 11 Players Selected")
+                    MyUtils.showToast(
+                        requireActivity() as AppCompatActivity,
+                        "ALL 11 Players Selected"
+                    )
                 }
             }
             adapter.notifyDataSetChanged()
@@ -166,7 +180,7 @@ class AllRounder : Fragment() {
             } else {
                 mBinding!!.sortByCreditsArrow.setImageResource(R.drawable.ic_baseline_arrow_downward_24)
             }
-            var swapArray = CricketPlayersFilters.getPlayersbyMaxCredits(
+            val swapArray = CricketPlayersFilters.getPlayersbyMaxCredits(
                 allRounders!!,
                 CreateTeamActivity.isSortByCreditsActiveDecending!!
             )
@@ -189,7 +203,7 @@ class AllRounder : Fragment() {
             } else {
                 mBinding!!.sortByPointsArrow.setImageResource(R.drawable.ic_baseline_arrow_downward_24)
             }
-            var swapArray = CricketPlayersFilters.getPlayersbyMaxPoints(
+            val swapArray = CricketPlayersFilters.getPlayersbyMaxPoints(
                 allRounders!!,
                 CreateTeamActivity.isSortByPointsActiveDecending!!
             )
@@ -211,7 +225,7 @@ class AllRounder : Fragment() {
             } else {
                 mBinding!!.sortBySelectedArrow.setImageResource(R.drawable.ic_baseline_arrow_downward_24)
             }
-            var swapArray = CricketPlayersFilters.getPlayersbyMaxSelection(
+            val swapArray = CricketPlayersFilters.getPlayersbyMaxSelection(
                 allRounders!!,
                 CreateTeamActivity.isSortBySelectionActiveDecending!!
             )
@@ -228,13 +242,13 @@ class AllRounder : Fragment() {
             if (CreateTeamActivity.COUNT_WICKET_KEEPER < CreateTeamActivity.MAX_WICKET_KEEPER[0]) {
                 MyUtils.showToast(
                     requireActivity() as AppCompatActivity,
-                    "Minimum " + CreateTeamActivity.MAX_WICKET_KEEPER[0] + " " + "Wicket Keeper Required"
+                    "Minimum " + CreateTeamActivity.MAX_WICKET_KEEPER[0] + " Wicket Keeper Required"
                 )
                 return false
             } else if (CreateTeamActivity.COUNT_BATS_MAN < CreateTeamActivity.MAX_BATSMAN[0]) {
                 MyUtils.showToast(
                     requireActivity() as AppCompatActivity,
-                    "Minimum " + CreateTeamActivity.MAX_BATSMAN[0] + " " + "BatsMan Required"
+                    "Minimum " + CreateTeamActivity.MAX_BATSMAN[0] + " BatsMan Required"
                 )
                 return false
             } else if (CreateTeamActivity.COUNT_ALL_ROUNDER < CreateTeamActivity.MAX_ALL_ROUNDER[0]) {
@@ -243,7 +257,7 @@ class AllRounder : Fragment() {
             } else if (CreateTeamActivity.COUNT_BOWLER < CreateTeamActivity.MAX_BOWLER[0]) {
                 MyUtils.showToast(
                     requireActivity() as AppCompatActivity,
-                    "Minimum " + CreateTeamActivity.MAX_BOWLER[0] + " " + "BOWLER Required"
+                    "Minimum " + CreateTeamActivity.MAX_BOWLER[0] + " BOWLER Required"
                 )
                 return false
 

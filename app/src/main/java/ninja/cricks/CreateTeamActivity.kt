@@ -162,13 +162,9 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
             val intent = Intent(this@CreateTeamActivity, WebActivity::class.java)
             intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_PRIVACY_POLICY)
             intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_PRIVACY)
-            if (Build.VERSION.SDK_INT > 20) {
-                val options =
-                    ActivityOptions.makeSceneTransitionAnimation(this)
-                startActivity(intent, options.toBundle())
-            } else {
-                startActivity(intent)
-            }
+            val options =
+                ActivityOptions.makeSceneTransitionAnimation(this)
+            startActivity(intent, options.toBundle())
         })
 
         mBinding!!.clearAllPlayer.setOnClickListener(View.OnClickListener {
@@ -963,7 +959,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         mBinding!!.progressBar.visibility = View.GONE
     }
 
-    fun getAllPlayers() {
+    private fun getAllPlayers() {
 
         val models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
@@ -1019,32 +1015,22 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
             override fun onPageSelected(position: Int) {
 
                 val fragment = viewPagerAdapter.getItem(position)
-                if (fragment != null) {
-                    when (position) {
-                        0 -> {
-                            val objectsWicketKeeper = fragment as WicketKeepers
-                            if (objectsWicketKeeper != null) {
-                                objectsWicketKeeper.setFilterIfActive()
-                            }
-                        }
-                        1 -> {
-                            val objectsBatsMan = fragment as Batsman
-                            if (objectsBatsMan != null) {
-                                objectsBatsMan.setFilterIfActive()
-                            }
-                        }
-                        2 -> {
-                            val objectsAllRounder = fragment as AllRounder
-                            if (objectsAllRounder != null) {
-                                objectsAllRounder.setFilterIfActive()
-                            }
-                        }
-                        3 -> {
-                            var objectsbowler = fragment as Bowlers
-                            if (objectsbowler != null) {
-                                objectsbowler.setFilterIfActive()
-                            }
-                        }
+                when (position) {
+                    0 -> {
+                        val objectsWicketKeeper = fragment as WicketKeepers
+                        objectsWicketKeeper.setFilterIfActive()
+                    }
+                    1 -> {
+                        val objectsBatsMan = fragment as Batsman
+                        objectsBatsMan.setFilterIfActive()
+                    }
+                    2 -> {
+                        val objectsAllRounder = fragment as AllRounder
+                        objectsAllRounder.setFilterIfActive()
+                    }
+                    3 -> {
+                        val objectsBowler = fragment as Bowlers
+                        objectsBowler.setFilterIfActive()
                     }
                 }
             }
@@ -1055,7 +1041,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         viewPager: ViewPager
     ) {
 
-        var wkList = parseEditTeamModel(playersList!!.wicketKeepers!!, 1)
+        val wkList = parseEditTeamModel(playersList!!.wicketKeepers!!, 1)
 
         var titleTabs = ""
         if (isEditMode || isCopyTeam) {
@@ -1063,7 +1049,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         } else {
             titleTabs = getString(R.string.createteam_type_wk)
         }
-        var bundleWicketKeepers = Bundle()
+        val bundleWicketKeepers = Bundle()
         bundleWicketKeepers.putSerializable(SERIALIZABLE_KEY_PLAYERS, wkList)
         bundleWicketKeepers.putSerializable(
             ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT,
@@ -1074,9 +1060,9 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         viewPagerAdapter.addFragment(WicketKeepers.newInstance(bundleWicketKeepers), titleTabs)
 
 
-        var batsManList = parseEditTeamModel(playersList!!.batsmen!!, 2)
+        val batsManList = parseEditTeamModel(playersList!!.batsmen!!, 2)
 
-        var bundleBatsMatchesModel = Bundle()
+        val bundleBatsMatchesModel = Bundle()
         bundleBatsMatchesModel.putSerializable(SERIALIZABLE_KEY_PLAYERS, batsManList)
         bundleBatsMatchesModel.putSerializable(
             ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT,
@@ -1091,7 +1077,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
         viewPagerAdapter.addFragment(Batsman.newInstance(bundleBatsMatchesModel), titleTabs)
 
-        var allList = parseEditTeamModel(playersList!!.allRounders!!, 3)
+        val allList = parseEditTeamModel(playersList!!.allRounders!!, 3)
         if (isEditMode || isCopyTeam) {
             titleTabs = String.format("AR(%d)", myTeamModel!!.allRounders!!.size)
         } else {
@@ -1099,12 +1085,12 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
                 R.string.createteam_type_ar
             )
         }
-        var bundleAllRounder = Bundle()
+        val bundleAllRounder = Bundle()
         bundleAllRounder.putSerializable(SERIALIZABLE_KEY_PLAYERS, allList)
         bundleAllRounder.putSerializable(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT, matchObject)
         viewPagerAdapter.addFragment(AllRounder.newInstance(bundleAllRounder), titleTabs)
 
-        var bowlerList = parseEditTeamModel(playersList!!.bowlers!!, 4)
+        val bowlerList = parseEditTeamModel(playersList!!.bowlers!!, 4)
 
         if (isEditMode || isCopyTeam) {
             titleTabs = String.format("BOWL(%d)", myTeamModel!!.bowlers!!.size)
@@ -1125,28 +1111,28 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
     private fun updateEditTEam() {
         if (myTeamModel != null) {
-            var wkSelected = myTeamModel!!.wicketKeepers
-            var playersListWK = playersList!!.wicketKeepers!!
+            val wkSelected = myTeamModel!!.wicketKeepers
+            val playersListWK = playersList!!.wicketKeepers!!
             for (y in 0..wkSelected!!.size - 1) {
-                var robj = wkSelected.get(y)
+                val robj = wkSelected.get(y)
 
                 for (x in 0..playersListWK.size - 1) {
-                    var dkkd = playersListWK.get(x)
+                    val dkkd = playersListWK.get(x)
                     if (robj == dkkd.playerId) {
-                        var obj = playersListWK.get(x)
+                        val obj = playersListWK.get(x)
                         obj.isSelected = true
                         onWicketKeeperSelected(obj)
                     }
                 }
             }
             //BatsManSelected
-            var batsSelected = myTeamModel!!.batsmen
-            var playersListBats = playersList!!.batsmen!!
+            val batsSelected = myTeamModel!!.batsmen
+            val playersListBats = playersList!!.batsmen!!
             for (y in 0..batsSelected!!.size - 1) {
-                var robj = batsSelected.get(y)
+                val robj = batsSelected.get(y)
                 for (x in 0..playersListBats.size - 1) {
                     if (robj == playersListBats.get(x).playerId) {
-                        var obj = playersListBats.get(x)
+                        val obj = playersListBats.get(x)
                         obj.isSelected = true
                         onBatsManSelected(obj)
                     }
@@ -1154,13 +1140,13 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
             }
 
             //allRounderSelected
-            var allSelected = myTeamModel!!.allRounders
-            var playersListAll = playersList!!.allRounders!!
+            val allSelected = myTeamModel!!.allRounders
+            val playersListAll = playersList!!.allRounders!!
             for (y in 0..allSelected!!.size - 1) {
-                var robj = allSelected.get(y)
+                val robj = allSelected.get(y)
                 for (x in 0..playersListAll.size - 1) {
                     if (robj == playersListAll.get(x).playerId) {
-                        var obj = playersListAll.get(x)
+                        val obj = playersListAll.get(x)
                         obj.isSelected = true
                         onAllRounderSelected(obj)
                     }
@@ -1168,13 +1154,13 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
             }
 
             //allBowlerSelected
-            var bowlerSelected = myTeamModel!!.bowlers
-            var playersListbowl = playersList!!.bowlers!!
+            val bowlerSelected = myTeamModel!!.bowlers
+            val playersListbowl = playersList!!.bowlers!!
             for (y in 0..bowlerSelected!!.size - 1) {
-                var robj = bowlerSelected.get(y)
+                val robj = bowlerSelected.get(y)
                 for (x in 0..playersListbowl.size - 1) {
                     if (robj == playersListbowl.get(x).playerId) {
-                        var obj = playersListbowl.get(x)
+                        val obj = playersListbowl.get(x)
                         obj.isSelected = true
                         onBowlerSelected(obj)
                     }
@@ -1187,7 +1173,6 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         realList: java.util.ArrayList<PlayersInfoModel>,
         position: Int
     ): java.util.ArrayList<PlayersInfoModel> {
-
         return realList
     }
 
@@ -1375,12 +1360,12 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
     }
 
     fun isSpotAvailable(wantPlayerFrom: Int): Boolean {
-        var remainingSpots = MAX_PLAYERS_CRICKET - totalPlayers
+        val remainingSpots = MAX_PLAYERS_CRICKET - totalPlayers
         if (remainingSpots <= (COUNT_BATS_MAN + COUNT_BOWLER + COUNT_ALL_ROUNDER + COUNT_WICKET_KEEPER)) {
-            var totalWKRemaining = MAX_WICKET_KEEPER[0] - COUNT_WICKET_KEEPER
-            var totalBatsRemaining = MAX_BATSMAN[0] - COUNT_BATS_MAN
-            var totalAllRounderRemaining = MAX_ALL_ROUNDER[0] - COUNT_ALL_ROUNDER
-            var totalBowlerRemainig = MAX_BOWLER[0] - COUNT_BOWLER
+            val totalWKRemaining = MAX_WICKET_KEEPER[0] - COUNT_WICKET_KEEPER
+            val totalBatsRemaining = MAX_BATSMAN[0] - COUNT_BATS_MAN
+            val totalAllRounderRemaining = MAX_ALL_ROUNDER[0] - COUNT_ALL_ROUNDER
+            val totalBowlerRemainig = MAX_BOWLER[0] - COUNT_BOWLER
 
             if (WANT_WK == wantPlayerFrom) {
                 var countnow = 0
@@ -1469,7 +1454,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
     }
 
     internal inner class ViewPagerAdapter(manager: FragmentManager) :
-        FragmentPagerAdapter(manager) {
+        FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         private val mFragmentList = ArrayList<Fragment>()
         private val mFragmentTitleList = ArrayList<String>()
 
@@ -1490,5 +1475,4 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
             return mFragmentTitleList[position]
         }
     }
-
 }

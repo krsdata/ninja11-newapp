@@ -104,7 +104,7 @@ class MyLiveMatchesFragment : Fragment() {
             mBinding!!.progressBar.visibility = View.VISIBLE
         }
         mBinding!!.linearEmptyContest.visibility = View.GONE
-        var models = RequestModel()
+        val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         models.action_type = "live"
 
@@ -122,9 +122,9 @@ class MyLiveMatchesFragment : Fragment() {
                 ) {
                     if (isAdded) {
                         mBinding!!.progressBar.visibility = View.GONE
-                        var res = response!!.body()
+                        val res = response!!.body()
                         if (res != null) {
-                            var responseModel = res.responseObject
+                            val responseModel = res.responseObject
                             if (responseModel != null) {
                                 if (responseModel.matchdatalist != null && responseModel.matchdatalist!!.size > 0) {
                                     checkinArrayList.clear()
@@ -156,7 +156,7 @@ class MyLiveMatchesFragment : Fragment() {
         private var matchesListObject = tradeinfoModels
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            var view = LayoutInflater.from(parent.context)
+            val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.matches_row_upcoming_inner, parent, false)
             return DataViewHolder(view)
 
@@ -170,7 +170,7 @@ class MyLiveMatchesFragment : Fragment() {
         }
 
         override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
-            var objectVal = matchesListObject[viewType]
+            val objectVal = matchesListObject[viewType]
             val viewHolder: DataViewHolder = parent as DataViewHolder
             viewHolder.matchTitle?.visibility = View.GONE
             viewHolder.tournamentTitle?.visibility = View.VISIBLE

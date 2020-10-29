@@ -2,6 +2,7 @@ package plug.cricket.ui.createteam
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,7 @@ class Batsman : Fragment() {
     private lateinit var mListener: OnTeamCreateListener
     private var mBinding: FragmentCreateTeamListBinding? = null
     lateinit var adapter: PlayersContestAdapter
+    private var TAG: String = Batsman::class.java.simpleName
 
     companion object {
         fun newInstance(bundle: Bundle): Batsman {
@@ -43,9 +45,18 @@ class Batsman : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         batsmenListFilter =
-            arguments!!.get(CreateTeamActivity.SERIALIZABLE_KEY_PLAYERS) as ArrayList<PlayersInfoModel>
+            requireArguments().get(CreateTeamActivity.SERIALIZABLE_KEY_PLAYERS) as ArrayList<PlayersInfoModel>
         matchObject =
-            arguments!!.get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
+            requireArguments().get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
+
+        if (batsmenListFilter!!.size > 0) {
+            for (i in batsmenListFilter!!.indices) {
+                if (batsmenListFilter!![i].isSelected) {
+                    count++
+                }
+            }
+        }
+        Log.e(TAG, "count =========> $count")
     }
 
     override fun onCreateView(
@@ -78,7 +89,7 @@ class Batsman : Fragment() {
         mBinding!!.recyclerCreatePlayersList.addItemDecoration(dividerItemDecoration)
 
         adapter = PlayersContestAdapter(
-            activity!!,
+            requireActivity(),
             batsmenListFilter!!,
             matchObject!!
         )
@@ -101,24 +112,26 @@ class Batsman : Fragment() {
                             }
                         } else {
                             MyUtils.showToast(
-                                activity!! as AppCompatActivity,
+                                requireActivity() as AppCompatActivity,
                                 "MAX Player Reached limit  " + objects.teamShortName
                             )
                         }
                     } else {
                         MyUtils.showToast(
-                            activity!! as AppCompatActivity,
+                            requireActivity() as AppCompatActivity,
                             "MAX ALLOWED is " + CreateTeamActivity.MAX_BATSMAN[1]
                         )
                     }
                 } else {
-                    MyUtils.showToast(activity!! as AppCompatActivity, "ALL 11 Players Selected")
+                    MyUtils.showToast(
+                        requireActivity() as AppCompatActivity,
+                        "ALL 11 Players Selected"
+                    )
                 }
             }
             adapter.notifyDataSetChanged()
         }
     }
-
 
     fun setFilterIfActive() {
         activateSelectionSorting()
@@ -164,7 +177,7 @@ class Batsman : Fragment() {
             } else {
                 mBinding!!.sortByCreditsArrow.setImageResource(R.drawable.ic_baseline_arrow_downward_24)
             }
-            var swapArray = CricketPlayersFilters.getPlayersbyMaxCredits(
+            val swapArray = CricketPlayersFilters.getPlayersbyMaxCredits(
                 batsmenListFilter!!,
                 CreateTeamActivity.isSortByCreditsActiveDecending!!
             )
@@ -187,7 +200,7 @@ class Batsman : Fragment() {
             } else {
                 mBinding!!.sortByPointsArrow.setImageResource(R.drawable.ic_baseline_arrow_downward_24)
             }
-            var swapArray = CricketPlayersFilters.getPlayersbyMaxPoints(
+            val swapArray = CricketPlayersFilters.getPlayersbyMaxPoints(
                 batsmenListFilter!!,
                 CreateTeamActivity.isSortByPointsActiveDecending!!
             )
@@ -209,7 +222,7 @@ class Batsman : Fragment() {
             } else {
                 mBinding!!.sortBySelectedArrow.setImageResource(R.drawable.ic_baseline_arrow_downward_24)
             }
-            var swapArray = CricketPlayersFilters.getPlayersbyMaxSelection(
+            val swapArray = CricketPlayersFilters.getPlayersbyMaxSelection(
                 batsmenListFilter!!,
                 CreateTeamActivity.isSortBySelectionActiveDecending!!
             )
@@ -222,10 +235,10 @@ class Batsman : Fragment() {
     }
 
     private fun isMinimumPlayerSelected(): Boolean {
-        if ((activity!! as CreateTeamActivity).isSpotAvailable(CreateTeamActivity.WANT_BAT)) {
+        if ((requireActivity() as CreateTeamActivity).isSpotAvailable(CreateTeamActivity.WANT_BAT)) {
             if (CreateTeamActivity.COUNT_WICKET_KEEPER < CreateTeamActivity.MAX_WICKET_KEEPER[0]) {
                 MyUtils.showToast(
-                    activity!! as AppCompatActivity,
+                    requireActivity() as AppCompatActivity,
                     "Minimum " + CreateTeamActivity.MAX_WICKET_KEEPER[0] + " " + "Wicket Keeper Required"
                 )
                 return false
@@ -234,13 +247,13 @@ class Batsman : Fragment() {
                 return true
             } else if (CreateTeamActivity.COUNT_ALL_ROUNDER < CreateTeamActivity.MAX_ALL_ROUNDER[0]) {
                 MyUtils.showToast(
-                    activity!! as AppCompatActivity,
+                    requireActivity() as AppCompatActivity,
                     "Minimum " + CreateTeamActivity.MAX_ALL_ROUNDER[0] + " " + "All Rounder Required"
                 )
                 return false
             } else if (CreateTeamActivity.COUNT_BOWLER < CreateTeamActivity.MAX_BOWLER[0]) {
                 MyUtils.showToast(
-                    activity!! as AppCompatActivity,
+                    requireActivity() as AppCompatActivity,
                     "Minimum " + CreateTeamActivity.MAX_BOWLER[0] + " " + "BOWLER Required"
                 )
                 return false
@@ -269,7 +282,5 @@ class Batsman : Fragment() {
                 "$context must implement OnTeamCreateListener"
             )
         }
-
     }
-
 }

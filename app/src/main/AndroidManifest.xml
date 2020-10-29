@@ -182,6 +182,10 @@
             android:label="Update Profile"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name="ninja.cricks.ui.JoinContestActivity"
+            android:label="Join Contest"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

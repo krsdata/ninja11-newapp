@@ -39,6 +39,7 @@ class BindingUtils {
         val WEBVIEW_ABOUT_US = BASE_URL_MAIN + "about-us?request=mobile"
         val WEBVIEW_LEGALITY = BASE_URL_MAIN + "legality?request=mobile"
         val WEBVIEW_FAQ = BASE_URL_MAIN + "faqs?request=mobile"
+        val WEBVIEW_OFFERS = BASE_URL_MAIN + "offers?request=mobile"
         const val NOTIFICATION_ID_BIG_IMAGE = 101
         val BILTY_APK_LINK: String = BASE_URL_API + "apk"
         val WEB_TITLE_PRIVACY_POLICY: String = "Privacy Policy"
@@ -48,6 +49,7 @@ class BindingUtils {
         val WEB_TITLE_FANTASY_POINTS: String = "Fantasy Point System"
         val WEB_TITLE_LEGALITY: String = "LEGALITY"
         val WEB_TITLE_FAQ: String = "FAQs"
+        val WEB_TITLE_OFFERS: String = "Offers"
 
         var currentTimeStamp: Long = 0
 
