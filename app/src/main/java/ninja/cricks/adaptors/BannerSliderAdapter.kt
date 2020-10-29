@@ -11,6 +11,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import ninja.cricks.AddMoneyActivity
 import ninja.cricks.InviteFriendsActivity
 import ninja.cricks.R
@@ -55,8 +56,7 @@ class BannerSliderAdapter(val context: Context, val tradeinfoModels: ArrayList<M
             Glide.with(context)
                 .load(objectVal.bannerUrl)
                 .placeholder(R.drawable.rectangle_left_top_curve)
-                .skipMemoryCache(true)
-                .disallowHardwareConfig()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(viewHolder.target)
 
             viewHolder.target.setOnClickListener(View.OnClickListener {

@@ -89,15 +89,15 @@ class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<Matche
         } else if (objectVal.viewType == TYPE_BANNERS) {
             val objectVal = matchesListObject[position]
             val viewBanners: BannersViewHolder = parent as BannersViewHolder
-            viewBanners.recyclerView.layoutManager =
+            /*viewBanners.recyclerView.layoutManager =
                 LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false)
             val adapter = BannersMatchesAdapter(
                 mContext!!,
                 objectVal.matchBanners!!
             )
-            viewBanners.recyclerView.adapter = adapter
+            viewBanners.recyclerView.adapter = adapter*/
 
-            /*val scrollViewAdapter = BannerSliderAdapter(mContext!!, objectVal.matchBanners!!)
+            val scrollViewAdapter = BannerSliderAdapter(mContext!!, objectVal.matchBanners!!)
             viewBanners.recyclerView.adapter = scrollViewAdapter
             scrollViewAdapter.notifyDataSetChanged()
 
@@ -111,7 +111,7 @@ class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<Matche
             viewBanners.recyclerView.setDirection(AutoScrollViewPager.Direction.RIGHT)
             viewBanners.recyclerView.setCycle(true)
             viewBanners.recyclerView.setBorderAnimation(true)
-            viewBanners.recyclerView.visibility = View.VISIBLE*/
+            viewBanners.recyclerView.visibility = View.VISIBLE
 
         } else if (objectVal.viewType == TYPE_UPCOMING_MATCHES) {
             val objectVal = matchesListObject[position]
@@ -173,8 +173,8 @@ class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<Matche
     }
 
     inner class BannersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val recyclerView = itemView.findViewById<RecyclerView>(R.id.recycler_banners)
-        //val recyclerView: AutoScrollViewPager = itemView.findViewById(R.id.recycler_banners)
+        //val recyclerView = itemView.findViewById<RecyclerView>(R.id.recycler_banners)
+        val recyclerView: AutoScrollViewPager = itemView.findViewById(R.id.recycler_banners)
     }
 
     inner class UpcomingMatchesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

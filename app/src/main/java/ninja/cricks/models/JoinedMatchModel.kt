@@ -54,6 +54,10 @@ class JoinedMatchModel :Serializable,Cloneable{
     @Expose
     var prizeAmount: String = "0"
 
+    @SerializedName("league_title")
+    @Expose
+    var leagueTitle: String = ""
+
 
     public override fun clone(): JoinedMatchModel {
         return super.clone() as JoinedMatchModel

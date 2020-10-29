@@ -229,6 +229,7 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginRight="@dimen/_20sdp"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:text="Note : Withdrawal amount cannot be less than 200 Rs"
                     android:textColor="@color/colorAccent"
                     android:textSize="16sp" />

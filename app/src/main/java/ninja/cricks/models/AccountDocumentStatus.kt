@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 
- class AccountDocumentStatus :Serializable,Cloneable {
+class AccountDocumentStatus : Serializable, Cloneable {
 
 
     @SerializedName("email_verified")
@@ -28,7 +28,6 @@ import java.io.Serializable
     public override fun clone(): AccountDocumentStatus {
         return super.clone() as AccountDocumentStatus
     }
-
 
 
 }

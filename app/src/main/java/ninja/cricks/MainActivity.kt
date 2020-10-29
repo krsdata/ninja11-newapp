@@ -209,6 +209,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     if (res != null) {
                         var responseModel = res.walletObjects
                         if (responseModel != null) {
+                            MyPreferences.setRazorPayId(this@MainActivity, responseModel.razorPay)
+                            MyPreferences.setShowPaytm(this@MainActivity, responseModel.paytm_show)
+                            MyPreferences.setShowGpay(this@MainActivity, responseModel.gpay_show)
+                            MyPreferences.setShowRazorPay(this@MainActivity, responseModel.rozarpay_show)
                             (application as SportsFightApplication).saveWalletInformation(
                                 responseModel
                             )

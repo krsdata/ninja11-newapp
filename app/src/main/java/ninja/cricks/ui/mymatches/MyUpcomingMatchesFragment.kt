@@ -81,11 +81,18 @@ class MyUpcomingMatchesFragment : Fragment() {
         mBinding!!.btnEmptyView.setOnClickListener(View.OnClickListener {
             (activity as MainActivity).viewUpcomingMatches()
         })
+    }
 
+    override fun onResume() {
+        super.onResume()
+        if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
+            MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
+            return
+        }
         getMatchHistory()
     }
 
-    fun getMatchHistory() {
+    private fun getMatchHistory() {
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return

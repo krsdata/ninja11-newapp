@@ -60,7 +60,7 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
                 intent.getSerializableExtra(SERIALIZABLE_KEY_UPCOMING_MATCHES) as UpcomingMatchesModel
         }
         if (intent.hasExtra(SERIALIZABLE_KEY_JOINED_CONTEST)) {
-            var joinedMatchObject =
+            val joinedMatchObject =
                 intent.getSerializableExtra(SERIALIZABLE_KEY_JOINED_CONTEST) as JoinedMatchModel
             matchObject = UpcomingMatchesModel()
             matchObject!!.teamAInfo = joinedMatchObject.teamAInfo
@@ -199,7 +199,7 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
     }
 
     internal inner class ViewPagerAdapter(manager: FragmentManager) :
-        FragmentPagerAdapter(manager) {
+        FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         private val mFragmentList = ArrayList<Fragment>()
         private val mFragmentTitleList = ArrayList<String>()
 

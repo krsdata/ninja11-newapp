@@ -515,7 +515,7 @@ object MyPreferences {
     fun setShowRazorPay(context: Context, value: Boolean) {
         putBoolean(
             context,
-            KEY_PREF_IS_GPAY,
+            KEY_PREF_IS_RAZOR_PAY,
             value
         )
     }
@@ -523,7 +523,7 @@ object MyPreferences {
     fun getShowRazorPay(context: Context): Boolean {
         val isShow = getBoolean(
             context,
-            KEY_PREF_IS_GPAY,
+            KEY_PREF_IS_RAZOR_PAY,
             true
         )
         return isShow

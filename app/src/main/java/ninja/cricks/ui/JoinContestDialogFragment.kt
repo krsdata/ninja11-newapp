@@ -204,7 +204,7 @@ class JoinContestDialogFragment(
                 ) {
                     if (isVisible) {
                         customeProgressDialog.dismiss()
-                        var res = response!!.body()
+                        val res = response!!.body()
                         if (res != null && res.status) {
                             activity!!.setResult(RESULT_OK)
                             activity!!.finish()
@@ -241,7 +241,7 @@ class JoinContestDialogFragment(
             return
         }
         customeProgressDialog.show()
-        var models = RequestModel()
+        val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         models.token = MyPreferences.getToken(requireActivity())!!
 
@@ -257,7 +257,7 @@ class JoinContestDialogFragment(
                 ) {
                     if (isVisible) {
                         customeProgressDialog.dismiss()
-                        var res = response!!.body()
+                        val res = response!!.body()
                         if (res != null && res.status) {
                             if (res.sessionExpired) {
                                 logoutApp("Session Expired Please login again!!", false)

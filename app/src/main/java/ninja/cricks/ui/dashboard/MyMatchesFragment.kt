@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import ninja.cricks.MainActivity
@@ -16,7 +16,6 @@ import ninja.cricks.ui.mymatches.MyLiveMatchesFragment
 import ninja.cricks.ui.mymatches.MyUpcomingMatchesFragment
 
 class MyMatchesFragment : Fragment() {
-
 
 
     override fun onCreateView(
@@ -40,18 +39,19 @@ class MyMatchesFragment : Fragment() {
     }
 
     private fun setupViewPager(viewPager: ViewPager) {
-        val adapter = ViewPagerAdapter(activity!!.supportFragmentManager)
-        adapter.addFragment(MyUpcomingMatchesFragment(),getString(R.string.mymatch_upcoming))
-        adapter.addFragment(MyLiveMatchesFragment(),getString(R.string.mymatch_live))
-        adapter.addFragment(MyCompletedMatchesFragment(),getString(R.string.mymatch_completed))
+        val adapter = ViewPagerAdapter(requireActivity().supportFragmentManager)
+        adapter.addFragment(MyUpcomingMatchesFragment(), getString(R.string.mymatch_upcoming))
+        adapter.addFragment(MyLiveMatchesFragment(), getString(R.string.mymatch_live))
+        adapter.addFragment(MyCompletedMatchesFragment(), getString(R.string.mymatch_completed))
         viewPager.adapter = adapter
     }
 
-    fun onRefresh(){
+    fun onRefresh() {
 
     }
-    internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager,
-        FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
+    internal inner class ViewPagerAdapter(manager: FragmentManager) :
+        FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         private val mFragmentList = ArrayList<Fragment>()
         private val mFragmentTitleList = ArrayList<String>()
 

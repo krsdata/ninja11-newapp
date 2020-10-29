@@ -63,7 +63,6 @@ class SportsFightApplication : MultiDexApplication() {
         }
 
 
-
     fun saveWalletInformation(value: WalletInfo?) {
         if (value != null) {
             val gson = Gson()
@@ -138,7 +137,4 @@ class SportsFightApplication : MultiDexApplication() {
             }
             return mStoreListModels ?: ArrayList()
         }
-
-
-
 }

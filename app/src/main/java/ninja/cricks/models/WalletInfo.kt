@@ -67,20 +67,17 @@ class WalletInfo : Serializable, Cloneable {
 
     @SerializedName("paytm_show")
     @Expose
-    var paytm_show: Boolean = true
+    var paytm_show: Boolean = false
 
     @SerializedName("rozarpay_show")
     @Expose
-    var rozarpay_show: Boolean = true
+    var rozarpay_show: Boolean = false
 
     @SerializedName("gpay_show")
     @Expose
-    var gpay_show: Boolean = true
-
+    var gpay_show: Boolean = false
 
     public override fun clone(): WalletInfo {
         return super.clone() as WalletInfo
     }
-
-
 }

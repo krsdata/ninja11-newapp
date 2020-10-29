@@ -48,7 +48,6 @@ class MyCompletedMatchesFragment : Fragment() {
             inflater,
             R.layout.fragment_my_completed, container, false
         )
-
         return mBinding!!.root
     }
 
@@ -73,7 +72,14 @@ class MyCompletedMatchesFragment : Fragment() {
         mBinding!!.btnEmptyView.setOnClickListener {
             (activity as MainActivity).viewUpcomingMatches()
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
+            MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
+            return
+        }
         getMatchHistory()
     }
 
@@ -91,7 +97,8 @@ class MyCompletedMatchesFragment : Fragment() {
         models.action_type = "completed"
 
 
-        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getMatchHistory(models)
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
+            .getMatchHistory(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
 

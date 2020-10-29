@@ -173,6 +173,4 @@ class SelectTeamActivity : AppCompatActivity() {
 
             })
     }
-
-
 }

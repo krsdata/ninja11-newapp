@@ -176,7 +176,6 @@ class UsersPostDBResponse {
 
     }
 
-
     inner class ScoresBoardModels {
 
         @SerializedName("status")
@@ -194,11 +193,23 @@ class UsersPostDBResponse {
         @SerializedName("teamb")
         @Expose
         var teamb: TeamBInfo? = null
-
-
     }
 
+    @SerializedName("rozar_key")
+    @Expose
+    var razorPay: String = ""
 
+    @SerializedName("paytm_show")
+    @Expose
+    var paytm_show: Boolean = false
+
+    @SerializedName("rozarpay_show")
+    @Expose
+    var rozarpay_show: Boolean = false
+
+    @SerializedName("gpay_show")
+    @Expose
+    var gpay_show: Boolean = false
 }
 
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/banner_height"
+    android:layout_height="@dimen/_45sdp"
     android:layout_marginStart="@dimen/matches_view_left_margin_inner"
     android:layout_marginTop="@dimen/matches_view_top_margin"
     android:layout_marginEnd="@dimen/matches_view_right_margin_inner">

@@ -60,11 +60,11 @@ class MyLiveMatchesFragment : Fragment() {
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         //initDummyContent()
 
-        adapter = MyMatchesAdapter(activity!!, checkinArrayList)
+        adapter = MyMatchesAdapter(requireActivity(), checkinArrayList)
         mBinding!!.recyclerMyUpcoming.adapter = adapter
 
         adapter.onItemClick = { objects ->
-            val intent = Intent(activity!!, ContestActivity::class.java)
+            val intent = Intent(requireActivity(), ContestActivity::class.java)
             //intent.putExtra(ContestActivity.SERIALIZABLE_KEY_UPCOMING_MATCHES,objects)
             intent.putExtra(ContestActivity.SERIALIZABLE_KEY_JOINED_CONTEST, objects)
             startActivity(intent)
@@ -79,12 +79,20 @@ class MyLiveMatchesFragment : Fragment() {
         mBinding!!.btnEmptyView.setOnClickListener(View.OnClickListener {
             (activity as MainActivity).viewUpcomingMatches()
         })
-        getMatchHistory()
     }
 
     override fun onPause() {
         super.onPause()
         BindingUtils.stopTimer()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
+            MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
+            return
+        }
+        getMatchHistory()
     }
 
     private fun getMatchHistory() {
@@ -97,10 +105,10 @@ class MyLiveMatchesFragment : Fragment() {
         }
         mBinding!!.linearEmptyContest.visibility = View.GONE
         var models = RequestModel()
-        models.user_id = MyPreferences.getUserID(activity!!)!!
+        models.user_id = MyPreferences.getUserID(requireActivity())!!
         models.action_type = "live"
 
-        WebServiceClient(activity!!).client.create(IApiMethod::class.java).getMatchHistory(models)
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getMatchHistory(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     if (isAdded) {

@@ -47,6 +47,7 @@ class BindingUtils {
         val WEB_TITLE_ABOUT_US: String = "About Us"
         val WEB_TITLE_FANTASY_POINTS: String = "Fantasy Point System"
         val WEB_TITLE_LEGALITY: String = "LEGALITY"
+        val WEB_TITLE_FAQ: String = "FAQs"
 
         var currentTimeStamp: Long = 0
 

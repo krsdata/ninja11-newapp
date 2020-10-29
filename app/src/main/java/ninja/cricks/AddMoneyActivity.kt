@@ -1,6 +1,7 @@
 package  ninja.cricks
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -25,7 +26,6 @@ import ninja.cricks.network.WebServiceClient
 import ninja.cricks.payments.PaytmHandler
 import ninja.cricks.ui.BaseActivity
 import ninja.cricks.ui.home.models.UsersPostDBResponse
-import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.BindingUtils.Companion.GOOGLE_TEZ_PACKAGE_NAME
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
@@ -47,6 +47,7 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
     private lateinit var paymentsClient: PaymentsClient
     val LOAD_PAYMENT_DATA_REQUEST_CODE = 0
     private val TAG: String? = AddMoneyActivity::class.java.simpleName
+    private var mContext: Context? = null
 
     companion object {
         val ADD_EXTRA_AMOUNT: String? = "add_extra_amount"
@@ -128,6 +129,8 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
             this,
             R.layout.activity_add_money
         )
+        mContext = this
+
         mBinding!!.toolbar.title = "Add Cash"
         mBinding!!.toolbar.setTitleTextColor(resources.getColor(R.color.white))
         mBinding!!.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
@@ -476,12 +479,12 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
                 .authority("pay")
                 .appendQueryParameter("pa", upiId)
                 .appendQueryParameter("pn", "Ninja 11 Service")
-                .appendQueryParameter("mc", "BCR2DN6T4XOJNV")
+                //.appendQueryParameter("mc", "BCR2DN6T4XOJNV")
                 .appendQueryParameter("tr", System.currentTimeMillis().toString())
-                .appendQueryParameter("tn", "Thank you for being our valued customers.")
+                //.appendQueryParameter("tn", "Thank you for being our valued customers.")
                 .appendQueryParameter("am", amount.toString())
                 .appendQueryParameter("cu", "INR")
-                .appendQueryParameter("url", BindingUtils.BASE_URL_API)
+                //.appendQueryParameter("url", BindingUtils.BASE_URL_API)
                 .build()
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = uri
@@ -516,29 +519,25 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
         val walletInfo = (application as SportsFightApplication).walletInfo
 
         MyPreferences.setGooglePayId(this, walletInfo.gPay)
-        MyPreferences.setRazorPayId(this, walletInfo.razorPay)
+
         MyPreferences.setPaytmMid(this, walletInfo.paytmMid)
         MyPreferences.setPaytmCallback(this, walletInfo.callUrl)
         MyPreferences.setMinimumDeposit(this, walletInfo.minDeposit)
 
-        MyPreferences.setShowPaytm(this, walletInfo.paytm_show)
-        MyPreferences.setShowGpay(this, walletInfo.gpay_show)
-        MyPreferences.setShowRazorPay(this, walletInfo.rozarpay_show)
-
         val walletAmount = walletInfo.walletAmount
         mBinding!!.walletTotalAmount.text = String.format("₹%.2f", walletAmount)
 
-        if (MyPreferences.getShowPaytm(this)) {
+        if (MyPreferences.getShowPaytm(mContext!!)) {
             mBinding!!.usePaytmWallet.visibility = View.VISIBLE
         } else {
             mBinding!!.usePaytmWallet.visibility = View.GONE
         }
-        if (MyPreferences.getShowGpay(this)) {
+        if (MyPreferences.getShowGpay(mContext!!)) {
             mBinding!!.useWalletGpay.visibility = View.VISIBLE
         } else {
             mBinding!!.useWalletGpay.visibility = View.GONE
         }
-        if (MyPreferences.getShowRazorPay(this)) {
+        if (MyPreferences.getShowRazorPay(mContext!!)) {
             mBinding!!.useWalletPhonepay.visibility = View.VISIBLE
         } else {
             mBinding!!.useWalletPhonepay.visibility = View.GONE
@@ -566,6 +565,12 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
                     if (res != null) {
                         val responseModel = res.walletObjects
                         if (responseModel != null) {
+
+                            MyPreferences.setRazorPayId(mContext!!, res.razorPay)
+                            MyPreferences.setShowPaytm(mContext!!, res.paytm_show)
+                            MyPreferences.setShowGpay(mContext!!, res.gpay_show)
+                            MyPreferences.setShowRazorPay(mContext!!, res.rozarpay_show)
+
                             (application as SportsFightApplication).saveWalletInformation(
                                 responseModel
                             )
