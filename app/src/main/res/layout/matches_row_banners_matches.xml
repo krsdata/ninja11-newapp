@@ -3,9 +3,9 @@
     android:id="@+id/recycler_banners"
     android:layout_width="match_parent"
     android:layout_height="@dimen/_45sdp"
-    android:layout_marginStart="@dimen/matches_view_left_margin"
+    android:layout_marginLeft="@dimen/matches_view_left_margin_consolidated"
     android:layout_marginTop="@dimen/matches_view_top_margin"
-    android:layout_marginEnd="@dimen/matches_view_right_margin" />
+    android:layout_marginRight="@dimen/matches_view_left_margin_consolidated" />
 
     <!--
     <?xml version="1.0" encoding="utf-8"?>

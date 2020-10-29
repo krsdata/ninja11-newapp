@@ -68,12 +68,9 @@ interface IApiMethod {
     @POST("api/v2/deviceNotification")
     fun deviceNotification(@Body request: RequestModel): Call<UsersPostDBResponse>
 
-
-
     @Headers("Content-Type: application/json")
     @POST("api/v2/addMoney")
     fun addMoney(@Body request: RequestModel): Call<UsersPostDBResponse>
-
 
     @Headers("Content-Type: application/json")
     @POST("api/v2/getPoints")
@@ -95,11 +92,9 @@ interface IApiMethod {
     @POST("api/v2/apkUpdate")
     fun apkUpdate(@Body request: RequestModel): Call<UsersPostDBResponse>
     
-
     @Headers("Content-Type: application/json")
     @POST("paytm/generateChecksum.php")
     fun getPaytmChecksum(@Body request: RequestPaytmModel): Call<ResponseModel>
-
 
     @Headers("Content-Type: application/json")
     @POST("api/v2/cloneMyTeam")
@@ -113,7 +108,6 @@ interface IApiMethod {
     @POST("api/v2/uploadbase64Image")
     fun uploadImage(@Field("image_bytes") imageBytes: String,@Field("user_id") userid: String,@Field("documents_type") documentsType: String): Call<ResponseModel>
 
-
     @Headers("Content-Type: application/json")
     @POST("api/v2/saveDocuments")
     fun saveBankDetails(@Body request: DocumentsModel): Call<ResponseModel>
@@ -121,7 +115,6 @@ interface IApiMethod {
     @Headers("Content-Type: application/json")
     @POST("api/v2/verification")
     fun verification(@Body request: DocumentsModel): Call<ResponseModel>
-
 
     @Headers("Content-Type: application/json")
     @POST("api/v2/myReferralDetails")
@@ -174,5 +167,8 @@ interface IApiMethod {
     @Headers("Content-Type: application/json")
     @POST("api/v2/messageApi")
     fun getMessages(@Body request: RequestModel): Call<JsonObject>
-}
 
+    @Headers("Content-Type: application/json")
+    @POST("api/v2/eventLog")
+    fun sendEventLogs(@Body request: RequestModel): Call<UsersPostDBResponse>
+}

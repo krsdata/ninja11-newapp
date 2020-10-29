@@ -17,11 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
-import ninja.cricks.ContestActivity
-import ninja.cricks.CreateTeamActivity
-import ninja.cricks.SportsFightApplication
-import ninja.cricks.TeamPreviewActivity
-import ninja.cricks.R
+import ninja.cricks.*
 import ninja.cricks.databinding.FragmentLeadersBoardBinding
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.models.UserInfo
@@ -51,21 +47,23 @@ class LeadersBoardFragment : Fragment() {
     var adapter: LeadersBoardAdapter? = null
     var leadersBoardList = ArrayList<LeadersBoardModels>()
 
-    var matchObject : UpcomingMatchesModel?=null
-    var contestObject : ContestModelLists?=null
+    var matchObject: UpcomingMatchesModel? = null
+    var contestObject: ContestModelLists? = null
 
-    companion object{
-        fun newInstance(bundle : Bundle) : LeadersBoardFragment {
+    companion object {
+        fun newInstance(bundle: Bundle): LeadersBoardFragment {
             val fragment = LeadersBoardFragment()
-            fragment.arguments=bundle
+            fragment.arguments = bundle
             return fragment
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        contestObject = arguments!!.get(ContestActivity.SERIALIZABLE_KEY_CONTEST_OBJECT) as ContestModelLists
-        matchObject = arguments!!.get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
+        contestObject =
+            requireArguments().get(ContestActivity.SERIALIZABLE_KEY_CONTEST_OBJECT) as ContestModelLists
+        matchObject =
+            requireArguments().get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
     }
 
     override fun onCreateView(
@@ -85,31 +83,31 @@ class LeadersBoardFragment : Fragment() {
         mBinding!!.progressBar.visibility = View.GONE
         mBinding!!.prizeLeadersboardRecycler.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        userInfo = (activity!!.applicationContext as SportsFightApplication).userInformations
+        userInfo = (requireActivity().applicationContext as SportsFightApplication).userInformations
         val dividerItemDecoration = DividerItemDecoration(
             mBinding!!.prizeLeadersboardRecycler.context,
             RecyclerView.VERTICAL
         )
         mBinding!!.prizeLeadersboardRecycler.addItemDecoration(dividerItemDecoration)
 
-        adapter = LeadersBoardAdapter(activity!!, leadersBoardList)
+        adapter = LeadersBoardAdapter(requireActivity(), leadersBoardList)
         mBinding!!.prizeLeadersboardRecycler.adapter = adapter
         adapter!!.onItemClick = { objects ->
             teamName = String.format("%s(%s)", objects.userInfo!!.fullName, objects.teamName)
-            if(TextUtils.isEmpty(objects.userId)){
+            if (TextUtils.isEmpty(objects.userId)) {
                 MyUtils.showToast(
-                    activity!! as AppCompatActivity,
+                    requireActivity() as AppCompatActivity,
                     "System issue please contact Admin."
                 )
-            }else {
-                if (objects.userId.equals(MyPreferences.getUserID(activity!!))) {
-                    getPoints(objects.teamId)
+            } else {
+                if (objects.userId.equals(MyPreferences.getUserID(requireActivity()))) {
+                    getPoints(objects.teamId, objects.userId)
                 } else
                     if (matchObject!!.status != BindingUtils.MATCH_STATUS_UPCOMING) {
-                        getPoints(objects.teamId)
+                        getPoints(objects.teamId, objects.userId)
                     } else {
                         MyUtils.showToast(
-                            activity!! as AppCompatActivity,
+                            requireActivity() as AppCompatActivity,
                             "You cannot see other players teams, until match started"
                         )
                     }
@@ -127,19 +125,19 @@ class LeadersBoardFragment : Fragment() {
 
 
     private fun setTotalTeamCounts(value: Int) {
-        mBinding!!.totalTeamCounts.text ="ALL TEAMS" //String.format("ALL TEAMS (%d)", value)
+        mBinding!!.totalTeamCounts.text = "ALL TEAMS" //String.format("ALL TEAMS (%d)", value)
     }
 
-    fun getPoints(teamId: Int) {
+    fun getPoints(teamId: Int, user_id: String) {
         customeProgressDialog.show()
-        var models = RequestModel()
-        models.user_id = MyPreferences.getUserID(activity!!)!!
+        val models = RequestModel()
+        models.user_id = MyPreferences.getUserID(requireActivity())!!
         //models.token =MyPreferences.getToken(activity!!)!!
         models.contest_id = "" + contestObject!!.id
         models.match_id = "" + matchObject!!.matchId
         models.team_id = teamId
 
-        WebServiceClient(activity!!).client.create(IApiMethod::class.java).getPoints(models)
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getPoints(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     customeProgressDialog.dismiss()
@@ -150,26 +148,26 @@ class LeadersBoardFragment : Fragment() {
                     response: Response<UsersPostDBResponse?>?
                 ) {
                     customeProgressDialog.dismiss()
-                    var res = response!!.body()
+                    val res = response!!.body()
                     if (res != null) {
                         //var totalPoints = res.totalPoints
-                        var responseModel = res.responseObject
+                        val responseModel = res.responseObject
                         if (responseModel != null) {
-                            var playerPointsList = responseModel.playerPointsList
-                            var hasmapPlayers: HashMap<String, ArrayList<PlayersInfoModel>> =
+                            val playerPointsList = responseModel.playerPointsList
+                            val hasmapPlayers: HashMap<String, ArrayList<PlayersInfoModel>> =
                                 HashMap<String, ArrayList<PlayersInfoModel>>()
 
-                            var wktKeeperList: ArrayList<PlayersInfoModel> =
+                            val wktKeeperList: ArrayList<PlayersInfoModel> =
                                 ArrayList<PlayersInfoModel>()
-                            var batsManList: ArrayList<PlayersInfoModel> =
+                            val batsManList: ArrayList<PlayersInfoModel> =
                                 ArrayList<PlayersInfoModel>()
-                            var allRounderList: ArrayList<PlayersInfoModel> =
+                            val allRounderList: ArrayList<PlayersInfoModel> =
                                 ArrayList<PlayersInfoModel>()
-                            var allbowlerList: ArrayList<PlayersInfoModel> =
+                            val allbowlerList: ArrayList<PlayersInfoModel> =
                                 ArrayList<PlayersInfoModel>()
 
                             for (x in 0..playerPointsList!!.size - 1) {
-                                var plyObj = playerPointsList.get(x)
+                                val plyObj = playerPointsList.get(x)
                                 if (plyObj.playerRole.equals("wk")) {
                                     wktKeeperList.add(plyObj)
                                 } else if (plyObj.playerRole.equals("bat")) {
@@ -191,6 +189,16 @@ class LeadersBoardFragment : Fragment() {
                             )
                             hasmapPlayers.put(CreateTeamActivity.CREATE_TEAM_BOWLER, allbowlerList)
 
+                            BindingUtils.sendEventLogs(
+                                activity!!,
+                                "" + matchObject!!.matchId,
+                                "" + contestObject!!.id,
+                                user_id,
+                                teamId,
+                                (requireActivity().applicationContext as SportsFightApplication).userInformations,
+                                "Last Seen"
+                            )
+
                             val intent = Intent(activity, TeamPreviewActivity::class.java)
                             intent.putExtra(TeamPreviewActivity.KEY_TEAM_NAME, teamName)
                             intent.putExtra(TeamPreviewActivity.KEY_TEAM_ID, teamId)
@@ -201,35 +209,30 @@ class LeadersBoardFragment : Fragment() {
                             )
                             startActivity(intent)
                         }
-
                     }
-
                 }
-
             })
-
     }
-
-
 
     fun getLeadersBoards() {
         // (activity as LeadersBoardActivity).updateScores()
         // customeProgressDialog.show()
-        if(!isVisible){
+        if (!isVisible) {
             return
         }
         mBinding!!.progressBar.visibility = View.VISIBLE
-        var models = RequestModel()
-        models.user_id = MyPreferences.getUserID(activity!!)!!
-        models.token = MyPreferences.getToken(activity!!)!!
+        val models = RequestModel()
+        models.user_id = MyPreferences.getUserID(requireActivity())!!
+        models.token = MyPreferences.getToken(requireActivity())!!
         models.contest_id = "" + contestObject!!.id
         models.match_id = "" + matchObject!!.matchId
-        WebServiceClient(activity!!).client.create(IApiMethod::class.java).getLeaderBoard(models)
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
+            .getLeaderBoard(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     // MyUtils.showToast(activity!!.getWindow().getDecorView().getRootView(),t!!.localizedMessage)
                     //customeProgressDialog.dismiss()
-                    if(!isVisible){
+                    if (!isVisible) {
                         return
                     }
                     mBinding!!.swipeRefreshLeaderboard.isRefreshing = false
@@ -245,9 +248,9 @@ class LeadersBoardFragment : Fragment() {
                     mBinding!!.progressBar.visibility = View.GONE
                     mBinding!!.swipeRefreshLeaderboard.isRefreshing = false
                     //customeProgressDialog.dismiss()
-                    var res = response!!.body()
+                    val res = response!!.body()
                     if (res != null) {
-                        var responseModel = res.leaderBoardList
+                        val responseModel = res.leaderBoardList
                         if (responseModel != null) {
                             if (responseModel != null) {
                                 if (responseModel.size > 0) {
@@ -273,7 +276,6 @@ class LeadersBoardFragment : Fragment() {
 
     }
 
-
     inner class LeadersBoardAdapter(
         val context: Context,
         rangeModels: ArrayList<LeadersBoardModels>
@@ -284,7 +286,7 @@ class LeadersBoardFragment : Fragment() {
 
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            var view = LayoutInflater.from(parent.context)
+            val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.leaders_board_rows, parent, false)
             return MyMatchViewHolder(view)
         }
@@ -308,9 +310,9 @@ class LeadersBoardFragment : Fragment() {
                 )
             }
             if (!TextUtils.isEmpty(objectVal.teamWonStatus)) {
-                if(objectVal.teamWonStatus.toDouble()>0) {
+                if (objectVal.teamWonStatus.toDouble() > 0) {
                     viewHolder.teamWonStatus.visibility = View.VISIBLE
-                }else {
+                } else {
                     viewHolder.teamWonStatus.visibility = View.INVISIBLE
                 }
             }
@@ -324,9 +326,7 @@ class LeadersBoardFragment : Fragment() {
             } else {
                 viewHolder.profileImage.setImageResource(R.drawable.placeholder_player_teama)
             }
-
         }
-
 
         override fun getItemCount(): Int {
             return matchesListObject.size
@@ -345,12 +345,6 @@ class LeadersBoardFragment : Fragment() {
             val playeRanks = itemView.findViewById<TextView>(R.id.player_rank)
             val teamWonStatus = itemView.findViewById<TextView>(R.id.team_won_status)
             val imgMatchStatus = itemView.findViewById<ImageView>(R.id.match_status)
-
-
         }
-
-
     }
-
-
 }

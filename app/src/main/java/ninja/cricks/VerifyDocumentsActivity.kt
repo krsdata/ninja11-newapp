@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import ninja.cricks.databinding.ActivityVerifyDocumentBinding
 import ninja.cricks.models.DocumentsModel
 import ninja.cricks.models.ResponseModel
 import ninja.cricks.network.IApiMethod
@@ -17,32 +18,32 @@ import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import ninja.cricks.databinding.ActivityVerifyDocumentBinding
 
 
 class VerifyDocumentsActivity : BaseActivity() {
 
-    companion object{
+    companion object {
         var REQUESTCODE_VERIFY_DOC = 1008
 
     }
 
-    private var mIsAdharFrontSelected: Boolean=false
+    private var mIsAdharFrontSelected: Boolean = false
 
     // private var mIsAdharFrontSelected: Boolean = false
     private var mBinding: ActivityVerifyDocumentBinding? = null
     private var isMobileNumberVerified = true
     private var isEmailVeirfied = true
 
-    var pancardDocumentUrl:String= ""
-    var adharCardDocumentUrlFront:String= ""
-    var adharCardDocumentUrlBack:String= ""
-    var bankPassbookUrl:String= ""
+    var pancardDocumentUrl: String = ""
+    var adharCardDocumentUrlFront: String = ""
+    var adharCardDocumentUrlBack: String = ""
+    var bankPassbookUrl: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         userInfo = (application as SportsFightApplication).userInformations
-        mBinding = DataBindingUtil.setContentView(this,
+        mBinding = DataBindingUtil.setContentView(
+            this,
             R.layout.activity_verify_document
         )
         mBinding!!.toolbar.title = "Verify Documents"
@@ -63,26 +64,25 @@ class VerifyDocumentsActivity : BaseActivity() {
     }
 
     private fun initCommunication() {
-        if(isMobileNumberVerified) {
+        if (isMobileNumberVerified) {
             mBinding!!.linearMobileBorder.setBackgroundResource(R.drawable.btn_selector_verified)
             mBinding!!.verifyMobileMessage.text = "Your mobile number verified"
             mBinding!!.verifyMobileNumber.text = userInfo!!.mobileNumber
             mBinding!!.verifyMobileNumber.setTextColor(resources.getColor(R.color.green))
 
-
-        }else {
+        } else {
             mBinding!!.linearMobileBorder.setBackgroundResource(R.drawable.btn_selector_not_verified)
             mBinding!!.verifyMobileMessage.text = "Your mobile number not verified"
             mBinding!!.verifyMobileNumber.text = userInfo!!.mobileNumber
             mBinding!!.verifyMobileNumber.setTextColor(resources.getColor(R.color.red))
         }
 
-        if(isEmailVeirfied) {
+        if (isEmailVeirfied) {
             mBinding!!.linearEmailBorder.setBackgroundResource(R.drawable.btn_selector_verified)
             mBinding!!.verifyEmailMessage.text = "Your Email Address verified"
             mBinding!!.verifyEmailAddress.text = userInfo!!.userEmail
             mBinding!!.verifyEmailAddress.setTextColor(resources.getColor(R.color.green))
-        }else {
+        } else {
 
             mBinding!!.linearEmailBorder.setBackgroundResource(R.drawable.btn_selector_not_verified)
             mBinding!!.verifyEmailMessage.text = "Your Email Address not verified"
@@ -131,29 +131,34 @@ class VerifyDocumentsActivity : BaseActivity() {
 
         mBinding!!.submitDocuments.setOnClickListener(View.OnClickListener {
             //Toast.makeText(this@VerifyDocumentsActivity,"Submitted All Documents like PAN Or Adhar",Toast.LENGTH_LONG).show()
-            var models = DocumentsModel()
+            val models = DocumentsModel()
             models.user_id = userInfo!!.userId
             models.documentType = mDocumentType
-            if(mDocumentType.equals(DOCUMENT_TYPE_PANCARD)){
-                var pancardName = mBinding!!.editPancardName.text.toString()
-                var pancardNumber = mBinding!!.editPancardNumber.text.toString()
-                var pancardConfirmNumber = mBinding!!.editPancardConfirmNumber.text.toString()
+            if (mDocumentType.equals(DOCUMENT_TYPE_PANCARD)) {
+                val pancardName = mBinding!!.editPancardName.text.toString()
+                val pancardNumber = mBinding!!.editPancardNumber.text.toString()
+                val pancardConfirmNumber = mBinding!!.editPancardConfirmNumber.text.toString()
 
-                if(TextUtils.isEmpty(pancardName)){
-                    MyUtils.showToast(this@VerifyDocumentsActivity,"Please enter Name on Pancard")
+                if (TextUtils.isEmpty(pancardName)) {
+                    MyUtils.showToast(this@VerifyDocumentsActivity, "Please enter Name on Pancard")
                     return@OnClickListener
-                }else if(TextUtils.isEmpty(pancardNumber)){
-                    MyUtils.showToast(this@VerifyDocumentsActivity,"Please enter Pancard Number")
+                } else if (TextUtils.isEmpty(pancardNumber)) {
+                    MyUtils.showToast(this@VerifyDocumentsActivity, "Please enter Pancard Number")
                     return@OnClickListener
-                }else if(TextUtils.isEmpty(pancardConfirmNumber)){
-                    MyUtils.showToast(this@VerifyDocumentsActivity,"Please Confirm Pancard Number")
+                } else if (TextUtils.isEmpty(pancardConfirmNumber)) {
+                    MyUtils.showToast(this@VerifyDocumentsActivity, "Please Confirm Pancard Number")
                     return@OnClickListener
-                }else if(!pancardNumber.equals(pancardConfirmNumber)){
-                    MyUtils.showToast(this@VerifyDocumentsActivity,"Both Pancard number doesnot matched")
+                } else if (!pancardNumber.equals(pancardConfirmNumber)) {
+                    MyUtils.showToast(
+                        this@VerifyDocumentsActivity,
+                        "Both Pancard number doesnot matched"
+                    )
                     return@OnClickListener
-                }
-                else if(TextUtils.isEmpty(pancardDocumentUrl)){
-                    MyUtils.showToast(this@VerifyDocumentsActivity,"Please upload clear picture of pancard")
+                } else if (TextUtils.isEmpty(pancardDocumentUrl)) {
+                    MyUtils.showToast(
+                        this@VerifyDocumentsActivity,
+                        "Please upload clear picture of pancard"
+                    )
                     return@OnClickListener
                 }
 
@@ -161,30 +166,47 @@ class VerifyDocumentsActivity : BaseActivity() {
                 models.panCardNumber = pancardConfirmNumber
                 models.pancardDocumentUrl = pancardDocumentUrl
 
-            }else {
+            } else {
                 var adharCardName = mBinding!!.editAdharcardName.text.toString()
                 var adharCardNumber = mBinding!!.editAdharNumber.text.toString()
                 var adharCardConfirmNumber = mBinding!!.editAdharConfirmNumber.text.toString()
 
-                if(TextUtils.isEmpty(adharCardName)){
+                if (TextUtils.isEmpty(adharCardName)) {
 
-                    MyUtils.showToast(this@VerifyDocumentsActivity,"Please enter Name on Adharcard")
+                    MyUtils.showToast(
+                        this@VerifyDocumentsActivity,
+                        "Please enter Name on Adharcard"
+                    )
                     return@OnClickListener
-                }else if(TextUtils.isEmpty(adharCardNumber)){
-                    MyUtils.showToast(this@VerifyDocumentsActivity,"Please enter Aadharcard Number")
+                } else if (TextUtils.isEmpty(adharCardNumber)) {
+                    MyUtils.showToast(
+                        this@VerifyDocumentsActivity,
+                        "Please enter Aadharcard Number"
+                    )
                     return@OnClickListener
-                }else if(TextUtils.isEmpty(adharCardConfirmNumber)){
-                    MyUtils.showToast(this@VerifyDocumentsActivity,"Please Confirm Aadharcard Number")
+                } else if (TextUtils.isEmpty(adharCardConfirmNumber)) {
+                    MyUtils.showToast(
+                        this@VerifyDocumentsActivity,
+                        "Please Confirm Aadharcard Number"
+                    )
                     return@OnClickListener
-                }else if(!adharCardNumber.equals(adharCardConfirmNumber)){
-                    MyUtils.showToast(this@VerifyDocumentsActivity,"Both Pancard number doesnot matched")
+                } else if (!adharCardNumber.equals(adharCardConfirmNumber)) {
+                    MyUtils.showToast(
+                        this@VerifyDocumentsActivity,
+                        "Both Pancard number doesnot matched"
+                    )
                     return@OnClickListener
-                }
-                else if(TextUtils.isEmpty(adharCardDocumentUrlFront)){
-                    MyUtils.showToast(this@VerifyDocumentsActivity,"Please upload Front Side of Adharcard")
+                } else if (TextUtils.isEmpty(adharCardDocumentUrlFront)) {
+                    MyUtils.showToast(
+                        this@VerifyDocumentsActivity,
+                        "Please upload Front Side of Adharcard"
+                    )
                     return@OnClickListener
-                }else if(TextUtils.isEmpty(adharCardDocumentUrlBack)){
-                    MyUtils.showToast(this@VerifyDocumentsActivity,"Please upload Back Side of Adharcard")
+                } else if (TextUtils.isEmpty(adharCardDocumentUrlBack)) {
+                    MyUtils.showToast(
+                        this@VerifyDocumentsActivity,
+                        "Please upload Back Side of Adharcard"
+                    )
                     return@OnClickListener
                 }
 
@@ -195,12 +217,12 @@ class VerifyDocumentsActivity : BaseActivity() {
                 models.aadharCardDocumentUrlFront = adharCardDocumentUrlFront
                 models.aadharCardDocumentUrlBack = adharCardDocumentUrlBack
             }
-            submitDocuments(models,mDocumentType)
+            submitDocuments(models, mDocumentType)
         })
 
     }
 
-    private fun submitDocuments(models: DocumentsModel, documentType: String ) {
+    private fun submitDocuments(models: DocumentsModel, documentType: String) {
         customeProgressDialog.show()
         models.documentType = documentType
 //        BindingUtils.sendEventLogs(
@@ -209,11 +231,12 @@ class VerifyDocumentsActivity : BaseActivity() {
 //            userInfo!!,
 //            documentType
 //        )
-        if(MyUtils.isConnectedWithInternet(this@VerifyDocumentsActivity)){
-            WebServiceClient(this@VerifyDocumentsActivity).client.create(IApiMethod::class.java).saveBankDetails(models)
+        if (MyUtils.isConnectedWithInternet(this@VerifyDocumentsActivity)) {
+            WebServiceClient(this@VerifyDocumentsActivity).client.create(IApiMethod::class.java)
+                .saveBankDetails(models)
                 .enqueue(object : Callback<ResponseModel?> {
                     override fun onFailure(call: Call<ResponseModel?>?, t: Throwable?) {
-                        MyUtils.showToast(this@VerifyDocumentsActivity,t!!.localizedMessage)
+                        MyUtils.showToast(this@VerifyDocumentsActivity, t!!.localizedMessage)
                         hidePanAdharDocuments()
                     }
 
@@ -222,35 +245,39 @@ class VerifyDocumentsActivity : BaseActivity() {
                         response: Response<ResponseModel?>?
                     ) {
                         customeProgressDialog.dismiss()
-                        var res = response!!.body()
-                        if(res!=null &&  res.status) {
-                            if( models.documentType == DOCUMENT_TYPE_PANCARD || models.documentType == DOCUMENT_TYPE_ADHARCARD) {
+                        val res = response!!.body()
+                        if (res != null && res.status) {
+                            if (models.documentType == DOCUMENT_TYPE_PANCARD || models.documentType == DOCUMENT_TYPE_ADHARCARD) {
                                 hidePanAdharDocuments()
-                            }else if( models.documentType == DOCUMENT_TYPE_BANK_PASSBOOK) {
-                               hideBankDocuments()
-                            }else if( models.documentType == DOCUMENT_TYPE_PAYTM) {
-                                Toast.makeText(this@VerifyDocumentsActivity,res.message,Toast.LENGTH_LONG).show()
+                            } else if (models.documentType == DOCUMENT_TYPE_BANK_PASSBOOK) {
+                                hideBankDocuments()
+                            } else if (models.documentType == DOCUMENT_TYPE_PAYTM) {
+                                Toast.makeText(
+                                    this@VerifyDocumentsActivity,
+                                    res.message,
+                                    Toast.LENGTH_LONG
+                                ).show()
                                 setResult(Activity.RESULT_OK)
                                 finish()
                             }
-                        }else {
-                            MyUtils.showToast(this@VerifyDocumentsActivity,res!!.message)
+                        } else {
+                            MyUtils.showToast(this@VerifyDocumentsActivity, res!!.message)
                         }
-
                     }
-
                 })
-        }else {
-            MyUtils.showToast(this@VerifyDocumentsActivity,"Please check your internet connections")
+        } else {
+            MyUtils.showToast(
+                this@VerifyDocumentsActivity,
+                "Please check your internet connections"
+            )
         }
     }
 
     private fun hidePanAdharDocuments() {
         mDocumentType = DOCUMENT_TYPE_BANK_PASSBOOK
-        mBinding!!.linearDocumentsDetails.visibility  = View.GONE
+        mBinding!!.linearDocumentsDetails.visibility = View.GONE
         mBinding!!.linearBankaccountDetails.visibility = View.VISIBLE
         mBinding!!.linearPaytmDetails.visibility = View.GONE
-
 
 
 //        mBinding!!.linearBankaccountDetails.setVisibility(View.VISIBLE);
@@ -262,7 +289,7 @@ class VerifyDocumentsActivity : BaseActivity() {
     }
 
     private fun hideBankDocuments() {
-        mBinding!!.linearDocumentsDetails.visibility  = View.GONE
+        mBinding!!.linearDocumentsDetails.visibility = View.GONE
         mBinding!!.linearBankaccountDetails.visibility = View.GONE
         mBinding!!.linearPaytmDetails.visibility = View.VISIBLE
 
@@ -274,7 +301,6 @@ class VerifyDocumentsActivity : BaseActivity() {
 //            .setListener(null)
     }
 
-
     private fun initBankDocuments() {
         mBinding!!.linearBankaccountDetails.visibility = View.GONE
         mBinding!!.imgBankPassbook.setOnClickListener(View.OnClickListener {
@@ -283,36 +309,42 @@ class VerifyDocumentsActivity : BaseActivity() {
         })
 
         mBinding!!.submitBankDocuments.setOnClickListener(View.OnClickListener {
-            Toast.makeText(this@VerifyDocumentsActivity,"Submitted All Bank Documents",Toast.LENGTH_LONG).show()
-            var models = DocumentsModel()
+            Toast.makeText(
+                this@VerifyDocumentsActivity,
+                "Submitted All Bank Documents",
+                Toast.LENGTH_LONG
+            ).show()
+            val models = DocumentsModel()
             models.user_id = userInfo!!.userId
-            var bankName = mBinding!!.editBankName.text.toString()
-            var accountHolderName = mBinding!!.editAccountHolderName.text.toString()
-            var accountNumber = mBinding!!.editAccountNumber.text.toString()
-            var ifscCode = mBinding!!.editAccountIfscCode.text.toString()
-            var accountType = mBinding!!.editAccoutType.text.toString()
+            val bankName = mBinding!!.editBankName.text.toString()
+            val accountHolderName = mBinding!!.editAccountHolderName.text.toString()
+            val accountNumber = mBinding!!.editAccountNumber.text.toString()
+            val ifscCode = mBinding!!.editAccountIfscCode.text.toString()
+            val accountType = mBinding!!.editAccoutType.text.toString()
 
-            if(TextUtils.isEmpty(bankName)){
+            if (TextUtils.isEmpty(bankName)) {
 
-                MyUtils.showToast(this@VerifyDocumentsActivity,"Please enter Your Bank Name")
+                MyUtils.showToast(this@VerifyDocumentsActivity, "Please enter Your Bank Name")
                 return@OnClickListener
-            }else if(TextUtils.isEmpty(accountHolderName)){
-                MyUtils.showToast(this@VerifyDocumentsActivity,"Please your name on Bank card")
+            } else if (TextUtils.isEmpty(accountHolderName)) {
+                MyUtils.showToast(this@VerifyDocumentsActivity, "Please your name on Bank card")
                 return@OnClickListener
-            }else if(TextUtils.isEmpty(accountNumber)){
-                MyUtils.showToast(this@VerifyDocumentsActivity,"Please enter bank account number")
+            } else if (TextUtils.isEmpty(accountNumber)) {
+                MyUtils.showToast(this@VerifyDocumentsActivity, "Please enter bank account number")
+                return@OnClickListener
+            } else if (TextUtils.isEmpty(ifscCode)) {
+                MyUtils.showToast(this@VerifyDocumentsActivity, "Please enter IFSC Code")
+                return@OnClickListener
+            } else if (TextUtils.isEmpty(accountType)) {
+                MyUtils.showToast(this@VerifyDocumentsActivity, "Please enter Account Type")
+                return@OnClickListener
+            } else if (TextUtils.isEmpty(bankPassbookUrl)) {
+                MyUtils.showToast(
+                    this@VerifyDocumentsActivity,
+                    "Please upload passbook or cheque clear image"
+                )
                 return@OnClickListener
             }
-            else if(TextUtils.isEmpty(ifscCode)){
-                MyUtils.showToast(this@VerifyDocumentsActivity,"Please enter IFSC Code")
-                return@OnClickListener
-            }else  if(TextUtils.isEmpty(accountType)){
-                 MyUtils.showToast(this@VerifyDocumentsActivity,"Please enter Account Type")
-                 return@OnClickListener
-             }else  if(TextUtils.isEmpty(bankPassbookUrl)){
-                 MyUtils.showToast(this@VerifyDocumentsActivity,"Please upload passbook or cheque clear image")
-                 return@OnClickListener
-             }
 
             models.bankName = bankName
             models.accountHolderName = accountHolderName
@@ -321,33 +353,35 @@ class VerifyDocumentsActivity : BaseActivity() {
             models.accountType = accountType
             models.bankPassbookUrl = bankPassbookUrl
 
-            submitDocuments(models,mDocumentType)
+            submitDocuments(models, mDocumentType)
 
         })
     }
-
 
     private fun initPaytm() {
         mBinding!!.linearPaytmDetails.visibility = View.GONE
 
         mBinding!!.btnSubmitVerification.setOnClickListener(View.OnClickListener {
-            var models = DocumentsModel()
+            val models = DocumentsModel()
             models.user_id = userInfo!!.userId.toString()
-            var paytmNumber = mBinding!!.editPaytmNumber.text.toString()
+            val paytmNumber = mBinding!!.editPaytmNumber.text.toString()
             models.paytmNumber = paytmNumber
 
-            if(TextUtils.isEmpty(paytmNumber)){
-                MyUtils.showToast(this@VerifyDocumentsActivity,"Please enter Your Paytm Number")
+            if (TextUtils.isEmpty(paytmNumber)) {
+                MyUtils.showToast(this@VerifyDocumentsActivity, "Please enter Your Paytm Number")
                 return@OnClickListener
             }
 
             models.documentType = DOCUMENT_TYPE_PAYTM
 
 
-            if(MyUtils.isConnectedWithInternet(this@VerifyDocumentsActivity)){
-               submitDocuments(models, DOCUMENT_TYPE_PAYTM)
-            }else {
-                MyUtils.showToast(this@VerifyDocumentsActivity,"Please check your internet connections")
+            if (MyUtils.isConnectedWithInternet(this@VerifyDocumentsActivity)) {
+                submitDocuments(models, DOCUMENT_TYPE_PAYTM)
+            } else {
+                MyUtils.showToast(
+                    this@VerifyDocumentsActivity,
+                    "Please check your internet connections"
+                )
             }
         })
 
@@ -366,37 +400,31 @@ class VerifyDocumentsActivity : BaseActivity() {
     }
 
 
-
-
-
-
     override fun onBitmapSelected(bitmap: Bitmap) {
-        if(mDocumentType.equals(DOCUMENT_TYPE_PANCARD)){
+        if (mDocumentType.equals(DOCUMENT_TYPE_PANCARD)) {
             mBinding!!.imgPancard.setImageBitmap(bitmap)
-        }else if(mDocumentType.equals(DOCUMENT_TYPE_ADHARCARD)){
-            if(mIsAdharFrontSelected){
+        } else if (mDocumentType.equals(DOCUMENT_TYPE_ADHARCARD)) {
+            if (mIsAdharFrontSelected) {
                 mBinding!!.imgAdharcardFront.setImageBitmap(bitmap)
-            }else {
+            } else {
                 mBinding!!.imgAdharcardBack.setImageBitmap(bitmap)
             }
-        }else if(mDocumentType.equals(DOCUMENT_TYPE_BANK_PASSBOOK)){
+        } else if (mDocumentType.equals(DOCUMENT_TYPE_BANK_PASSBOOK)) {
             mBinding!!.imgBankPassbook.setImageBitmap(bitmap)
         }
     }
 
     override fun onUploadedImageUrl(url: String) {
-        if(mDocumentType.equals(DOCUMENT_TYPE_PANCARD)){
+        if (mDocumentType.equals(DOCUMENT_TYPE_PANCARD)) {
             pancardDocumentUrl = url
-        }else if(mDocumentType.equals(DOCUMENT_TYPE_ADHARCARD)){
-            if(mIsAdharFrontSelected){
+        } else if (mDocumentType.equals(DOCUMENT_TYPE_ADHARCARD)) {
+            if (mIsAdharFrontSelected) {
                 adharCardDocumentUrlFront = url
-            }else {
+            } else {
                 adharCardDocumentUrlBack = url
             }
-        }else if(mDocumentType.equals(DOCUMENT_TYPE_BANK_PASSBOOK)){
+        } else if (mDocumentType.equals(DOCUMENT_TYPE_BANK_PASSBOOK)) {
             bankPassbookUrl = url
         }
     }
-
-
 }

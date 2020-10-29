@@ -1,9 +1,18 @@
 package ninja.cricks.utils
 
+import android.content.Context
 import android.os.CountDownTimer
 import android.util.Log
+import com.deliverdas.customers.utils.HardwareInfoManager
 import com.edify.atrist.listener.OnMatchTimerStarted
 import ninja.cricks.BuildConfig
+import ninja.cricks.network.IApiMethod
+import ninja.cricks.network.RequestModel
+import ninja.cricks.network.WebServiceClient
+import ninja.cricks.ui.home.models.UsersPostDBResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
 
 
@@ -132,7 +141,6 @@ class BindingUtils {
             }
         }
 
-
         fun countDownStartForAdaptors(
             starttimeStamp: Long,
             listeners: OnMatchTimerStarted
@@ -192,6 +200,42 @@ class BindingUtils {
                 listeners.onTimeFinished()
             }
 
+        }
+
+        fun sendEventLogs(
+            context: Context,
+            match_id: String,
+            contest_id: String,
+            user_id: String,
+            team_id: Int,
+            userInfo: ninja.cricks.models.UserInfo,
+            eventName: String
+        ) {
+            val request = RequestModel()
+            request.user_info = userInfo
+            request.event_name = eventName
+            request.match_id = match_id
+            request.contest_id = contest_id
+            request.team_id = team_id
+            request.user_id = user_id
+            request.device_id = MyPreferences.getNotificationToken(context)!!
+            request.deviceDetails = HardwareInfoManager(context).collectData()
+            WebServiceClient(context).client.create(IApiMethod::class.java)
+                .sendEventLogs(request)
+                .enqueue(object : Callback<UsersPostDBResponse?> {
+                    override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
+
+                    }
+
+                    override fun onResponse(
+                        call: Call<UsersPostDBResponse?>?,
+                        response: Response<UsersPostDBResponse?>?
+                    ) {
+
+
+                    }
+
+                })
         }
     }
 }
