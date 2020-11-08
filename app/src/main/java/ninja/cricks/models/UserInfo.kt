@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-class UserInfo :Serializable,Cloneable {
+class UserInfo : Serializable, Cloneable {
 
 
     @SerializedName("email")
@@ -65,7 +65,6 @@ class UserInfo :Serializable,Cloneable {
     @SerializedName("apk_url")
     @Expose
     var apkUrl: String = ""
-
 
 
     public override fun clone(): UserInfo {

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +26,6 @@ import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.home.models.UsersPostDBResponse
-import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import retrofit2.Call
@@ -40,6 +40,7 @@ class MyLiveMatchesFragment : Fragment() {
     private var mBinding: FragmentMyLiveBinding? = null
     lateinit var adapter: MyMatchesAdapter
     var checkinArrayList = ArrayList<JoinedMatchModel>()
+    private var TAG: String = MyLiveMatchesFragment::class.java.simpleName
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,11 +52,6 @@ class MyLiveMatchesFragment : Fragment() {
             R.layout.fragment_my_live, container, false
         )
 
-        return mBinding!!.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         mBinding!!.recyclerMyUpcoming.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         //initDummyContent()
@@ -79,12 +75,14 @@ class MyLiveMatchesFragment : Fragment() {
         mBinding!!.btnEmptyView.setOnClickListener(View.OnClickListener {
             (activity as MainActivity).viewUpcomingMatches()
         })
+
+        return mBinding!!.root
     }
 
-    override fun onPause() {
+    /*override fun onPause() {
         super.onPause()
         BindingUtils.stopTimer()
-    }
+    }*/
 
     override fun onResume() {
         super.onResume()
@@ -92,6 +90,7 @@ class MyLiveMatchesFragment : Fragment() {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
+        Log.e(TAG, "onResume")
         getMatchHistory()
     }
 
@@ -100,41 +99,41 @@ class MyLiveMatchesFragment : Fragment() {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-        if (checkinArrayList.size == 0) {
+        //if (checkinArrayList.size == 0) {
             mBinding!!.progressBar.visibility = View.VISIBLE
-        }
+       //}
         mBinding!!.linearEmptyContest.visibility = View.GONE
         val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         models.action_type = "live"
 
-        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getMatchHistory(models)
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
+            .getMatchHistory(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                    if (isAdded) {
-                        updateEmptyViews()
+                    if (mBinding!!.progressBar.visibility == View.VISIBLE) {
+                        mBinding!!.progressBar.visibility = View.GONE
                     }
+                    updateEmptyViews()
                 }
 
                 override fun onResponse(
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    if (isAdded) {
-                        mBinding!!.progressBar.visibility = View.GONE
-                        val res = response!!.body()
-                        if (res != null) {
-                            val responseModel = res.responseObject
-                            if (responseModel != null) {
-                                if (responseModel.matchdatalist != null && responseModel.matchdatalist!!.size > 0) {
-                                    checkinArrayList.clear()
-                                    checkinArrayList.addAll(responseModel.matchdatalist!!.get(0).liveMatchHistory!!)
-                                    adapter.notifyDataSetChanged()
-                                }
+                    mBinding!!.progressBar.visibility = View.GONE
+                    val res = response!!.body()
+                    if (res != null) {
+                        val responseModel = res.responseObject
+                        if (responseModel != null) {
+                            if (responseModel.matchdatalist != null && responseModel.matchdatalist!!.size > 0) {
+                                checkinArrayList.clear()
+                                checkinArrayList.addAll(responseModel.matchdatalist!!.get(0).liveMatchHistory!!)
+                                adapter.notifyDataSetChanged()
                             }
                         }
-                        updateEmptyViews()
                     }
+                    updateEmptyViews()
                 }
             })
     }

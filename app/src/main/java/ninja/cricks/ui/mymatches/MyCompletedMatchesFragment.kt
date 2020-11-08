@@ -48,11 +48,6 @@ class MyCompletedMatchesFragment : Fragment() {
             inflater,
             R.layout.fragment_my_completed, container, false
         )
-        return mBinding!!.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         mBinding!!.recyclerMyUpcoming.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
 
@@ -72,6 +67,12 @@ class MyCompletedMatchesFragment : Fragment() {
         mBinding!!.btnEmptyView.setOnClickListener {
             (activity as MainActivity).viewUpcomingMatches()
         }
+        return mBinding!!.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
     }
 
     override fun onResume() {
@@ -96,36 +97,33 @@ class MyCompletedMatchesFragment : Fragment() {
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         models.action_type = "completed"
 
-
         WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
             .getMatchHistory(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-
-                    if (isAdded) {
-                        updateEmptyViews()
+                    if(mBinding!!.progressBar.visibility == View.VISIBLE){
+                        mBinding!!.progressBar.visibility = View.GONE
                     }
+                    updateEmptyViews()
                 }
 
                 override fun onResponse(
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    if (isAdded) {
-                        mBinding!!.progressBar.visibility = View.GONE
-                        val res = response!!.body()
-                        if (res != null) {
-                            val responseModel = res.responseObject
-                            if (responseModel != null) {
-                                if (responseModel.matchdatalist != null && responseModel.matchdatalist!!.size > 0) {
-                                    checkinArrayList.clear()
-                                    checkinArrayList.addAll(responseModel.matchdatalist!!.get(0).completedMatchHistory!!)
-                                    adapter.notifyDataSetChanged()
-                                }
+                    mBinding!!.progressBar.visibility = View.GONE
+                    val res = response!!.body()
+                    if (res != null) {
+                        val responseModel = res.responseObject
+                        if (responseModel != null) {
+                            if (responseModel.matchdatalist != null && responseModel.matchdatalist!!.size > 0) {
+                                checkinArrayList.clear()
+                                checkinArrayList.addAll(responseModel.matchdatalist!!.get(0).completedMatchHistory!!)
+                                adapter.notifyDataSetChanged()
                             }
                         }
-                        updateEmptyViews()
                     }
+                    updateEmptyViews()
                 }
             })
     }

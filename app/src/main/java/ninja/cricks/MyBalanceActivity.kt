@@ -127,7 +127,7 @@ class MyBalanceActivity : AppCompatActivity() {
                     mBinding!!.verifyAccount.setBackgroundResource(R.drawable.button_selector_white)
                     mBinding!!.verifyAccount.setTextColor(Color.BLACK)
                     mBinding!!.verifyAccount.setOnClickListener(View.OnClickListener {
-                        gotoDocumentsListActivity()
+                        //gotoDocumentsListActivity()
                     })
                 } else {
                     mBinding!!.verifyAccountMessage.visibility = View.VISIBLE

@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-class UpcomingMatchesModel :Serializable,Cloneable{
+class UpcomingMatchesModel : Serializable, Cloneable {
 
     @SerializedName("match_id")
     @Expose
@@ -36,11 +36,11 @@ class UpcomingMatchesModel :Serializable,Cloneable{
 
     @SerializedName("total_joined_team")
     @Expose
-    var totalTeams : Int=0
+    var totalTeams: Int = 0
 
     @SerializedName("total_join_contests")
     @Expose
-    var totalJoinContests : Int=0
+    var totalJoinContests: Int = 0
 
 
     @SerializedName("status")
@@ -77,7 +77,7 @@ class UpcomingMatchesModel :Serializable,Cloneable{
 
     @SerializedName("contest_prize")
     @Expose
-    var contestPrize: String? = null
+    var contestPrize: String = ""
 
 
     public override fun clone(): UpcomingMatchesModel {

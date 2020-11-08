@@ -60,6 +60,12 @@ class MoreOptionsFragment : BaseFragment() {
     private fun initContent() {
         allOptionsList.clear()
 
+        val upcomingMModle11 = MoreOptionsModel()
+        upcomingMModle11.drawable = R.drawable.more_terms_conditions
+        upcomingMModle11.id = 11
+        upcomingMModle11.title = "Top Referral Users"
+        allOptionsList.add(upcomingMModle11)
+
         val upcomingMModle10 = MoreOptionsModel()
         upcomingMModle10.drawable = R.drawable.more_terms_conditions
         upcomingMModle10.id = 10
@@ -86,11 +92,11 @@ class MoreOptionsFragment : BaseFragment() {
         allOptionsList.add(upcomingMModle2)
 
 
-        val upcomingMModle3 = MoreOptionsModel()
+        /*val upcomingMModle3 = MoreOptionsModel()
         upcomingMModle3.drawable = R.drawable.more_terms_conditions
         upcomingMModle3.id = 2
         upcomingMModle3.title = "How to Play"
-        allOptionsList.add(upcomingMModle3)
+        allOptionsList.add(upcomingMModle3)*/
 
         val upcomingMModle9 = MoreOptionsModel()
         upcomingMModle9.drawable = R.drawable.more_terms_conditions
@@ -104,11 +110,11 @@ class MoreOptionsFragment : BaseFragment() {
         upcomingMModle4.title = "About Us"
         allOptionsList.add(upcomingMModle4)
 
-        val upcomingMModle5 = MoreOptionsModel()
+        /*val upcomingMModle5 = MoreOptionsModel()
         upcomingMModle5.drawable = R.drawable.more_legality
         upcomingMModle5.id = 4
         upcomingMModle5.title = "Legality"
-        allOptionsList.add(upcomingMModle5)
+        allOptionsList.add(upcomingMModle5)*/
 
         val upcomingMModle6 = MoreOptionsModel()
         upcomingMModle6.drawable = R.drawable.more_terms_conditions
@@ -271,6 +277,15 @@ class MoreOptionsFragment : BaseFragment() {
                         val intent = Intent(activity!!, WebActivity::class.java)
                         intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_OFFERS)
                         intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_OFFERS)
+                        val options =
+                            ActivityOptions.makeSceneTransitionAnimation(activity)
+                        startActivity(intent, options.toBundle())
+                    }
+
+                    11 -> {
+                        val intent = Intent(activity!!, WebActivity::class.java)
+                        intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_TOP_REFERRAL_USER)
+                        intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_TOP_REFERRAL_USER)
                         val options =
                             ActivityOptions.makeSceneTransitionAnimation(activity)
                         startActivity(intent, options.toBundle())

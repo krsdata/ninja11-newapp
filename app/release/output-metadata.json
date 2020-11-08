@@ -11,10 +11,10 @@
       "type": "SINGLE",
       "filters": [],
       "properties": [],
-      "versionCode": 3005,
-      "versionName": "1.5",
+      "versionCode": 3006,
+      "versionName": "1.6",
       "enabled": true,
-      "outputFile": "Ninja11-1.5-release.apk"
+      "outputFile": "Ninja11-1.6-release.apk"
     }
   ]
 }

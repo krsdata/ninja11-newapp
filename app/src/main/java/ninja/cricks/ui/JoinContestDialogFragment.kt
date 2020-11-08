@@ -79,7 +79,7 @@ class JoinContestDialogFragment(
     private fun initWalletInfo() {
         val walletInfo = (requireActivity().applicationContext as SportsFightApplication).walletInfo
         userInfo = (requireActivity().applicationContext as SportsFightApplication).userInformations
-        DISCOUNT_ON_BONUS = contestModel.usableBonus
+        DISCOUNT_ON_BONUS = contestModel.usableBonus.toInt()
         walletAmount = walletInfo.walletAmount
         bonusAmount = walletInfo.bonusAmount
         createdTeamIdList = ArrayList<Int>()
@@ -97,7 +97,7 @@ class JoinContestDialogFragment(
             val objects = myTeamArrayList.get(x)
             if (objects.isSelected!!) {
                 createdTeamIdList!!.add(objects.teamId!!.teamId)
-                totalEntryFees += contestModel.entryFees
+                totalEntryFees += contestModel.entryFees.toInt()
             }
         }
 

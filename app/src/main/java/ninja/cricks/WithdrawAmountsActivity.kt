@@ -221,7 +221,8 @@ class WithdrawAmountsActivity : BaseActivity() {
         val models = RequestModel()
         models.user_id = MyPreferences.getUserID(mContext!!)!!
         models.token = MyPreferences.getToken(mContext!!)!!
-        models.deviceDetails = HardwareInfoManager(mContext).collectData()
+        val deviceToken: String? = MyPreferences.getDeviceToken(mContext!!)
+        models.deviceDetails = HardwareInfoManager(mContext).collectData(deviceToken!!)
 
         WebServiceClient(mContext!!).client.create(IApiMethod::class.java).getMessages(models)
             .enqueue(object : Callback<JsonObject?> {

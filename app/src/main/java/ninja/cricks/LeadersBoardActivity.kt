@@ -154,11 +154,11 @@ class LeadersBoardActivity : BaseActivity() {
 
     private fun initContestDetails() {
         mBinding!!.includeLiveMatchRow.contestPrizePool.text =
-            String.format("%s%d", "₹", contestObject!!.totalWinningPrize)
+            String.format("%s%s", "₹", contestObject!!.totalWinningPrize)
         mBinding!!.includeLiveMatchRow.contestSpots.text =
             String.format("%d", contestObject!!.totalSpots)
         mBinding!!.includeLiveMatchRow.contestEntryPrize.text =
-            String.format("%s%d", "₹", contestObject!!.entryFees)
+            String.format("%s%s", "₹", contestObject!!.entryFees)
     }
 
     private fun initScoreCard() {
@@ -201,7 +201,7 @@ class LeadersBoardActivity : BaseActivity() {
 
 
     fun updateScores() {
-        var models = RequestModel()
+        val models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
         // models.token = MyPreferences.getToken(this)!!
         models.contest_id = "" + contestObject!!.id
@@ -210,19 +210,15 @@ class LeadersBoardActivity : BaseActivity() {
         WebServiceClient(this).client.create(IApiMethod::class.java).getScore(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                    if (customeProgressDialog != null) {
-                        customeProgressDialog.dismiss()
-                    }
+                    customeProgressDialog.dismiss()
                 }
 
                 override fun onResponse(
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    if (customeProgressDialog != null) {
-                        customeProgressDialog.dismiss()
-                    }
-                    var res = response!!.body()
+                    customeProgressDialog.dismiss()
+                    val res = response!!.body()
                     if (res != null) {
                         if (res.scoresModel != null) {
                             if (res.sessionExpired) {
@@ -259,13 +255,9 @@ class LeadersBoardActivity : BaseActivity() {
                                     }
                                 }
                             }
-
                         }
-
                     }
-
                 }
-
             })
     }
 
@@ -276,15 +268,15 @@ class LeadersBoardActivity : BaseActivity() {
         var totalSpots = contestObject!!.totalSpots
         var filledSpots = contestObject!!.filledSpots
         mBinding!!.includeContestRow.contestPrizePool.text =
-            String.format("%s%d", "₹ ", contestObject!!.totalWinningPrize)
+            String.format("%s%s", "₹ ", contestObject!!.totalWinningPrize)
 
-        if (contestObject!!.entryFees == 0 && contestObject!!.winnerCounts > 0) {
+        if (contestObject!!.entryFees.toInt() == 0 && contestObject!!.winnerCounts!!.toInt() > 0) {
             mBinding!!.includeContestRow.contestEntryPrize.text = "Free"
-        } else if (contestObject!!.entryFees == 0 && contestObject!!.winnerCounts == 0) {
+        } else if (contestObject!!.entryFees.toInt() == 0 && contestObject!!.winnerCounts!!.toInt() == 0) {
             mBinding!!.includeContestRow.contestEntryPrize.text = "Join"
         } else {
             mBinding!!.includeContestRow.contestEntryPrize.text =
-                String.format("%s%d", "₹", contestObject!!.entryFees)
+                String.format("%s%s", "₹", contestObject!!.entryFees)
         }
 
         if (totalSpots == 0) {
@@ -308,17 +300,17 @@ class LeadersBoardActivity : BaseActivity() {
             }
         }
 
-        if (contestObject!!.usableBonus == 0) {
+        if (contestObject!!.usableBonus.toInt() == 0) {
             mBinding!!.includeContestRow.linearBonues.visibility = View.GONE
         } else {
             mBinding!!.includeContestRow.linearBonues.visibility = View.VISIBLE
             mBinding!!.includeContestRow.contestBonus.text =
-                String.format("%d%s", contestObject!!.usableBonus, "%")
+                String.format("%s%s", contestObject!!.usableBonus, "%")
         }
         mBinding!!.includeContestRow.contestEntryPrize.text =
-            String.format("%s%d", "₹", contestObject!!.entryFees)
+            String.format("%s%s", "₹", contestObject!!.entryFees)
         mBinding!!.includeContestRow.firstPrize.text =
-            String.format("%s%d", "₹", contestObject!!.firstPrice)
+            String.format("%s%s", "₹", contestObject!!.firstPrice)
         mBinding!!.includeContestRow.winningPercentage.text =
             "" + contestObject!!.winnerCounts//String.format("%d%s",contestObject!!.winnerPercentage,"%")
         // mBinding!!.includeContestRow.maxAllowedTeam.text = String.format("%s %d %s","Upto",contestObject!!.maxAllowedTeam,"teams")
@@ -344,14 +336,14 @@ class LeadersBoardActivity : BaseActivity() {
                 "" + contestObject!!.maxAllowedTeam
         }
         mBinding!!.includeContestRow.contestBonus.text =
-            String.format("%d%s", contestObject!!.usableBonus, "%")
+            String.format("%s%s", contestObject!!.usableBonus, "%")
 
         mBinding!!.includeContestRow.contestEntryPrize.setOnClickListener(View.OnClickListener {
             if (!MyUtils.isConnectedWithInternet(this)) {
                 MyUtils.showToast(this, "No Internet connection found")
             } else {
                 customeProgressDialog.show()
-                var models = RequestModel()
+                val models = RequestModel()
                 models.user_id = MyPreferences.getUserID(this)!!
                 // models.token =MyPreferences.getToken(this)!!
                 models.match_id = "" + matchObject!!.matchId
@@ -429,17 +421,11 @@ class LeadersBoardActivity : BaseActivity() {
                                 }
                             }
                         }
-
                     })
             }
-
         })
-
-
 //        }
-
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -450,11 +436,10 @@ class LeadersBoardActivity : BaseActivity() {
     }
 
     override fun onBitmapSelected(bitmap: Bitmap) {
-        TODO("Not yet implemented")
+        //TODO("Not yet implemented")
     }
 
     override fun onUploadedImageUrl(url: String) {
-
 
     }
 
@@ -465,17 +450,14 @@ class LeadersBoardActivity : BaseActivity() {
 
         viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)
 
-        var bundle = Bundle()
+        val bundle = Bundle()
         bundle.putSerializable(ContestActivity.SERIALIZABLE_KEY_CONTEST_OBJECT, contestObject)
         bundle.putSerializable(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT, matchObject)
 
         viewPagerAdapter.addFragment(PrizeBreakupFragment.newInstance(bundle), "Prize Breakup")
         viewPagerAdapter.addFragment(LeadersBoardFragment.newInstance(bundle), "Leaderboard")
         // viewPagerAdapter.addFragment(ContestStatsFragment(matchObject!!), "Leaderboard")
-
         viewPager.adapter = viewPagerAdapter
-
-
     }
 
     internal inner class ViewPagerAdapter(manager: FragmentManager) :
@@ -500,6 +482,4 @@ class LeadersBoardActivity : BaseActivity() {
             return mFragmentTitleList[position]
         }
     }
-
-
 }

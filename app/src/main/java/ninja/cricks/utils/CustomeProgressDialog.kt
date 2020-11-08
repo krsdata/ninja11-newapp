@@ -13,7 +13,7 @@ class CustomeProgressDialog(context: Context?) : Dialog(context!!) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getWindow()!!.setBackgroundDrawableResource(android.R.color.transparent);
+        window!!.setBackgroundDrawableResource(android.R.color.transparent);
         setContentView(R.layout.dialog_progress)
         setCancelable(false)
         setCanceledOnTouchOutside(false)

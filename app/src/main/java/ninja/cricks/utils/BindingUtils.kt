@@ -49,6 +49,7 @@ class BindingUtils {
         val WEBVIEW_LEGALITY = BASE_URL_MAIN + "legality?request=mobile"
         val WEBVIEW_FAQ = BASE_URL_MAIN + "faqs?request=mobile"
         val WEBVIEW_OFFERS = BASE_URL_MAIN + "offers?request=mobile"
+        val WEBVIEW_TOP_REFERRAL_USER = BASE_URL_MAIN + "topReferralUser?request=mobile"
         const val NOTIFICATION_ID_BIG_IMAGE = 101
         val BILTY_APK_LINK: String = BASE_URL_API + "apk"
         val WEB_TITLE_PRIVACY_POLICY: String = "Privacy Policy"
@@ -59,6 +60,7 @@ class BindingUtils {
         val WEB_TITLE_LEGALITY: String = "LEGALITY"
         val WEB_TITLE_FAQ: String = "FAQs"
         val WEB_TITLE_OFFERS: String = "Offers"
+        val WEB_TITLE_TOP_REFERRAL_USER: String = "Top Referral Users"
 
         var currentTimeStamp: Long = 0
 
@@ -130,7 +132,6 @@ class BindingUtils {
                 listeners.onTimeFinished()
                 isCountedObjectCreated = false
             }
-
         }
 
         fun stopTimer() {
@@ -147,7 +148,7 @@ class BindingUtils {
         ) {
             if (starttimeStamp > currentTimeStamp) {
                 //BindingUtils.logD("TimerLogs","Count Down timer Called Adaptors")
-                var timerAdapters = object : CountDownTimer(starttimeStamp, 1000) {
+                val timerAdapters = object : CountDownTimer(starttimeStamp, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
                         val itemLong = starttimeStamp
                         val date = Date(itemLong * 1000L)
@@ -218,8 +219,9 @@ class BindingUtils {
             request.contest_id = contest_id
             request.team_id = team_id
             request.user_id = user_id
-            request.device_id = MyPreferences.getNotificationToken(context)!!
-            request.deviceDetails = HardwareInfoManager(context).collectData()
+            request.device_id = MyPreferences.getDeviceToken(context)!!
+            val deviceToken: String? = MyPreferences.getDeviceToken(context)
+            request.deviceDetails = HardwareInfoManager(context).collectData(deviceToken!!)
             WebServiceClient(context).client.create(IApiMethod::class.java)
                 .sendEventLogs(request)
                 .enqueue(object : Callback<UsersPostDBResponse?> {

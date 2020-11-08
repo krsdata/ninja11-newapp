@@ -34,6 +34,8 @@ object MyPreferences {
     private val KEY_PREF_IS_GPAY = "isgpay"
     private val KEY_PREF_IS_RAZOR_PAY = "israzorpay"
 
+    private val KEY_DEVICE_TOKEN ="deviceToken"
+
     /**
      * @author Manoj Prasad
      * List of all constants for API's Caching
@@ -527,5 +529,22 @@ object MyPreferences {
             true
         )
         return isShow
+    }
+
+    fun setDeviceToken(context: Context, deviceToken: String) {
+        if (!TextUtils.isEmpty(deviceToken)) {
+            setStringPrefrence(
+                context,
+                KEY_DEVICE_TOKEN,
+                deviceToken
+            )
+        }
+    }
+
+    fun getDeviceToken(context: Context): String? {
+        return getStringPrefrence(
+            context,
+            KEY_DEVICE_TOKEN
+        )
     }
 }

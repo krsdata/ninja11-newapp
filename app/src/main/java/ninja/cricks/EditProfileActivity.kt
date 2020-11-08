@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
+import ninja.cricks.databinding.ActivityEditProfileBinding
 import ninja.cricks.models.ResponseModel
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.RequestModel
@@ -22,20 +23,21 @@ import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import ninja.cricks.databinding.ActivityEditProfileBinding
+import java.text.DecimalFormat
 import java.util.*
 
 
 class EditProfileActivity : BaseActivity() {
 
     private var mBinding: ActivityEditProfileBinding? = null
-    private var photoUrl: String=""
+    private var photoUrl: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         userInfo = (application as SportsFightApplication).userInformations
         customeProgressDialog = CustomeProgressDialog(this)
-        mBinding = DataBindingUtil.setContentView(this,
+        mBinding = DataBindingUtil.setContentView(
+            this,
             R.layout.activity_edit_profile
         )
         mBinding!!.toolbar.title = "Update Profile"
@@ -48,53 +50,64 @@ class EditProfileActivity : BaseActivity() {
 
         Glide.with(this)
             .load(userInfo!!.profileImage)
-            .placeholder(R.drawable.placeholder_player_teamb)
+            .placeholder(R.drawable.ic_profile)
             .into(mBinding!!.profileImage)
 
         updateUserOtherInfo()
 
 
         mBinding!!.profileImage.setOnClickListener {
-//            if (!TextUtils.isEmpty(photoUrl)) {
-//                val intent =
-//                    Intent(this@EditProfileActivity, FullScreenImageViewActivity::class.java)
-//                intent.putExtra(FullScreenImageViewActivity.KEY_IMAGE_URL, photoUrl)
-//                startActivity(intent)
-//            } else {
-//                if (checkAndRequestPermissions()) {
-//                    selectImage(BaseActivity.DOCUMENTS_TYPE_PROFILES)
-//                } else {
-//                    Toast.makeText(
-//                        this@EditProfileActivity,
-//                        "Permission required ",
-//                        Toast.LENGTH_LONG
-//                    )
-//                        .show()
-//                }
-//            }
+            if (!TextUtils.isEmpty(photoUrl)) {
+                val intent =
+                    Intent(this@EditProfileActivity, FullScreenImageViewActivity::class.java)
+                intent.putExtra(FullScreenImageViewActivity.KEY_IMAGE_URL, photoUrl)
+                startActivity(intent)
+            } else {
+                if (checkAndRequestPermissions()) {
+                    selectImage(BaseActivity.DOCUMENTS_TYPE_PROFILES)
+                } else {
+                    Toast.makeText(
+                        this@EditProfileActivity,
+                        "Permission required ",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
         }
 
-//        mBinding!!.imageEdit.setOnClickListener {
-//            if (checkAndRequestPermissions()) {
-//                selectImage(DOCUMENTS_TYPE_PROFILES)
-//            } else {
-//                Toast.makeText(this@EditProfileActivity, "Permission required ", Toast.LENGTH_LONG)
-//                    .show()
-//            }
-//        }
+        mBinding!!.imageEdit.setOnClickListener {
+            if (checkAndRequestPermissions()) {
+                selectImage(DOCUMENTS_TYPE_PROFILES)
+            } else {
+                Toast.makeText(this@EditProfileActivity, "Permission required ", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
 
         mBinding!!.dateOfBirth.setOnClickListener(View.OnClickListener {
             val c = Calendar.getInstance()
-            var mYear = c[Calendar.YEAR]
-            var mMonth = c[Calendar.MONTH]
-            var mDay = c[Calendar.DAY_OF_MONTH]
-
+            val mYear = c[Calendar.YEAR]
+            val mMonth = c[Calendar.MONTH]
+            val mDay = c[Calendar.DAY_OF_MONTH]
 
             val datePickerDialog = DatePickerDialog(
                 this,
                 OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    val a = monthOfYear + 1
+                    val formatter = DecimalFormat("00")
+                    val month = formatter.format(a.toLong())
+
+                    val formatter2 = DecimalFormat("00")
+                    val date = formatter2.format(dayOfMonth.toLong())
+
                     mBinding!!.dateOfBirth.setText(
-                        dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year
+                        String.format(
+                            Locale.ENGLISH,
+                            "%s-%s-%d",
+                            date,
+                            month,
+                            year
+                        )
                     )
                 }, mYear, mMonth, mDay
             )
@@ -105,87 +118,108 @@ class EditProfileActivity : BaseActivity() {
 
             updateProfile()
         })
-
         initProfile()
         getProfile()
 
     }
 
     private fun updateUserOtherInfo() {
-        if(!TextUtils.isEmpty(userInfo!!.teamName)) {
+        if (!TextUtils.isEmpty(userInfo!!.teamName)) {
             mBinding!!.editTeamName.setText(userInfo!!.teamName)
+
+            mBinding!!.editTeamName.setSelection(userInfo!!.teamName.length)
         }
 
-         if(!TextUtils.isEmpty(userInfo!!.dateOfBirth)) {
+        if (!TextUtils.isEmpty(userInfo!!.dateOfBirth)) {
             mBinding!!.dateOfBirth.setText(userInfo!!.dateOfBirth)
         }
 
-        if(!TextUtils.isEmpty(userInfo!!.city)) {
+        if (!TextUtils.isEmpty(userInfo!!.city)) {
             mBinding!!.editCity.setText(userInfo!!.city)
         }
-        if(!TextUtils.isEmpty(userInfo!!.pinCode)) {
+        /*if(!TextUtils.isEmpty(userInfo!!.pinCode)) {
             mBinding!!.editPicode.setText(userInfo!!.pinCode)
             mBinding!!.spinnerStates.prompt = userInfo!!.state
 
-        }
+        }*/
     }
 
     override fun onBitmapSelected(bitmap: Bitmap) {
-        mBinding!!.profileImage.setImageBitmap(bitmap)
+        //mBinding!!.profileImage.setImageBitmap(bitmap)
+        if (!bitmap.equals("")) {
+            Glide.with(this).asBitmap().load(bitmap).placeholder(R.drawable.player_blue)
+                .into(mBinding!!.profileImage)
+        }
     }
 
     override fun onUploadedImageUrl(url: String) {
         this.photoUrl = url
+        if (url.isNotEmpty())
+            Glide.with(this).load(url).placeholder(R.drawable.player_blue)
+                .into(mBinding!!.profileImage)
         //MyPreferences.setProfilePicture(this@EditProfileActivity,photoUrl)
     }
 
     private fun initProfile() {
         photoUrl = userInfo!!.profileImage
-       // MyPreferences.setProfilePicture(this,photoUrl)
+        // MyPreferences.setProfilePicture(this,photoUrl)
         mBinding!!.editTeamName.setText(userInfo!!.teamName)
         mBinding!!.updateProfileName.setText(userInfo!!.fullName)
         mBinding!!.updateEmail.setText(userInfo!!.userEmail)
         mBinding!!.updateEditMobile.setText(userInfo!!.mobileNumber)
+
+        if (userInfo!!.gender.equals("male")) {
+            mBinding!!.genderMale.isChecked = true
+            mBinding!!.genderFemale.isChecked = false
+        } else {
+            mBinding!!.genderMale.isChecked = false
+            mBinding!!.genderFemale.isChecked = true
+        }
+
+        if (userInfo!!.profileImage.isNotEmpty())
+            Glide.with(this).load(userInfo!!.profileImage).placeholder(R.drawable.player_blue)
+                .into(mBinding!!.profileImage)
     }
 
     private fun updateProfile() {
-        if(!MyUtils.isConnectedWithInternet(this)) {
-            MyUtils.showToast(this,"No Internet connection found")
+        if (!MyUtils.isConnectedWithInternet(this)) {
+            MyUtils.showToast(this, "No Internet connection found")
             return
         }
-        var editName = mBinding!!.updateProfileName.text.toString()
-        var mobileNumber = mBinding!!.updateEditMobile.text.toString()
-        var emailAddress = mBinding!!.updateEmail.text.toString()
-        var cityName = mBinding!!.editCity.text.toString()
-        var gender ="male"
-        if( !mBinding!!.genderMale.isChecked){
-            gender ="female"
+        val editTeamName = mBinding!!.editTeamName.text.toString()
+        val editName = mBinding!!.updateProfileName.text.toString()
+        val mobileNumber = mBinding!!.updateEditMobile.text.toString()
+        val emailAddress = mBinding!!.updateEmail.text.toString()
+        val cityName = mBinding!!.editCity.text.toString()
+        var gender = "male"
+        if (!mBinding!!.genderMale.isChecked) {
+            gender = "female"
         }
-        var dateOfBirth = mBinding!!.dateOfBirth.text.toString()
-        var state = mBinding!!.spinnerStates.selectedItem.toString()
+        val dateOfBirth = mBinding!!.dateOfBirth.text.toString()
+        //val state = mBinding!!.spinnerStates.selectedItem.toString()
 
-        if(TextUtils.isEmpty(editName)){
-            MyUtils.showToast(this@EditProfileActivity,"Please enter your real name")
+        if (TextUtils.isEmpty(editName)) {
+            MyUtils.showToast(this@EditProfileActivity, "Please enter your real name")
             return
-        }else if(TextUtils.isEmpty(mobileNumber)){
-            MyUtils.showToast(this@EditProfileActivity,"Please enter valid mobile number")
+        } else if (TextUtils.isEmpty(mobileNumber)) {
+            MyUtils.showToast(this@EditProfileActivity, "Please enter valid mobile number")
             return
-        }else if(mobileNumber.length<10){
-            MyUtils.showToast(this@EditProfileActivity,"Please enter valid mobile number")
+        } else if (mobileNumber.length < 10) {
+            MyUtils.showToast(this@EditProfileActivity, "Please enter valid mobile number")
             return
-        }else if(TextUtils.isEmpty(emailAddress) || !MyUtils.isEmailValid(emailAddress)){
-            MyUtils.showToast(this@EditProfileActivity,"Please enter valid email address")
+        } else if (TextUtils.isEmpty(emailAddress) || !MyUtils.isEmailValid(emailAddress)) {
+            MyUtils.showToast(this@EditProfileActivity, "Please enter valid email address")
             return
-        }else if(TextUtils.isEmpty(cityName)){
-            MyUtils.showToast(this@EditProfileActivity,"Please enter city Name")
+        } else if (TextUtils.isEmpty(cityName)) {
+            MyUtils.showToast(this@EditProfileActivity, "Please enter city Name")
             return
-        }else if(TextUtils.isEmpty(dateOfBirth)){
-            MyUtils.showToast(this@EditProfileActivity,"Please enter your Date of Birth")
+        } else if (TextUtils.isEmpty(dateOfBirth)) {
+            MyUtils.showToast(this@EditProfileActivity, "Please enter your Date of Birth")
             return
         }
 
-        mBinding!!.progressBar.visibility  =View.VISIBLE
-        var models = RequestModel()
+        mBinding!!.progressBar.visibility = View.VISIBLE
+        val models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
         models.image_url = photoUrl
         models.team_name = mBinding!!.editTeamName.text.toString()
@@ -195,8 +229,8 @@ class EditProfileActivity : BaseActivity() {
         models.city = cityName
         models.gender = gender
         models.dateOfBirth = dateOfBirth
-       // models.pinCode = pinCode
-        models.state = state
+        //models.pinCode = pinCode
+        //models.state = state
 
         WebServiceClient(this).client.create(IApiMethod::class.java).updateProfile(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
@@ -208,42 +242,45 @@ class EditProfileActivity : BaseActivity() {
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    mBinding!!.progressBar.visibility  =View.GONE
-                    var res = response!!.body()
-                    if(res!=null && res.status) {
+                    mBinding!!.progressBar.visibility = View.GONE
+                    val res = response!!.body()
+                    if (res != null && res.status) {
 //                        userInfo = (application as PlugSportsApplication).userInformations
-//                        userInfo.teamName = editName
-//                        userInfo.fullName = editName
-//                        userInfo.city = cityName
-//                        userInfo.gender = gender
-//                        userInfo.dateOfBirth = dateOfBirth
-//                       // userInfo.pinCode = pinCode
+                        userInfo!!.profileImage = photoUrl
+                        userInfo!!.teamName = editTeamName
+                        userInfo!!.fullName = editName
+                        userInfo!!.city = cityName
+                        userInfo!!.gender = gender
+                        userInfo!!.dateOfBirth = dateOfBirth
+                       // userInfo.pinCode = pinCode
 //                        userInfo.state = state
 
-                        Toast.makeText(this@EditProfileActivity,"Profile updated successfully",Toast.LENGTH_LONG).show()
+                        (application as SportsFightApplication).saveUserInformations(userInfo)
+
+                        Toast.makeText(
+                            this@EditProfileActivity,
+                            "Profile updated successfully",
+                            Toast.LENGTH_LONG
+                        ).show()
                         finish()
                     }
-
                 }
-
             })
-
     }
 
     private fun getProfile() {
-        if(!MyUtils.isConnectedWithInternet(this)) {
-            MyUtils.showToast(this,"No Internet connection found")
+        if (!MyUtils.isConnectedWithInternet(this)) {
+            MyUtils.showToast(this, "No Internet connection found")
             return
         }
         customeProgressDialog.show()
-        var models = RequestModel()
+        val models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
-
 
         WebServiceClient(this).client.create(IApiMethod::class.java).getProfile(models)
             .enqueue(object : Callback<ResponseModel?> {
                 override fun onFailure(call: Call<ResponseModel?>?, t: Throwable?) {
-                   customeProgressDialog.dismiss()
+                    customeProgressDialog.dismiss()
                 }
 
                 override fun onResponse(
@@ -251,31 +288,23 @@ class EditProfileActivity : BaseActivity() {
                     response: Response<ResponseModel?>?
                 ) {
                     customeProgressDialog.dismiss()
-                    var res = response!!.body()
-                    if(res!=null && res.status) {
+                    val res = response!!.body()
+                    if (res != null && res.status) {
 
-                        var infoModels = res.infomodel
+                        val infoModels = res.infomodel
                         if (infoModels != null) {
-//                            if (!TextUtils.isEmpty(res.infomodel!!.profileImage)) {
-//                                MyPreferences.setProfilePicture(this@EditProfileActivity, res.infomodel!!.profileImage)
-//                            }
                             (application as SportsFightApplication).saveUserInformations(infoModels)
                             userInfo = (application as SportsFightApplication).userInformations
                             initProfile()
                             updateUserOtherInfo()
-
                         } else {
-                            MyUtils.showToast(this@EditProfileActivity, "Something went wrong, please contact admin")
+                            MyUtils.showToast(
+                                this@EditProfileActivity,
+                                "Something went wrong, please contact admin"
+                            )
                         }
-
                     }
-
                 }
-
             })
-
     }
-
-
-
 }

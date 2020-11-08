@@ -124,7 +124,7 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
         }
     }
 
-    fun getAllMatches() {
+    private fun getAllMatches() {
 //        if(!isVisible()){
 //            return
 //        }
@@ -152,7 +152,8 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
         val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         models.token = MyPreferences.getToken(requireActivity())!!
-        models.deviceDetails = HardwareInfoManager(context).collectData()
+        val deviceToken: String? = MyPreferences.getDeviceToken(requireActivity())
+        models.deviceDetails = HardwareInfoManager(context).collectData(deviceToken!!)
 
         WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getAllMatches(
             models
@@ -227,9 +228,11 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
         val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         models.token = MyPreferences.getToken(requireActivity())!!
-        models.deviceDetails = HardwareInfoManager(context).collectData()
+        val deviceToken: String? = MyPreferences.getDeviceToken(requireActivity())
+        models.deviceDetails = HardwareInfoManager(context).collectData(deviceToken!!)
 
-        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getMessages(models)
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
+            .getMessages(models)
             .enqueue(object : Callback<JsonObject?> {
                 override fun onFailure(call: Call<JsonObject?>?, t: Throwable?) {
                     // customeProgressDialog.dismiss()
@@ -251,11 +254,13 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
                             } else {
                                 if (data.getString("message_type") == "HTML") {
                                     mBinding!!.labelMessage.linksClickable = true
-                                    mBinding!!.labelMessage.movementMethod = LinkMovementMethod.getInstance()
+                                    mBinding!!.labelMessage.movementMethod =
+                                        LinkMovementMethod.getInstance()
                                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                                         mBinding!!.labelMessage.text =
                                             Html.fromHtml(
-                                                data.getString("message"), Html.FROM_HTML_MODE_COMPACT
+                                                data.getString("message"),
+                                                Html.FROM_HTML_MODE_COMPACT
                                             )
                                     } else {
                                         mBinding!!.labelMessage.text = Html.fromHtml(

@@ -9,6 +9,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.google.android.material.tabs.TabLayout.TabLayoutOnPageChangeListener
 import ninja.cricks.MainActivity
 import ninja.cricks.R
 import ninja.cricks.ui.mymatches.MyCompletedMatchesFragment
@@ -16,7 +18,8 @@ import ninja.cricks.ui.mymatches.MyLiveMatchesFragment
 import ninja.cricks.ui.mymatches.MyUpcomingMatchesFragment
 
 class MyMatchesFragment : Fragment() {
-
+    var tabLayout: TabLayout? = null
+    var viewpager: ViewPager? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,29 +28,44 @@ class MyMatchesFragment : Fragment() {
     ): View? {
 
         val root = inflater.inflate(R.layout.fragment_mymatches, container, false)
+
+        (activity as MainActivity).showToolbar()
+        viewpager= root.findViewById(R.id.viewpager)
+        tabLayout = root.findViewById(R.id.tabs)
+        setupViewPager()
+
+        // viewpager.addOnPageChangeListener(this)
+        //tabs.setupWithViewPager(viewpager)
+
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).showToolbar()
-        val viewpager: ViewPager = view.findViewById(R.id.viewpager)
-        val tabs: TabLayout = view.findViewById(R.id.tabs)
-        setupViewPager(viewpager)
-        // viewpager.addOnPageChangeListener(this)
-        tabs.setupWithViewPager(viewpager)
     }
 
-    private fun setupViewPager(viewPager: ViewPager) {
-        val adapter = ViewPagerAdapter(requireActivity().supportFragmentManager)
-        adapter.addFragment(MyUpcomingMatchesFragment(), getString(R.string.mymatch_upcoming))
-        adapter.addFragment(MyLiveMatchesFragment(), getString(R.string.mymatch_live))
-        adapter.addFragment(MyCompletedMatchesFragment(), getString(R.string.mymatch_completed))
-        viewPager.adapter = adapter
-    }
+    private fun setupViewPager() {
 
-    fun onRefresh() {
+        tabLayout?.addTab(tabLayout!!.newTab().setText(getString(R.string.mymatch_upcoming)))
+        tabLayout?.addTab(tabLayout!!.newTab().setText(getString(R.string.mymatch_live)))
+        tabLayout?.addTab(tabLayout!!.newTab().setText(getString(R.string.mymatch_completed)))
+        tabLayout?.tabGravity = TabLayout.GRAVITY_FILL
+        val adapter = MyAdapter(childFragmentManager, tabLayout!!.tabCount)
+        viewpager?.adapter = adapter
 
+        viewpager?.addOnPageChangeListener(TabLayoutOnPageChangeListener(tabLayout))
+
+        tabLayout!!.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                viewpager?.currentItem = tab.position
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
+
+        val tab = tabLayout!!.getTabAt(0)
+        tab?.select()
     }
 
     internal inner class ViewPagerAdapter(manager: FragmentManager) :
@@ -70,6 +88,21 @@ class MyMatchesFragment : Fragment() {
 
         override fun getPageTitle(position: Int): CharSequence {
             return mFragmentTitleList[position]
+        }
+    }
+
+    class MyAdapter internal constructor(fm: FragmentManager?, var totalTabs: Int) :
+        FragmentPagerAdapter(fm!!, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        override fun getItem(position: Int): Fragment {
+            return when (position) {
+                0 -> MyUpcomingMatchesFragment()
+                1 -> MyLiveMatchesFragment()
+                else -> MyCompletedMatchesFragment()
+            }
+        }
+
+        override fun getCount(): Int {
+            return totalTabs
         }
     }
 }

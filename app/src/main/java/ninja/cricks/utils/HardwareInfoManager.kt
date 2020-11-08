@@ -143,12 +143,12 @@ class HardwareInfoManager(internal var hardwareContext: Context?) : Serializable
             return carrierName
         }
 
-    fun collectData(): HardwareInfo {
+    fun collectData(notificationToken: String): HardwareInfo {
         val hardware = HardwareInfo()
         try {
             hardware.brand = brand
             hardware.noOfSIM = simSupportedCount
-            hardware.device_id = dataDiaryVersion
+            hardware.device_id = notificationToken
             hardware.model = model
             hardware.manufacturer = manufacturesName
             hardware.setOs(osName)

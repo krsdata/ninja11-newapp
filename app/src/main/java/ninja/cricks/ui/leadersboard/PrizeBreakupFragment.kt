@@ -27,33 +27,39 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PrizeBreakupFragment: Fragment(){
+class PrizeBreakupFragment : Fragment() {
 
     private var mBinding: FragmentPrizeBreakupBinding? = null
     lateinit var adapter: PrizeBreakUpAdapter
     var prizeBreakupList = ArrayList<PrizeBreakUpModels>()
 
-    var matchObject : UpcomingMatchesModel?=null
-    var contestObject : ContestModelLists?=null
+    var matchObject: UpcomingMatchesModel? = null
+    var contestObject: ContestModelLists? = null
 
-    companion object{
-        fun newInstance(bundle : Bundle) : PrizeBreakupFragment {
+    companion object {
+        fun newInstance(bundle: Bundle): PrizeBreakupFragment {
             val fragment = PrizeBreakupFragment()
-            fragment.arguments=bundle
+            fragment.arguments = bundle
             return fragment
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        contestObject = arguments!!.get(ContestActivity.SERIALIZABLE_KEY_CONTEST_OBJECT) as ContestModelLists
-        matchObject = arguments!!.get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
+        contestObject =
+            requireArguments().get(ContestActivity.SERIALIZABLE_KEY_CONTEST_OBJECT) as ContestModelLists
+        matchObject =
+            requireArguments().get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        mBinding  = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_prize_breakup, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        mBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_prize_breakup, container, false
+        )
         return mBinding!!.root
     }
 
@@ -63,17 +69,17 @@ class PrizeBreakupFragment: Fragment(){
         mBinding!!.prizeViewRecycler.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         adapter = PrizeBreakUpAdapter(
-            activity!!,
+            requireActivity(),
             prizeBreakupList
         )
         mBinding!!.prizeViewRecycler.adapter = adapter
-        if(!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
-            MyUtils.showToast(activity as AppCompatActivity,"No Internet connection found")
+        if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
+            MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-        if(contestObject!!.winnerCounts==0){
+        if (contestObject!!.winnerCounts!!.toInt() == 0) {
             mBinding!!.winnerGlory.visibility = View.VISIBLE
-        }else {
+        } else {
             mBinding!!.winnerGlory.visibility = View.GONE
             getPrizeBreakup()
         }
@@ -81,16 +87,16 @@ class PrizeBreakupFragment: Fragment(){
     }
 
 
-
     fun getPrizeBreakup() {
         mBinding!!.progressBar.visibility = View.VISIBLE
         var models = RequestModel()
-        models.user_id = MyPreferences.getUserID(activity!!)!!
-        models.token =MyPreferences.getToken(activity!!)!!
-        models.match_id =""+matchObject!!.matchId
-        models.contest_id =""+contestObject!!.id
-        WebServiceClient(activity!!).client.create(IApiMethod::class.java).getPrizeBreakUp(models)
-            .enqueue(object : Callback<UsersPostDBResponse?>{
+        models.user_id = MyPreferences.getUserID(requireActivity())!!
+        models.token = MyPreferences.getToken(requireActivity())!!
+        models.match_id = "" + matchObject!!.matchId
+        models.contest_id = "" + contestObject!!.id
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
+            .getPrizeBreakUp(models)
+            .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
 
                 }
@@ -100,8 +106,8 @@ class PrizeBreakupFragment: Fragment(){
                     response: Response<UsersPostDBResponse?>?
                 ) {
                     var res = response!!.body()
-                    if(res!=null) {
-                        if(isVisible) {
+                    if (res != null) {
+                        if (isVisible) {
                             mBinding!!.progressBar.visibility = View.GONE
                             var responseModel = res.responseObject
                             if (responseModel!!.prizeBreakUpModelsList!!.size > 0) {
@@ -120,10 +126,13 @@ class PrizeBreakupFragment: Fragment(){
     }
 
 
-    inner class PrizeBreakUpAdapter(val context: Context,rangeModels: ArrayList<PrizeBreakUpModels>) :
+    inner class PrizeBreakUpAdapter(
+        val context: Context,
+        rangeModels: ArrayList<PrizeBreakUpModels>
+    ) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         var onItemClick: ((PrizeBreakUpModels) -> Unit)? = null
-        private var matchesListObject =  rangeModels
+        private var matchesListObject = rangeModels
 
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -136,16 +145,15 @@ class PrizeBreakupFragment: Fragment(){
             var objectVal = matchesListObject[viewType]
             val viewHolder: MyMatchViewHolder = parent as MyMatchViewHolder
             viewHolder.rankRange.text = objectVal.rangeName
-            viewHolder.winnerPrize.text = "₹"+objectVal.winnersPrice
+            viewHolder.winnerPrize.text = "₹" + objectVal.winnersPrice
         }
-
 
 
         override fun getItemCount(): Int {
             return matchesListObject.size
         }
 
-        inner  class MyMatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        inner class MyMatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
             val rankRange = itemView.findViewById<TextView>(R.id.rank_range)
             val winnerPrize = itemView.findViewById<TextView>(R.id.winner_rpize)

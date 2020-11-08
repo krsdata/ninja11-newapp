@@ -6,14 +6,12 @@ import ninja.cricks.ui.contest.models.ContestModelLists
 import java.io.Serializable
 
 
-class ContestsParentModels:Serializable,Cloneable {
+class ContestsParentModels : Serializable, Cloneable {
 
-    var contestTitle : String=""
-    var contestSubTitle : String=""
+    var contestTitle: String = ""
+    var contestSubTitle: String = ""
 
     @SerializedName("contests")
     @Expose
-    var allContestsRunning: ArrayList<ContestModelLists> ?=null
-
-
+    var allContestsRunning: ArrayList<ContestModelLists>? = null
 }

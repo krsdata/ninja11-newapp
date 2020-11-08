@@ -124,7 +124,7 @@ class ContestFragment : Fragment() {
         })
     }
 
-    fun registerSpotSizeSelection() {
+    private fun registerSpotSizeSelection() {
 
         mBinding!!.sortBy2spots.setOnClickListener(View.OnClickListener {
 
@@ -258,16 +258,16 @@ class ContestFragment : Fragment() {
         mBinding!!.contestViewRecycler.visibility = View.GONE
         mBinding!!.recyclerBySpotsize.visibility = View.VISIBLE
         filterSpotsListData.clear()
-        var filterValues = ArrayList<ContestModelLists>()
+        val filterValues = ArrayList<ContestModelLists>()
         for (i in 0..allContestListData.size - 1) {
-            var values = allContestListData.get(i).allContestsRunning
+            val values = allContestListData.get(i).allContestsRunning
             if (values != null && values.size > 0) {
 
                 if (isEntryAscending) {
-                    var sortedEntryPrizes = values.sortedBy { it -> it.entryFees }
+                    val sortedEntryPrizes = values.sortedBy { it -> it.entryFees }
                     sortedEntryPrizes.forEach { s -> filterValues.add(s) }
                 } else {
-                    var sortedEntryPrizes = values.sortedByDescending { it -> it.entryFees }
+                    val sortedEntryPrizes = values.sortedByDescending { it -> it.entryFees }
                     sortedEntryPrizes.forEach { s -> filterValues.add(s) }
                 }
 
@@ -283,10 +283,10 @@ class ContestFragment : Fragment() {
         }
         //mBinding!!.recyclerBySpotsize.scrollToPosition(filterSpotsListData!!.size - 1)
         if (isEntryAscending) {
-            var objectPrize = filterValues.sortedBy { it -> it.entryFees }
+            val objectPrize = filterValues.sortedBy { it -> it.entryFees }
             objectPrize.forEach { s -> filterSpotsListData.add(s) }
         } else {
-            var objectPrize = filterValues.sortedByDescending { it -> it.entryFees }
+            val objectPrize = filterValues.sortedByDescending { it -> it.entryFees }
             objectPrize.forEach { s -> filterSpotsListData.add(s) }
         }
         spotSizeFilterAdaptor.notifyDataSetChanged()
@@ -299,10 +299,10 @@ class ContestFragment : Fragment() {
         mBinding!!.recyclerBySpotsize.visibility = View.VISIBLE
         filterSpotsListData.clear()
         for (i in 0..allContestListData.size - 1) {
-            var values = allContestListData.get(i).allContestsRunning
+            val values = allContestListData.get(i).allContestsRunning
             if (values != null && values.size > 0) {
                 for (j in 0..values.size - 1) {
-                    var spotObject = values.get(j)
+                    val spotObject = values.get(j)
                     if (4 == spotSize && spotObject.totalSpots >= 4) {
                         filterSpotsListData.add(spotObject)
                     } else {
@@ -356,17 +356,19 @@ class ContestFragment : Fragment() {
 
     }
 
-    fun getAllContest() {
+    private fun getAllContest() {
         //var userInfo = (activity as PlugSportsApplication).userInformations
         selectAllContest()
         mBinding!!.contestRefresh.isRefreshing = true
         //mBinding!!.filterBar.visibility = View.GONE
-        var models = RequestModel()
+        val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         // models.token =MyPreferences.getToken(activity!!)!!
         models.match_id = "" + matchObject!!.matchId
         models.token = MyPreferences.getToken(requireActivity())!!
-        models.deviceDetails = HardwareInfoManager(activity).collectData()
+        val deviceToken: String? = MyPreferences.getDeviceToken(requireActivity())
+        models.deviceDetails = HardwareInfoManager(activity).collectData(deviceToken!!)
+
         WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getContestByMatch(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
@@ -405,15 +407,13 @@ class ContestFragment : Fragment() {
                             } else {
                                 MyUtils.showToast(
                                     activity!! as AppCompatActivity,
-                                    "No Contest available for this match " + res.toString()
+                                    "No Contest available for this match $res"
                                 )
                             }
                         }
                     updateEmptyViews()
                 }
-
             })
-
     }
 
     fun updateEmptyViews() {

@@ -21,10 +21,8 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import ninja.cricks.MainActivity
-import ninja.cricks.OtpVerifyActivity
-import ninja.cricks.SportsFightApplication
-import ninja.cricks.WebActivity
+import ninja.cricks.*
+import ninja.cricks.databinding.ActivityLoginBinding
 import ninja.cricks.models.ResponseModel
 import ninja.cricks.models.UserInfo
 import ninja.cricks.network.IApiMethod
@@ -38,13 +36,11 @@ import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import ninja.cricks.R
-import ninja.cricks.databinding.ActivityLoginBinding
 
 
 class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
 
-    private var firebaseProvider: String=""
+    private var firebaseProvider: String = ""
     var photoUrl: String = ""
     private var isActivityRequiredResult: Boolean? = false
     val RC_SIGN_IN: Int = 1
@@ -59,7 +55,6 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
     companion object {
         var AUTH_TYPE_GMAIL = "googleAuth"
     }
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -191,14 +186,15 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
             return
         }
         customeProgressDialog.show()
-        var request = RequestModel()
+        val request = RequestModel()
         request.name = name
         request.email = email!!
         request.device_id = notificationToken
         request.user_type = authType
         request.provider_id = firebaseAuth.uid!!
-        request.deviceDetails = HardwareInfoManager(this).collectData()
-        WebServiceClient(this).client.create(IApiMethod::class.java).customerLogin(request).enqueue(this)
+        request.deviceDetails = HardwareInfoManager(this).collectData(notificationToken)
+        WebServiceClient(this).client.create(IApiMethod::class.java).customerLogin(request)
+            .enqueue(this)
 
     }
 
@@ -213,36 +209,44 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
                     if (infoModels != null) {
                         if (TextUtils.isEmpty(responseb.infomodel!!.profileImage)) {
                             //MyPreferences.setProfilePicture(this, photoUrl)
-                            responseb!!.infomodel!!.profileImage = photoUrl
+                            responseb.infomodel!!.profileImage = photoUrl
                         }
                         MyPreferences.setOtpAuthRequired(this, responseb.isOTPRequired)
                         MyPreferences.setToken(this, responseb.token)
 
                         MyPreferences.setUserID(this, "" + responseb.infomodel!!.userId)
-                        (applicationContext as SportsFightApplication).saveUserInformations(responseb.infomodel)
-                        if (TextUtils.isEmpty(infoModels.mobileNumber) || TextUtils.isEmpty(infoModels.userEmail) || TextUtils.isEmpty(
+                        (applicationContext as SportsFightApplication).saveUserInformations(
+                            responseb.infomodel
+                        )
+                        if (TextUtils.isEmpty(infoModels.mobileNumber) || TextUtils.isEmpty(
+                                infoModels.userEmail
+                            ) || TextUtils.isEmpty(
                                 infoModels.fullName
                             )
                         ) {
-                           registerUsers(firebaseAuth.uid)
+                            registerUsers(firebaseAuth.uid)
                         } else
                             if (infoModels.isOtpVerified) {
                                 MyPreferences.setLoginStatus(this@LoginScreenActivity, true)
-                                var intent = Intent(this@LoginScreenActivity, MainActivity::class.java)
+                                var intent =
+                                    Intent(this@LoginScreenActivity, MainActivity::class.java)
                                 setResult(Activity.RESULT_OK)
                                 startActivity(intent)
                                 finish()
                             } else {
-                               sendOTP(firebaseAuth.uid)
+                                sendOTP(firebaseAuth.uid)
                             }
                     } else {
-                        MyUtils.showToast(this@LoginScreenActivity, "Something went wrong, please contact admin")
+                        MyUtils.showToast(
+                            this@LoginScreenActivity,
+                            "Something went wrong, please contact admin"
+                        )
                     }
-                }else {
-                    if(responseb.statusCode==BindingUtils.REUEST_STATUS_CODE_FRAUD){
-                          showDeadLineAlert(responseb.message)
-                    }else {
-                        var infomodel = UserInfo()
+                } else {
+                    if (responseb.statusCode == BindingUtils.REUEST_STATUS_CODE_FRAUD) {
+                        showDeadLineAlert(responseb.message)
+                    } else {
+                        val infomodel = UserInfo()
                         infomodel.userEmail = emailid
                         (applicationContext as SportsFightApplication).saveUserInformations(
                             responseb.infomodel
@@ -260,14 +264,14 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
 
     private fun registerUsers(uid: String?) {
         val intent = Intent(this@LoginScreenActivity, RegisterScreenActivity::class.java)
-        intent.putExtra(OtpVerifyActivity.EXTRA_KEY_PROVIDER_ID,firebaseAuth.uid)
+        intent.putExtra(OtpVerifyActivity.EXTRA_KEY_PROVIDER_ID, firebaseAuth.uid)
         startActivity(intent)
     }
 
     private fun sendOTP(uid: String?) {
         var intent = Intent(this, OtpVerifyActivity::class.java)
-        intent.putExtra(OtpVerifyActivity.EXTRA_KEY_EDIT_MOBILE_NUMBER,true)
-        intent.putExtra(OtpVerifyActivity.EXTRA_KEY_PROVIDER_ID,uid)
+        intent.putExtra(OtpVerifyActivity.EXTRA_KEY_EDIT_MOBILE_NUMBER, true)
+        intent.putExtra(OtpVerifyActivity.EXTRA_KEY_PROVIDER_ID, uid)
         startActivityForResult(intent, RegisterScreenActivity.REQUESTCODE_LOGIN)
     }
 

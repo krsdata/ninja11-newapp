@@ -26,6 +26,7 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import ninja.cricks.utils.BindingUtils;
 import ninja.cricks.R;
@@ -119,8 +120,7 @@ public class NotificationUtils {
 		//inboxStyle.addLine(message);
 		// If the build version is greater than JELLY_BEAN and lower than OREO,
 		// set the notification's priority to PRIORITY_HIGH.
-		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN
-				&& Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
 			mBuilder.setPriority(NotificationCompat.PRIORITY_HIGH);
 		}
 		NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -152,8 +152,7 @@ public class NotificationUtils {
 
 		// If the build version is greater than JELLY_BEAN and lower than OREO,
 		// set the notification's priority to PRIORITY_HIGH.
-		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN
-				&& Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
 			notificationBuilder.setPriority(NotificationCompat.PRIORITY_HIGH);
 		}
 
@@ -198,8 +197,7 @@ public class NotificationUtils {
 			connection.setDoInput(true);
 			connection.connect();
 			InputStream input = connection.getInputStream();
-			Bitmap myBitmap = BitmapFactory.decodeStream(input);
-			return myBitmap;
+			return BitmapFactory.decodeStream(input);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
@@ -274,7 +272,7 @@ public class NotificationUtils {
 	 * @return the time milli sec
 	 */
 	public static long getTimeMilliSec(String timeStamp) {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
 		try {
 			Date date = format.parse(timeStamp);
 			return date.getTime();

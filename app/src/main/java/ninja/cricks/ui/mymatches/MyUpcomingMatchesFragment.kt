@@ -52,22 +52,13 @@ class MyUpcomingMatchesFragment : Fragment() {
             inflater,
             R.layout.fragment_my_upcoming, container, false
         )
-
-        return mBinding!!.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         mBinding!!.recyclerMyUpcoming.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
 
-        //initDummyContent()
 
         adapter = MyMatchesAdapter(requireActivity(), checkinArrayList)
         mBinding!!.recyclerMyUpcoming.adapter = adapter
         adapter.onItemClick = { objects ->
-
-            //MyUtils.logd("MatchesAdapter",objects.country1Name+" Vs "+objects.country1Name)
             val intent = Intent(requireActivity(), ContestActivity::class.java)
             intent.putExtra(ContestActivity.SERIALIZABLE_KEY_UPCOMING_MATCHES, objects)
             startActivity(intent)
@@ -81,6 +72,12 @@ class MyUpcomingMatchesFragment : Fragment() {
         mBinding!!.btnEmptyView.setOnClickListener(View.OnClickListener {
             (activity as MainActivity).viewUpcomingMatches()
         })
+        return mBinding!!.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
     }
 
     override fun onResume() {
@@ -97,43 +94,42 @@ class MyUpcomingMatchesFragment : Fragment() {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-        if (checkinArrayList.size == 0) {
+        //if (checkinArrayList.size == 0) {
             mBinding!!.progressBar.visibility = View.VISIBLE
-        }
+        //}
         mBinding!!.linearEmptyContest.visibility = View.GONE
         val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         models.action_type = "upcoming"
 
 
-        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getMatchHistory(models)
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
+            .getMatchHistory(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-
-                    if (isAdded) {
-                        updateEmptyViews()
+                    if(mBinding!!.progressBar.visibility == View.VISIBLE){
+                        mBinding!!.progressBar.visibility = View.GONE
                     }
+                    updateEmptyViews()
                 }
 
                 override fun onResponse(
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    if (isAdded) {
-                        mBinding!!.progressBar.visibility = View.GONE
-                        val res = response!!.body()
-                        if (res != null) {
-                            val responseModel = res.responseObject
-                            if (responseModel != null) {
-                                if (responseModel.matchdatalist != null && responseModel.matchdatalist!!.size > 0) {
-                                    checkinArrayList.clear()
-                                    checkinArrayList.addAll(responseModel.matchdatalist!!.get(0).upcomingMatchHistory!!)
-                                    adapter.notifyDataSetChanged()
-                                }
+                    mBinding!!.progressBar.visibility = View.GONE
+                    val res = response!!.body()
+                    if (res != null) {
+                        val responseModel = res.responseObject
+                        if (responseModel != null) {
+                            if (responseModel.matchdatalist != null && responseModel.matchdatalist!!.size > 0) {
+                                checkinArrayList.clear()
+                                checkinArrayList.addAll(responseModel.matchdatalist!!.get(0).upcomingMatchHistory!!)
+                                adapter.notifyDataSetChanged()
                             }
                         }
-                        updateEmptyViews()
                     }
+                    updateEmptyViews()
                 }
             })
     }

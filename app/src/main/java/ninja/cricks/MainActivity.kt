@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
 import androidx.databinding.DataBindingUtil
@@ -16,6 +15,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
+import ninja.cricks.databinding.ActivityMainBinding
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
@@ -27,25 +27,26 @@ import ninja.cricks.utils.MyPreferences
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import ninja.cricks.databinding.ActivityMainBinding
 
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var navController: NavController
     private var mBinding: ActivityMainBinding? = null
-    companion object{
 
-        var CHECK_WALLET_ONCE: Boolean?=false
-        var updatedApkUrl: String=""
-        var releaseNote: String=""
-        var CHECK_APK_UPDATE_API :Boolean = false
-        var CHECK_FORCE_UPDATE :Boolean = true
+    companion object {
+
+        var CHECK_WALLET_ONCE: Boolean? = false
+        var updatedApkUrl: String = ""
+        var releaseNote: String = ""
+        var CHECK_APK_UPDATE_API: Boolean = false
+        var CHECK_FORCE_UPDATE: Boolean = true
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this,
+        mBinding = DataBindingUtil.setContentView(
+            this,
             R.layout.activity_main
         )
         userInfo = (application as SportsFightApplication).userInformations
@@ -70,21 +71,24 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         })
         mBinding!!.notificationId.setOnClickListener(View.OnClickListener {
             val intent = Intent(this@MainActivity, NotificationListActivity::class.java)
-            startActivityForResult(intent,MyBalanceActivity.REQUEST_CODE_ADD_MONEY)
+            startActivityForResult(intent, MyBalanceActivity.REQUEST_CODE_ADD_MONEY)
         })
 
         getWalletBalances()
 
-        mBinding!!.profileImage.setOnClickListener(object: View.OnClickListener{
+        Glide.with(this).load(userInfo!!.profileImage)
+            .placeholder(R.drawable.player_blue).into(mBinding!!.profileImage)
+
+        mBinding!!.profileImage.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 val intent = Intent(this@MainActivity, EditProfileActivity::class.java)
-                intent.putExtra(FullScreenImageViewActivity.KEY_IMAGE_URL,userInfo!!.profileImage)
+                intent.putExtra(FullScreenImageViewActivity.KEY_IMAGE_URL, userInfo!!.profileImage)
                 startActivity(intent)
             }
 
         })
 
-      //  viewAllMatches()
+        //  viewAllMatches()
         mBinding!!.navView1.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_home -> {
@@ -100,7 +104,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     mBinding!!.navView1.updateFabPosition2(3)
                 }
             }
-            if(navController.currentDestination!!.id!= item.itemId)
+            if (navController.currentDestination!!.id != item.itemId)
                 navController.navigate(item.itemId)
             false
         }
@@ -131,7 +135,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     override fun onResume() {
         super.onResume()
-        if(userInfo!=null) {
+        if (userInfo != null) {
             Glide.with(this)
                 .load(userInfo!!.profileImage)
                 .placeholder(R.drawable.player_blue)
@@ -212,7 +216,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                             MyPreferences.setRazorPayId(this@MainActivity, responseModel.razorPay)
                             MyPreferences.setShowPaytm(this@MainActivity, responseModel.paytm_show)
                             MyPreferences.setShowGpay(this@MainActivity, responseModel.gpay_show)
-                            MyPreferences.setShowRazorPay(this@MainActivity, responseModel.rozarpay_show)
+                            MyPreferences.setShowRazorPay(
+                                this@MainActivity,
+                                responseModel.rozarpay_show
+                            )
                             (application as SportsFightApplication).saveWalletInformation(
                                 responseModel
                             )

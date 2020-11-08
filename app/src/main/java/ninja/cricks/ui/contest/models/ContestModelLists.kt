@@ -22,11 +22,11 @@ class ContestModelLists :Serializable,Cloneable {
 
     @SerializedName("totalWinningPrize")
     @Expose
-    var totalWinningPrize: Int = 0
+    var totalWinningPrize: String = ""
 
     @SerializedName("entryFees")
     @Expose
-    var entryFees: Int = 0
+    var entryFees: String = ""
 
     @SerializedName("match_status")
     @Expose
@@ -42,15 +42,15 @@ class ContestModelLists :Serializable,Cloneable {
 
     @SerializedName("firstPrice")
     @Expose
-    var firstPrice: Int = 0
+    var firstPrice: String = ""
 
     @SerializedName("winnerPercentage")
     @Expose
-    var winnerPercentage: Int = 0
+    var winnerPercentage: String = ""
 
     @SerializedName("winnerCount")
     @Expose
-    var winnerCounts: Int = 0
+    var winnerCounts: String? = ""
 
     @SerializedName("maxAllowedTeam")
     @Expose
@@ -58,7 +58,7 @@ class ContestModelLists :Serializable,Cloneable {
 
     @SerializedName("usable_bonus")
     @Expose
-    var usableBonus: Int = 0
+    var usableBonus: String = ""
 
     @SerializedName("bonus_contest")
     @Expose
@@ -72,12 +72,7 @@ class ContestModelLists :Serializable,Cloneable {
     @Expose
     var joinedTeams: ArrayList<MyTeamModels>? = null
 
-
-
     public override fun clone(): ContestModelLists {
         return super.clone() as ContestModelLists
     }
-
-
-
 }

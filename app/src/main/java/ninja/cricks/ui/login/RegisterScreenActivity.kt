@@ -41,7 +41,6 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
         val REQUESTCODE_LOGIN: Int = 1005
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         userInfo = (applicationContext as SportsFightApplication).userInformations
@@ -77,7 +76,7 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
     }
 
     private fun bindUI() {
-        binding!!.inputRefferal.visibility = View.VISIBLE
+        //binding!!.inputRefferal.visibility = View.VISIBLE
         if (!TextUtils.isEmpty(userInfo!!.userEmail)) {
             binding!!.editEmail.setText(userInfo!!.userEmail)
             binding!!.editEmail.isEnabled = false
@@ -100,13 +99,9 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
                 val intent = Intent(this@RegisterScreenActivity, WebActivity::class.java)
                 intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_PRIVACY_POLICY)
                 intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_PRIVACY)
-                if (Build.VERSION.SDK_INT > 20) {
-                    val options =
-                        ActivityOptions.makeSceneTransitionAnimation(this@RegisterScreenActivity)
-                    startActivity(intent, options.toBundle())
-                } else {
-                    startActivity(intent)
-                }
+                val options =
+                    ActivityOptions.makeSceneTransitionAnimation(this@RegisterScreenActivity)
+                startActivity(intent, options.toBundle())
             }
 
         })
@@ -155,7 +150,7 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
             return
         }
         customeProgressDialog.show()
-        var request = RequestModel()
+        val request = RequestModel()
 
         request.user_id = userInfo!!.userId.toString()
         request.name = name
@@ -169,7 +164,7 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
         request.team_name = binding!!.editTeamName.text.toString()
         request.device_id = notificationToken
         print(notificationToken)
-        request.deviceDetails = HardwareInfoManager(this).collectData()
+        request.deviceDetails = HardwareInfoManager(this).collectData(notificationToken)
         WebServiceClient(this).client.create(IApiMethod::class.java).customerLogin(request)
             .enqueue(this)
     }

@@ -56,7 +56,7 @@
     <string name="mymatch_live">Live</string>
     <string name="mymatch_completed">Completed</string>
 
-    <string name="downloading">Downloading...</string>
+    <string name="downloading">Downloading&#8230;</string>
     <string name="title_file_download">APK is downloading</string>
     <string name="storage_access_required">Storage access is required to downloading the file.</string>
     <string name="storage_permission_denied">Storage permission request was denied.</string>
@@ -65,7 +65,7 @@
     <string name="facebook_app_id">251742452647735</string>
     <string name="fb_login_protocol_scheme">fb251742452647735</string>
     <string name="file_provider">image_sports_fight</string>
-    <string name="prize_break_up_note">"Note: The actual prize money may be different than the prize money mentioned above if there is a tie for any of the winning positions. As per the goverment regulations,a tax of 31.2% will be deducted if an individual wins more than ₹10,000" </string>
+    <string name="prize_break_up_note">"Note: The actual prize money may be different than the prize money mentioned above if there is a tie for any of the winning positions. As per the government regulations,a tax of 31.2% will be deducted if an individual wins more than ₹10,000" </string>
 
 
     <string-array name="india_states">
@@ -122,4 +122,5 @@
     <string name="warning_somethingwentwront">"Something went wrong, please contact ninja11 team"</string>
     <string name="contact_support_Team">"Contact ninja11 Support Team"</string>
     <string name="label_update">"ninja11 Update"</string>
+    <string name="verify_communication">Verify Communication</string>
 </resources>

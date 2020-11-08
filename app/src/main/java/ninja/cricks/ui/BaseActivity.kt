@@ -51,10 +51,6 @@ import java.io.IOException
 abstract class BaseActivity : AppCompatActivity() {
 
     private lateinit var options: Array<CharSequence>
-
-    /**
-     * Android Q
-     */
     private var imageUri: Uri? = null
 
     private var sizeofImage: Int = 0
@@ -104,9 +100,8 @@ abstract class BaseActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
-
     fun showMatchTimeUpDialog() {
-        var flashbar = Flashbar.Builder(this)
+        val flashbar = Flashbar.Builder(this)
             .gravity(Flashbar.Gravity.BOTTOM)
             .title(getString(R.string.app_name))
             .message("Time Up Editing your team, match went to live.")
@@ -124,14 +119,13 @@ abstract class BaseActivity : AppCompatActivity() {
             .build()
         flashbar.show()
         Handler().postDelayed(Runnable {
-            var intent = Intent(this@BaseActivity, MainActivity::class.java)
+            val intent = Intent(this@BaseActivity, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()
 
         }, 2000L)
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -142,8 +136,7 @@ abstract class BaseActivity : AppCompatActivity() {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     mBitmap = data!!.extras!!.get("data") as Bitmap
                 } else {
-                    mBitmap =
-                        MediaStore.Images.Media.getBitmap(this.contentResolver, image_uri)
+                    mBitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, image_uri)
                 }
                 onBitmapSelected(mBitmap!!)
                 uploadBase64ImageToServer(mBitmap!!)
@@ -152,31 +145,23 @@ abstract class BaseActivity : AppCompatActivity() {
 
                 val selectedImage = data!!.data
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    var source = ImageDecoder.createSource(this.contentResolver, selectedImage!!)
+                    val source = ImageDecoder.createSource(this.contentResolver, selectedImage!!)
                     mBitmap = ImageDecoder.decodeBitmap(source)
-
                     uploadBase64ImageToServer(mBitmap!!)
                 } else {
 
-                    var mImageCaptureUri = data.data
+                    val mImageCaptureUri = data.data
                     var path = getRealPathFromURI(mImageCaptureUri) //from Gallery
-
                     if (path == null) {
                         path = mImageCaptureUri!!.path //from File Manager
                     }
-
                     if (path != null) {
                         mBitmap = modifyOrientation(BitmapFactory.decodeFile(path), path)
                         onBitmapSelected(mBitmap!!)
                         uploadBase64ImageToServer(mBitmap!!)
                     }
-
-
                 }
-
             }
-
-
         }
     }
 
@@ -237,7 +222,7 @@ abstract class BaseActivity : AppCompatActivity() {
         )
     }
 
-    fun getRealPathFromURI(contentUri: Uri?): String? {
+    private fun getRealPathFromURI(contentUri: Uri?): String? {
         val proj = arrayOf(MediaStore.Images.Media.DATA)
         val cursor: Cursor = managedQuery(contentUri, proj, null, null, null) ?: return null
         val column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
@@ -246,9 +231,9 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     private fun uploadBase64ImageToServer(bitmap: Bitmap) {
-        var base64Images = getImageUrl(bitmap)
+        val base64Images = getImageUrl(bitmap)
         if (sizeofImage > 2) {
-            showCommonAlert("Image size cannot be greater than 2MB,  Current is " + sizeofImage + " MB")
+            showCommonAlert("Image size cannot be greater than 2MB,  Current is $sizeofImage MB")
             return
         }
 
@@ -267,30 +252,23 @@ abstract class BaseActivity : AppCompatActivity() {
                 ) {
                     if (!isFinishing) {
                         customeProgressDialog.dismiss()
-                        var res = response!!.body()
+                        val res = response!!.body()
                         if (res != null && res.status) {
-                            var photoUrl = res.image_url
+                            val photoUrl = res.image_url
                             onBitmapSelected(mBitmap!!)
                             onUploadedImageUrl(photoUrl)
-                            Toast.makeText(this@BaseActivity, "" + res.message, Toast.LENGTH_LONG)
-                                .show()
+                            //Toast.makeText(this@BaseActivity, "" + res.message, Toast.LENGTH_LONG).show()
                         } else {
-                            Toast.makeText(this@BaseActivity, "" + res!!.message, Toast.LENGTH_LONG)
-                                .show()
+                            Toast.makeText(this@BaseActivity, "" + res!!.message, Toast.LENGTH_LONG).show()
                         }
                     }
-
                 }
-
             })
-
-
     }
 
     /**
      * Android Q Implementations
      */
-
     private fun setImageUri(): Uri {
         val folder = File("${getExternalFilesDir(Environment.DIRECTORY_DCIM)}")
         folder.mkdirs()
@@ -331,11 +309,11 @@ abstract class BaseActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
-    fun getImageUrl(bitmap: Bitmap): String {
+    private fun getImageUrl(bitmap: Bitmap): String {
         val byteArrayOutputStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
         val bytes = byteArrayOutputStream.toByteArray()
-        var sizeofIamge = bytes.size
+        val sizeofIamge = bytes.size
         setSizeOfImage(sizeofIamge)
         return Base64.encodeToString(bytes, Base64.DEFAULT)
     }
@@ -343,7 +321,6 @@ abstract class BaseActivity : AppCompatActivity() {
     private fun setSizeOfImage(sizeofIamge: Int) {
         this.sizeofImage = (sizeofIamge / 1024) / 1024
     }
-
 
     fun checkAndRequestPermissions(): Boolean {
         val camerapermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
@@ -441,23 +418,23 @@ abstract class BaseActivity : AppCompatActivity() {
         startActivityForResult(intent, PICK_IMAGE_REQUEST_GALLERY)
     }
 
-
     fun updateFireBase() {
         FirebaseInstanceId.getInstance().instanceId
             .addOnSuccessListener { instanceIdResult ->
                 val deviceToken = instanceIdResult.token
                 if (!TextUtils.isEmpty(deviceToken)) {
                     notificationToken = deviceToken
+                    MyPreferences.setDeviceToken(this@BaseActivity, deviceToken)
                 }
 //                    var notid =  FirebaseInstanceId.getInstance()
 //                        .getToken(getString(R.string.gcm_default_sender_id), "FCM")
-                var userId = MyPreferences.getUserID(this@BaseActivity)!!
+                val userId = MyPreferences.getUserID(this@BaseActivity)!!
                 if (!TextUtils.isEmpty(deviceToken) && !TextUtils.isEmpty(userId)) {
-                    var request = RequestModel()
+                    val request = RequestModel()
                     request.user_id = userId
                     request.device_id = deviceToken
                     request.token = MyPreferences.getToken(this@BaseActivity)!!
-                    request.deviceDetails = HardwareInfoManager(this@BaseActivity).collectData()
+                    request.deviceDetails = HardwareInfoManager(this@BaseActivity).collectData(deviceToken)
                     WebServiceClient(this@BaseActivity).client.create(IApiMethod::class.java)
                         .deviceNotification(request)
                         .enqueue(object : Callback<UsersPostDBResponse?> {
@@ -465,23 +442,18 @@ abstract class BaseActivity : AppCompatActivity() {
                                 call: Call<UsersPostDBResponse?>?,
                                 t: Throwable?
                             ) {
-
                             }
 
                             override fun onResponse(
                                 call: Call<UsersPostDBResponse?>?,
                                 response: Response<UsersPostDBResponse?>?
                             ) {
-
                                 MyUtils.logd("deviceId", "Posted successfully")
                             }
-
                         })
                 }
             }
-
     }
-
 
     fun logoutApp(message: String, boolean: Boolean) {
         if (!MyUtils.isConnectedWithInternet(this@BaseActivity)) {
@@ -491,8 +463,7 @@ abstract class BaseActivity : AppCompatActivity() {
         genericAlertDialog(message, boolean)
     }
 
-
-    fun genericAlertDialog(message: String, boolean: Boolean) {
+    private fun genericAlertDialog(message: String, boolean: Boolean) {
         val builder = AlertDialog.Builder(this@BaseActivity)
         //set title for alert dialog
         // builder.setTitle("Warning")
@@ -508,7 +479,7 @@ abstract class BaseActivity : AppCompatActivity() {
         builder.setPositiveButton("OK") { dialogInterface, which ->
 
             customeProgressDialog.show()
-            var request = RequestModel()
+            val request = RequestModel()
             request.user_id = MyPreferences.getUserID(this@BaseActivity)!!
             request.token = MyPreferences.getToken(this@BaseActivity)!!
             WebServiceClient(this@BaseActivity).client.create(IApiMethod::class.java)
@@ -522,7 +493,6 @@ abstract class BaseActivity : AppCompatActivity() {
                         call: Call<UsersPostDBResponse?>?,
                         response: Response<UsersPostDBResponse?>?
                     ) {
-
                         customeProgressDialog.dismiss()
                         MyPreferences.clear(this@BaseActivity)
                         val intent = Intent(
@@ -534,7 +504,6 @@ abstract class BaseActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     }
-
                 })
         }
         // Create the AlertDialog
@@ -546,11 +515,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     protected open fun sizeOf(data: Bitmap): Int {
-        return if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB_MR1) {
-            data.rowBytes * data.height
-        } else {
-            (data.byteCount / 1024) / 1024
-        }
+        return (data.byteCount / 1024) / 1024
     }
 
     abstract fun onBitmapSelected(bitmap: Bitmap)

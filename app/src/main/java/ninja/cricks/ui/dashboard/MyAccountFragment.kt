@@ -94,7 +94,7 @@ class MyAccountFragment : BaseFragment() {
             return
         }
         //mBinding!!.progressBarPlayingHistory.visibility  =View.VISIBLE
-        var models = RequestModel()
+        val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         models.token = MyPreferences.getToken(requireActivity())!!
 
@@ -113,9 +113,9 @@ class MyAccountFragment : BaseFragment() {
                     if(isVisible) {
                         customeProgressDialog!!.dismiss()
                         //mBinding!!.progressBarPlayingHistory.visibility = View.GONE
-                        var res = response!!.body()
+                        val res = response!!.body()
                         if(res!=null) {
-                            var responseModel = res.walletObjects
+                            val responseModel = res.walletObjects
                             if(responseModel!=null) {
                                 (activity!!.applicationContext as SportsFightApplication).saveWalletInformation(responseModel)
                                 initProfile()
@@ -156,7 +156,7 @@ class MyAccountFragment : BaseFragment() {
         })
         walletInfo = (requireActivity().applicationContext as SportsFightApplication).walletInfo
         if(walletInfo!=null){
-            var accountStatus = walletInfo.accountStatus
+            val accountStatus = walletInfo.accountStatus
             if(accountStatus!=null){
                 if(walletInfo.bankAccountVerified==BindingUtils.BANK_DOCUMENTS_STATUS_REJECTED){
                     mBinding!!.btnVerifyAccount.text = "REJECTED"
@@ -182,7 +182,7 @@ class MyAccountFragment : BaseFragment() {
                     mBinding!!.btnVerifyAccount.setBackgroundResource(R.drawable.button_selector_white)
                     mBinding!!.btnVerifyAccount.setTextColor(Color.BLACK)
                     mBinding!!.btnVerifyAccount.setOnClickListener(View.OnClickListener {
-                        gotoDocumentsListActivity()
+                        //gotoDocumentsListActivity()
                     })
                 }else {
                     mBinding!!.btnVerifyAccount.setOnClickListener(View.OnClickListener {

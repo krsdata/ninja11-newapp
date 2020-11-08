@@ -1,4 +1,5 @@
 package ninja.cricks.network
+
 import com.google.gson.JsonObject
 import ninja.cricks.models.DocumentsModel
 import ninja.cricks.models.ResponseModel
@@ -91,7 +92,7 @@ interface IApiMethod {
     @Headers("Content-Type: application/json")
     @POST("api/v2/apkUpdate")
     fun apkUpdate(@Body request: RequestModel): Call<UsersPostDBResponse>
-    
+
     @Headers("Content-Type: application/json")
     @POST("paytm/generateChecksum.php")
     fun getPaytmChecksum(@Body request: RequestPaytmModel): Call<ResponseModel>
@@ -106,7 +107,11 @@ interface IApiMethod {
 
     @FormUrlEncoded
     @POST("api/v2/uploadbase64Image")
-    fun uploadImage(@Field("image_bytes") imageBytes: String,@Field("user_id") userid: String,@Field("documents_type") documentsType: String): Call<ResponseModel>
+    fun uploadImage(
+        @Field("image_bytes") imageBytes: String,
+        @Field("user_id") userid: String,
+        @Field("documents_type") documentsType: String
+    ): Call<ResponseModel>
 
     @Headers("Content-Type: application/json")
     @POST("api/v2/saveDocuments")
@@ -171,4 +176,9 @@ interface IApiMethod {
     @Headers("Content-Type: application/json")
     @POST("api/v2/eventLog")
     fun sendEventLogs(@Body request: RequestModel): Call<UsersPostDBResponse>
+
+
+    @Headers("Content-Type: application/json")
+    @POST("api/v2/saveAllDocuments")
+    fun saveAllDocuments(@Body request: DocumentsModel): Call<ResponseModel>
 }

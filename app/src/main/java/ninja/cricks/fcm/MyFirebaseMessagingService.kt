@@ -20,7 +20,7 @@ import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
-import org.json.JSONObject
+import ninja.cricks.R
 import ninja.cricks.SplashScreenActivity
 import ninja.cricks.UpdateApplicationActivity
 import ninja.cricks.network.IApiMethod
@@ -29,10 +29,10 @@ import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.home.models.UsersPostDBResponse
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import ninja.cricks.R
 import java.net.URL
 
 
@@ -41,23 +41,29 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private val NOTIFICATION_ID = 1000
     private val FCM_TAG = "MyFirebaseToken"
     private var notificationUtils: NotificationUtils? = null
-    val KEY_ACTION = "action"
-    val KEY_TITLE = "title"
-    val KEY_MESSAGE = "message"
-    val KEY_UPDATE_APK = "apk_update_url"
-    val KEY_RELEASE_NOTE = "release_note"
+    private val KEY_ACTION = "action"
+    private val KEY_TITLE = "title"
+    private val KEY_MESSAGE = "message"
+    private val KEY_UPDATE_APK = "apk_update_url"
+    private val KEY_RELEASE_NOTE = "release_note"
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
         Log.i(FCM_TAG, token)
-        var userId = MyPreferences.getUserID(applicationContext)!!
-        var notid = FirebaseInstanceId.getInstance().getToken(getString(R.string.gcm_default_sender_id), "FCM")
-        if(!TextUtils.isEmpty(notid) && !TextUtils.isEmpty(userId)){
-            var request = RequestModel()
-            request.user_id =userId
-            request.device_id =notid!!
-            request.deviceDetails = HardwareInfoManager(this).collectData()
-            WebServiceClient(applicationContext).client.create(IApiMethod::class.java).deviceNotification(request)
+        val userId = MyPreferences.getUserID(applicationContext)!!
+        val notid = FirebaseInstanceId.getInstance()
+            .getToken(getString(R.string.gcm_default_sender_id), "FCM")
+
+        MyPreferences.setDeviceToken(this, token)
+
+        if (!TextUtils.isEmpty(notid) && !TextUtils.isEmpty(userId)) {
+            val request = RequestModel()
+            request.user_id = userId
+            request.device_id = token
+            val deviceToken: String? = MyPreferences.getDeviceToken(this)
+            request.deviceDetails = HardwareInfoManager(this).collectData(deviceToken!!)
+            WebServiceClient(applicationContext).client.create(IApiMethod::class.java)
+                .deviceNotification(request)
                 .enqueue(object : Callback<UsersPostDBResponse?> {
                     override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
 
@@ -70,23 +76,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
 
                     }
-
                 })
         }
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
-
-
-
         remoteMessage.let { message ->
-
-
-            // TODO(developer): Handle FCM messages here.
             // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
-            MyUtils.logd(FCM_TAG,"From: " + remoteMessage.from)
-            if(applicationContext!=null) {
+            MyUtils.logd(FCM_TAG, "From: " + remoteMessage.from)
+            if (applicationContext != null) {
                 if (remoteMessage.data.size > 0) {
                     Log.e(
                         FCM_TAG,
@@ -100,8 +99,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                         var action = ""
                         var title = ""
                         var message = ""
-                        var url = URL("https://cdn.britannica.com/63/211663-050-A674D74C/Jonny-Bairstow-batting-semifinal-match-England-Australia-2019.jpg")
-                        var image = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+                        val url =
+                            URL("https://cdn.britannica.com/63/211663-050-A674D74C/Jonny-Bairstow-batting-semifinal-match-England-Australia-2019.jpg")
+                        var image =
+                            BitmapFactory.decodeStream(url.openConnection().getInputStream())
 
                         if (json.has(KEY_ACTION)) {
                             action = json.getString(KEY_ACTION)
@@ -119,30 +120,30 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                             } catch (e: java.lang.Exception) {
                             }
 
-                            when(action){
+                            when (action) {
                                 "notify" ->
                                     notifyUsers(applicationContext, title, message)
                                 //    sendNotification(message,image)
-                                "logout"->
+                                "logout" ->
                                     MyPreferences.clear(applicationContext)
-                                "update"->
-                                    updateApplicationRequired(applicationContext, title, message,json.getString(KEY_UPDATE_APK),json.getString(KEY_RELEASE_NOTE))
-
+                                "update" ->
+                                    updateApplicationRequired(
+                                        applicationContext,
+                                        title,
+                                        message,
+                                        json.getString(KEY_UPDATE_APK),
+                                        json.getString(KEY_RELEASE_NOTE)
+                                    )
                             }
                         }
-
-
                     } catch (e: Exception) {
                         Log.e(
                             FCM_TAG, "Exception: " + e.message
                         )
                     }
-
                 }
             }
-
         }
-
     }
 
     private fun sendNotification(
@@ -171,17 +172,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
     }
-    fun notifyUsers(context: Context, title : String, message: String) {
+
+    private fun notifyUsers(context: Context, title: String, message: String) {
         val powerManager =
             context.getSystemService(Context.POWER_SERVICE) as PowerManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            if (!powerManager.isInteractive) {
-                return
-            }
-        } else {
-            if (!powerManager.isScreenOn) {
-                return
-            }
+        if (!powerManager.isInteractive) {
+            return
         }
         val intent: Intent = getIntentNotify()!!
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY)
@@ -232,7 +228,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 
-
     private fun getIntentNotify(): Intent? {
         val intent = Intent(
             applicationContext,
@@ -243,9 +238,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         return intent
     }
 
-
-
-    fun updateApplicationRequired(
+    private fun updateApplicationRequired(
         context: Context,
         title: String,
         messagedd: String,
@@ -254,16 +247,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     ) {
         val powerManager =
             context.getSystemService(Context.POWER_SERVICE) as PowerManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-            if (!powerManager.isInteractive) {
-                return
-            }
-        } else {
-            if (!powerManager.isScreenOn) {
-                return
-            }
+        if (!powerManager.isInteractive) {
+            return
         }
-        val intent: Intent = getIntentUpdateActvity(apkupdateurl,releasenote)!!
+        val intent: Intent = getIntentUpdateActvity(apkupdateurl, releasenote)!!
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         val stackBuilder =
@@ -310,14 +297,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 
-
     private fun getIntentUpdateActvity(apkupdateurl: String, releasenote: String): Intent? {
         val intent = Intent(
             applicationContext,
             UpdateApplicationActivity::class.java
         )
-        intent.putExtra(UpdateApplicationActivity.REQUEST_CODE_APK_UPDATE,apkupdateurl)
-        intent.putExtra(UpdateApplicationActivity.REQUEST_RELEASE_NOTE,releasenote)
+        intent.putExtra(UpdateApplicationActivity.REQUEST_CODE_APK_UPDATE, apkupdateurl)
+        intent.putExtra(UpdateApplicationActivity.REQUEST_RELEASE_NOTE, releasenote)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         return intent

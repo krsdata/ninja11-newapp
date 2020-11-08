@@ -154,12 +154,13 @@ class MoreContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEv
     fun getAllContest() {
         //var userInfo = (activity as PlugSportsApplication).userInformations
         mBinding!!.mycontestRefresh.isRefreshing = true
-        var models = RequestModel()
+        val models = RequestModel()
         models.user_id = MyPreferences.getUserID(this@MoreContestActivity)!!
         // models.token =MyPreferences.getToken(requireActivity())!!
         models.match_id = "" + matchObject!!.matchId
         models.token = MyPreferences.getToken(this@MoreContestActivity)!!
-        models.deviceDetails = HardwareInfoManager(this@MoreContestActivity).collectData()
+        val deviceToken: String? = MyPreferences.getDeviceToken(this@MoreContestActivity)
+        models.deviceDetails = HardwareInfoManager(this@MoreContestActivity).collectData(deviceToken!!)
 
         WebServiceClient(this@MoreContestActivity).client.create(IApiMethod::class.java)
             .getContestByMatch(models)
@@ -174,10 +175,10 @@ class MoreContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEv
                 ) {
 
                     mBinding!!.mycontestRefresh.isRefreshing = false
-                    var res = response!!.body()
+                    val res = response!!.body()
                     if (res != null) {
                         BindingUtils.currentTimeStamp = res.systemTime
-                        var responseModel = res.responseObject
+                        val responseModel = res.responseObject
                         if (responseModel!!.matchContestlist != null && responseModel.matchContestlist!!.size > 0) {
 //                            checkinArrayList.clear()
 //                            checkinArrayList.addAll(responseModel.matchContestlist!!)
@@ -195,9 +196,7 @@ class MoreContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEv
                         }
                     }
                 }
-
             })
-
     }
 
     override fun onBitmapSelected(bitmap: Bitmap) {
@@ -220,8 +219,8 @@ class MoreContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEv
         val adapter = ViewPagerAdapter(supportFragmentManager)
         viewPager.removeAllViews()
         for (i in 0..allContestList!!.size - 1) {
-            var clobject = allContestList!!.get(i)
-            var bundle = Bundle()
+            val clobject = allContestList!!.get(i)
+            val bundle = Bundle()
             bundle.putSerializable(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT, matchObject)
             bundle.putSerializable(MoreContestFragment.CONTEST_LIST, clobject.allContestsRunning)
             adapter.addFragment(
@@ -285,7 +284,7 @@ class MoreContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEv
 
     override fun onContestJoinning(objects: ContestModelLists, position: Int) {
         customeProgressDialog.show()
-        var models = RequestModel()
+        val models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
         //  models.token =MyPreferences.getToken(this)!!
         models.match_id = "" + matchObject!!.matchId
@@ -355,17 +354,12 @@ class MoreContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEv
                                     this@MoreContestActivity,
                                     res.message,
                                     Toast.LENGTH_LONG
-                                )
-                                    .show()
+                                ).show()
                             }
                         }
                     }
-
                 }
-
             })
-
-
     }
 
     override fun onShareContest(objects: ContestModelLists) {

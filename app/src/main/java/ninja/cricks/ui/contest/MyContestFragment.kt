@@ -149,7 +149,7 @@ class MyContestFragment : Fragment() {
         }
     }
 
-    fun getMyJoinedContest() {
+    private fun getMyJoinedContest() {
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
@@ -191,9 +191,7 @@ class MyContestFragment : Fragment() {
                     }
                     updateEmptyViews()
                 }
-
             })
-
     }
 
     fun updateEmptyViews() {
@@ -203,7 +201,6 @@ class MyContestFragment : Fragment() {
             mBinding!!.linearEmptyContest.visibility = View.GONE
         }
     }
-
 
     inner class MyContestAdapter(
         val context: Activity,
@@ -215,16 +212,16 @@ class MyContestFragment : Fragment() {
 
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            var view = LayoutInflater.from(parent.context)
+            val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.mycontest_rows, parent, false)
             return MyMatchViewHolder(view)
         }
 
         override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
-            var objectVal = matchesListObject[viewType]
+            val objectVal = matchesListObject[viewType]
             val viewHolder: MyMatchViewHolder = parent as MyMatchViewHolder
-            viewHolder.contestPrizePool.text = String.format("₹%d", objectVal.totalWinningPrize)
-            viewHolder.contestEntryPrize.text = String.format("%d", objectVal.entryFees)
+            viewHolder.contestPrizePool.text = String.format("₹%s", objectVal.totalWinningPrize)
+            viewHolder.contestEntryPrize.text = String.format("%s", objectVal.entryFees)
             if (objectVal.isContestCancelled) {
                 viewHolder.contestInfo.text = "Cancelled"
                 viewHolder.contestInfo.textSize = 18.0f
@@ -269,7 +266,7 @@ class MyContestFragment : Fragment() {
                 viewHolder.progressLinear?.visibility = View.GONE
             }
             //viewHolder.maxAllowedTeam?.text = String.format("%s %d %s","Upto",objectVal.winnerPercentage,"teams")
-            viewHolder.firstPrize?.text = String.format("%s%d", "₹", objectVal.firstPrice)
+            viewHolder.firstPrize?.text = String.format("%s%s", "₹", objectVal.firstPrice)
 
 
             if (objectVal.joinedTeams != null && objectVal.joinedTeams!!.size > 0) {
@@ -281,7 +278,7 @@ class MyContestFragment : Fragment() {
                 )
                 viewHolder.recyclerTeamList.addItemDecoration(dividerItemDecoration)
 
-                var adapterJoinTeamAapter =
+                val adapterJoinTeamAapter =
                     MyContestJoinedTeamAdapter(activity!!, objectVal.joinedTeams!!)
                 viewHolder.recyclerTeamList.adapter = adapterJoinTeamAapter
 
@@ -320,13 +317,8 @@ class MyContestFragment : Fragment() {
             val contestCancellation = itemView.findViewById<ImageView>(R.id.contest_cancellation)
             val firstPrize = itemView.findViewById<TextView>(R.id.first_prize)
             val recyclerTeamList = itemView.findViewById<RecyclerView>(R.id.recycler_team_list)
-
-
         }
-
-
     }
-
 
     inner class MyContestJoinedTeamAdapter(
         val context: Activity,
@@ -338,13 +330,13 @@ class MyContestFragment : Fragment() {
 
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            var view = LayoutInflater.from(parent.context)
+            val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.mycontest_rows_teams, parent, false)
             return MyMatchViewHolder(view)
         }
 
         override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
-            var objectVal = matchesListObject[viewType]
+            val objectVal = matchesListObject[viewType]
             val viewHolder: MyMatchViewHolder = parent as MyMatchViewHolder
             viewHolder.txtTeamName.text = objectVal.teamName
 //            if(!TextUtils.isEmpty(objectVal.teamWonStatus)) {
@@ -369,7 +361,7 @@ class MyContestFragment : Fragment() {
 ////            }
 
             if (!TextUtils.isEmpty(objectVal.teamWonStatus)) {
-                var prize = objectVal.teamWonStatus!!.toDouble()
+                val prize = objectVal.teamWonStatus!!.toDouble()
                 if (prize > 0) {
                     if (objectMatches!!.status == BindingUtils.MATCH_STATUS_LIVE) {
                         viewHolder.teamWonStatus.text = String.format(
@@ -390,8 +382,6 @@ class MyContestFragment : Fragment() {
             }
             viewHolder.teamPoints.text = objectVal.teamPoints
             viewHolder.teamRanks.text = "#" + objectVal.teamRanks
-
-
         }
 
         override fun getItemCount(): Int {
@@ -409,12 +399,8 @@ class MyContestFragment : Fragment() {
             val teamWonStatus = itemView.findViewById<TextView>(R.id.team_won_status)
             val teamPoints = itemView.findViewById<TextView>(R.id.team_points)
             val teamRanks = itemView.findViewById<TextView>(R.id.team_ranks)
-
         }
-
-
     }
-
 
     fun getPoints(teamId: Int) {
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
@@ -422,7 +408,7 @@ class MyContestFragment : Fragment() {
             return
         }
         customeProgressDialog.show()
-        var models = RequestModel()
+        val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         // models.token =MyPreferences.getToken(activity!!)!!
         models.team_id = teamId
@@ -438,26 +424,26 @@ class MyContestFragment : Fragment() {
                     response: Response<UsersPostDBResponse?>?
                 ) {
                     customeProgressDialog.dismiss()
-                    var res = response!!.body()
+                    val res = response!!.body()
                     if (res != null) {
                         var totalPoints = res.totalPoints
-                        var responseModel = res.responseObject
+                        val responseModel = res.responseObject
                         if (responseModel != null) {
-                            var playerPointsList = responseModel.playerPointsList
-                            var hasmapPlayers: HashMap<String, ArrayList<PlayersInfoModel>> =
+                            val playerPointsList = responseModel.playerPointsList
+                            val hasmapPlayers: HashMap<String, ArrayList<PlayersInfoModel>> =
                                 HashMap<String, ArrayList<PlayersInfoModel>>()
 
-                            var wktKeeperList: ArrayList<PlayersInfoModel> =
+                            val wktKeeperList: ArrayList<PlayersInfoModel> =
                                 ArrayList<PlayersInfoModel>()
-                            var batsManList: ArrayList<PlayersInfoModel> =
+                            val batsManList: ArrayList<PlayersInfoModel> =
                                 ArrayList<PlayersInfoModel>()
-                            var allRounderList: ArrayList<PlayersInfoModel> =
+                            val allRounderList: ArrayList<PlayersInfoModel> =
                                 ArrayList<PlayersInfoModel>()
-                            var allbowlerList: ArrayList<PlayersInfoModel> =
+                            val allbowlerList: ArrayList<PlayersInfoModel> =
                                 ArrayList<PlayersInfoModel>()
 
                             for (x in 0..playerPointsList!!.size - 1) {
-                                var plyObj = playerPointsList.get(x)
+                                val plyObj = playerPointsList.get(x)
                                 if (plyObj.playerRole.equals("wk")) {
                                     wktKeeperList.add(plyObj)
                                 } else if (plyObj.playerRole.equals("bat")) {

@@ -29,28 +29,45 @@ class ContestListAdapter(
     private var matchesListObject = contestModelList
 
     var matchObject = matchObject
+    val TYPE_IPL_FINAL: Int = 1
+    val TYPE_NORMAL: Int = 100
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.contest_rows_inner, parent, false)
-        return DataViewHolder(view)
+    override fun getItemViewType(position: Int): Int {
+        if (matchesListObject[position].totalWinningPrize.toInt() % 20000 == 0) {
+            return TYPE_IPL_FINAL
+        } else {
+            return TYPE_NORMAL
+        }
     }
 
-    override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
-        val objectVal = matchesListObject[viewType]
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        if (viewType == TYPE_NORMAL) {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.contest_rows_inner, parent, false)
+            return DataViewHolder(view)
+        } else {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.contest_rows_ipl_final, parent, false)
+            return DataViewHolder(view)
+        }
+    }
+
+    override fun onBindViewHolder(parent: RecyclerView.ViewHolder, position: Int) {
+        val objectVal = matchesListObject[position]
         val viewHolder: DataViewHolder = parent as DataViewHolder
-        viewHolder.contestPrizePool?.text = String.format("%s%d", "₹", objectVal.totalWinningPrize)
-        if (objectVal.entryFees == 0 && objectVal.winnerCounts > 0) {
+        viewHolder.contestPrizePool?.text = String.format("%s%s", "₹", objectVal.totalWinningPrize)
+
+        if (objectVal.entryFees.toInt() == 0 && objectVal.winnerCounts!!.toInt() > 0) {
             viewHolder.contestEntryPrize?.text = "Free"
             viewHolder.winningPercentage?.text = "" + objectVal.winnerCounts
-        } else if (objectVal.entryFees == 0 && objectVal.winnerCounts == 0) {
+        } else if (objectVal.entryFees.toInt() == 0 && objectVal.winnerCounts!!.toInt() == 0) {
             viewHolder.contestEntryPrize?.text = "Join"
             viewHolder.winningPercentage?.text = "Practice"
         } else {
-            viewHolder.contestEntryPrize?.text = String.format("%s%d", "₹", objectVal.entryFees)
+            viewHolder.contestEntryPrize?.text = String.format("%s%s", "₹", objectVal.entryFees)
             viewHolder.winningPercentage?.text = "" + objectVal.winnerCounts
         }
-        viewHolder.firstPrize?.text = String.format("%s%d", "₹", objectVal.firstPrice)
+        viewHolder.firstPrize?.text = String.format("%s%s", "₹", objectVal.firstPrice)
         //String.format("%d%s",objectVal.winnerPercentage,"%")
         //viewHolder.maxAllowedTeam?.text = String.format("%s %d %s","Upto",objectVal.maxAllowedTeam,"teams")
 
@@ -66,34 +83,56 @@ class ContestListAdapter(
             // viewHolder.contestMultiplayer.text =  ""+objectVal.maxAllowedTeam
             // viewHolder.linearMulti.visibility = View.GONE
         }
-        if (objectVal.usableBonus == 0) {
+        if (objectVal.usableBonus.toInt() == 0) {
             viewHolder.linearBonus?.visibility = View.GONE
         } else {
             viewHolder.linearBonus?.visibility = View.VISIBLE
-            viewHolder.contestBonus?.text = String.format("%d%s", objectVal.usableBonus, "%")
+            viewHolder.contestBonus?.text = String.format("%s%s", objectVal.usableBonus, "%")
         }
 
-        if (objectVal.totalSpots == 0) {
-            viewHolder.contestProgress.max =
-                objectVal.filledSpots + BindingUtils.UNLIMITED_SPOT_MARGIN
-            viewHolder.contestProgress.progress = objectVal.filledSpots
-            viewHolder.totalSpot?.text = String.format("unlimited spots")
-            viewHolder.totalSpotLeft?.text = String.format("%d spot filled", objectVal.filledSpots)
-        } else {
-            viewHolder.contestProgress.max = objectVal.totalSpots
-            viewHolder.contestProgress.progress = objectVal.filledSpots
-            if (objectVal.totalSpots == objectVal.filledSpots) {
-                viewHolder.totalSpot?.text = "Contest full"
-                viewHolder.totalSpot?.textSize = 18.0f
-                viewHolder.totalSpotLeft?.text = ""
+        if(getItemViewType(position) == TYPE_NORMAL) {
+            if (objectVal.totalSpots == 0) {
+                viewHolder.contestProgress.max =
+                    objectVal.filledSpots + BindingUtils.UNLIMITED_SPOT_MARGIN
+                viewHolder.contestProgress.progress = objectVal.filledSpots
+                viewHolder.totalSpot?.text = String.format("unlimited spots")
+                viewHolder.totalSpotLeft?.text = String.format("%d spot filled", objectVal.filledSpots)
             } else {
-                viewHolder.totalSpot?.text = String.format("%d spots", objectVal.totalSpots)
-                viewHolder.totalSpotLeft?.text =
-                    String.format("%d spot left", objectVal.totalSpots - objectVal.filledSpots)
+                viewHolder.contestProgress.max = objectVal.totalSpots
+                viewHolder.contestProgress.progress = objectVal.filledSpots
+                if (objectVal.totalSpots == objectVal.filledSpots) {
+                    viewHolder.totalSpot?.text = "Contest full"
+                    viewHolder.totalSpot?.textSize = 18.0f
+                    viewHolder.totalSpotLeft?.text = ""
+                } else {
+                    viewHolder.totalSpot?.text = String.format("%d spots", objectVal.totalSpots)
+                    viewHolder.totalSpotLeft?.text =
+                        String.format("%d  spot left", objectVal.totalSpots - objectVal.filledSpots)
+                }
+            }
+        } else {
+            if (objectVal.totalSpots == 0) {
+                viewHolder.contestProgress.max =
+                    objectVal.filledSpots + BindingUtils.UNLIMITED_SPOT_MARGIN
+                viewHolder.contestProgress.progress = objectVal.filledSpots
+                viewHolder.totalSpot?.text = String.format("unlimited spots")
+                viewHolder.totalSpotLeft?.text = String.format("%d", objectVal.filledSpots)
+            } else {
+                viewHolder.contestProgress.max = objectVal.totalSpots
+                viewHolder.contestProgress.progress = objectVal.filledSpots
+                if (objectVal.totalSpots == objectVal.filledSpots) {
+                    viewHolder.totalSpot?.text = "Contest full"
+                    viewHolder.totalSpot?.textSize = 18.0f
+                    viewHolder.totalSpotLeft?.text = ""
+                } else {
+                    viewHolder.totalSpot?.text = String.format("%d", objectVal.totalSpots)
+                    viewHolder.totalSpotLeft?.text =
+                        String.format("%d", objectVal.filledSpots)
+                }
             }
         }
-        // viewHolder?.cardBackround?.setBackgroundColor(colorCode)
 
+        // viewHolder?.cardBackround?.setBackgroundColor(colorCode)
         viewHolder.linearContestViews?.setOnClickListener(View.OnClickListener {
             val intent = Intent(context, LeadersBoardActivity::class.java)
             intent.putExtra(LeadersBoardActivity.SERIALIZABLE_MATCH_KEY, matchObject)
@@ -112,7 +151,7 @@ class ContestListAdapter(
 
         //if(matchObject.status==1) {
         viewHolder.contestEntryPrize?.setOnClickListener(View.OnClickListener {
-            listener!!.onContestJoinning(objectVal, viewType)
+            listener!!.onContestJoinning(objectVal, position)
 
         })
 //        }else {
