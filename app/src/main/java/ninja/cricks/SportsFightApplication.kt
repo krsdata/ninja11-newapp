@@ -9,6 +9,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import io.branch.referral.Branch
 import ninja.cricks.models.MatchesModels
 import ninja.cricks.models.TransactionModel
 import ninja.cricks.models.UserInfo
@@ -37,7 +38,10 @@ class SportsFightApplication : MultiDexApplication() {
         EmojiCompat.init(config)
 
         FirebaseApp.initializeApp(this)
+        Branch.getAutoInstance(this)
+
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
+
     }
 
     fun saveUserInformations(value: UserInfo?) {

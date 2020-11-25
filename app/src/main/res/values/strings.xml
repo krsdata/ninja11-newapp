@@ -110,17 +110,17 @@
     <string name="gcm_default_sender_id">"701940049916"</string>
     <string name="razorpaythemecolor">"#0172ac"</string>
     <string name="razorpay_key">rzp_live_SiMilNQfyJNzJe</string>
-    <string name="label_login_agree">By creating an account or logging in, you agree to ninja11</string>
-    <string name="label_policy">READ ninja11 Policies</string>
-    <string name="label_acceptance1">By joining this,you accept ninja11 </string>
+    <string name="label_login_agree">By creating an account or logging in, you agree to Ninja11</string>
+    <string name="label_policy">READ Ninja11 Policies</string>
+    <string name="label_acceptance1">By joining this,you accept Ninja11 </string>
     <string name="label_acceptance2">and confirm that you are not a resident of
-                Andhra Pradesh,assam, Odisha, Telangana, nagaland and Sikkim. I also agree to be contancted by ninja11 and their partner</string>
-    <string name="label_document_safe">Your documents are safe with ninja11.in, we do not share this documents with anyone else nor we disclose the personal identifications.</string>
-    <string name="label_register_on_sf">"Register on ninja11 application with referral code "</string>
+                Andhra Pradesh,assam, Odisha, Telangana, nagaland and Sikkim. I also agree to be contancted by Ninja11 and their partner</string>
+    <string name="label_document_safe">Your documents are safe with Ninja11.in, we do not share this documents with anyone else nor we disclose the personal identifications.</string>
+    <string name="label_register_on_sf">"Register on Ninja11 application with referral code "</string>
     <string name="label_supportteam">"Ninja11 Support Team"</string>
-    <string name="warning_mobilenumber">"Please enter valid mobile number, to authenticate with ninja11 system"</string>
-    <string name="warning_somethingwentwront">"Something went wrong, please contact ninja11 team"</string>
-    <string name="contact_support_Team">"Contact ninja11 Support Team"</string>
-    <string name="label_update">"ninja11 Update"</string>
+    <string name="warning_mobilenumber">"Please enter valid mobile number, to authenticate with Ninja11 system"</string>
+    <string name="warning_somethingwentwront">"Something went wrong, please contact Ninja11 team"</string>
+    <string name="contact_support_Team">"Contact Ninja11 Support Team"</string>
+    <string name="label_update">"Ninja11 Update"</string>
     <string name="verify_communication">Verify Communication</string>
 </resources>

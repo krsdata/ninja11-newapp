@@ -2,13 +2,13 @@ package ninja.cricks
 
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.transition.Slide
@@ -18,24 +18,43 @@ import android.view.View
 import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import io.branch.indexing.BranchUniversalObject
+import io.branch.referral.Branch
+import io.branch.referral.Branch.BranchLinkCreateListener
+import io.branch.referral.BranchError
+import io.branch.referral.util.LinkProperties
+import io.branch.referral.util.ShareSheetStyle
+import ninja.cricks.databinding.InviteFriendsBinding
 import ninja.cricks.models.UserInfo
 import ninja.cricks.utils.BindingUtils
-import ninja.cricks.databinding.InviteFriendsBinding
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
+import java.util.*
 
 class InviteFriendsActivity : AppCompatActivity() {
 
-    var userInfo: UserInfo?=null
+    var userInfo: UserInfo? = null
 
     private var mBinding: InviteFriendsBinding? = null
+    var url: String? = null
+    var lp: LinkProperties? = null
+    var buo: BranchUniversalObject? = null
+    var shareSheetStyle: ShareSheetStyle? = null
+    var mContext: Context? = null
+
+    var TAG: String = InviteFriendsActivity::class.java.simpleName
+
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.invite_friends)
-        mBinding = DataBindingUtil.setContentView(this,
+        mBinding = DataBindingUtil.setContentView(
+            this,
             R.layout.invite_friends
         )
+
+        mContext = this
+
         mBinding!!.onRefernEarn = OnClickListners()
 
         mBinding!!.toolbar.title = "Refer & Earn"
@@ -46,15 +65,15 @@ class InviteFriendsActivity : AppCompatActivity() {
             finish()
         })
 
-         userInfo = (application as SportsFightApplication).userInformations
+        userInfo = (application as SportsFightApplication).userInformations
         //findViewById<TextView>(R.id.invitecode).setText("Your Referral Code is "+userInfo.referalCode)
 
-        mBinding!!.rereralCode.text = ""+userInfo!!.referalCode
+        mBinding!!.rereralCode.text = "" + userInfo!!.referalCode
         mBinding!!.moreOptions.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 val msgText: String = ("" +
                         getString(R.string.label_register_on_sf) +
-                        "*"+userInfo!!.referalCode+"*"+
+                        "*" + userInfo!!.referalCode + "*" +
                         " and get Rs 100 Bonus on Joining.\n" +
                         " Click on " +
                         BindingUtils.BILTY_APK_LINK)
@@ -64,32 +83,67 @@ class InviteFriendsActivity : AppCompatActivity() {
                 shareIntent.type = "text/plain"
 
 
-                startActivity(Intent.createChooser(shareIntent,"Reffer and Earn Rs 100"))
-
+                startActivity(Intent.createChooser(shareIntent, "Reffer and Earn Rs 100"))
             }
-
-
         })
-       // setAnimation()
-    }
 
-    fun  setAnimation() {
-        if (Build.VERSION.SDK_INT > 20) {
-            var slide = Slide()
-            slide.slideEdge = Gravity.LEFT
-            slide.duration = 400
-            slide.interpolator = DecelerateInterpolator()
-            window.exitTransition = slide
-            window.enterTransition = slide
+        buo = BranchUniversalObject()
+            .setTitle("Ninja11")
+            .setContentDescription("Cricket Fantasy App")
+            .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
+            .setLocalIndexMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
+
+        lp = LinkProperties()
+            .setFeature("sharing")
+            .setCampaign("launch")
+            .setStage("new user")
+            .addControlParameter(
+                "refer_code",
+                userInfo!!.referalCode
+            )
+            .addControlParameter(
+                "custom_random",
+                java.lang.Long.toString(Calendar.getInstance().timeInMillis)
+            )
+
+        buo!!.generateShortUrl(mContext!!, lp!!,
+            BranchLinkCreateListener { url, error ->
+                if (error == null) {
+                    //Log.e(TAG, "got my Branch link to share  =====> " + url);
+                    this@InviteFriendsActivity.url = url
+                }
+            })
+
+        shareSheetStyle = ShareSheetStyle(
+            mContext!!, "Ninja11",
+            "Welcome to Ninja11. Register on Ninja11 application with this link.\n\nUse my referral code \"" + userInfo!!.referalCode +
+                    "\" and get extra Rs. 100 Bonus on Joining.".trimIndent()
+        ) //.setCopyUrlStyle(getResources().getDrawable(android.R.drawable.ic_menu_send), "Copy", "Added to clipboard")
+            //.setMoreOptionStyle(getResources().getDrawable(android.R.drawable.ic_menu_search), "Show more")
+            .setAsFullWidthStyle(true)
+            .setDefaultURL(url)
+            .setSharingTitle("Refer and Earn Rs 100")
+
+
+        mBinding!!.inviteFriends.setOnClickListener {
+            shareReferCode()
         }
     }
 
+    fun setAnimation() {
+        val slide = Slide()
+        slide.slideEdge = Gravity.START
+        slide.duration = 400
+        slide.interpolator = DecelerateInterpolator()
+        window.exitTransition = slide
+        window.enterTransition = slide
+    }
 
-    inner class OnClickListners  {
+    inner class OnClickListners {
         fun onInvite(view: View?): Unit {
             val msgText: String = ("" +
                     getString(R.string.label_register_on_sf) +
-                    "*"+userInfo!!.referalCode+"*"+
+                    "*" + userInfo!!.referalCode + "*" +
                     " and get Rs 100 Bonus on Joining.\n" +
                     " Click on " +
                     BindingUtils.BILTY_APK_LINK)
@@ -103,7 +157,7 @@ class InviteFriendsActivity : AppCompatActivity() {
             )
             sendIntent.putExtra(Intent.EXTRA_TEXT, msgText)
             try {
-               startActivity(sendIntent)
+                startActivity(sendIntent)
             } catch (ex: ActivityNotFoundException) {
             }
         }
@@ -113,7 +167,7 @@ class InviteFriendsActivity : AppCompatActivity() {
             try {
                 val msgText: String = ("" +
                         getString(R.string.label_register_on_sf) +
-                        "*"+userInfo!!.referalCode+"*"+
+                        "*" + userInfo!!.referalCode + "*" +
                         " and get Rs 100 Bonus on Joining.\n" +
                         " Click on " +
                         BindingUtils.BILTY_APK_LINK)
@@ -139,7 +193,7 @@ class InviteFriendsActivity : AppCompatActivity() {
         fun onFacebook(view: View?): Unit {
             val msgText: String = ("" +
                     getString(R.string.label_register_on_sf) +
-                    "*"+userInfo!!.referalCode+"*"+
+                    "*" + userInfo!!.referalCode + "*" +
                     " and get Rs 100 Bonus on Joining.\n" +
                     " Click on " +
                     BindingUtils.BILTY_APK_LINK)
@@ -177,7 +231,7 @@ class InviteFriendsActivity : AppCompatActivity() {
         fun onTwitter(view: View?): Unit {
             val msgText: String = ("" +
                     getString(R.string.label_register_on_sf) +
-                    "*"+userInfo!!.referalCode+"*"+
+                    "*" + userInfo!!.referalCode + "*" +
                     " and get Rs 100 Bonus on Joining.\n" +
                     " Click on " +
                     BindingUtils.BILTY_APK_LINK)
@@ -214,6 +268,21 @@ class InviteFriendsActivity : AppCompatActivity() {
         }
     }
 
+    private fun shareReferCode() {
+        buo!!.showShareSheet(this, lp!!, shareSheetStyle!!, object : Branch.BranchLinkShareListener {
+            override fun onShareLinkDialogLaunched() {}
+            override fun onShareLinkDialogDismissed() {}
+            override fun onLinkShareResponse(
+                sharedLink: String,
+                sharedChannel: String,
+                error: BranchError
+            ) {
+                Log.e(TAG, "error ====>  " + error.message!!);
+                Log.e(TAG, "error Code ====>  " + error.errorCode);
+            }
 
+            override fun onChannelSelected(channelName: String) {}
+        })
+    }
 
 }

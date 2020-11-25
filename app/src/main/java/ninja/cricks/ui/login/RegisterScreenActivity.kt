@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.Bitmap
-import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -88,6 +87,15 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
 
         if (!TextUtils.isEmpty(userInfo!!.fullName)) {
             binding!!.editName.setText(userInfo!!.fullName)
+        }
+
+        if (MyPreferences.getTempReferCode(this) != null) {
+            binding!!.editInvitecode.setText(
+                java.lang.String.format(
+                    "%s",
+                    MyPreferences.getTempReferCode(this)
+                )
+            )
         }
 
     }

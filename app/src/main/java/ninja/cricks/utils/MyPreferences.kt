@@ -35,6 +35,7 @@ object MyPreferences {
     private val KEY_PREF_IS_RAZOR_PAY = "israzorpay"
 
     private val KEY_DEVICE_TOKEN ="deviceToken"
+    private val KEY_TEMP_REFER_CODE = "refer_code"
 
     /**
      * @author Manoj Prasad
@@ -545,6 +546,23 @@ object MyPreferences {
         return getStringPrefrence(
             context,
             KEY_DEVICE_TOKEN
+        )
+    }
+
+    fun setTempReferCode(context: Context, referCode: String) {
+        if (!TextUtils.isEmpty(referCode)) {
+            setStringPrefrence(
+                context,
+                KEY_TEMP_REFER_CODE,
+                referCode
+            )
+        }
+    }
+
+    fun getTempReferCode(context: Context): String? {
+        return getStringPrefrence(
+            context,
+            KEY_TEMP_REFER_CODE
         )
     }
 }
