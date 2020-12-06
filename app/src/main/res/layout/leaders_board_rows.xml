@@ -19,8 +19,8 @@
 
         <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/profile_image"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
             android:src="@drawable/ic_profile" />
 
         <LinearLayout
@@ -71,6 +71,7 @@
             android:textSize="@dimen/_10sdp" />
 
         <LinearLayout
+            android:id="@+id/rankLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

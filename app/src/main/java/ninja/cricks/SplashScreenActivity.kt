@@ -1,5 +1,6 @@
 package ninja.cricks
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -22,7 +23,7 @@ import retrofit2.Response
 
 class SplashScreenActivity : BaseActivity() {
 
-    private lateinit var mContext: SplashScreenActivity
+    private lateinit var mContext: Context
     private var mBinding: ActivitySplashBinding? = null
     private var mDelayHandler: Handler? = null
     private val SPLASH_DELAYED: Long = 2000
@@ -63,13 +64,13 @@ class SplashScreenActivity : BaseActivity() {
         MainActivity.CHECK_APK_UPDATE_API = false
         MainActivity.CHECK_WALLET_ONCE = false
         updateFireBase()
-        mContext = this@SplashScreenActivity
+        mContext = this
         mBinding = DataBindingUtil.setContentView(
             this,
             R.layout.activity_splash
         )
         updateCheckApk()
-        val splashCreen = MyPreferences.getSplashScreen(this@SplashScreenActivity)
+        val splashCreen = MyPreferences.getSplashScreen(mContext)
 
         if (!TextUtils.isEmpty(splashCreen)) {
 //            Glide.with(this)

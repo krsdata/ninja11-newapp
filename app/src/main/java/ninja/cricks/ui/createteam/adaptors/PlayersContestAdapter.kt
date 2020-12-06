@@ -42,10 +42,10 @@ class PlayersContestAdapter(
         viewHolder.playerName?.text = objectVal.shortName
         viewHolder.teamName?.text = objectVal.teamShortName
         if (matchObject.teamAInfo!!.teamId == objectVal.teamId) {
-            viewHolder.teamName?.setBackgroundColor(context.resources.getColor(R.color.player_bg_dark_red))
-            viewHolder.teamName?.setTextColor(context.resources.getColor(R.color.white))
+            viewHolder.teamName?.background = context.resources.getDrawable(R.drawable.ract_white_background)
+            viewHolder.teamName?.setTextColor(context.resources.getColor(R.color.black))
         } else {
-            viewHolder.teamName?.setBackgroundColor(context.resources.getColor(R.color.player_bg_dark_yellow))
+            viewHolder.teamName?.background = context.resources.getDrawable(R.drawable.ract_black_background)
             viewHolder.teamName?.setTextColor(context.resources.getColor(R.color.white))
         }
         viewHolder.fantasyPoints?.text = "${objectVal.fantasyPlayerRating}"

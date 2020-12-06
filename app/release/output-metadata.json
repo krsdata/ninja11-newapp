@@ -1,20 +1,18 @@
 {
-  "version": 1,
+  "version": 2,
   "artifactType": {
     "type": "APK",
     "kind": "Directory"
   },
   "applicationId": "ninja.cricks",
-  "variantName": "release",
+  "variantName": "processReleaseResources",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
-      "properties": [],
-      "versionCode": 3005,
-      "versionName": "1.5",
-      "enabled": true,
-      "outputFile": "Ninja11-1.5-release.apk"
+      "versionCode": 3008,
+      "versionName": "1.8",
+      "outputFile": "Ninja11-1.8-release.apk"
     }
   ]
 }

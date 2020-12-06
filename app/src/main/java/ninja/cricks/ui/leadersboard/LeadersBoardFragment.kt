@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -69,7 +70,7 @@ class LeadersBoardFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_leaders_board, container, false
@@ -302,6 +303,15 @@ class LeadersBoardFragment : Fragment() {
                     objectVal.teamWonStatus
                 )
             }
+
+            if(objectVal.teamRanks.toInt() == 0){
+                viewHolder.playeRanks.visibility = View.INVISIBLE
+                viewHolder.userPoints.visibility = View.INVISIBLE
+            } else {
+                viewHolder.playeRanks.visibility = View.VISIBLE
+                viewHolder.userPoints.visibility = View.VISIBLE
+            }
+
             if (!TextUtils.isEmpty(objectVal.teamWonStatus)) {
                 if (objectVal.teamWonStatus.toDouble() > 0) {
                     viewHolder.teamWonStatus.visibility = View.VISIBLE
@@ -309,7 +319,6 @@ class LeadersBoardFragment : Fragment() {
                     viewHolder.teamWonStatus.visibility = View.INVISIBLE
                 }
             }
-
 
             if (!TextUtils.isEmpty(objectVal.userInfo.profileImage)) {
                 Glide.with(context)
@@ -338,6 +347,7 @@ class LeadersBoardFragment : Fragment() {
             val playeRanks = itemView.findViewById<TextView>(R.id.player_rank)
             val teamWonStatus = itemView.findViewById<TextView>(R.id.team_won_status)
             val imgMatchStatus = itemView.findViewById<ImageView>(R.id.match_status)
+            val rankLayout = itemView.findViewById<LinearLayout>(R.id.rankLayout)
         }
     }
 }

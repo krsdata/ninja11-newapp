@@ -62,7 +62,7 @@ class AllRounder : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_create_team_list, container, false
