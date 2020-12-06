@@ -9,43 +9,55 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
+import ninja.cricks.R
 import ninja.cricks.UpdateApplicationActivity
+import ninja.cricks.databinding.FragmentUpdateApkBinding
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.DownloadController
-//import com.paytm.pgsdk.PaytmOrder
-//import com.paytm.pgsdk.PaytmPGService
-//import com.paytm.pgsdk.PaytmPaymentTransactionCallback
-import ninja.cricks.R
-import ninja.cricks.databinding.FragmentUpdateApkBinding
+
 
 class UpdateAppDialogFragment(
-    val updateApkUrl: String,
-    val releaseNote: String
+    private val updateApkUrl: String,
+    private val releaseNote: String
 ) : DialogFragment() {
 
     private var mBinding: FragmentUpdateApkBinding? = null
-    lateinit var downloadController: DownloadController
+    private lateinit var downloadController: DownloadController
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mBinding  = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_update_apk, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL, R.style.CustomDialog)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        mBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_update_apk, container, false
+        )
         return mBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var customeProgressDialog = CustomeProgressDialog(activity)
-//        getDialog()!!.requestWindowFeature(STYLE_NO_TITLE);
-//        getDialog()!!.setCancelable(MainActivity.CHECK_FORCE_UPDATE)
-//        getDialog()!!.setCanceledOnTouchOutside(MainActivity.CHECK_FORCE_UPDATE)
-        downloadController = DownloadController(activity!!, updateApkUrl,customeProgressDialog)
-        mBinding!!.imgClose.setOnClickListener(View.OnClickListener {
+        val customProgressDialog = CustomeProgressDialog(activity)
+        dialog!!.requestWindowFeature(STYLE_NO_TITLE)
+        downloadController = DownloadController(
+            requireActivity(),
+            updateApkUrl,
+            customProgressDialog
+        )
+        mBinding!!.imgClose.visibility = View.GONE
+        mBinding!!.imgClose.setOnClickListener {
             dismiss()
-        })
-        mBinding!!.updateApk.setOnClickListener(View.OnClickListener {
+        }
+        mBinding!!.updateApk.setOnClickListener {
 
             checkStoragePermission()
-        })
+        }
 
         mBinding!!.releaseNote.text = releaseNote
     }
@@ -60,9 +72,6 @@ class UpdateAppDialogFragment(
             if (grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // start downloading
                 downloadController.enqueueDownload()
-            } else {
-                // Permission request was denied.
-                // maincontainer.showSnackbar(R.string.storage_permission_denied, Snackbar.LENGTH_SHORT)
             }
         }
     }
@@ -71,17 +80,16 @@ class UpdateAppDialogFragment(
         // Check if the storage permission has been granted
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 
-            if(activity!!.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            if (requireActivity().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 downloadController.enqueueDownload()
-            }else {
+            } else {
                 requestStoragePermission()
             }
-
         }
     }
+
     private fun requestStoragePermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
             if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 requestPermissions(
                     arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
@@ -93,12 +101,6 @@ class UpdateAppDialogFragment(
                     UpdateApplicationActivity.PERMISSION_REQUEST_STORAGE
                 )
             }
-
         }
-
-
-
-
     }
-
 }

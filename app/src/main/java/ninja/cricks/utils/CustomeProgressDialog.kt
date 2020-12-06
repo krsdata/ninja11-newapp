@@ -17,7 +17,5 @@ class CustomeProgressDialog(context: Context?) : Dialog(context!!) {
         setContentView(R.layout.dialog_progress)
         setCancelable(false)
         setCanceledOnTouchOutside(false)
-
     }
-
 }

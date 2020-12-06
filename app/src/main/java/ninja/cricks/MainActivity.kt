@@ -58,6 +58,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             setOf(
                 R.id.navigation_home,
                 R.id.navigation_dashboard,
+                R.id.navigation_myaccount,
                 R.id.navigation_notifications
             )
         )
@@ -188,6 +189,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             val fm = supportFragmentManager
             val pioneersFragment =
                 UpdateAppDialogFragment(updatedApkUrl, releaseNote)
+            pioneersFragment.isCancelable = false
             pioneersFragment.show(fm, "updateapp_tag")
         }
     }

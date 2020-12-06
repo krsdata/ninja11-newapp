@@ -35,6 +35,7 @@ import retrofit2.Response
 
 class ContestFragment : Fragment() {
 
+    //FragmentAllContestBinding
 
     private var objectMatches: UpcomingMatchesModel? = null
     var matchObject: UpcomingMatchesModel? = null

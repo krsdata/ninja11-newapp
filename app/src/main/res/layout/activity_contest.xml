@@ -111,7 +111,7 @@
                             android:fontFamily="@font/montserrat_regular"
                             android:gravity="center"
                             android:paddingBottom="@dimen/_2sdp"
-                            android:text="nilesh"
+                            android:text=""
                             android:textColor="@color/white"
                             android:textSize="14sp" />
                     </LinearLayout>

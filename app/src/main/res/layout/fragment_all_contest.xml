@@ -183,18 +183,20 @@
 
         <TextView
             android:id="@+id/btn_create_team"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal|bottom"
             android:layout_marginBottom="20dp"
             android:background="@drawable/button_selector_white"
             android:fontFamily="@font/montserratsemibold"
-            android:padding="10dp"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
             android:text="CREATE A TEAM"
             android:textColor="@color/green"
-            android:textSize="10sp"
+            android:textSize="@dimen/_13sdp"
             android:textStyle="bold" />
 
         <LinearLayout

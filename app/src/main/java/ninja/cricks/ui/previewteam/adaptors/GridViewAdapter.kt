@@ -37,7 +37,7 @@ class GridViewAdapter(
         var convertView = convertView
         val viewHolder: ViewHolder
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.preview_player_info, null)
+            convertView = LayoutInflater.from(context).inflate(R.layout.preview_player_info, parent, false)
             viewHolder =
                 ViewHolder()
             viewHolder.imageView = convertView!!.findViewById(R.id.imageView)
@@ -49,7 +49,7 @@ class GridViewAdapter(
         } else {
             viewHolder = convertView.tag as ViewHolder
         }
-        var objects = listImageURLs.get(position)
+        val objects = listImageURLs.get(position)
         viewHolder.playerName.text = objects.shortName
         if (matchObject.status == BindingUtils.MATCH_STATUS_UPCOMING) {
             viewHolder.playerFantasyPoints.text = "" + objects.fantasyPlayerRating + " Cr"
@@ -63,10 +63,10 @@ class GridViewAdapter(
             .into(viewHolder.imageView)
 
         if (matchObject.teamAInfo!!.teamId == objects.teamId) {
-            viewHolder.playerName.setBackgroundColor(Color.WHITE)
+            viewHolder.playerName.background = context.resources.getDrawable(R.drawable.ract_white_background)
             viewHolder.playerName.setTextColor(context.resources.getColor(R.color.black))
         } else {
-            viewHolder.playerName.setBackgroundColor(Color.BLACK)
+            viewHolder.playerName.background = context.resources.getDrawable(R.drawable.ract_black_background)
             viewHolder.playerName.setTextColor(context.resources.getColor(R.color.white))
         }
 
@@ -78,15 +78,12 @@ class GridViewAdapter(
         if (objects.isCaptain) {
             viewHolder.playerRole.visibility = View.VISIBLE
             viewHolder.playerRole.text = "C"
-            viewHolder.playerRole.textSize = 6.0f
         } else if (objects.isViceCaptain) {
             viewHolder.playerRole.visibility = View.VISIBLE
             viewHolder.playerRole.text = "VC"
-            viewHolder.playerRole.textSize = 4.0f
         } else if (objects.isTrump) {
             viewHolder.playerRole.visibility = View.VISIBLE
             viewHolder.playerRole.text = "T"
-            viewHolder.playerRole.textSize = 6.0f
         } else {
             viewHolder.playerRole.visibility = View.GONE
         }

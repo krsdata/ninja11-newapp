@@ -33,10 +33,10 @@ class TeamPreviewActivity : AppCompatActivity() {
     private lateinit var matchObject: UpcomingMatchesModel
     private lateinit var hasmapPlayers: HashMap<String, java.util.ArrayList<PlayersInfoModel>>
     private var mBinding: ActivityTeamPreviewBinding? = null
-    val listWicketKeeper = ArrayList<PlayersInfoModel>()
-    val listBatsMan = ArrayList<PlayersInfoModel>()
-    val listAllRounder = ArrayList<PlayersInfoModel>()
-    val listBowler = ArrayList<PlayersInfoModel>()
+    private val listWicketKeeper = ArrayList<PlayersInfoModel>()
+    private val listBatsMan = ArrayList<PlayersInfoModel>()
+    private val listAllRounder = ArrayList<PlayersInfoModel>()
+    private val listBowler = ArrayList<PlayersInfoModel>()
 
     companion object {
         val SERIALIZABLE_TEAM_PREVIEW_KEY: String = "teampreview"
@@ -86,7 +86,6 @@ class TeamPreviewActivity : AppCompatActivity() {
         }
 
         setupPlayersOnGrounds()
-
     }
 
     private fun setupPlayersOnGrounds() {
@@ -114,13 +113,12 @@ class TeamPreviewActivity : AppCompatActivity() {
             )
 
         if (listBatsMan.size > 4) {
-            sizeofColumn = 4
+            sizeofColumn = 3
         } else {
             sizeofColumn = listBatsMan.size
         }
         mBinding!!.gridBatsman.numColumns = sizeofColumn
         mBinding!!.gridBatsman.adapter = gridViewAdapterBatsMan
-
 
         val gridViewAdapterAllRounder =
             GridViewAdapter(
@@ -129,7 +127,7 @@ class TeamPreviewActivity : AppCompatActivity() {
                 matchObject
             )
         if (listAllRounder.size > 4) {
-            sizeofColumn = 4
+            sizeofColumn = 3
         } else {
             sizeofColumn = listAllRounder.size
         }
@@ -142,8 +140,8 @@ class TeamPreviewActivity : AppCompatActivity() {
                 listBowler,
                 matchObject
             )
-        if (listBowler.size > 5) {
-            sizeofColumn = 5
+        if (listBowler.size > 4) {
+            sizeofColumn = 3
         } else {
             sizeofColumn = listBowler.size
         }
@@ -152,13 +150,13 @@ class TeamPreviewActivity : AppCompatActivity() {
         setGridViewOnItemClickListener()
     }
 
-    fun getPoints(teamId: Int) {
+    private fun getPoints(teamId: Int) {
         if (!MyUtils.isConnectedWithInternet(this)) {
             MyUtils.showToast(this, "No Internet connection found")
             return
         }
         customeProgressDialog.show()
-        var models = RequestModel()
+        val models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
         models.team_id = teamId
 
@@ -173,26 +171,26 @@ class TeamPreviewActivity : AppCompatActivity() {
                     response: Response<UsersPostDBResponse?>?
                 ) {
                     customeProgressDialog.dismiss()
-                    var res = response!!.body()
+                    val res = response!!.body()
                     if (res != null) {
                         var totalPoints = res.totalPoints
-                        var responseModel = res.responseObject
+                        val responseModel = res.responseObject
                         if (responseModel != null) {
-                            var playerPointsList = responseModel.playerPointsList
-                            var hasmapPlayers: HashMap<String, ArrayList<PlayersInfoModel>> =
+                            val playerPointsList = responseModel.playerPointsList
+                            val hasmapPlayers: HashMap<String, ArrayList<PlayersInfoModel>> =
                                 HashMap<String, ArrayList<PlayersInfoModel>>()
 
-                            var wktKeeperList: ArrayList<PlayersInfoModel> =
+                            val wktKeeperList: ArrayList<PlayersInfoModel> =
                                 ArrayList<PlayersInfoModel>()
-                            var batsManList: ArrayList<PlayersInfoModel> =
+                            val batsManList: ArrayList<PlayersInfoModel> =
                                 ArrayList<PlayersInfoModel>()
-                            var allRounderList: ArrayList<PlayersInfoModel> =
+                            val allRounderList: ArrayList<PlayersInfoModel> =
                                 ArrayList<PlayersInfoModel>()
-                            var allbowlerList: ArrayList<PlayersInfoModel> =
+                            val allbowlerList: ArrayList<PlayersInfoModel> =
                                 ArrayList<PlayersInfoModel>()
 
                             for (x in 0..playerPointsList!!.size - 1) {
-                                var plyObj = playerPointsList.get(x)
+                                val plyObj = playerPointsList.get(x)
                                 if (plyObj.playerRole.equals("wk")) {
                                     wktKeeperList.add(plyObj)
                                 } else if (plyObj.playerRole.equals("bat")) {
@@ -210,13 +208,9 @@ class TeamPreviewActivity : AppCompatActivity() {
 
                             updatePlayersPoints(hasmapPlayers)
                         }
-
                     }
-
                 }
-
             })
-
     }
 
     private fun updatePlayersPoints(hasmapPlayers: HashMap<String, ArrayList<PlayersInfoModel>>) {

@@ -125,7 +125,7 @@ class LeadersBoardFragment : Fragment() {
 
 
     private fun setTotalTeamCounts(value: Int) {
-        mBinding!!.totalTeamCounts.text = "ALL TEAMS" //String.format("ALL TEAMS (%d)", value)
+        mBinding!!.totalTeamCounts.text = String.format("ALL TEAMS (%d)", value)
     }
 
     fun getPoints(teamId: Int, user_id: String) {
@@ -267,13 +267,9 @@ class LeadersBoardFragment : Fragment() {
 //                            userInfo,
 //                            BindingUtils.FIREBASE_EVENT_ITEM_ID_LEADERS_BOARD_REFRESH
 //                        )
-
                     }
-
                 }
-
             })
-
     }
 
     inner class LeadersBoardAdapter(
@@ -292,17 +288,14 @@ class LeadersBoardFragment : Fragment() {
         }
 
         override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
-            var objectVal = matchesListObject[viewType]
+            val objectVal = matchesListObject[viewType]
             val viewHolder: MyMatchViewHolder = parent as MyMatchViewHolder
             viewHolder.teamName.text =
                 String.format("%s(%s)", objectVal.userInfo!!.teamName, objectVal.teamName)
             viewHolder.userPoints.text = objectVal.teamPoints
             viewHolder.playeRanks.text = objectVal.teamRanks
             if (matchObject!!.status == BindingUtils.MATCH_STATUS_LIVE) {
-                viewHolder.teamWonStatus.text = String.format(
-                    "Winning ₹%s",
-                    objectVal.teamWonStatus
-                )
+                viewHolder.teamWonStatus.text = "Winning Zone"
             } else {
                 viewHolder.teamWonStatus.text = String.format(
                     "Won ₹%s",
@@ -318,9 +311,9 @@ class LeadersBoardFragment : Fragment() {
             }
 
 
-            if (!TextUtils.isEmpty(objectVal.userInfo!!.profileImage)) {
+            if (!TextUtils.isEmpty(objectVal.userInfo.profileImage)) {
                 Glide.with(context)
-                    .load(objectVal.userInfo!!.profileImage)
+                    .load(objectVal.userInfo.profileImage)
                     .placeholder(R.drawable.placeholder_player_teama)
                     .into(viewHolder.profileImage)
             } else {
