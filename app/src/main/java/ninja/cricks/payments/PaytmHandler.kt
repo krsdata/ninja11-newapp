@@ -3,13 +3,13 @@ package ninja.cricks.payments
 import android.content.Context
 import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import ninja.cricks.models.ResponseModel
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,12 +35,12 @@ class PaytmHandler(private val mContext: Context, private val mListeners: OnChec
         }
 
     fun paytmPayment(id: String, amount: Double) {
-        var mid = MyPreferences.getPaytmMid(mContext)!!
-        var callback = MyPreferences.getPaytmCallback(mContext)!!
-        if(!TextUtils.isEmpty(mid)){
+        val mid = MyPreferences.getPaytmMid(mContext)!!
+        val callback = MyPreferences.getPaytmCallback(mContext)!!
+        if (!TextUtils.isEmpty(mid)) {
             MID = mid
         }
-        if(!TextUtils.isEmpty(callback)){
+        if (!TextUtils.isEmpty(callback)) {
             CALLBACK_URL = callback
         }
         //MID = "xmHOCa32667710380797"
@@ -58,21 +58,23 @@ class PaytmHandler(private val mContext: Context, private val mListeners: OnChec
                     mOrderId!!,
                     CUST_ID,
                     mAmount,
-                        it,
-                        it1,
-                        callbackUrl!!,
+                    it,
+                    it1,
+                    callbackUrl!!,
                     MID,
                     INDUSTRY_TYPE_ID,
-                    CHANNEL_ID, WEBSITE)
+                    CHANNEL_ID, WEBSITE
+                )
             }
         }
 
 
-        if(!MyUtils.isConnectedWithInternet(mContext as AppCompatActivity)) {
-            MyUtils.showToast(mContext as AppCompatActivity,"No Internet connection found")
+        if (!MyUtils.isConnectedWithInternet(mContext as AppCompatActivity)) {
+            MyUtils.showToast(mContext, "No Internet connection found")
             return
         }
-        WebServiceClient(mContext).client.create(IApiMethod::class.java).getPaytmChecksum(requestModel!!)
+        WebServiceClient(mContext).client.create(IApiMethod::class.java)
+            .getPaytmChecksum(requestModel!!)
             .enqueue(object : Callback<ResponseModel?> {
                 override fun onFailure(call: Call<ResponseModel?>?, t: Throwable?) {
                 }
@@ -81,13 +83,12 @@ class PaytmHandler(private val mContext: Context, private val mListeners: OnChec
                     call: Call<ResponseModel?>?,
                     response: Response<ResponseModel?>?
                 ) {
-                    var res = response!!.body()
-                    if(res!=null) {
+                    val res = response!!.body()
+                    if (res != null) {
                         payNow(res.checksum)
                     }
 
                 }
-
             })
 //        if (requestModel != null) {
 //            createService(mContext).getPaytmChecksum(requestModel)
@@ -130,17 +131,12 @@ class PaytmHandler(private val mContext: Context, private val mListeners: OnChec
     }
 
 
-
-
     interface OnCheckSumGenerated {
-
-
         fun payNow(pmap: HashMap<String, String>)
     }
 
     companion object {
         // private static String MercahntKey = "4R_ZPWNmplUfdDH8!";  //Production
-
         private var MID = "SDBEXq82035234210571"
         private val INDUSTRY_TYPE_ID = "Retail"
         private val CHANNEL_ID = "WAP"
@@ -148,8 +144,7 @@ class PaytmHandler(private val mContext: Context, private val mListeners: OnChec
         private var CUST_ID = ""
         private var MOBILE_NO: String? = ""
         private var EMAIL_ID: String? = ""
-//        private val CALLBACK_URL = "https://api.sportsfight.in/api/v2/paytmCallBack"
+        //        private val CALLBACK_URL = "https://api.sportsfight.in/api/v2/paytmCallBack"
         private var CALLBACK_URL = "https://securegw.paytm.in/theia/paytmCallback?ORDER_ID="
     }
-
 }
