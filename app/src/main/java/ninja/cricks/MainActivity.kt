@@ -196,7 +196,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     fun getWalletBalances() {
         //var userInfo = (activity as PlugSportsApplication).userInformations
-        var models = RequestModel()
+        val models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
         // models.token = MyPreferences.getToken(this)!!
 

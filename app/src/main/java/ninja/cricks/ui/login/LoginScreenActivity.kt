@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -54,8 +55,8 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
 
     companion object {
         var AUTH_TYPE_GMAIL = "googleAuth"
+        var TAG: String = LoginScreenActivity::class.java.simpleName
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -154,6 +155,10 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
     }
 
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
+
+        Log.e(TAG, "email =========> " + acct.email)
+        Log.e(TAG, "displayName =========> " + acct.displayName)
+
         customeProgressDialog.show()
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener {
@@ -162,8 +167,14 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
                 val user = FirebaseAuth.getInstance().currentUser
                 if (user != null) {
                     firebaseProvider = credential.provider
-                    name = user.displayName!!
-                    emailid = user.email!!
+                    name = user.displayName.toString()
+                    if (user.email != null) {
+                        Log.e(TAG, "user email =========> " + user.email)
+                        emailid = user.email.toString()
+                    } else {
+                        Log.e(TAG, "acct email =========> " + acct.email)
+                        emailid = acct.email!!
+                    }
                     photoUrl = firebaseAuth.currentUser!!.photoUrl.toString()
 
                     login(emailid, AUTH_TYPE_GMAIL)
@@ -180,7 +191,7 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
-    fun login(email: String?, authType: String) {
+    fun login(email: String, authType: String) {
         if (!MyUtils.isConnectedWithInternet(this@LoginScreenActivity)) {
             MyUtils.showToast(this@LoginScreenActivity, "No Internet connection found")
             return
@@ -188,7 +199,7 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
         customeProgressDialog.show()
         val request = RequestModel()
         request.name = name
-        request.email = email!!
+        request.email = email
         request.device_id = notificationToken
         request.user_type = authType
         request.provider_id = firebaseAuth.uid!!
@@ -202,10 +213,10 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
         if (!isFinishing) {
             customeProgressDialog.dismiss()
 
-            var responseb = response!!.body()
+            val responseb = response!!.body()
             if (responseb != null) {
                 if (responseb.status) {
-                    var infoModels = responseb.infomodel
+                    val infoModels = responseb.infomodel
                     if (infoModels != null) {
                         if (TextUtils.isEmpty(responseb.infomodel!!.profileImage)) {
                             //MyPreferences.setProfilePicture(this, photoUrl)
@@ -218,17 +229,15 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
                         (applicationContext as SportsFightApplication).saveUserInformations(
                             responseb.infomodel
                         )
-                        if (TextUtils.isEmpty(infoModels.mobileNumber) || TextUtils.isEmpty(
-                                infoModels.userEmail
-                            ) || TextUtils.isEmpty(
-                                infoModels.fullName
-                            )
+                        if (TextUtils.isEmpty(infoModels.mobileNumber) ||
+                            TextUtils.isEmpty(infoModels.userEmail) ||
+                            TextUtils.isEmpty(infoModels.fullName)
                         ) {
                             registerUsers(firebaseAuth.uid)
                         } else
                             if (infoModels.isOtpVerified) {
                                 MyPreferences.setLoginStatus(this@LoginScreenActivity, true)
-                                var intent =
+                                val intent =
                                     Intent(this@LoginScreenActivity, MainActivity::class.java)
                                 setResult(Activity.RESULT_OK)
                                 startActivity(intent)
@@ -269,7 +278,7 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
     }
 
     private fun sendOTP(uid: String?) {
-        var intent = Intent(this, OtpVerifyActivity::class.java)
+        val intent = Intent(this, OtpVerifyActivity::class.java)
         intent.putExtra(OtpVerifyActivity.EXTRA_KEY_EDIT_MOBILE_NUMBER, true)
         intent.putExtra(OtpVerifyActivity.EXTRA_KEY_PROVIDER_ID, uid)
         startActivityForResult(intent, RegisterScreenActivity.REQUESTCODE_LOGIN)
