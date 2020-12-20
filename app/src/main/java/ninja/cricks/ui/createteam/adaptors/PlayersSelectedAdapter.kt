@@ -10,18 +10,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.edify.atrist.listener.OnRolesSelected
 import ninja.cricks.R
+import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.ui.createteam.models.PlayersInfoModel
 
 
 class PlayersSelectedAdapter(
     val context: Context,
     contestModelList: ArrayList<PlayersInfoModel>,
-    listeners: OnRolesSelected
+    listeners: OnRolesSelected,
+    matchObject: UpcomingMatchesModel
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var onItemClick: ((PlayersInfoModel) -> Unit)? = null
     private var matchesListObject = contestModelList
     var listeners = listeners
+    var matchObject = matchObject
 
     companion object {
         const val TYPE_LABEL = 1
@@ -32,6 +35,7 @@ class PlayersSelectedAdapter(
         val comparable = matchesListObject.get(position)
         return comparable.viewType
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == TYPE_LABEL) {
             val view = LayoutInflater.from(parent.context)
@@ -48,7 +52,7 @@ class PlayersSelectedAdapter(
     override fun onBindViewHolder(parent: RecyclerView.ViewHolder, position: Int) {
 
         val objectVal = matchesListObject[position]
-        if(objectVal.viewType== TYPE_LABEL){
+        if (objectVal.viewType == TYPE_LABEL) {
             val viewHolder: ViewLabelsHolders = parent as ViewLabelsHolders
             viewHolder.roleType.text = objectVal.playerRole
 
@@ -77,6 +81,15 @@ class PlayersSelectedAdapter(
                 viewHolder.playerSelectionPercentage?.text = ""
             }
 
+            /*if (matchObject.teamAInfo!!.teamId == objectVal.teamId) {
+                viewHolder.selectedPlayerCountry.background =
+                    context.resources.getDrawable(R.drawable.ract_white_background)
+                viewHolder.selectedPlayerCountry.setTextColor(context.resources.getColor(R.color.black))
+            } else {
+                viewHolder.selectedPlayerCountry.background =
+                    context.resources.getDrawable(R.drawable.ract_black_background)
+                viewHolder.selectedPlayerCountry.setTextColor(context.resources.getColor(R.color.white))
+            }*/
 
             Glide.with(context)
                 .load(objectVal.playerImage)
@@ -163,7 +176,8 @@ class PlayersSelectedAdapter(
             itemView.findViewById<TextView>(R.id.player_selection_percentage)
         val selectedPlayerPoints = itemView.findViewById<TextView>(R.id.player_points)
         val selectedPlayerCountry = itemView.findViewById<TextView>(R.id.selected_player_country)
-        val selectedPlayingStyle = itemView.findViewById<TextView>(R.id.selected_player_playing_style)
+        val selectedPlayingStyle =
+            itemView.findViewById<TextView>(R.id.selected_player_playing_style)
         val selectedPlayerImage = itemView.findViewById<ImageView>(R.id.player_image)
 
         val roleTypeTrump = itemView.findViewById<TextView>(R.id.role_type_trump)

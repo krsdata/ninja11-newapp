@@ -55,7 +55,7 @@ class ContestAdapter(
         /**
          * Replace this part with below part once api comes
          */
-        viewJoinedMatches.viewMoreLayout?.visibility = View.GONE
+        /*viewJoinedMatches.viewMoreLayout.visibility = View.GONE
         val adapter = ContestListAdapter(
             context,
             objectVal.allContestsRunning!!,
@@ -63,10 +63,10 @@ class ContestAdapter(
             listener,
             colorCode
         )
-        viewJoinedMatches.recyclerView.adapter = adapter
+        viewJoinedMatches.recyclerView.adapter = adapter*/
 
         //  Settings for more Contests
-        /*val top3: ArrayList<ContestModelLists> = getFirst3Values(objectVal.allContestsRunning!!)
+        val top3: ArrayList<ContestModelLists> = getFirst3Values(objectVal.allContestsRunning!!)
         val adapter = ContestListAdapter(
             context,
             top3,
@@ -75,9 +75,12 @@ class ContestAdapter(
             colorCode
         )
         viewJoinedMatches.recyclerView.adapter = adapter
-        if (objectVal.allContestsRunning != null && objectVal.allContestsRunning!!.size > 3) {
-            viewJoinedMatches.viewMoreLayout?.visibility = View.VISIBLE
-            viewJoinedMatches.moreContestClick?.setOnClickListener(View.OnClickListener {
+        if (objectVal.allContestsRunning != null && objectVal.allContestsRunning!!.size > 2) {
+            viewJoinedMatches.viewMoreLayout.visibility = View.VISIBLE
+
+            val count = objectVal.allContestsRunning!!.size - getFirst3Values(objectVal.allContestsRunning!!).size
+            viewJoinedMatches.moreContestClick.text = String.format("View %d More Contest", count)
+            viewJoinedMatches.moreContestClick.setOnClickListener(View.OnClickListener {
                 val intent = Intent(context, MoreContestActivity::class.java)
                 intent.putExtra(ContestActivity.SERIALIZABLE_KEY_UPCOMING_MATCHES, matchObject)
                 intent.putExtra(ContestActivity.SERIALIZABLE_KEY_JOINED_CONTEST, matchesListObject)
@@ -85,8 +88,8 @@ class ContestAdapter(
                 context.startActivityForResult(intent, LeadersBoardActivity.CREATETEAM_REQUESTCODE)
             })
         } else {
-            viewJoinedMatches.viewMoreLayout?.visibility = View.GONE
-        }*/
+            viewJoinedMatches.viewMoreLayout.visibility = View.GONE
+        }
 
         adapter.onItemClick = { objects ->
             //MyUtils.logd("JoinedContestAdapter","Joined Contest"+objects.country1Name+" Vs "+objects.country1Name)
@@ -94,15 +97,14 @@ class ContestAdapter(
     }
 
     private fun getFirst3Values(allContestsRunning: java.util.ArrayList<ContestModelLists>): java.util.ArrayList<ContestModelLists> {
-        val MAX_FILTER_CONTEST_SIZE = 2
-        if (allContestsRunning.size > MAX_FILTER_CONTEST_SIZE) {
+        return if (allContestsRunning.size > 2) {
             val values = ArrayList<ContestModelLists>()
-            for (i in 0..MAX_FILTER_CONTEST_SIZE) {
-                values.add(allContestsRunning.get(i))
+            for (i in 0..1) {
+                values.add(allContestsRunning[i])
             }
-            return values
+            values
         } else {
-            return allContestsRunning
+            allContestsRunning
         }
     }
 

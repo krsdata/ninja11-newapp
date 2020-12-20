@@ -63,6 +63,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="8dip"
                     android:layout_marginRight="5dp"
+                    android:visibility="invisible"
                     android:layout_toLeftOf="@+id/img_wallet"
                     android:src="@drawable/ic_live_help_black_24dp"
                     app:tint="@color/white" />
@@ -75,6 +76,7 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="8dip"
+                    android:visibility="invisible"
                     android:layout_marginRight="10dp"
                     android:src="@drawable/ic_account_balance_wallet_black_24dp"
                     app:tint="@color/white" />
@@ -191,17 +193,6 @@
                                 android:orientation="vertical">
 
                                 <TextView
-                                    android:id="@+id/teama_name"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_centerVertical="true"
-                                    android:fontFamily="@font/montserrat_bold"
-                                    android:text="AU-W"
-                                    android:textColor="@color/white"
-                                    android:textSize="@dimen/create_team_text_size_normal" />
-
-                                <TextView
                                     android:id="@+id/teama_counts"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -212,6 +203,18 @@
                                     android:text="0"
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/create_team_text_size_normal" />
+
+                                <TextView
+                                    android:id="@+id/teama_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_centerVertical="true"
+                                    android:fontFamily="@font/montserrat_bold"
+                                    android:text="AU-W"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/create_team_text_size_normal" />
+
                             </LinearLayout>
                         </LinearLayout>
 
@@ -240,17 +243,6 @@
                             android:orientation="vertical">
 
                             <TextView
-                                android:id="@+id/teamb_name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_centerHorizontal="true"
-                                android:layout_centerVertical="true"
-                                android:fontFamily="@font/montserrat_bold"
-                                android:text="SL-W"
-                                android:textColor="@color/white"
-                                android:textSize="@dimen/create_team_text_size_normal" />
-
-                            <TextView
                                 android:id="@+id/teamb_counts"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -259,6 +251,17 @@
                                 android:layout_marginLeft="4dp"
                                 android:fontFamily="@font/montserrat_bold"
                                 android:text="0"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/create_team_text_size_normal" />
+
+                            <TextView
+                                android:id="@+id/teamb_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:fontFamily="@font/montserrat_bold"
+                                android:text="SL-W"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/create_team_text_size_normal" />
                         </LinearLayout>

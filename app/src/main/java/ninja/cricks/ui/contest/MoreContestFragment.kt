@@ -21,7 +21,6 @@ import ninja.cricks.ui.contest.adaptors.ContestListAdapter
 import ninja.cricks.ui.contest.models.ContestModelLists
 import ninja.cricks.utils.CustomeProgressDialog
 
-
 class MoreContestFragment : Fragment() {
     var mListenerContestEvents: OnContestLoadedListener? = null
     var mListener: OnContestLoadedListener? = null
@@ -33,7 +32,7 @@ class MoreContestFragment : Fragment() {
     lateinit var adapter: ContestListAdapter
 
     companion object {
-        val CONTEST_LIST: String? = "contestlist"
+        const val CONTEST_LIST: String = "contestlist"
 
         fun newInstance(bundle: Bundle): MoreContestFragment {
             val fragment = MoreContestFragment()
@@ -44,10 +43,6 @@ class MoreContestFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        objectMatches =
-            arguments!!.get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
-        allContestList = arguments!!.get(CONTEST_LIST) as ArrayList<ContestModelLists>
-
     }
 
     override fun onAttach(context: Context) {
@@ -72,7 +67,7 @@ class MoreContestFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_more_contest, container, false
@@ -83,6 +78,13 @@ class MoreContestFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         customeProgressDialog = CustomeProgressDialog(activity)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        objectMatches =
+            requireArguments().get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
+        allContestList = requireArguments().get(CONTEST_LIST) as ArrayList<ContestModelLists>
 
         mBinding!!.recyclerMyContest.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
@@ -96,7 +98,6 @@ class MoreContestFragment : Fragment() {
         )
         mBinding!!.recyclerMyContest.adapter = adapter
 
-
         adapter.onItemClick = { objects ->
             val intent = Intent(context, LeadersBoardActivity::class.java)
             intent.putExtra(LeadersBoardActivity.SERIALIZABLE_MATCH_KEY, objectMatches)
@@ -106,8 +107,5 @@ class MoreContestFragment : Fragment() {
                 LeadersBoardActivity.CREATETEAM_REQUESTCODE
             )
         }
-
     }
-
-
 }

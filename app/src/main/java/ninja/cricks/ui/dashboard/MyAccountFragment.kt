@@ -16,6 +16,7 @@ import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import ninja.cricks.*
+import ninja.cricks.databinding.FragmentMyaccountsBinding
 import ninja.cricks.models.UserInfo
 import ninja.cricks.models.WalletInfo
 import ninja.cricks.network.IApiMethod
@@ -24,7 +25,6 @@ import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseFragment
 import ninja.cricks.ui.home.models.UsersPostDBResponse
 import ninja.cricks.ui.myaccounts.MyAccountBalanceFragment
-import ninja.cricks.ui.myaccounts.PlayingHistoryFragment
 import ninja.cricks.ui.myaccounts.TransactionFragment
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
@@ -32,8 +32,6 @@ import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import ninja.cricks.R
-import ninja.cricks.databinding.FragmentMyaccountsBinding
 
 class MyAccountFragment : BaseFragment() {
 
@@ -46,7 +44,7 @@ class MyAccountFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_myaccounts, container, false
@@ -62,7 +60,7 @@ class MyAccountFragment : BaseFragment() {
 
         mBinding!!.notificationClick.setOnClickListener(View.OnClickListener {
             val intent = Intent(requireActivity(), NotificationListActivity::class.java)
-            startActivityForResult(intent,MyBalanceActivity.REQUEST_CODE_ADD_MONEY)
+            startActivityForResult(intent, MyBalanceActivity.REQUEST_CODE_ADD_MONEY)
         })
         val viewpager: ViewPager = view.findViewById(R.id.account_viewpager)
         val tabs: TabLayout = view.findViewById(R.id.account_tabs)
@@ -79,6 +77,7 @@ class MyAccountFragment : BaseFragment() {
         customeProgressDialog!!.show()
         getWalletBalances()
     }
+
     override fun onResume() {
         super.onResume()
         initProfile()
@@ -88,9 +87,10 @@ class MyAccountFragment : BaseFragment() {
         super.onStart()
         getWalletBalances()
     }
+
     fun getWalletBalances() {
-        if(!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
-            MyUtils.showToast(activity as AppCompatActivity,"No Internet connection found")
+        if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
+            MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
         //mBinding!!.progressBarPlayingHistory.visibility  =View.VISIBLE
@@ -101,7 +101,7 @@ class MyAccountFragment : BaseFragment() {
         WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getWallet(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                    if(isAdded) {
+                    if (isAdded) {
                         //mBinding!!.progressBarPlayingHistory.visibility = View.GONE
                     }
                 }
@@ -110,14 +110,16 @@ class MyAccountFragment : BaseFragment() {
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    if(isVisible) {
+                    if (isVisible) {
                         customeProgressDialog!!.dismiss()
                         //mBinding!!.progressBarPlayingHistory.visibility = View.GONE
                         val res = response!!.body()
-                        if(res!=null) {
+                        if (res != null) {
                             val responseModel = res.walletObjects
-                            if(responseModel!=null) {
-                                (activity!!.applicationContext as SportsFightApplication).saveWalletInformation(responseModel)
+                            if (responseModel != null) {
+                                (activity!!.applicationContext as SportsFightApplication).saveWalletInformation(
+                                    responseModel
+                                )
                                 initProfile()
 
 //                                var fragment = activity!!.getSupportFragmentManager()
@@ -137,16 +139,16 @@ class MyAccountFragment : BaseFragment() {
     }
 
     fun initProfile() {
-        if(!isVisible){
+        if (!isVisible) {
             return
         }
-        if(userInfo!=null) {
+        if (userInfo != null) {
             mBinding!!.profileName.text = userInfo.fullName
             Glide.with(requireActivity())
                 .load(userInfo.profileImage)
                 .placeholder(R.drawable.player_blue)
                 .into(mBinding!!.profileImage)
-        }else {
+        } else {
             mBinding!!.profileName.text = "GUEST"
         }
 
@@ -155,10 +157,10 @@ class MyAccountFragment : BaseFragment() {
             startActivity(intent)
         })
         walletInfo = (requireActivity().applicationContext as SportsFightApplication).walletInfo
-        if(walletInfo!=null){
+        if (walletInfo != null) {
             val accountStatus = walletInfo.accountStatus
-            if(accountStatus!=null){
-                if(walletInfo.bankAccountVerified==BindingUtils.BANK_DOCUMENTS_STATUS_REJECTED){
+            if (accountStatus != null) {
+                if (walletInfo.bankAccountVerified == BindingUtils.BANK_DOCUMENTS_STATUS_REJECTED) {
                     mBinding!!.btnVerifyAccount.text = "REJECTED"
                     mBinding!!.btnVerifyAccount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.0f)
                     mBinding!!.btnVerifyAccount.setBackgroundResource(R.drawable.button_selector_red)
@@ -167,31 +169,35 @@ class MyAccountFragment : BaseFragment() {
                         gotoDocumentsListActivity()
                     })
 
-                }else
-                if(walletInfo.bankAccountVerified==BindingUtils.BANK_DOCUMENTS_STATUS_VERIFIED){
-                    mBinding!!.btnVerifyAccount.text = "Account Verified"
-                    mBinding!!.btnVerifyAccount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.0f)
-                    mBinding!!.btnVerifyAccount.setBackgroundResource(R.drawable.button_selector_green)
-                    mBinding!!.btnVerifyAccount.setTextColor(Color.WHITE)
-                    mBinding!!.btnVerifyAccount.setOnClickListener(View.OnClickListener {
-                        gotoDocumentsListActivity()
-                    })
-                }else if(walletInfo.bankAccountVerified==BindingUtils.BANK_DOCUMENTS_STATUS_APPROVAL_PENDING){
-                    mBinding!!.btnVerifyAccount.text = "Approval Pending"
-                    mBinding!!.btnVerifyAccount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.0f)
-                    mBinding!!.btnVerifyAccount.setBackgroundResource(R.drawable.button_selector_white)
-                    mBinding!!.btnVerifyAccount.setTextColor(Color.BLACK)
-                    mBinding!!.btnVerifyAccount.setOnClickListener(View.OnClickListener {
-                        //gotoDocumentsListActivity()
-                    })
-                }else {
-                    mBinding!!.btnVerifyAccount.setOnClickListener(View.OnClickListener {
-                        val intent = Intent(requireActivity(), VerifyDocumentsActivity::class.java)
-                        startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
-                    })
-                }
+                } else
+                    if (walletInfo.bankAccountVerified == BindingUtils.BANK_DOCUMENTS_STATUS_VERIFIED) {
+                        mBinding!!.btnVerifyAccount.text = "Account Verified"
+                        mBinding!!.btnVerifyAccount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.0f)
+                        mBinding!!.btnVerifyAccount.setBackgroundResource(R.drawable.button_selector_green)
+                        mBinding!!.btnVerifyAccount.setTextColor(Color.WHITE)
+                        mBinding!!.btnVerifyAccount.setOnClickListener(View.OnClickListener {
+                            gotoDocumentsListActivity()
+                        })
+                    } else if (walletInfo.bankAccountVerified == BindingUtils.BANK_DOCUMENTS_STATUS_APPROVAL_PENDING) {
+                        mBinding!!.btnVerifyAccount.text = "Approval Pending"
+                        mBinding!!.btnVerifyAccount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.0f)
+                        mBinding!!.btnVerifyAccount.setBackgroundResource(R.drawable.button_selector_white)
+                        mBinding!!.btnVerifyAccount.setTextColor(Color.BLACK)
+                        mBinding!!.btnVerifyAccount.setOnClickListener(View.OnClickListener {
+                            //gotoDocumentsListActivity()
+                        })
+                    } else {
+                        mBinding!!.btnVerifyAccount.setOnClickListener(View.OnClickListener {
+                            val intent =
+                                Intent(requireActivity(), VerifyDocumentsActivity::class.java)
+                            startActivityForResult(
+                                intent,
+                                VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC
+                            )
+                        })
+                    }
             }
-        }else {
+        } else {
             mBinding!!.btnVerifyAccount.setOnClickListener(View.OnClickListener {
                 val intent = Intent(requireActivity(), VerifyDocumentsActivity::class.java)
                 startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
@@ -207,16 +213,19 @@ class MyAccountFragment : BaseFragment() {
     private fun setupViewPager(viewPager: ViewPager) {
         val adapter = MyAccountViewPagerAdapter(requireActivity().supportFragmentManager)
         val bundle = Bundle()
-       // bundle.putSerializable(SERIALIZABLE_ACCOUNT_BAL,this)
-        adapter.addFragment(MyAccountBalanceFragment.newInstance(bundle),"BALANCE")
+        // bundle.putSerializable(SERIALIZABLE_ACCOUNT_BAL,this)
+        adapter.addFragment(MyAccountBalanceFragment.newInstance(bundle), "BALANCE")
         //adapter.addFragment(PlayingHistoryFragment.newInstance(bundle),"PLAYING HISTORY")
-        adapter.addFragment(TransactionFragment.newInstance(bundle),"TRANSACTION")
+        adapter.addFragment(TransactionFragment.newInstance(bundle), "TRANSACTION")
         viewPager.adapter = adapter
     }
 
 
-    internal inner class MyAccountViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager,
-        BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+    internal inner class MyAccountViewPagerAdapter(manager: FragmentManager) :
+        FragmentStatePagerAdapter(
+            manager,
+            BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+        ) {
         private val mFragmentList = ArrayList<Fragment>()
         private val mFragmentTitleList = ArrayList<String>()
 

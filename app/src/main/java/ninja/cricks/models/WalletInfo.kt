@@ -77,6 +77,11 @@ class WalletInfo : Serializable, Cloneable {
     @Expose
     var gpay_show: Boolean = false
 
+    @SerializedName("ninja_point")
+    @Expose
+    var ninja_point: String = ""
+
+
     public override fun clone(): WalletInfo {
         return super.clone() as WalletInfo
     }

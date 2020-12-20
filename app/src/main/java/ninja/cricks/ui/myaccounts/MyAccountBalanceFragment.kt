@@ -42,19 +42,17 @@ class MyAccountBalanceFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //myAccountFragment = arguments!!.get(SERIALIZABLE_ACCOUNT_BAL) as MyAccountFragment
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         mBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_my_account_balance, container, false
         )
-
         return mBinding!!.root
     }
 
@@ -68,7 +66,7 @@ class MyAccountBalanceFragment : BaseFragment() {
 
         mBinding!!.btnWithdraw.setOnClickListener(View.OnClickListener {
             if (walletInfo.bankAccountVerified == BindingUtils.BANK_DOCUMENTS_STATUS_VERIFIED) {
-                var amount = walletInfo.walletAmount
+                val amount = walletInfo.walletAmount
                 if (amount >= 200) {
                     val intent = Intent(requireActivity(), WithdrawAmountsActivity::class.java)
                     startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
@@ -78,7 +76,6 @@ class MyAccountBalanceFragment : BaseFragment() {
                         "Amount is less than 200 INR"
                     )
                 }
-
             } else {
                 var message = "Please Verify your account"
                 if (walletInfo.bankAccountVerified == BindingUtils.BANK_DOCUMENTS_STATUS_APPROVAL_PENDING) {
@@ -88,15 +85,12 @@ class MyAccountBalanceFragment : BaseFragment() {
                 }
                 MyUtils.showToast(requireActivity() as AppCompatActivity, message)
             }
-
         })
 
         mBinding!!.refferalList.setOnClickListener(View.OnClickListener {
             val intent = Intent(requireActivity(), RefferalFriendsListActivity::class.java)
             startActivity(intent)
         })
-
-
 
         initViews()
     }
@@ -109,21 +103,18 @@ class MyAccountBalanceFragment : BaseFragment() {
         }
     }
 
-
     private fun initWalletViews(responseModel: WalletInfo) {
         mBinding!!.addedAmount.text = String.format("₹%.2f", responseModel.depositAmount)
         mBinding!!.winningAmount.text = String.format("₹%.2f", responseModel.prizeAmount)
-
         mBinding!!.cashBonus.text = String.format("₹%.2f", responseModel.bonusAmount)
         // mBinding!!.earningRefferal.text = String.format("₹ %s",responseModel.referralAmount)
 
-        var totalBalance =
+        mBinding!!.earnedPoints.text = String.format("My Reward points: %s", responseModel.ninja_point)
+
+        val totalBalance =
             responseModel.depositAmount + responseModel.prizeAmount + responseModel.bonusAmount
         mBinding!!.totalBalance.text = String.format("₹%.2f", totalBalance)
-
         mBinding!!.friendsCounts.text = String.format("%d", responseModel.refferalCounts)
-
-
     }
 
 
@@ -141,7 +132,7 @@ class MyAccountBalanceFragment : BaseFragment() {
         }
         customeProgressDialog!!.show()
         //mBinding!!.progressBarPlayingHistory.visibility  =View.VISIBLE
-        var models = RequestModel()
+        val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         models.token = MyPreferences.getToken(requireActivity())!!
 
@@ -160,15 +151,14 @@ class MyAccountBalanceFragment : BaseFragment() {
                     if (isVisible) {
                         customeProgressDialog!!.dismiss()
                         //mBinding!!.progressBarPlayingHistory.visibility = View.GONE
-                        var res = response!!.body()
+                        val res = response!!.body()
                         if (res != null) {
-                            var responseModel = res.walletObjects
+                            val responseModel = res.walletObjects
                             if (responseModel != null) {
                                 (activity!!.applicationContext as SportsFightApplication).saveWalletInformation(
                                     responseModel
                                 )
                                 initViews()
-
 //                                var fragment = activity!!.getSupportFragmentManager()
 //                                    .findFragmentById("myFragmentTag") as MyAccountBalanceFragment
 //                                if (fragment != null) {
@@ -177,13 +167,7 @@ class MyAccountBalanceFragment : BaseFragment() {
                             }
                         }
                     }
-
-
                 }
-
             })
-
     }
-
-
 }

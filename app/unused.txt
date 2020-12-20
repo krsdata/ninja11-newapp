@@ -752,26 +752,26 @@ androidx.customview.widget.ViewDragHelper:
     private static final int BASE_SETTLE_DURATION
     private static final int MAX_SETTLE_DURATION
 ninja.cricks.payments.RequestPaytmModel:
-    public final java.lang.String getORDER_ID$Ninja11_1_9_debug()
-    public final void setORDER_ID$Ninja11_1_9_debug(java.lang.String)
-    public final java.lang.String getCUST_ID$Ninja11_1_9_debug()
-    public final void setCUST_ID$Ninja11_1_9_debug(java.lang.String)
-    public final java.lang.String getTXN_AMOUNT$Ninja11_1_9_debug()
-    public final void setTXN_AMOUNT$Ninja11_1_9_debug(java.lang.String)
-    public final java.lang.String getEMAIL$Ninja11_1_9_debug()
-    public final void setEMAIL$Ninja11_1_9_debug(java.lang.String)
-    public final java.lang.String getMOBILE_NO$Ninja11_1_9_debug()
-    public final void setMOBILE_NO$Ninja11_1_9_debug(java.lang.String)
-    public final java.lang.String getCALLBACK_URL$Ninja11_1_9_debug()
-    public final void setCALLBACK_URL$Ninja11_1_9_debug(java.lang.String)
-    public final java.lang.String getMID$Ninja11_1_9_debug()
-    public final void setMID$Ninja11_1_9_debug(java.lang.String)
-    public final java.lang.String getINDUSTRY_TYPE_ID$Ninja11_1_9_debug()
-    public final void setINDUSTRY_TYPE_ID$Ninja11_1_9_debug(java.lang.String)
-    public final java.lang.String getCHANNEL_ID$Ninja11_1_9_debug()
-    public final void setCHANNEL_ID$Ninja11_1_9_debug(java.lang.String)
-    public final java.lang.String getWEBSITE$Ninja11_1_9_debug()
-    public final void setWEBSITE$Ninja11_1_9_debug(java.lang.String)
+    public final java.lang.String getORDER_ID$Ninja11_1_9_release()
+    public final void setORDER_ID$Ninja11_1_9_release(java.lang.String)
+    public final java.lang.String getCUST_ID$Ninja11_1_9_release()
+    public final void setCUST_ID$Ninja11_1_9_release(java.lang.String)
+    public final java.lang.String getTXN_AMOUNT$Ninja11_1_9_release()
+    public final void setTXN_AMOUNT$Ninja11_1_9_release(java.lang.String)
+    public final java.lang.String getEMAIL$Ninja11_1_9_release()
+    public final void setEMAIL$Ninja11_1_9_release(java.lang.String)
+    public final java.lang.String getMOBILE_NO$Ninja11_1_9_release()
+    public final void setMOBILE_NO$Ninja11_1_9_release(java.lang.String)
+    public final java.lang.String getCALLBACK_URL$Ninja11_1_9_release()
+    public final void setCALLBACK_URL$Ninja11_1_9_release(java.lang.String)
+    public final java.lang.String getMID$Ninja11_1_9_release()
+    public final void setMID$Ninja11_1_9_release(java.lang.String)
+    public final java.lang.String getINDUSTRY_TYPE_ID$Ninja11_1_9_release()
+    public final void setINDUSTRY_TYPE_ID$Ninja11_1_9_release(java.lang.String)
+    public final java.lang.String getCHANNEL_ID$Ninja11_1_9_release()
+    public final void setCHANNEL_ID$Ninja11_1_9_release(java.lang.String)
+    public final java.lang.String getWEBSITE$Ninja11_1_9_release()
+    public final void setWEBSITE$Ninja11_1_9_release(java.lang.String)
 kotlinx.coroutines.flow.internal.ChannelFlowTransformLatest$flowCollect$3$invokeSuspend$$inlined$collect$1$lambda$1
 okhttp3.Cache$Companion
 androidx.appcompat.graphics.drawable.AnimatedStateListDrawableCompat:
@@ -1056,8 +1056,8 @@ okio.BufferedSource:
 kotlin.random.Random
 ninja.cricks.payments.PaytmHandler:
     private final okhttp3.OkHttpClient getClient()
-    public final java.lang.String getMAmount$Ninja11_1_9_debug()
-    public final void setMAmount$Ninja11_1_9_debug(java.lang.String)
+    public final java.lang.String getMAmount$Ninja11_1_9_release()
+    public final void setMAmount$Ninja11_1_9_release(java.lang.String)
 com.bumptech.glide.disklrucache.DiskLruCache$Value:
     public com.bumptech.glide.disklrucache.DiskLruCache$Editor edit()
     public java.lang.String getString(int)
@@ -1387,13 +1387,7 @@ okhttp3.internal.http2.Http2Stream$FramingSink:
     public final void setClosed(boolean)
     public final void setFinished(boolean)
 androidx.concurrent.futures.AbstractResolvableFuture$1
-ninja.cricks.BuildConfig:
-    public void <init>()
-    public static final java.lang.String APPLICATION_ID
-    public static final java.lang.String BUILD_TYPE
-    public static final int VERSION_CODE
-    public static final java.lang.String VERSION_NAME
-    public static final boolean MLOG
+ninja.cricks.BuildConfig
 android.support.v4.media.MediaDescriptionCompatApi23$Builder:
     private void <init>()
 kotlinx.coroutines.CompletableJob
@@ -1499,8 +1493,8 @@ androidx.appcompat.widget.ActionMenuPresenter:
     private static final java.lang.String TAG
 android.support.v4.media.session.MediaControllerCompatApi23$TransportControls
 com.deliverdas.customers.utils.HardwareInfoManager:
-    public final int getRows$Ninja11_1_9_debug()
-    public final void setRows$Ninja11_1_9_debug(int)
+    public final int getRows$Ninja11_1_9_release()
+    public final void setRows$Ninja11_1_9_release(int)
     public final int getOs()
     public final java.lang.String getDataDiaryVersion()
     public final java.lang.String getProductInfo()
@@ -1508,8 +1502,8 @@ com.deliverdas.customers.utils.HardwareInfoManager:
     public final java.lang.String getOsVersion()
     public final java.lang.String getTimeZone()
     public final java.lang.String getDefaultCarrierName()
-    public final android.content.Context getHardwareContext$Ninja11_1_9_debug()
-    public final void setHardwareContext$Ninja11_1_9_debug(android.content.Context)
+    public final android.content.Context getHardwareContext$Ninja11_1_9_release()
+    public final void setHardwareContext$Ninja11_1_9_release(android.content.Context)
     private int rows
 androidx.constraintlayout.solver.Metrics:
     public void <init>()
@@ -3490,6 +3484,7 @@ kotlin.text.StringsKt__StringBuilderJVMKt:
     private static final java.lang.StringBuilder appendln(java.lang.StringBuilder,float)
     private static final java.lang.StringBuilder appendln(java.lang.StringBuilder,double)
     public void <init>()
+ninja.cricks.network.WebServiceClient$client$1
 androidx.cardview.R$color:
     private void <init>()
 okhttp3.internal.tls.OkHostnameVerifier:
@@ -6356,9 +6351,6 @@ kotlin.StandardKt__StandardKt
 ninja.cricks.MoreContestActivity:
     public static final synthetic void access$setMBinding$p(ninja.cricks.MoreContestActivity,ninja.cricks.databinding.ActivityMoreContestBinding)
     public static final synthetic java.util.ArrayList access$getAllContestList$p(ninja.cricks.MoreContestActivity)
-    public static final synthetic void access$setAllContestList$p(ninja.cricks.MoreContestActivity,java.util.ArrayList)
-    public static final synthetic void access$setupViewPager(ninja.cricks.MoreContestActivity,androidx.viewpager.widget.ViewPager)
-    public static final synthetic java.lang.String access$getSERIALIZABLE_KEY_LIST_POSTIION$cp()
     public final void setMatchObject(ninja.cricks.models.UpcomingMatchesModel)
     public final java.util.ArrayList getJoinedTeamList()
     public final void setJoinedTeamList(java.util.ArrayList)
@@ -6367,11 +6359,11 @@ ninja.cricks.MoreContestActivity:
     public final int getSelected_position()
     public final void setSelected_position(int)
     public final void changeTabsPositions(int)
-    public final void getAllContest()
     public void onShareContest(ninja.cricks.ui.contest.models.ContestModelLists)
     public android.view.View _$_findCachedViewById(int)
     public void _$_clearFindViewByIdCache()
     private java.util.HashMap _$_findViewCache
+    public static final java.lang.String SERIALIZABLE_KEY_LIST_POSTIION
 com.bumptech.glide.request.transition.DrawableCrossFadeTransition
 androidx.browser.trusted.ScreenOrientation
 com.bumptech.glide.load.engine.CallbackException:
@@ -6729,14 +6721,11 @@ ninja.cricks.ui.home.FixtureCricketFragment$Companion:
     public final int getPageNo()
     public final void setPageNo(int)
 ninja.cricks.ui.contest.adaptors.ContestAdapter:
-    private final java.util.ArrayList getFirst3Values(java.util.ArrayList)
     public static final synthetic void access$setMatchesListObject$p(ninja.cricks.ui.contest.adaptors.ContestAdapter,java.util.ArrayList)
     public final android.content.Context getMContext()
     public final void setMContext(android.content.Context)
-    public final ninja.cricks.models.UpcomingMatchesModel getMatchObject()
     public final void setMatchObject(ninja.cricks.models.UpcomingMatchesModel)
     public final void setOnItemClick(kotlin.jvm.functions.Function1)
-    public final android.app.Activity getContext()
     public final java.util.ArrayList getContestInfoModel()
     public final com.edify.atrist.listener.OnContestEvents getListener()
 androidx.core.database.sqlite.SQLiteCursorCompat
@@ -8895,6 +8884,7 @@ ninja.cricks.ui.contest.MoreContestFragment:
     public final ninja.cricks.ui.contest.adaptors.ContestListAdapter getAdapter()
     public final void setAdapter(ninja.cricks.ui.contest.adaptors.ContestListAdapter)
     public android.view.View _$_findCachedViewById(int)
+    public static final java.lang.String CONTEST_LIST
 androidx.constraintlayout.motion.widget.KeyPosition
 kotlinx.coroutines.flow.FlowKt__MergeKt$unsafeTransform$$inlined$unsafeFlow$1$1
 androidx.navigation.fragment.ktx.R$dimen
@@ -9223,7 +9213,7 @@ androidx.lifecycle.ViewModelProvider$NewInstanceFactory:
     private static androidx.lifecycle.ViewModelProvider$NewInstanceFactory sInstance
 ninja.cricks.SplashScreenActivity:
     public static final synthetic void access$setMContext$p(ninja.cricks.SplashScreenActivity,android.content.Context)
-    public final java.lang.Runnable getMRunnable$Ninja11_1_9_debug()
+    public final java.lang.Runnable getMRunnable$Ninja11_1_9_release()
     public android.view.View _$_findCachedViewById(int)
     public void _$_clearFindViewByIdCache()
     private java.util.HashMap _$_findViewCache
@@ -11637,6 +11627,7 @@ ninja.cricks.models.WalletInfo:
     public final void setPaytm_show(boolean)
     public final void setRozarpay_show(boolean)
     public final void setGpay_show(boolean)
+    public final void setNinja_point(java.lang.String)
     private double referralAmount
 kotlinx.coroutines.channels.ChannelsKt__Channels_commonKt$mapIndexed$1
 androidx.appcompat.widget.AppCompatSpinner$DialogPopup:
@@ -13059,8 +13050,6 @@ com.bumptech.glide.load.model.StreamEncoder:
     private static final java.lang.String TAG
 androidx.core.content.pm.ShortcutManagerCompat$1
 androidx.core.app.JobIntentService$CompatWorkItem
-ninja.cricks.MoreContestActivity$Companion:
-    public final java.lang.String getSERIALIZABLE_KEY_LIST_POSTIION()
 androidx.media.VolumeProviderCompatApi21$1
 pl.droidsonroids.gif.annotations.Beta
 kotlin.random.Random$Default
@@ -15015,8 +15004,6 @@ kotlin.jvm.functions.Function22:
     public abstract java.lang.Object invoke(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)
 android.support.v4.media.MediaBrowserCompatApi26$SubscriptionCallbackProxy
 kotlin.sequences.SequencesKt___SequencesKt$scanReduce$1
-ninja.cricks.ui.contest.adaptors.ContestAdapter$ViewHolderJoinedContest:
-    public final android.widget.TextView getMoreContestClick()
 kotlin.jvm.internal.Ref$FloatRef
 kotlinx.coroutines.flow.FlowKt__DistinctKt$distinctUntilChangedBy$$inlined$distinctUntilChangedBy$FlowKt__DistinctKt$1
 kotlin.ranges.ULongRange$Companion
@@ -15431,6 +15418,8 @@ ninja.cricks.ui.createteam.adaptors.PlayersSelectedAdapter:
     public static final synthetic void access$setMatchesListObject$p(ninja.cricks.ui.createteam.adaptors.PlayersSelectedAdapter,java.util.ArrayList)
     public final void setOnItemClick(kotlin.jvm.functions.Function1)
     public final void setListeners(com.edify.atrist.listener.OnRolesSelected)
+    public final ninja.cricks.models.UpcomingMatchesModel getMatchObject()
+    public final void setMatchObject(ninja.cricks.models.UpcomingMatchesModel)
     public final android.content.Context getContext()
     public static final int TYPE_LABEL
     public static final int TYPE_DATA
@@ -23863,7 +23852,6 @@ io.branch.referral.ServerRequestRegisterInstall:
 androidx.annotation.DrawableRes
 androidx.media.R$string
 androidx.media.MediaBrowserCompatUtils
-ninja.cricks.MoreContestActivity$getAllContest$1
 androidx.recyclerview.widget.ItemTouchHelper$2
 com.bumptech.glide.disklrucache.Util:
     private void <init>()
@@ -25600,8 +25588,6 @@ ninja.cricks.ui.contest.MyContestFragment$MyContestAdapter:
 ninja.cricks.MaintainanceActivity:
     private ninja.cricks.databinding.ActivityMaintenanceActivityBinding mBinding
 kotlinx.coroutines.CoroutineName
-ninja.cricks.MoreContestActivity$ViewPagerAdapter:
-    final synthetic ninja.cricks.MoreContestActivity this$0
 ninja.cricks.adaptors.OpenTeamsAdapter$onBindViewHolder$3
 ninja.cricks.databinding.ContestRowsInnerBinding:
     public final android.widget.LinearLayout linearMulti
@@ -25629,8 +25615,10 @@ androidx.appcompat.graphics.drawable.AnimatedStateListDrawableCompat:
     private static final java.lang.String LOGTAG
 plug.cricket.ui.createteam.AllRounder$resetSorting$3
 androidx.arch.core.executor.ArchTaskExecutor:
+    public void executeOnDiskIO(java.lang.Runnable)
     private static final java.util.concurrent.Executor sMainThreadExecutor
     private static final java.util.concurrent.Executor sIOThreadExecutor
+okhttp3.EventListener$Companion
 androidx.core.text.TextDirectionHeuristicsCompat:
     public static final androidx.core.text.TextDirectionHeuristicCompat ANYRTL_LTR
     public static final androidx.core.text.TextDirectionHeuristicCompat LOCALE
@@ -25657,6 +25645,9 @@ okhttp3.internal.http2.Http2Connection$pushHeadersLater$$inlined$execute$1:
     final synthetic java.lang.String $name
     final synthetic boolean $cancelable
 androidx.constraintlayout.motion.utils.Easing:
+    public void <init>()
+    public java.lang.String toString()
+    java.lang.String str
     static androidx.constraintlayout.motion.utils.Easing sDefault
 androidx.appcompat.widget.AppCompatSpinner$DropdownPopup$1:
     final synthetic androidx.appcompat.widget.AppCompatSpinner val$this$0
@@ -25708,10 +25699,13 @@ com.andrognito.flashbar.anim.FlashAnimIconBuilder:
     public final com.andrognito.flashbar.anim.FlashAnim build$flashbar_release()
 com.bumptech.glide.load.engine.LoadPath:
     private final java.lang.Class dataClass
+androidx.fragment.app.FragmentPagerAdapter:
+    public void <init>(androidx.fragment.app.FragmentManager)
 kotlin.jvm.internal.markers.KMutableList
 ninja.cricks.adaptors.OpenTeamsAdapter$onBindViewHolder$2
 androidx.core.view.ViewPropertyAnimatorCompat$2:
     final synthetic androidx.core.view.ViewPropertyAnimatorCompat this$0
+com.deliverdas.customers.utils.HardwareInfoManager$Companion
 androidx.constraintlayout.solver.widgets.VirtualLayout:
     private int mPaddingTop
     private int mPaddingBottom
@@ -25766,6 +25760,7 @@ ninja.cricks.ui.mymatches.MyCompletedMatchesFragment$MyMatchesAdapter:
 plug.cricket.ui.createteam.Batsman$resetSorting$2
 androidx.lifecycle.Lifecycle:
     java.util.concurrent.atomic.AtomicReference mInternalScopeRef
+okhttp3.ConnectionSpec$Companion
 ninja.cricks.ui.leadersboard.LeadersBoardFragment$onViewCreated$2
 okhttp3.internal.http2.Http2Connection$writeSynResetLater$$inlined$execute$1:
     final synthetic java.lang.String $name
@@ -25970,6 +25965,8 @@ ninja.cricks.LeadersBoardActivity:
     private ninja.cricks.models.PlayerModels playersList
     private ninja.cricks.LeadersBoardActivity$ViewPagerAdapter viewPagerAdapter
     private static int REFRESH_TIME
+okhttp3.internal.http2.Http2Stream$Companion
+okio.Timeout$Companion
 com.bumptech.glide.request.target.ViewTarget:
     private static boolean isTagUsedAtLeastOnce
 ninja.cricks.databinding.ActivityQuizContestBinding:
@@ -25987,6 +25984,7 @@ android.support.v4.media.session.MediaSessionCompat$Token:
     private android.os.Bundle mSessionToken2Bundle
 androidx.constraintlayout.solver.LinearSystem$ValuesRow:
     final synthetic androidx.constraintlayout.solver.LinearSystem this$0
+ninja.cricks.listener.RecyclerViewLoadMoreScroll
 okhttp3.internal.http2.Http2Connection$ReaderRunnable$headers$$inlined$synchronized$lambda$1:
     final synthetic java.lang.String $name
     final synthetic boolean $cancelable
@@ -26008,6 +26006,8 @@ okhttp3.internal.connection.RealConnection:
 plug.cricket.ui.createteam.Batsman$resetSorting$1
 ninja.cricks.ui.leadersboard.LeadersBoardFragment$onViewCreated$1
 ninja.cricks.MoreContestActivity:
+    public static final synthetic void access$setAllContestList$p(ninja.cricks.MoreContestActivity,java.util.ArrayList)
+    public static final synthetic void access$setupViewPager(ninja.cricks.MoreContestActivity,androidx.viewpager.widget.ViewPager)
     public void onMyContest(java.util.ArrayList)
     public void onMyTeam(java.util.ArrayList)
     private java.util.ArrayList joinedTeamList
@@ -26027,8 +26027,7 @@ ninja.cricks.ui.home.models.UsersPostDBResponse$Response:
     public final java.util.ArrayList getPaytmNoList()
     public final java.util.ArrayList getBankAccountsList()
 plug.cricket.ui.createteam.AllRounder$resetSorting$1
-ninja.cricks.FullScreenImageViewActivity$1:
-    final synthetic ninja.cricks.FullScreenImageViewActivity this$0
+ninja.cricks.FullScreenImageViewActivity$1
 ninja.cricks.models.TeamAInfo:
     public final java.lang.String getScores()
     public final java.lang.String getOvers()
@@ -26039,6 +26038,7 @@ ninja.cricks.MyBalanceActivity$updateAccountVerification$1
 plug.cricket.ui.createteam.Batsman$Companion
 retrofit2.DefaultCallAdapterFactory$1:
     final synthetic retrofit2.DefaultCallAdapterFactory this$0
+ninja.cricks.ui.home.FixtureCricketFragment$Companion
 ninja.cricks.ui.contest.adaptors.ContestAdapter:
     public final void setMatchesList(java.util.ArrayList)
 com.bumptech.glide.Glide:
@@ -26098,6 +26098,8 @@ com.mikhaellopez.circularimageview.R$styleable:
     public static final int[] ViewStubCompat
 retrofit2.CompletableFutureCallAdapterFactory$BodyCallAdapter$1:
     final synthetic retrofit2.CompletableFutureCallAdapterFactory$BodyCallAdapter this$0
+com.bumptech.glide.load.model.Headers$1
+okhttp3.Dns$Companion
 ninja.cricks.network.GlideRequest:
     public ninja.cricks.network.GlideRequest disallowHardwareConfig()
     public synthetic bridge com.bumptech.glide.request.BaseRequestOptions disallowHardwareConfig()
@@ -26121,6 +26123,7 @@ io.branch.referral.UniversalResourceAnalyser$UrlSkipListUpdateTask:
 ninja.cricks.adaptors.ClosedTeamsAdapter$onBindViewHolder$2
 androidx.constraintlayout.solver.PriorityGoalRow$1:
     final synthetic androidx.constraintlayout.solver.PriorityGoalRow this$0
+okhttp3.FormBody$Companion
 androidx.constraintlayout.solver.widgets.analyzer.RunGroup:
     public int position
     androidx.constraintlayout.solver.widgets.analyzer.WidgetRun lastRun
@@ -26149,10 +26152,14 @@ androidx.fragment.app.FragmentTransaction:
     private final androidx.fragment.app.FragmentFactory mFragmentFactory
     private final java.lang.ClassLoader mClassLoader
 kotlinx.coroutines.ThreadContextElement$DefaultImpls
+okio.Segment$Companion
+okhttp3.internal.connection.RealConnectionPool$Companion
 retrofit2.Response:
     private final okhttp3.ResponseBody errorBody
 plug.cricket.ui.createteam.WicketKeepers$onViewCreated$1
 ninja.cricks.models.TeamBInfo
+androidx.recyclerview.widget.StaggeredGridLayoutManager:
+    public int[] findLastVisibleItemPositions(int[])
 ninja.cricks.models.DocumentsModel:
     private java.lang.String user_id
     private java.lang.String documentType
@@ -26281,6 +26288,7 @@ com.andrognito.flashbar.R$styleable:
     public static final int[] ViewBackgroundHelper
     public static final int[] ViewStubCompat
 plug.cricket.ui.createteam.Bowlers$resetSorting$1
+okhttp3.internal.http2.Http2Connection$Listener$Companion
 androidx.arch.core.executor.DefaultTaskExecutor$1:
     final synthetic androidx.arch.core.executor.DefaultTaskExecutor this$0
 ninja.cricks.ui.contest.MyContestFragment:
@@ -26295,10 +26303,12 @@ ninja.cricks.databinding.FragmentJoinContestConfirmationBinding:
     public final android.widget.LinearLayout linearEmptyContest
 ninja.cricks.OtpVerifyActivity$RequestBackKeyPressEvent:
     private final android.view.View view
+okhttp3.Authenticator$Companion
 androidx.transition.ChangeBounds$7:
     final synthetic androidx.transition.ChangeBounds this$0
 okhttp3.internal.Util:
     public static final okhttp3.RequestBody EMPTY_REQUEST
+ninja.cricks.ui.createteam.adaptors.PlayersSelectedAdapter$Companion
 ninja.cricks.adaptors.JoinedMatchesAdapter$DataViewHolder:
     public final android.widget.ImageView getTeamALogo()
     public final android.widget.ImageView getTeamBLogo()
@@ -26316,6 +26326,7 @@ androidx.databinding.ViewDataBinding:
 ninja.cricks.utils.CricketPlayersFilters
 ninja.cricks.ui.myaccounts.MyAccountBalanceFragment:
     private static final java.lang.String SERIALIZABLE_ACCOUNT_BAL
+okhttp3.internal.connection.Exchange$Companion
 androidx.transition.ChangeBounds$10:
     final synthetic androidx.transition.ChangeBounds this$0
 plug.cricket.ui.createteam.AllRounder$onViewCreated$1
@@ -26332,11 +26343,13 @@ androidx.appcompat.widget.ScrollingTabContainerView:
 androidx.fragment.app.FragmentTransitionCompat21$1:
     final synthetic androidx.fragment.app.FragmentTransitionCompat21 this$0
 kotlinx.coroutines.Dispatchers:
+    private void <init>()
     private static final kotlinx.coroutines.CoroutineDispatcher Unconfined
     private static final kotlinx.coroutines.CoroutineDispatcher IO
     public static final kotlinx.coroutines.Dispatchers INSTANCE
 androidx.transition.ChangeBounds$8:
     final synthetic androidx.transition.ChangeBounds this$0
+okhttp3.internal.http2.Settings$Companion
 ninja.cricks.ui.leadersboard.PrizeBreakupFragment$Companion
 ninja.cricks.ContestActivity:
     public static final synthetic java.lang.String access$getSERIALIZABLE_KEY_CONTEST_OBJECT$cp()
@@ -26344,7 +26357,9 @@ ninja.cricks.ContestActivity:
     public void onMyTeam(java.util.ArrayList)
     private java.util.ArrayList joinedTeamList
     private java.util.ArrayList contestObjects
+    private static final java.lang.String SERIALIZABLE_KEY_CONTEST_OBJECT
 kotlinx.coroutines.CoroutineId
+com.mikhaellopez.circularimageview.CircularImageView$Companion
 androidx.constraintlayout.widget.ConstraintLayout:
     int mLastMeasureWidthSize
     int mLastMeasureHeightSize
@@ -26423,6 +26438,8 @@ ninja.cricks.databinding.ContestRowsIplFinalBinding:
     public final android.widget.TextView totalSpotLeft
     public final android.widget.LinearLayout upcomingLinearContestView
     public final android.widget.TextView winningPercentage
+androidx.recyclerview.widget.RecyclerView$LayoutManager:
+    public int getItemCount()
 pl.droidsonroids.relinker.elf.Elf$Header:
     public int type
     public int shnum
@@ -26465,6 +26482,8 @@ com.bumptech.glide.load.resource.bitmap.VideoDecoder$ByteBufferInitializer$1:
 ninja.cricks.databinding.ActivityTeamPreviewBinding:
     public final android.widget.LinearLayout linearTopClose
 com.andrognito.flashbar.view.FbProgress$WheelSavedState:
+    private void <init>(android.os.Parcel)
+    public synthetic void <init>(android.os.Parcel,kotlin.jvm.internal.DefaultConstructorMarker)
     private static final android.os.Parcelable$Creator CREATOR
     public static final com.andrognito.flashbar.view.FbProgress$WheelSavedState$Companion Companion
 androidx.appcompat.app.AlertController$2:
@@ -26473,6 +26492,7 @@ androidx.appcompat.widget.DrawableUtils:
     public static final android.graphics.Rect INSETS_NONE
     private static java.lang.Class sInsetsClazz
 ninja.cricks.CreateTeamActivity$initViewPager$1
+com.bumptech.glide.load.engine.executor.GlideExecutor$UncaughtThrowableStrategy$3
 ninja.cricks.CreateTeamActivity$onCreate$1
 kotlinx.coroutines.internal.StackTraceRecoveryKt:
     private static final java.lang.String stackTraceRecoveryClassName
@@ -26496,7 +26516,10 @@ androidx.core.app.NotificationCompatJellybean:
 okhttp3.logging.HttpLoggingInterceptor$Logger:
     public static final okhttp3.logging.HttpLoggingInterceptor$Logger$Companion Companion
 ninja.cricks.LeadersBoardActivity$initUpcomingMatchData$1
+kotlin.KotlinVersion$Companion
+com.bumptech.glide.load.engine.DiskCacheStrategy$4
 plug.cricket.ui.createteam.Bowlers$Companion
+ninja.cricks.MoreContestActivity$Companion
 okhttp3.internal.cache.CacheRequest:
     public abstract okio.Sink body()
     public abstract void abort()
@@ -26607,6 +26630,7 @@ okhttp3.CipherSuite:
 plug.cricket.ui.createteam.AllRounder$Companion
 ninja.cricks.adaptors.SelectedTeamAdapter:
     public static final ninja.cricks.adaptors.SelectedTeamAdapter$Companion Companion
+okhttp3.logging.HttpLoggingInterceptor$Logger$Companion
 ninja.cricks.ui.mymatches.MyUpcomingMatchesFragment$MyMatchesAdapter:
     final synthetic ninja.cricks.ui.mymatches.MyUpcomingMatchesFragment this$0
 ninja.cricks.utils.HardwareInfo:
@@ -26641,15 +26665,17 @@ ninja.cricks.CreateTeamActivity$onCreate$3
 okhttp3.internal.http2.Http2Connection$ReaderRunnable$ping$$inlined$execute$1:
     final synthetic java.lang.String $name
     final synthetic boolean $cancelable
+ninja.cricks.utils.DownloadController$Companion
 ninja.cricks.databinding.ActivityMoreContestBinding:
     public final android.widget.RelativeLayout linearTeams
     public final android.widget.LinearLayout linearTopBar
-    public final androidx.swiperefreshlayout.widget.SwipeRefreshLayout mycontestRefresh
 ninja.cricks.utils.CricketPlayersFilters$Companion$getPlayersbyMaxCredits$$inlined$sortedByDescending$1
+com.edify.atrist.listener.OnLoadMoreListener
 androidx.fragment.app.FragmentTransitionCompat21$2:
     final synthetic androidx.fragment.app.FragmentTransitionCompat21 this$0
 com.bumptech.glide.load.engine.cache.SafeKeyGenerator$1:
     final synthetic com.bumptech.glide.load.engine.cache.SafeKeyGenerator this$0
+ninja.cricks.ui.JoinContestActivity$Companion
 androidx.transition.ChangeBounds$9:
     final synthetic androidx.transition.ChangeBounds this$0
 ninja.cricks.utils.CricketPlayersFilters$Companion$getPlayersbyMaxSelection$$inlined$sortedByDescending$1
@@ -26657,11 +26683,10 @@ androidx.media.AudioAttributesCompat:
     private static final int[] SDK_USAGES
 com.bumptech.glide.load.engine.GlideException:
     private java.lang.Exception exception
-ninja.cricks.ui.contest.adaptors.ContestAdapter$ViewHolderJoinedContest:
-    private final android.widget.TextView moreContestClick
 androidx.core.graphics.TypefaceCompatBaseImpl$1:
     final synthetic androidx.core.graphics.TypefaceCompatBaseImpl this$0
 kotlin.internal.PlatformImplementations$ReflectAddSuppressedMethod:
+    private void <init>()
     public static final kotlin.internal.PlatformImplementations$ReflectAddSuppressedMethod INSTANCE
 ninja.cricks.databinding.ActivityWithdrawAmountBinding:
     public final android.widget.RadioButton bankBtn
@@ -26681,6 +26706,7 @@ ninja.cricks.databinding.ActivityVerifyDocumentBinding:
     public final android.widget.TextView txtSelectPancrd
 ninja.cricks.CreateTeamActivity$onCreate$2
 plug.cricket.ui.createteam.WicketKeepers$resetSorting$1
+okhttp3.internal.http2.PushObserver$Companion
 ninja.cricks.databinding.InviteFriendsBinding:
     public final com.google.android.material.appbar.AppBarLayout appbar
 ninja.cricks.models.MyTeamModels:
@@ -26709,7 +26735,9 @@ ninja.cricks.NotificationListActivity:
 com.bumptech.glide.RequestBuilder:
     private final com.bumptech.glide.Glide glide
     protected static final com.bumptech.glide.request.RequestOptions DOWNLOAD_ONLY_OPTIONS
+com.bumptech.glide.load.resource.bitmap.DownsampleStrategy$AtMost
 ninja.cricks.ui.createteam.adaptors.PlayersSelectedAdapter:
+    private ninja.cricks.models.UpcomingMatchesModel matchObject
     public static final ninja.cricks.ui.createteam.adaptors.PlayersSelectedAdapter$Companion Companion
 kotlinx.coroutines.CoroutineName$Key
 ninja.cricks.CreateTeamActivity$onCreate$5
@@ -26835,6 +26863,8 @@ androidx.navigation.fragment.R$styleable:
     public static final int[] Navigator
 com.bumptech.glide.load.engine.ActiveResources:
     private final java.util.concurrent.Executor monitorClearedResourcesExecutor
+okhttp3.internal.http2.Header$Companion
+androidx.databinding.CallbackRegistry$NotifierCallback
 io.branch.referral.GooglePlayStoreAttribution$2:
     final synthetic io.branch.referral.GooglePlayStoreAttribution this$0
 androidx.fragment.app.FragmentTransitionImpl$1:
@@ -26850,6 +26880,8 @@ okhttp3.internal.http2.Http2Connection$ReaderRunnable$settings$$inlined$execute$
     final synthetic java.lang.String $name
     final synthetic boolean $cancelable
 ninja.cricks.CreateTeamActivity$onCreate$6
+okhttp3.internal.http.RetryAndFollowUpInterceptor$Companion
+okhttp3.internal.http1.Http1ExchangeCodec$Companion
 ninja.cricks.network.IApiMethod:
     public abstract retrofit2.Call getPlayer(ninja.cricks.network.RequestModel)
     public abstract retrofit2.Call getLeaderBoard(ninja.cricks.network.RequestModel)
@@ -26869,6 +26901,7 @@ okhttp3.internal.http2.Http2Connection$ReaderRunnable$applyAndAckSettings$$inlin
     final synthetic okhttp3.internal.http2.Settings $settings$inlined
     final synthetic kotlin.jvm.internal.Ref$LongRef $delta$inlined
     final synthetic kotlin.jvm.internal.Ref$ObjectRef $streamsToNotify$inlined
+androidx.arch.core.executor.ArchTaskExecutor$2
 okhttp3.internal.tls.BasicCertificateChainCleaner:
     public static final okhttp3.internal.tls.BasicCertificateChainCleaner$Companion Companion
 ninja.cricks.CreateTeamActivity$onCreate$4
@@ -26877,6 +26910,7 @@ androidx.appcompat.view.menu.ActionMenuItem:
 ninja.cricks.databinding.FragmentMyAccountBalanceBinding:
     public final android.widget.ImageView bonusIcon
     public final android.widget.TextView earningRefferal
+    public final android.widget.ImageView giftIcon
     public final android.widget.ImageView refferalIcon
     public final android.widget.ImageView ruppeIcon
     public final android.widget.ImageView trophyIcon
@@ -26900,6 +26934,7 @@ androidx.emoji.text.EmojiSpan:
     private short mHeight
 androidx.fragment.app.FragmentTransitionImpl$2:
     final synthetic androidx.fragment.app.FragmentTransitionImpl this$0
+com.andrognito.flashbar.Flashbar$Companion
 androidx.viewpager.widget.PagerAdapter:
     public java.lang.Object instantiateItem(android.view.View,int)
     public void destroyItem(android.view.View,int,java.lang.Object)
@@ -26962,13 +26997,17 @@ ninja.cricks.ui.home.FixtureCricketFragment:
     public final ninja.cricks.adaptors.MatchesAdapter getAdapter()
     public final java.util.ArrayList getAllmatchesArrayList()
     private ninja.cricks.listener.RecyclerViewLoadMoreScroll scrollListener
+    private static int pageNo
     public static final ninja.cricks.ui.home.FixtureCricketFragment$Companion Companion
 kotlinx.coroutines.CoroutineId$Key
 ninja.cricks.TeamPreviewActivity$Companion:
     public final java.lang.String getKEY_TEAM_NAME()
     public final java.lang.String getKEY_TEAM_ID()
+androidx.arch.core.executor.DefaultTaskExecutor:
+    public void executeOnDiskIO(java.lang.Runnable)
 plug.cricket.ui.createteam.Batsman$onViewCreated$1
 ninja.cricks.ui.leadersboard.PrizeBreakupFragment$PrizeBreakUpAdapter
+okhttp3.CookieJar$Companion
 ninja.cricks.QuizContestActivity$QuizContestListAdapter$DataViewHolder:
     private final android.widget.LinearLayout linearContestViews
     private final android.widget.TextView contestPrizePool
@@ -26993,6 +27032,8 @@ androidx.core.view.WindowInsetsCompat$Impl29:
     private androidx.core.graphics.Insets mTappableElementInsets
 pl.droidsonroids.relinker.elf.ElfParser:
     private final int MAGIC
+ninja.cricks.adaptors.MatchesAdapter$Companion
+androidx.appcompat.widget.ListPopupWindow$2
 androidx.appcompat.view.menu.BaseMenuPresenter:
     protected android.view.LayoutInflater mInflater
 com.bumptech.glide.load.HttpException:
@@ -27022,15 +27063,18 @@ ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter$MyMatchViewHolder:
     private final android.widget.ImageView teamShare
 kotlinx.coroutines.scheduling.TasksKt:
     public static final int BLOCKING_DEFAULT_PARALLELISM
+okhttp3.internal.platform.android.AndroidSocketAdapter$Companion
 plug.cricket.ui.createteam.AllRounder
 ninja.cricks.VerifyDocumentsActivity:
     private java.lang.String adharCardDocumentUrlFront
     private java.lang.String adharCardDocumentUrlBack
 ninja.cricks.models.NotifyModels:
     private final java.lang.String activationDate
+androidx.databinding.ViewDataBinding$4
 ninja.cricks.ui.home.models.UsersPostDBResponse:
     public final java.util.ArrayList getLeaderBoardList()
     private java.util.ArrayList leaderBoardList
+androidx.databinding.ViewDataBinding$5
 okhttp3.internal.http2.Http2Connection$Listener:
     public static final okhttp3.internal.http2.Http2Connection$Listener$Companion Companion
 okhttp3.internal.http.ExchangeCodec:
@@ -27048,6 +27092,7 @@ retrofit2.CompletableFutureCallAdapterFactory$ResponseCallAdapter$1:
 kotlin.jvm.internal.ClassReference:
     private static final java.util.Map simpleNames
     public static final kotlin.jvm.internal.ClassReference$Companion Companion
+com.bumptech.glide.load.resource.bitmap.DownsampleStrategy$AtLeast
 androidx.core.view.accessibility.AccessibilityViewCommand$CommandArguments:
     android.os.Bundle mBundle
 com.bumptech.glide.load.engine.bitmap_recycle.LruBitmapPool:
@@ -27064,6 +27109,7 @@ androidx.navigation.NavDestination:
     private static final java.util.HashMap sClasses
 androidx.constraintlayout.widget.ConstraintHelper:
     private android.view.View[] mViews
+kotlinx.coroutines.scheduling.CoroutineScheduler$Companion
 okhttp3.internal.cache.CacheInterceptor$cacheWritingResponse$cacheWritingSource$1
 android.support.v4.os.ResultReceiver:
     final boolean mLocal
@@ -27075,6 +27121,7 @@ com.paytm.pgsdk.PaytmWebView$1:
 ninja.cricks.ui.leadersboard.LeadersBoardFragment$LeadersBoardAdapter
 okhttp3.Interceptor:
     public static final okhttp3.Interceptor$Companion Companion
+androidx.arch.core.executor.ArchTaskExecutor$1
 ninja.cricks.CreateTeamActivity$Companion:
     public final java.lang.String getSERIALIZABLE_KEY_PLAYERS()
     public final boolean isCopyTeam()
@@ -27122,6 +27169,7 @@ androidx.core.os.TraceCompat:
     private static java.lang.reflect.Method sTraceCounterMethod
 androidx.appcompat.app.AlertController$AlertParams:
     public boolean mRecycleOnMeasure
+ninja.cricks.payments.PaytmHandler$Companion
 ninja.cricks.ui.leadersboard.LeadersBoardFragment$getPoints$1
 ninja.cricks.databinding.ActivityRegisterBinding:
     public final android.widget.TextView checkboxTnc
@@ -27153,6 +27201,39 @@ ninja.cricks.ui.mymatches.MyLiveMatchesFragment$MyMatchesAdapter:
     final synthetic ninja.cricks.ui.mymatches.MyLiveMatchesFragment this$0
 androidx.fragment.app.FragmentTransitionImpl$3:
     final synthetic androidx.fragment.app.FragmentTransitionImpl this$0
+androidx.core.R$id:
+    public static final int accessibility_custom_action_0
+    public static final int accessibility_custom_action_1
+    public static final int accessibility_custom_action_10
+    public static final int accessibility_custom_action_11
+    public static final int accessibility_custom_action_12
+    public static final int accessibility_custom_action_13
+    public static final int accessibility_custom_action_14
+    public static final int accessibility_custom_action_15
+    public static final int accessibility_custom_action_16
+    public static final int accessibility_custom_action_17
+    public static final int accessibility_custom_action_18
+    public static final int accessibility_custom_action_19
+    public static final int accessibility_custom_action_2
+    public static final int accessibility_custom_action_20
+    public static final int accessibility_custom_action_21
+    public static final int accessibility_custom_action_22
+    public static final int accessibility_custom_action_23
+    public static final int accessibility_custom_action_24
+    public static final int accessibility_custom_action_25
+    public static final int accessibility_custom_action_26
+    public static final int accessibility_custom_action_27
+    public static final int accessibility_custom_action_28
+    public static final int accessibility_custom_action_29
+    public static final int accessibility_custom_action_3
+    public static final int accessibility_custom_action_30
+    public static final int accessibility_custom_action_31
+    public static final int accessibility_custom_action_4
+    public static final int accessibility_custom_action_5
+    public static final int accessibility_custom_action_6
+    public static final int accessibility_custom_action_7
+    public static final int accessibility_custom_action_8
+    public static final int accessibility_custom_action_9
 androidx.transition.FragmentTransitionSupport$5:
     final synthetic androidx.transition.FragmentTransitionSupport this$0
 androidx.appcompat.widget.ActionMenuPresenter$OverflowMenuButton$1:
@@ -27206,10 +27287,14 @@ ninja.cricks.ui.myaccounts.TransactionFragment$TransactionAdaptor:
     private final android.content.Context context
 okhttp3.EventListener:
     public static final okhttp3.EventListener$Companion Companion
+androidx.recyclerview.widget.StaggeredGridLayoutManager$Span:
+    public int findLastVisibleItemPosition()
+    int findOneVisibleChild(int,int,boolean)
 ninja.cricks.ui.BaseActivity:
     private static java.lang.String DOCUMENT_TYPE_PAYTM
 androidx.constraintlayout.widget.ConstraintLayout$LayoutParams:
     float dimensionRatioValue
+okhttp3.internal.http2.Http2Writer$Companion
 kotlin.sequences.DropSequence$iterator$1:
     final synthetic kotlin.sequences.DropSequence this$0
 com.andrognito.flashbar.Flashbar:
@@ -27231,6 +27316,9 @@ kotlinx.coroutines.JobSupport$addLastAtomic$$inlined$addLastIf$1:
     final synthetic kotlinx.coroutines.internal.LockFreeLinkedListNode $node
 io.branch.referral.ServerResponse:
     private java.lang.String tag_
+com.andrognito.flashbar.view.FbProgress$WheelSavedState$Companion$CREATOR$1
+okhttp3.internal.tls.BasicCertificateChainCleaner$Companion
+com.andrognito.flashbar.view.FbProgress$WheelSavedState$Companion
 ninja.cricks.MyTransactionHistoryActivity$MoreOptionsAdaptor:
     private final android.content.Context context
 ninja.cricks.utils.BindingUtils$Companion$sendEventLogs$1
@@ -27309,6 +27397,8 @@ androidx.lifecycle.MethodCallsLogger:
     private java.util.Map mCalledMethods
 ninja.cricks.ContestActivity$Companion:
     public final java.lang.String getSERIALIZABLE_KEY_CONTEST_OBJECT()
+androidx.databinding.ViewDataBinding$1
+okhttp3.internal.connection.RealConnection$Companion
 androidx.appcompat.R$styleable:
     public static final int[] ActionMenuView
     public static final int[] ActivityChooserView
@@ -27331,6 +27421,8 @@ ninja.cricks.adaptors.OpenTeamsAdapter:
     private final ninja.cricks.utils.CustomeProgressDialog customeProgressDialog
 ninja.cricks.adaptors.MatchesAdapter$UpcomingMatchesViewHolder:
     final synthetic ninja.cricks.adaptors.MatchesAdapter this$0
+kotlin.text.Regex$Companion
+ninja.cricks.adaptors.SelectedTeamAdapter$Companion
 androidx.appcompat.widget.ThemeUtils:
     static final int[] ACTIVATED_STATE_SET
     static final int[] SELECTED_STATE_SET
@@ -27427,12 +27519,15 @@ ninja.cricks.CreateTeamActivity:
     public final void sortByCredits()
     private ninja.cricks.models.PlayerModels playersList
     private ninja.cricks.CreateTeamActivity$ViewPagerAdapter viewPagerAdapter
+    private static final java.lang.String SERIALIZABLE_KEY_PLAYERS
     private static int teamAId
     private static int teamBId
+androidx.databinding.ViewDataBinding$2
 ninja.cricks.adaptors.SelectedTeamAdapter$ViewHolderJoinedMatches:
     final synthetic ninja.cricks.adaptors.SelectedTeamAdapter this$0
 ninja.cricks.models.MyTeamModels$MyTeamId:
     public final void setTeamId(int)
+com.bumptech.glide.load.engine.executor.GlideExecutor$UncaughtThrowableStrategy$1
 com.bumptech.glide.module.AppliesOptions
 androidx.transition.Fade$1:
     final synthetic androidx.transition.Fade this$0
@@ -27509,12 +27604,14 @@ ninja.cricks.databinding.ActivityUpdateApplicationBinding:
     public final android.widget.ImageView logo
     public final android.widget.RelativeLayout topLinearBalance
 ninja.cricks.ui.leadersboard.LeadersBoardFragment
+kotlin.jvm.internal.ClassReference$Companion
 com.bumptech.glide.load.engine.ActiveResources$1$1:
     final synthetic com.bumptech.glide.load.engine.ActiveResources$1 this$1
 pl.droidsonroids.gif.R$styleable:
     public static final int[] GifTextureView
 androidx.constraintlayout.solver.widgets.analyzer.DependencyGraph:
     private java.util.ArrayList runGroups
+androidx.databinding.ViewDataBinding$3
 okio.BufferedSink:
     public abstract okio.BufferedSink emitCompleteSegments()
 ninja.cricks.ui.contest.MyContestFragment$MyContestJoinedTeamAdapter:
@@ -27532,8 +27629,11 @@ androidx.navigation.common.R$styleable:
     public static final int[] FontFamilyFont
     public static final int[] GradientColor
     public static final int[] GradientColorItem
+ninja.cricks.utils.HardwareInfo$Companion
 ninja.cricks.ui.login.LoginScreenActivity:
     private java.lang.Boolean isActivityRequiredResult
+androidx.arch.core.executor.TaskExecutor:
+    public abstract void executeOnDiskIO(java.lang.Runnable)
 ninja.cricks.ui.leadersboard.PrizeBreakupFragment$PrizeBreakUpAdapter$MyMatchViewHolder
 androidx.appcompat.view.StandaloneActionMode:
     private boolean mFocusable

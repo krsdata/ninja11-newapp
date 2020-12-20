@@ -123,4 +123,5 @@
     <string name="contact_support_Team">"Contact Ninja11 Support Team"</string>
     <string name="label_update">"Ninja11 Update"</string>
     <string name="verify_communication">Verify Communication</string>
+    <string name="my_reward_points">(100 points = ₹1.00)</string>
 </resources>

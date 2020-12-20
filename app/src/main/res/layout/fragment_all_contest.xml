@@ -21,6 +21,7 @@
             android:background="@color/greybackround"
             android:gravity="center_vertical"
             android:orientation="vertical"
+            android:visibility="gone"
             android:paddingStart="@dimen/_10sdp"
             android:paddingEnd="@dimen/_10sdp">
 
