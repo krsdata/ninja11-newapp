@@ -110,8 +110,7 @@
                 <TextView
                     android:id="@+id/invite_friends"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_30sdp"
-                    android:fontFamily="@font/roboto"
+                    android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="Invite your friends"
                     android:textColor="@color/white"

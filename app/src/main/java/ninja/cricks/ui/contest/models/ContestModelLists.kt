@@ -72,6 +72,10 @@ class ContestModelLists :Serializable,Cloneable {
     @Expose
     var joinedTeams: ArrayList<MyTeamModels>? = null
 
+    @SerializedName("gift_url")
+    @Expose
+    var giftUrl: String = ""
+
     public override fun clone(): ContestModelLists {
         return super.clone() as ContestModelLists
     }

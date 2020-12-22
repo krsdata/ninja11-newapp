@@ -55,7 +55,7 @@ class ContestAdapter(
         /**
          * Replace this part with below part once api comes
          */
-        /*viewJoinedMatches.viewMoreLayout.visibility = View.GONE
+        viewJoinedMatches.viewMoreLayout.visibility = View.GONE
         val adapter = ContestListAdapter(
             context,
             objectVal.allContestsRunning!!,
@@ -63,10 +63,10 @@ class ContestAdapter(
             listener,
             colorCode
         )
-        viewJoinedMatches.recyclerView.adapter = adapter*/
+        viewJoinedMatches.recyclerView.adapter = adapter
 
         //  Settings for more Contests
-        val top3: ArrayList<ContestModelLists> = getFirst3Values(objectVal.allContestsRunning!!)
+        /*val top3: ArrayList<ContestModelLists> = getFirst3Values(objectVal.allContestsRunning!!)
         val adapter = ContestListAdapter(
             context,
             top3,
@@ -89,7 +89,7 @@ class ContestAdapter(
             })
         } else {
             viewJoinedMatches.viewMoreLayout.visibility = View.GONE
-        }
+        }*/
 
         adapter.onItemClick = { objects ->
             //MyUtils.logd("JoinedContestAdapter","Joined Contest"+objects.country1Name+" Vs "+objects.country1Name)

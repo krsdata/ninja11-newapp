@@ -34,6 +34,7 @@ kotlin.ranges.UIntProgression
 com.github.ybq.android.spinkit.style.CubeGrid$1
 io.branch.referral.ServerRequestIdentifyUserRequest:
     public void <init>(android.content.Context,io.branch.referral.Branch$BranchReferralInitListener,java.lang.String)
+    public boolean handleErrors(android.content.Context)
     public boolean isExistingID()
     public void handleUserExist(io.branch.referral.Branch)
 ninja.cricks.DataBinderMapperImpl$InnerBrLookup
@@ -324,6 +325,7 @@ androidx.fragment.app.FragmentManager$FragmentLifecycleCallbacks:
     public void <init>()
 io.branch.referral.ServerRequestRedeemRewards:
     public void <init>(android.content.Context,java.lang.String,int,io.branch.referral.Branch$BranchReferralStateChangedListener)
+    public boolean handleErrors(android.content.Context)
 androidx.core.app.NotificationCompat:
     static android.app.Notification[] getNotificationArrayFromBundle(android.os.Bundle,java.lang.String)
     public static int getActionCount(android.app.Notification)
@@ -943,35 +945,7 @@ androidx.annotation.ArrayRes
 androidx.constraintlayout.utils.widget.ImageFilterButton
 androidx.databinding.Untaggable
 kotlin.Experimental$Level
-io.branch.referral.util.CommerceEvent:
-    public void <init>()
-    public void <init>(java.lang.Double,io.branch.referral.util.CurrencyType,java.lang.String,java.lang.Double,java.lang.Double,java.lang.String,java.lang.String,java.util.List)
-    public void <init>(java.lang.Double,io.branch.referral.util.CurrencyType,java.lang.String,java.lang.Double,java.lang.Double,java.lang.String,java.lang.String,io.branch.referral.util.Product)
-    public java.lang.Double getRevenue()
-    public void setRevenue(java.lang.Double)
-    public io.branch.referral.util.CurrencyType getCurrencyType()
-    public void setCurrencyType(io.branch.referral.util.CurrencyType)
-    public java.lang.String getTransactionID()
-    public void setTransactionID(java.lang.String)
-    public java.lang.Double getShipping()
-    public void setShipping(java.lang.Double)
-    public java.lang.Double getTax()
-    public void setTax(java.lang.Double)
-    public java.lang.String getCoupon()
-    public void setCoupon(java.lang.String)
-    public java.lang.String getAffiliation()
-    public void setAffiliation(java.lang.String)
-    public void setProducts(java.util.List)
-    public void addProduct(io.branch.referral.util.Product)
-    public java.util.List getProducts()
-    private java.lang.Double revenue
-    private io.branch.referral.util.CurrencyType currencyType
-    private java.lang.String transactionID
-    private java.lang.Double shipping
-    private java.lang.Double tax
-    private java.lang.String coupon
-    private java.lang.String affiliation
-    private java.util.List products
+io.branch.referral.util.CommerceEvent
 io.branch.referral.Branch$InitSessionBuilder:
     public io.branch.referral.Branch$InitSessionBuilder withDelay(int)
     public io.branch.referral.Branch$InitSessionBuilder isReferrable(boolean)
@@ -999,6 +973,7 @@ kotlin.collections.ArraysKt___ArraysKt$asSequence$$inlined$Sequence$5
 androidx.navigation.NavigatorProviderKt
 io.branch.referral.ServerRequestGetRewardHistory:
     public void <init>(android.content.Context,java.lang.String,java.lang.String,int,io.branch.referral.Branch$CreditHistoryOrder,io.branch.referral.Branch$BranchListResponseListener)
+    public boolean handleErrors(android.content.Context)
 androidx.core.content.res.ResourcesCompat$ThemeCompat$ImplApi23:
     private void <init>()
 android.support.v4.media.session.MediaControllerCompat$TransportControlsBase
@@ -1413,6 +1388,7 @@ okhttp3.Cache$CacheResponseBody
 kotlin.coroutines.CoroutineContext:
     public abstract kotlin.coroutines.CoroutineContext plus(kotlin.coroutines.CoroutineContext)
 kotlin.collections.unsigned.UArraysKt___UArraysJvmKt
+io.branch.referral.Branch$ExtendedBranchLinkShareListener
 pl.droidsonroids.gif.InputSource$InputStreamSource
 ninja.cricks.AddMoneyActivity$checkGpayAvalable$1
 kotlinx.coroutines.DeferredCoroutine
@@ -1715,11 +1691,7 @@ androidx.core.util.LongSparseArrayKt$valueIterator$1
 androidx.recyclerview.widget.ItemTouchHelper$Callback
 okio.-Platform:
     public static final java.lang.Object synchronized(java.lang.Object,kotlin.jvm.functions.Function0)
-androidx.databinding.PropertyChangeRegistry:
-    public void <init>()
-    static void <clinit>()
-    public void notifyChange(androidx.databinding.Observable,int)
-    private static final androidx.databinding.CallbackRegistry$NotifierCallback NOTIFIER_CALLBACK
+androidx.databinding.PropertyChangeRegistry
 kotlinx.coroutines.channels.AbstractSendChannel$onSend$1
 androidx.slidingpanelayout.R$drawable
 androidx.constraintlayout.widget.Barrier:
@@ -2348,6 +2320,7 @@ kotlinx.coroutines.scheduling.CoroutineScheduler:
     private static final long PARKED_INDEX_MASK
     private static final long PARKED_VERSION_MASK
     private static final long PARKED_VERSION_INC
+io.branch.referral.AnimatedDialog
 io.branch.referral.validators.ServerRequestGetAppConfig
 androidx.constraintlayout.solver.widgets.analyzer.WidgetGroup$MeasureResult:
     public void apply()
@@ -2658,6 +2631,7 @@ androidx.emoji.widget.EmojiExtractEditText:
     public void <init>(android.content.Context,android.util.AttributeSet,int)
     public void <init>(android.content.Context,android.util.AttributeSet,int,int)
 io.branch.indexing.BranchUniversalObject:
+    static synthetic io.branch.referral.BranchShortLinkBuilder access$100(io.branch.indexing.BranchUniversalObject,io.branch.referral.BranchShortLinkBuilder,io.branch.referral.util.LinkProperties)
     public io.branch.indexing.BranchUniversalObject setCanonicalIdentifier(java.lang.String)
     public io.branch.indexing.BranchUniversalObject setCanonicalUrl(java.lang.String)
     public io.branch.indexing.BranchUniversalObject setContentImageUrl(java.lang.String)
@@ -2675,7 +2649,9 @@ io.branch.indexing.BranchUniversalObject:
     public void removeFromLocalIndexing(android.content.Context,io.branch.referral.util.LinkProperties)
     public void userCompletedAction(java.lang.String)
     public void userCompletedAction(io.branch.referral.util.BRANCH_STANDARD_EVENT)
+    public void userCompletedAction(java.lang.String,java.util.HashMap)
     public void userCompletedAction(io.branch.referral.util.BRANCH_STANDARD_EVENT,java.util.HashMap)
+    public boolean isLocallyIndexable()
     public java.util.HashMap getMetadata()
     public io.branch.referral.util.ContentMetadata getContentMetadata()
     public long getExpirationTime()
@@ -2693,6 +2669,9 @@ io.branch.indexing.BranchUniversalObject:
     public java.lang.String getShortUrl(android.content.Context,io.branch.referral.util.LinkProperties)
     public java.lang.String getShortUrl(android.content.Context,io.branch.referral.util.LinkProperties,boolean)
     public void generateShortUrl(android.content.Context,io.branch.referral.util.LinkProperties,io.branch.referral.Branch$BranchLinkCreateListener,boolean)
+    public void showShareSheet(android.app.Activity,io.branch.referral.util.LinkProperties,io.branch.referral.util.ShareSheetStyle,io.branch.referral.Branch$BranchLinkShareListener)
+    public void showShareSheet(android.app.Activity,io.branch.referral.util.LinkProperties,io.branch.referral.util.ShareSheetStyle,io.branch.referral.Branch$BranchLinkShareListener,io.branch.referral.Branch$IChannelProperties)
+    public org.json.JSONObject convertToJson()
 androidx.activity.R$attr
 androidx.browser.trusted.splashscreens.SplashScreenVersion
 androidx.browser.browseractions.BrowserServiceFileProvider
@@ -3377,6 +3356,7 @@ retrofit2.Retrofit$Builder:
 androidx.lifecycle.AbstractSavedStateViewModelFactory
 androidx.transition.GhostView
 com.bumptech.glide.ListPreloader$PreloadTargetQueue
+io.branch.indexing.BranchUniversalObject$LinkShareListenerWrapper
 androidx.core.text.HtmlKt
 ninja.cricks.VerifyDocumentsActivity$Companion:
     public final void setREQUESTCODE_VERIFY_DOC(int)
@@ -3512,21 +3492,7 @@ androidx.core.view.ViewGroupCompat:
     public static final int LAYOUT_MODE_CLIP_BOUNDS
     public static final int LAYOUT_MODE_OPTICAL_BOUNDS
 androidx.core.app.NotificationCompat$CarExtender
-io.branch.referral.BranchShareSheetBuilder:
-    public io.branch.referral.BranchShareSheetBuilder addTag(java.lang.String)
-    public io.branch.referral.BranchShareSheetBuilder addTags(java.util.ArrayList)
-    public io.branch.referral.BranchShareSheetBuilder setFeature(java.lang.String)
-    public io.branch.referral.BranchShareSheetBuilder setStage(java.lang.String)
-    public io.branch.referral.BranchShareSheetBuilder addPreferredSharingOption(io.branch.referral.SharingHelper$SHARE_WITH)
-    public io.branch.referral.BranchShareSheetBuilder addParam(java.lang.String,java.lang.String)
-    public io.branch.referral.BranchShareSheetBuilder setMoreOptionStyle(int,int)
-    public io.branch.referral.BranchShareSheetBuilder setCopyUrlStyle(int,int,int)
-    public io.branch.referral.BranchShareSheetBuilder setAlias(java.lang.String)
-    public io.branch.referral.BranchShareSheetBuilder setMatchDuration(int)
-    public io.branch.referral.BranchShareSheetBuilder excludeFromShareSheet(java.lang.String[])
-    public io.branch.referral.BranchShareSheetBuilder includeInShareSheet(java.lang.String)
-    public io.branch.referral.BranchShareSheetBuilder includeInShareSheet(java.lang.String[])
-    public io.branch.referral.Branch getBranch()
+io.branch.referral.BranchShareSheetBuilder
 androidx.vectordrawable.graphics.drawable.PathInterpolatorCompat:
     private static final float PRECISION
     public static final int MAX_NUM_POINTS
@@ -3833,7 +3799,6 @@ kotlin.collections.CollectionsKt___CollectionsKt:
     public static final java.lang.Object maxWith(java.lang.Iterable,java.util.Comparator)
     public static final java.lang.Double min(java.lang.Iterable)
     public static final java.lang.Float min(java.lang.Iterable)
-    public static final java.lang.Comparable min(java.lang.Iterable)
     public static final java.lang.Object minBy(java.lang.Iterable,kotlin.jvm.functions.Function1)
     public static final java.lang.Object minWith(java.lang.Iterable,java.util.Comparator)
     public static final boolean none(java.lang.Iterable)
@@ -3899,6 +3864,49 @@ kotlinx.coroutines.flow.FlowKt__BuildersKt$flowViaChannel$1
 kotlin.jvm.internal.MutablePropertyReference0Impl
 kotlinx.coroutines.flow.FlowKt__ZipKt$combineTransform$1
 net.gotev.uploadservice.BinaryUploadRequest
+io.branch.referral.ShareLinkManager:
+    void <init>()
+    private void createShareDialog(java.util.List)
+    private java.util.List getPreferredMatchingApps(java.util.List,java.util.List)
+    private java.util.List getExplicitlyIncludedMatchingApps(java.util.List)
+    private void filterOutExplicitlyExcludedApps(java.util.List)
+    private void invokeSharingClient(android.content.pm.ResolveInfo)
+    private void shareWithClient(android.content.pm.ResolveInfo,java.lang.String,java.lang.String)
+    private void addLinkToClipBoard(java.lang.String,java.lang.String)
+    static synthetic java.util.List access$302(io.branch.referral.ShareLinkManager,java.util.List)
+    static synthetic io.branch.referral.BranchShareSheetBuilder access$400(io.branch.referral.ShareLinkManager)
+    static synthetic void access$500(io.branch.referral.ShareLinkManager,android.content.pm.ResolveInfo)
+    static synthetic boolean access$600(io.branch.referral.ShareLinkManager)
+    static synthetic io.branch.referral.BranchShareSheetBuilder access$402(io.branch.referral.ShareLinkManager,io.branch.referral.BranchShareSheetBuilder)
+    static synthetic void access$700(io.branch.referral.ShareLinkManager,android.content.pm.ResolveInfo,java.lang.String,java.lang.String)
+    static synthetic boolean access$602(io.branch.referral.ShareLinkManager,boolean)
+    static synthetic java.util.List access$300(io.branch.referral.ShareLinkManager)
+    static synthetic int access$800(io.branch.referral.ShareLinkManager)
+    static synthetic int access$902(int)
+    static synthetic int access$900()
+    static synthetic int access$1000()
+    static synthetic int access$1100(io.branch.referral.ShareLinkManager)
+    static synthetic int access$1200(io.branch.referral.ShareLinkManager)
+    static void <clinit>()
+    android.app.Dialog shareLink(io.branch.referral.BranchShareSheetBuilder)
+    io.branch.referral.AnimatedDialog shareDlg_
+    io.branch.referral.Branch$BranchLinkShareListener callback_
+    io.branch.referral.Branch$IChannelProperties channelPropertiesCallback_
+    private java.util.List displayedAppList_
+    private android.content.Intent shareLinkIntent_
+    private final int BG_COLOR_ENABLED
+    private final int BG_COLOR_DISABLED
+    android.content.Context context_
+    private boolean isShareInProgress_
+    private int shareDialogThemeID_
+    private int iconSize_
+    private io.branch.referral.BranchShareSheetBuilder builder_
+    final int padding
+    final int leftMargin
+    private java.util.List includeInShareSheet
+    private java.util.List excludeFromShareSheet
+    private static int viewItemMinHeight_
+    private static int ICON_SIZER
 kotlin.collections.CollectionsKt__MutableCollectionsJVMKt:
     private static final void sort(java.util.List,java.util.Comparator)
     private static final void sort(java.util.List,kotlin.jvm.functions.Function2)
@@ -5822,6 +5830,8 @@ io.branch.referral.BranchUtil:
     public void <init>()
     static void shutDown()
     public static boolean isDebugEnabled()
+    public static android.graphics.drawable.Drawable getDrawable(android.content.Context,int)
+    public static int dpToPx(android.content.Context,int)
     public static boolean isLowOnMemory(android.content.Context)
     public static org.json.JSONObject getDeepLinkSchemes(android.content.Context)
 pl.pzienowicz.autoscrollviewpager.AutoScrollViewPager:
@@ -6113,6 +6123,7 @@ kotlin.ResultKt:
 kotlinx.coroutines.flow.FlowKt__ZipKt$combineTransform$$inlined$combineTransform$2
 kotlinx.coroutines.flow.FlowKt__ZipKt$combineTransform$5
 androidx.appcompat.text.AllCapsTransformationMethod
+io.branch.referral.ShareLinkManager$MoreShareItem
 com.bumptech.glide.load.engine.executor.RuntimeCompat:
     private void <init>()
     private static final java.lang.String TAG
@@ -6721,11 +6732,14 @@ ninja.cricks.ui.home.FixtureCricketFragment$Companion:
     public final int getPageNo()
     public final void setPageNo(int)
 ninja.cricks.ui.contest.adaptors.ContestAdapter:
+    private final java.util.ArrayList getFirst3Values(java.util.ArrayList)
     public static final synthetic void access$setMatchesListObject$p(ninja.cricks.ui.contest.adaptors.ContestAdapter,java.util.ArrayList)
     public final android.content.Context getMContext()
     public final void setMContext(android.content.Context)
+    public final ninja.cricks.models.UpcomingMatchesModel getMatchObject()
     public final void setMatchObject(ninja.cricks.models.UpcomingMatchesModel)
     public final void setOnItemClick(kotlin.jvm.functions.Function1)
+    public final android.app.Activity getContext()
     public final java.util.ArrayList getContestInfoModel()
     public final com.edify.atrist.listener.OnContestEvents getListener()
 androidx.core.database.sqlite.SQLiteCursorCompat
@@ -6738,7 +6752,6 @@ com.bumptech.glide.Glide:
     public static synchronized void init(com.bumptech.glide.Glide)
     public static void init(android.content.Context,com.bumptech.glide.GlideBuilder)
     public static synchronized void tearDown()
-    public static com.bumptech.glide.RequestManager with(android.app.Activity)
     public static com.bumptech.glide.RequestManager with(androidx.fragment.app.Fragment)
     public static com.bumptech.glide.RequestManager with(android.app.Fragment)
     public static com.bumptech.glide.RequestManager with(android.view.View)
@@ -6832,6 +6845,7 @@ ninja.cricks.ui.previewteam.adaptors.GridViewAdapter:
     public final java.util.List getListImageURLs()
 kotlinx.coroutines.flow.FlowKt__ZipKt$combine$$inlined$combine$2$2
 kotlinx.coroutines.channels.ChannelsKt__ChannelsKt$sendBlocking$1
+io.branch.referral.AnimatedDialog$2
 kotlin.internal.ProgressionUtilKt:
     private static final long mod(long,long)
     private static final long differenceModulo(long,long,long)
@@ -7463,6 +7477,7 @@ okhttp3.RequestBody$Companion:
 androidx.lifecycle.LifecycleCoroutineScope$launchWhenResumed$1
 kotlinx.coroutines.flow.FlowKt__MigrationKt$combine$$inlined$combine$3$3
 androidx.recyclerview.widget.ItemTouchHelper$Callback$1
+io.branch.referral.ShareLinkManager$2
 androidx.core.app.NotificationCompat$Style:
     private android.graphics.Bitmap createColoredBitmap(int,int,int)
     private android.graphics.Bitmap createColoredBitmap(androidx.core.graphics.drawable.IconCompat,int,int)
@@ -8121,6 +8136,7 @@ ninja.cricks.ui.BaseActivity$Companion:
     public final int getPICK_IMAGE_REQUEST_GALLERY()
 kotlin.ULong
 org.intellij.lang.annotations.JdkConstants$TabPlacement
+io.branch.referral.ShareLinkManager$1
 androidx.constraintlayout.motion.widget.TimeCycleSplineSet$Sort
 androidx.constraintlayout.solver.widgets.analyzer.BasicMeasure:
     private static final boolean DEBUG
@@ -9030,11 +9046,14 @@ androidx.databinding.BaseObservable:
     public void addOnPropertyChangedCallback(androidx.databinding.Observable$OnPropertyChangedCallback)
     public void removeOnPropertyChangedCallback(androidx.databinding.Observable$OnPropertyChangedCallback)
     public void notifyChange()
+    public void notifyPropertyChanged(int)
+    private transient androidx.databinding.PropertyChangeRegistry mCallbacks
 androidx.slidingpanelayout.widget.SlidingPaneLayout$SavedState$1
 com.bumptech.glide.R$layout
 io.branch.referral.BranchShortLinkBuilder:
     public io.branch.referral.BranchShortLinkBuilder setParameters(org.json.JSONObject)
     public io.branch.referral.BranchShortLinkBuilder setType(int)
+    void generateShortUrlInternal(io.branch.referral.Branch$BranchLinkCreateListener,boolean)
 ninja.cricks.databinding.FragmentLeadersBoardBinding:
     public static ninja.cricks.databinding.FragmentLeadersBoardBinding inflate(android.view.LayoutInflater,android.view.ViewGroup,boolean)
     public static ninja.cricks.databinding.FragmentLeadersBoardBinding inflate(android.view.LayoutInflater,android.view.ViewGroup,boolean,java.lang.Object)
@@ -9489,8 +9508,7 @@ com.bumptech.glide.load.resource.bitmap.CenterInside:
 androidx.core.content.res.ResourcesCompat$ThemeCompat$ImplApi29:
     private void <init>()
 androidx.navigation.ui.R$bool
-io.branch.referral.SharingHelper$SHARE_WITH:
-    public java.lang.String getAppName()
+io.branch.referral.SharingHelper$SHARE_WITH
 androidx.core.view.accessibility.AccessibilityEventCompat:
     private void <init>()
     public static int getRecordCount(android.view.accessibility.AccessibilityEvent)
@@ -10020,6 +10038,7 @@ androidx.constraintlayout.motion.widget.TransitionBuilder
 io.branch.referral.R$style
 ninja.cricks.databinding.InviteFriendsBindingImpl:
     public boolean setVariable(int,java.lang.Object)
+    public void setOnRefernEarn(ninja.cricks.InviteFriendsActivity)
     protected boolean onFieldChange(int,java.lang.Object,int)
 kotlinx.coroutines.channels.AbstractChannel$IdempotentTokenValue
 kotlin.coroutines.jvm.internal.SuspendFunction
@@ -10145,6 +10164,7 @@ io.branch.referral.ServerRequestCreateUrl:
     boolean isReqStartedFromBranchShareSheet()
     private static final java.lang.String DEF_BASE_URL
 okhttp3.internal.concurrent.TaskQueue$AwaitIdleTask
+io.branch.referral.ShareLinkManager$ShareItemView
 kotlinx.coroutines.channels.BroadcastChannel$DefaultImpls
 kotlin.sequences.SequencesKt__SequencesKt$generateSequence$2
 androidx.core.graphics.drawable.IconKt
@@ -10898,12 +10918,15 @@ io.branch.referral.Branch:
     public void getCreditHistory(java.lang.String,io.branch.referral.Branch$BranchListResponseListener)
     public void getCreditHistory(java.lang.String,int,io.branch.referral.Branch$CreditHistoryOrder,io.branch.referral.Branch$BranchListResponseListener)
     public void getCreditHistory(java.lang.String,java.lang.String,int,io.branch.referral.Branch$CreditHistoryOrder,io.branch.referral.Branch$BranchListResponseListener)
+    public void userCompletedAction(java.lang.String,org.json.JSONObject)
     public void userCompletedAction(java.lang.String)
     public void userCompletedAction(java.lang.String,io.branch.referral.BranchViewHandler$IBranchViewEvents)
+    public void userCompletedAction(java.lang.String,org.json.JSONObject,io.branch.referral.BranchViewHandler$IBranchViewEvents)
     public void sendCommerceEvent(io.branch.referral.util.CommerceEvent,org.json.JSONObject,io.branch.referral.BranchViewHandler$IBranchViewEvents)
     public void sendCommerceEvent(io.branch.referral.util.CommerceEvent)
     public org.json.JSONObject getFirstReferringParamsSync()
     public org.json.JSONObject getLatestReferringParamsSync()
+    void shareLink(io.branch.referral.BranchShareSheetBuilder)
     public void cancelShareLinkDialog(boolean)
     public void notifyNetworkAvailable()
     boolean isReferrable()
@@ -11287,6 +11310,7 @@ com.bumptech.glide.load.engine.bitmap_recycle.LruArrayPool:
 androidx.core.view.MenuItemCompat$1
 kotlinx.coroutines.internal.ArrayQueue:
     public final void clear()
+io.branch.referral.util.BRANCH_STANDARD_EVENT
 ninja.cricks.models.MyJoinedTeamModels:
     public final java.lang.Boolean isSelected()
     public final void setSelected(java.lang.Boolean)
@@ -11407,6 +11431,7 @@ okhttp3.internal.platform.Android10Platform:
 kotlinx.coroutines.flow.FlowKt__CountKt$count$3
 kotlin.collections.ArraysKt___ArraysKt$asSequence$$inlined$Sequence$7
 kotlin.sequences.SequencesKt___SequencesKt$distinct$1
+io.branch.referral.AnimatedDialog$1
 kotlin.text.CharsKt__CharJVMKt:
     private static final boolean isDefined(char)
     private static final boolean isLetter(char)
@@ -11577,6 +11602,7 @@ kotlin.text.DelimitedRangesSequence$iterator$1:
     public final void setNextItem(kotlin.ranges.IntRange)
     public final int getCounter()
     public final void setCounter(int)
+io.branch.referral.ShareLinkManager$3
 kotlin.collections.BooleanIterator
 io.branch.referral.util.ShareSheetStyle:
     private android.graphics.drawable.Drawable getDrawable(android.content.Context,int)
@@ -11596,6 +11622,24 @@ io.branch.referral.util.ShareSheetStyle:
     public io.branch.referral.util.ShareSheetStyle includeInShareSheet(java.lang.String[])
     public io.branch.referral.util.ShareSheetStyle includeInShareSheet(java.util.List)
     public io.branch.referral.util.ShareSheetStyle setIconSize(int)
+    public java.util.List getExcludedFromShareSheet()
+    public java.util.List getIncludedInShareSheet()
+    public java.util.ArrayList getPreferredOptions()
+    public android.graphics.drawable.Drawable getCopyUrlIcon()
+    public android.graphics.drawable.Drawable getMoreOptionIcon()
+    public java.lang.String getMessageBody()
+    public java.lang.String getMessageTitle()
+    public java.lang.String getCopyURlText()
+    public java.lang.String getDefaultURL()
+    public java.lang.String getMoreOptionText()
+    public java.lang.String getUrlCopiedMessage()
+    public int getDividerHeight()
+    public java.lang.String getSharingTitle()
+    public android.view.View getSharingTitleView()
+    public boolean getIsFullWidthStyle()
+    public int getDialogThemeResourceID()
+    public int getStyleResourceID()
+    public int getIconSize()
 kotlinx.coroutines.flow.FlowKt__ErrorsKt
 com.bumptech.glide.load.engine.bitmap_recycle.SizeStrategy
 androidx.transition.VisibilityPropagation
@@ -11629,6 +11673,7 @@ ninja.cricks.models.WalletInfo:
     public final void setGpay_show(boolean)
     public final void setNinja_point(java.lang.String)
     private double referralAmount
+io.branch.referral.ShareLinkManager$4
 kotlinx.coroutines.channels.ChannelsKt__Channels_commonKt$mapIndexed$1
 androidx.appcompat.widget.AppCompatSpinner$DialogPopup:
     public int getHorizontalOriginalOffset()
@@ -11946,6 +11991,7 @@ kotlin.text.StringsKt__StringBuilderKt:
     public static final varargs java.lang.StringBuilder append(java.lang.StringBuilder,java.lang.Object[])
     public void <init>()
 io.branch.referral.ServerRequest:
+    public abstract boolean handleErrors(android.content.Context)
     protected void addGetParam(java.lang.String,java.lang.String)
     private static final java.lang.String POST_KEY
     private static final java.lang.String POST_PATH_KEY
@@ -12560,6 +12606,7 @@ kotlin.collections.MapsKt__MapsJVMKt:
 kotlin.PreconditionsKt__PreconditionsKt
 io.branch.referral.ServerRequestGetRewards:
     public void <init>(android.content.Context,io.branch.referral.Branch$BranchReferralStateChangedListener)
+    public boolean handleErrors(android.content.Context)
 kotlin.jvm.internal.markers.KMutableCollection
 androidx.appcompat.resources.R$string
 androidx.core.view.accessibility.AccessibilityViewCommand$SetProgressArguments:
@@ -14520,6 +14567,7 @@ okhttp3.internal.cache2.Relay$Companion
 kotlinx.coroutines.flow.FlowKt__ReduceKt
 androidx.navigation.ui.R$interpolator
 kotlin.coroutines.experimental.migration.ExperimentalSuspendFunction0Migration
+io.branch.referral.ShareLinkManager$ChooserArrayAdapter
 android.support.v4.media.session.IMediaControllerCallback$Stub:
     public static android.support.v4.media.session.IMediaControllerCallback asInterface(android.os.IBinder)
     private static final java.lang.String DESCRIPTOR
@@ -15004,6 +15052,9 @@ kotlin.jvm.functions.Function22:
     public abstract java.lang.Object invoke(java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object,java.lang.Object)
 android.support.v4.media.MediaBrowserCompatApi26$SubscriptionCallbackProxy
 kotlin.sequences.SequencesKt___SequencesKt$scanReduce$1
+ninja.cricks.ui.contest.adaptors.ContestAdapter$ViewHolderJoinedContest:
+    public final android.widget.TextView getMoreContestClick()
+io.branch.referral.ShareLinkManager$CopyLinkItem
 kotlin.jvm.internal.Ref$FloatRef
 kotlinx.coroutines.flow.FlowKt__DistinctKt$distinctUntilChangedBy$$inlined$distinctUntilChangedBy$FlowKt__DistinctKt$1
 kotlin.ranges.ULongRange$Companion
@@ -15091,7 +15142,9 @@ ninja.cricks.databinding.InviteFriendsBinding:
     public static ninja.cricks.databinding.InviteFriendsBinding inflate(android.view.LayoutInflater,java.lang.Object)
     public static ninja.cricks.databinding.InviteFriendsBinding bind(android.view.View)
     public static ninja.cricks.databinding.InviteFriendsBinding bind(android.view.View,java.lang.Object)
-    public ninja.cricks.InviteFriendsActivity$OnClickListners getOnRefernEarn()
+    public abstract void setOnRefernEarn(ninja.cricks.InviteFriendsActivity)
+    public ninja.cricks.InviteFriendsActivity getOnRefernEarn()
+    protected ninja.cricks.InviteFriendsActivity mOnRefernEarn
 androidx.core.view.LayoutInflaterCompat$Factory2Wrapper
 androidx.appcompat.widget.DropDownListView:
     public int lookForSelectablePosition(int,boolean)
@@ -15231,6 +15284,7 @@ kotlin.sequences.SequencesKt___SequencesKt$sortedWith$1
 androidx.recyclerview.widget.RecyclerView$Orientation
 io.branch.referral.DeviceInfo:
     static void shutDown()
+    boolean isTV()
     public java.lang.String getPackageName()
 kotlinx.coroutines.channels.ActorScope$DefaultImpls
 kotlinx.coroutines.flow.internal.FlowCoroutineKt
@@ -15751,12 +15805,9 @@ io.branch.referral.R$drawable
 kotlin.time.ExperimentalTime
 kotlin.text.StringsKt__IndentKt:
     public static synthetic java.lang.String replaceIndentByMargin$default(java.lang.String,java.lang.String,java.lang.String,int,java.lang.Object)
-    public static final java.lang.String trimIndent(java.lang.String)
-    public static final java.lang.String replaceIndent(java.lang.String,java.lang.String)
     public static synthetic java.lang.String replaceIndent$default(java.lang.String,java.lang.String,int,java.lang.Object)
     public static final java.lang.String prependIndent(java.lang.String,java.lang.String)
     public static synthetic java.lang.String prependIndent$default(java.lang.String,java.lang.String,int,java.lang.Object)
-    private static final int indentWidth$StringsKt__IndentKt(java.lang.String)
     private static final java.lang.String reindent$StringsKt__IndentKt(java.util.List,int,kotlin.jvm.functions.Function1,kotlin.jvm.functions.Function1)
     public void <init>()
 retrofit2.Utils:
@@ -15931,6 +15982,7 @@ androidx.appcompat.widget.AppCompatImageHelper:
 androidx.navigation.NavDeepLinkRequest$Builder
 kotlinx.coroutines.channels.ChannelsKt__Channels_commonKt$indexOfFirst$1
 ninja.cricks.InviteFriendsActivity:
+    public final ninja.cricks.models.UserInfo getUserInfo()
     public final void setUserInfo(ninja.cricks.models.UserInfo)
     public final java.lang.String getUrl()
     public final io.branch.referral.util.LinkProperties getLp()
@@ -15941,6 +15993,7 @@ ninja.cricks.InviteFriendsActivity:
     public final void setShareSheetStyle(io.branch.referral.util.ShareSheetStyle)
     public final android.content.Context getMContext()
     public final void setMContext(android.content.Context)
+    public final java.lang.String getTAG()
     public final void setTAG(java.lang.String)
     public final void setAnimation()
     public android.view.View _$_findCachedViewById(int)
@@ -15991,6 +16044,8 @@ androidx.constraintlayout.solver.widgets.ChainHead:
     public androidx.constraintlayout.solver.widgets.ConstraintWidget getFirstMatchConstraintWidget()
     public androidx.constraintlayout.solver.widgets.ConstraintWidget getLastMatchConstraintWidget()
     public float getTotalWeight()
+io.branch.referral.ServerRequestRegisterClose:
+    public boolean handleErrors(android.content.Context)
 androidx.vectordrawable.R$string
 androidx.transition.R$id:
     private void <init>()
@@ -17712,6 +17767,7 @@ androidx.navigation.ktx.R$style
 androidx.customview.R$id
 io.branch.referral.R$id
 androidx.core.view.ViewCompat$FocusRelativeDirection
+io.branch.referral.Branch$IChannelProperties
 kotlin.collections.ArraysKt___ArraysKt$withIndex$1
 com.bumptech.glide.load.resource.bitmap.HardwareConfigState:
     static final int MIN_HARDWARE_DIMENSION_O
@@ -18490,7 +18546,6 @@ kotlin.text.StringsKt___StringsKt:
     public static final java.lang.Character singleOrNull(java.lang.CharSequence)
     public static final java.lang.Character singleOrNull(java.lang.CharSequence,kotlin.jvm.functions.Function1)
     public static final java.lang.CharSequence drop(java.lang.CharSequence,int)
-    public static final java.lang.String drop(java.lang.String,int)
     public static final java.lang.CharSequence dropLast(java.lang.CharSequence,int)
     public static final java.lang.String dropLast(java.lang.String,int)
     public static final java.lang.CharSequence dropLastWhile(java.lang.CharSequence,kotlin.jvm.functions.Function1)
@@ -19222,8 +19277,6 @@ androidx.transition.Scene:
     private java.lang.Runnable mEnterAction
 com.bumptech.glide.request.target.CustomViewTarget
 androidx.appcompat.widget.ActivityChooserModel$ActivityChooserModelClient
-ninja.cricks.InviteFriendsActivity$OnClickListners:
-    public final void onInvite(android.view.View)
 androidx.appcompat.app.ActionBarDrawerToggle$ToolbarCompatDelegate
 ninja.cricks.ui.notifications.MoreOptionsFragment:
     public static final synthetic void access$setMBinding$p(ninja.cricks.ui.notifications.MoreOptionsFragment,ninja.cricks.databinding.FragmentMoreoptionsBinding)
@@ -19409,6 +19462,7 @@ kotlin.jvm.internal.ClassReference:
     public boolean isCompanion()
 io.branch.referral.ServerRequestLogout:
     public void <init>(android.content.Context,io.branch.referral.Branch$LogoutStatusListener)
+    public boolean handleErrors(android.content.Context)
 androidx.annotation.AttrRes
 androidx.core.content.pm.ActivityInfoCompat
 kotlin.coroutines.experimental.migration.ContinuationInterceptorMigration
@@ -21200,6 +21254,7 @@ androidx.lifecycle.ViewModelProvider:
     public void <init>(androidx.lifecycle.ViewModelStoreOwner)
     public void <init>(androidx.lifecycle.ViewModelStoreOwner,androidx.lifecycle.ViewModelProvider$Factory)
     private static final java.lang.String DEFAULT_KEY
+io.branch.referral.Branch$BranchLinkShareListener
 kotlinx.coroutines.flow.FlowKt__TransformKt$filter$$inlined$unsafeTransform$2
 kotlinx.coroutines.flow.FlowKt__TransformKt$unsafeTransform$$inlined$unsafeFlow$1$lambda$1$1
 androidx.loader.R$integer
@@ -21545,6 +21600,7 @@ kotlin.coroutines.ContinuationInterceptor$DefaultImpls:
 kotlin.jvm.Transient
 io.branch.referral.ServerRequestRegisterOpen:
     void setInitFinishedCallback(io.branch.referral.Branch$BranchReferralInitListener)
+    public boolean handleErrors(android.content.Context)
 kotlinx.coroutines.flow.FlowKt__TransformKt$scanReduce$$inlined$unsafeFlow$1$lambda$1
 com.andrognito.flashbar.view.FbProgress$WheelSavedState$Companion:
     public final android.os.Parcelable$Creator getCREATOR()
@@ -21755,6 +21811,7 @@ ninja.cricks.ui.contest.ContestFragment:
     public final void setAllContestListData(java.util.ArrayList)
     public final java.util.ArrayList getFilterSpotsListData()
     public final void setFilterSpotsListData(java.util.ArrayList)
+    public final void setFilterArrayList(java.util.ArrayList)
     public final boolean isEntryAscending()
     public final void setEntryAscending(boolean)
     public android.view.View _$_findCachedViewById(int)
@@ -23602,6 +23659,7 @@ androidx.appcompat.app.AppCompatDelegateImpl$ConfigurationImplApi24:
 io.branch.referral.ServerRequestGetLATD:
     void <init>(android.content.Context,java.lang.String,io.branch.referral.ServerRequestGetLATD$BranchLastAttributedTouchDataListener)
     void <init>(android.content.Context,java.lang.String,io.branch.referral.ServerRequestGetLATD$BranchLastAttributedTouchDataListener,int)
+    public boolean handleErrors(android.content.Context)
     protected static final int defaultAttributionWindow
 kotlinx.android.parcel.IgnoredOnParcel
 kotlin.internal.Exact
@@ -23849,6 +23907,7 @@ kotlinx.coroutines.android.HandlerContext
 kotlin.time.TimeSource
 io.branch.referral.ServerRequestRegisterInstall:
     void setInitFinishedCallback(io.branch.referral.Branch$BranchReferralInitListener)
+    public boolean handleErrors(android.content.Context)
 androidx.annotation.DrawableRes
 androidx.media.R$string
 androidx.media.MediaBrowserCompatUtils
@@ -24276,6 +24335,7 @@ ninja.cricks.ui.contest.models.ContestModelLists:
     public final void setBonusContest(boolean)
     public final void setCancellation(boolean)
     public final void setJoinedTeams(java.util.ArrayList)
+    public final void setGiftUrl(java.lang.String)
 kotlinx.coroutines.flow.FlowKt__ZipKt$combine$$inlined$unsafeFlow$5$1
 kotlin.contracts.SimpleEffect
 androidx.constraintlayout.solver.LinearSystem:
@@ -24318,6 +24378,9 @@ android.support.v4.media.MediaBrowserCompat$MediaBrowserImplBase$4
 kotlin.internal.PureReifiable
 androidx.media.R$id
 androidx.databinding.ObservableFloat
+io.branch.referral.ServerRequestActionCompleted:
+    public void <init>(android.content.Context,java.lang.String,io.branch.referral.util.CommerceEvent,org.json.JSONObject,io.branch.referral.BranchViewHandler$IBranchViewEvents)
+    public boolean handleErrors(android.content.Context)
 androidx.fragment.app.FragmentManagerViewModel:
     void restoreFromSnapshot(androidx.fragment.app.FragmentManagerNonConfig)
     androidx.fragment.app.FragmentManagerNonConfig getSnapshot()
@@ -25546,6 +25609,7 @@ com.bumptech.glide.GlideBuilder:
     com.bumptech.glide.GlideBuilder setEngine(com.bumptech.glide.load.engine.Engine)
 androidx.databinding.adapters.SeekBarBindingAdapter
 io.branch.referral.BranchError:
+    public int getErrorCode()
     public static final int ERR_NO_SESSION
     public static final int ERR_NO_INTERNET_PERMISSION
     public static final int ERR_INVALID_REFERRAL_CODE
@@ -25596,6 +25660,8 @@ ninja.cricks.MyBalanceActivity$updateAccountVerification$2
 ninja.cricks.databinding.ActivityMyBallanceBinding:
     public final android.widget.LinearLayout linearWalletAdded
     public final android.widget.LinearLayout topLinearBalance
+io.branch.referral.ServerRequestRedeemRewards:
+    int actualNumOfCreditsToRedeem_
 androidx.emoji.text.MetadataListReader$OffsetInfo:
     private final long mLength
 ninja.cricks.ui.contest.MyContestFragment$MyContestAdapter$MyMatchViewHolder:
@@ -25805,9 +25871,6 @@ retrofit2.Retrofit:
 ninja.cricks.ui.createteam.adaptors.PlayersSelectedAdapter$ViewLabelsHolders:
     final synthetic ninja.cricks.ui.createteam.adaptors.PlayersSelectedAdapter this$0
 ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter$onBindViewHolder$2
-io.branch.referral.ShareLinkManager:
-    final int padding
-    final int leftMargin
 ninja.cricks.ui.mymatches.MyCompletedMatchesFragment:
     public final ninja.cricks.ui.mymatches.MyCompletedMatchesFragment$MyMatchesAdapter getAdapter()
     public final java.util.ArrayList getCheckinArrayList()
@@ -26429,6 +26492,7 @@ ninja.cricks.databinding.ContestRowsIplFinalBinding:
     public final android.widget.TextView contestPrizePool
     public final android.widget.ProgressBar contestProgress
     public final android.widget.TextView firstPrize
+    public final android.widget.ImageView giftImage
     public final android.widget.LinearLayout linearBonues
     public final android.widget.LinearLayout linearMulti
     public final android.widget.LinearLayout linearTradesStatus
@@ -26453,7 +26517,25 @@ com.bumptech.glide.module.RegistersComponents
 okhttp3.internal.http1.Http1ExchangeCodec:
     public static final okhttp3.internal.http1.Http1ExchangeCodec$Companion Companion
 io.branch.referral.util.ShareSheetStyle:
+    private android.graphics.drawable.Drawable moreOptionIcon_
+    private java.lang.String moreOptionText_
+    private android.graphics.drawable.Drawable copyUrlIcon_
+    private java.lang.String copyURlText_
+    private java.lang.String urlCopiedMessage_
+    private final java.lang.String messageTitle_
+    private final java.lang.String messageBody_
+    private final java.util.ArrayList preferredOptions_
+    private java.lang.String defaultURL_
+    private int styleResourceID_
+    private int dialogThemeResourceID_
     final android.content.Context context_
+    private boolean setFullWidthStyle_
+    private int dividerHeight_
+    private int iconSize_
+    private java.lang.String sharingTitle_
+    private android.view.View sharingTitleView_
+    private java.util.List includeInShareSheet
+    private java.util.List excludeFromShareSheet
 androidx.core.view.ViewCompat:
     private static final java.util.concurrent.atomic.AtomicInteger sNextGeneratedId
     private static final int[] ACCESSIBILITY_ACTIONS_RESOURCE_IDS
@@ -26683,6 +26765,8 @@ androidx.media.AudioAttributesCompat:
     private static final int[] SDK_USAGES
 com.bumptech.glide.load.engine.GlideException:
     private java.lang.Exception exception
+ninja.cricks.ui.contest.adaptors.ContestAdapter$ViewHolderJoinedContest:
+    private final android.widget.TextView moreContestClick
 androidx.core.graphics.TypefaceCompatBaseImpl$1:
     final synthetic androidx.core.graphics.TypefaceCompatBaseImpl this$0
 kotlin.internal.PlatformImplementations$ReflectAddSuppressedMethod:
@@ -26707,8 +26791,6 @@ ninja.cricks.databinding.ActivityVerifyDocumentBinding:
 ninja.cricks.CreateTeamActivity$onCreate$2
 plug.cricket.ui.createteam.WicketKeepers$resetSorting$1
 okhttp3.internal.http2.PushObserver$Companion
-ninja.cricks.databinding.InviteFriendsBinding:
-    public final com.google.android.material.appbar.AppBarLayout appbar
 ninja.cricks.models.MyTeamModels:
     public final java.util.ArrayList getBatsmen()
     public final java.util.ArrayList getBowlers()
@@ -26745,6 +26827,9 @@ androidx.core.graphics.TypefaceCompatBaseImpl$2:
     final synthetic androidx.core.graphics.TypefaceCompatBaseImpl this$0
 io.branch.referral.DeviceInfo$SystemObserverInstance:
     final synthetic io.branch.referral.DeviceInfo this$0
+ninja.cricks.InviteFriendsActivity:
+    private io.branch.referral.util.ShareSheetStyle shareSheetStyle
+    private java.lang.String TAG
 ninja.cricks.databinding.ActivitySaveTeamBinding:
     public final android.widget.LinearLayout linearIndicator
     public final android.widget.LinearLayout linearTopBar
@@ -26890,6 +26975,7 @@ ninja.cricks.network.IApiMethod:
 ninja.cricks.databinding.FragmentAllContestBinding:
     public final android.widget.LinearLayout bottomLayout
     public final android.widget.LinearLayout filterBar
+    public final android.widget.LinearLayout topNewFilter
 android.support.v4.media.MediaMetadataCompat:
     private static final java.lang.String[] PREFERRED_DESCRIPTION_ORDER
     private static final java.lang.String[] PREFERRED_BITMAP_ORDER
@@ -27342,6 +27428,7 @@ ninja.cricks.ui.contest.ContestFragment:
     public static final synthetic com.edify.atrist.listener.OnContestLoadedListener access$getMListener$p(ninja.cricks.ui.contest.ContestFragment)
     public final ninja.cricks.ui.contest.adaptors.ContestAdapter getAdapter()
     public final java.util.ArrayList getAllContestListData()
+    public final java.util.ArrayList getFilterArrayList()
     private boolean isVisibleToUser
 ninja.cricks.ui.contest.adaptors.ContestListAdapter:
     private final int colorCode
@@ -27635,5 +27722,7 @@ ninja.cricks.ui.login.LoginScreenActivity:
 androidx.arch.core.executor.TaskExecutor:
     public abstract void executeOnDiskIO(java.lang.Runnable)
 ninja.cricks.ui.leadersboard.PrizeBreakupFragment$PrizeBreakUpAdapter$MyMatchViewHolder
+io.branch.referral.BranchError:
+    int errorCode_
 androidx.appcompat.view.StandaloneActionMode:
     private boolean mFocusable

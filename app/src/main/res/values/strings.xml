@@ -121,7 +121,7 @@
     <string name="warning_mobilenumber">"Please enter valid mobile number, to authenticate with Ninja11 system"</string>
     <string name="warning_somethingwentwront">"Something went wrong, please contact Ninja11 team"</string>
     <string name="contact_support_Team">"Contact Ninja11 Support Team"</string>
-    <string name="label_update">"Ninja11 Update"</string>
+    <string name="label_update">Ninja11 Update</string>
     <string name="verify_communication">Verify Communication</string>
     <string name="my_reward_points">(100 points = ₹1.00)</string>
 </resources>

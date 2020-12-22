@@ -30,12 +30,12 @@ class BindingUtils {
         val BANK_DOCUMENTS_STATUS_REJECTED: Int = 3
         val BANK_DOCUMENTS_STATUS_VERIFIED: Int = 2
         val BANK_DOCUMENTS_STATUS_APPROVAL_PENDING: Int = 1
-        val BANNERS_KEY_ADD: String? = "ADD"
-        val BANNERS_KEY_REFFER: String? = "reffer"
-        val BANNERS_KEY_SUPPORT: String? = "support"
-        val BANNERS_KEY_BROWSERS: String? = "browser"
-        val EMAIL: String? = "support@ninja11.in"
-        val PHONE_NUMBER: String? = "=+918103194076"
+        val BANNERS_KEY_ADD: String = "ADD"
+        val BANNERS_KEY_REFFER: String = "reffer"
+        val BANNERS_KEY_SUPPORT: String = "support"
+        val BANNERS_KEY_BROWSERS: String = "browser"
+        val EMAIL: String = "support@ninja11.in"
+        val PHONE_NUMBER: String = "=+918103194076"
         val GOOGLE_TEZ_PACKAGE_NAME = "com.google.android.apps.nbu.paisa.user"
         val PAYMENT_GOOGLEPAY_UPI = "9340301139@okbizaxis"
         val PAYMENT_RAZOR_PAY_KEY = "rzp_live_SiMilNQfyJNzJe"
