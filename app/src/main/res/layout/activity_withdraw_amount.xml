@@ -104,6 +104,26 @@
                             android:paddingEnd="@dimen/_10sdp"
                             android:text="Bank Transfer"
                             android:textSize="@dimen/_16sdp" />
+
+                        <RadioButton
+                            android:id="@+id/upi_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_35sdp"
+                            android:layout_gravity="center_horizontal"
+                            android:checked="false"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:text="UPI Transfer"
+                            android:textSize="@dimen/_16sdp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="@dimen/_10sdp"
+                            android:paddingEnd="@dimen/_10sdp"
+                            android:text="UPI payment will charge ₹10 as a service charge"
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/_10sdp"/>
                     </RadioGroup>
                 </androidx.cardview.widget.CardView>
 
@@ -125,6 +145,30 @@
                         android:padding="8dp">
 
                         <TextView
+                            android:id="@+id/upi_text"
+                            style="@style/document_verify_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="UPI id"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/upi_edit_text"
+                            style="@style/document_verify_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_38sdp"
+                            android:background="@drawable/et_style"
+                            android:hint="Your UPI Id"
+                            android:inputType="text"
+                            android:paddingStart="@dimen/_15sdp"
+                            android:paddingEnd="@dimen/_15sdp"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/greyish"
+                            android:textSize="@dimen/_20sdp" />
+
+                        <TextView
                             style="@style/document_verify_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -140,7 +184,6 @@
                             android:background="@drawable/et_style"
                             android:hint="₹200 - ₹2000"
                             android:inputType="number"
-                            android:maxLength="4"
                             android:paddingStart="@dimen/_15sdp"
                             android:paddingEnd="@dimen/_15sdp"
                             android:singleLine="true"

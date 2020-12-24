@@ -8,7 +8,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.text.Html
-import android.text.TextUtils
 import android.view.View
 import android.widget.RadioButton
 import androidx.appcompat.app.AlertDialog
@@ -61,42 +60,71 @@ class WithdrawAmountsActivity : BaseActivity() {
 
         mBinding!!.winningAmount.text = String.format("₹ %s", walletInfo!!.prizeAmount)
 
-        //mBinding!!.viewAmount.visibility = View.GONE
-
         mBinding!!.radioGroup.setOnCheckedChangeListener { group, checkedId ->
             val rb = group.findViewById<RadioButton>(checkedId)
-            ////Log.e(TAG, "checkedId =====> " + checkedId);
             if (rb != null) {
                 if (rb.text.toString().equals("paytm", true)) {
                     pageType = "paytm"
-                } else {
+                } else if (rb.text.toString().equals("Bank Transfer", true)) {
                     pageType = "bank account"
+                } else {
+                    pageType = "UPI"
                 }
-                //mBinding!!.viewAmount.visibility = View.VISIBLE
-                ////Log.e(TAG, "pageType ======> " + pageType);
             }
         }
 
         mBinding!!.submitBtnWithdrawal.setOnClickListener(View.OnClickListener {
-            var value = mBinding!!.editWithdrawalAmount.text.toString().trim()
-            if (TextUtils.isEmpty(value)) {
-                value = "0"
-            }
-            val amount = value.toInt()
-            if (!pageType.equals("")) {
-                if (amount >= 200) {
-                    showWithdrawalAlert(amount, pageType)
-                } else {
-                    MyUtils.showMessage(
-                        this@WithdrawAmountsActivity,
-                        "You cannot withdraw amount less than 200 INR"
-                    )
-                }
+            val amount = mBinding!!.editWithdrawalAmount.text.toString().trim()
+            if (amount.isEmpty()) {
+                MyUtils.showMessage(mContext!!, "Withdraw amount cannot be empty")
             } else {
-                MyUtils.showMessage(
-                    this@WithdrawAmountsActivity,
-                    "Select amount withdraw type"
-                )
+                if (pageType.equals("paytm", true)) {
+                    if (amount.toInt() < 200) {
+                        MyUtils.showMessage(
+                            mContext!!,
+                            "You can not withdraw amount less than 200"
+                        )
+                    } else if (amount.toInt() <= 1000) {
+                        showWithdrawalAlert(amount.toInt(), pageType)
+                    } else {
+                        MyUtils.showMessage(
+                            mContext!!,
+                            "You can not withdraw amount more then 1000, please try Bank withdraw."
+                        )
+                    }
+                } else if (pageType.equals("bank account", true)) {
+                    when {
+                        amount.toInt() < 1001 -> {
+                            MyUtils.showMessage(
+                                mContext!!,
+                                "You can not withdraw amount less than 1000, please try Paytm withdraw."
+                            )
+                        }
+                        amount.toInt() <= 10000 -> {
+                            showWithdrawalAlert(amount.toInt(), pageType)
+                        }
+                        else -> {
+                            MyUtils.showMessage(
+                                mContext!!,
+                                "You can not withdraw amount more then 10000"
+                            )
+                        }
+                    }
+                } else {
+                    if (amount.toInt() < 200) {
+                        MyUtils.showMessage(
+                            mContext!!,
+                            "You can not withdraw amount less than 200"
+                        )
+                    } else if (amount.toInt() <= 10000) {
+                        showWithdrawalAlert(amount.toInt(), pageType)
+                    } else {
+                        MyUtils.showMessage(
+                            mContext!!,
+                            "You can not withdraw amount more then 10000."
+                        )
+                    }
+                }
             }
         })
 
@@ -106,6 +134,9 @@ class WithdrawAmountsActivity : BaseActivity() {
         })
 
         getMessage()
+
+        mBinding!!.upiText.visibility = View.GONE
+        mBinding!!.upiEditText.visibility = View.GONE
     }
 
     private fun showWithdrawalAlert(amount: Int, type: String) {
@@ -154,6 +185,10 @@ class WithdrawAmountsActivity : BaseActivity() {
         models.withdraw_amount = amount
         models.payment_taken_in = type
 
+        if (type == "UPI") {
+            models.upi_id = mBinding!!.upiEditText.text.toString()
+        }
+
         WebServiceClient(this).client.create(IApiMethod::class.java).withdrawAmount(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
@@ -169,10 +204,18 @@ class WithdrawAmountsActivity : BaseActivity() {
                     if (res != null && res.status) {
                         successAlert(res.message, true)
                     } else {
-                        if (res != null) {
-                            successAlert(res.message, false)
+                        if (res != null && res.code == 405) {
+                            mBinding!!.upiText.visibility = View.VISIBLE
+                            mBinding!!.upiEditText.visibility = View.VISIBLE
+
+                            errorAlert(res.message)
+
                         } else {
-                            successAlert("Please try again! Something went wrong", false)
+                            if (res != null) {
+                                successAlert(res.message, false)
+                            } else {
+                                successAlert("Please try again! Something went wrong", false)
+                            }
                         }
                     }
                 }
@@ -204,6 +247,16 @@ class WithdrawAmountsActivity : BaseActivity() {
             }
 
         }, 2000L)
+    }
+
+    private fun errorAlert(message: String) {
+        val flashBar = Flashbar.Builder(this@WithdrawAmountsActivity)
+            .gravity(Flashbar.Gravity.TOP)
+            .title(getString(R.string.app_name))
+            .message(message)
+            .backgroundDrawable(R.color.red)
+            .build()
+        flashBar.show()
     }
 
     override fun onBitmapSelected(bitmap: Bitmap) {
@@ -244,8 +297,6 @@ class WithdrawAmountsActivity : BaseActivity() {
                             mBinding!!.withdrawMessage.visibility = View.GONE
                         } else {
                             if (data.getString("message_type") == "HTML") {
-                                //mBinding!!.withdrawMessage.linksClickable = true
-                                //mBinding!!.withdrawMessage.movementMethod = LinkMovementMethod.getInstance()
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                                     mBinding!!.withdrawMessage.text =
                                         Html.fromHtml(

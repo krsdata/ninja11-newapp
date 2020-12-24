@@ -176,15 +176,14 @@
 
                 <TextView
                     android:id="@+id/role_type_captain"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_width="@dimen/_27sdp"
+                    android:layout_height="@dimen/_27sdp"
                     android:background="@drawable/circle_save_match"
                     android:fontFamily="@font/montserrat_bold"
                     android:gravity="center"
-                    android:padding="3dp"
                     android:text="C"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_13sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <TextView
                     android:id="@+id/selected_captain_percentage"
@@ -206,15 +205,14 @@
 
                 <TextView
                     android:id="@+id/role_type_vicecaptain"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_width="@dimen/_27sdp"
+                    android:layout_height="@dimen/_27sdp"
                     android:background="@drawable/circle_save_match"
                     android:fontFamily="@font/montserrat_bold"
                     android:gravity="center"
-                    android:padding="3dp"
                     android:text="VC"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_11sdp" />
+                    android:textSize="@dimen/_10sdp" />
 
                 <TextView
                     android:id="@+id/selected_vc_percentage"

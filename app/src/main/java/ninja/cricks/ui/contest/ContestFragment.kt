@@ -438,6 +438,8 @@ class ContestFragment : Fragment() {
                                 allContestListData.clear()
                                 allContestListData.addAll(responseModel.matchContestlist!!)
 
+                                filterArrayList.clear()
+
                                 val model = ContestCategoryModel("All", true)
                                 filterArrayList.add(model)
 
@@ -607,6 +609,8 @@ class ContestFragment : Fragment() {
                             if (responseModel!!.matchContestlist != null && responseModel.matchContestlist!!.isNotEmpty()) {
                                 allContestListData.clear()
                                 allContestListData.addAll(responseModel.matchContestlist!!)
+                                filterArrayList.clear()
+
                                 val model = ContestCategoryModel("All", false)
                                 filterArrayList.add(model)
 

@@ -17,14 +17,14 @@ import ninja.cricks.ui.createteam.models.PlayersInfoModel
 class PlayersSelectedAdapter(
     val context: Context,
     contestModelList: ArrayList<PlayersInfoModel>,
-    listeners: OnRolesSelected,
-    matchObject: UpcomingMatchesModel
+    listener: OnRolesSelected,
+    matchObjectmodel: UpcomingMatchesModel
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var onItemClick: ((PlayersInfoModel) -> Unit)? = null
     private var matchesListObject = contestModelList
-    var listeners = listeners
-    var matchObject = matchObject
+    var listeners = listener
+    var matchObject = matchObjectmodel
 
     companion object {
         const val TYPE_LABEL = 1
@@ -71,14 +71,15 @@ class PlayersSelectedAdapter(
                 viewHolder.selectedTrumpPercentage.text =
                     String.format("%.1f%%", objectVal.analyticsModel!!.trumpPc)
                 viewHolder.playerSelectionPercentage?.text =
-                    "Sel by " + objectVal.analyticsModel!!.selectionPc + "%"
-                viewHolder.selectedPlayerPoints?.text = "" + objectVal.playerSeriesPoints
+                    String.format("Sel by %.1f%%", objectVal.analyticsModel!!.selectionPc)
+                viewHolder.selectedPlayerPoints?.text =
+                    String.format("%d", objectVal.playerSeriesPoints)
 
             } else {
                 viewHolder.selectedCaptainPercentage.text = "0%"
                 viewHolder.selectedvcPercentage.text = "0%"
                 viewHolder.selectedTrumpPercentage.text = "0%"
-                viewHolder.playerSelectionPercentage?.text = ""
+                viewHolder.playerSelectionPercentage?.text = "0%"
             }
 
             /*if (matchObject.teamAInfo!!.teamId == objectVal.teamId) {
@@ -95,7 +96,6 @@ class PlayersSelectedAdapter(
                 .load(objectVal.playerImage)
                 .placeholder(R.drawable.player_blue)
                 .into(viewHolder.selectedPlayerImage)
-
             setSelections(objectVal, viewHolder, position)
         }
     }
@@ -105,7 +105,6 @@ class PlayersSelectedAdapter(
         viewHolder: DataViewHolder,
         position: Int
     ) {
-
         if (objectVal.isTrump) {
             viewHolder.roleTypeTrump.text = "3X"
             viewHolder.roleTypeTrump.setBackgroundResource(R.drawable.circle_green)
@@ -127,7 +126,6 @@ class PlayersSelectedAdapter(
             viewHolder.roleTypeCaptain.setTextColor(context.resources.getColor(R.color.black))
         }
 
-
         if (objectVal.isViceCaptain) {
             viewHolder.roleTypeViceCaptain.text = "1.5X"
             viewHolder.roleTypeViceCaptain.setBackgroundResource(R.drawable.circle_green)
@@ -138,23 +136,18 @@ class PlayersSelectedAdapter(
             viewHolder.roleTypeViceCaptain.setTextColor(context.resources.getColor(R.color.black))
         }
 
-
         viewHolder.roleTypeTrump?.setOnClickListener(View.OnClickListener {
             listeners.onTrumpSelected(objectVal, position)
-
         })
 
         viewHolder.roleTypeCaptain?.setOnClickListener(View.OnClickListener {
             listeners.onCaptainSelected(objectVal, position)
-
         })
 
         viewHolder.roleTypeViceCaptain?.setOnClickListener(View.OnClickListener {
             listeners.onViceCaptainSelected(objectVal, position)
-
         })
     }
-
 
     override fun getItemCount(): Int {
         return matchesListObject.size

@@ -120,6 +120,7 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
             val editName = binding!!.editName.text.toString()
             val mobileNumber = binding!!.editMobile.text.toString()
             val emailAddress = binding!!.editEmail.text.toString()
+            val state = binding!!.editState.text.toString()
 
             if (TextUtils.isEmpty(teamName)) {
                 MyUtils.showToast(this@RegisterScreenActivity, "Enter Your Team Name(Nick Name)")
@@ -135,6 +136,9 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
                 return@OnClickListener
             } else if (TextUtils.isEmpty(emailAddress) || !MyUtils.isEmailValid(emailAddress)) {
                 MyUtils.showToast(this@RegisterScreenActivity, "Please enter valid email address")
+                return@OnClickListener
+            } else if (TextUtils.isEmpty(state)){
+                MyUtils.showToast(this@RegisterScreenActivity, "Please enter state")
                 return@OnClickListener
             }
             name = editName
@@ -170,6 +174,7 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
         }
         request.referral_code = binding!!.editInvitecode.text.toString()
         request.team_name = binding!!.editTeamName.text.toString()
+        request.state = binding!!.editState.text.toString()
         request.device_id = notificationToken
         print(notificationToken)
         request.deviceDetails = HardwareInfoManager(this).collectData(notificationToken)

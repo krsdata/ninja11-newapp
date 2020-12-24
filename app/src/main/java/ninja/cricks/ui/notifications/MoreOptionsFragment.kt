@@ -34,7 +34,7 @@ class MoreOptionsFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_moreoptions, container, false
@@ -42,11 +42,10 @@ class MoreOptionsFragment : BaseFragment() {
         return mBinding!!.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as MainActivity).showToolbar()
-        mBinding!!.appVersion.text = MyUtils.getAppVersionName(requireActivity())
+        mBinding!!.appVersion.text = String.format("App Version: %s", MyUtils.getAppVersionName(requireActivity()))
         mBinding!!.recyclerMoreoptions.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
 
@@ -59,6 +58,12 @@ class MoreOptionsFragment : BaseFragment() {
 
     private fun initContent() {
         allOptionsList.clear()
+
+        val upcomingMModle12 = MoreOptionsModel()
+        upcomingMModle12.drawable = R.drawable.more_terms_conditions
+        upcomingMModle12.id = 12
+        upcomingMModle12.title = "My-Affiliate"
+        allOptionsList.add(upcomingMModle12)
 
         val upcomingMModle11 = MoreOptionsModel()
         upcomingMModle11.drawable = R.drawable.more_terms_conditions
@@ -284,8 +289,20 @@ class MoreOptionsFragment : BaseFragment() {
 
                     11 -> {
                         val intent = Intent(activity!!, WebActivity::class.java)
-                        intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_TOP_REFERRAL_USER)
+                        intent.putExtra(
+                            WebActivity.KEY_TITLE,
+                            BindingUtils.WEB_TITLE_TOP_REFERRAL_USER
+                        )
                         intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_TOP_REFERRAL_USER)
+                        val options =
+                            ActivityOptions.makeSceneTransitionAnimation(activity)
+                        startActivity(intent, options.toBundle())
+                    }
+
+                    12 -> {
+                        val intent = Intent(activity!!, WebActivity::class.java)
+                        intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_MY_AFFILIATE)
+                        intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_MY_AFFILIATE)
                         val options =
                             ActivityOptions.makeSceneTransitionAnimation(activity)
                         startActivity(intent, options.toBundle())

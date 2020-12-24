@@ -60,6 +60,7 @@ class RequestModel {
     var entryFees: String = ""
 
     var payment_taken_in: String = ""
+    var upi_id: String = ""
 
 
 }
