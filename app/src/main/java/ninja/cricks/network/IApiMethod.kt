@@ -177,8 +177,12 @@ interface IApiMethod {
     @POST("api/v2/eventLog")
     fun sendEventLogs(@Body request: RequestModel): Call<UsersPostDBResponse>
 
-
     @Headers("Content-Type: application/json")
     @POST("api/v2/saveAllDocuments")
     fun saveAllDocuments(@Body request: DocumentsModel): Call<ResponseModel>
+
+    @Headers("Content-Type: application/json")
+    @POST("api/v2/withdrawAmountNinja")
+    fun withdrawAmountNew(@Body request: RequestModel): Call<UsersPostDBResponse>
+
 }

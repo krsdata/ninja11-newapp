@@ -20,7 +20,7 @@
         android:name="ninja.cricks.SportsFightApplication"
         android:allowBackup="false"
         android:hardwareAccelerated="true"
-        android:icon="@mipmap/ic_launcher_round"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
         android:requestLegacyExternalStorage="true"
@@ -80,20 +80,14 @@
             android:name="ninja.cricks.ui.login.LoginScreenActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/screen_name_login"
-            android:screenOrientation="portrait">
-            <!--            <intent-filter android:label="deeplink">-->
-            <!--                      <action android:name="android.intent.action.VIEW"/>-->
-            <!--                     <category android:name="android.intent.category.BROWSABLE"/>-->
-            <!--                     <category android:name="android.intent.category.DEFAULT"/>-->
-            <!--                  <data android:scheme="https" android:host="www.ninja.in" android:pathPrefix="/apks"/>-->
-            <!--            </intent-filter>-->
+            android:screenOrientation="portrait"/>
 
-        </activity>
         <activity
             android:name="ninja.cricks.ui.login.RegisterScreenActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/screen_name_register"
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.MainActivity"
             android:screenOrientation="portrait"
@@ -112,10 +106,12 @@
             android:name="ninja.cricks.QuizContestActivity"
             android:label="@string/activity_type_contest"
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.CreateTeamActivity"
             android:label="@string/activity_type_create_team"
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.TeamPreviewActivity"
             android:label=""
@@ -140,6 +136,7 @@
             android:name="ninja.cricks.MyBalanceActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.AddMoneyActivity"
             android:label=""
@@ -154,10 +151,12 @@
             android:name="ninja.cricks.WebActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.LeadersBoardActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.MoreContestActivity"
             android:label=""
@@ -238,11 +237,6 @@
             </intent-filter>
         </service>
 
-        <activity
-            android:name="com.facebook.FacebookActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" />
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@mipmap/ic_launcher" />
@@ -255,7 +249,6 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
-
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

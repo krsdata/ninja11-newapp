@@ -26,6 +26,7 @@ class DocumentsModel :Serializable,Cloneable {
     var accountType : String = ""
     var bankPassbookUrl: String = ""
     var paytmNumber: String = ""
+    var upi_id: String = ""
 
 
     public override fun clone(): DocumentsModel {

@@ -220,6 +220,16 @@ class JoinContestActivity : AppCompatActivity() {
                         } else {
                             val responseModel = res.walletObjects
                             if (responseModel != null) {
+
+                                MyPreferences.setRazorPayId(mContext!!, res.razorPay)
+                                MyPreferences.setShowPaytm(mContext!!, res.paytm_show)
+                                MyPreferences.setShowGpay(mContext!!, res.gpay_show)
+                                MyPreferences.setShowRazorPay(mContext!!, res.rozarpay_show)
+
+                                MyPreferences.setShowPaytmWithdraw(mContext!!, res.paytm_withdrawal)
+                                MyPreferences.setShowBankWithdraw(mContext!!, res.bank_withdrawal)
+                                MyPreferences.setShowUPIWithdraw(mContext!!, res.upi_withdrawal)
+
                                 (applicationContext as SportsFightApplication).saveWalletInformation(
                                     responseModel
                                 )

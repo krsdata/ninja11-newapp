@@ -10,6 +10,7 @@ class ContestsParentModels : Serializable, Cloneable {
 
     var contestTitle: String = ""
     var contestSubTitle: String = ""
+    var contestEmoji: String = ""
 
     @SerializedName("contests")
     @Expose

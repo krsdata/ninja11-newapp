@@ -39,11 +39,13 @@
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_34sdp"
+                        android:layout_height="match_parent"
                         android:layout_alignParentTop="true"
                         android:layout_centerInParent="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/ninja_logo" />
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/home_header" />
 
                     <com.mikhaellopez.circularimageview.CircularImageView
                         android:id="@+id/profile_image"

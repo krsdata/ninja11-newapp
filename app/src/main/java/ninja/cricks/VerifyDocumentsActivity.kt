@@ -280,6 +280,7 @@ class VerifyDocumentsActivity : BaseActivity() {
             val accountNumber = mBinding!!.editAccountNumber.text.toString()
             val ifscCode = mBinding!!.editAccountIfscCode.text.toString()
             val accountType = mBinding!!.editAccoutType.text.toString()
+            val UPI_Id = mBinding!!.editUpiId.text.toString()
 
 
             if (TextUtils.isEmpty(pancardName)) {
@@ -328,6 +329,8 @@ class VerifyDocumentsActivity : BaseActivity() {
             } else if (TextUtils.isEmpty(paytmNumber)) {
                 MyUtils.showToast(this@VerifyDocumentsActivity, "Please enter your Paytm number")
                 return@OnClickListener
+            } else if (TextUtils.isEmpty(UPI_Id)) {
+                MyUtils.showToast(this@VerifyDocumentsActivity, "Please enter your UPI Id")
             }
 
             models.panCardName = pancardName
@@ -342,6 +345,7 @@ class VerifyDocumentsActivity : BaseActivity() {
             models.bankPassbookUrl = bankPassbookUrl
 
             models.paytmNumber = paytmNumber
+            models.upi_id = UPI_Id
             models.documentType = DOCUMENT_TYPE_PANCARD
 
             if (MyUtils.isConnectedWithInternet(this@VerifyDocumentsActivity)) {

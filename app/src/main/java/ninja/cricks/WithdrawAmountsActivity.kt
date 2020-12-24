@@ -29,6 +29,7 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 
 class WithdrawAmountsActivity : BaseActivity() {
@@ -60,6 +61,24 @@ class WithdrawAmountsActivity : BaseActivity() {
 
         mBinding!!.winningAmount.text = String.format("₹ %s", walletInfo!!.prizeAmount)
 
+        if (MyPreferences.getShowPaytmWithdraw(mContext!!)) {
+            mBinding!!.paytmBtn.visibility = View.VISIBLE
+        } else {
+            mBinding!!.paytmBtn.visibility = View.GONE
+        }
+
+        if (MyPreferences.getShowBankWithdraw(mContext!!)) {
+            mBinding!!.bankBtn.visibility = View.VISIBLE
+        } else {
+            mBinding!!.bankBtn.visibility = View.GONE
+        }
+
+        if (MyPreferences.getShowUPIWithdraw(mContext!!)) {
+            mBinding!!.upiBtn.visibility = View.VISIBLE
+        } else {
+            mBinding!!.upiBtn.visibility = View.GONE
+        }
+
         mBinding!!.radioGroup.setOnCheckedChangeListener { group, checkedId ->
             val rb = group.findViewById<RadioButton>(checkedId)
             if (rb != null) {
@@ -77,19 +96,21 @@ class WithdrawAmountsActivity : BaseActivity() {
             val amount = mBinding!!.editWithdrawalAmount.text.toString().trim()
             if (amount.isEmpty()) {
                 MyUtils.showMessage(mContext!!, "Withdraw amount cannot be empty")
+            } else if (pageType.isEmpty()) {
+                MyUtils.showMessage(mContext!!, "Please select Withdraw type")
             } else {
                 if (pageType.equals("paytm", true)) {
                     if (amount.toInt() < 200) {
                         MyUtils.showMessage(
                             mContext!!,
-                            "You can not withdraw amount less than 200"
+                            "You can not withdraw amount less than ₹200"
                         )
                     } else if (amount.toInt() <= 1000) {
                         showWithdrawalAlert(amount.toInt(), pageType)
                     } else {
                         MyUtils.showMessage(
                             mContext!!,
-                            "You can not withdraw amount more then 1000, please try Bank withdraw."
+                            "Please try Bank or UPI withdraw."
                         )
                     }
                 } else if (pageType.equals("bank account", true)) {
@@ -97,7 +118,7 @@ class WithdrawAmountsActivity : BaseActivity() {
                         amount.toInt() < 1001 -> {
                             MyUtils.showMessage(
                                 mContext!!,
-                                "You can not withdraw amount less than 1000, please try Paytm withdraw."
+                                "Please try Paytm or UPI"
                             )
                         }
                         amount.toInt() <= 10000 -> {
@@ -106,7 +127,7 @@ class WithdrawAmountsActivity : BaseActivity() {
                         else -> {
                             MyUtils.showMessage(
                                 mContext!!,
-                                "You can not withdraw amount more then 10000"
+                                "You can not withdraw amount more then ₹10000"
                             )
                         }
                     }
@@ -114,14 +135,25 @@ class WithdrawAmountsActivity : BaseActivity() {
                     if (amount.toInt() < 200) {
                         MyUtils.showMessage(
                             mContext!!,
-                            "You can not withdraw amount less than 200"
+                            "You can not withdraw amount less than ₹200"
                         )
                     } else if (amount.toInt() <= 10000) {
-                        showWithdrawalAlert(amount.toInt(), pageType)
+                        if (mBinding!!.upiEditText.visibility == View.VISIBLE) {
+                            if (mBinding!!.upiEditText.text.toString().length < 0) {
+                                MyUtils.showMessage(
+                                    mContext!!,
+                                    "Please add your UPI id"
+                                )
+                            } else {
+                                showWithdrawalAlert(amount.toInt(), pageType)
+                            }
+                        } else {
+                            showWithdrawalAlert(amount.toInt(), pageType)
+                        }
                     } else {
                         MyUtils.showMessage(
                             mContext!!,
-                            "You can not withdraw amount more then 10000."
+                            "You can not withdraw amount more then ₹10000"
                         )
                     }
                 }
@@ -144,26 +176,19 @@ class WithdrawAmountsActivity : BaseActivity() {
         //set title for alert dialog
         builder.setTitle("Confirmation")
         //set message for alert dialog
-        if (type.equals("")) {
-            builder.setMessage(
-                String.format(
-                    "%d will be transferred to your verified bank accounts",
-                    amount
-                )
+        builder.setMessage(
+            String.format(
+                "your amount ₹%d will be transfer in respective account.",
+                amount
             )
-        } else {
-            builder.setMessage(
-                String.format(
-                    "%d will be transferred to your verified Paytm account",
-                    amount
-                )
-            )
-        }
-        builder.setIcon(android.R.drawable.ic_btn_speak_now)
-
+        )
         //performing positive action
         builder.setPositiveButton("Proceed") { dialogInterface, which ->
+            dialogInterface.dismiss()
             withdrawalRequest(amount, type)
+        }
+        builder.setNegativeButton("Cancel") { dialogInterface, which ->
+            dialogInterface.dismiss()
         }
         // Create the AlertDialog
         val alertDialog: AlertDialog = builder.create()
@@ -182,14 +207,15 @@ class WithdrawAmountsActivity : BaseActivity() {
         val models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
         models.token = MyPreferences.getToken(this)!!
-        models.withdraw_amount = amount
-        models.payment_taken_in = type
+        models.withdraw_amount = MyUtils.encodeBase64(amount.toString()).toString()
+        models.payment_taken_in = MyUtils.encodeBase64(type).toString()
 
         if (type == "UPI") {
             models.upi_id = mBinding!!.upiEditText.text.toString()
         }
 
-        WebServiceClient(this).client.create(IApiMethod::class.java).withdrawAmount(models)
+        //WebServiceClient(this).client.create(IApiMethod::class.java).withdrawAmount(models)
+        WebServiceClient(this).client.create(IApiMethod::class.java).withdrawAmountNew(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     customeProgressDialog.dismiss()
@@ -209,12 +235,11 @@ class WithdrawAmountsActivity : BaseActivity() {
                             mBinding!!.upiEditText.visibility = View.VISIBLE
 
                             errorAlert(res.message)
-
                         } else {
                             if (res != null) {
-                                successAlert(res.message, false)
+                                errorAlert(res.message)
                             } else {
-                                successAlert("Please try again! Something went wrong", false)
+                                errorAlert("Please try again! Something went wrong")
                             }
                         }
                     }
@@ -228,16 +253,6 @@ class WithdrawAmountsActivity : BaseActivity() {
             .title(getString(R.string.app_name))
             .message(message)
             .backgroundDrawable(R.color.green)
-            /*.showIcon()
-            .icon(R.drawable.ic_photo_camera_black_24dp)
-            .iconAnimation(
-                FlashAnim.with(this@WithdrawAmountsActivity)
-                    .animateIcon()
-                    .pulse()
-                    .alpha()
-                    .duration(750)
-                    .accelerate()
-            )*/
             .build()
         flashbar.show()
         Handler().postDelayed(Runnable {
@@ -254,9 +269,10 @@ class WithdrawAmountsActivity : BaseActivity() {
             .gravity(Flashbar.Gravity.TOP)
             .title(getString(R.string.app_name))
             .message(message)
-            .backgroundDrawable(R.color.red)
+            .backgroundDrawable(R.color.red2)
             .build()
         flashBar.show()
+        Handler().postDelayed(Runnable { flashBar.dismiss() }, 2000L)
     }
 
     override fun onBitmapSelected(bitmap: Bitmap) {

@@ -12,18 +12,19 @@ import android.os.Handler
 import android.provider.Settings
 import android.telephony.SmsManager
 import android.text.TextUtils
+import android.util.Base64
 import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.andrognito.flashbar.Flashbar
-import com.andrognito.flashbar.anim.FlashAnim
 import ninja.cricks.R
 import java.io.IOException
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
+import java.nio.charset.StandardCharsets
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -43,13 +44,13 @@ class MyUtils {
         }
 
         fun isMobileValid(email: String): Boolean {
-            return email.length==10
+            return email.length == 10
         }
 
-        fun placeOrderWhatsapp(context: Context,email:String,name:String) {
+        fun placeOrderWhatsapp(context: Context, email: String, name: String) {
             try {
                 val text =
-                    "Hi Rats, I am interested in your demo, Please register me as \n"+name+"\n"+email // Replace with your message.
+                    "Hi Rats, I am interested in your demo, Please register me as \n" + name + "\n" + email // Replace with your message.
                 var toNumber = "918828002531"
                 val intent = Intent(Intent.ACTION_VIEW)
                 intent.data = Uri.parse("http://api.whatsapp.com/send?phone=$toNumber&text=$text")
@@ -83,7 +84,7 @@ class MyUtils {
         }
 
 
-        fun parseDate(date:String):String?{
+        fun parseDate(date: String): String? {
 
             val originalFormat: DateFormat =
                 SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
@@ -95,14 +96,15 @@ class MyUtils {
         }
 
         fun logd(s: String, image1Path: String?) {
-            Log.d(s+"ZX",image1Path)
+            Log.d(s + "ZX", image1Path)
         }
 
 
-        fun isConnectedWithInternet(activity: AppCompatActivity):Boolean{
-            val connectivityManager=activity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            val networkInfo=connectivityManager.activeNetworkInfo
-            return  networkInfo!=null && networkInfo.isConnected
+        fun isConnectedWithInternet(activity: AppCompatActivity): Boolean {
+            val connectivityManager =
+                activity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val networkInfo = connectivityManager.activeNetworkInfo
+            return networkInfo != null && networkInfo.isConnected
         }
 
         fun getDeviceID(mContext: Context): String? {
@@ -111,7 +113,10 @@ class MyUtils {
                 MyPreferences.getAndroidId(mContext)
             try {
                 if (TextUtils.isEmpty(androidId)) {
-                    androidId = Settings.Secure.getString(mContext.contentResolver, Settings.Secure.ANDROID_ID)
+                    androidId = Settings.Secure.getString(
+                        mContext.contentResolver,
+                        Settings.Secure.ANDROID_ID
+                    )
                     MyPreferences.setAndroidID(
                         mContext,
                         androidId
@@ -120,53 +125,26 @@ class MyUtils {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-
             return androidId
         }
 
-        fun showToast(activity:AppCompatActivity, message: String) {
-//            val snackbar = Snackbar.make(view, str,
-//                Snackbar.LENGTH_LONG).setAction("Ok", null)
-//            snackbar.setActionTextColor(Color.WHITE)
-//            val snackbarView = snackbar.view
-//            snackbarView.setBackgroundColor(Color.RED)
-//            val params =view.layoutParams as WindowManager.LayoutParams
-//            params.gravity = Gravity.TOP
-//            view.setLayoutParams(params)
-//            val textView =
-//                snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
-//            textView.setTextColor(Color.WHITE)
-//
-//            textView.textSize = 12f
-//            snackbar.show()
+        fun showToast(activity: AppCompatActivity, message: String) {
 
-            if(activity!=null && !activity.isFinishing) {
-                var flashbar = Flashbar.Builder(activity)
+            if (activity != null && !activity.isFinishing) {
+                val flashbar = Flashbar.Builder(activity)
                     .gravity(Flashbar.Gravity.TOP)
-//                    .title(activity!!.getString(R.string.app_name))
+                    .title(activity.resources.getString(R.string.app_name))
                     .message(message)
                     .backgroundDrawable(R.color.secondery_color)
-                    /*.showIcon()
-                    .icon(R.drawable.ic_photo_camera_black_24dp)
-                    .iconAnimation(
-                        FlashAnim.with(activity)
-                            .animateIcon()
-                            .pulse()
-                            .alpha()
-                            .duration(750)
-                            .accelerate()
-                    )*/
                     .build()
                 flashbar.show()
                 Handler().postDelayed(Runnable { flashbar.dismiss() }, 2000L)
             }
-
         }
 
-
         fun getBitmapFromURL(src: String?): Bitmap? {
-           // BitmapFactory.decodeResource(context.resources, R.drawable.splash_logo)
-            if(TextUtils.isEmpty(src)){
+            // BitmapFactory.decodeResource(context.resources, R.drawable.splash_logo)
+            if (TextUtils.isEmpty(src)) {
                 return null
             }
             return try {
@@ -193,11 +171,11 @@ class MyUtils {
             val thread = Thread(Runnable {
                 try {
 
-                    val bitmap =getBitmapFromURL(urls)
-                    if(bitmap!=null) {
-                        logd("bitmap","Found bitmap for "+urls)
-                        var dominanctColor = getDominantColor(bitmap)
-                        teamAColorView!!.setBackgroundColor(dominanctColor)
+                    val bitmap = getBitmapFromURL(urls)
+                    if (bitmap != null) {
+                        logd("bitmap", "Found bitmap for =====> $urls")
+                        val dominantColor = getDominantColor(bitmap)
+                        teamAColorView!!.setBackgroundColor(dominantColor)
                     }
 
                 } catch (e: java.lang.Exception) {
@@ -220,26 +198,40 @@ class MyUtils {
         }
 
         @Synchronized
-        fun showMessage(context:Context,
+        fun showMessage(
+            context: Context,
             toast: String?
         ) {
             if (!TextUtils.isEmpty(toast)) {
-                var msg = Toast.makeText(context, toast, Toast.LENGTH_LONG)
+                val msg = Toast.makeText(context, toast, Toast.LENGTH_LONG)
                 msg.setGravity(Gravity.CENTER, 0, 0)
                 msg.show()
-//                val bottomSheetFragment =
-//                    BottomSheetErrorDialogFragment()
-//                val bundle = Bundle()
-//                bundle.putString(BottomSheetErrorDialogFragment.CONST_TITLE, toast)
-//                //bundle.putString(BottomSheetErrorDialogFragment.CONST_MESSAGE, toast);
-//                bottomSheetFragment.setArguments(bundle)
-//                bottomSheetFragment.show(fragmentManager, bottomSheetFragment.getTag())
             }
-            //return msg;
         }
 
+        fun encodeBase64(text: String): String? {
+            // Sending side
+            var base64: String? = ""
+            try {
+                val data = text.toByteArray(StandardCharsets.UTF_8)
+                base64 = Base64.encodeToString(data, Base64.NO_WRAP)
+                //Log.e( "String: ", "");
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return base64
+        }
+
+        fun decodeBase64(base64: String?): String {
+            // Receiving side
+            var text = ""
+            try {
+                val data = Base64.decode(base64, Base64.NO_WRAP)
+                text = String(data, StandardCharsets.UTF_8)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return text
+        }
     }
-
-
-
 }

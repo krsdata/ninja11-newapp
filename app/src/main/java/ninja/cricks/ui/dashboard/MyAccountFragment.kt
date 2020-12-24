@@ -117,6 +117,16 @@ class MyAccountFragment : BaseFragment() {
                         if (res != null) {
                             val responseModel = res.walletObjects
                             if (responseModel != null) {
+
+                                MyPreferences.setRazorPayId(requireActivity(), res.razorPay)
+                                MyPreferences.setShowPaytm(requireActivity(), res.paytm_show)
+                                MyPreferences.setShowGpay(requireActivity(), res.gpay_show)
+                                MyPreferences.setShowRazorPay(requireActivity(), res.rozarpay_show)
+
+                                MyPreferences.setShowPaytmWithdraw(requireActivity(), res.paytm_withdrawal)
+                                MyPreferences.setShowBankWithdraw(requireActivity(), res.bank_withdrawal)
+                                MyPreferences.setShowUPIWithdraw(requireActivity(), res.upi_withdrawal)
+
                                 (activity!!.applicationContext as SportsFightApplication).saveWalletInformation(
                                     responseModel
                                 )
@@ -130,12 +140,8 @@ class MyAccountFragment : BaseFragment() {
                             }
                         }
                     }
-
-
                 }
-
             })
-
     }
 
     fun initProfile() {
@@ -219,7 +225,6 @@ class MyAccountFragment : BaseFragment() {
         adapter.addFragment(TransactionFragment.newInstance(bundle), "TRANSACTION")
         viewPager.adapter = adapter
     }
-
 
     internal inner class MyAccountViewPagerAdapter(manager: FragmentManager) :
         FragmentStatePagerAdapter(

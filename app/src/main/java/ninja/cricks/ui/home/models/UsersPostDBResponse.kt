@@ -210,6 +210,18 @@ class UsersPostDBResponse {
     @SerializedName("gpay_show")
     @Expose
     var gpay_show: Boolean = false
+
+    @SerializedName("bank_withdrawal")
+    @Expose
+    var bank_withdrawal: Boolean = false
+
+    @SerializedName("paytm_withdrawal")
+    @Expose
+    var paytm_withdrawal: Boolean = false
+
+    @SerializedName("upi_withdrawal")
+    @Expose
+    var upi_withdrawal: Boolean = false
 }
 
 

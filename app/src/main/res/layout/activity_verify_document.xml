@@ -278,6 +278,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/montserrat_regular"
                                 android:hint="Confirm PAN Card Number"
+                                android:imeOptions="actionNext"
                                 android:inputType="textCapCharacters"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_11sdp" />
@@ -309,7 +310,6 @@
                         android:orientation="vertical"
                         android:padding="@dimen/_10sdp"
                         android:visibility="gone">
-
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="match_parent"
@@ -497,6 +497,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat_regular"
+                            android:imeOptions="actionNext"
                             android:hint="IFSC code"
                             android:inputType="textCapCharacters"
                             android:textColor="@color/black"
@@ -517,6 +518,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat_regular"
                             android:hint="Account type (saving / current)"
+                            android:imeOptions="actionNext"
                             android:inputType="textCapCharacters"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_11sdp" />
@@ -561,6 +563,26 @@
                             android:textSize="@dimen/_11sdp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        app:hintAnimationEnabled="true"
+                        app:hintEnabled="true">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edit_upi_id"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:hint="ENTER UPI ID"
+                            android:imeOptions="actionDone"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_11sdp" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <Button
                         android:id="@+id/btn_submit_verification"

@@ -2,12 +2,14 @@ package ninja.cricks.ui.myaccounts
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import ninja.cricks.*
+import ninja.cricks.databinding.FragmentMyAccountBalanceBinding
 import ninja.cricks.models.WalletInfo
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.RequestModel
@@ -20,13 +22,11 @@ import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import ninja.cricks.R
-import ninja.cricks.databinding.FragmentMyAccountBalanceBinding
+import java.nio.charset.StandardCharsets
 
 
 class MyAccountBalanceFragment : BaseFragment() {
     private lateinit var walletInfo: WalletInfo
-
     //var myAccountFragment: MyAccountFragment?=null
     private var mBinding: FragmentMyAccountBalanceBinding? = null
 
@@ -88,10 +88,9 @@ class MyAccountBalanceFragment : BaseFragment() {
         })
 
         mBinding!!.refferalList.setOnClickListener(View.OnClickListener {
-            val intent = Intent(requireActivity(), RefferalFriendsListActivity::class.java)
+            val intent = Intent(requireActivity(), InviteFriendsActivity::class.java)
             startActivity(intent)
         })
-
         initViews()
     }
 
@@ -109,14 +108,16 @@ class MyAccountBalanceFragment : BaseFragment() {
         mBinding!!.cashBonus.text = String.format("₹%.2f", responseModel.bonusAmount)
         // mBinding!!.earningRefferal.text = String.format("₹ %s",responseModel.referralAmount)
 
-        mBinding!!.earnedPoints.text = String.format("My Reward points: %s", responseModel.ninja_point)
+        mBinding!!.earnedPoints.text = String.format(
+            "My Reward points: %s",
+            responseModel.ninja_point
+        )
 
         val totalBalance =
             responseModel.depositAmount + responseModel.prizeAmount + responseModel.bonusAmount
         mBinding!!.totalBalance.text = String.format("₹%.2f", totalBalance)
         mBinding!!.friendsCounts.text = String.format("%d", responseModel.refferalCounts)
     }
-
 
     override fun onStart() {
         super.onStart()
@@ -155,6 +156,15 @@ class MyAccountBalanceFragment : BaseFragment() {
                         if (res != null) {
                             val responseModel = res.walletObjects
                             if (responseModel != null) {
+                                MyPreferences.setRazorPayId(requireActivity(), res.razorPay)
+                                MyPreferences.setShowPaytm(requireActivity(), res.paytm_show)
+                                MyPreferences.setShowGpay(requireActivity(), res.gpay_show)
+                                MyPreferences.setShowRazorPay(requireActivity(), res.rozarpay_show)
+
+                                MyPreferences.setShowPaytmWithdraw(requireActivity(), res.paytm_withdrawal)
+                                MyPreferences.setShowBankWithdraw(requireActivity(), res.bank_withdrawal)
+                                MyPreferences.setShowUPIWithdraw(requireActivity(), res.upi_withdrawal)
+
                                 (activity!!.applicationContext as SportsFightApplication).saveWalletInformation(
                                     responseModel
                                 )

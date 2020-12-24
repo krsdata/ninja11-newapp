@@ -81,6 +81,17 @@ class WalletInfo : Serializable, Cloneable {
     @Expose
     var ninja_point: String = ""
 
+    @SerializedName("bank_withdrawal")
+    @Expose
+    var bank_withdrawal: Boolean = false
+
+    @SerializedName("paytm_withdrawal")
+    @Expose
+    var paytm_withdrawal: Boolean = false
+
+    @SerializedName("upi_withdrawal")
+    @Expose
+    var upi_withdrawal: Boolean = false
 
     public override fun clone(): WalletInfo {
         return super.clone() as WalletInfo

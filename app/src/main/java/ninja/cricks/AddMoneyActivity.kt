@@ -571,6 +571,10 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
                             MyPreferences.setShowGpay(mContext!!, res.gpay_show)
                             MyPreferences.setShowRazorPay(mContext!!, res.rozarpay_show)
 
+                            MyPreferences.setShowPaytmWithdraw(mContext!!, res.paytm_withdrawal)
+                            MyPreferences.setShowBankWithdraw(mContext!!, res.bank_withdrawal)
+                            MyPreferences.setShowUPIWithdraw(mContext!!, res.upi_withdrawal)
+
                             (application as SportsFightApplication).saveWalletInformation(
                                 responseModel
                             )

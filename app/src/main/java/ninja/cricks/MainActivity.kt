@@ -86,7 +86,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 intent.putExtra(FullScreenImageViewActivity.KEY_IMAGE_URL, userInfo!!.profileImage)
                 startActivity(intent)
             }
-
         })
 
         //  viewAllMatches()
@@ -111,29 +110,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
     }
 
-
-//    override fun onDestinationChanged(
-//        controller: NavController,
-//        destination: NavDestination,
-//        arguments: Bundle?
-//    ) {
-//        when(destination.id){
-//            R.id.navigation_home->{
-//                mBinding!!.navView1.updateFabPosition(0)
-//            }
-//            R.id.navigation_dashboard->{
-//                mBinding!!.navView1.updateFabPosition(1)
-//            }
-//            R.id.navigation_myaccount->{
-//                mBinding!!.navView1.updateFabPosition(2)
-//            }
-//            R.id.navigation_more->{
-//                mBinding!!.navView1.updateFabPosition(3)
-//            }
-//        }
-//
-//    }
-
     override fun onResume() {
         super.onResume()
         if (userInfo != null) {
@@ -152,7 +128,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         mBinding!!.navView1.bottomNavigationView.selectedItemId = R.id.navigation_dashboard
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == MyBalanceActivity.REQUEST_CODE_ADD_MONEY) {
@@ -161,9 +136,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
     }
 
-
     private fun setWalletBalanceValue() {
-
 //        var walletInfo = (application as SportsFightApplication).walletInfo
 //        if(walletInfo!=null){
 //            var totalBalance =
@@ -174,7 +147,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     override fun onBitmapSelected(bitmap: Bitmap) {
-        TODO("Not yet implemented")
     }
 
     override fun onUploadedImageUrl(url: String) {
@@ -211,28 +183,27 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     response: Response<UsersPostDBResponse?>?
                 ) {
                     CHECK_APK_UPDATE_API = false
-                    var res = response!!.body()
+                    val res = response!!.body()
                     if (res != null) {
-                        var responseModel = res.walletObjects
+                        val responseModel = res.walletObjects
                         if (responseModel != null) {
-                            MyPreferences.setRazorPayId(this@MainActivity, responseModel.razorPay)
-                            MyPreferences.setShowPaytm(this@MainActivity, responseModel.paytm_show)
-                            MyPreferences.setShowGpay(this@MainActivity, responseModel.gpay_show)
-                            MyPreferences.setShowRazorPay(
-                                this@MainActivity,
-                                responseModel.rozarpay_show
-                            )
+                            MyPreferences.setRazorPayId(this@MainActivity, res.razorPay)
+                            MyPreferences.setShowPaytm(this@MainActivity, res.paytm_show)
+                            MyPreferences.setShowGpay(this@MainActivity, res.gpay_show)
+                            MyPreferences.setShowRazorPay(this@MainActivity, res.rozarpay_show)
+
+                            MyPreferences.setShowPaytmWithdraw(this@MainActivity, res.paytm_withdrawal)
+                            MyPreferences.setShowBankWithdraw(this@MainActivity, res.bank_withdrawal)
+                            MyPreferences.setShowUPIWithdraw(this@MainActivity, res.upi_withdrawal)
+
                             (application as SportsFightApplication).saveWalletInformation(
                                 responseModel
                             )
                             setWalletBalanceValue()
                         }
                     }
-
                 }
-
             })
-
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -240,8 +211,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             R.id.nav_home -> {
                 // Handle the camera action
             }
-
-
             R.id.nav_wallet -> {
                 val intent = Intent(this@MainActivity, MyBalanceActivity::class.java)
                 startActivityForResult(intent, MyBalanceActivity.REQUEST_CODE_ADD_MONEY)
@@ -265,7 +234,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     startActivity(intent)
                 }
             }
-
             R.id.nav_tnc -> {
                 val intent = Intent(this@MainActivity, WebActivity::class.java)
                 intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_TNC)
@@ -288,7 +256,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     startActivity(intent)
                 }
             }
-
             R.id.nav_aboutus -> {
                 val intent = Intent(this@MainActivity, WebActivity::class.java)
                 intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_ABOUT_US)
@@ -300,8 +267,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     startActivity(intent)
                 }
             }
-
-
 //            R.id.nav_logout -> {
 //                var userId = MyPreferences.getUserID(this@MainActivity)!!
 //                if (!TextUtils.isEmpty(userId)) {
@@ -328,28 +293,20 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 //                                startActivity(intent)
 //                                finish()
 //                            }
-//
 //                        })
 //                 }
-//
-//
 //            }
-
-
         }
-
         // mBinding!!.drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-
             return true
         }
         return super.onOptionsItemSelected(item)
     }
-
 
     fun showToolbar() {
         mBinding!!.toolbar.visibility = View.VISIBLE

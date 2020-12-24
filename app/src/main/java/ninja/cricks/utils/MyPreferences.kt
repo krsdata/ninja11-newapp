@@ -34,6 +34,10 @@ object MyPreferences {
     private val KEY_PREF_IS_GPAY = "isgpay"
     private val KEY_PREF_IS_RAZOR_PAY = "israzorpay"
 
+    private val KEY_PREF_PAYTM_WITHDRAW = "paytm_withdrawal"
+    private val KEY_PREF_BANK_WITHDRAW = "bank_withdrawal"
+    private val KEY_PREF_UPI_WITHDRAW = "upi_withdrawal"
+
     private val KEY_DEVICE_TOKEN ="deviceToken"
     private val KEY_TEMP_REFER_CODE = "refer_code"
 
@@ -564,5 +568,56 @@ object MyPreferences {
             context,
             KEY_TEMP_REFER_CODE
         )
+    }
+
+    fun setShowPaytmWithdraw(context: Context, value: Boolean) {
+        putBoolean(
+            context,
+            KEY_PREF_PAYTM_WITHDRAW,
+            value
+        )
+    }
+
+    fun getShowPaytmWithdraw(context: Context): Boolean {
+        val isShow = getBoolean(
+            context,
+            KEY_PREF_PAYTM_WITHDRAW,
+            false
+        )
+        return isShow
+    }
+
+    fun setShowBankWithdraw(context: Context, value: Boolean) {
+        putBoolean(
+            context,
+            KEY_PREF_BANK_WITHDRAW,
+            value
+        )
+    }
+
+    fun getShowBankWithdraw(context: Context): Boolean {
+        val isShow = getBoolean(
+            context,
+            KEY_PREF_BANK_WITHDRAW,
+            false
+        )
+        return isShow
+    }
+
+    fun setShowUPIWithdraw(context: Context, value: Boolean) {
+        putBoolean(
+            context,
+            KEY_PREF_UPI_WITHDRAW,
+            value
+        )
+    }
+
+    fun getShowUPIWithdraw(context: Context): Boolean {
+        val isShow = getBoolean(
+            context,
+            KEY_PREF_UPI_WITHDRAW,
+            false
+        )
+        return isShow
     }
 }

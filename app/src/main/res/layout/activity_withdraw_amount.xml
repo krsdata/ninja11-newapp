@@ -121,8 +121,9 @@
                             android:layout_height="wrap_content"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
-                            android:text="UPI payment will charge ₹10 as a service charge"
-                            android:textColor="@color/red"
+                            android:text="UPI/Paytm Instant payment will be charge ₹10"
+                            android:textColor="@color/red2"
+                            android:fontFamily="@font/montserrat_medium"
                             android:textSize="@dimen/_10sdp"/>
                     </RadioGroup>
                 </androidx.cardview.widget.CardView>
@@ -182,7 +183,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_38sdp"
                             android:background="@drawable/et_style"
-                            android:hint="₹200 - ₹2000"
+                            android:hint="₹200"
                             android:inputType="number"
                             android:paddingStart="@dimen/_15sdp"
                             android:paddingEnd="@dimen/_15sdp"

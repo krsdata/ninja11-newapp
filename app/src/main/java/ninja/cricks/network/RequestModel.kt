@@ -22,7 +22,7 @@ class RequestModel {
     var user_id: String = ""
     var documents_type: String = ""
     var token: String = ""
-    var withdraw_amount: Int = 0
+    var withdraw_amount: String = ""
     var match_id: String = ""
     var contest_id: String = ""
 

@@ -242,13 +242,13 @@
         android:id="@+id/free_view"
         android:layout_width="@dimen/_65sdp"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
+        android:layout_gravity="end"
         android:background="@color/green_light"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="center"
         android:padding="3dip"
         android:src="@drawable/left_triangle"
-        android:text="FREE"
+        android:text="Giveaway"
         android:textColor="@color/white"
         android:textSize="@dimen/small_info_size" />
 </androidx.cardview.widget.CardView>

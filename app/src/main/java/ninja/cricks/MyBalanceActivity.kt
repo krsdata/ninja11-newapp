@@ -199,10 +199,16 @@ class MyBalanceActivity : AppCompatActivity() {
                     if (res != null) {
                         val responseModel = res.walletObjects
                         if (responseModel != null) {
-                            MyPreferences.setRazorPayId(this@MyBalanceActivity, responseModel.razorPay)
-                            MyPreferences.setShowPaytm(this@MyBalanceActivity, responseModel.paytm_show)
-                            MyPreferences.setShowGpay(this@MyBalanceActivity, responseModel.gpay_show)
-                            MyPreferences.setShowRazorPay(this@MyBalanceActivity, responseModel.rozarpay_show)
+
+                            MyPreferences.setRazorPayId(this@MyBalanceActivity, res.razorPay)
+                            MyPreferences.setShowPaytm(this@MyBalanceActivity, res.paytm_show)
+                            MyPreferences.setShowGpay(this@MyBalanceActivity, res.gpay_show)
+                            MyPreferences.setShowRazorPay(this@MyBalanceActivity, res.rozarpay_show)
+
+                            MyPreferences.setShowPaytmWithdraw(this@MyBalanceActivity, res.paytm_withdrawal)
+                            MyPreferences.setShowBankWithdraw(this@MyBalanceActivity, res.bank_withdrawal)
+                            MyPreferences.setShowUPIWithdraw(this@MyBalanceActivity, res.upi_withdrawal)
+
                             (application as SportsFightApplication).saveWalletInformation(
                                 responseModel
                             )

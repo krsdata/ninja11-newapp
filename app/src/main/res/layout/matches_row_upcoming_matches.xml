@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/matches_view_top_margin"
@@ -48,7 +49,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dip"
                 android:src="@drawable/ic_gamepad_black_24dp"
-                android:tint="@color/colorPrimaryDark" />
+                app:tint="@color/colorPrimaryDark" />
         </LinearLayout>
     </RelativeLayout>
 </LinearLayout>
