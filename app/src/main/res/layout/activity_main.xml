@@ -76,73 +76,6 @@
             </androidx.appcompat.widget.Toolbar>
         </RelativeLayout>
 
-
-        <!--        <RelativeLayout-->
-        <!--            android:id="@+id/tool"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="@dimen/_130sdp"-->
-        <!--            android:layout_alignParentTop="true"-->
-        <!--            android:background="@drawable/gradient">-->
-
-        <!--            <androidx.appcompat.widget.Toolbar-->
-        <!--                android:id="@+id/toolbar"-->
-        <!--                style="@style/ToolbarTheme3"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="@dimen/_100sdp"-->
-        <!--                android:layout_alignParentTop="true"-->
-        <!--                android:fitsSystemWindows="true">-->
-
-        <!--                <RelativeLayout-->
-        <!--                    android:layout_width="match_parent"-->
-        <!--                    android:layout_height="wrap_content"-->
-        <!--                    android:layout_marginStart="@dimen/_20sdp"-->
-        <!--                    android:layout_marginTop="@dimen/_22sdp"-->
-        <!--                    android:orientation="horizontal">-->
-
-        <!--                    <ImageView-->
-        <!--                        android:layout_width="@dimen/_75sdp"-->
-        <!--                        android:layout_height="@dimen/_34sdp"-->
-        <!--                        android:layout_alignParentTop="true"-->
-        <!--                        android:layout_centerInParent="true"-->
-        <!--                        android:src="@drawable/sport" />-->
-
-        <!--                    <ImageView-->
-        <!--                        android:id="@+id/profile_image"-->
-        <!--                        android:layout_width="@dimen/_36sdp"-->
-        <!--                        android:layout_height="@dimen/_36sdp"-->
-        <!--                        android:layout_alignParentStart="true"-->
-        <!--                        android:layout_alignParentTop="true"-->
-        <!--                        android:layout_centerVertical="true"-->
-        <!--                        android:background="@drawable/bg_text"-->
-        <!--                        android:src="@drawable/dummy_two" />-->
-
-        <!--                    <ImageView-->
-        <!--                        android:id="@+id/img_wallet_amount"-->
-        <!--                        android:layout_width="@dimen/_24sdp"-->
-        <!--                        android:layout_height="@dimen/_24sdp"-->
-        <!--                        android:layout_alignParentTop="true"-->
-        <!--                        android:layout_alignParentEnd="true"-->
-        <!--                        android:layout_centerVertical="true"-->
-        <!--                        android:src="@drawable/wallet_new"-->
-        <!--                        android:tint="@color/white" />-->
-
-        <!--                </RelativeLayout>-->
-
-
-        <!--            </androidx.appcompat.widget.Toolbar>-->
-
-        <!--            <RelativeLayout-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="@dimen/_30sdp"-->
-        <!--                android:layout_alignParentStart="true"-->
-        <!--                android:layout_alignParentBottom="true"-->
-        <!--                android:background="@drawable/bottom"-->
-        <!--                android:backgroundTint="@color/background_default"/>-->
-
-
-        <!--        </RelativeLayout>-->
-
-
         <ninja.cricks.bottom_nav.BottomNavBar
             android:id="@+id/nav_view1"
             android:layout_width="match_parent"
@@ -160,20 +93,6 @@
             app:bn_item_color="@color/white_transperent"
             app:bn_menu="@menu/bottom_nav_menu"
             app:menu="@menu/bottom_nav_menu" />
-        <!--    <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/nav_view"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_54sdp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="0dp"
-
-                app:fabAlignmentMode="center"
-                app:itemIconTint="@color/white"
-                app:itemTextColor="@color/white"
-                app:labelVisibilityMode="labeled"
-                app:menu="@menu/bottom_nav_menu" />-->
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -191,10 +110,6 @@
                 android:layout_height="match_parent"
                 app:defaultNavHost="true"
                 app:navGraph="@navigation/mobile_navigation" />
-
         </LinearLayout>
-
     </RelativeLayout>
-
-
 </layout>

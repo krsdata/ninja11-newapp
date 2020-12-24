@@ -4,30 +4,38 @@ import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.transition.Slide
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.databinding.DataBindingUtil
-import ninja.cricks.ui.BaseActivity
 import ninja.cricks.databinding.WebviewBinding
+import ninja.cricks.ui.BaseActivity
 
 
-public class WebActivity : BaseActivity() {
+class WebActivity : BaseActivity() {
     private var mBinding: WebviewBinding? = null
-    companion object{
-        val KEY_TITLE:String = "web.title"
-        val KEY_URL:String = "url.web"
+
+    companion object {
+        var TAG: String = WebActivity::class.java.simpleName
+        const val KEY_TITLE: String = "web.title"
+        const val KEY_URL: String = "url.web"
+        const val USER_ID: String = "user_id"
     }
-    var URL: String? = null
+
+    private var URL: String? = null
+    private var userId: String? = ""
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         setEnterAnimations()
         super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this,
+        mBinding = DataBindingUtil.setContentView(
+            this,
             R.layout.webview
         )
-        mBinding!!.toolbar.title =intent.getStringExtra(KEY_TITLE)
+        mBinding!!.toolbar.title = intent.getStringExtra(KEY_TITLE)
         mBinding!!.toolbar.setTitleTextColor(resources.getColor(R.color.white))
         mBinding!!.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
         setSupportActionBar(mBinding!!.toolbar)
@@ -37,45 +45,34 @@ public class WebActivity : BaseActivity() {
 
         customeProgressDialog.show()
         URL = intent.getStringExtra(KEY_URL)
+        userId = intent.getStringExtra(USER_ID)
         loadURL()
     }
 
     override fun onBitmapSelected(bitmap: Bitmap) {
-        TODO("Not yet implemented")
     }
 
     override fun onUploadedImageUrl(url: String) {
-        TODO("Not yet implemented")
     }
 
-    fun  setEnterAnimations() {
-        if (Build.VERSION.SDK_INT > 20) {
-            var slide = Slide()
-            slide.slideEdge = Gravity.BOTTOM
-            slide.duration = 400
-            slide.interpolator = DecelerateInterpolator()
-            window.exitTransition = slide
-            window.enterTransition = slide
-        }
+    private fun setEnterAnimations() {
+        val slide = Slide()
+        slide.slideEdge = Gravity.BOTTOM
+        slide.duration = 400
+        slide.interpolator = DecelerateInterpolator()
+        window.exitTransition = slide
+        window.enterTransition = slide
     }
 
-
-//
-//    override fun finish() {
-//        super.finish()
-//        overridePendingTransition(R.anim.hold, R.anim.grow_linear_animation);
-//    }
-
-    /**
-     * Load url.
-     */
-    fun loadURL() {
+    private fun loadURL() {
         mBinding!!.webBody.webViewClient = MyWebViewClient()
         mBinding!!.webBody.settings.javaScriptEnabled = true
-        mBinding!!.webBody.loadUrl(URL)
+        if (userId != null && !userId.equals("")) {
+            mBinding!!.webBody.loadUrl(URL + userId)
+        } else {
+            mBinding!!.webBody.loadUrl(URL)
+        }
     }
-
-
 
     private inner class MyWebViewClient : WebViewClient() {
 
@@ -84,8 +81,11 @@ public class WebActivity : BaseActivity() {
             url: String
         ): Boolean {
             view.loadUrl(url)
-
             return true
+        }
+
+        override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+            super.onPageStarted(view, url, favicon)
         }
 
         override fun onPageFinished(view: WebView, url: String) {

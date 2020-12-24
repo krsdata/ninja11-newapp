@@ -2,18 +2,17 @@ package ninja.cricks.ui.contest.adaptors
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.edify.atrist.listener.OnContestEvents
-import ninja.cricks.ContestActivity
-import ninja.cricks.LeadersBoardActivity
-import ninja.cricks.MoreContestActivity
 import ninja.cricks.R
 import ninja.cricks.models.ContestsParentModels
 import ninja.cricks.models.UpcomingMatchesModel
@@ -51,6 +50,25 @@ class ContestAdapter(
         if (objectVal.contestTitle.contains("Practise")) {
             colorCode = context.resources.getColor(R.color.highlighted_text_material_dark)
         }
+
+        if (objectVal.icon_url == "") {
+            viewJoinedMatches.contestIconImageView.visibility = View.GONE
+            viewJoinedMatches.contestIconTextView.visibility = View.GONE
+        } else if (objectVal.icon_url.contains("http") || objectVal.icon_url.contains("https")) {
+            viewJoinedMatches.contestIconImageView.visibility = View.VISIBLE
+            viewJoinedMatches.contestIconTextView.visibility = View.GONE
+
+            Glide.with(context)
+                .load(objectVal.icon_url)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(viewJoinedMatches.contestIconImageView)
+
+        } else {
+            viewJoinedMatches.contestIconImageView.visibility = View.GONE
+            viewJoinedMatches.contestIconTextView.visibility = View.VISIBLE
+            viewJoinedMatches.contestIconTextView.text = objectVal.icon_url
+        }
+
 
         /**
          * Replace this part with below part once api comes
@@ -130,5 +148,8 @@ class ContestAdapter(
         val recyclerView: RecyclerView = itemView.findViewById(R.id.recycler_all_contest)
         val moreContestClick: TextView = itemView.findViewById(R.id.more_contest_click)
         val viewMoreLayout: RelativeLayout = itemView.findViewById(R.id.view_more_layout)
+
+        val contestIconImageView: ImageView = itemView.findViewById(R.id.contest_icon_url)
+        val contestIconTextView: TextView = itemView.findViewById(R.id.contest_icon_text)
     }
 }

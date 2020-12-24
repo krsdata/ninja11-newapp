@@ -303,6 +303,7 @@ class MoreOptionsFragment : BaseFragment() {
                         val intent = Intent(activity!!, WebActivity::class.java)
                         intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_MY_AFFILIATE)
                         intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_MY_AFFILIATE)
+                        intent.putExtra(WebActivity.USER_ID, MyPreferences.getUserID(requireActivity())!!)
                         val options =
                             ActivityOptions.makeSceneTransitionAnimation(activity)
                         startActivity(intent, options.toBundle())

@@ -89,7 +89,8 @@
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_35sdp"
                             android:layout_centerVertical="true"
-                            android:src="@drawable/ic_my_account_add_cash" />
+                            android:src="@drawable/ic_my_account_add_cash"
+                            app:tint="@color/colorAccent" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
