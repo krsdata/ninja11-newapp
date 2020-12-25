@@ -80,12 +80,12 @@ class ContestListAdapter(
 
 
         if (objectVal.maxAllowedTeam > 1) {
-            viewHolder.allowedTeamType.text = "M"
-            viewHolder.contestMultiplayer.text = "" + objectVal.maxAllowedTeam
+            viewHolder.allowedTeamType.text = "Multiple Entry"
+            /*viewHolder.contestMultiplayer.text = "" + objectVal.maxAllowedTeam*/
             viewHolder.linearMulti.visibility = View.VISIBLE
         } else {
-            viewHolder.allowedTeamType.text = "S"
-            viewHolder.contestMultiplayer.text = "" + objectVal.maxAllowedTeam
+            viewHolder.allowedTeamType.text = "Single Entry"
+            /*viewHolder.contestMultiplayer.text = "" + objectVal.maxAllowedTeam*/
             viewHolder.linearMulti.visibility = View.VISIBLE
             // viewHolder.contestMultiplayer.text =  ""+objectVal.maxAllowedTeam
             // viewHolder.linearMulti.visibility = View.GONE
@@ -193,7 +193,7 @@ class ContestListAdapter(
         //val maxAllowedTeam: TextView = itemView.findViewById(R.id.max_allowed_team)
         val contestCancellation: TextView = itemView.findViewById(R.id.contest_cancellation)
         val allowedTeamType: TextView = itemView.findViewById(R.id.allowedTeamType)
-        val contestMultiplayer: TextView = itemView.findViewById(R.id.contest_multiplayer)
+//        val contestMultiplayer: TextView = itemView.findViewById(R.id.contest_multiplayer)
         val linearMulti: LinearLayout = itemView.findViewById(R.id.linear_Multi)
         val linearBonus: LinearLayout = itemView.findViewById(R.id.linear_bonues)
         val contestBonus: TextView = itemView.findViewById(R.id.contest_bonus)

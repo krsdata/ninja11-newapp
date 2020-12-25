@@ -35,6 +35,8 @@ import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class LeadersBoardActivity : BaseActivity() {
@@ -123,8 +125,8 @@ class LeadersBoardActivity : BaseActivity() {
     }
 
     private fun updateTimerHeader() {
-        mBinding!!.matchTimer.text = matchObject!!.statusString.toUpperCase()
-        mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.green))
+        mBinding!!.matchTimer.text = matchObject!!.statusString.toUpperCase(Locale.ENGLISH)
+        mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.colorPrimary))
         mBinding!!.watchTimerImg.visibility = View.GONE
     }
 
@@ -174,8 +176,8 @@ class LeadersBoardActivity : BaseActivity() {
             .placeholder(R.drawable.placeholder_player_teama)
             .into(mBinding!!.includeLiveMatchRow.imgTeambLogo)
 
-        mBinding!!.matchTimer.text = matchObject!!.statusString.toUpperCase()
-        mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.green))
+        mBinding!!.matchTimer.text = matchObject!!.statusString.toUpperCase(Locale.ENGLISH)
+        mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.colorPrimary))
         mBinding!!.watchTimerImg.visibility = View.GONE
 
         mBinding!!.includeLiveMatchRow.teamAName.text = matchObject!!.teamAInfo!!.teamShortName
@@ -327,13 +329,13 @@ class LeadersBoardActivity : BaseActivity() {
 //            mBinding!!.includeContestRow.contestMultiplayer.visibility = View.GONE
 //        }
         if (contestObject!!.maxAllowedTeam > 1) {
-            mBinding!!.includeContestRow.allowedTeamType.text = "M"
-            mBinding!!.includeContestRow.contestMultiplayer.text =
-                "" + contestObject!!.maxAllowedTeam
+            mBinding!!.includeContestRow.allowedTeamType.text = "Multiple Entry"
+            /*mBinding!!.includeContestRow.contestMultiplayer.text =
+                "" + contestObject!!.maxAllowedTeam*/
         } else {
-            mBinding!!.includeContestRow.allowedTeamType.text = "S"
-            mBinding!!.includeContestRow.contestMultiplayer.text =
-                "" + contestObject!!.maxAllowedTeam
+            mBinding!!.includeContestRow.allowedTeamType.text = "Single Entry"
+            /*mBinding!!.includeContestRow.contestMultiplayer.text =
+                "" + contestObject!!.maxAllowedTeam*/
         }
         mBinding!!.includeContestRow.contestBonus.text =
             String.format("%s%s", contestObject!!.usableBonus, "%")
@@ -436,11 +438,9 @@ class LeadersBoardActivity : BaseActivity() {
     }
 
     override fun onBitmapSelected(bitmap: Bitmap) {
-        //TODO("Not yet implemented")
     }
 
     override fun onUploadedImageUrl(url: String) {
-
     }
 
     private fun setupViewPager(

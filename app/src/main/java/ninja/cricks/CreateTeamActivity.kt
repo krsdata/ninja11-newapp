@@ -40,6 +40,9 @@ import plug.cricket.ui.createteam.WicketKeepers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
@@ -879,8 +882,8 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
     }
 
     private fun updateTimerHeader() {
-        mBinding!!.matchTimer.text = matchObject!!.statusString.toUpperCase()
-        mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.green))
+        mBinding!!.matchTimer.text = matchObject!!.statusString.toUpperCase(Locale.ENGLISH)
+        mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.colorPrimary))
     }
 
     private fun startCountDown() {
@@ -897,7 +900,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
             override fun onTicks(time: String) {
                 mBinding!!.matchTimer.text = time
-                mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.white))
+                mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.colorPrimary))
                 //         mBinding!!.watchTimerImg.visibility =View.VISIBLE
                 BindingUtils.logD("TimerLogs", "ContestScreen: " + time)
             }

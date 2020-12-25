@@ -41,16 +41,18 @@
                     app:tint="@color/white" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
+                    android:layout_toEndOf="@+id/image_back"
+                    android:layout_toStartOf="@+id/img_wallet"
                     android:gravity="center"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:weightSum="2">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:orientation="horizontal">
 
@@ -59,7 +61,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="@dimen/_3sdp"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
                             android:text="AU-W"
@@ -70,7 +72,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="@dimen/_3sdp"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
                             android:text="vs"
@@ -81,7 +83,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="@dimen/_3sdp"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
                             android:text="AU-W"
@@ -90,9 +92,11 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:layout_gravity="center|end"
+                        android:gravity="center|end"
                         android:orientation="horizontal">
 
                         <ImageView
@@ -100,20 +104,25 @@
                             android:layout_width="22dp"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="5dp"
+                            android:visibility="gone"
                             android:src="@drawable/ic_av_timer_black_24dp"
                             app:tint="@color/white" />
 
                         <TextView
                             android:id="@+id/match_timer"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:gravity="center"
-                            android:paddingBottom="@dimen/_2sdp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center|end"
+                            android:fontFamily="@font/montserrat_bold"
+                            android:gravity="center|end"
+                            android:paddingTop="@dimen/_4sdp"
+                            android:paddingEnd="@dimen/_7sdp"
+                            android:paddingStart="@dimen/_7sdp"
+                            android:paddingBottom="@dimen/_4sdp"
+                            android:background="@drawable/rounded_timer_back"
                             android:text=""
-                            android:textColor="@color/white"
-                            android:textSize="14sp" />
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/_10sdp" />
                     </LinearLayout>
                 </LinearLayout>
 

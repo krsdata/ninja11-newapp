@@ -36,6 +36,9 @@ import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class SaveTeamActivity : BaseActivity(), OnRolesSelected {
@@ -99,13 +102,9 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
             val intent = Intent(this@SaveTeamActivity, WebActivity::class.java)
             intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_HOW_TO_PLAY)
             intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_FANTASY_HOW_TO_PLAY)
-            if (Build.VERSION.SDK_INT > 20) {
-                val options =
-                    ActivityOptions.makeSceneTransitionAnimation(this)
-                startActivity(intent, options.toBundle())
-            } else {
-                startActivity(intent)
-            }
+            val options =
+                ActivityOptions.makeSceneTransitionAnimation(this)
+            startActivity(intent, options.toBundle())
         })
         initPlayers()
 
@@ -154,8 +153,8 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
     }
 
     private fun updateTimerHeader() {
-        mBinding!!.matchTimer.text = matchObject.statusString.toUpperCase()
-        mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.white))
+        mBinding!!.matchTimer.text = matchObject.statusString.toUpperCase(Locale.ENGLISH)
+        mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.colorPrimary))
     }
 
     private fun startCountDown() {
@@ -173,7 +172,7 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
 
             override fun onTicks(time: String) {
                 mBinding!!.matchTimer.text = time
-                mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.white))
+                mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.colorPrimary))
                 //         mBinding!!.watchTimerImg.visibility =View.VISIBLE
                 BindingUtils.logD("TimerLogs", "ContestScreen: " + time)
             }
@@ -193,15 +192,15 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
         var trump = 0
         var captain = 0
         var viceCaptain = 0
-        var teams: ArrayList<Int>? = ArrayList()
+        val teams: ArrayList<Int> = ArrayList()
         var isTrump = false
         var isCaptain = false
         var isViceCaptain = false
         var team_id = false
 
         for (x in 0..savedTeamList.size - 1) {
-            var obj = savedTeamList.get(x)
-            teams!!.add(obj.playerId.toInt())
+            val obj = savedTeamList.get(x)
+            teams.add(obj.playerId.toInt())
             if (obj.isTrump) {
                 isTrump = true
                 trump = obj.playerId
@@ -226,10 +225,10 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
             MyUtils.showToast(this@SaveTeamActivity, "Please select Vice Captain")
             return null
         }
-        var teamIds = ArrayList<Int>()
+        val teamIds = ArrayList<Int>()
         teamIds.add(matchObject.teamAInfo!!.teamId)
         teamIds.add(matchObject.teamBInfo!!.teamId)
-        var models = RequestCreateTeamModel()
+        val models = RequestCreateTeamModel()
         models.user_id = MyPreferences.getUserID(this)!!
         // models.token = MyPreferences.getToken(this)!!
         models.match_id = "" + matchObject.matchId
@@ -257,15 +256,15 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
             viceCaptainId = myTeamModel!!.viceCaptain!!.playerId
         }
         if (hasmapPlayers.containsKey(CREATE_TEAM_WICKET_KEEPER)) {
-            var objList =
+            val objList =
                 hasmapPlayers.get(CREATE_TEAM_WICKET_KEEPER) as ArrayList<PlayersInfoModel>
-            var playersLabel = PlayersInfoModel()
+            val playersLabel = PlayersInfoModel()
             playersLabel.viewType = PlayersSelectedAdapter.TYPE_LABEL
             playersLabel.playerRole = "Wicket Keeper"
             savedTeamList.add(playersLabel)
 
             for (x in 0..objList.size - 1) {
-                var listPlayers = objList.get(x)
+                val listPlayers = objList.get(x)
                 listPlayers.playerRole = CREATE_TEAM_WICKET_KEEPER
                 if (captainId == listPlayers.playerId) {
                     listPlayers.isCaptain = true
@@ -278,14 +277,14 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
             }
         }
         if (hasmapPlayers.containsKey(CREATE_TEAM_BATSMAN)) {
-            var objList =
+            val objList =
                 hasmapPlayers.get(CREATE_TEAM_BATSMAN) as ArrayList<PlayersInfoModel>
-            var playersLabel = PlayersInfoModel()
+            val playersLabel = PlayersInfoModel()
             playersLabel.viewType = PlayersSelectedAdapter.TYPE_LABEL
             playersLabel.playerRole = "BATSMAN"
             savedTeamList.add(playersLabel)
             for (x in 0..objList.size - 1) {
-                var listPlayers = objList.get(x)
+                val listPlayers = objList.get(x)
                 listPlayers.playerRole = CREATE_TEAM_BATSMAN
                 if (captainId == listPlayers.playerId) {
                     listPlayers.isCaptain = true
@@ -298,14 +297,14 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
             }
         }
         if (hasmapPlayers.containsKey(CREATE_TEAM_ALLROUNDER)) {
-            var objList =
+            val objList =
                 hasmapPlayers.get(CREATE_TEAM_ALLROUNDER) as ArrayList<PlayersInfoModel>
-            var playersLabel = PlayersInfoModel()
+            val playersLabel = PlayersInfoModel()
             playersLabel.viewType = PlayersSelectedAdapter.TYPE_LABEL
             playersLabel.playerRole = "ALL ROUNDER"
             savedTeamList.add(playersLabel)
             for (x in 0..objList.size - 1) {
-                var listPlayers = objList.get(x)
+                val listPlayers = objList.get(x)
                 listPlayers.playerRole = CREATE_TEAM_ALLROUNDER
                 if (captainId == listPlayers.playerId) {
                     listPlayers.isCaptain = true
@@ -317,14 +316,14 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
             }
         }
         if (hasmapPlayers.containsKey(CREATE_TEAM_BOWLER)) {
-            var objList =
+            val objList =
                 hasmapPlayers.get(CREATE_TEAM_BOWLER) as ArrayList<PlayersInfoModel>
-            var playersLabel = PlayersInfoModel()
+            val playersLabel = PlayersInfoModel()
             playersLabel.viewType = PlayersSelectedAdapter.TYPE_LABEL
             playersLabel.playerRole = "BOWLER"
             savedTeamList.add(playersLabel)
             for (x in 0..objList.size - 1) {
-                var listPlayers = objList.get(x)
+                val listPlayers = objList.get(x)
                 listPlayers.playerRole = CREATE_TEAM_BOWLER
                 if (captainId == listPlayers.playerId) {
                     listPlayers.isCaptain = true
@@ -360,7 +359,7 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
     override fun onCaptainSelected(objects: PlayersInfoModel, position: Int) {
         isCaptainSelected = true
         for (X in 0..savedTeamList.size - 1) {
-            var values = savedTeamList.get(X)
+            val values = savedTeamList.get(X)
             if (position == X) {
                 values.isCaptain = true
                 values.isTrump = false
@@ -378,7 +377,7 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
     override fun onViceCaptainSelected(objects: PlayersInfoModel, position: Int) {
         isViceCaptainSelected = true
         for (X in 0..savedTeamList.size - 1) {
-            var values = savedTeamList.get(X)
+            val values = savedTeamList.get(X)
             if (position == X) {
                 values.isViceCaptain = true
                 values.isCaptain = false
@@ -427,7 +426,7 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
                     response: Response<UsersPostDBResponse?>?
                 ) {
                     customeProgressDialog.dismiss()
-                    var res = response!!.body()
+                    val res = response!!.body()
                     if (res != null) {
                         if (res.status) {
 //                            BindingUtils.sendEventLogs(
@@ -449,9 +448,6 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
                         }
                     }
                 }
-
             })
-
     }
-
 }

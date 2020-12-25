@@ -118,7 +118,7 @@ class MoreContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEv
 
             override fun onTicks(time: String) {
                 mBinding!!.matchTimer.text = time
-                mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.red))
+                mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.colorPrimary))
                 mBinding!!.watchTimerImg.visibility = View.VISIBLE
                 BindingUtils.logD("TimerLogs", "ContestScreen: " + time)
             }
@@ -126,8 +126,8 @@ class MoreContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEv
     }
 
     private fun updateTimerHeader() {
-        mBinding!!.matchTimer.text = matchObject!!.statusString.toUpperCase()
-        mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.green))
+        mBinding!!.matchTimer.text = matchObject!!.statusString.toUpperCase(Locale.ENGLISH)
+        mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.colorPrimary))
         mBinding!!.watchTimerImg.visibility = View.GONE
     }
 
