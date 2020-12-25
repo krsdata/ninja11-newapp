@@ -51,7 +51,7 @@ class ContestAdapter(
             colorCode = context.resources.getColor(R.color.highlighted_text_material_dark)
         }
 
-        if (objectVal.icon_url == "") {
+        if (objectVal.icon_url == null || objectVal.icon_url == "null" || objectVal.icon_url == "") {
             viewJoinedMatches.contestIconImageView.visibility = View.GONE
             viewJoinedMatches.contestIconTextView.visibility = View.GONE
         } else if (objectVal.icon_url.contains("http") || objectVal.icon_url.contains("https")) {

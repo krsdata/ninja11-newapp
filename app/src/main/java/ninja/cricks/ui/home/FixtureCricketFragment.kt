@@ -1,6 +1,7 @@
 package ninja.cricks.ui.home
 
 import android.app.Dialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
@@ -9,12 +10,13 @@ import android.os.Bundle
 import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.*
-import android.widget.TextView
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.bumptech.glide.Glide
 import com.deliverdas.customers.utils.HardwareInfoManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.JsonObject
@@ -52,6 +54,14 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
     lateinit var adapter: MatchesAdapter
     var allmatchesArrayList = ArrayList<MatchesModels>()
     var scrollListener: RecyclerViewLoadMoreScroll? = null
+    lateinit var sdialog: Dialog
+    var mContext: Context? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mContext = requireActivity()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -196,7 +206,7 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
                                     }
                                     val offerImage = resObje.offerImage
                                     if (offerImage != "" && offerImage.contains("http")) {
-                                        showAlert()
+                                        showAlert(offerImage)
                                     }
                                 }
                             }
@@ -284,25 +294,28 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
             })
     }
 
-    private fun showAlert() {
-//        sdialog = Dialog(mContext)
-//        sdialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-//        sdialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation
-//        sdialog.setContentView(R.layout.dialog_imgeselect)
-//        sdialog.setCancelable(true)
-//        sdialog.show()
-//        (sdialog.findViewById(R.id.dialog_pack_name) as TextView).text = "Select PAN Card Image"
-//        sdialog.findViewById(R.id.dialog_close)
-//            .setOnClickListener(com.century.VerifyBankDetailsActivity.MyDialogClick())
-//        sdialog.findViewById(R.id.camera)
-//            .setOnClickListener(com.century.VerifyBankDetailsActivity.MyDialogClick())
-//        sdialog.findViewById(R.id.gallery)
-//            .setOnClickListener(com.century.VerifyBankDetailsActivity.MyDialogClick())
-//        sdialog.setOnKeyListener(DialogInterface.OnKeyListener { dialog, keyCode, keyEvent ->
-//            if (keyCode == KeyEvent.KEYCODE_BACK) {
-//                dialog.dismiss()
-//            }
-//            true
-//        })
+    private fun showAlert(offerImage: String) {
+        sdialog = Dialog(mContext!!)
+        sdialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        sdialog.window!!.attributes.windowAnimations = R.style.PauseDialogAnimation
+        sdialog.setContentView(R.layout.dialog_offer_image)
+        sdialog.setCancelable(false)
+        sdialog.show()
+        val close: ImageView = sdialog.findViewById(R.id.dialog_close)
+        val offerImageView: ImageView = sdialog.findViewById(R.id.dialog_offer_image)
+
+        close.setOnClickListener {
+            sdialog.dismiss()
+        }
+
+        Glide.with(mContext!!).load(offerImage).placeholder(R.drawable.app_logo).into(offerImageView)
+
+
+        sdialog.setOnKeyListener(DialogInterface.OnKeyListener { dialog, keyCode, keyEvent ->
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                dialog.dismiss()
+            }
+            true
+        })
     }
 }

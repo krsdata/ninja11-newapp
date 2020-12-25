@@ -32,47 +32,31 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Refer &amp; Earn ₹100 Bonus"
-                android:textColor="@color/colorAccent"
                 android:layout_gravity="center"
+                android:fontFamily="sans-serif"
                 android:gravity="center"
-                android:textSize="@dimen/_20sdp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_2sdp"
-                android:visibility="gone"
-                android:background="@color/grey" />
-
+                android:text="Refer your friend and Earn ₹100 Bonus."
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/_20sdp"
+                android:textStyle="bold" />
 
             <ImageView
-                android:layout_width="@dimen/_150sdp"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/_150sdp"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:src="@mipmap/ic_launcher"/>
+                android:src="@drawable/share_one" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Life Time Earning (Either Your Friends Play or Not)"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_1sdp"
-                android:visibility="gone"
-                android:background="@color/grey" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:text="No Earning Limit"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:text="@string/share_this_code_with_your_friends"
                 android:textColor="@color/dim_foreground_disabled_material_light"
-                android:textSize="@dimen/_10sdp" />
+                android:textSize="@dimen/_14sdp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -84,7 +68,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:text="Referral Code: "
                     android:textColor="@color/black"
@@ -94,7 +78,7 @@
                     android:id="@+id/rereral_code"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:fontFamily="@font/roboto"
+                    android:fontFamily="sans-serif"
                     android:gravity="center|start"
                     android:text=""
                     android:textColor="@color/black"
@@ -113,6 +97,7 @@
                     android:id="@+id/invite_friends"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:fontFamily="sans-serif"
                     android:gravity="center"
                     android:text="Invite your friends"
                     android:textColor="@color/white"
