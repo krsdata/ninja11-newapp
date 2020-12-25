@@ -49,7 +49,7 @@ class BindingUtils {
         val WEBVIEW_FAQ = BASE_URL_MAIN + "faqs?request=mobile"
         val WEBVIEW_OFFERS = BASE_URL_MAIN + "offers?request=mobile"
         val WEBVIEW_TOP_REFERRAL_USER = BASE_URL_MAIN + "topReferralUser?request=mobile"
-        val WEBVIEW_MY_AFFILIATE = BASE_URL_API + "myAffiliate?user_id="
+        val WEBVIEW_MY_AFFILIATE = BASE_URL_MAIN + "myAffiliate?user_id="
         const val NOTIFICATION_ID_BIG_IMAGE = 101
         val BILTY_APK_LINK: String = BASE_URL_API + "apk"
         val WEB_TITLE_PRIVACY_POLICY: String = "Privacy Policy"

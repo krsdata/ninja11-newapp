@@ -36,7 +36,6 @@ import retrofit2.Response
 import java.util.*
 import kotlin.collections.ArrayList
 
-
 class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents {
 
     //private var isMatchLive: Boolean = false

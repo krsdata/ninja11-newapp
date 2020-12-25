@@ -614,8 +614,10 @@ class ContestFragment : Fragment() {
                                 val model = ContestCategoryModel("All", false)
                                 filterArrayList.add(model)
 
+                                val actualPosition = pos - 1
+
                                 for (i in responseModel.matchContestlist!!.indices) {
-                                    if (pos == i) {
+                                    if (actualPosition == i) {
                                         val categoryModel = ContestCategoryModel(
                                             responseModel.matchContestlist!![i].contestTitle,
                                             true
@@ -632,7 +634,6 @@ class ContestFragment : Fragment() {
 
                                 filterAdapter.updateRecord(filterArrayList)
 
-                                val actualPosition = pos - 1
 
                                 showFilteredContestRecycler()
                                 filterSpotsListData.clear()

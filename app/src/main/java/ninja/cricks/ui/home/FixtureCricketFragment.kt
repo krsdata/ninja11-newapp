@@ -1,14 +1,15 @@
 package ninja.cricks.ui.home
 
+import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.text.method.LinkMovementMethod
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -193,6 +194,10 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
                                         addAllList(listofData)
                                         adapter.setMatchesList(allmatchesArrayList)
                                     }
+                                    val offerImage = resObje.offerImage
+                                    if (offerImage != "" && offerImage.contains("http")) {
+                                        showAlert()
+                                    }
                                 }
                             }
                         updateEmptyViews()
@@ -208,13 +213,14 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
         }
     }
 
-    //    override fun onAttach(activity: Activity) {
+//    override fun onAttach(activity: Activity) {
 //        super.onAttach(activity)
 //        if (activity is OnPageRefreshedListener) {
 //            Log.d("Annv - Fragment", "activity " + activity.localClassName)
-//           listener = activity as OnPageRefreshedListener
+//            listener = activity as OnPageRefreshedListener
 //        }
 //    }
+
     override fun onRefresh() {
         getAllMatches()
         getMessage()
@@ -276,5 +282,27 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
                     }
                 }
             })
+    }
+
+    private fun showAlert() {
+//        sdialog = Dialog(mContext)
+//        sdialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//        sdialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation
+//        sdialog.setContentView(R.layout.dialog_imgeselect)
+//        sdialog.setCancelable(true)
+//        sdialog.show()
+//        (sdialog.findViewById(R.id.dialog_pack_name) as TextView).text = "Select PAN Card Image"
+//        sdialog.findViewById(R.id.dialog_close)
+//            .setOnClickListener(com.century.VerifyBankDetailsActivity.MyDialogClick())
+//        sdialog.findViewById(R.id.camera)
+//            .setOnClickListener(com.century.VerifyBankDetailsActivity.MyDialogClick())
+//        sdialog.findViewById(R.id.gallery)
+//            .setOnClickListener(com.century.VerifyBankDetailsActivity.MyDialogClick())
+//        sdialog.setOnKeyListener(DialogInterface.OnKeyListener { dialog, keyCode, keyEvent ->
+//            if (keyCode == KeyEvent.KEYCODE_BACK) {
+//                dialog.dismiss()
+//            }
+//            true
+//        })
     }
 }

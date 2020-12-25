@@ -1,34 +1,20 @@
 package ninja.cricks
 
-import android.content.ActivityNotFoundException
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ActivityInfo
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
-import android.net.Uri
 import android.os.Bundle
-import android.text.TextUtils
 import android.transition.Slide
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import io.branch.indexing.BranchUniversalObject
-import io.branch.referral.Branch
 import io.branch.referral.Branch.BranchLinkCreateListener
-import io.branch.referral.BranchError
 import io.branch.referral.util.LinkProperties
 import io.branch.referral.util.ShareSheetStyle
 import ninja.cricks.databinding.InviteFriendsBinding
 import ninja.cricks.models.UserInfo
-import ninja.cricks.utils.BindingUtils
-import java.io.UnsupportedEncodingException
-import java.net.URLEncoder
 import java.util.*
 
 class InviteFriendsActivity : AppCompatActivity() {
@@ -43,7 +29,6 @@ class InviteFriendsActivity : AppCompatActivity() {
     var mContext: Context? = null
 
     var TAG: String = InviteFriendsActivity::class.java.simpleName
-
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,7 +82,8 @@ class InviteFriendsActivity : AppCompatActivity() {
         shareSheetStyle = ShareSheetStyle(
             mContext!!, "Ninja11",
             "Welcome to Ninja11. Register on Ninja11 application with this link.\n\nUse my referral code \"" + userInfo!!.referalCode +
-                    "\" and get extra Rs. 100 Bonus on Joining.".trimIndent())
+                    "\" and get extra Rs. 100 Bonus on Joining.".trimIndent()
+        )
             .setAsFullWidthStyle(false)
             .setDefaultURL(url)
             .setSharingTitle("Refer and Earn Rs 100")

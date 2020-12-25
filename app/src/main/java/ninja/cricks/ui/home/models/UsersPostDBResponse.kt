@@ -119,7 +119,6 @@ class UsersPostDBResponse {
         @Expose
         var totalWinningAmount: Int? = null
 
-
         @SerializedName("matchdata")
         @Expose
         var matchdatalist: List<MatchesModels>? = null
@@ -222,6 +221,8 @@ class UsersPostDBResponse {
     @SerializedName("upi_withdrawal")
     @Expose
     var upi_withdrawal: Boolean = false
+
+    @SerializedName("offer_image")
+    @Expose
+    var offerImage: String = ""
 }
-
-
