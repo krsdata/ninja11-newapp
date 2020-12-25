@@ -84,7 +84,7 @@
     </style>
 
 
-    <style name="CustomDialog" parent="AppTheme_app" >
+    <style name="CustomDialog" parent="AppTheme_app">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowIsFloating">true</item>

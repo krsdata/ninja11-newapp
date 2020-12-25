@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -11,12 +12,17 @@ import android.text.Html
 import android.text.method.LinkMovementMethod
 import android.view.*
 import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.deliverdas.customers.utils.HardwareInfoManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.JsonObject
@@ -295,7 +301,7 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
     }
 
     private fun showAlert(offerImage: String) {
-        sdialog = Dialog(mContext!!)
+        sdialog = Dialog(mContext!!, R.style.MyDialog)
         sdialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         sdialog.window!!.attributes.windowAnimations = R.style.PauseDialogAnimation
         sdialog.setContentView(R.layout.dialog_offer_image)
@@ -303,13 +309,33 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
         sdialog.show()
         val close: ImageView = sdialog.findViewById(R.id.dialog_close)
         val offerImageView: ImageView = sdialog.findViewById(R.id.dialog_offer_image)
+        val progressBar: ProgressBar = sdialog.findViewById(R.id.progress_bar)
 
         close.setOnClickListener {
             sdialog.dismiss()
         }
 
-        Glide.with(mContext!!).load(offerImage).placeholder(R.drawable.app_logo).into(offerImageView)
+        Glide.with(mContext!!).load(offerImage).listener(object : RequestListener<Drawable?> {
+            override fun onLoadFailed(
+                e: GlideException?,
+                model: Any,
+                target: Target<Drawable?>,
+                isFirstResource: Boolean
+            ): Boolean {
+                return false
+            }
 
+            override fun onResourceReady(
+                resource: Drawable?,
+                model: Any,
+                target: Target<Drawable?>,
+                dataSource: DataSource,
+                isFirstResource: Boolean
+            ): Boolean {
+                progressBar.visibility = View.GONE
+                return false
+            }
+        }).into(offerImageView)
 
         sdialog.setOnKeyListener(DialogInterface.OnKeyListener { dialog, keyCode, keyEvent ->
             if (keyCode == KeyEvent.KEYCODE_BACK) {

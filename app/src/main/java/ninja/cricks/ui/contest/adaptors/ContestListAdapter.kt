@@ -123,7 +123,7 @@ class ContestListAdapter(
                 .load(objectVal.giftUrl)
                 .placeholder(R.drawable.phone_image)
                 .into(viewHolder.giftImage)
-            
+
             if (objectVal.totalSpots == 0) {
                 viewHolder.contestProgress.max =
                     objectVal.filledSpots + BindingUtils.UNLIMITED_SPOT_MARGIN
@@ -154,7 +154,7 @@ class ContestListAdapter(
         })
 
         if (objectVal.cancellation) {
-            viewHolder.contestCancellation.visibility = View.INVISIBLE
+            viewHolder.contestCancellation.visibility = View.GONE
         } else {
             viewHolder.contestCancellation.visibility = View.VISIBLE
         }
