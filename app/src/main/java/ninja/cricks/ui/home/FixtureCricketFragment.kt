@@ -29,7 +29,7 @@ import com.google.gson.JsonObject
 import ninja.cricks.MainActivity
 import ninja.cricks.MaintainanceActivity
 import ninja.cricks.R
-import ninja.cricks.SportsFightApplication
+import ninja.cricks.NinjaApplication
 import ninja.cricks.adaptors.MatchesAdapter
 import ninja.cricks.databinding.FragmentAllGamesBinding
 import ninja.cricks.listener.RecyclerViewLoadMoreScroll
@@ -106,7 +106,7 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
         mBinding!!.allGameViewRecycler.layoutManager = linearLayoutManager
 
         val upcomingmatchlist =
-            (requireActivity().applicationContext as SportsFightApplication).getUpcomingMatches
+            (requireActivity().applicationContext as NinjaApplication).getUpcomingMatches
         if (upcomingmatchlist != null && upcomingmatchlist.size > 0) {
             allmatchesArrayList.clear()
             allmatchesArrayList.addAll(upcomingmatchlist)
@@ -203,7 +203,7 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
                                     val responseObject = resObje.responseObject
                                     val listofData =
                                         responseObject!!.matchdatalist as ArrayList<MatchesModels>?
-                                    (activity!!.applicationContext as SportsFightApplication).saveUpcomingMatches(
+                                    (activity!!.applicationContext as NinjaApplication).saveUpcomingMatches(
                                         listofData
                                     )
                                     if (listofData!!.size > 0) {

@@ -2,7 +2,6 @@ package ninja.cricks.ui.myaccounts
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +21,6 @@ import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.nio.charset.StandardCharsets
 
 
 class MyAccountBalanceFragment : BaseFragment() {
@@ -95,7 +93,7 @@ class MyAccountBalanceFragment : BaseFragment() {
     }
 
     fun initViews() {
-        walletInfo = (requireActivity().applicationContext as SportsFightApplication).walletInfo
+        walletInfo = (requireActivity().applicationContext as NinjaApplication).walletInfo
         if (walletInfo != null) {
             mBinding!!.progressBarPlayingHistory.visibility = View.GONE
             initWalletViews(walletInfo)
@@ -165,7 +163,7 @@ class MyAccountBalanceFragment : BaseFragment() {
                                 MyPreferences.setShowBankWithdraw(requireActivity(), res.bank_withdrawal)
                                 MyPreferences.setShowUPIWithdraw(requireActivity(), res.upi_withdrawal)
 
-                                (activity!!.applicationContext as SportsFightApplication).saveWalletInformation(
+                                (activity!!.applicationContext as NinjaApplication).saveWalletInformation(
                                     responseModel
                                 )
                                 initViews()

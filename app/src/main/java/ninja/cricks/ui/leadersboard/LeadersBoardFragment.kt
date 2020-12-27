@@ -84,7 +84,7 @@ class LeadersBoardFragment : Fragment() {
         mBinding!!.progressBar.visibility = View.GONE
         mBinding!!.prizeLeadersboardRecycler.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        userInfo = (requireActivity().applicationContext as SportsFightApplication).userInformations
+        userInfo = (requireActivity().applicationContext as NinjaApplication).userInformations
         val dividerItemDecoration = DividerItemDecoration(
             mBinding!!.prizeLeadersboardRecycler.context,
             RecyclerView.VERTICAL
@@ -196,7 +196,7 @@ class LeadersBoardFragment : Fragment() {
                                 "" + contestObject!!.id,
                                 user_id,
                                 teamId,
-                                (requireActivity().applicationContext as SportsFightApplication).userInformations,
+                                (requireActivity().applicationContext as NinjaApplication).userInformations,
                                 "Last Seen"
                             )
 

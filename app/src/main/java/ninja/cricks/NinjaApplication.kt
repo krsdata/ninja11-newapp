@@ -19,8 +19,7 @@ import ninja.cricks.utils.MyPreferences.KEY_TRANSACTION_HISTORY
 import ninja.cricks.utils.MyPreferences.KEY_UPCOMING_MATCHES
 
 
-class SportsFightApplication : MultiDexApplication() {
-
+class NinjaApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
@@ -39,7 +38,6 @@ class SportsFightApplication : MultiDexApplication() {
 
         FirebaseApp.initializeApp(this)
         Branch.getAutoInstance(this)
-
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
 
     }

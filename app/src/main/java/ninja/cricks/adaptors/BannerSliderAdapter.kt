@@ -60,20 +60,20 @@ class BannerSliderAdapter(val context: Context, val tradeinfoModels: ArrayList<M
                 .into(viewHolder.target)
 
             viewHolder.target.setOnClickListener(View.OnClickListener {
-                if (objectVal.title.equals(BindingUtils.BANNERS_KEY_ADD)) {
+                if (objectVal.title == BindingUtils.BANNERS_KEY_ADD) {
                     val intent = Intent(context, AddMoneyActivity::class.java)
                     context.startActivity(intent)
                 }
-                if (objectVal.title.equals(BindingUtils.BANNERS_KEY_REFFER)) {
+                if (objectVal.title == BindingUtils.BANNERS_KEY_REFFER) {
                     val intent = Intent(context, InviteFriendsActivity::class.java)
                     context.startActivity(intent)
                 }
-                if (objectVal.title.equals(BindingUtils.BANNERS_KEY_SUPPORT)) {
+                if (objectVal.title == BindingUtils.BANNERS_KEY_SUPPORT) {
                     val intent = Intent(context, SupportActivity::class.java)
                     context.startActivity(intent)
                 }
 
-                if (objectVal.title.equals(BindingUtils.BANNERS_KEY_BROWSERS)) {
+                if (objectVal.title == BindingUtils.BANNERS_KEY_BROWSERS) {
                     val builder = CustomTabsIntent.Builder()
                     builder.setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
                     val customTabsIntent = builder.build()

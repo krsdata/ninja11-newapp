@@ -49,12 +49,11 @@ class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<Matche
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.matches_row_banners_matches, parent, false)
             return BannersViewHolder(view)
-        } else if (viewType == TYPE_UPCOMING_MATCHES) {
+        } else /*if (viewType == TYPE_UPCOMING_MATCHES)*/ {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.matches_row_upcoming_matches, parent, false)
             return UpcomingMatchesViewHolder(view)
         }
-        return null!!
     }
 
     override fun onBindViewHolder(parent: RecyclerView.ViewHolder, position: Int) {

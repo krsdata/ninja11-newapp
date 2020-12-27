@@ -49,7 +49,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             this,
             R.layout.activity_main
         )
-        userInfo = (application as SportsFightApplication).userInformations
+        userInfo = (application as NinjaApplication).userInformations
         setSupportActionBar(mBinding!!.toolbar)
         // setUpDrawerLayout()
 
@@ -196,7 +196,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                             MyPreferences.setShowBankWithdraw(this@MainActivity, res.bank_withdrawal)
                             MyPreferences.setShowUPIWithdraw(this@MainActivity, res.upi_withdrawal)
 
-                            (application as SportsFightApplication).saveWalletInformation(
+                            (application as NinjaApplication).saveWalletInformation(
                                 responseModel
                             )
                             setWalletBalanceValue()

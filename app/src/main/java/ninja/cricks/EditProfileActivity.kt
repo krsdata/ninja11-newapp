@@ -34,7 +34,7 @@ class EditProfileActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        userInfo = (application as SportsFightApplication).userInformations
+        userInfo = (application as NinjaApplication).userInformations
         customeProgressDialog = CustomeProgressDialog(this)
         mBinding = DataBindingUtil.setContentView(
             this,
@@ -255,7 +255,7 @@ class EditProfileActivity : BaseActivity() {
                        // userInfo.pinCode = pinCode
 //                        userInfo.state = state
 
-                        (application as SportsFightApplication).saveUserInformations(userInfo)
+                        (application as NinjaApplication).saveUserInformations(userInfo)
 
                         Toast.makeText(
                             this@EditProfileActivity,
@@ -293,8 +293,8 @@ class EditProfileActivity : BaseActivity() {
 
                         val infoModels = res.infomodel
                         if (infoModels != null) {
-                            (application as SportsFightApplication).saveUserInformations(infoModels)
-                            userInfo = (application as SportsFightApplication).userInformations
+                            (application as NinjaApplication).saveUserInformations(infoModels)
+                            userInfo = (application as NinjaApplication).userInformations
                             initProfile()
                             updateUserOtherInfo()
                         } else {

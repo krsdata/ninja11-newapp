@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ninja.cricks.SportsFightApplication
+import ninja.cricks.NinjaApplication
 import ninja.cricks.models.TransactionModel
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.RequestModel
@@ -59,7 +59,7 @@ class TransactionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var transactionHistory =
-            (activity!!.applicationContext as SportsFightApplication).getTransactionHistory
+            (activity!!.applicationContext as NinjaApplication).getTransactionHistory
         if(transactionHistory!=null && transactionHistory.size>0){
             transactionList.clear()
             transactionList.addAll(transactionHistory)
@@ -110,7 +110,7 @@ class TransactionFragment : Fragment() {
                         var responseModel = res.transactionHistory
                         if(responseModel!=null) {
                             if (responseModel.transactionList != null && responseModel.transactionList!!.size > 0) {
-                                (activity!!.applicationContext as SportsFightApplication).saveTransactionHistory(
+                                (activity!!.applicationContext as NinjaApplication).saveTransactionHistory(
                                     responseModel.transactionList!!)
                                 transactionList.addAll(responseModel.transactionList!!)
                                 adapter.notifyDataSetChanged()

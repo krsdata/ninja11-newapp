@@ -77,8 +77,8 @@ class JoinContestDialogFragment(
     }
 
     private fun initWalletInfo() {
-        val walletInfo = (requireActivity().applicationContext as SportsFightApplication).walletInfo
-        userInfo = (requireActivity().applicationContext as SportsFightApplication).userInformations
+        val walletInfo = (requireActivity().applicationContext as NinjaApplication).walletInfo
+        userInfo = (requireActivity().applicationContext as NinjaApplication).userInformations
         DISCOUNT_ON_BONUS = contestModel.usableBonus.toInt()
         walletAmount = walletInfo.walletAmount
         bonusAmount = walletInfo.bonusAmount
@@ -265,7 +265,7 @@ class JoinContestDialogFragment(
                                     MyPreferences.setShowBankWithdraw(requireActivity(), res.bank_withdrawal)
                                     MyPreferences.setShowUPIWithdraw(requireActivity(), res.upi_withdrawal)
 
-                                    (activity!!.applicationContext as SportsFightApplication).saveWalletInformation(
+                                    (activity!!.applicationContext as NinjaApplication).saveWalletInformation(
                                         responseModel
                                     )
                                     initWalletInfo()

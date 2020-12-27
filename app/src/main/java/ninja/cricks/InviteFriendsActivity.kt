@@ -4,11 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.transition.Slide
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.branch.indexing.BranchUniversalObject
 import io.branch.referral.Branch.BranchLinkCreateListener
 import io.branch.referral.util.LinkProperties
@@ -48,7 +50,7 @@ class InviteFriendsActivity : AppCompatActivity() {
             finish()
         })
 
-        userInfo = (application as SportsFightApplication).userInformations
+        userInfo = (application as NinjaApplication).userInformations
 
         mBinding!!.rereralCode.text = userInfo!!.referalCode
 
@@ -76,6 +78,11 @@ class InviteFriendsActivity : AppCompatActivity() {
                 if (error == null) {
                     //Log.e(TAG, "got my Branch link to share  =====> " + url);
                     this@InviteFriendsActivity.url = url
+                    FirebaseCrashlytics.getInstance().log("share url =========> $url");
+
+                } else {
+                    FirebaseCrashlytics.getInstance().log("error generating url =========> $error");
+                    Log.e(TAG, "error =========> $error")
                 }
             })
 
@@ -108,6 +115,8 @@ class InviteFriendsActivity : AppCompatActivity() {
         val msg: String =
             "Welcome to Ninja11.\n\nRegister on Ninja11 application with this link.\n\nUse my referral code \"" + userInfo!!.referalCode +
                     "\" and get extra Rs. 100 Bonus on Joining.\n\n $url".trimIndent()
+        FirebaseCrashlytics.getInstance().log("share message =========> $msg");
+
         val sendIntent = Intent()
         sendIntent.action = Intent.ACTION_SEND
         sendIntent.putExtra(Intent.EXTRA_TEXT, msg)

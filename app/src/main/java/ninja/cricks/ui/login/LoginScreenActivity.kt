@@ -226,7 +226,7 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
                         MyPreferences.setToken(this, responseb.token)
 
                         MyPreferences.setUserID(this, "" + responseb.infomodel!!.userId)
-                        (applicationContext as SportsFightApplication).saveUserInformations(
+                        (applicationContext as NinjaApplication).saveUserInformations(
                             responseb.infomodel
                         )
                         if (TextUtils.isEmpty(infoModels.mobileNumber) ||
@@ -257,7 +257,7 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
                     } else {
                         val infomodel = UserInfo()
                         infomodel.userEmail = emailid
-                        (applicationContext as SportsFightApplication).saveUserInformations(
+                        (applicationContext as NinjaApplication).saveUserInformations(
                             responseb.infomodel
                         )
                         registerUsers(firebaseAuth.uid)

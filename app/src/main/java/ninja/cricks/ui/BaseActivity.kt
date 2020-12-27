@@ -27,7 +27,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.andrognito.flashbar.Flashbar
-import com.andrognito.flashbar.anim.FlashAnim
 import com.deliverdas.customers.utils.HardwareInfoManager
 import com.google.firebase.iid.FirebaseInstanceId
 import ninja.cricks.*
@@ -77,7 +76,7 @@ abstract class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         customeProgressDialog = CustomeProgressDialog(this)
         //uploadReceiver = SingleUploadBroadcastReceiver()
-        userInfo = (application as SportsFightApplication).userInformations
+        userInfo = (application as NinjaApplication).userInformations
     }
 
     fun showDeadLineAlert(message: String) {

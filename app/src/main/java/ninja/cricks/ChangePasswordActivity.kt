@@ -27,7 +27,7 @@ class ChangePasswordActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        userInfo = (application as SportsFightApplication).userInformations
+        userInfo = (application as NinjaApplication).userInformations
         customeProgressDialog = CustomeProgressDialog(this)
         mBinding = DataBindingUtil.setContentView(this,
             R.layout.activity_change_password

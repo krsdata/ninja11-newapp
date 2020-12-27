@@ -61,7 +61,7 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
 
     override fun onStart() {
         super.onStart()
-        val infomodel = (application as SportsFightApplication).userInformations
+        val infomodel = (application as NinjaApplication).userInformations
         if (infomodel != null) {
         }
     }
@@ -516,7 +516,7 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
     }
 
     private fun initWalletInfo() {
-        val walletInfo = (application as SportsFightApplication).walletInfo
+        val walletInfo = (application as NinjaApplication).walletInfo
 
         MyPreferences.setGooglePayId(this, walletInfo.gPay)
 
@@ -575,7 +575,7 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
                             MyPreferences.setShowBankWithdraw(mContext!!, res.bank_withdrawal)
                             MyPreferences.setShowUPIWithdraw(mContext!!, res.upi_withdrawal)
 
-                            (application as SportsFightApplication).saveWalletInformation(
+                            (application as NinjaApplication).saveWalletInformation(
                                 responseModel
                             )
                             initWalletInfo()
@@ -617,7 +617,7 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
 
                         val responseModel = res.walletObjects
                         if (responseModel != null) {
-                            (application as SportsFightApplication).saveWalletInformation(
+                            (application as NinjaApplication).saveWalletInformation(
                                 responseModel
                             )
                             MyUtils.showMessage(this@AddMoneyActivity, res.message)

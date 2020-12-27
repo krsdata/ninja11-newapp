@@ -42,8 +42,8 @@ class WithdrawAmountsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         customeProgressDialog = CustomeProgressDialog(this)
-        userInfo = (application as SportsFightApplication).userInformations
-        walletInfo = (application as SportsFightApplication).walletInfo
+        userInfo = (application as NinjaApplication).userInformations
+        walletInfo = (application as NinjaApplication).walletInfo
         mBinding = DataBindingUtil.setContentView(
             this,
             R.layout.activity_withdraw_amount

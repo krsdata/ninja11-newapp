@@ -41,7 +41,7 @@ class MyBalanceActivity : AppCompatActivity() {
             this,
             R.layout.activity_my_ballance
         )
-        walletInfo = (application as SportsFightApplication).walletInfo
+        walletInfo = (application as NinjaApplication).walletInfo
         mBinding!!.toolbar.title = "My Balance"
         mBinding!!.toolbar.setTitleTextColor(resources.getColor(R.color.white))
         mBinding!!.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
@@ -154,7 +154,7 @@ class MyBalanceActivity : AppCompatActivity() {
     }
 
     private fun initWalletInfo() {
-        val walletInfo = (application as SportsFightApplication).walletInfo
+        val walletInfo = (application as NinjaApplication).walletInfo
         val totalBalance =
             walletInfo.depositAmount + walletInfo.prizeAmount + walletInfo.bonusAmount
         mBinding!!.walletTotalAmount.text = String.format("₹%.2f", totalBalance)
@@ -209,7 +209,7 @@ class MyBalanceActivity : AppCompatActivity() {
                             MyPreferences.setShowBankWithdraw(this@MyBalanceActivity, res.bank_withdrawal)
                             MyPreferences.setShowUPIWithdraw(this@MyBalanceActivity, res.upi_withdrawal)
 
-                            (application as SportsFightApplication).saveWalletInformation(
+                            (application as NinjaApplication).saveWalletInformation(
                                 responseModel
                             )
                             initWalletInfo()

@@ -54,8 +54,8 @@ class MyAccountFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        userInfo = (requireActivity().applicationContext as SportsFightApplication).userInformations
-        walletInfo = (requireActivity().applicationContext as SportsFightApplication).walletInfo
+        userInfo = (requireActivity().applicationContext as NinjaApplication).userInformations
+        walletInfo = (requireActivity().applicationContext as NinjaApplication).walletInfo
         (activity as MainActivity).hideToolbar()
 
         mBinding!!.notificationClick.setOnClickListener(View.OnClickListener {
@@ -127,7 +127,7 @@ class MyAccountFragment : BaseFragment() {
                                 MyPreferences.setShowBankWithdraw(requireActivity(), res.bank_withdrawal)
                                 MyPreferences.setShowUPIWithdraw(requireActivity(), res.upi_withdrawal)
 
-                                (activity!!.applicationContext as SportsFightApplication).saveWalletInformation(
+                                (activity!!.applicationContext as NinjaApplication).saveWalletInformation(
                                     responseModel
                                 )
                                 initProfile()
@@ -162,7 +162,7 @@ class MyAccountFragment : BaseFragment() {
             val intent = Intent(requireActivity(), EditProfileActivity::class.java)
             startActivity(intent)
         })
-        walletInfo = (requireActivity().applicationContext as SportsFightApplication).walletInfo
+        walletInfo = (requireActivity().applicationContext as NinjaApplication).walletInfo
         if (walletInfo != null) {
             val accountStatus = walletInfo.accountStatus
             if (accountStatus != null) {
