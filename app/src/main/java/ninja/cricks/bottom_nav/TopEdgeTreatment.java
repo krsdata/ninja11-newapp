@@ -42,15 +42,15 @@ public class TopEdgeTreatment extends EdgeTreatment {
             return;
         }
 
-        Float cradleDiameter = this.fabMargin * 2.0f + this.fabDiameter;
+        float cradleDiameter = this.fabMargin * 2.0f + this.fabDiameter;
         Float cradleRadius = cradleDiameter / 2.0f;
         Float roundedCornerOffset = interpolation * this.roundedCornerRadius;
-        Float menuItemWidth = length / menuSize;
+        float menuItemWidth = length / menuSize;
         Float fabPositionX = fabMenuIndex * menuItemWidth + menuItemWidth / 2;
         //Float middle = center + this.horizontalOffset;
 
         Float verticalOffset = interpolation * this.cradleVerticalOffset + (1.0f - interpolation) * cradleRadius;
-        Float verticalOffsetRatio = verticalOffset / cradleRadius;
+        float verticalOffsetRatio = verticalOffset / cradleRadius;
 
         if (verticalOffsetRatio >= 1.0f) {
             // Vertical offset is so high that there's no curve to draw in the edge, i.e., the fab is
@@ -66,7 +66,7 @@ public class TopEdgeTreatment extends EdgeTreatment {
         // Calculate the X distance between the center of the two adjacent circles using pythagorean
         // theorem.
         Float distanceBetweenCenters = cradleRadius + roundedCornerOffset;
-        Float distanceBetweenCentersSquared = distanceBetweenCenters * distanceBetweenCenters;
+        float distanceBetweenCentersSquared = distanceBetweenCenters * distanceBetweenCenters;
         Float distanceY = verticalOffset + roundedCornerOffset;
         Float distanceX = (float) Math.sqrt(distanceBetweenCentersSquared - distanceY * distanceY);
 
@@ -75,8 +75,8 @@ public class TopEdgeTreatment extends EdgeTreatment {
         Float rightRoundedCornerCircleX = fabPositionX + distanceX;
 
         // Calculate the arc between the center of the two circles.
-        Float cornerRadiusArcLength = (float) Math.toDegrees(Math.atan(distanceX / distanceY));
-        Float cutoutArcOffset = 90.0f - cornerRadiusArcLength;
+        float cornerRadiusArcLength = (float) Math.toDegrees(Math.atan(distanceX / distanceY));
+        float cutoutArcOffset = 90.0f - cornerRadiusArcLength;
 
         // Draw the starting line up to the left rounded corner.
         shapePath.lineTo(leftRoundedCornerCircleX - roundedCornerOffset, 0.0f);
@@ -130,6 +130,4 @@ public class TopEdgeTreatment extends EdgeTreatment {
     public void setFabDiameter(Float fabDiameter){
         this.fabDiameter = fabDiameter;
     }
-
-
 }

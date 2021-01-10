@@ -84,7 +84,7 @@ class MyUtils {
         }
 
 
-        fun parseDate(date: String): String? {
+        fun parseDate(date: String): String {
 
             val originalFormat: DateFormat =
                 SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)

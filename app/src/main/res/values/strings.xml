@@ -114,8 +114,8 @@
     <string name="label_policy">READ Ninja11 Policies</string>
     <string name="label_acceptance1">By joining this,you accept Ninja11 </string>
     <string name="label_acceptance2">and confirm that you are not a resident of
-                Andhra Pradesh,assam, Odisha, Telangana, nagaland and Sikkim. I also agree to be contancted by Ninja11 and their partner</string>
-    <string name="label_document_safe">Your documents are safe with Ninja11.in, we do not share this documents with anyone else nor we disclose the personal identifications.</string>
+                Andhra Pradesh, Assam, Odisha, Telangana, Nagaland and Sikkim. I also agree to be contacted by Ninja11 and their partner.</string>
+    <string name="label_document_safe">Your documents are safe with "ninja11.in". We do not share this documents with anyone else nor we disclose the personal identifications.</string>
     <string name="label_register_on_sf">"Register on Ninja11 application with referral code "</string>
     <string name="label_supportteam">"Ninja11 Support Team"</string>
     <string name="warning_mobilenumber">"Please enter valid mobile number, to authenticate with Ninja11 system"</string>

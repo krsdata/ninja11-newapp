@@ -1,32 +1,33 @@
 package ninja.cricks
 
-import android.graphics.Bitmap
-import android.os.Build
+import android.content.Context
 import android.os.Bundle
 import android.transition.Slide
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ninja.cricks.databinding.WebviewBinding
-import ninja.cricks.ui.BaseActivity
+import ninja.cricks.utils.CustomeProgressDialog
 
 
-class WebActivity : BaseActivity() {
+class WebActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
     private var mBinding: WebviewBinding? = null
+    lateinit var customProgressDialog: CustomeProgressDialog
+    var mContext: Context? = null
+    private var URL: String? = null
+    private var userId: String? = ""
 
     companion object {
         var TAG: String = WebActivity::class.java.simpleName
-        const val KEY_TITLE: String = "web.title"
-        const val KEY_URL: String = "url.web"
+        const val KEY_TITLE: String = "key_title"
+        const val KEY_URL: String = "key_url"
         const val USER_ID: String = "user_id"
     }
-
-    private var URL: String? = null
-    private var userId: String? = ""
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         setEnterAnimations()
@@ -35,6 +36,9 @@ class WebActivity : BaseActivity() {
             this,
             R.layout.webview
         )
+
+        mContext = this
+
         mBinding!!.toolbar.title = intent.getStringExtra(KEY_TITLE)
         mBinding!!.toolbar.setTitleTextColor(resources.getColor(R.color.white))
         mBinding!!.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
@@ -43,16 +47,24 @@ class WebActivity : BaseActivity() {
             finish()
         })
 
-        customeProgressDialog.show()
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            mBinding!!.refreshLayout.setColorSchemeColors(
+                mContext!!.resources.getColor(
+                    R.color.colorPrimary,
+                    null
+                )
+            )
+        } else {
+            mBinding!!.refreshLayout.setColorSchemeColors(mContext!!.resources.getColor(R.color.colorPrimary))
+        }
+        mBinding!!.refreshLayout.setOnRefreshListener(this)
+
+        customProgressDialog = CustomeProgressDialog(mContext)
+        customProgressDialog.show()
+
         URL = intent.getStringExtra(KEY_URL)
         userId = intent.getStringExtra(USER_ID)
         loadURL()
-    }
-
-    override fun onBitmapSelected(bitmap: Bitmap) {
-    }
-
-    override fun onUploadedImageUrl(url: String) {
     }
 
     private fun setEnterAnimations() {
@@ -84,12 +96,17 @@ class WebActivity : BaseActivity() {
             return true
         }
 
-        override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-            super.onPageStarted(view, url, favicon)
-        }
-
         override fun onPageFinished(view: WebView, url: String) {
-            customeProgressDialog.dismiss()
+            if (mBinding!!.refreshLayout.isRefreshing) {
+                mBinding!!.refreshLayout.isRefreshing = false
+            }
+            if (customProgressDialog.isShowing) {
+                customProgressDialog.dismiss()
+            }
         }
+    }
+
+    override fun onRefresh() {
+        loadURL()
     }
 }

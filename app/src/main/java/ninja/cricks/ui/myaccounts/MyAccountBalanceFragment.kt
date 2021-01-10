@@ -24,6 +24,7 @@ import retrofit2.Response
 
 
 class MyAccountBalanceFragment : BaseFragment() {
+
     private lateinit var walletInfo: WalletInfo
     //var myAccountFragment: MyAccountFragment?=null
     private var mBinding: FragmentMyAccountBalanceBinding? = null
@@ -104,6 +105,7 @@ class MyAccountBalanceFragment : BaseFragment() {
         mBinding!!.addedAmount.text = String.format("₹%.2f", responseModel.depositAmount)
         mBinding!!.winningAmount.text = String.format("₹%.2f", responseModel.prizeAmount)
         mBinding!!.cashBonus.text = String.format("₹%.2f", responseModel.bonusAmount)
+        mBinding!!.extraCashBonus.text = String.format("₹%.2f", responseModel.extraCash)
         // mBinding!!.earningRefferal.text = String.format("₹ %s",responseModel.referralAmount)
 
         mBinding!!.earnedPoints.text = String.format(
@@ -167,11 +169,6 @@ class MyAccountBalanceFragment : BaseFragment() {
                                     responseModel
                                 )
                                 initViews()
-//                                var fragment = activity!!.getSupportFragmentManager()
-//                                    .findFragmentById("myFragmentTag") as MyAccountBalanceFragment
-//                                if (fragment != null) {
-//                                    fragment!!.initViews()
-//                                }
                             }
                         }
                     }

@@ -9,6 +9,7 @@ import ninja.cricks.ui.leadersboard.models.LeadersBoardModels
 import ninja.cricks.ui.leadersboard.models.PrizeBreakUpModels
 
 class UsersPostDBResponse {
+
     @SerializedName("status")
     @Expose
     var status: Boolean = false
@@ -143,7 +144,6 @@ class UsersPostDBResponse {
         @Expose
         var myJoinedContest: List<ContestModelLists>? = null
 
-
         @SerializedName("myjoinedTeams")
         @Expose
         var myjoinedTeams: ArrayList<MyTeamModels>? = null
@@ -152,27 +152,53 @@ class UsersPostDBResponse {
         @Expose
         var joinedContestDetails: ArrayList<ContestModelLists>? = null
 
-
         @SerializedName("player_points")
         @Expose
         var playerPointsList: ArrayList<PlayersInfoModel>? = null
 
-
-        /**
-         * bank Accounts
-         */
-        @SerializedName("documents")
+        @SerializedName("pan_number")
         @Expose
-        var documentsList: ArrayList<DocumentsModels>? = null
+        var panNumber: String = ""
 
-        @SerializedName("paytm")
+        @SerializedName("pan_name")
         @Expose
-        var paytmNoList: ArrayList<DocumentsModels>? = null
+        var panName: String = ""
 
-        @SerializedName("bank_accounts")
+        @SerializedName("pan_url")
         @Expose
-        var bankAccountsList: ArrayList<DocumentsModels>? = null
+        var panUrl: String = ""
 
+        @SerializedName("bank_name")
+        @Expose
+        var bankName: String = ""
+
+        @SerializedName("account_name")
+        @Expose
+        var accountName: String = ""
+
+        @SerializedName("account_number")
+        @Expose
+        var accountNumber: String = ""
+
+        @SerializedName("ifsc_code")
+        @Expose
+        var IFSCCode: String = ""
+
+        @SerializedName("account_type")
+        @Expose
+        var accountType: String = ""
+
+        @SerializedName("bank_url")
+        @Expose
+        var bankUrl: String = ""
+
+        @SerializedName("paytm_number")
+        @Expose
+        var paytmNumber: String = ""
+
+        @SerializedName("upi_id")
+        @Expose
+        var UPIId: String = ""
     }
 
     inner class ScoresBoardModels {

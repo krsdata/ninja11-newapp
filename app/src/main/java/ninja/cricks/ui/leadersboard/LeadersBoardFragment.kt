@@ -39,9 +39,8 @@ import retrofit2.Response
 
 
 class LeadersBoardFragment : Fragment() {
-    private lateinit var userInfo: UserInfo
 
-    //private var isMatchStarted: Boolean?=false
+    private lateinit var userInfo: UserInfo
     private lateinit var customeProgressDialog: CustomeProgressDialog
     private var teamName: String? = ""
     private var mBinding: FragmentLeadersBoardBinding? = null
@@ -113,17 +112,13 @@ class LeadersBoardFragment : Fragment() {
                         )
                     }
             }
-
-
         }
         mBinding!!.swipeRefreshLeaderboard.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
             getLeadersBoards()
         })
         setTotalTeamCounts(0)
         getLeadersBoards()
-
     }
-
 
     private fun setTotalTeamCounts(value: Int) {
         mBinding!!.totalTeamCounts.text = String.format("ALL TEAMS (%d)", value)
@@ -203,6 +198,8 @@ class LeadersBoardFragment : Fragment() {
                             val intent = Intent(activity, TeamPreviewActivity::class.java)
                             intent.putExtra(TeamPreviewActivity.KEY_TEAM_NAME, teamName)
                             intent.putExtra(TeamPreviewActivity.KEY_TEAM_ID, teamId)
+                            intent.putExtra(TeamPreviewActivity.KEY_CONTEST_ID, contestObject!!.id.toString())
+                            intent.putExtra(TeamPreviewActivity.KEY_USER_ID, user_id)
                             intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
                             intent.putExtra(
                                 TeamPreviewActivity.SERIALIZABLE_TEAM_PREVIEW_KEY,

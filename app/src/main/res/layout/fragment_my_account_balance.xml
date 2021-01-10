@@ -21,13 +21,13 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="@dimen/_15sdp"
                     app:cardBackgroundColor="#ffffff">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="16dp">
+                        android:padding="@dimen/_5sdp">
 
                         <ImageView
                             android:id="@+id/gift_icon"
@@ -58,7 +58,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:fontFamily="@font/open_sans_light"
-                                android:text="Reward points are automatically redeemed after 1000 points."
+                                android:text="Reward points are automatically redeemed after 5000 points."
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_10sdp" />
 
@@ -220,7 +220,7 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="10dp">
+                            android:padding="@dimen/_5sdp">
 
                             <ImageView
                                 android:id="@+id/bonus_icon"
@@ -235,19 +235,18 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
-                                android:layout_marginStart="10dp"
+                                android:layout_marginStart="@dimen/_5sdp"
                                 android:layout_toEndOf="@+id/bonus_icon"
                                 android:orientation="vertical">
 
                                 <TextView
                                     android:id="@+id/cash_bonus"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/open_sans_semibold"
-                                    android:lineSpacingExtra="6sp"
                                     android:maxLines="1"
                                     android:singleLine="true"
-                                    android:text="₹0.0"
+                                    android:text="₹ 0.0"
                                     android:textColor="@color/black"
                                     android:textSize="16sp" />
 
@@ -255,7 +254,6 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/open_sans_light"
-                                    android:lineSpacingExtra="7sp"
                                     android:text="Cash Bonus"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/_10sdp" />
@@ -266,14 +264,63 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
                         android:layout_weight="1"
                         app:cardBackgroundColor="#ffffff">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="10dp">
+                            android:padding="@dimen/_5sdp">
+
+                            <ImageView
+                                android:id="@+id/extra_bonus_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/ic_my_account_cash_bonous"
+                                app:tint="@color/colorAccent" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:layout_toEndOf="@+id/extra_bonus_icon"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/extra_cash_bonus"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/open_sans_semibold"
+                                    android:maxLines="1"
+                                    android:singleLine="true"
+                                    android:text="₹ 0.0"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/open_sans_light"
+                                    android:text="Exta Bonus"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_10sdp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="#ffffff">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/_5sdp">
 
                             <ImageView
                                 android:id="@+id/wallet_icon"
@@ -288,7 +335,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
-                                android:layout_marginStart="10dp"
+                                android:layout_marginStart="@dimen/_5sdp"
                                 android:layout_toEndOf="@+id/wallet_icon"
                                 android:orientation="vertical">
 

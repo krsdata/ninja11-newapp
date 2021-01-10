@@ -12,6 +12,4 @@
     <stroke
         android:width="@dimen/_1sdp"
         android:color="@color/crop__selector_focused" />
-
-
 </shape>

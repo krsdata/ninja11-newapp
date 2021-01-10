@@ -18,13 +18,13 @@ class PlayersSelectedAdapter(
     val context: Context,
     contestModelList: ArrayList<PlayersInfoModel>,
     listener: OnRolesSelected,
-    matchObjectmodel: UpcomingMatchesModel
+    matchObjectModel: UpcomingMatchesModel
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var onItemClick: ((PlayersInfoModel) -> Unit)? = null
     private var matchesListObject = contestModelList
     var listeners = listener
-    var matchObject = matchObjectmodel
+    var matchObject = matchObjectModel
 
     companion object {
         const val TYPE_LABEL = 1

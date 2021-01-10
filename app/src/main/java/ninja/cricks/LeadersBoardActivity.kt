@@ -38,7 +38,6 @@ import retrofit2.Response
 import java.util.*
 import kotlin.collections.ArrayList
 
-
 class LeadersBoardActivity : BaseActivity() {
 
     var mainHandler: Handler? = Handler()
@@ -47,6 +46,7 @@ class LeadersBoardActivity : BaseActivity() {
     var contestObject: ContestModelLists? = null
     var matchObject: UpcomingMatchesModel? = null
     private var mBinding: ActivityLeadersBoardBinding? = null
+
     private val updateScoresHandler = object : Runnable {
         override fun run() {
             Log.d("leadersboard", "hitting to server")
@@ -57,16 +57,12 @@ class LeadersBoardActivity : BaseActivity() {
         }
     }
 
-
     companion object {
         var CREATETEAM_REQUESTCODE: Int = 2001
         var REFRESH_TIME: Int = 60000
-
         val SERIALIZABLE_MATCH_KEY: String = "matchObject"
         val SERIALIZABLE_CONTEST_KEY: String = "contest"
-
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,10 +102,7 @@ class LeadersBoardActivity : BaseActivity() {
 
         setupViewPager(mBinding!!.viewpager)
         mBinding!!.tabs.setupWithViewPager(mBinding!!.viewpager)
-
-
         initContestDetails()
-
     }
 
     override fun onResume() {
@@ -144,15 +137,12 @@ class LeadersBoardActivity : BaseActivity() {
             override fun onTicks(time: String) {
                 mBinding!!.matchTimer.text = time
             }
-
         })
-
     }
 
     fun pauseCountDown() {
         BindingUtils.stopTimer()
     }
-
 
     private fun initContestDetails() {
         mBinding!!.includeLiveMatchRow.contestPrizePool.text =
@@ -192,7 +182,6 @@ class LeadersBoardActivity : BaseActivity() {
         updateScores()
     }
 
-
     override fun onPause() {
         super.onPause()
         pauseCountDown()
@@ -201,11 +190,9 @@ class LeadersBoardActivity : BaseActivity() {
         }
     }
 
-
     fun updateScores() {
         val models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
-        // models.token = MyPreferences.getToken(this)!!
         models.contest_id = "" + contestObject!!.id
         models.match_id = "" + matchObject!!.matchId
 

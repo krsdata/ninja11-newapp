@@ -96,13 +96,6 @@ class MoreOptionsFragment : BaseFragment() {
         upcomingMModle2.title = "Fantasy Points System"
         allOptionsList.add(upcomingMModle2)
 
-
-        /*val upcomingMModle3 = MoreOptionsModel()
-        upcomingMModle3.drawable = R.drawable.more_terms_conditions
-        upcomingMModle3.id = 2
-        upcomingMModle3.title = "How to Play"
-        allOptionsList.add(upcomingMModle3)*/
-
         val upcomingMModle9 = MoreOptionsModel()
         upcomingMModle9.drawable = R.drawable.more_terms_conditions
         upcomingMModle9.id = 9
@@ -115,23 +108,11 @@ class MoreOptionsFragment : BaseFragment() {
         upcomingMModle4.title = "About Us"
         allOptionsList.add(upcomingMModle4)
 
-        /*val upcomingMModle5 = MoreOptionsModel()
-        upcomingMModle5.drawable = R.drawable.more_legality
-        upcomingMModle5.id = 4
-        upcomingMModle5.title = "Legality"
-        allOptionsList.add(upcomingMModle5)*/
-
         val upcomingMModle6 = MoreOptionsModel()
         upcomingMModle6.drawable = R.drawable.more_terms_conditions
         upcomingMModle6.id = 5
         upcomingMModle6.title = "Terms and Conditions"
         allOptionsList.add(upcomingMModle6)
-
-//        var upcomingMModle9 = MoreOptionsModel()
-//        upcomingMModle9.drawable = R.drawable.ic_chat_black_24dp
-//        upcomingMModle9.id = 9
-//        upcomingMModle9.title = "Chat with Sports Fight"
-//        allOptionsList.add(upcomingMModle9)
 
         val upcomingMModle8 = MoreOptionsModel()
         upcomingMModle8.drawable = R.drawable.more_logout

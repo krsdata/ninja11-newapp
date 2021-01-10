@@ -23,14 +23,13 @@ import ninja.cricks.R;
 
 
 public class BottomNavBar extends CoordinatorLayout {
-    int fabMenuIndex = 0;
     private static final String TAG = BottomNavBar.class.getSimpleName();
     public BottomNavigationView bottomNavigationView;
-    private FloatingActionButton fab;
-    private FloatingActionButton fab1;
-    private FloatingActionButton fab2;
-    private FloatingActionButton fab3;
-
+    int fabMenuIndex = 0;
+    private final FloatingActionButton fab;
+    private final FloatingActionButton fab1;
+    private final FloatingActionButton fab2;
+    private final FloatingActionButton fab3;
 
     public BottomNavBar(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);

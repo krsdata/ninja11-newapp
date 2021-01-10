@@ -18,12 +18,12 @@ import ninja.cricks.ui.createteam.models.PlayersInfoModel
 class PlayersContestAdapter(
     val context: Context,
     val playerList: ArrayList<PlayersInfoModel>,
-    matchObject: UpcomingMatchesModel
+    matchModel: UpcomingMatchesModel
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var onItemClick: ((PlayersInfoModel) -> Unit)? = null
     private var playerListObject = playerList
-    private var matchObject = matchObject
+    private var matchObject = matchModel
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent.context)

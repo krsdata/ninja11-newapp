@@ -146,17 +146,9 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
         mBinding!!.viewpagerContest.currentItem = position
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-//        if(CreateTeamActivity.CREATETEAM_REQUESTCODE==requestCode && resultCode== Activity.RESULT_OK){
-//            mBinding!!.viewpagerContest.setCurrentItem(1)
-//        }else {
-//            getCon
-//        }
         mBinding!!.viewpagerContest.currentItem = 0
-        // mBinding!!.viewpagerContest.get
-        // getAllContest()
     }
 
     override fun onBitmapSelected(bitmap: Bitmap) {
@@ -165,9 +157,7 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
 
     override fun onUploadedImageUrl(url: String) {
 
-
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 //        menuInflater.inflate(R.menu.main_menu, menu)
@@ -324,6 +314,4 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
     override fun onShareContest(objects: ContestModelLists) {
 
     }
-
-
 }

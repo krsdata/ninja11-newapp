@@ -93,6 +93,10 @@ class WalletInfo : Serializable, Cloneable {
     @Expose
     var upi_withdrawal: Boolean = false
 
+    @SerializedName("extra_cash")
+    @Expose
+    var extraCash: String = ""
+
     public override fun clone(): WalletInfo {
         return super.clone() as WalletInfo
     }

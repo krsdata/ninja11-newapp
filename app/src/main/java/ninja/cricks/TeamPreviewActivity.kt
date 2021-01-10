@@ -1,5 +1,6 @@
 package ninja.cricks
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -9,6 +10,7 @@ import ninja.cricks.CreateTeamActivity.Companion.CREATE_TEAM_ALLROUNDER
 import ninja.cricks.CreateTeamActivity.Companion.CREATE_TEAM_BATSMAN
 import ninja.cricks.CreateTeamActivity.Companion.CREATE_TEAM_BOWLER
 import ninja.cricks.CreateTeamActivity.Companion.CREATE_TEAM_WICKET_KEEPER
+import ninja.cricks.customviews.ScreenshotDetectionDelegate
 import ninja.cricks.databinding.ActivityTeamPreviewBinding
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.network.IApiMethod
@@ -26,22 +28,31 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class TeamPreviewActivity : AppCompatActivity() {
+class TeamPreviewActivity : AppCompatActivity(),
+    ScreenshotDetectionDelegate.ScreenshotDetectionListener {
+
     private lateinit var customeProgressDialog: CustomeProgressDialog
     private var teamId: Int = 0
     private var teamName: String = ""
     private lateinit var matchObject: UpcomingMatchesModel
-    private lateinit var hasmapPlayers: HashMap<String, java.util.ArrayList<PlayersInfoModel>>
+    private lateinit var hasmapPlayers: HashMap<String, ArrayList<PlayersInfoModel>>
     private var mBinding: ActivityTeamPreviewBinding? = null
     private val listWicketKeeper = ArrayList<PlayersInfoModel>()
     private val listBatsMan = ArrayList<PlayersInfoModel>()
     private val listAllRounder = ArrayList<PlayersInfoModel>()
     private val listBowler = ArrayList<PlayersInfoModel>()
+    private var mContext: Context? = null
+
+    private val screenshotDetectionDelegate = ScreenshotDetectionDelegate(this, this)
+    private var contestId: String = ""
+    private var userId: String = ""
 
     companion object {
-        val SERIALIZABLE_TEAM_PREVIEW_KEY: String = "teampreview"
-        val KEY_TEAM_NAME: String = "team_name"
-        val KEY_TEAM_ID: String = "team_id"
+        const val SERIALIZABLE_TEAM_PREVIEW_KEY: String = "teampreview"
+        const val KEY_TEAM_NAME: String = "team_name"
+        const val KEY_TEAM_ID: String = "team_id"
+        const val KEY_USER_ID: String = "user_id"
+        const val KEY_CONTEST_ID: String = "contest_id"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +61,9 @@ class TeamPreviewActivity : AppCompatActivity() {
             this,
             R.layout.activity_team_preview
         )
-        customeProgressDialog = CustomeProgressDialog(this)
+
+        mContext = this
+        customeProgressDialog = CustomeProgressDialog(mContext)
         if (intent.hasExtra(KEY_TEAM_NAME)) {
             teamName = intent.getStringExtra(KEY_TEAM_NAME)
         }
@@ -61,20 +74,28 @@ class TeamPreviewActivity : AppCompatActivity() {
             intent.getSerializableExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY) as UpcomingMatchesModel
         hasmapPlayers =
             intent.getSerializableExtra(SERIALIZABLE_TEAM_PREVIEW_KEY) as HashMap<String, ArrayList<PlayersInfoModel>>
-        mBinding!!.imgRefresh.setOnClickListener(View.OnClickListener {
+
+        if (intent.hasExtra(KEY_CONTEST_ID)) {
+            contestId = intent.getStringExtra(KEY_CONTEST_ID)
+        }
+        if (intent.hasExtra(KEY_USER_ID)) {
+            userId = intent.getStringExtra(KEY_USER_ID)
+        }
+
+        mBinding!!.imgRefresh.setOnClickListener {
             getPoints(teamId)
-        })
+        }
 
-        mBinding!!.imgClose.setOnClickListener(View.OnClickListener {
+        mBinding!!.imgClose.setOnClickListener {
             finish()
-        })
+        }
 
-        mBinding!!.fantasyPointsWebsview.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this@TeamPreviewActivity, WebActivity::class.java)
+        mBinding!!.fantasyPointsWebsview.setOnClickListener {
+            val intent = Intent(mContext, WebActivity::class.java)
             intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_FANTASY_POINTS)
             intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_FANTASY_POINTS)
             startActivity(intent)
-        })
+        }
 
         mBinding!!.teamName.text = teamName
         if (matchObject.status == BindingUtils.MATCH_STATUS_UPCOMING) {
@@ -222,33 +243,33 @@ class TeamPreviewActivity : AppCompatActivity() {
     private fun calculatePoints(): String {
         var totalPoints: Double = 0.0
         if (hasmapPlayers.containsKey(CREATE_TEAM_WICKET_KEEPER)) {
-            val lkeeper = hasmapPlayers.get(CREATE_TEAM_WICKET_KEEPER)
-            for (x in 0..lkeeper!!.size - 1) {
-                val obj = lkeeper.get(x)
-                totalPoints = totalPoints + obj.playerPoints.toDouble()
+            val wkKeeper = hasmapPlayers[CREATE_TEAM_WICKET_KEEPER]
+            for (x in 0 until wkKeeper!!.size) {
+                val obj = wkKeeper[x]
+                totalPoints += obj.playerPoints.toDouble()
             }
         }
 
         if (hasmapPlayers.containsKey(CREATE_TEAM_BATSMAN)) {
-            val btslist = hasmapPlayers.get(CREATE_TEAM_BATSMAN)
-            for (x in 0..btslist!!.size - 1) {
-                val obj = btslist.get(x)
-                totalPoints = totalPoints + obj.playerPoints.toDouble()
+            val btslist = hasmapPlayers[CREATE_TEAM_BATSMAN]
+            for (x in 0 until btslist!!.size) {
+                val obj = btslist[x]
+                totalPoints += obj.playerPoints.toDouble()
             }
         }
 
         if (hasmapPlayers.containsKey(CREATE_TEAM_ALLROUNDER)) {
-            val alllist = hasmapPlayers.get(CREATE_TEAM_ALLROUNDER)
-            for (x in 0..alllist!!.size - 1) {
-                val obj = alllist.get(x)
-                totalPoints = totalPoints + obj.playerPoints.toDouble()
+            val allList = hasmapPlayers[CREATE_TEAM_ALLROUNDER]
+            for (x in 0 until allList!!.size) {
+                val obj = allList[x]
+                totalPoints += obj.playerPoints.toDouble()
             }
         }
         if (hasmapPlayers.containsKey(CREATE_TEAM_BOWLER)) {
-            val bwllist = hasmapPlayers.get(CREATE_TEAM_BOWLER)
-            for (x in 0..bwllist!!.size - 1) {
-                val obj = bwllist.get(x)
-                totalPoints = totalPoints + obj.playerPoints.toDouble()
+            val bowlList = hasmapPlayers[CREATE_TEAM_BOWLER]
+            for (x in 0 until bowlList!!.size) {
+                val obj = bowlList[x]
+                totalPoints += obj.playerPoints.toDouble()
             }
         }
         return totalPoints.toString()
@@ -272,64 +293,92 @@ class TeamPreviewActivity : AppCompatActivity() {
     private fun addWicketKeeper() {
         listWicketKeeper.clear()
         if (hasmapPlayers.containsKey(CREATE_TEAM_WICKET_KEEPER)) {
-            val listofPlayers = hasmapPlayers.get(CREATE_TEAM_WICKET_KEEPER)!!
-            for (i in 0..listofPlayers.size - 1) {
-                val playerObject = listofPlayers.get(i)
+            val listOfPlayers = hasmapPlayers[CREATE_TEAM_WICKET_KEEPER]!!
+            for (i in 0 until listOfPlayers.size) {
+                val playerObject = listOfPlayers[i]
                 if (playerObject.teamId == matchObject.teamAInfo!!.teamId) {
                     playerObject.setPlayerIcon(R.drawable.ic_player_wk_teama)
                 } else {
                     playerObject.setPlayerIcon(R.drawable.ic_player_wk_teamb)
                 }
             }
-            listWicketKeeper.addAll(listofPlayers)
+            listWicketKeeper.addAll(listOfPlayers)
         }
     }
 
     private fun addBatsman() {
         listBatsMan.clear()
         if (hasmapPlayers.containsKey(CREATE_TEAM_BATSMAN)) {
-            val listofPlayers = hasmapPlayers.get(CREATE_TEAM_BATSMAN)!!
-            for (i in 0..listofPlayers.size - 1) {
-                val playerObject = listofPlayers.get(i)
+            val listOfPlayers = hasmapPlayers[CREATE_TEAM_BATSMAN]!!
+            for (i in 0 until listOfPlayers.size) {
+                val playerObject = listOfPlayers[i]
                 if (playerObject.teamId == matchObject.teamAInfo!!.teamId) {
                     playerObject.setPlayerIcon(R.drawable.ic_player_bat_teama)
                 } else {
                     playerObject.setPlayerIcon(R.drawable.ic_player_bat_teamb)
                 }
             }
-            listBatsMan.addAll(listofPlayers)
+            listBatsMan.addAll(listOfPlayers)
         }
     }
 
     private fun addAllRounder() {
         listAllRounder.clear()
         if (hasmapPlayers.containsKey(CREATE_TEAM_ALLROUNDER)) {
-            val listofPlayers = hasmapPlayers.get(CREATE_TEAM_ALLROUNDER)!!
-            for (i in 0..listofPlayers.size - 1) {
-                val playerObject = listofPlayers.get(i)
+            val listOfPlayers = hasmapPlayers[CREATE_TEAM_ALLROUNDER]!!
+            for (i in 0 until listOfPlayers.size) {
+                val playerObject = listOfPlayers[i]
                 if (playerObject.teamId == matchObject.teamAInfo!!.teamId) {
                     playerObject.setPlayerIcon(R.drawable.ic_player_all_teama)
                 } else {
                     playerObject.setPlayerIcon(R.drawable.ic_player_all_teamb)
                 }
             }
-            listAllRounder.addAll(listofPlayers)
+            listAllRounder.addAll(listOfPlayers)
         }
     }
 
     private fun addBowler() {
         listBowler.clear()
         if (hasmapPlayers.containsKey(CREATE_TEAM_BOWLER)) {
-            val listofPlayers = hasmapPlayers.get(CREATE_TEAM_BOWLER)!!
-            for (i in 0..listofPlayers.size - 1) {
-                val playerObject = listofPlayers.get(i)
+            val listOfPlayers = hasmapPlayers[CREATE_TEAM_BOWLER]!!
+            for (i in 0 until listOfPlayers.size) {
+                val playerObject = listOfPlayers[i]
                 if (playerObject.teamId == matchObject.teamAInfo!!.teamId) {
                     playerObject.setPlayerIcon(R.drawable.ic_player_bowler_teama)
                 } else {
                     playerObject.setPlayerIcon(R.drawable.ic_player_bowler_teamb)
                 }
             }
-            listBowler.addAll(listofPlayers)
+            listBowler.addAll(listOfPlayers)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        screenshotDetectionDelegate.startScreenshotDetection()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        screenshotDetectionDelegate.stopScreenshotDetection()
+    }
+
+    override fun onScreenCaptured(path: String) {
+        if(contestId != null && contestId != "") {
+            BindingUtils.sendEventLogs(
+                mContext!!, matchObject.matchId.toString(), contestId, userId, teamId,
+                (application as NinjaApplication).userInformations, "Screen Shot Captured"
+            )
+        }
+    }
+
+    override fun onScreenCapturedWithDeniedPermission() {
+        if(contestId != null && contestId != "") {
+            BindingUtils.sendEventLogs(
+                mContext!!, matchObject.matchId.toString(), contestId, userId, teamId,
+                (application as NinjaApplication).userInformations, "captured"
+            )
         }
     }
 }

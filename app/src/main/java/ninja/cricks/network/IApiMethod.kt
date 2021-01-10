@@ -185,4 +185,7 @@ interface IApiMethod {
     @POST("api/v2/withdrawAmountNinja")
     fun withdrawAmountNew(@Body request: RequestModel): Call<UsersPostDBResponse>
 
+    @Headers("Content-Type: application/json")
+    @POST("api/v2/verificationNinja")
+    fun getApprovedDocuments(@Body request: RequestModel): Call<UsersPostDBResponse>
 }

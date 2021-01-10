@@ -154,7 +154,7 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
 
     private fun updateTimerHeader() {
         mBinding!!.matchTimer.text = matchObject.statusString.toUpperCase(Locale.ENGLISH)
-        mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.colorPrimary))
+        mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.white))
     }
 
     private fun startCountDown() {
@@ -172,14 +172,14 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
 
             override fun onTicks(time: String) {
                 mBinding!!.matchTimer.text = time
-                mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.colorPrimary))
+                mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.white))
                 //         mBinding!!.watchTimerImg.visibility =View.VISIBLE
                 BindingUtils.logD("TimerLogs", "ContestScreen: " + time)
             }
         })
     }
 
-    fun pauseCountDown() {
+    private fun pauseCountDown() {
         BindingUtils.stopTimer()
     }
 
@@ -213,10 +213,6 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
             }
         }
 
-//        if(!isTrump){
-//            MyUtils.showToast(this@SaveTeamActivity,"Please select Trump")
-//            return null
-//        }
         if (!isCaptain) {
             MyUtils.showToast(this@SaveTeamActivity, "Please select Captain")
             return null

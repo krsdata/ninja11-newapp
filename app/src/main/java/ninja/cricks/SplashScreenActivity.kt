@@ -103,7 +103,7 @@ class SplashScreenActivity : BaseActivity() {
     }
 
     override fun onBitmapSelected(bitmap: Bitmap) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onUploadedImageUrl(url: String) {
@@ -126,7 +126,7 @@ class SplashScreenActivity : BaseActivity() {
                     response: Response<UsersPostDBResponse?>?
                 ) {
 
-                    var res = response!!.body()
+                    val res = response!!.body()
                     if (!isFinishing) {
                         if (res != null) {
                             if (res.status) {
@@ -137,7 +137,6 @@ class SplashScreenActivity : BaseActivity() {
 
                                 MyPreferences.setSplashScreen(this@SplashScreenActivity, res.splash)
                             }
-
                         }
                     }
                 }
@@ -187,6 +186,4 @@ class SplashScreenActivity : BaseActivity() {
                 }
             }
     }
-
-
 }

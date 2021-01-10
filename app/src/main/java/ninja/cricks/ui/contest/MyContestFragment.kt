@@ -52,6 +52,7 @@ class MyContestFragment : Fragment() {
     var checkinArrayList = ArrayList<ContestModelLists>()
     private var teamName: String? = ""
     private var isVisibleToUser: Boolean = false
+    var contestObject: ContestModelLists? = null
 
     companion object {
         fun newInstance(bundle: Bundle): MyContestFragment {
@@ -71,7 +72,7 @@ class MyContestFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_my_contest, container, false
@@ -90,10 +91,14 @@ class MyContestFragment : Fragment() {
         mBinding!!.recyclerMyContest.adapter = adapter
 
         adapter.onItemClick = { objects ->
+            contestObject = objects
             val intent = Intent(context, LeadersBoardActivity::class.java)
             intent.putExtra(LeadersBoardActivity.SERIALIZABLE_MATCH_KEY, objectMatches)
             intent.putExtra(LeadersBoardActivity.SERIALIZABLE_CONTEST_KEY, objects)
-            requireActivity().startActivityForResult(intent, LeadersBoardActivity.CREATETEAM_REQUESTCODE)
+            requireActivity().startActivityForResult(
+                intent,
+                LeadersBoardActivity.CREATETEAM_REQUESTCODE
+            )
         }
         mBinding!!.linearEmptyContest.visibility = View.GONE
 
@@ -120,14 +125,7 @@ class MyContestFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        //if (isVisibleToUser) {
-            getMyJoinedContest()
-        //}
-    }
-
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        this.isVisibleToUser = isVisibleToUser
+        getMyJoinedContest()
     }
 
     override fun onAttach(context: Context) {
@@ -154,16 +152,15 @@ class MyContestFragment : Fragment() {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-        //var userInfo = (activity as PlugSportsApplication).userInformations
         mBinding!!.linearEmptyContest.visibility = View.GONE
         mBinding!!.progressContest.visibility = View.VISIBLE
-        var models = RequestModel()
+        val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         models.token = MyPreferences.getToken(requireActivity())!!
         models.match_id = "" + objectMatches!!.matchId
 
-
-        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getMyContest(models)
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
+            .getMyContest(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     mBinding!!.mycontestRefresh.isRefreshing = false
@@ -177,9 +174,9 @@ class MyContestFragment : Fragment() {
                 ) {
                     mBinding!!.mycontestRefresh.isRefreshing = false
                     mBinding!!.progressContest.visibility = View.GONE
-                    var res = response!!.body()
+                    val res = response!!.body()
                     if (res != null) {
-                        var responseModel = res.responseObject
+                        val responseModel = res.responseObject
                         if (responseModel != null) {
                             if (responseModel.myJoinedContest != null && responseModel.myJoinedContest!!.size > 0) {
                                 checkinArrayList.clear()
@@ -253,7 +250,7 @@ class MyContestFragment : Fragment() {
 
 
             viewHolder.contestCancellation?.setOnClickListener(View.OnClickListener {
-                //MyUtils.showToast(activity!!,""+objectVal.cancellation)
+
             })
 
             if (objectMatches!!.status == BindingUtils.MATCH_STATUS_UPCOMING) {
@@ -265,9 +262,7 @@ class MyContestFragment : Fragment() {
                 viewHolder.contestEntryPrize?.setBackgroundResource(R.drawable.button_selector_grey)
                 viewHolder.progressLinear?.visibility = View.GONE
             }
-            //viewHolder.maxAllowedTeam?.text = String.format("%s %d %s","Upto",objectVal.winnerPercentage,"teams")
             viewHolder.firstPrize?.text = String.format("%s%s", "₹", objectVal.firstPrice)
-
 
             if (objectVal.joinedTeams != null && objectVal.joinedTeams!!.size > 0) {
                 viewHolder.recyclerTeamList.layoutManager =
@@ -289,7 +284,6 @@ class MyContestFragment : Fragment() {
                 }
             }
         }
-
 
         override fun getItemCount(): Int {
             return matchesListObject.size
@@ -313,7 +307,6 @@ class MyContestFragment : Fragment() {
             val totalSpotLeft = itemView.findViewById<TextView>(R.id.total_spot_left)
             val totalSpots = itemView.findViewById<TextView>(R.id.total_spot)
 
-            // val maxAllowedTeam = itemView.findViewById<TextView>(R.id.max_allowed_team)
             val contestCancellation = itemView.findViewById<ImageView>(R.id.contest_cancellation)
             val firstPrize = itemView.findViewById<TextView>(R.id.first_prize)
             val recyclerTeamList = itemView.findViewById<RecyclerView>(R.id.recycler_team_list)
@@ -339,26 +332,6 @@ class MyContestFragment : Fragment() {
             val objectVal = matchesListObject[viewType]
             val viewHolder: MyMatchViewHolder = parent as MyMatchViewHolder
             viewHolder.txtTeamName.text = objectVal.teamName
-//            if(!TextUtils.isEmpty(objectVal.teamWonStatus)) {
-////                if(Integer.parseInt(objectVal.teamWonStatus!!)>0){
-////                    if(matchObject.status==3){
-////                        viewHolder.teamWonStatus.text = String.format(
-////                            "Winning ₹%s",
-////                            objectVal.teamWonStatus
-////                        )
-////                    }else {
-////                        viewHolder.teamWonStatus.text = String.format(
-////                            "You Won ₹%s",
-////                            objectVal.teamWonStatus
-////                        )
-////                    }
-////                }else {
-////                    viewHolder.teamWonStatus.text = ""
-////                }
-////
-////            }else {
-////                viewHolder.teamWonStatus.text = ""
-////            }
 
             if (!TextUtils.isEmpty(objectVal.teamWonStatus)) {
                 val prize = objectVal.teamWonStatus!!.toDouble()
@@ -468,6 +441,11 @@ class MyContestFragment : Fragment() {
                             val intent = Intent(activity, TeamPreviewActivity::class.java)
                             intent.putExtra(TeamPreviewActivity.KEY_TEAM_ID, teamId)
                             intent.putExtra(TeamPreviewActivity.KEY_TEAM_NAME, teamName)
+                            intent.putExtra(
+                                TeamPreviewActivity.KEY_CONTEST_ID,
+                                contestObject!!.id.toString()
+                            )
+                            intent.putExtra(TeamPreviewActivity.KEY_USER_ID, MyPreferences.getUserID(requireActivity())!!)
                             intent.putExtra(
                                 CreateTeamActivity.SERIALIZABLE_MATCH_KEY,
                                 objectMatches

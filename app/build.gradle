@@ -123,5 +123,4 @@ dependencies {
     implementation 'com.github.pzienowicz:androidx-auto-scroll-view-pager:1.1.0'
 
     implementation 'io.branch.sdk.android:library:5.0.4'
-
 }

@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName
 import ninja.cricks.R
 import java.io.Serializable
 
-class PlayersInfoModel :Serializable,Cloneable{
+class PlayersInfoModel : Serializable, Cloneable {
 
-    private var playerIcon: Int= R.drawable.ic_player_bat_teama
+    private var playerIcon: Int = R.drawable.ic_player_bat_teama
     var isSelected: Boolean = false
     var viewType: Int = 0
 
@@ -57,32 +57,29 @@ class PlayersInfoModel :Serializable,Cloneable{
 
     @SerializedName("fantasy_player_rating")
     @Expose
-    var fantasyPlayerRating: Double=0.0
+    var fantasyPlayerRating: Double = 0.0
 
     @SerializedName("playerPoints")
     @Expose
-    var playerSeriesPoints: Int=0
+    var playerSeriesPoints: Int = 0
 
     @SerializedName("points")
     @Expose
-    var playerPoints: String=""
+    var playerPoints: String = ""
 
     @SerializedName("analytics")
     @Expose
-    var analyticsModel: AnalyticsModel?=null
+    var analyticsModel: AnalyticsModel? = null
 
-    fun setPlayerIcon(playerIcon:Int) {
+    fun setPlayerIcon(playerIcon: Int) {
         this.playerIcon = playerIcon
     }
 
-    fun getPlayerIcon() : Int{
-         return this.playerIcon
+    fun getPlayerIcon(): Int {
+        return this.playerIcon
     }
 
     public override fun clone(): PlayersInfoModel {
         return super.clone() as PlayersInfoModel
     }
-
-
-
 }
