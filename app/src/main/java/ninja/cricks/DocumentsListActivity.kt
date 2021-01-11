@@ -1,10 +1,12 @@
 package ninja.cricks
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
 import ninja.cricks.databinding.ActivityViewDocumentBinding
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.RequestModel
@@ -22,6 +24,8 @@ import retrofit2.Response
 class DocumentsListActivity : BaseActivity() {
 
     private var mBinding: ActivityViewDocumentBinding? = null
+    var mContext: Context? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         customeProgressDialog = CustomeProgressDialog(this)
@@ -30,7 +34,7 @@ class DocumentsListActivity : BaseActivity() {
             this,
             R.layout.activity_view_document
         )
-
+        mContext = this
         mBinding!!.toolbar.title = "My Documents"
         mBinding!!.toolbar.setTitleTextColor(resources.getColor(R.color.white))
         mBinding!!.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
@@ -40,7 +44,7 @@ class DocumentsListActivity : BaseActivity() {
         })
 
         mBinding!!.contactUs.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this@DocumentsListActivity, SupportActivity::class.java)
+            val intent = Intent(mContext!!, SupportActivity::class.java)
             startActivity(intent)
         })
         getDocumentsList()
@@ -71,7 +75,7 @@ class DocumentsListActivity : BaseActivity() {
                     if (res != null) {
                         if (res.status) {
                             val data = res.responseObject
-                            if (data!!.UPIId != "") {
+                            if (data!!.UPIId != null && data.UPIId != "") {
                                 mBinding!!.upiIdLayout.visibility = View.VISIBLE
                                 mBinding!!.upiIdView.visibility = View.VISIBLE
                                 mBinding!!.upiNumber.text = data.UPIId
@@ -80,11 +84,19 @@ class DocumentsListActivity : BaseActivity() {
                                 mBinding!!.upiIdView.visibility = View.GONE
                             }
 
-                            mBinding!!.paytmNumber.text = data.panNumber
+                            mBinding!!.paytmNumber.text = data.paytmNumber
+
+                            mBinding!!.panName.text = data.panName
+                            mBinding!!.panNumbers.text = data.panNumber
+
                             mBinding!!.bankName.text = data.bankName
                             mBinding!!.bankAccountName.text = data.accountName
                             mBinding!!.bankAccountNumber.text = data.accountNumber
-                            mBinding!!.bankAccountType.text = data.accountType
+                            mBinding!!.bankAccountType.text = data.IFSCCode
+
+                            Glide.with(mContext!!).load(data.bankUrl).into(mBinding!!.chequeBookImage)
+                            Glide.with(mContext!!).load(data.panUrl).into(mBinding!!.imgDocType)
+
                         } else {
                             MyUtils.showToast(
                                 this@DocumentsListActivity,

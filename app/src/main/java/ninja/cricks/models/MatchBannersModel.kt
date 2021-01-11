@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-class MatchBannersModel :Serializable,Cloneable{
+class MatchBannersModel : Serializable, Cloneable {
 
     @SerializedName("url")
     @Expose
@@ -18,8 +18,6 @@ class MatchBannersModel :Serializable,Cloneable{
     @Expose
     val descriptions: String = ""
 
-
-
     public override fun clone(): MatchBannersModel {
         return super.clone() as MatchBannersModel
     }
@@ -27,6 +25,4 @@ class MatchBannersModel :Serializable,Cloneable{
     override fun toString(): String {
         return "bannerUrl(Id='$bannerUrl')"
     }
-
-
 }

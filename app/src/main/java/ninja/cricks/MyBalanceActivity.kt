@@ -1,5 +1,6 @@
 package ninja.cricks
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -29,9 +30,9 @@ class MyBalanceActivity : AppCompatActivity() {
     private lateinit var walletInfo: WalletInfo
     private var customeProgressDialog: CustomeProgressDialog? = null
     private var mBinding: ActivityMyBallanceBinding? = null
+    private var mContext: Context? = null
 
     companion object {
-
         val REQUEST_CODE_ADD_MONEY: Int = 9001
     }
 
@@ -41,6 +42,9 @@ class MyBalanceActivity : AppCompatActivity() {
             this,
             R.layout.activity_my_ballance
         )
+
+        mContext = this
+
         walletInfo = (application as NinjaApplication).walletInfo
         mBinding!!.toolbar.title = "My Balance"
         mBinding!!.toolbar.setTitleTextColor(resources.getColor(R.color.white))
@@ -52,16 +56,15 @@ class MyBalanceActivity : AppCompatActivity() {
 
         customeProgressDialog = CustomeProgressDialog(this)
 
-
         getWalletBalances()
         initWalletInfo()
 
         mBinding!!.addCash.setOnClickListener(View.OnClickListener {
-            if (MyPreferences.getLoginStatus(this@MyBalanceActivity)!!) {
-                val intent = Intent(this@MyBalanceActivity, AddMoneyActivity::class.java)
+            if (MyPreferences.getLoginStatus(mContext!!)!!) {
+                val intent = Intent(mContext!!, AddMoneyActivity::class.java)
                 startActivityForResult(intent, REQUEST_CODE_ADD_MONEY)
             } else {
-                val intent = Intent(this@MyBalanceActivity, RegisterScreenActivity::class.java)
+                val intent = Intent(mContext!!, RegisterScreenActivity::class.java)
                 intent.putExtra(RegisterScreenActivity.ISACTIVITYRESULT, true)
                 startActivityForResult(intent, RegisterScreenActivity.REQUESTCODE_LOGIN)
             }
@@ -72,7 +75,7 @@ class MyBalanceActivity : AppCompatActivity() {
                 val value = walletInfo.walletAmount
                 val amount = value.toDouble()
                 if (amount >= 200) {
-                    val intent = Intent(this@MyBalanceActivity, WithdrawAmountsActivity::class.java)
+                    val intent = Intent(mContext!!, WithdrawAmountsActivity::class.java)
                     startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
                 } else {
                     MyUtils.showToast(this@MyBalanceActivity, "Amount is less than 200 INR")
@@ -92,14 +95,14 @@ class MyBalanceActivity : AppCompatActivity() {
 
         mBinding!!.txtRecentTransaction.setOnClickListener(View.OnClickListener {
 
-            val intent = Intent(this@MyBalanceActivity, MyTransactionHistoryActivity::class.java)
+            val intent = Intent(mContext!!, MyTransactionHistoryActivity::class.java)
             startActivityForResult(intent, REQUEST_CODE_ADD_MONEY)
         })
     }
 
     private fun updateAccountVerification(accountStatus: AccountDocumentStatus?) {
         if (accountStatus != null) {
-            if (accountStatus.documentsVerified == BindingUtils.BANK_DOCUMENTS_STATUS_REJECTED) {
+            /*if (accountStatus.documentsVerified == BindingUtils.BANK_DOCUMENTS_STATUS_REJECTED) {
                 mBinding!!.verifyAccountMessage.visibility = View.GONE
                 mBinding!!.verifyAccount.text = "REJECTED"
                 mBinding!!.verifyAccount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.0f)
@@ -108,38 +111,37 @@ class MyBalanceActivity : AppCompatActivity() {
                 mBinding!!.verifyAccount.setOnClickListener(View.OnClickListener {
                     gotoDocumentsListActivity()
                 })
+            } else*/
+            if (accountStatus.documentsVerified == BindingUtils.BANK_DOCUMENTS_STATUS_VERIFIED) {
+                mBinding!!.verifyAccountMessage.visibility = View.GONE
+                mBinding!!.verifyAccount.text = "Account Verified"
+                mBinding!!.verifyAccount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.0f)
+                mBinding!!.verifyAccount.setBackgroundResource(R.drawable.button_selector_green)
+                mBinding!!.verifyAccount.setTextColor(Color.WHITE)
+                mBinding!!.verifyAccount.setOnClickListener(View.OnClickListener {
+                    gotoDocumentsListActivity()
+                })
 
-            } else
-                if (accountStatus.documentsVerified == BindingUtils.BANK_DOCUMENTS_STATUS_VERIFIED) {
-                    mBinding!!.verifyAccountMessage.visibility = View.GONE
-                    mBinding!!.verifyAccount.text = "Account Verified"
-                    mBinding!!.verifyAccount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.0f)
-                    mBinding!!.verifyAccount.setBackgroundResource(R.drawable.button_selector_green)
-                    mBinding!!.verifyAccount.setTextColor(Color.WHITE)
-                    mBinding!!.verifyAccount.setOnClickListener(View.OnClickListener {
-                        gotoDocumentsListActivity()
-                    })
-
-                } else if (accountStatus.documentsVerified == BindingUtils.BANK_DOCUMENTS_STATUS_APPROVAL_PENDING) {
-                    mBinding!!.verifyAccountMessage.visibility = View.GONE
-                    mBinding!!.verifyAccount.text = "Approval Pending"
-                    mBinding!!.verifyAccount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.0f)
-                    mBinding!!.verifyAccount.setBackgroundResource(R.drawable.button_selector_white)
-                    mBinding!!.verifyAccount.setTextColor(Color.BLACK)
-                    mBinding!!.verifyAccount.setOnClickListener(View.OnClickListener {
-                        //gotoDocumentsListActivity()
-                    })
-                } else {
-                    mBinding!!.verifyAccountMessage.visibility = View.VISIBLE
-                    mBinding!!.verifyAccount.setOnClickListener(View.OnClickListener {
-                        val intent =
-                            Intent(this@MyBalanceActivity, VerifyDocumentsActivity::class.java)
-                        startActivityForResult(
-                            intent,
-                            VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC
-                        )
-                    })
-                }
+            } else if (accountStatus.documentsVerified == BindingUtils.BANK_DOCUMENTS_STATUS_APPROVAL_PENDING) {
+                mBinding!!.verifyAccountMessage.visibility = View.GONE
+                mBinding!!.verifyAccount.text = "Approval Pending"
+                mBinding!!.verifyAccount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.0f)
+                mBinding!!.verifyAccount.setBackgroundResource(R.drawable.button_selector_white)
+                mBinding!!.verifyAccount.setTextColor(Color.BLACK)
+                mBinding!!.verifyAccount.setOnClickListener(View.OnClickListener {
+                    //gotoDocumentsListActivity()
+                })
+            } else {
+                mBinding!!.verifyAccountMessage.visibility = View.VISIBLE
+                mBinding!!.verifyAccount.setOnClickListener(View.OnClickListener {
+                    val intent =
+                        Intent(mContext!!, VerifyDocumentsActivity::class.java)
+                    startActivityForResult(
+                        intent,
+                        VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC
+                    )
+                })
+            }
         }
     }
 
@@ -168,7 +170,7 @@ class MyBalanceActivity : AppCompatActivity() {
         } else {
             mBinding!!.verifyAccountMessage.visibility = View.VISIBLE
             mBinding!!.verifyAccount.setOnClickListener(View.OnClickListener {
-                val intent = Intent(this@MyBalanceActivity, VerifyDocumentsActivity::class.java)
+                val intent = Intent(mContext!!, VerifyDocumentsActivity::class.java)
                 startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
             })
         }
@@ -200,14 +202,23 @@ class MyBalanceActivity : AppCompatActivity() {
                         val responseModel = res.walletObjects
                         if (responseModel != null) {
 
-                            MyPreferences.setRazorPayId(this@MyBalanceActivity, res.razorPay)
-                            MyPreferences.setShowPaytm(this@MyBalanceActivity, res.paytm_show)
-                            MyPreferences.setShowGpay(this@MyBalanceActivity, res.gpay_show)
-                            MyPreferences.setShowRazorPay(this@MyBalanceActivity, res.rozarpay_show)
+                            MyPreferences.setRazorPayId(mContext!!, res.razorPay)
+                            MyPreferences.setShowPaytm(mContext!!, res.paytm_show)
+                            MyPreferences.setShowGpay(mContext!!, res.gpay_show)
+                            MyPreferences.setShowRazorPay(mContext!!, res.rozarpay_show)
 
-                            MyPreferences.setShowPaytmWithdraw(this@MyBalanceActivity, res.paytm_withdrawal)
-                            MyPreferences.setShowBankWithdraw(this@MyBalanceActivity, res.bank_withdrawal)
-                            MyPreferences.setShowUPIWithdraw(this@MyBalanceActivity, res.upi_withdrawal)
+                            MyPreferences.setShowPaytmWithdraw(
+                                mContext!!,
+                                res.paytm_withdrawal
+                            )
+                            MyPreferences.setShowBankWithdraw(
+                                mContext!!,
+                                res.bank_withdrawal
+                            )
+                            MyPreferences.setShowUPIWithdraw(
+                                mContext!!,
+                                res.upi_withdrawal
+                            )
 
                             (application as NinjaApplication).saveWalletInformation(
                                 responseModel

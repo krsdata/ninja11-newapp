@@ -1,29 +1,32 @@
 package ninja.cricks.adaptors
 
+import android.app.Dialog
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.content.DialogInterface
+import android.graphics.drawable.Drawable
+import android.util.Log
+import android.view.*
 import android.widget.ImageView
-import androidx.browser.customtabs.CustomTabsIntent
-import androidx.core.content.ContextCompat
+import android.widget.ProgressBar
 import androidx.viewpager.widget.PagerAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import ninja.cricks.AddMoneyActivity
-import ninja.cricks.InviteFriendsActivity
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import ninja.cricks.R
-import ninja.cricks.SupportActivity
 import ninja.cricks.models.MatchBannersModel
-import ninja.cricks.utils.BindingUtils
 
-class BannerSliderAdapter(val context: Context, val tradeinfoModels: ArrayList<MatchBannersModel>) :
+class BannerSliderAdapter(
+    val context: Context,
+    private val tradeInfoModels: ArrayList<MatchBannersModel>
+) :
     PagerAdapter() {
     var mContext: Context = context
-    private var arrayList = tradeinfoModels
+    private var arrayList = tradeInfoModels
     var inflater: LayoutInflater = LayoutInflater.from(mContext)
+    lateinit var sdialog: Dialog
+    val TAG: String = BannerSliderAdapter::class.java.simpleName
 
     override fun getCount(): Int {
         return arrayList.size
@@ -59,28 +62,7 @@ class BannerSliderAdapter(val context: Context, val tradeinfoModels: ArrayList<M
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(viewHolder.target)
 
-            viewHolder.target.setOnClickListener(View.OnClickListener {
-                if (objectVal.title == BindingUtils.BANNERS_KEY_ADD) {
-                    val intent = Intent(context, AddMoneyActivity::class.java)
-                    context.startActivity(intent)
-                }
-                if (objectVal.title == BindingUtils.BANNERS_KEY_REFFER) {
-                    val intent = Intent(context, InviteFriendsActivity::class.java)
-                    context.startActivity(intent)
-                }
-                if (objectVal.title == BindingUtils.BANNERS_KEY_SUPPORT) {
-                    val intent = Intent(context, SupportActivity::class.java)
-                    context.startActivity(intent)
-                }
-
-                if (objectVal.title == BindingUtils.BANNERS_KEY_BROWSERS) {
-                    val builder = CustomTabsIntent.Builder()
-                    builder.setToolbarColor(ContextCompat.getColor(context, R.color.colorPrimary))
-                    val customTabsIntent = builder.build()
-                    customTabsIntent.intent.setPackage("com.android.chrome")
-                    customTabsIntent.launchUrl(context, Uri.parse(objectVal.descriptions))
-                }
-            })
+            viewHolder.target.setOnClickListener(ImageClick(position))
 
         } catch (e: Exception) {
             e.printStackTrace()
@@ -91,6 +73,58 @@ class BannerSliderAdapter(val context: Context, val tradeinfoModels: ArrayList<M
 
     internal class ViewHolder(view: View) {
         var target: ImageView = view.findViewById(R.id.image_banner)
+    }
 
+    inner class ImageClick(pos: Int) : View.OnClickListener {
+        var position: Int = pos
+        override fun onClick(v: View?) {
+            showAlert(arrayList[position].bannerUrl)
+        }
+    }
+
+    private fun showAlert(offerImage: String) {
+        sdialog = Dialog(mContext, R.style.MyDialog)
+        sdialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        sdialog.window!!.attributes.windowAnimations = R.style.PauseDialogAnimation
+        sdialog.setContentView(R.layout.dialog_banner_image)
+        sdialog.setCancelable(false)
+        sdialog.show()
+        val close: ImageView = sdialog.findViewById(R.id.dialog_close)
+        val offerImageView: ImageView = sdialog.findViewById(R.id.dialog_offer_image)
+        val progressBar: ProgressBar = sdialog.findViewById(R.id.progress_bar)
+
+        close.setOnClickListener {
+            Log.e(TAG, "offerImage =======> $offerImage")
+            sdialog.dismiss()
+        }
+
+        Glide.with(mContext).load(offerImage).listener(object : RequestListener<Drawable?> {
+            override fun onLoadFailed(
+                e: GlideException?,
+                model: Any,
+                target: Target<Drawable?>,
+                isFirstResource: Boolean
+            ): Boolean {
+                return false
+            }
+
+            override fun onResourceReady(
+                resource: Drawable?,
+                model: Any?,
+                target: Target<Drawable?>?,
+                dataSource: com.bumptech.glide.load.DataSource?,
+                isFirstResource: Boolean
+            ): Boolean {
+                progressBar.visibility = View.GONE
+                return false
+            }
+        }).into(offerImageView)
+
+        sdialog.setOnKeyListener(DialogInterface.OnKeyListener { dialog, keyCode, keyEvent ->
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                dialog.dismiss()
+            }
+            true
+        })
     }
 }

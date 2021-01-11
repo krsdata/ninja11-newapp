@@ -14,11 +14,12 @@
         <ImageView
             android:id="@+id/dialog_offer_image"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_70sdp"
             android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_15sdp"
             android:layout_marginStart="@dimen/_15sdp"
             android:layout_alignParentTop="true"
+            android:scaleType="fitXY"
             android:adjustViewBounds="true" />
 
         <ProgressBar

@@ -368,7 +368,7 @@ class TeamPreviewActivity : AppCompatActivity(),
         if(contestId != null && contestId != "") {
             BindingUtils.sendEventLogs(
                 mContext!!, matchObject.matchId.toString(), contestId, userId, teamId,
-                (application as NinjaApplication).userInformations, "Screen Shot Captured"
+                (application as NinjaApplication).userInformations, "captured"
             )
         }
     }

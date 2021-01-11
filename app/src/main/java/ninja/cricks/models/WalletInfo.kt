@@ -95,7 +95,7 @@ class WalletInfo : Serializable, Cloneable {
 
     @SerializedName("extra_cash")
     @Expose
-    var extraCash: String = ""
+    var extraCash: Double = 0.0
 
     public override fun clone(): WalletInfo {
         return super.clone() as WalletInfo

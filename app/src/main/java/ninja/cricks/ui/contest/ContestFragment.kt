@@ -162,8 +162,8 @@ class ContestFragment : Fragment() {
             mBinding!!.rupees.setTextColor(resources.getColor(R.color.black))
 
             showRecyclerListBySpotSize(2)
-
         })
+
         mBinding!!.sortBy3spots.setOnClickListener(View.OnClickListener {
 
             mBinding!!.sortBy2spots.setBackgroundResource(R.drawable.circle_grey)
@@ -183,9 +183,8 @@ class ContestFragment : Fragment() {
             mBinding!!.rupees.setTextColor(resources.getColor(R.color.black))
 
             showRecyclerListBySpotSize(3)
-
-
         })
+
         mBinding!!.sortBy4spots.setOnClickListener(View.OnClickListener {
 
             mBinding!!.sortBy2spots.setBackgroundResource(R.drawable.circle_grey)
@@ -221,8 +220,6 @@ class ContestFragment : Fragment() {
             mBinding!!.filterByAll.setBackgroundResource(R.drawable.circle_grey)
             mBinding!!.filterByAll.setTextColor(resources.getColor(R.color.black))
 
-
-
             mBinding!!.linearEntryPrizeSort.setBackgroundResource(R.drawable.circle_app_color)
             mBinding!!.prizeArrow.visibility = View.VISIBLE
 
@@ -231,11 +228,8 @@ class ContestFragment : Fragment() {
             filterByEntryPrize()
         })
 
-
         mBinding!!.filterByAll.setOnClickListener(View.OnClickListener {
-
             selectAllContest()
-
         })
     }
 
@@ -296,18 +290,9 @@ class ContestFragment : Fragment() {
                     val sortedEntryPrizes = values.sortedByDescending { it -> it.entryFees }
                     sortedEntryPrizes.forEach { s -> filterValues.add(s) }
                 }
-
-
-//                println("Sorting by ascending : ")
-//                val sortedStudents = students.sortedBy { student -> student.name }
-//                sortedStudents.forEach { s -> println(s.name) }
-//
-//                println("Sorting by descending : ")
-//                val dSortedStudents = sortedStudents.sortedByDescending { student -> student.name }
-//                dSortedStudents.forEach { s -> println(s.name) }
             }
         }
-        //mBinding!!.recyclerBySpotsize.scrollToPosition(filterSpotsListData!!.size - 1)
+
         if (isEntryAscending) {
             val objectPrize = filterValues.sortedBy { it -> it.entryFees }
             objectPrize.forEach { s -> filterSpotsListData.add(s) }
@@ -317,7 +302,6 @@ class ContestFragment : Fragment() {
         }
         spotSizeFilterAdaptor.notifyDataSetChanged()
         mBinding!!.recyclerBySpotsize.scheduleLayoutAnimation()
-        // mBinding!!.recyclerBySpotsize.smoothScrollToPosition(spotSizeFilterAdaptor.getItemCount() - 1);
     }
 
     private fun showRecyclerListBySpotSize(spotSize: Int) {
@@ -339,10 +323,8 @@ class ContestFragment : Fragment() {
                 }
             }
         }
-        //mBinding!!.recyclerBySpotsize.scrollToPosition(filterSpotsListData!!.size - 1)
 
         spotSizeFilterAdaptor.notifyDataSetChanged()
-        //mBinding!!.recyclerBySpotsize.scheduleLayoutAnimation()
         mBinding!!.recyclerBySpotsize.smoothScrollToPosition(spotSizeFilterAdaptor.itemCount - 1)
     }
 
@@ -353,7 +335,10 @@ class ContestFragment : Fragment() {
             filterArrayList[i].isStatus = pos == i
         }
 
-        //filterAdapter.notifyDataSetChanged()
+        /*if (mBinding != null && mBinding!!.filterRecyclerView != null) {
+            mBinding!!.filterRecyclerView.scrollToPosition(pos)
+        }*/
+
         filterAdapter.updateRecord(filterArrayList)
 
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
@@ -385,7 +370,6 @@ class ContestFragment : Fragment() {
                 "$context must implement OnContestLoadedListener"
             )
         }
-
     }
 
     private fun getAllContest() {

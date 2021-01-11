@@ -88,13 +88,6 @@ class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<Matche
         } else if (objectVal.viewType == TYPE_BANNERS) {
             val objectVal = matchesListObject[position]
             val viewBanners: BannersViewHolder = parent as BannersViewHolder
-            /*viewBanners.recyclerView.layoutManager =
-                LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false)
-            val adapter = BannersMatchesAdapter(
-                mContext!!,
-                objectVal.matchBanners!!
-            )
-            viewBanners.recyclerView.adapter = adapter*/
 
             val scrollViewAdapter = BannerSliderAdapter(mContext!!, objectVal.matchBanners!!)
             viewBanners.recyclerView.adapter = scrollViewAdapter

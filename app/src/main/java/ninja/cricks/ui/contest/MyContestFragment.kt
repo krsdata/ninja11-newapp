@@ -19,7 +19,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.edify.atrist.listener.OnContestEvents
 import com.edify.atrist.listener.OnContestLoadedListener
 import ninja.cricks.*
@@ -52,7 +51,6 @@ class MyContestFragment : Fragment() {
     var checkinArrayList = ArrayList<ContestModelLists>()
     private var teamName: String? = ""
     private var isVisibleToUser: Boolean = false
-    var contestObject: ContestModelLists? = null
 
     companion object {
         fun newInstance(bundle: Bundle): MyContestFragment {
@@ -91,7 +89,6 @@ class MyContestFragment : Fragment() {
         mBinding!!.recyclerMyContest.adapter = adapter
 
         adapter.onItemClick = { objects ->
-            contestObject = objects
             val intent = Intent(context, LeadersBoardActivity::class.java)
             intent.putExtra(LeadersBoardActivity.SERIALIZABLE_MATCH_KEY, objectMatches)
             intent.putExtra(LeadersBoardActivity.SERIALIZABLE_CONTEST_KEY, objects)
@@ -102,25 +99,13 @@ class MyContestFragment : Fragment() {
         }
         mBinding!!.linearEmptyContest.visibility = View.GONE
 
-        mBinding!!.btnJoinContest.setOnClickListener(View.OnClickListener {
+        mBinding!!.btnJoinContest.setOnClickListener {
             (activity as ContestActivity).changeTabsPositions(0)
-        })
+        }
 
-        mBinding!!.mycontestRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
+        mBinding!!.mycontestRefresh.setOnRefreshListener {
             getMyJoinedContest()
-        })
-
-//        BindingUtils.countDownStart(matchObject!!.timestampStart,object:OnMatchTimerStarted{
-//            override fun onTimeFinished() {
-//                isMatchStarted =true
-//                adapter.notifyDataSetChanged()
-//            }
-//
-//            override fun onTicks(time: String) {
-//                isMatchStarted =false
-//            }
-//
-//        })
+        }
     }
 
     override fun onResume() {
@@ -214,8 +199,8 @@ class MyContestFragment : Fragment() {
             return MyMatchViewHolder(view)
         }
 
-        override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
-            val objectVal = matchesListObject[viewType]
+        override fun onBindViewHolder(parent: RecyclerView.ViewHolder, position: Int) {
+            val objectVal = matchesListObject[position]
             val viewHolder: MyMatchViewHolder = parent as MyMatchViewHolder
             viewHolder.contestPrizePool.text = String.format("₹%s", objectVal.totalWinningPrize)
             viewHolder.contestEntryPrize.text = String.format("%s", objectVal.entryFees)
@@ -255,7 +240,7 @@ class MyContestFragment : Fragment() {
 
             if (objectMatches!!.status == BindingUtils.MATCH_STATUS_UPCOMING) {
                 viewHolder.contestEntryPrize?.setOnClickListener(View.OnClickListener {
-                    mContestListeners!!.onContestJoinning(objectVal, viewType)
+                    mContestListeners!!.onContestJoinning(objectVal, position)
 
                 })
             } else {
@@ -279,7 +264,7 @@ class MyContestFragment : Fragment() {
 
                 adapterJoinTeamAapter.onItemClick = { objects ->
                     teamName = objects.teamName
-                    getPoints(objects.createdteamId)
+                    getPoints(objects.createdteamId, objectVal.id)
 
                 }
             }
@@ -375,7 +360,7 @@ class MyContestFragment : Fragment() {
         }
     }
 
-    fun getPoints(teamId: Int) {
+    fun getPoints(teamId: Int, contestId: Int) {
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
@@ -443,9 +428,12 @@ class MyContestFragment : Fragment() {
                             intent.putExtra(TeamPreviewActivity.KEY_TEAM_NAME, teamName)
                             intent.putExtra(
                                 TeamPreviewActivity.KEY_CONTEST_ID,
-                                contestObject!!.id.toString()
+                                contestId.toString()
                             )
-                            intent.putExtra(TeamPreviewActivity.KEY_USER_ID, MyPreferences.getUserID(requireActivity())!!)
+                            intent.putExtra(
+                                TeamPreviewActivity.KEY_USER_ID,
+                                MyPreferences.getUserID(requireActivity())!!
+                            )
                             intent.putExtra(
                                 CreateTeamActivity.SERIALIZABLE_MATCH_KEY,
                                 objectMatches
