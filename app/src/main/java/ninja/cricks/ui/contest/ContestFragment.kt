@@ -132,6 +132,10 @@ class ContestFragment : Fragment() {
             intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_PRIVACY)
             requireActivity().startActivity(intent)
         })
+
+        mBinding!!.contestFilterRefresh.setColorSchemeResources(R.color.colorPrimary)
+        mBinding!!.contestRefresh.setColorSchemeResources(R.color.colorPrimary)
+
         mBinding!!.contestRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
             getAllContest()
         })

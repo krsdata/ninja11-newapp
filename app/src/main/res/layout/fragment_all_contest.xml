@@ -210,7 +210,7 @@
         <LinearLayout
             android:id="@+id/bottom_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_50sdp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:background="@color/greybackround">
@@ -218,17 +218,16 @@
             <TextView
                 android:id="@+id/btn_create_team"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_15sdp"
-                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_gravity="center"
                 android:background="@drawable/default_rounded_button_sportsfight"
                 android:fontFamily="@font/montserratsemibold"
                 android:gravity="center"
                 android:text="CREATE TEAM"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_13sdp"
+                android:textSize="@dimen/_14sdp"
                 android:textStyle="bold" />
         </LinearLayout>
 

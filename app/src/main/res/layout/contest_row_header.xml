@@ -9,19 +9,17 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/_2sdp"
-        android:paddingBottom="@dimen/_2sdp"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginStart="@dimen/_14sdp"
-        android:layout_marginEnd="@dimen/_14sdp"
-        android:minHeight="@dimen/_38sdp"
         android:layout_gravity="center"
+        android:layout_marginStart="@dimen/_14sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_14sdp"
+        android:minHeight="@dimen/_40sdp"
         app:cardCornerRadius="4dp"
         app:cardElevation="12dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_35sdp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:background="@color/white"
             android:orientation="horizontal">
@@ -52,11 +50,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/contest_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_bold"
                     android:text="Mega Contest"
@@ -65,7 +64,7 @@
 
                 <TextView
                     android:id="@+id/contest_sub_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/open_sans_light"
                     android:text="Get ready for mega winning!!"

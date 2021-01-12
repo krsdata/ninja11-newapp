@@ -55,7 +55,6 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
         var pageNo = 1
     }
 
-    //   private lateinit var mainViewModel: MatchesViewModel
     private var mBinding: FragmentAllGamesBinding? = null
     lateinit var adapter: MatchesAdapter
     var allmatchesArrayList = ArrayList<MatchesModels>()
@@ -89,10 +88,7 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
         mBinding!!.linearEmptyContest.visibility = View.GONE
 
         mBinding!!.swipeRefresh.setColorScheme(
-            android.R.color.holo_blue_bright,
-            android.R.color.holo_green_light,
-            android.R.color.holo_orange_light,
-            android.R.color.holo_red_light
+            R.color.colorPrimary
         )
 
         mBinding!!.swipeRefresh.setOnRefreshListener(this)

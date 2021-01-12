@@ -26,13 +26,13 @@
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar">
 
             <WebView
                 android:id="@+id/web_body"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/toolbar"
                 android:background="@color/white"
                 android:textAlignment="textStart" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

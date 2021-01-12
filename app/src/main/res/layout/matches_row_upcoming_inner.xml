@@ -76,9 +76,9 @@
                         android:src="@drawable/flag_indian"
                         app:civ_border="true"
                         app:civ_border_color="@color/white"
-                        app:civ_circle_color_end="@color/colorPrimaryDark"
-                        app:civ_circle_color_start="@color/colorPrimaryDark"
-                        app:civ_circle_color="@color/colorPrimaryDark"
+                        app:civ_circle_color_end="@color/white"
+                        app:civ_circle_color_start="@color/white"
+                        app:civ_circle_color="@color/white"
                         app:civ_border_width="3dp" />
                 </RelativeLayout>
 
@@ -183,9 +183,9 @@
                         android:src="@drawable/flag_newzeland"
                         app:civ_border="true"
                         app:civ_border_color="@color/white"
-                        app:civ_circle_color_end="@color/colorPrimaryDark"
-                        app:civ_circle_color_start="@color/colorPrimaryDark"
-                        app:civ_circle_color="@color/colorPrimaryDark"
+                        app:civ_circle_color_end="@color/white"
+                        app:civ_circle_color_start="@color/white"
+                        app:civ_circle_color="@color/white"
                         app:civ_border_width="3dp" />
                 </RelativeLayout>
             </LinearLayout>
