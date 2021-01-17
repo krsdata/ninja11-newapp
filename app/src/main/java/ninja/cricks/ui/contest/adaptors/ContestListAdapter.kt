@@ -35,11 +35,6 @@ class ContestListAdapter(
     val TYPE_NORMAL: Int = 100
 
     override fun getItemViewType(position: Int): Int {
-        /*if (matchesListObject[position].totalWinningPrize.toInt() % 20000 == 0) {
-            return TYPE_IPL_FINAL
-        } else {
-            return TYPE_NORMAL
-        }*/
         return if (matchesListObject[position].giftUrl == "") {
             TYPE_NORMAL
         } else {
@@ -196,18 +191,15 @@ class ContestListAdapter(
             }
         }
 
-        // val cardBackround = itemView.findViewById<CardView>(R.id.card_backround)
         val linearContestViews: LinearLayout = itemView.findViewById(R.id.linear_trades_status)
         val contestPrizePool: TextView = itemView.findViewById(R.id.contest_prize_pool)
         val contestEntryPrize: TextView = itemView.findViewById(R.id.contest_entry_prize)
         val firstPrize: TextView = itemView.findViewById(R.id.first_prize)
         val winningPercentage: TextView = itemView.findViewById(R.id.winning_percentage)
 
-        //val maxAllowedTeam: TextView = itemView.findViewById(R.id.max_allowed_team)
         val contestCancellation: TextView = itemView.findViewById(R.id.contest_cancellation)
         val allowedTeamType: TextView = itemView.findViewById(R.id.allowedTeamType)
 
-        //        val contestMultiplayer: TextView = itemView.findViewById(R.id.contest_multiplayer)
         val linearMulti: LinearLayout = itemView.findViewById(R.id.linear_Multi)
         val linearBonus: LinearLayout = itemView.findViewById(R.id.linear_bonues)
         val contestBonus: TextView = itemView.findViewById(R.id.contest_bonus)

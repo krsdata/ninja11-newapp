@@ -1,8 +1,13 @@
 package ninja.cricks
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
 import com.google.firebase.FirebaseApp
@@ -14,12 +19,27 @@ import ninja.cricks.models.MatchesModels
 import ninja.cricks.models.TransactionModel
 import ninja.cricks.models.UserInfo
 import ninja.cricks.models.WalletInfo
+import ninja.cricks.network.IApiMethod
+import ninja.cricks.network.RequestModel
+import ninja.cricks.network.WebServiceClient
+import ninja.cricks.ui.home.models.UsersPostDBResponse
+import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyPreferences.KEY_TRANSACTION_HISTORY
 import ninja.cricks.utils.MyPreferences.KEY_UPCOMING_MATCHES
+import ninja.cricks.utils.MyUtils
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class NinjaApplication : MultiDexApplication() {
+
+    private var mGetWallet: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            getWalletBalances()
+        }
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -40,6 +60,8 @@ class NinjaApplication : MultiDexApplication() {
         Branch.getAutoInstance(this)
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true)
 
+        val filter1 = IntentFilter(BindingUtils.EXTRA_DATA_GET_WALLET)
+        LocalBroadcastManager.getInstance(this).registerReceiver(mGetWallet, filter1)
     }
 
     fun saveUserInformations(value: UserInfo?) {
@@ -64,7 +86,6 @@ class NinjaApplication : MultiDexApplication() {
             return mStoreListModels ?: UserInfo()
         }
 
-
     fun saveWalletInformation(value: WalletInfo?) {
         if (value != null) {
             val gson = Gson()
@@ -87,10 +108,6 @@ class NinjaApplication : MultiDexApplication() {
             return mStoreListModels ?: WalletInfo()
         }
 
-    /**
-     * @author Manoj Prasad
-     * Saving all upcoming matches in cache
-     */
     fun saveUpcomingMatches(value: ArrayList<MatchesModels>?) {
         if (value != null) {
             val gson = Gson()
@@ -113,11 +130,6 @@ class NinjaApplication : MultiDexApplication() {
             return mStoreListModels ?: ArrayList()
         }
 
-
-    /**
-     * @author Manoj Prasad
-     * Saving transactionlist in cache
-     */
     fun saveTransactionHistory(value: ArrayList<TransactionModel>?) {
         if (value != null) {
             val gson = Gson()
@@ -139,4 +151,52 @@ class NinjaApplication : MultiDexApplication() {
             }
             return mStoreListModels ?: ArrayList()
         }
+
+    private fun getWalletBalances() {
+        if (!MyUtils.isConnectedWithInternet(this)) {
+            return
+        }
+        val models = RequestModel()
+        models.user_id = MyPreferences.getUserID(this)!!
+        models.token = MyPreferences.getToken(this)!!
+
+        WebServiceClient(this).client.create(IApiMethod::class.java).getWallet(models)
+            .enqueue(object : Callback<UsersPostDBResponse?> {
+                override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
+
+                }
+
+                override fun onResponse(
+                    call: Call<UsersPostDBResponse?>?,
+                    response: Response<UsersPostDBResponse?>?
+                ) {
+                    val res = response!!.body()
+                    if (res != null && res.status) {
+                        val responseModel = res.walletObjects
+                        if (responseModel != null) {
+
+                            MyPreferences.setRazorPayId(this@NinjaApplication, res.razorPay)
+                            MyPreferences.setShowPaytm(this@NinjaApplication, res.paytm_show)
+                            MyPreferences.setShowGpay(this@NinjaApplication, res.gpay_show)
+                            MyPreferences.setShowRazorPay(this@NinjaApplication, res.rozarpay_show)
+
+                            MyPreferences.setShowPaytmWithdraw(
+                                this@NinjaApplication,
+                                res.paytm_withdrawal
+                            )
+                            MyPreferences.setShowBankWithdraw(
+                                this@NinjaApplication,
+                                res.bank_withdrawal
+                            )
+                            MyPreferences.setShowUPIWithdraw(
+                                this@NinjaApplication,
+                                res.upi_withdrawal
+                            )
+
+                            saveWalletInformation(responseModel)
+                        }
+                    }
+                }
+            })
+    }
 }

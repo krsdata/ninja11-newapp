@@ -63,6 +63,8 @@ class BindingUtils {
         val WEB_TITLE_TOP_REFERRAL_USER: String = "Top Referral Users"
         val WEB_TITLE_MY_AFFILIATE: String = "My-Affiliate"
 
+        val EXTRA_DATA_GET_WALLET: String = "EXTRA_DATA_GET_WALLET"
+
         var currentTimeStamp: Long = 0
 
         fun logD(tag: String, message: String) {
@@ -190,7 +192,6 @@ class BindingUtils {
                         } else {
                             listeners.onTimeFinished()
                         }
-
                     }
 
                     override fun onFinish() {
@@ -201,7 +202,6 @@ class BindingUtils {
             } else {
                 listeners.onTimeFinished()
             }
-
         }
 
         fun sendEventLogs(
@@ -235,9 +235,7 @@ class BindingUtils {
                         response: Response<UsersPostDBResponse?>?
                     ) {
 
-
                     }
-
                 })
         }
     }

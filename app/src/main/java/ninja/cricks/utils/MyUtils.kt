@@ -100,7 +100,7 @@ class MyUtils {
         }
 
 
-        fun isConnectedWithInternet(activity: AppCompatActivity): Boolean {
+        fun isConnectedWithInternet(activity: Context): Boolean {
             val connectivityManager =
                 activity.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val networkInfo = connectivityManager.activeNetworkInfo

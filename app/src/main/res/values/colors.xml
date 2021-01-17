@@ -195,8 +195,8 @@
     <color name="orange">#f0a015</color>
     <color name="text_view_color">#282828</color>
 
-    <color name="progress_start_color">#00d800</color>
-    <color name="progress_center_color">#00ef00</color>
-    <color name="progress_end_color">#00ff00</color>
+    <color name="progress_start_color">#e14b61</color>
+    <color name="progress_center_color">#aa0a37</color>
+    <color name="progress_end_color">#740012</color>
 
 </resources>

@@ -66,7 +66,6 @@ class ContestFragment : Fragment() {
         super.onCreate(savedInstanceState)
         objectMatches =
             requireArguments().get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
-
     }
 
     override fun onCreateView(
@@ -137,7 +136,7 @@ class ContestFragment : Fragment() {
         mBinding!!.contestRefresh.setColorSchemeResources(R.color.colorPrimary)
 
         mBinding!!.contestRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
-            getAllContest()
+            getAllContest(false)
         })
 
         mBinding!!.contestFilterRefresh.setOnRefreshListener {
@@ -339,17 +338,13 @@ class ContestFragment : Fragment() {
             filterArrayList[i].isStatus = pos == i
         }
 
-        /*if (mBinding != null && mBinding!!.filterRecyclerView != null) {
-            mBinding!!.filterRecyclerView.scrollToPosition(pos)
-        }*/
-
         filterAdapter.updateRecord(filterArrayList)
 
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-        getAllContest()
+        getAllContest(true)
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -376,11 +371,14 @@ class ContestFragment : Fragment() {
         }
     }
 
-    private fun getAllContest() {
+    private fun getAllContest(isLoading: Boolean) {
         //var userInfo = (activity as PlugSportsApplication).userInformations
         selectAllContest()
-        mBinding!!.contestRefresh.isRefreshing = true
+        mBinding!!.contestRefresh.isRefreshing = false
         //mBinding!!.filterBar.visibility = View.GONE
+        if (isLoading)
+            mBinding!!.progressBar.visibility = View.VISIBLE
+
         val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         // models.token =MyPreferences.getToken(activity!!)!!
@@ -389,14 +387,13 @@ class ContestFragment : Fragment() {
         val deviceToken: String? = MyPreferences.getDeviceToken(requireActivity())
         models.deviceDetails = HardwareInfoManager(activity).collectData(deviceToken!!)
 
-        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getContestByMatch(
-            models
-        )
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getContestByMatch(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     if (isVisible) {
                         MyUtils.showToast(activity!! as AppCompatActivity, "Something went wrong!!")
                         mBinding!!.contestRefresh.isRefreshing = false
+                        mBinding!!.progressBar.visibility = View.GONE
                     }
                 }
 
@@ -408,7 +405,7 @@ class ContestFragment : Fragment() {
                         return
                     }
                     mBinding!!.contestRefresh.isRefreshing = false
-                    //mBinding!!.filterBar.visibility = View.VISIBLE
+                    mBinding!!.progressBar.visibility = View.GONE
                     val res = response!!.body()
                     if (res != null && res.appMaintainance) {
                         val intent = Intent(activity, MaintainanceActivity::class.java)
@@ -554,7 +551,8 @@ class ContestFragment : Fragment() {
     }
 
     private fun getFilteredContest() {
-        mBinding!!.contestFilterRefresh.isRefreshing = true
+        //mBinding!!.contestFilterRefresh.isRefreshing = true
+
         val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         models.match_id = "" + matchObject!!.matchId

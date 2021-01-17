@@ -49,7 +49,7 @@ import retrofit2.Response
 
 
 class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
-    //var listener : OnPageRefreshedListener? =null
+
     companion object {
         fun newInstance() = FixtureCricketFragment()
         var pageNo = 1

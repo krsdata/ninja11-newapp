@@ -45,7 +45,7 @@
 
 # Top-level functions that can only be used by Kotlin.
 -dontwarn retrofit2.KotlinExtensions
--dontwarn retrofit2.KotlinExtensions.*
+-dontwarn retrofit2.KotlinExtensions$*
 
 # With R8 full mode, it sees no subtypes of Retrofit interfaces since they are created with a Proxy
 # and replaces all potential values with null. Explicitly keeping the interfaces prevents this.
@@ -54,11 +54,26 @@
 
 # added for retrofit on 15-05-20 end ==========================
 
--keep class com.google.** { *; }
--dontwarn com.google.**
+# Animal Sniffer compileOnly dependency to ensure APIs are compatible with older versions of Java.
+-dontwarn org.codehaus.mojo.animal_sniffer.*
+# JSR 305 annotations are for embedding nullability information.
+-dontwarn javax.annotation.**
 
--keep class com.crashlytics.** { *; }
--dontwarn com.crashlytics.**
+# A resource is loaded with a relative path so the package of this class must be preserved.
+-keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
+
+# Animal Sniffer compileOnly dependency to ensure APIs are compatible with older versions of Java.
+-dontwarn org.codehaus.mojo.animal_sniffer.*
+
+# OkHttp platform used only on JVM and when Conscrypt dependency is available.
+-dontwarn okhttp3.internal.platform.ConscryptPlatform
+-dontwarn org.conscrypt.ConscryptHostnameVerifier
+
+#-keep class com.google.** { *; }
+#-dontwarn com.google.**
+#
+#-keep class com.crashlytics.** { *; }
+#-dontwarn com.crashlytics.**
 
 -keepattributes *Annotation*
 -keepattributes SourceFile,LineNumberTable

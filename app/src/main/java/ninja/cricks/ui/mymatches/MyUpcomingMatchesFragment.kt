@@ -75,11 +75,6 @@ class MyUpcomingMatchesFragment : Fragment() {
         return mBinding!!.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-
     override fun onResume() {
         super.onResume()
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
@@ -95,7 +90,7 @@ class MyUpcomingMatchesFragment : Fragment() {
             return
         }
         //if (checkinArrayList.size == 0) {
-            mBinding!!.progressBar.visibility = View.VISIBLE
+        mBinding!!.progressBar.visibility = View.VISIBLE
         //}
         mBinding!!.linearEmptyContest.visibility = View.GONE
         val models = RequestModel()
@@ -107,7 +102,7 @@ class MyUpcomingMatchesFragment : Fragment() {
             .getMatchHistory(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                    if(mBinding!!.progressBar.visibility == View.VISIBLE){
+                    if (mBinding!!.progressBar.visibility == View.VISIBLE) {
                         mBinding!!.progressBar.visibility = View.GONE
                     }
                     updateEmptyViews()

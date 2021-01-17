@@ -8,6 +8,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import ninja.cricks.*
 import ninja.cricks.databinding.FragmentJoinContestConfirmationBinding
 import ninja.cricks.models.MyTeamModels
@@ -61,7 +62,6 @@ class JoinContestActivity : AppCompatActivity() {
             finish()
         })
         initWalletInfo()
-        getWalletBalances()
     }
 
     override fun onBackPressed() {
@@ -117,7 +117,6 @@ class JoinContestActivity : AppCompatActivity() {
             mBinding!!.entryFees.text = String.format("₹%.2f", totalEntryFees)
             mBinding!!.usableCashbonus.text = String.format("₹%.2f", discountFromBonusAmount)
         }
-
 
         //var finalAmount = walletAmount - totalPayable
         mBinding!!.usableTopay.text = String.format("₹%.2f", Math.abs(actualPayable))
@@ -182,60 +181,12 @@ class JoinContestActivity : AppCompatActivity() {
                     customeProgressDialog.dismiss()
                     val res = response!!.body()
                     if (res != null && res.status) {
+                        val intent1 = Intent(BindingUtils.EXTRA_DATA_GET_WALLET)
+                        LocalBroadcastManager.getInstance(mContext!!).sendBroadcast(intent1)
                         setResult(RESULT_OK)
                         finish()
                     } else {
                         MyUtils.showMessage(mContext!!, res!!.message)
-                    }
-                }
-            })
-    }
-
-    private fun getWalletBalances() {
-        //var userInfo = (activity as PlugSportsApplication).userInformations
-        if (!MyUtils.isConnectedWithInternet(this@JoinContestActivity)) {
-            MyUtils.showToast(this@JoinContestActivity, "No Internet connection found")
-            return
-        }
-        customeProgressDialog.show()
-        val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(mContext!!)!!
-        models.token = MyPreferences.getToken(mContext!!)!!
-
-        WebServiceClient(mContext!!).client.create(IApiMethod::class.java).getWallet(models)
-            .enqueue(object : Callback<UsersPostDBResponse?> {
-                override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                    customeProgressDialog.dismiss()
-                }
-
-                override fun onResponse(
-                    call: Call<UsersPostDBResponse?>?,
-                    response: Response<UsersPostDBResponse?>?
-                ) {
-                    customeProgressDialog.dismiss()
-                    val res = response!!.body()
-                    if (res != null && res.status) {
-                        if (res.sessionExpired) {
-                            logoutApp("Session Expired Please login again!!", false)
-                        } else {
-                            val responseModel = res.walletObjects
-                            if (responseModel != null) {
-
-                                MyPreferences.setRazorPayId(mContext!!, res.razorPay)
-                                MyPreferences.setShowPaytm(mContext!!, res.paytm_show)
-                                MyPreferences.setShowGpay(mContext!!, res.gpay_show)
-                                MyPreferences.setShowRazorPay(mContext!!, res.rozarpay_show)
-
-                                MyPreferences.setShowPaytmWithdraw(mContext!!, res.paytm_withdrawal)
-                                MyPreferences.setShowBankWithdraw(mContext!!, res.bank_withdrawal)
-                                MyPreferences.setShowUPIWithdraw(mContext!!, res.upi_withdrawal)
-
-                                (applicationContext as NinjaApplication).saveWalletInformation(
-                                    responseModel
-                                )
-                                initWalletInfo()
-                            }
-                        }
                     }
                 }
             })
