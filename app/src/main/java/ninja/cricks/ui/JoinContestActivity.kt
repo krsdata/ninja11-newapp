@@ -9,16 +9,19 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.google.gson.Gson
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import ninja.cricks.*
 import ninja.cricks.databinding.FragmentJoinContestConfirmationBinding
 import ninja.cricks.models.MyTeamModels
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.models.UserInfo
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.ui.contest.models.ContestModelLists
-import ninja.cricks.ui.home.models.UsersPostDBResponse
+import ninja.cricks.models.ContestModelLists
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
@@ -156,19 +159,33 @@ class JoinContestActivity : AppCompatActivity() {
             return
         }
         customeProgressDialog.show()
-        val models = RequestModel()
+        /*val models = RequestModel()
         models.user_id = MyPreferences.getUserID(mContext!!)!!
-        //models.token = MyPreferences.getToken(activity!!)!!
         models.match_id = "" + matchObject!!.matchId
         models.contest_id = "" + contestModel!!.id
         models.created_team_id = createdTeamIdList
         models.token = MyPreferences.getToken(mContext!!)!!
         models.entryFees = totalEntryFees.toString()
         models.totalPaidAmount = totalPayable.toString()
-        models.discountOnBonusAmount = discountFromBonusAmount.toString()
+        models.discountOnBonusAmount = discountFromBonusAmount.toString()*/
+
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+        jsonRequest.addProperty("match_id", matchObject!!.matchId)
+        jsonRequest.addProperty("contest_id", contestModel!!.id)
+        jsonRequest.addProperty("entryFees", totalEntryFees.toString())
+        jsonRequest.addProperty("totalPaidAmount", totalPayable.toString())
+        jsonRequest.addProperty("discountOnBonusAmount", discountFromBonusAmount.toString())
+
+        val gson = Gson()
+        val jsonString: String = gson.toJson(createdTeamIdList)
+        val createdTeamIds: JsonArray = JsonParser().parse(jsonString).asJsonArray
+
+        jsonRequest.add("created_team_id", createdTeamIds)
 
         WebServiceClient(mContext!!).client.create(IApiMethod::class.java)
-            .joinContest(models)
+            .joinContest(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     customeProgressDialog.dismiss()
@@ -180,13 +197,24 @@ class JoinContestActivity : AppCompatActivity() {
                 ) {
                     customeProgressDialog.dismiss()
                     val res = response!!.body()
-                    if (res != null && res.status) {
-                        val intent1 = Intent(BindingUtils.EXTRA_DATA_GET_WALLET)
-                        LocalBroadcastManager.getInstance(mContext!!).sendBroadcast(intent1)
-                        setResult(RESULT_OK)
-                        finish()
-                    } else {
-                        MyUtils.showMessage(mContext!!, res!!.message)
+                    if (res != null) {
+                        if (res.status){
+                            if (res.sessionExpired) {
+                                logoutApp("Session Expired Please login again!!", false)
+                            } else {
+                                val intent1 = Intent(BindingUtils.EXTRA_DATA_GET_WALLET)
+                                LocalBroadcastManager.getInstance(mContext!!).sendBroadcast(intent1)
+                                setResult(RESULT_OK)
+                                finish()
+                            }
+                        } else {
+                            if (res.code == 1001) {
+                                MyUtils.showMessage(this@JoinContestActivity, res.message)
+                                MyUtils.logoutApp(this@JoinContestActivity)
+                            } else {
+                                MyUtils.showMessage(mContext!!, res.message)
+                            }
+                        }
                     }
                 }
             })
@@ -216,14 +244,18 @@ class JoinContestActivity : AppCompatActivity() {
         builder.setPositiveButton("OK") { dialogInterface, which ->
 
             customeProgressDialog.show()
-            val request = RequestModel()
+            /*val request = RequestModel()
             request.user_id = MyPreferences.getUserID(mContext!!)!!
-            request.token = MyPreferences.getToken(mContext!!)!!
-            WebServiceClient(mContext!!).client.create(IApiMethod::class.java)
-                .logout(request)
+            request.token = MyPreferences.getToken(mContext!!)!!*/
+
+            val jsonRequest = JsonObject()
+            jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+            jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+
+            WebServiceClient(mContext!!).client.create(IApiMethod::class.java).logout(jsonRequest)
                 .enqueue(object : Callback<UsersPostDBResponse?> {
                     override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-
+                        customeProgressDialog.dismiss()
                     }
 
                     override fun onResponse(

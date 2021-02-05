@@ -9,18 +9,19 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.gson.JsonObject
 import ninja.cricks.databinding.ActivityMainBinding
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseActivity
 import ninja.cricks.ui.UpdateAppDialogFragment
 import ninja.cricks.ui.dashboard.MyAccountFragment
 import ninja.cricks.ui.dashboard.MyMatchesFragment
 import ninja.cricks.ui.home.FixtureCricketFragment
-import ninja.cricks.ui.home.models.UsersPostDBResponse
 import ninja.cricks.ui.notifications.MoreOptionsFragment
 import ninja.cricks.utils.MyPreferences
+import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -119,12 +120,11 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     }
 
     fun getWalletBalances() {
-        //var userInfo = (activity as PlugSportsApplication).userInformations
-        val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(this)!!
-        // models.token = MyPreferences.getToken(this)!!
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
 
-        WebServiceClient(this).client.create(IApiMethod::class.java).getWallet(models)
+        WebServiceClient(this).client.create(IApiMethod::class.java).getWallet(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     CHECK_APK_UPDATE_API = false
@@ -137,26 +137,38 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                     CHECK_APK_UPDATE_API = false
                     val res = response!!.body()
                     if (res != null) {
-                        val responseModel = res.walletObjects
-                        if (responseModel != null) {
-                            MyPreferences.setRazorPayId(this@MainActivity, res.razorPay)
-                            MyPreferences.setShowPaytm(this@MainActivity, res.paytm_show)
-                            MyPreferences.setShowGpay(this@MainActivity, res.gpay_show)
-                            MyPreferences.setShowRazorPay(this@MainActivity, res.rozarpay_show)
+                        if (res.status) {
+                            val responseModel = res.walletObjects
+                            if (responseModel != null) {
+                                MyPreferences.setRazorPayId(this@MainActivity, res.razorPay)
+                                MyPreferences.setShowPaytm(this@MainActivity, res.paytm_show)
+                                MyPreferences.setShowGpay(this@MainActivity, res.gpay_show)
+                                MyPreferences.setShowRazorPay(this@MainActivity, res.rozarpay_show)
 
-                            MyPreferences.setShowPaytmWithdraw(
-                                this@MainActivity,
-                                res.paytm_withdrawal
-                            )
-                            MyPreferences.setShowBankWithdraw(
-                                this@MainActivity,
-                                res.bank_withdrawal
-                            )
-                            MyPreferences.setShowUPIWithdraw(this@MainActivity, res.upi_withdrawal)
+                                MyPreferences.setShowPaytmWithdraw(
+                                    this@MainActivity,
+                                    res.paytm_withdrawal
+                                )
+                                MyPreferences.setShowBankWithdraw(
+                                    this@MainActivity,
+                                    res.bank_withdrawal
+                                )
+                                MyPreferences.setShowUPIWithdraw(
+                                    this@MainActivity,
+                                    res.upi_withdrawal
+                                )
 
-                            (application as NinjaApplication).saveWalletInformation(
-                                responseModel
-                            )
+                                (application as NinjaApplication).saveWalletInformation(
+                                    responseModel
+                                )
+                            }
+                        } else {
+                            if (res.code == 1001) {
+                                MyUtils.showMessage(this@MainActivity, res.message)
+                                MyUtils.logoutApp(this@MainActivity)
+                            } else {
+                                MyUtils.showMessage(this@MainActivity, res.message)
+                            }
                         }
                     }
                 }
@@ -170,7 +182,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         return super.onOptionsItemSelected(item)
     }
 
-    fun showToolbar() {
+    /*fun showToolbar() {
         mBinding!!.toolbar.visibility = View.VISIBLE
         mBinding!!.toolLayout.visibility = View.VISIBLE
     }
@@ -178,7 +190,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     fun hideToolbar() {
         mBinding!!.toolbar.visibility = View.GONE
         mBinding!!.toolLayout.visibility = View.GONE
-    }
+    }*/
 
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
@@ -215,7 +227,4 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
 }

@@ -18,7 +18,7 @@ import ninja.cricks.R
 import ninja.cricks.databinding.FragmentMoreContestBinding
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.ui.contest.adaptors.ContestListAdapter
-import ninja.cricks.ui.contest.models.ContestModelLists
+import ninja.cricks.models.ContestModelLists
 import ninja.cricks.utils.CustomeProgressDialog
 
 class MoreContestFragment : Fragment() {

@@ -13,7 +13,6 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import com.deliverdas.customers.utils.HardwareInfoManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -22,16 +21,19 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import ninja.cricks.*
 import ninja.cricks.databinding.ActivityLoginBinding
 import ninja.cricks.models.ResponseModel
 import ninja.cricks.models.UserInfo
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
+import ninja.cricks.network.RetrofitClient
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseActivity
-import ninja.cricks.ui.login.viewmodel.LoginViewModel
 import ninja.cricks.utils.BindingUtils
+import ninja.cricks.utils.HardwareInfoManager
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import retrofit2.Call
@@ -50,8 +52,9 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
     private lateinit var firebaseAuth: FirebaseAuth
     var name = ""
     var emailid = ""
+    var idToken = ""
     var binding: ActivityLoginBinding? = null
-    var viewmodel: LoginViewModel? = null
+//    var viewmodel: LoginViewModel? = null
 
     companion object {
         var AUTH_TYPE_GMAIL = "googleAuth"
@@ -80,7 +83,6 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
         configureGoogleSignIn()
         processStep1()
         initClicks()
-
     }
 
     private fun initClicks() {
@@ -97,7 +99,6 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
             intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_TERMS_CONDITION)
             intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_TNC)
             startActivity(intent)
-
         })
 
         binding!!.privacyPolicy.setOnClickListener(View.OnClickListener {
@@ -105,9 +106,7 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
             intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_PRIVACY_POLICY)
             intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_PRIVACY)
             startActivity(intent)
-
         })
-
     }
 
     private fun configureGoogleSignIn() {
@@ -118,9 +117,7 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
         mGoogleSignInClient = GoogleSignIn.getClient(this, mGoogleSignInOptions)
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        //callbackManager!!.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == RC_SIGN_IN) {
@@ -129,6 +126,8 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
                 val account = task.getResult(ApiException::class.java)
                 firebaseAuthWithGoogle(account!!)
             } catch (e: ApiException) {
+                Log.e(TAG, "ApiException message =========> ${e.message}")
+                Log.e(TAG, "ApiException statusCode =========> ${e.statusCode}")
                 Toast.makeText(this, "Google sign in failed:(", Toast.LENGTH_LONG).show()
             }
         }
@@ -136,22 +135,10 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
 
     override fun onBitmapSelected(bitmap: Bitmap) {
 
-
     }
 
     override fun onUploadedImageUrl(url: String) {
         photoUrl = url
-    }
-
-    override fun onStart() {
-        super.onStart()
-        val user = FirebaseAuth.getInstance().currentUser
-//        if (user != null) {
-//            name = user!!.displayName!!
-//            emailid = user!!.email!!
-//            login(user!!.email)
-//
-//        }
     }
 
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
@@ -169,18 +156,41 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
                     firebaseProvider = credential.provider
                     name = user.displayName.toString()
                     if (user.email != null) {
-                        Log.e(TAG, "user email =========> " + user.email)
                         emailid = user.email.toString()
                     } else {
-                        Log.e(TAG, "acct email =========> " + acct.email)
                         emailid = acct.email!!
                     }
                     photoUrl = firebaseAuth.currentUser!!.photoUrl.toString()
 
-                    login(emailid, AUTH_TYPE_GMAIL)
-                    mGoogleSignInClient.signOut()
+                    user.getIdToken(true)
+                        .addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                Log.e(TAG, "idToken ==========> $idToken")
+                                idToken = it.result!!.token.toString()
+                                login(emailid, AUTH_TYPE_GMAIL)
+
+                                mGoogleSignInClient.signOut()
+                            } else {
+                                /*Log.e(TAG, "idToken exception ==========> ${it.exception.toString()}")
+
+                                Log.e(TAG, "idToken exception ==========> ${it.exception!!.printStackTrace()}")*/
+
+                                Log.e(
+                                    TAG,
+                                    "idToken exception ==========> ${it.exception!!.message}"
+                                )
+                                Toast.makeText(this, "Google sign in failed:(", Toast.LENGTH_LONG)
+                                    .show()
+                            }
+                        }
                 }
             } else {
+                /*Log.e(TAG, "firebaseAuth exception ==========> ${it.exception.toString()}")
+                Log.e(TAG, "firebaseAuth localizedMessage ==========> ${it.exception!!.localizedMessage}")
+                Log.e(TAG, "firebaseAuth exception printStackTrace ==========> ${it.exception!!.printStackTrace()}")*/
+
+                Log.e(TAG, "firebaseAuth message ==========> ${it.exception!!.message}")
+
                 Toast.makeText(this, "Google sign in failed:(", Toast.LENGTH_LONG).show()
             }
         }
@@ -197,16 +207,23 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
             return
         }
         customeProgressDialog.show()
-        val request = RequestModel()
-        request.name = name
-        request.email = email
-        request.device_id = notificationToken
-        request.user_type = authType
-        request.provider_id = firebaseAuth.uid!!
-        request.deviceDetails = HardwareInfoManager(this).collectData(notificationToken)
-        WebServiceClient(this).client.create(IApiMethod::class.java).customerLogin(request)
-            .enqueue(this)
 
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("name", name)
+        jsonRequest.addProperty("email", email)
+        jsonRequest.addProperty("device_id", notificationToken)
+        jsonRequest.addProperty("user_type", authType)
+        jsonRequest.addProperty("provider_id", firebaseAuth.uid)
+        jsonRequest.addProperty("id_token", idToken)
+
+        val gson = Gson()
+        val jsonString: String =
+            gson.toJson(HardwareInfoManager(this).collectData(MyPreferences.getDeviceToken(this)!!))
+        val deviceDetails: JsonObject = JsonParser().parse(jsonString).asJsonObject
+        jsonRequest.add("deviceDetails", deviceDetails)
+
+        RetrofitClient(this).client.create(IApiMethod::class.java).customerLogin(jsonRequest)
+            .enqueue(this)
     }
 
     override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
@@ -229,11 +246,25 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
                         (applicationContext as NinjaApplication).saveUserInformations(
                             responseb.infomodel
                         )
+
+                        MyPreferences.setOtpAuthRequired(this, responseb.isOTPRequired)
+                        MyPreferences.setToken(this, responseb.token)
+                        MyPreferences.setUserID(this, "" + responseb.infomodel!!.userId)
+                        MyPreferences.setPaytmMid(this, responseb.paytmMid)
+                        MyPreferences.setPaytmCallback(this, responseb.callbackurrl)
+                        MyPreferences.setGooglePayId(this, responseb.gpayid)
+                        MyPreferences.setRazorPayId(this, responseb.razorPay)
+
+                        if (responseb.baseUrl != null && responseb.baseUrl != "") {
+                            MyPreferences.setBaseUrl(this, responseb.baseUrl)
+                        }
+                        MyPreferences.setSystemToken(this, responseb.systemToken)
+
                         if (TextUtils.isEmpty(infoModels.mobileNumber) ||
                             TextUtils.isEmpty(infoModels.userEmail) ||
                             TextUtils.isEmpty(infoModels.fullName)
                         ) {
-                            registerUsers(firebaseAuth.uid)
+                            registerUsers()
                         } else
                             if (infoModels.isOtpVerified) {
                                 MyPreferences.setLoginStatus(this@LoginScreenActivity, true)
@@ -254,26 +285,27 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
                 } else {
                     if (responseb.statusCode == BindingUtils.REUEST_STATUS_CODE_FRAUD) {
                         showDeadLineAlert(responseb.message)
+                    } else if (responseb.statusCode == 401) {
+                        showDeadLineAlert(responseb.message)
                     } else {
                         val infomodel = UserInfo()
                         infomodel.userEmail = emailid
                         (applicationContext as NinjaApplication).saveUserInformations(
                             responseb.infomodel
                         )
-                        registerUsers(firebaseAuth.uid)
+                        registerUsers()
                     }
                 }
-
             } else {
                 MyUtils.showToast(this@LoginScreenActivity, "Invalid Email or Password")
             }
         }
-
     }
 
-    private fun registerUsers(uid: String?) {
+    private fun registerUsers() {
         val intent = Intent(this@LoginScreenActivity, RegisterScreenActivity::class.java)
         intent.putExtra(OtpVerifyActivity.EXTRA_KEY_PROVIDER_ID, firebaseAuth.uid)
+        intent.putExtra(OtpVerifyActivity.EXTRA_KEY_ID_TOKEN, idToken)
         startActivity(intent)
     }
 
@@ -283,7 +315,6 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
         intent.putExtra(OtpVerifyActivity.EXTRA_KEY_PROVIDER_ID, uid)
         startActivityForResult(intent, RegisterScreenActivity.REQUESTCODE_LOGIN)
     }
-
 
     private fun processStep1() {
 
@@ -320,166 +351,7 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
         })
     }
 
-//    private fun processStep2(infomodel: UserInfo?) {
-//        binding!!.linearStep1.visibility = View.GONE
-//        binding!!.linearStep2.visibility = View.VISIBLE
-//
-//        binding!!.editName.setText(infomodel!!.fullName)
-//        binding!!.afterLoginEmail.setText(infomodel!!.userEmail)
-//        binding!!.editMobile.setText(infomodel!!.mobileNumber)
-//
-//
-//        binding!!.registerButton.setOnClickListener(object: View.OnClickListener{
-//            override fun onClick(v: View?) {
-//
-//                var emailAddress = infomodel.userEmail
-//                var mobileNumber = binding!!.editMobile.text.toString()
-//                var fullName = binding!!.editName.text.toString()
-//
-//                if(TextUtils.isEmpty(fullName)){
-//                    Toast.makeText(this@LoginScreenActivity
-//                        , "Warning , Please enter your Full Name", Toast.LENGTH_LONG).show()
-//                    return
-//                }
-//                if(TextUtils.isEmpty(mobileNumber)){
-//                    Toast.makeText(this@LoginScreenActivity
-//                        , "Warning , Please enter your Mobile Number", Toast.LENGTH_LONG).show()
-//                    return
-//                }
-//
-//                if(TextUtils.isEmpty(emailAddress)){
-//                    Toast.makeText(this@LoginScreenActivity
-//                        , "Warning , Email Address Required", Toast.LENGTH_LONG).show()
-//                    return
-//                }
-//
-//                if(!MyUtils.isConnectedWithInternet(this@LoginScreenActivity)) {
-//                    MyUtils.showToast(this@LoginScreenActivity,"No Internet connection found")
-//                    return
-//                }
-//                customeProgressDialog!!.show()
-//                var request = RequestModel()
-//                request.user_id =infomodel!!.userId.toString()
-//                request.name =binding!!.beforeEditName.text.toString()
-//                request.image_url =photoUrl
-//                request.referral_code =binding!!.editInvitecode.text.toString()
-//                request.email = infomodel!!.userEmail
-//                request.mobile_number = mobileNumber
-//                request.device_id = notificationToken
-//
-//                infomodel!!.mobileNumber =mobileNumber
-//                infomodel!!.fullName =name
-//                infomodel!!.referalCode =binding!!.editInvitecode.text.toString()
-//
-//
-//
-//                request.deviceDetails = HardwareInfoManager(this@LoginScreenActivity).collectData()
-//                WebServiceClient(this@LoginScreenActivity).client.create(BackEndApi::class.java).updateAfterLogin(request)
-//                    .enqueue(object : Callback<ResponseModel?>{
-//                        override fun onFailure(call: Call<ResponseModel?>?, t: Throwable?) {
-//
-//                        }
-//
-//                        override fun onResponse(
-//                            call: Call<ResponseModel?>?,
-//                            response: Response<ResponseModel?>?
-//                        ) {
-//
-//                            if(!isFinishing) {
-//                                customeProgressDialog!!.dismiss()
-//
-//                                var responseb = response!!.body()
-//                                if (responseb != null && responseb.status) {
-//                                    (applicationContext as PlugSportsApplication).saveUserInformations(infomodel)
-//                                    MyPreferences.setLoginStatus(this@LoginScreenActivity, true)
-//                                    MyPreferences.setUserID(this@LoginScreenActivity, ""+infomodel.userId)
-//                                    var intent = Intent(this@LoginScreenActivity, MainActivity::class.java)
-//                                    if(isActivityRequiredResult!!){
-//                                        setResult(Activity.RESULT_OK)
-//                                    }else {
-//                                        startActivity(intent)
-//                                    }
-//                                    finish()
-//                                }else {
-//                                    MyUtils.showToast(
-//                                        this@LoginScreenActivity,
-//                                        responseb!!.message
-//                                    )
-//                                }
-//
-//
-//                            }
-//
-//                        }
-//
-//                    })
-//            }
-//
-//
-//        })
-
-
-    //   }
-
-
     override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
-//        customeProgressDialog!!.dismiss()
-//        Toast.makeText(this
-//            , "Warning , ${t?.message}", Toast.LENGTH_LONG).show()
-
 
     }
-
-
-//    fun facebookInit(){
-//        FacebookSdk.sdkInitialize(this);
-////        AppEventsLogger.activateApp(this);
-//        callbackManager = CallbackManager.Factory.create()
-//        //buttonFacebookLogin.setReadPermissions("email", "public_profile")
-//        LoginManager.getInstance().registerCallback(callbackManager,
-//            object : FacebookCallback<LoginResult?> {
-//                override fun onSuccess(loginResult: LoginResult?) {
-//                    Log.d("Success", "Login")
-//                    val accessToken: AccessToken = AccessToken.getCurrentAccessToken()
-//                    val isLoggedIn = accessToken != null && !accessToken.isExpired()
-//                    //Toast.makeText(this@LoginScreenActivity, "Login Success "+accessToken+" isLogin"+isLoggedIn, Toast.LENGTH_LONG).show()
-//
-//                    var photoUrl = ""
-//                    val request = GraphRequest.newMeRequest(
-//                        accessToken,
-//                        object : GraphRequest.GraphJSONObjectCallback {
-//                            override fun onCompleted(
-//                                jsonObjects: JSONObject?,
-//                                response: GraphResponse?
-//                            ){
-//                                Log.d("fbres",jsonObjects.toString())
-//                                emailid = jsonObjects!!.getString("email")
-//                                name = jsonObjects!!.getString("name")
-//                                MyPreferences.setProfilePicture(this@LoginScreenActivity,photoUrl);
-//                                login(emailid,"", AUTH_TYPE_FACEBOOK)
-//                            }
-//                        })
-//                    val parameters = Bundle()
-//                    parameters.putString("fields", "id,name,link")
-//                    request.parameters = parameters
-//                    request.executeAsync()
-//
-//
-//
-//
-//
-//
-//                }
-//
-//                override fun onCancel() {
-//                    Toast.makeText(this@LoginScreenActivity, "Login Cancel", Toast.LENGTH_LONG).show()
-//                }
-//
-//                override fun onError(exception: FacebookException) {
-//                    Toast.makeText(this@LoginScreenActivity, exception.message, Toast.LENGTH_LONG).show()
-//                }
-//            })
-//    }
-
-
 }

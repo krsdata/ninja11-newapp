@@ -38,7 +38,7 @@ class UpdateApplicationActivity : BaseActivity() {
         if (!TextUtils.isEmpty(releaseNote)) {
             mBinding!!.releaseNote.text = releaseNote
         }
-        downloadController = DownloadController(this, apkUrl, customeProgressDialog)
+        downloadController = DownloadController(this, apkUrl!!, customeProgressDialog)
 
         mBinding!!.toolbar.title = this@UpdateApplicationActivity.getString(R.string.label_update)
         mBinding!!.toolbar.setTitleTextColor(resources.getColor(R.color.white))

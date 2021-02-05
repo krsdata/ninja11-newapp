@@ -6,30 +6,31 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import com.google.gson.JsonObject
+import ninja.cricks.databinding.ActivityChangePasswordBinding
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseActivity
-import ninja.cricks.ui.home.models.UsersPostDBResponse
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import ninja.cricks.databinding.ActivityChangePasswordBinding
 
 
 class ChangePasswordActivity : BaseActivity() {
 
     private var mBinding: ActivityChangePasswordBinding? = null
-    private var photoUrl: String=""
+    private var photoUrl: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         userInfo = (application as NinjaApplication).userInformations
         customeProgressDialog = CustomeProgressDialog(this)
-        mBinding = DataBindingUtil.setContentView(this,
+        mBinding = DataBindingUtil.setContentView(
+            this,
             R.layout.activity_change_password
         )
         mBinding!!.toolbar.title = "Change Password"
@@ -44,7 +45,6 @@ class ChangePasswordActivity : BaseActivity() {
 
             updateProfile()
         })
-
 
 
     }
@@ -63,57 +63,69 @@ class ChangePasswordActivity : BaseActivity() {
         var editNewPassword = mBinding!!.editNewPassword.text.toString()
         var editConfirmNewPassword = mBinding!!.editConfirmPassword.text.toString()
 
-        if(TextUtils.isEmpty(currentPassword)){
-            MyUtils.showToast(this@ChangePasswordActivity,"Please enter current password")
+        if (TextUtils.isEmpty(currentPassword)) {
+            MyUtils.showToast(this@ChangePasswordActivity, "Please enter current password")
             return
         }
-        if(currentPassword.length<4){
-            MyUtils.showToast(this@ChangePasswordActivity,"Password cannot be less than 4 character")
+        if (currentPassword.length < 4) {
+            MyUtils.showToast(
+                this@ChangePasswordActivity,
+                "Password cannot be less than 4 character"
+            )
+            return
+        } else if (TextUtils.isEmpty(editNewPassword)) {
+            MyUtils.showToast(this@ChangePasswordActivity, "Please enter new password")
+            return
+        } else if (editNewPassword.length < 8) {
+            MyUtils.showToast(
+                this@ChangePasswordActivity,
+                "New Password cannot be less than 8 character"
+            )
+            return
+        } else if (!editNewPassword.equals(editConfirmNewPassword)) {
+            MyUtils.showToast(this@ChangePasswordActivity, "Both password does not matched")
             return
         }
-        else if(TextUtils.isEmpty(editNewPassword)){
-            MyUtils.showToast(this@ChangePasswordActivity,"Please enter new password")
-            return
-        }else if(editNewPassword.length<8){
-            MyUtils.showToast(this@ChangePasswordActivity,"New Password cannot be less than 8 character")
-            return
-        }
-        else if(!editNewPassword.equals(editConfirmNewPassword)){
-            MyUtils.showToast(this@ChangePasswordActivity,"Both password does not matched")
-            return
-        }
-        mBinding!!.progressBar.visibility  =View.VISIBLE
+        mBinding!!.progressBar.visibility = View.VISIBLE
         customeProgressDialog.show()
-        var models = RequestModel()
+        /*var models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
         models.current_password = currentPassword
-        models.new_password = editNewPassword
+        models.new_password = editNewPassword*/
 
-        WebServiceClient(this).client.create(IApiMethod::class.java).changePassword(models)
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+        jsonRequest.addProperty("current_password", currentPassword)
+        jsonRequest.addProperty("new_password", editNewPassword)
+
+        WebServiceClient(this).client.create(IApiMethod::class.java).changePassword(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     customeProgressDialog.dismiss()
-                    MyUtils.showMessage(this@ChangePasswordActivity,t!!.message)
+                    MyUtils.showMessage(this@ChangePasswordActivity, t!!.message)
                 }
 
                 override fun onResponse(
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    mBinding!!.progressBar.visibility  =View.GONE
+                    mBinding!!.progressBar.visibility = View.GONE
                     customeProgressDialog.dismiss()
-                    var res = response!!.body()
-                    if(res!=null && res.status) {
-                        Toast.makeText(this@ChangePasswordActivity,"Profile updated successfully",Toast.LENGTH_LONG).show()
-                       finish()
+                    val res = response!!.body()
+                    if (res != null) {
+                        if (res.status) {
+                            Toast.makeText(
+                                this@ChangePasswordActivity,
+                                "Profile updated successfully",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            finish()
+                        } else {
+                            MyUtils.showMessage(this@ChangePasswordActivity, res.message)
+                        }
                     }
-
                 }
-
             })
-
     }
-
-
-
 }

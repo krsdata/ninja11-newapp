@@ -4,70 +4,62 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-class UserInfo : Serializable, Cloneable {
-
+data class UserInfo(
 
     @SerializedName("email")
     @Expose
-    var userEmail: String = ""
+    var userEmail: String = "",
 
     @SerializedName("referal_code")
     @Expose
-    var referalCode: String = ""
+    var referalCode: String = "",
 
     @SerializedName("profile_image")
     @Expose
-    var profileImage: String = ""
-
+    var profileImage: String = "",
 
     @SerializedName("otpverified")
     @Expose
-    var isOtpVerified: Boolean = false
-
+    var isOtpVerified: Boolean = false,
 
     @SerializedName("user_id")
     @Expose
-    val userId: String = ""
+    val userId: String = "",
 
     @SerializedName("mobile_number")
     @Expose
-    var mobileNumber: String = ""
+    var mobileNumber: String = "",
 
     @SerializedName("name")
     @Expose
-    var fullName: String = ""
+    var fullName: String = "",
 
     @SerializedName("team_name")
     @Expose
-    var teamName: String = ""
+    var teamName: String = "",
 
     @SerializedName("city")
     @Expose
-    var city: String = ""
+    var city: String = "",
 
     @SerializedName("gender")
     @Expose
-    var gender: String = ""
+    var gender: String = "",
 
     @SerializedName("dateOfBirth")
     @Expose
-    var dateOfBirth: String = ""
+    var dateOfBirth: String = "",
 
     @SerializedName("pinCode")
     @Expose
-    var pinCode: String = ""
+    var pinCode: String = "",
 
     @SerializedName("state")
     @Expose
-    var state: String = ""
-
+    var state: String = "",
 
     @SerializedName("apk_url")
     @Expose
     var apkUrl: String = ""
 
-
-    public override fun clone(): UserInfo {
-        return super.clone() as UserInfo
-    }
-}
+) : Serializable, Cloneable

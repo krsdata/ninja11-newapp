@@ -13,6 +13,11 @@
     <color name="colorPrimaryDark">#C61D24</color>
     <color name="colorAccent">#C61D24</color>-->
 
+    <!-- Here you can add color of your choice  -->
+    <color name="ucrop_color_toolbar">@color/colorPrimary</color>
+    <color name="ucrop_color_statusbar">@color/colorPrimary</color>
+    <color name="ucrop_color_widget_active">@color/colorPrimary</color>
+
     <color name="colorAccent_light">#bcdde6</color>
     <color name="secondery_color">#ED1C24</color>
     <color name="greenish_color">#03989E</color>
@@ -198,5 +203,7 @@
     <color name="progress_start_color">#e14b61</color>
     <color name="progress_center_color">#aa0a37</color>
     <color name="progress_end_color">#740012</color>
+
+    <color name="theme_trans">#33FFEBEE</color>
 
 </resources>

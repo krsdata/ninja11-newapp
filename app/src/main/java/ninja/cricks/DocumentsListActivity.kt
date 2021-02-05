@@ -7,12 +7,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
+import com.google.gson.JsonObject
 import ninja.cricks.databinding.ActivityViewDocumentBinding
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseActivity
-import ninja.cricks.ui.home.models.UsersPostDBResponse
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
@@ -56,11 +56,12 @@ class DocumentsListActivity : BaseActivity() {
             return
         }
         customeProgressDialog.show()
-        val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(this)!!
-        models.token = MyPreferences.getToken(this)!!
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
 
-        WebServiceClient(this).client.create(IApiMethod::class.java).getApprovedDocuments(models)
+        WebServiceClient(this).client.create(IApiMethod::class.java)
+            .getApprovedDocuments(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     customeProgressDialog.dismiss()
@@ -94,14 +95,20 @@ class DocumentsListActivity : BaseActivity() {
                             mBinding!!.bankAccountNumber.text = data.accountNumber
                             mBinding!!.bankAccountType.text = data.IFSCCode
 
-                            Glide.with(mContext!!).load(data.bankUrl).into(mBinding!!.chequeBookImage)
+                            Glide.with(mContext!!).load(data.bankUrl)
+                                .into(mBinding!!.chequeBookImage)
                             Glide.with(mContext!!).load(data.panUrl).into(mBinding!!.imgDocType)
 
                         } else {
-                            MyUtils.showToast(
-                                this@DocumentsListActivity,
-                                "Something went wrong. Please try after some time."
-                            )
+                            if (res.code == 1001) {
+                                MyUtils.showMessage(this@DocumentsListActivity, res.message)
+                                MyUtils.logoutApp(this@DocumentsListActivity)
+                            } else {
+                                MyUtils.showToast(
+                                    this@DocumentsListActivity,
+                                    res.message
+                                )
+                            }
                         }
                     } else {
                         MyUtils.showToast(

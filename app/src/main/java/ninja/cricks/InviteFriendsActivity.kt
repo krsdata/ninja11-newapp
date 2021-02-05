@@ -17,7 +17,9 @@ import io.branch.referral.util.LinkProperties
 import io.branch.referral.util.ShareSheetStyle
 import ninja.cricks.databinding.InviteFriendsBinding
 import ninja.cricks.models.UserInfo
+import ninja.cricks.utils.MyPreferences
 import java.util.*
+import java.util.prefs.Preferences
 
 class InviteFriendsActivity : AppCompatActivity() {
 
@@ -73,18 +75,25 @@ class InviteFriendsActivity : AppCompatActivity() {
                 java.lang.Long.toString(Calendar.getInstance().timeInMillis)
             )
 
-        buo!!.generateShortUrl(mContext!!, lp!!,
-            BranchLinkCreateListener { url, error ->
-                if (error == null) {
-                    //Log.e(TAG, "got my Branch link to share  =====> " + url);
-                    this@InviteFriendsActivity.url = url
-                    FirebaseCrashlytics.getInstance().log("share url =========> $url");
+        if (MyPreferences.getInviteUrl(mContext!!)!! == "") {
+            buo!!.generateShortUrl(mContext!!, lp!!,
+                BranchLinkCreateListener { url, error ->
+                    if (error == null) {
+                        this@InviteFriendsActivity.url = url
+                        MyPreferences.setInviteUrl(mContext!!, url)
 
-                } else {
-                    FirebaseCrashlytics.getInstance().log("error generating url =========> $error");
-                    Log.e(TAG, "error =========> $error")
-                }
-            })
+                        Log.e(TAG, "got my Branch link to share  =====> $url")
+                        FirebaseCrashlytics.getInstance().log("share url =========> $url")
+                    } else {
+                        FirebaseCrashlytics.getInstance()
+                            .log("error generating url =========> $error")
+                        Log.e(TAG, "error errorCode =========> ${error.errorCode}")
+                        Log.e(TAG, "error message =========> ${error.message}")
+                    }
+                })
+        } else {
+            url = MyPreferences.getInviteUrl(mContext!!)!!
+        }
 
         shareSheetStyle = ShareSheetStyle(
             mContext!!, "Ninja11",
@@ -94,7 +103,6 @@ class InviteFriendsActivity : AppCompatActivity() {
             .setAsFullWidthStyle(false)
             .setDefaultURL(url)
             .setSharingTitle("Refer and Earn Rs 100")
-
 
         mBinding!!.inviteFriends.setOnClickListener {
             shareReferCode()
@@ -112,10 +120,14 @@ class InviteFriendsActivity : AppCompatActivity() {
 
     private fun shareReferCode() {
 
+        if (url == null || url == "") {
+            url = "https://www.ninja11.in/Ninja11.apk"
+        }
+
         val msg: String =
             "Welcome to Ninja11.\n\nRegister on Ninja11 application with this link.\n\nUse my referral code \"" + userInfo!!.referalCode +
                     "\" and get extra Rs. 100 Bonus on Joining.\n\n $url".trimIndent()
-        FirebaseCrashlytics.getInstance().log("share message =========> $msg");
+        FirebaseCrashlytics.getInstance().log("share message =========> $msg")
 
         val sendIntent = Intent()
         sendIntent.action = Intent.ACTION_SEND
@@ -124,21 +136,5 @@ class InviteFriendsActivity : AppCompatActivity() {
         sendIntent.type = "text/plain"
         val shareIntent = Intent.createChooser(sendIntent, "Ninja11")
         startActivity(shareIntent)
-
-        /*buo!!.showShareSheet(this, lp!!, shareSheetStyle!!, object : Branch.BranchLinkShareListener {
-            override fun onShareLinkDialogLaunched() {}
-            override fun onShareLinkDialogDismissed() {}
-            override fun onLinkShareResponse(
-                sharedLink: String,
-                sharedChannel: String,
-                error: BranchError
-            ) {
-                Log.e(TAG, "error ====>  " + error.message!!);
-                Log.e(TAG, "error Code ====>  " + error.errorCode);
-            }
-
-            override fun onChannelSelected(channelName: String) {}
-        })*/
     }
-
 }

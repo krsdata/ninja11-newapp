@@ -15,15 +15,15 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.gson.JsonObject
 import ninja.cricks.ContestActivity
 import ninja.cricks.MainActivity
 import ninja.cricks.R
 import ninja.cricks.databinding.FragmentMyCompletedBinding
 import ninja.cricks.models.JoinedMatchModel
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.ui.home.models.UsersPostDBResponse
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import retrofit2.Call
@@ -93,12 +93,17 @@ class MyCompletedMatchesFragment : Fragment() {
             mBinding!!.progressBar.visibility = View.VISIBLE
         }
         mBinding!!.linearEmptyContest.visibility = View.GONE
-        val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(requireActivity())!!
-        models.action_type = "completed"
 
-        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
-            .getMatchHistory(models)
+        /*val models = RequestModel()
+        models.user_id = MyPreferences.getUserID(requireActivity())!!
+        models.action_type = "completed"*/
+
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
+        jsonRequest.addProperty("action_type", "2")
+
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getMatchHistory(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     if(mBinding!!.progressBar.visibility == View.VISIBLE){
@@ -111,15 +116,27 @@ class MyCompletedMatchesFragment : Fragment() {
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
+                    if (!isVisible){
+                        return
+                    }
                     mBinding!!.progressBar.visibility = View.GONE
                     val res = response!!.body()
                     if (res != null) {
-                        val responseModel = res.responseObject
-                        if (responseModel != null) {
-                            if (responseModel.matchdatalist != null && responseModel.matchdatalist!!.size > 0) {
-                                checkinArrayList.clear()
-                                checkinArrayList.addAll(responseModel.matchdatalist!!.get(0).completedMatchHistory!!)
-                                adapter.notifyDataSetChanged()
+                        if (res.status) {
+                            val responseModel = res.responseObject
+                            if (responseModel != null) {
+                                if (responseModel.matchdatalist != null && responseModel.matchdatalist!!.size > 0) {
+                                    checkinArrayList.clear()
+                                    checkinArrayList.addAll(responseModel.matchdatalist!!.get(0).completedMatchHistory!!)
+                                    adapter.notifyDataSetChanged()
+                                }
+                            }
+                        } else {
+                            if (res.code == 1001) {
+                                MyUtils.showMessage(requireActivity(), res.message)
+                                MyUtils.logoutApp(requireActivity())
+                            } else {
+                                MyUtils.showMessage(requireActivity(), res.message)
                             }
                         }
                     }

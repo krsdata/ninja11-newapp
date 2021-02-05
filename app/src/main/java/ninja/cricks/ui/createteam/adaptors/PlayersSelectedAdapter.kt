@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.edify.atrist.listener.OnRolesSelected
 import ninja.cricks.R
 import ninja.cricks.models.UpcomingMatchesModel
-import ninja.cricks.ui.createteam.models.PlayersInfoModel
+import ninja.cricks.models.PlayersInfoModel
 
 
 class PlayersSelectedAdapter(

@@ -13,16 +13,17 @@ import android.widget.RadioButton
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import com.andrognito.flashbar.Flashbar
-import com.deliverdas.customers.utils.HardwareInfoManager
+import com.google.gson.Gson
 import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import ninja.cricks.databinding.ActivityWithdrawAmountBinding
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.models.WalletInfo
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseActivity
-import ninja.cricks.ui.home.models.UsersPostDBResponse
 import ninja.cricks.utils.CustomeProgressDialog
+import ninja.cricks.utils.HardwareInfoManager
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import org.json.JSONObject
@@ -30,7 +31,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
-
 
 class WithdrawAmountsActivity : BaseActivity() {
 
@@ -59,7 +59,7 @@ class WithdrawAmountsActivity : BaseActivity() {
             finish()
         })
 
-        mBinding!!.winningAmount.text = String.format("₹ %s", walletInfo!!.prizeAmount)
+        mBinding!!.winningAmount.text = String.format("₹%s", walletInfo!!.prizeAmount)
 
         if (MyPreferences.getShowPaytmWithdraw(mContext!!)) {
             mBinding!!.paytmBtn.visibility = View.VISIBLE
@@ -204,7 +204,7 @@ class WithdrawAmountsActivity : BaseActivity() {
             return
         }
         customeProgressDialog.show()
-        val models = RequestModel()
+        /*val models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
         models.token = MyPreferences.getToken(this)!!
         models.withdraw_amount = MyUtils.encodeBase64(amount.toString()).toString()
@@ -212,10 +212,21 @@ class WithdrawAmountsActivity : BaseActivity() {
 
         if (type == "UPI") {
             models.upi_id = mBinding!!.upiEditText.text.toString()
-        }
+        }*/
 
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+        jsonRequest.addProperty(
+            "withdraw_amount",
+            MyUtils.encodeBase64(amount.toString()).toString()
+        )
+        jsonRequest.addProperty("payment_taken_in", MyUtils.encodeBase64(type).toString())
+        if (type == "UPI") {
+            jsonRequest.addProperty("upi_id", mBinding!!.upiEditText.text.toString())
+        }
         //WebServiceClient(this).client.create(IApiMethod::class.java).withdrawAmount(models)
-        WebServiceClient(this).client.create(IApiMethod::class.java).withdrawAmountNew(models)
+        WebServiceClient(this).client.create(IApiMethod::class.java).withdrawAmountNew(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     customeProgressDialog.dismiss()
@@ -227,21 +238,23 @@ class WithdrawAmountsActivity : BaseActivity() {
                 ) {
                     customeProgressDialog.dismiss()
                     val res = response!!.body()
-                    if (res != null && res.status) {
-                        successAlert(res.message, true)
-                    } else {
-                        if (res != null && res.code == 405) {
-                            mBinding!!.upiText.visibility = View.VISIBLE
-                            mBinding!!.upiEditText.visibility = View.VISIBLE
-
-                            errorAlert(res.message)
+                    if (res != null) {
+                        if (res.status) {
+                            successAlert(res.message, true)
                         } else {
-                            if (res != null) {
+                            if (res.code == 1001) {
+                                MyUtils.showMessage(this@WithdrawAmountsActivity, res.message)
+                                MyUtils.logoutApp(this@WithdrawAmountsActivity)
+                            } else if (res.code == 405) {
+                                mBinding!!.upiText.visibility = View.VISIBLE
+                                mBinding!!.upiEditText.visibility = View.VISIBLE
                                 errorAlert(res.message)
                             } else {
-                                errorAlert("Please try again! Something went wrong")
+                                MyUtils.showMessage(this@WithdrawAmountsActivity, res.message)
                             }
                         }
+                    } else {
+                        errorAlert("Please try again! Something went wrong")
                     }
                 }
             })
@@ -287,13 +300,13 @@ class WithdrawAmountsActivity : BaseActivity() {
         if (!MyUtils.isConnectedWithInternet(this)) {
             return
         }
-        val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(mContext!!)!!
-        models.token = MyPreferences.getToken(mContext!!)!!
-        val deviceToken: String? = MyPreferences.getDeviceToken(mContext!!)
-        models.deviceDetails = HardwareInfoManager(mContext).collectData(deviceToken!!)
 
-        WebServiceClient(mContext!!).client.create(IApiMethod::class.java).getMessages(models)
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+        jsonRequest.addProperty("version_code", BuildConfig.VERSION_CODE)
+
+        WebServiceClient(mContext!!).client.create(IApiMethod::class.java).getMessages(jsonRequest)
             .enqueue(object : Callback<JsonObject?> {
                 override fun onFailure(call: Call<JsonObject?>?, t: Throwable?) {
                     // customeProgressDialog.dismiss()

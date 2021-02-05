@@ -16,22 +16,22 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.edify.atrist.listener.OnContestLoadedListener
+import com.google.gson.JsonObject
 import ninja.cricks.CreateTeamActivity
 import ninja.cricks.R
 import ninja.cricks.databinding.FragmentMyTeamBinding
 import ninja.cricks.models.MyTeamModels
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.ui.home.models.UsersPostDBResponse
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ContestStatsFragment(objectMatches:UpcomingMatchesModel) : Fragment() {
+class ContestStatsFragment(objectMatches: UpcomingMatchesModel) : Fragment() {
 
     companion object {
         val SERIALIZABLE_EDIT_TEAM: String = "editteam"
@@ -43,10 +43,14 @@ class ContestStatsFragment(objectMatches:UpcomingMatchesModel) : Fragment() {
     lateinit var adapter: MyTeamAdapter
     var myTeamArrayList = ArrayList<MyTeamModels>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        mBinding  = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_my_team, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        mBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_my_team, container, false
+        )
         return mBinding!!.root
     }
 
@@ -55,18 +59,18 @@ class ContestStatsFragment(objectMatches:UpcomingMatchesModel) : Fragment() {
         mBinding!!.recyclerMyTeam.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
 
-        adapter = MyTeamAdapter(activity!!,myTeamArrayList)
+        adapter = MyTeamAdapter(requireActivity(), myTeamArrayList)
         mBinding!!.recyclerMyTeam.adapter = adapter
-        mBinding!!.linearEmptyContest.visibility=View.GONE
+        mBinding!!.linearEmptyContest.visibility = View.GONE
 
         mBinding!!.btnCreateTeam.setOnClickListener(View.OnClickListener {
             val intent = Intent(activity, CreateTeamActivity::class.java)
-            intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY,matchObject)
+            intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
             startActivity(intent)
         })
-         mBinding!!.myteamRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
-             getMyTeam()
-         })
+        mBinding!!.myteamRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
+            getMyTeam()
+        })
         getMyTeam()
 
     }
@@ -84,43 +88,57 @@ class ContestStatsFragment(objectMatches:UpcomingMatchesModel) : Fragment() {
     }
 
     fun getMyTeam() {
-        if(!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
-            MyUtils.showToast(activity as AppCompatActivity,"No Internet connection found")
+        if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
+            MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-        //var userInfo = (activity as PlugSportsApplication).userInformations
-        mBinding!!.linearEmptyContest.visibility=View.GONE
+        mBinding!!.linearEmptyContest.visibility = View.GONE
         mBinding!!.progressMyteam.visibility = View.VISIBLE
-        var models = RequestModel()
+
+        /*val models = RequestModel()
         models.user_id = MyPreferences.getUserID(activity!!)!!
         models.token = MyPreferences.getToken(activity!!)!!
-        models.match_id =""+matchObject.matchId
+        models.match_id =""+matchObject.matchId*/
 
-        WebServiceClient(activity!!).client.create(IApiMethod::class.java).getMyTeam(models)
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
+        jsonRequest.addProperty("match_id", matchObject.matchId)
+
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
+            .getMyTeam(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                  if(isVisible) {
-                      mBinding!!.myteamRefresh.isRefreshing = false
-                      mBinding!!.progressMyteam.visibility = View.GONE
-                      updateEmptyViews()
-                  }
+                    if (isVisible) {
+                        mBinding!!.myteamRefresh.isRefreshing = false
+                        mBinding!!.progressMyteam.visibility = View.GONE
+                        updateEmptyViews()
+                    }
                 }
 
                 override fun onResponse(
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    mBinding!!.myteamRefresh.isRefreshing=false
+                    mBinding!!.myteamRefresh.isRefreshing = false
                     mBinding!!.progressMyteam.visibility = View.GONE
-                    var res = response!!.body()
-                    if(res!=null) {
-                        var responseModel = res.responseObject
-
-                        if(responseModel!!.myTeamList!!.size>0) {
-                            myTeamArrayList.clear()
-                            myTeamArrayList.addAll(responseModel.myTeamList!!)
-                            adapter.notifyDataSetChanged()
-                            mListener.onMyTeam(myTeamArrayList)
+                    val res = response!!.body()
+                    if (res != null) {
+                        if (res.status) {
+                            val responseModel = res.responseObject
+                            if (responseModel!!.myTeamList!!.size > 0) {
+                                myTeamArrayList.clear()
+                                myTeamArrayList.addAll(responseModel.myTeamList!!)
+                                adapter.notifyDataSetChanged()
+                                mListener.onMyTeam(myTeamArrayList)
+                            }
+                        } else {
+                            if (res.code == 1001) {
+                                MyUtils.showMessage(requireActivity(), res.message)
+                                MyUtils.logoutApp(requireActivity())
+                            } else {
+                                MyUtils.showMessage(requireActivity(), res.message)
+                            }
                         }
                     }
                     updateEmptyViews()
@@ -130,17 +148,18 @@ class ContestStatsFragment(objectMatches:UpcomingMatchesModel) : Fragment() {
 
     }
 
-    fun updateEmptyViews(){
-        if(myTeamArrayList.size==0){
-            mBinding!!.linearEmptyContest.visibility=View.VISIBLE
-        }else {
-            mBinding!!.linearEmptyContest.visibility=View.GONE
+    fun updateEmptyViews() {
+        if (myTeamArrayList.size == 0) {
+            mBinding!!.linearEmptyContest.visibility = View.VISIBLE
+        } else {
+            mBinding!!.linearEmptyContest.visibility = View.GONE
         }
     }
-    inner class MyTeamAdapter(val context: Context,tradeinfoModels: ArrayList<MyTeamModels>) :
+
+    inner class MyTeamAdapter(val context: Context, tradeinfoModels: ArrayList<MyTeamModels>) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         var onItemClick: ((MyTeamModels) -> Unit)? = null
-        private var matchesListObject =  tradeinfoModels
+        private var matchesListObject = tradeinfoModels
 
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -156,16 +175,16 @@ class ContestStatsFragment(objectMatches:UpcomingMatchesModel) : Fragment() {
             viewHolder.teamaName.text = objectVal.teamsInfo!!.get(0).teamName
             viewHolder.teambName.text = objectVal.teamsInfo!!.get(1).teamName
 
-            viewHolder.teamaCount.text = ""+objectVal.teamsInfo!!.get(0).count
-            viewHolder.teambCount.text = ""+objectVal.teamsInfo!!.get(1).count
+            viewHolder.teamaCount.text = "" + objectVal.teamsInfo!!.get(0).count
+            viewHolder.teambCount.text = "" + objectVal.teamsInfo!!.get(1).count
 
             viewHolder.captainPlayerName.text = objectVal.captain!!.playerName
             viewHolder.vcPlayerName.text = objectVal.viceCaptain!!.playerName
 
-            viewHolder.countWicketkeeper.text = String.format("%d",objectVal.wicketKeepers!!.size)
-            viewHolder.countBatsman.text = String.format("%d",objectVal.batsmen!!.size)
-            viewHolder.countAllRounder.text = String.format("%d",objectVal.allRounders!!.size)
-            viewHolder.countBowler.text = String.format("%d",objectVal.bowlers!!.size)
+            viewHolder.countWicketkeeper.text = String.format("%d", objectVal.wicketKeepers!!.size)
+            viewHolder.countBatsman.text = String.format("%d", objectVal.batsmen!!.size)
+            viewHolder.countAllRounder.text = String.format("%d", objectVal.allRounders!!.size)
+            viewHolder.countBowler.text = String.format("%d", objectVal.bowlers!!.size)
 
             Glide.with(context)
                 .load("https://")
@@ -179,8 +198,8 @@ class ContestStatsFragment(objectMatches:UpcomingMatchesModel) : Fragment() {
 
             viewHolder.teamEdit.setOnClickListener(View.OnClickListener {
                 val intent = Intent(activity, CreateTeamActivity::class.java)
-                intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY,matchObject)
-                intent.putExtra(SERIALIZABLE_EDIT_TEAM,objectVal)
+                intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
+                intent.putExtra(SERIALIZABLE_EDIT_TEAM, objectVal)
                 activity!!.startActivityForResult(intent, CreateTeamActivity.CREATETEAM_REQUESTCODE)
             })
 
@@ -188,12 +207,11 @@ class ContestStatsFragment(objectMatches:UpcomingMatchesModel) : Fragment() {
         }
 
 
-
         override fun getItemCount(): Int {
             return matchesListObject.size
         }
 
-        inner  class MyMatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        inner class MyMatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
             val userTeamName = itemView.findViewById<TextView>(R.id.user_team_name)
             val teamEdit = itemView.findViewById<ImageView>(R.id.team_edit)
@@ -222,7 +240,6 @@ class ContestStatsFragment(objectMatches:UpcomingMatchesModel) : Fragment() {
 
 
     }
-
 
 
 }

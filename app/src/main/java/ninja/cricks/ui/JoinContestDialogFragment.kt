@@ -13,16 +13,19 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
+import com.google.gson.Gson
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import ninja.cricks.*
 import ninja.cricks.databinding.FragmentJoinContestConfirmationBinding
 import ninja.cricks.models.MyTeamModels
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.models.UserInfo
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.ui.contest.models.ContestModelLists
-import ninja.cricks.ui.home.models.UsersPostDBResponse
+import ninja.cricks.models.ContestModelLists
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
@@ -51,14 +54,13 @@ class JoinContestDialogFragment(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.dialog_theme)
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_join_contest_confirmation, container, false
@@ -172,19 +174,23 @@ class JoinContestDialogFragment(
             return
         }
         customeProgressDialog.show()
-        val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(requireActivity())!!
-        //models.token = MyPreferences.getToken(activity!!)!!
-        models.match_id = "" + matchObject.matchId
-        models.contest_id = "" + contestModel.id
-        models.created_team_id = createdTeamIdList
-        models.token = MyPreferences.getToken(requireActivity())!!
-        models.entryFees = totalEntryFees.toString()
-        models.totalPaidAmount = totalPayable.toString()
-        models.discountOnBonusAmount = discountFromBonusAmount.toString()
+
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
+        jsonRequest.addProperty("match_id", matchObject.matchId)
+        jsonRequest.addProperty("contest_id", contestModel.id)
+        jsonRequest.addProperty("entryFees", totalEntryFees.toString())
+        jsonRequest.addProperty("totalPaidAmount", totalPayable.toString())
+        jsonRequest.addProperty("discountOnBonusAmount", discountFromBonusAmount.toString())
+
+        val gson = Gson()
+        val jsonString: String = gson.toJson(createdTeamIdList)
+        val createdTeamIds: JsonArray = JsonParser().parse(jsonString).asJsonArray
+        jsonRequest.add("created_team_id", createdTeamIds)
 
         WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
-            .joinContest(models)
+            .joinContest(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     if (isVisible) {
@@ -199,11 +205,18 @@ class JoinContestDialogFragment(
                     if (isVisible) {
                         customeProgressDialog.dismiss()
                         val res = response!!.body()
-                        if (res != null && res.status) {
-                            activity!!.setResult(RESULT_OK)
-                            activity!!.finish()
-                        } else {
-                            MyUtils.showMessage(activity!!, res!!.message)
+                        if (res != null) {
+                            if (res.status) {
+                                activity!!.setResult(RESULT_OK)
+                                activity!!.finish()
+                            } else {
+                                if (res.code == 1001) {
+                                    MyUtils.showMessage(requireActivity(), res.message)
+                                    MyUtils.logoutApp(requireActivity())
+                                } else {
+                                    MyUtils.showMessage(requireActivity(), res.message)
+                                }
+                            }
                         }
                     }
                 }
@@ -218,12 +231,6 @@ class JoinContestDialogFragment(
             val height = ViewGroup.LayoutParams.MATCH_PARENT
             dialog.window!!.setLayout(width, height)
         }
-//        BindingUtils.sendEventLogs(
-//            activity!!,
-//            matchObject!!.matchId,contestModel!!.id,
-//            userInfo,
-//            BindingUtils.FIREBASE_EVENT_ITEM_ID_JOIN_CONTEST
-//        )
     }
 
     private fun getWalletBalances() {
@@ -233,11 +240,12 @@ class JoinContestDialogFragment(
             return
         }
         customeProgressDialog.show()
-        val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(requireActivity())!!
-        models.token = MyPreferences.getToken(requireActivity())!!
 
-        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getWallet(models)
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
+
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getWallet(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     customeProgressDialog.dismiss()
@@ -250,25 +258,49 @@ class JoinContestDialogFragment(
                     if (isVisible) {
                         customeProgressDialog.dismiss()
                         val res = response!!.body()
-                        if (res != null && res.status) {
-                            if (res.sessionExpired) {
-                                logoutApp("Session Expired Please login again!!", false)
+                        if (res != null) {
+                            if (res.status) {
+                                if (res.sessionExpired) {
+                                    logoutApp("Session Expired Please login again!!", false)
+                                } else {
+                                    val responseModel = res.walletObjects
+                                    if (responseModel != null) {
+                                        MyPreferences.setRazorPayId(requireActivity(), res.razorPay)
+                                        MyPreferences.setShowPaytm(
+                                            requireActivity(),
+                                            res.paytm_show
+                                        )
+                                        MyPreferences.setShowGpay(requireActivity(), res.gpay_show)
+                                        MyPreferences.setShowRazorPay(
+                                            requireActivity(),
+                                            res.rozarpay_show
+                                        )
+
+                                        MyPreferences.setShowPaytmWithdraw(
+                                            requireActivity(),
+                                            res.paytm_withdrawal
+                                        )
+                                        MyPreferences.setShowBankWithdraw(
+                                            requireActivity(),
+                                            res.bank_withdrawal
+                                        )
+                                        MyPreferences.setShowUPIWithdraw(
+                                            requireActivity(),
+                                            res.upi_withdrawal
+                                        )
+
+                                        (activity!!.applicationContext as NinjaApplication).saveWalletInformation(
+                                            responseModel
+                                        )
+                                        initWalletInfo()
+                                    }
+                                }
                             } else {
-                                val responseModel = res.walletObjects
-                                if (responseModel != null) {
-                                    MyPreferences.setRazorPayId(requireActivity(), res.razorPay)
-                                    MyPreferences.setShowPaytm(requireActivity(), res.paytm_show)
-                                    MyPreferences.setShowGpay(requireActivity(), res.gpay_show)
-                                    MyPreferences.setShowRazorPay(requireActivity(), res.rozarpay_show)
-
-                                    MyPreferences.setShowPaytmWithdraw(requireActivity(), res.paytm_withdrawal)
-                                    MyPreferences.setShowBankWithdraw(requireActivity(), res.bank_withdrawal)
-                                    MyPreferences.setShowUPIWithdraw(requireActivity(), res.upi_withdrawal)
-
-                                    (activity!!.applicationContext as NinjaApplication).saveWalletInformation(
-                                        responseModel
-                                    )
-                                    initWalletInfo()
+                                if (res.code == 1001) {
+                                    MyUtils.showMessage(requireActivity(), res.message)
+                                    MyUtils.logoutApp(requireActivity())
+                                } else {
+                                    MyUtils.showMessage(requireActivity(), res.message)
                                 }
                             }
                         }
@@ -301,14 +333,18 @@ class JoinContestDialogFragment(
         builder.setPositiveButton("OK") { dialogInterface, which ->
 
             customeProgressDialog.show()
-            val request = RequestModel()
+            /*val request = RequestModel()
             request.user_id = MyPreferences.getUserID(requireActivity())!!
-            request.token = MyPreferences.getToken(requireActivity())!!
-            WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
-                .logout(request)
+            request.token = MyPreferences.getToken(requireActivity())!!*/
+
+            val jsonRequest = JsonObject()
+            jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
+            jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
+
+            WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).logout(jsonRequest)
                 .enqueue(object : Callback<UsersPostDBResponse?> {
                     override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-
+                        customeProgressDialog.dismiss()
                     }
 
                     override fun onResponse(

@@ -1,7 +1,6 @@
 package ninja.cricks.ui.previewteam.adaptors
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,7 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import ninja.cricks.R
 import ninja.cricks.models.UpcomingMatchesModel
-import ninja.cricks.ui.createteam.models.PlayersInfoModel
+import ninja.cricks.models.PlayersInfoModel
 import ninja.cricks.utils.BindingUtils
 
 class GridViewAdapter(

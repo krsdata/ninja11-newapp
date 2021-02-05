@@ -21,16 +21,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.edify.atrist.listener.OnContestEvents
 import com.edify.atrist.listener.OnContestLoadedListener
+import com.google.gson.JsonObject
 import ninja.cricks.*
 import ninja.cricks.databinding.FragmentMyContestBinding
 import ninja.cricks.models.MyTeamModels
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.ui.contest.models.ContestModelLists
-import ninja.cricks.ui.createteam.models.PlayersInfoModel
-import ninja.cricks.ui.home.models.UsersPostDBResponse
+import ninja.cricks.models.ContestModelLists
+import ninja.cricks.models.PlayersInfoModel
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
@@ -139,18 +139,22 @@ class MyContestFragment : Fragment() {
         }
         mBinding!!.linearEmptyContest.visibility = View.GONE
         mBinding!!.progressContest.visibility = View.VISIBLE
-        val models = RequestModel()
+
+        /*val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         models.token = MyPreferences.getToken(requireActivity())!!
-        models.match_id = "" + objectMatches!!.matchId
+        models.match_id = "" + objectMatches!!.matchId*/
 
-        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
-            .getMyContest(models)
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
+        jsonRequest.addProperty("match_id", objectMatches!!.matchId)
+
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getMyContest(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     mBinding!!.mycontestRefresh.isRefreshing = false
-                    // MyUtils.showToast(activity!!.getWindow().getDecorView().getRootView(),t!!.localizedMessage)
-                    //updateEmptyViews()
+                    mBinding!!.progressContest.visibility = View.GONE
                 }
 
                 override fun onResponse(
@@ -161,13 +165,22 @@ class MyContestFragment : Fragment() {
                     mBinding!!.progressContest.visibility = View.GONE
                     val res = response!!.body()
                     if (res != null) {
-                        val responseModel = res.responseObject
-                        if (responseModel != null) {
-                            if (responseModel.myJoinedContest != null && responseModel.myJoinedContest!!.size > 0) {
-                                checkinArrayList.clear()
-                                checkinArrayList.addAll(responseModel.myJoinedContest!!)
-                                mListener.onMyContest(checkinArrayList)
-                                adapter.notifyDataSetChanged()
+                        if (res.status) {
+                            val responseModel = res.responseObject
+                            if (responseModel != null) {
+                                if (responseModel.myJoinedContest != null && responseModel.myJoinedContest!!.size > 0) {
+                                    checkinArrayList.clear()
+                                    checkinArrayList.addAll(responseModel.myJoinedContest!!)
+                                    mListener.onMyContest(checkinArrayList)
+                                    adapter.notifyDataSetChanged()
+                                }
+                            }
+                        } else {
+                            if (res.code == 1001) {
+                                MyUtils.showMessage(requireActivity(), res.message)
+                                MyUtils.logoutApp(requireActivity())
+                            } else {
+                                MyUtils.showMessage(requireActivity(), res.message)
                             }
                         }
                     }
@@ -366,12 +379,17 @@ class MyContestFragment : Fragment() {
             return
         }
         customeProgressDialog.show()
-        val models = RequestModel()
+        /*val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
-        // models.token =MyPreferences.getToken(activity!!)!!
-        models.team_id = teamId
+        models.token =MyPreferences.getToken(activity!!)!!
+        models.team_id = teamId*/
 
-        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getPoints(models)
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
+        jsonRequest.addProperty("team_id", teamId)
+
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getPoints(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     customeProgressDialog.dismiss()
@@ -384,65 +402,80 @@ class MyContestFragment : Fragment() {
                     customeProgressDialog.dismiss()
                     val res = response!!.body()
                     if (res != null) {
-                        var totalPoints = res.totalPoints
-                        val responseModel = res.responseObject
-                        if (responseModel != null) {
-                            val playerPointsList = responseModel.playerPointsList
-                            val hasmapPlayers: HashMap<String, ArrayList<PlayersInfoModel>> =
-                                HashMap<String, ArrayList<PlayersInfoModel>>()
+                        if (res.status) {
+                            var totalPoints = res.totalPoints
+                            val responseModel = res.responseObject
+                            if (responseModel != null) {
+                                val playerPointsList = responseModel.playerPointsList
+                                val hasmapPlayers: HashMap<String, ArrayList<PlayersInfoModel>> =
+                                    HashMap<String, ArrayList<PlayersInfoModel>>()
 
-                            val wktKeeperList: ArrayList<PlayersInfoModel> =
-                                ArrayList<PlayersInfoModel>()
-                            val batsManList: ArrayList<PlayersInfoModel> =
-                                ArrayList<PlayersInfoModel>()
-                            val allRounderList: ArrayList<PlayersInfoModel> =
-                                ArrayList<PlayersInfoModel>()
-                            val allbowlerList: ArrayList<PlayersInfoModel> =
-                                ArrayList<PlayersInfoModel>()
+                                val wktKeeperList: ArrayList<PlayersInfoModel> =
+                                    ArrayList<PlayersInfoModel>()
+                                val batsManList: ArrayList<PlayersInfoModel> =
+                                    ArrayList<PlayersInfoModel>()
+                                val allRounderList: ArrayList<PlayersInfoModel> =
+                                    ArrayList<PlayersInfoModel>()
+                                val allbowlerList: ArrayList<PlayersInfoModel> =
+                                    ArrayList<PlayersInfoModel>()
 
-                            for (x in 0..playerPointsList!!.size - 1) {
-                                val plyObj = playerPointsList.get(x)
-                                if (plyObj.playerRole.equals("wk")) {
-                                    wktKeeperList.add(plyObj)
-                                } else if (plyObj.playerRole.equals("bat")) {
-                                    batsManList.add(plyObj)
-                                } else if (plyObj.playerRole.equals("all")) {
-                                    allRounderList.add(plyObj)
-                                } else if (plyObj.playerRole.equals("bowl")) {
-                                    allbowlerList.add(plyObj)
+                                for (x in 0..playerPointsList!!.size - 1) {
+                                    val plyObj = playerPointsList.get(x)
+                                    if (plyObj.playerRole.equals("wk")) {
+                                        wktKeeperList.add(plyObj)
+                                    } else if (plyObj.playerRole.equals("bat")) {
+                                        batsManList.add(plyObj)
+                                    } else if (plyObj.playerRole.equals("all")) {
+                                        allRounderList.add(plyObj)
+                                    } else if (plyObj.playerRole.equals("bowl")) {
+                                        allbowlerList.add(plyObj)
+                                    }
                                 }
-                            }
-                            hasmapPlayers.put(
-                                CreateTeamActivity.CREATE_TEAM_WICKET_KEEPER,
-                                wktKeeperList
-                            )
-                            hasmapPlayers.put(CreateTeamActivity.CREATE_TEAM_BATSMAN, batsManList)
-                            hasmapPlayers.put(
-                                CreateTeamActivity.CREATE_TEAM_ALLROUNDER,
-                                allRounderList
-                            )
-                            hasmapPlayers.put(CreateTeamActivity.CREATE_TEAM_BOWLER, allbowlerList)
+                                hasmapPlayers.put(
+                                    CreateTeamActivity.CREATE_TEAM_WICKET_KEEPER,
+                                    wktKeeperList
+                                )
+                                hasmapPlayers.put(
+                                    CreateTeamActivity.CREATE_TEAM_BATSMAN,
+                                    batsManList
+                                )
+                                hasmapPlayers.put(
+                                    CreateTeamActivity.CREATE_TEAM_ALLROUNDER,
+                                    allRounderList
+                                )
+                                hasmapPlayers.put(
+                                    CreateTeamActivity.CREATE_TEAM_BOWLER,
+                                    allbowlerList
+                                )
 
-                            val intent = Intent(activity, TeamPreviewActivity::class.java)
-                            intent.putExtra(TeamPreviewActivity.KEY_TEAM_ID, teamId)
-                            intent.putExtra(TeamPreviewActivity.KEY_TEAM_NAME, teamName)
-                            intent.putExtra(
-                                TeamPreviewActivity.KEY_CONTEST_ID,
-                                contestId.toString()
-                            )
-                            intent.putExtra(
-                                TeamPreviewActivity.KEY_USER_ID,
-                                MyPreferences.getUserID(requireActivity())!!
-                            )
-                            intent.putExtra(
-                                CreateTeamActivity.SERIALIZABLE_MATCH_KEY,
-                                objectMatches
-                            )
-                            intent.putExtra(
-                                TeamPreviewActivity.SERIALIZABLE_TEAM_PREVIEW_KEY,
-                                hasmapPlayers
-                            )
-                            startActivity(intent)
+                                val intent = Intent(activity, TeamPreviewActivity::class.java)
+                                intent.putExtra(TeamPreviewActivity.KEY_TEAM_ID, teamId)
+                                intent.putExtra(TeamPreviewActivity.KEY_TEAM_NAME, teamName)
+                                intent.putExtra(
+                                    TeamPreviewActivity.KEY_CONTEST_ID,
+                                    contestId.toString()
+                                )
+                                intent.putExtra(
+                                    TeamPreviewActivity.KEY_USER_ID,
+                                    MyPreferences.getUserID(requireActivity())!!
+                                )
+                                intent.putExtra(
+                                    CreateTeamActivity.SERIALIZABLE_MATCH_KEY,
+                                    objectMatches
+                                )
+                                intent.putExtra(
+                                    TeamPreviewActivity.SERIALIZABLE_TEAM_PREVIEW_KEY,
+                                    hasmapPlayers
+                                )
+                                startActivity(intent)
+                            }
+                        } else {
+                            if (res.code == 1001) {
+                                MyUtils.showMessage(requireActivity(), res.message)
+                                MyUtils.logoutApp(requireActivity())
+                            } else {
+                                MyUtils.showMessage(requireActivity(), res.message)
+                            }
                         }
                     }
                 }

@@ -12,31 +12,32 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonObject
+import ninja.cricks.databinding.ActivityNotificationListBinding
 import ninja.cricks.models.NotifyModels
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.models.WalletInfo
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.ui.home.models.UsersPostDBResponse
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import ninja.cricks.databinding.ActivityNotificationListBinding
 
 
 class NotificationListActivity : AppCompatActivity() {
     private lateinit var adapter: NotificationListAdaptor
     var allNotificationList = ArrayList<NotifyModels>()
     private lateinit var walletInfo: WalletInfo
-    private var customeProgressDialog: CustomeProgressDialog?=null
+    private var customeProgressDialog: CustomeProgressDialog? = null
     private var mBinding: ActivityNotificationListBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this,
+        mBinding = DataBindingUtil.setContentView(
+            this,
             R.layout.activity_notification_list
         )
         walletInfo = (application as NinjaApplication).walletInfo
@@ -57,8 +58,8 @@ class NotificationListActivity : AppCompatActivity() {
         adapter.onItemClick = { objects ->
 
         }
-        if(!MyUtils.isConnectedWithInternet(this)) {
-            MyUtils.showToast(this,"No Internet connection found")
+        if (!MyUtils.isConnectedWithInternet(this)) {
+            MyUtils.showToast(this, "No Internet connection found")
             return
         }
         getNotificationList()
@@ -66,11 +67,12 @@ class NotificationListActivity : AppCompatActivity() {
 
     fun getNotificationList() {
         customeProgressDialog!!.show()
-        var models = RequestModel()
-        models.user_id = MyPreferences.getUserID(this)!!
-        //models.token = MyPreferences.getToken(this)!!
 
-        WebServiceClient(this).client.create(IApiMethod::class.java).getNotification(models)
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+
+        WebServiceClient(this).client.create(IApiMethod::class.java).getNotification(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     customeProgressDialog!!.dismiss()
@@ -81,19 +83,25 @@ class NotificationListActivity : AppCompatActivity() {
                     response: Response<UsersPostDBResponse?>?
                 ) {
                     customeProgressDialog!!.dismiss()
-                    var res = response!!.body()
-                    if(res!=null) {
-                        var responseModel = res.notificationList
-                        if(responseModel!=null &&  responseModel.size>0) {
-                            allNotificationList.addAll(responseModel)
-                            adapter.notifyDataSetChanged()
+                    val res = response!!.body()
+                    if (res != null) {
+                        if (res.status) {
+                            val responseModel = res.notificationList
+                            if (responseModel != null && responseModel.size > 0) {
+                                allNotificationList.addAll(responseModel)
+                                adapter.notifyDataSetChanged()
+                            }
+                        } else {
+                            if (res.code == 1001) {
+                                MyUtils.showMessage(this@NotificationListActivity, res.message)
+                                MyUtils.logoutApp(this@NotificationListActivity)
+                            } else {
+                                MyUtils.showMessage(this@NotificationListActivity, res.message)
+                            }
                         }
                     }
-
                 }
-
             })
-
     }
 
 

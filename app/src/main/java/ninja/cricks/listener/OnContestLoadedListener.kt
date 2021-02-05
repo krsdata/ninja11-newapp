@@ -1,7 +1,7 @@
 package com.edify.atrist.listener
 
 import ninja.cricks.models.MyTeamModels
-import ninja.cricks.ui.contest.models.ContestModelLists
+import ninja.cricks.models.ContestModelLists
 
 interface OnContestLoadedListener {
     fun onMyContest(contestModel: ArrayList<ContestModelLists>)

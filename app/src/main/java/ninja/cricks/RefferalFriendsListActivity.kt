@@ -13,13 +13,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonObject
 import ninja.cricks.models.RefferalUsersModel
 import ninja.cricks.models.TransactionModel
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseActivity
-import ninja.cricks.ui.home.models.UsersPostDBResponse
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
@@ -34,7 +34,6 @@ class RefferalFriendsListActivity : BaseActivity() {
 
     private lateinit var adapter: RefferalsListAdaptors
     private var mBinding: ActivityRefferalFriendsBinding? = null
-
     var checkinArrayList = ArrayList<RefferalUsersModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,7 +69,7 @@ class RefferalFriendsListActivity : BaseActivity() {
 
         mBinding!!.transactionHistoryRecycler.layoutManager =
             LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        var itemDecoration = DividerItemDecoration(this, LinearLayout.VERTICAL)
+        val itemDecoration = DividerItemDecoration(this, LinearLayout.VERTICAL)
         mBinding!!.transactionHistoryRecycler.addItemDecoration(itemDecoration)
         adapter = RefferalsListAdaptors(this, checkinArrayList)
         mBinding!!.transactionHistoryRecycler.adapter = adapter
@@ -82,20 +81,23 @@ class RefferalFriendsListActivity : BaseActivity() {
     }
 
     override fun onBitmapSelected(bitmap: Bitmap) {
-        TODO("Not yet implemented")
     }
 
     override fun onUploadedImageUrl(url: String) {
-
     }
 
     fun getMyRefferralsFriends() {
         mBinding!!.emptyViewRefferal.visibility=View.GONE
         mBinding!!.progressBar.visibility = View.VISIBLE
-        var models = RequestModel()
-        models.user_id = MyPreferences.getUserID(this)!!
 
-        WebServiceClient(this).client.create(IApiMethod::class.java).myRefferalsList(models)
+        /*var models = RequestModel()
+        models.user_id = MyPreferences.getUserID(this)!!*/
+
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+
+        WebServiceClient(this).client.create(IApiMethod::class.java).myRefferalsList(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     mBinding!!.emptyViewRefferal.visibility=View.VISIBLE
@@ -107,31 +109,33 @@ class RefferalFriendsListActivity : BaseActivity() {
                     response: Response<UsersPostDBResponse?>?
                 ) {
                     mBinding!!.progressBar.visibility = View.GONE
-                    var res = response!!.body()
+                    val res = response!!.body()
                     if(res!=null) {
-                        var responseModel = res.referalUserList
-                        if(responseModel!=null) {
-                            if (responseModel.size > 0) {
-
-                                checkinArrayList.addAll(responseModel)
-                                adapter.notifyDataSetChanged()
-                                mBinding!!.emptyViewRefferal.visibility=View.GONE
-
-                            }else {
-                                mBinding!!.emptyViewRefferal.visibility=View.VISIBLE
+                        if (res.status) {
+                            val responseModel = res.referalUserList
+                            if (responseModel != null) {
+                                if (responseModel.size > 0) {
+                                    checkinArrayList.addAll(responseModel)
+                                    adapter.notifyDataSetChanged()
+                                    mBinding!!.emptyViewRefferal.visibility = View.GONE
+                                } else {
+                                    mBinding!!.emptyViewRefferal.visibility = View.VISIBLE
+                                }
+                            } else {
+                                mBinding!!.emptyViewRefferal.visibility = View.VISIBLE
                             }
-                        }else {
-                            mBinding!!.emptyViewRefferal.visibility=View.VISIBLE
+                        } else {
+                            if (res.code == 1001) {
+                                MyUtils.showMessage(this@RefferalFriendsListActivity, res.message)
+                                MyUtils.logoutApp(this@RefferalFriendsListActivity)
+                            } else {
+                                MyUtils.showMessage(this@RefferalFriendsListActivity, res.message)
+                            }
                         }
-
                     }
-
                 }
-
             })
-
     }
-
 
     inner class RefferalsListAdaptors(
         val context: Context,
@@ -141,35 +145,29 @@ class RefferalFriendsListActivity : BaseActivity() {
         var onItemClick: ((TransactionModel) -> Unit)? = null
         private var optionListObject = tradeinfoModels
 
-
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            var view = LayoutInflater.from(parent.context)
+            val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.row_refferal_friends, parent, false)
             return DataViewHolder(view)
 
         }
 
         override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
-            var objectVal = optionListObject[viewType]
+            val objectVal = optionListObject[viewType]
             val viewHolder: DataViewHolder = parent as DataViewHolder
             viewHolder.transactionDate?.text = objectVal.created_at
             viewHolder.friendName?.text = objectVal.name
             viewHolder.earnedAmount?.text = "₹"+objectVal.referral_amount
         }
 
-
         override fun getItemCount(): Int {
             return optionListObject.size
         }
 
-
         inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
             val transactionDate = itemView.findViewById<TextView>(R.id.transaction_date)
             val friendName = itemView.findViewById<TextView>(R.id.friend_name)
             val earnedAmount = itemView.findViewById<TextView>(R.id.earned_amount)
         }
-
-
     }
 }

@@ -3,13 +3,14 @@ package ninja.cricks.utils
 import android.content.Context
 import android.os.CountDownTimer
 import android.util.Log
-import com.deliverdas.customers.utils.HardwareInfoManager
 import com.edify.atrist.listener.OnMatchTimerStarted
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import ninja.cricks.BuildConfig
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.ui.home.models.UsersPostDBResponse
+import ninja.cricks.models.UsersPostDBResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,53 +19,52 @@ import java.util.*
 class BindingUtils {
 
     companion object {
-        val UNLIMITED_SPOT_MARGIN: Int = 6
-        val MINIMUM_DEPOSIT_AMOUNT: Int = 25
+        const val UNLIMITED_SPOT_MARGIN: Int = 6
+        const val MINIMUM_DEPOSIT_AMOUNT: Int = 25
         private var isCountedObjectCreated: Boolean = false
         var timer: CountDownTimer? = null
-        val REUEST_STATUS_CODE_FRAUD: Int = 420
-        val MATCH_STATUS_UPCOMING: Int = 1
-        val MATCH_STATUS_LIVE: Int = 3
+        const val REUEST_STATUS_CODE_FRAUD: Int = 420
+        const val MATCH_STATUS_UPCOMING: Int = 1
+        const val MATCH_STATUS_LIVE: Int = 3
 
-        val BANK_DOCUMENTS_STATUS_REJECTED: Int = 3
-        val BANK_DOCUMENTS_STATUS_VERIFIED: Int = 2
-        val BANK_DOCUMENTS_STATUS_APPROVAL_PENDING: Int = 1
-        val BANNERS_KEY_ADD: String = "ADD"
-        val BANNERS_KEY_REFFER: String = "reffer"
-        val BANNERS_KEY_SUPPORT: String = "support"
-        val BANNERS_KEY_BROWSERS: String = "browser"
-        val EMAIL: String = "support@ninja11.in"
-        val PHONE_NUMBER: String = "=+918103194076"
-        val GOOGLE_TEZ_PACKAGE_NAME = "com.google.android.apps.nbu.paisa.user"
-        val PAYMENT_GOOGLEPAY_UPI = "9340301139@okbizaxis"
-        val PAYMENT_RAZOR_PAY_KEY = "rzp_live_SiMilNQfyJNzJe"
-        val BASE_URL_MAIN = "https://ninja11.in/"
-        val BASE_URL_API = "https://app.ninja11.in/"
-        val WEBVIEW_FANTASY_POINTS = BASE_URL_MAIN + "fantasy-points-system/index.html"
-        val WEBVIEW_FANTASY_HOW_TO_PLAY = BASE_URL_MAIN + "how-to-play?request=mobile"
-        val WEBVIEW_TNC = BASE_URL_MAIN + "terms-and-conditions?request=mobile"
-        val WEBVIEW_PRIVACY = BASE_URL_MAIN + "privacy-policy?request=mobile"
-        val WEBVIEW_ABOUT_US = BASE_URL_MAIN + "about-us?request=mobile"
-        val WEBVIEW_LEGALITY = BASE_URL_MAIN + "legality?request=mobile"
-        val WEBVIEW_FAQ = BASE_URL_MAIN + "faqs?request=mobile"
-        val WEBVIEW_OFFERS = BASE_URL_MAIN + "offers?request=mobile"
-        val WEBVIEW_TOP_REFERRAL_USER = BASE_URL_MAIN + "topReferralUser?request=mobile"
-        val WEBVIEW_MY_AFFILIATE = BASE_URL_MAIN + "myAffiliate?user_id="
+        const val BANK_DOCUMENTS_STATUS_REJECTED: Int = 3
+        const val BANK_DOCUMENTS_STATUS_VERIFIED: Int = 2
+        const val BANK_DOCUMENTS_STATUS_APPROVAL_PENDING: Int = 1
+        const val BANNERS_KEY_ADD: String = "ADD"
+        const val BANNERS_KEY_REFFER: String = "reffer"
+        const val BANNERS_KEY_SUPPORT: String = "support"
+        const val BANNERS_KEY_BROWSERS: String = "browser"
+        const val EMAIL: String = "support@ninja11.in"
+        const val PHONE_NUMBER: String = "=+918103194076"
+        const val GOOGLE_TEZ_PACKAGE_NAME = "com.google.android.apps.nbu.paisa.user"
+        const val PAYMENT_GOOGLEPAY_UPI = "9340301139@okbizaxis"
+        const val PAYMENT_RAZOR_PAY_KEY = "rzp_live_SiMilNQfyJNzJe"
+        const val BASE_URL_MAIN = "https://ninja.fancode11.com/"
+        const val BASE_URL_API = "https://rest.fancode11.com/"
+        const val BASE_URL_MAIN_API = "https://rest.fancode11.com/api/v3/"
+        const val WEBVIEW_FANTASY_POINTS = BASE_URL_MAIN + "fantasy-points-system/index.html"
+        const val WEBVIEW_FANTASY_HOW_TO_PLAY = BASE_URL_MAIN + "how-to-play?request=mobile"
+        const val WEBVIEW_TNC = BASE_URL_MAIN + "terms-and-conditions?request=mobile"
+        const val WEBVIEW_PRIVACY = BASE_URL_MAIN + "privacy-policy?request=mobile"
+        const val WEBVIEW_ABOUT_US = BASE_URL_MAIN + "about-us?request=mobile"
+        const val WEBVIEW_LEGALITY = BASE_URL_MAIN + "legality?request=mobile"
+        const val WEBVIEW_FAQ = BASE_URL_MAIN + "faqs?request=mobile"
+        const val WEBVIEW_OFFERS = BASE_URL_MAIN + "offers?request=mobile"
+        const val WEBVIEW_TOP_REFERRAL_USER = BASE_URL_MAIN + "topReferralUser?request=mobile"
+        const val WEBVIEW_MY_AFFILIATE = BASE_URL_MAIN + "myAffiliate?user_id="
         const val NOTIFICATION_ID_BIG_IMAGE = 101
-        val BILTY_APK_LINK: String = BASE_URL_API + "apk"
-        val WEB_TITLE_PRIVACY_POLICY: String = "Privacy Policy"
-        val WEB_TITLE_TERMS_CONDITION: String = "Terms & Conditions"
-        val WEB_TITLE_HOW_TO_PLAY: String = "How To Play"
-        val WEB_TITLE_ABOUT_US: String = "About Us"
-        val WEB_TITLE_FANTASY_POINTS: String = "Fantasy Point System"
-        val WEB_TITLE_LEGALITY: String = "LEGALITY"
-        val WEB_TITLE_FAQ: String = "FAQs"
-        val WEB_TITLE_OFFERS: String = "Offers"
-        val WEB_TITLE_TOP_REFERRAL_USER: String = "Top Referral Users"
-        val WEB_TITLE_MY_AFFILIATE: String = "My-Affiliate"
-
-        val EXTRA_DATA_GET_WALLET: String = "EXTRA_DATA_GET_WALLET"
-
+        const val BILTY_APK_LINK: String = BASE_URL_API + "apk"
+        const val WEB_TITLE_PRIVACY_POLICY: String = "Privacy Policy"
+        const val WEB_TITLE_TERMS_CONDITION: String = "Terms & Conditions"
+        const val WEB_TITLE_HOW_TO_PLAY: String = "How To Play"
+        const val WEB_TITLE_ABOUT_US: String = "About Us"
+        const val WEB_TITLE_FANTASY_POINTS: String = "Fantasy Point System"
+        const val WEB_TITLE_LEGALITY: String = "LEGALITY"
+        const val WEB_TITLE_FAQ: String = "FAQs"
+        const val WEB_TITLE_OFFERS: String = "Offers"
+        const val WEB_TITLE_TOP_REFERRAL_USER: String = "Top Referral Users"
+        const val WEB_TITLE_MY_AFFILIATE: String = "My-Affiliate"
+        const val EXTRA_DATA_GET_WALLET: String = "EXTRA_DATA_GET_WALLET"
         var currentTimeStamp: Long = 0
 
         fun logD(tag: String, message: String) {
@@ -213,18 +213,25 @@ class BindingUtils {
             userInfo: ninja.cricks.models.UserInfo,
             eventName: String
         ) {
-            val request = RequestModel()
-            request.user_info = userInfo
-            request.event_name = eventName
-            request.match_id = match_id
-            request.contest_id = contest_id
-            request.team_id = team_id
-            request.user_id = user_id
-            request.device_id = MyPreferences.getDeviceToken(context)!!
-            val deviceToken: String? = MyPreferences.getDeviceToken(context)
-            request.deviceDetails = HardwareInfoManager(context).collectData(deviceToken!!)
+            val jsonRequest = JsonObject()
+            jsonRequest.addProperty("event_name", eventName)
+            jsonRequest.addProperty("match_id", match_id)
+            jsonRequest.addProperty("contest_id", contest_id)
+            jsonRequest.addProperty("team_id", team_id)
+            jsonRequest.addProperty("user_id", user_id)
+            jsonRequest.addProperty("device_id", MyPreferences.getDeviceToken(context)!!)
+
+            val gson = Gson()
+            val userInfoString: String = gson.toJson(userInfo).toString()
+            val deviceDetailsString: String = gson.toJson(HardwareInfoManager(context).collectData(MyPreferences.getDeviceToken(context)!!)).toString()
+            val userInfoJson: JsonObject = JsonParser().parse(userInfoString).asJsonObject
+            val deviceDetailsJson: JsonObject = JsonParser().parse(deviceDetailsString).asJsonObject
+
+            jsonRequest.add("user_info", userInfoJson)
+            jsonRequest.add("deviceDetails", deviceDetailsJson)
+
             WebServiceClient(context).client.create(IApiMethod::class.java)
-                .sendEventLogs(request)
+                .sendEventLogs(jsonRequest)
                 .enqueue(object : Callback<UsersPostDBResponse?> {
                     override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
 

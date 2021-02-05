@@ -6,27 +6,25 @@ import android.app.PendingIntent
 import android.app.TaskStackBuilder
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.media.RingtoneManager
-import android.net.Uri
 import android.os.Build
 import android.os.PowerManager
 import android.text.TextUtils
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.deliverdas.customers.utils.HardwareInfoManager
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import ninja.cricks.R
 import ninja.cricks.SplashScreenActivity
 import ninja.cricks.UpdateApplicationActivity
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.ui.home.models.UsersPostDBResponse
+import ninja.cricks.utils.HardwareInfoManager
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import org.json.JSONObject
@@ -38,18 +36,9 @@ import java.net.URL
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
-    private val NOTIFICATION_ID = 1000
-    private val FCM_TAG = "MyFirebaseToken"
-    private var notificationUtils: NotificationUtils? = null
-    private val KEY_ACTION = "action"
-    private val KEY_TITLE = "title"
-    private val KEY_MESSAGE = "message"
-    private val KEY_UPDATE_APK = "apk_update_url"
-    private val KEY_RELEASE_NOTE = "release_note"
-
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        Log.i(FCM_TAG, token)
+        Log.e(TAG, token)
         val userId = MyPreferences.getUserID(applicationContext)!!
         val notid = FirebaseInstanceId.getInstance()
             .getToken(getString(R.string.gcm_default_sender_id), "FCM")
@@ -57,13 +46,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         MyPreferences.setDeviceToken(this, token)
 
         if (!TextUtils.isEmpty(notid) && !TextUtils.isEmpty(userId)) {
-            val request = RequestModel()
-            request.user_id = userId
-            request.device_id = token
-            val deviceToken: String? = MyPreferences.getDeviceToken(this)
-            request.deviceDetails = HardwareInfoManager(this).collectData(deviceToken!!)
+
+            val jsonRequest = JsonObject()
+            jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+            jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+            jsonRequest.addProperty("device_id", token)
+
             WebServiceClient(applicationContext).client.create(IApiMethod::class.java)
-                .deviceNotification(request)
+                .deviceNotification(jsonRequest)
                 .enqueue(object : Callback<UsersPostDBResponse?> {
                     override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
 
@@ -73,8 +63,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                         call: Call<UsersPostDBResponse?>?,
                         response: Response<UsersPostDBResponse?>?
                     ) {
-
-
                     }
                 })
         }
@@ -83,12 +71,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
         remoteMessage.let { message ->
-            // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
-            MyUtils.logd(FCM_TAG, "From: " + remoteMessage.from)
+            MyUtils.logd(TAG, "From: " + remoteMessage.from)
             if (applicationContext != null) {
                 if (remoteMessage.data.size > 0) {
                     Log.e(
-                        FCM_TAG,
+                        TAG,
                         "Data Payload: " + remoteMessage.data.toString()
                     )
                     try {
@@ -123,7 +110,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                             when (action) {
                                 "notify" ->
                                     notifyUsers(applicationContext, title, message)
-                                //    sendNotification(message,image)
                                 "logout" ->
                                     MyPreferences.clear(applicationContext)
                                 "update" ->
@@ -137,40 +123,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                             }
                         }
                     } catch (e: Exception) {
-                        Log.e(
-                            FCM_TAG, "Exception: " + e.message
-                        )
+                        Log.e(TAG, "Exception: " + e.message)
                     }
                 }
             }
         }
-    }
-
-    private fun sendNotification(
-        messageBody: String,
-        image: Bitmap
-    ) {
-        val intent = getIntentNotify()
-        val pendingIntent = PendingIntent.getActivity(
-            this, 0 /* Request code */, intent,
-            PendingIntent.FLAG_ONE_SHOT
-        )
-        val defaultSoundUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        val notificationBuilder =
-            NotificationCompat.Builder(this)
-                .setLargeIcon(image)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(messageBody)
-                .setStyle(
-                    NotificationCompat.BigPictureStyle()
-                        .bigPicture(image)
-                ) /*Notification with Image*/
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent)
-        val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
     }
 
     private fun notifyUsers(context: Context, title: String, message: String) {
@@ -179,7 +136,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         if (!powerManager.isInteractive) {
             return
         }
-        val intent: Intent = getIntentNotify()!!
+        val intent: Intent = getIntentNotify()
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         val stackBuilder =
@@ -193,8 +150,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationId = 1
-            val channelId = "SportsFightNotify"
-            val channelName = "SportsFightNotify"
+            val channelId = "Ninja11"
+            val channelName = "Ninja11 Notify"
             val importance = NotificationManager.IMPORTANCE_HIGH
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val mChannel = NotificationChannel(
@@ -204,7 +161,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             }
             val mBuilder =
                 NotificationCompat.Builder(context, channelId)
-                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setSmallIcon(R.drawable.ic_notification_icon)
                     .setContentTitle(title)
                     .setContentText(message)
                     .setStyle(NotificationCompat.BigTextStyle())
@@ -213,22 +170,21 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             notificationManager.notify(notificationId, mBuilder.build())
         } else {
             val builder =
-                NotificationCompat.Builder(context) // Set Ticker Message
-                    .setSmallIcon(R.mipmap.ic_launcher)
+                NotificationCompat.Builder(context)
+                    .setSmallIcon(R.drawable.ic_notification_icon)
                     .setContentTitle(title)
                     .setContentText(message)
                     .setStyle(NotificationCompat.BigTextStyle())
-                    .setAutoCancel(true) // Set PendingIntent into Notification
+                    .setAutoCancel(true)
                     .setContentIntent(resultPendingIntent)
-            // Sets an ID for the notification
             notificationManager.notify(
-                NOTIFICATION_ID,
+                Companion.NOTIFICATION_ID,
                 builder.build()
             )
         }
     }
 
-    private fun getIntentNotify(): Intent? {
+    private fun getIntentNotify(): Intent {
         val intent = Intent(
             applicationContext,
             SplashScreenActivity::class.java
@@ -241,16 +197,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private fun updateApplicationRequired(
         context: Context,
         title: String,
-        messagedd: String,
-        apkupdateurl: String,
-        releasenote: String
+        apkUpdateUrl: String,
+        releaseNote: String,
+        string: String
     ) {
-        val powerManager =
-            context.getSystemService(Context.POWER_SERVICE) as PowerManager
-        if (!powerManager.isInteractive) {
-            return
-        }
-        val intent: Intent = getIntentUpdateActvity(apkupdateurl, releasenote)!!
+        val intent: Intent = getIntentUpdateActivity(apkUpdateUrl, releaseNote)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         val stackBuilder =
@@ -264,8 +215,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notificationId = 1
-            val channelId = "SportsFightUpdate"
-            val channelName = "SportsFightUpdate"
+            val channelId = "Ninja11Update"
+            val channelName = "Ninja11 Update"
             val importance = NotificationManager.IMPORTANCE_HIGH
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val mChannel = NotificationChannel(
@@ -275,38 +226,46 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             }
             val mBuilder =
                 NotificationCompat.Builder(context, channelId)
-                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setSmallIcon(R.drawable.ic_notification_icon)
                     .setContentTitle(title)
-                    .setContentText(releasenote)
+                    .setContentText(releaseNote)
             mBuilder.setContentIntent(resultPendingIntent)
             mBuilder.setAutoCancel(true)
             notificationManager.notify(notificationId, mBuilder.build())
         } else {
             val builder =
-                NotificationCompat.Builder(context) // Set Ticker Message
-                    .setSmallIcon(R.mipmap.ic_launcher)
+                NotificationCompat.Builder(context)
+                    .setSmallIcon(R.drawable.ic_notification_icon)
                     .setContentTitle(title)
-                    .setContentText(releasenote)
-                    .setAutoCancel(true) // Set PendingIntent into Notification
+                    .setContentText(releaseNote)
+                    .setAutoCancel(true)
                     .setContentIntent(resultPendingIntent)
-            // Sets an ID for the notification
             notificationManager.notify(
-                NOTIFICATION_ID,
+                Companion.NOTIFICATION_ID,
                 builder.build()
             )
         }
     }
 
-    private fun getIntentUpdateActvity(apkupdateurl: String, releasenote: String): Intent? {
+    private fun getIntentUpdateActivity(apkUpdateUrl: String, releaseNote: String): Intent {
         val intent = Intent(
             applicationContext,
             UpdateApplicationActivity::class.java
         )
-        intent.putExtra(UpdateApplicationActivity.REQUEST_CODE_APK_UPDATE, apkupdateurl)
-        intent.putExtra(UpdateApplicationActivity.REQUEST_RELEASE_NOTE, releasenote)
+        intent.putExtra(UpdateApplicationActivity.REQUEST_CODE_APK_UPDATE, apkUpdateUrl)
+        intent.putExtra(UpdateApplicationActivity.REQUEST_RELEASE_NOTE, releaseNote)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NO_HISTORY)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         return intent
     }
 
+    companion object {
+        const val KEY_TITLE = "title"
+        const val KEY_RELEASE_NOTE = "release_note"
+        const val KEY_MESSAGE = "message"
+        const val KEY_UPDATE_APK = "apk_update_url"
+        const val KEY_ACTION = "action"
+        val TAG: String = MyFirebaseMessagingService::class.java.simpleName
+        const val NOTIFICATION_ID = 1000
+    }
 }

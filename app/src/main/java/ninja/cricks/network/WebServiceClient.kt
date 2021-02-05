@@ -8,11 +8,9 @@ import ninja.cricks.utils.MyUtils
 import okhttp3.ConnectionSpec
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -31,24 +29,22 @@ class WebServiceClient(val context: Context) {
             if (BuildConfig.DEBUG) {
                 okHttpClient = OkHttpClient.Builder()
                     .addInterceptor(interceptor)
-                    .addInterceptor(object : Interceptor {
-                        @Throws(IOException::class)
-                        override fun intercept(chain: Interceptor.Chain): Response {
-                            val original = chain.request()
-                            val builder = original.newBuilder()
-                            builder.addHeader("Accept", "application/json")
-                                .addHeader("Authorization", "Bearer " + MyPreferences.getToken(context))
-                                .addHeader("app_version",
-                                    MyUtils.getAppVersionName(context).toString()
-                                )
-                            val request = builder.build()
-
-                            BindingUtils.logD(
-                                "ServiceGen",
-                                "headrs: " + request.headers.toString()
+                    .addInterceptor(Interceptor { chain ->
+                        val original = chain.request()
+                        val builder = original.newBuilder()
+                        builder.addHeader("Accept", "application/json")
+                            .addHeader("Authorization", "Bearer " + MyPreferences.getToken(context))
+                            .addHeader(
+                                "app_version",
+                                MyUtils.getAppVersionName(context).toString()
                             )
-                            return chain.proceed(request)
-                        }
+                        val request = builder.build()
+
+                        BindingUtils.logD(
+                            "ServiceGen",
+                            "headrs: " + request.headers.toString()
+                        )
+                        chain.proceed(request)
                     })
                     .connectionSpecs(
                         Arrays.asList(
@@ -67,19 +63,18 @@ class WebServiceClient(val context: Context) {
             } else {
                 okHttpClient = OkHttpClient.Builder()
                     //.addInterceptor(interceptor)
-                    .addInterceptor(object : Interceptor {
-                        @Throws(IOException::class)
-                        override fun intercept(chain: Interceptor.Chain): Response {
-                            val original = chain.request()
-                            val builder = original.newBuilder()
-                            builder.addHeader("Accept", "application/json")
-                                .addHeader("Authorization", "Bearer " + MyPreferences.getToken(context))
-                                .addHeader("app_version",
-                                    MyUtils.getAppVersionName(context).toString()
-                                )
-                            val request = builder.build()
-                            return chain.proceed(request)
-                        }
+                    .addInterceptor(Interceptor { chain ->
+                        val original = chain.request()
+                        val builder = original.newBuilder()
+                        builder.addHeader("Accept", "application/json")
+                            .addHeader("Authorization", "Bearer " + MyPreferences.getToken(context))
+                            .addHeader(
+                                "version_code",
+                                BuildConfig.VERSION_CODE.toString()
+                                //MyUtils.getAppVersionName(context).toString()
+                            )
+                        val request = builder.build()
+                        chain.proceed(request)
                     })
                     .connectionSpecs(
                         Arrays.asList(
@@ -98,7 +93,8 @@ class WebServiceClient(val context: Context) {
             }
             if (retrofit == null) {
                 retrofit = Retrofit.Builder()
-                    .baseUrl(BindingUtils.BASE_URL_API)
+                    //.baseUrl(MyPreferences.getBaseUrl(context)!!)
+                    .baseUrl("https://rest.fancode11.com/api/v3/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(okHttpClient)
                     .build()

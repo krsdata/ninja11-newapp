@@ -14,19 +14,15 @@ import androidx.viewpager.widget.ViewPager
 import com.edify.atrist.listener.OnContestEvents
 import com.edify.atrist.listener.OnContestLoadedListener
 import com.edify.atrist.listener.OnMatchTimerStarted
+import com.google.gson.JsonObject
 import ninja.cricks.databinding.ActivityContestBinding
-import ninja.cricks.models.JoinedMatchModel
-import ninja.cricks.models.MyTeamModels
-import ninja.cricks.models.UpcomingMatchesModel
+import ninja.cricks.models.*
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseActivity
 import ninja.cricks.ui.contest.ContestFragment
 import ninja.cricks.ui.contest.MyContestFragment
 import ninja.cricks.ui.contest.MyTeamFragment
-import ninja.cricks.ui.contest.models.ContestModelLists
-import ninja.cricks.ui.home.models.UsersPostDBResponse
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
@@ -235,17 +231,20 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
     }
 
     override fun onContestJoinning(objects: ContestModelLists, position: Int) {
-        customeProgressDialog.show()
-        val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(this)!!
-        //  models.token =MyPreferences.getToken(this)!!
-        models.match_id = "" + matchObject!!.matchId
-        models.contest_id = "" + objects.id
         if (!MyUtils.isConnectedWithInternet(this)) {
             MyUtils.showToast(this, "No Internet connection found")
             return
         }
-        WebServiceClient(this).client.create(IApiMethod::class.java).joinNewContestStatus(models)
+        customeProgressDialog.show()
+
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+        jsonRequest.addProperty("match_id", matchObject!!.matchId)
+        jsonRequest.addProperty("contest_id", objects.id)
+
+        WebServiceClient(this).client.create(IApiMethod::class.java)
+            .joinNewContestStatus(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     customeProgressDialog.dismiss()
@@ -259,7 +258,10 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
                     val res = response!!.body()
                     if (res != null) {
                         if (!res.status) {
-                            if (res.code == 401) {
+                            if (res.code == 1001) {
+                                MyUtils.showMessage(this@ContestActivity, res.message)
+                                MyUtils.logoutApp(this@ContestActivity)
+                            } else if (res.code == 401) {
                                 MyUtils.showToast(
                                     this@ContestActivity,
                                     res.message

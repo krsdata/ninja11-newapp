@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.google.gson.JsonObject
 import ninja.cricks.CreateTeamActivity.Companion.CREATE_TEAM_ALLROUNDER
 import ninja.cricks.CreateTeamActivity.Companion.CREATE_TEAM_BATSMAN
 import ninja.cricks.CreateTeamActivity.Companion.CREATE_TEAM_BOWLER
@@ -14,10 +15,9 @@ import ninja.cricks.customviews.ScreenshotDetectionDelegate
 import ninja.cricks.databinding.ActivityTeamPreviewBinding
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.ui.createteam.models.PlayersInfoModel
-import ninja.cricks.ui.home.models.UsersPostDBResponse
+import ninja.cricks.models.PlayersInfoModel
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.ui.previewteam.adaptors.GridViewAdapter
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.CustomeProgressDialog
@@ -65,7 +65,7 @@ class TeamPreviewActivity : AppCompatActivity(),
         mContext = this
         customeProgressDialog = CustomeProgressDialog(mContext)
         if (intent.hasExtra(KEY_TEAM_NAME)) {
-            teamName = intent.getStringExtra(KEY_TEAM_NAME)
+            teamName = intent.getStringExtra(KEY_TEAM_NAME)!!
         }
         if (intent.hasExtra(KEY_TEAM_ID)) {
             teamId = intent.getIntExtra(KEY_TEAM_ID, 0)
@@ -76,10 +76,10 @@ class TeamPreviewActivity : AppCompatActivity(),
             intent.getSerializableExtra(SERIALIZABLE_TEAM_PREVIEW_KEY) as HashMap<String, ArrayList<PlayersInfoModel>>
 
         if (intent.hasExtra(KEY_CONTEST_ID)) {
-            contestId = intent.getStringExtra(KEY_CONTEST_ID)
+            contestId = intent.getStringExtra(KEY_CONTEST_ID)!!
         }
         if (intent.hasExtra(KEY_USER_ID)) {
-            userId = intent.getStringExtra(KEY_USER_ID)
+            userId = intent.getStringExtra(KEY_USER_ID)!!
         }
 
         mBinding!!.imgRefresh.setOnClickListener {
@@ -177,11 +177,17 @@ class TeamPreviewActivity : AppCompatActivity(),
             return
         }
         customeProgressDialog.show()
-        val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(this)!!
-        models.team_id = teamId
 
-        WebServiceClient(this).client.create(IApiMethod::class.java).getPoints(models)
+        /*val models = RequestModel()
+        models.user_id = MyPreferences.getUserID(this)!!
+        models.team_id = teamId*/
+
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+        jsonRequest.addProperty("team_id", teamId)
+
+        WebServiceClient(this).client.create(IApiMethod::class.java).getPoints(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     customeProgressDialog.dismiss()
@@ -194,40 +200,49 @@ class TeamPreviewActivity : AppCompatActivity(),
                     customeProgressDialog.dismiss()
                     val res = response!!.body()
                     if (res != null) {
-                        var totalPoints = res.totalPoints
-                        val responseModel = res.responseObject
-                        if (responseModel != null) {
-                            val playerPointsList = responseModel.playerPointsList
-                            val hasmapPlayers: HashMap<String, ArrayList<PlayersInfoModel>> =
-                                HashMap<String, ArrayList<PlayersInfoModel>>()
+                        if (res.status) {
+                            var totalPoints = res.totalPoints
+                            val responseModel = res.responseObject
+                            if (responseModel != null) {
+                                val playerPointsList = responseModel.playerPointsList
+                                val hasmapPlayers: HashMap<String, ArrayList<PlayersInfoModel>> =
+                                    HashMap<String, ArrayList<PlayersInfoModel>>()
 
-                            val wktKeeperList: ArrayList<PlayersInfoModel> =
-                                ArrayList<PlayersInfoModel>()
-                            val batsManList: ArrayList<PlayersInfoModel> =
-                                ArrayList<PlayersInfoModel>()
-                            val allRounderList: ArrayList<PlayersInfoModel> =
-                                ArrayList<PlayersInfoModel>()
-                            val allbowlerList: ArrayList<PlayersInfoModel> =
-                                ArrayList<PlayersInfoModel>()
+                                val wktKeeperList: ArrayList<PlayersInfoModel> =
+                                    ArrayList<PlayersInfoModel>()
+                                val batsManList: ArrayList<PlayersInfoModel> =
+                                    ArrayList<PlayersInfoModel>()
+                                val allRounderList: ArrayList<PlayersInfoModel> =
+                                    ArrayList<PlayersInfoModel>()
+                                val allbowlerList: ArrayList<PlayersInfoModel> =
+                                    ArrayList<PlayersInfoModel>()
 
-                            for (x in 0..playerPointsList!!.size - 1) {
-                                val plyObj = playerPointsList.get(x)
-                                if (plyObj.playerRole.equals("wk")) {
-                                    wktKeeperList.add(plyObj)
-                                } else if (plyObj.playerRole.equals("bat")) {
-                                    batsManList.add(plyObj)
-                                } else if (plyObj.playerRole.equals("all")) {
-                                    allRounderList.add(plyObj)
-                                } else if (plyObj.playerRole.equals("bowl")) {
-                                    allbowlerList.add(plyObj)
+                                for (x in 0..playerPointsList!!.size - 1) {
+                                    val plyObj = playerPointsList.get(x)
+                                    if (plyObj.playerRole.equals("wk")) {
+                                        wktKeeperList.add(plyObj)
+                                    } else if (plyObj.playerRole.equals("bat")) {
+                                        batsManList.add(plyObj)
+                                    } else if (plyObj.playerRole.equals("all")) {
+                                        allRounderList.add(plyObj)
+                                    } else if (plyObj.playerRole.equals("bowl")) {
+                                        allbowlerList.add(plyObj)
+                                    }
                                 }
-                            }
-                            hasmapPlayers.put(CREATE_TEAM_WICKET_KEEPER, wktKeeperList)
-                            hasmapPlayers.put(CREATE_TEAM_BATSMAN, batsManList)
-                            hasmapPlayers.put(CREATE_TEAM_ALLROUNDER, allRounderList)
-                            hasmapPlayers.put(CREATE_TEAM_BOWLER, allbowlerList)
+                                hasmapPlayers.put(CREATE_TEAM_WICKET_KEEPER, wktKeeperList)
+                                hasmapPlayers.put(CREATE_TEAM_BATSMAN, batsManList)
+                                hasmapPlayers.put(CREATE_TEAM_ALLROUNDER, allRounderList)
+                                hasmapPlayers.put(CREATE_TEAM_BOWLER, allbowlerList)
 
-                            updatePlayersPoints(hasmapPlayers)
+                                updatePlayersPoints(hasmapPlayers)
+                            }
+                        } else {
+                            if (res.code == 1001) {
+                                MyUtils.showMessage(this@TeamPreviewActivity, res.message)
+                                MyUtils.logoutApp(this@TeamPreviewActivity)
+                            } else {
+                                MyUtils.showMessage(this@TeamPreviewActivity, res.message)
+                            }
                         }
                     }
                 }

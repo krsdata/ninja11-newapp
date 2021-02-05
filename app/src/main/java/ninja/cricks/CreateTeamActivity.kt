@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.Bitmap
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
@@ -17,19 +16,19 @@ import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.edify.atrist.listener.OnMatchTimerStarted
 import com.edify.atrist.listener.OnTeamCreateListener
+import com.google.gson.JsonObject
 import ninja.cricks.databinding.ActivityCreateTeamBinding
 import ninja.cricks.models.MyTeamModels
 import ninja.cricks.models.PlayerModels
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseActivity
 import ninja.cricks.ui.contest.MyTeamFragment
 import ninja.cricks.ui.contest.MyTeamFragment.Companion.SERIALIZABLE_COPY_TEAM
 import ninja.cricks.ui.contest.MyTeamFragment.Companion.SERIALIZABLE_EDIT_TEAM
-import ninja.cricks.ui.createteam.models.PlayersInfoModel
-import ninja.cricks.ui.home.models.UsersPostDBResponse
+import ninja.cricks.models.PlayersInfoModel
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
@@ -964,16 +963,22 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
     private fun getAllPlayers() {
 
-        val models = RequestModel()
+        /*val models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
         models.token = MyPreferences.getToken(this)!!
-        models.match_id = "" + matchObject!!.matchId
+        models.match_id = "" + matchObject!!.matchId*/
 
         if (!MyUtils.isConnectedWithInternet(this)) {
             MyUtils.showToast(this, "No Internet connection found")
             return
         }
-        WebServiceClient(this).client.create(IApiMethod::class.java).getPlayer(models)
+
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+        jsonRequest.addProperty("match_id", matchObject!!.matchId)
+
+        WebServiceClient(this).client.create(IApiMethod::class.java).getPlayer(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     MyUtils.showToast(this@CreateTeamActivity, t!!.localizedMessage)
@@ -984,19 +989,26 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
                     response: Response<UsersPostDBResponse?>?
                 ) {
                     hideLoading()
-                    var res = response!!.body()
+                    val res = response!!.body()
                     if (res != null) {
-                        var responseModel = res.responseObject
-                        if (responseModel!!.playersList != null) {
-                            this@CreateTeamActivity.playersList = responseModel.playersList!!
-                            initViewPager()
-                            updateEditTEam()
+                        if (res.status) {
+                            val responseModel = res.responseObject
+                            if (responseModel!!.playersList != null) {
+                                this@CreateTeamActivity.playersList = responseModel.playersList!!
+                                initViewPager()
+                                updateEditTEam()
+                            }
+                        } else {
+                            if (res.code == 1001) {
+                                MyUtils.showMessage(this@CreateTeamActivity, res.message)
+                                MyUtils.logoutApp(this@CreateTeamActivity)
+                            }  else {
+                                MyUtils.showMessage(this@CreateTeamActivity, res.message)
+                            }
                         }
                     }
                 }
-
             })
-
     }
 
     private fun initViewPager() {
@@ -1178,7 +1190,6 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
     ): java.util.ArrayList<PlayersInfoModel> {
         return realList
     }
-
 
     override fun onWicketKeeperSelected(objects: PlayersInfoModel) {
         COUNT_WICKET_KEEPER++

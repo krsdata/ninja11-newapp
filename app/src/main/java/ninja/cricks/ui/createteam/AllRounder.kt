@@ -19,7 +19,7 @@ import ninja.cricks.R
 import ninja.cricks.databinding.FragmentCreateTeamListBinding
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.ui.createteam.adaptors.PlayersContestAdapter
-import ninja.cricks.ui.createteam.models.PlayersInfoModel
+import ninja.cricks.models.PlayersInfoModel
 import ninja.cricks.utils.CricketPlayersFilters
 import ninja.cricks.utils.MyUtils
 

@@ -7,12 +7,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ninja.cricks.R
 import ninja.cricks.models.UpcomingMatchesModel
-import ninja.cricks.ui.createteam.models.PlayersInfoModel
+import ninja.cricks.models.PlayersInfoModel
 
 
 class PlayersContestAdapter(

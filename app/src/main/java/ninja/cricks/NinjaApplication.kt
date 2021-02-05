@@ -13,6 +13,7 @@ import androidx.multidex.MultiDexApplication
 import com.google.firebase.FirebaseApp
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import io.branch.referral.Branch
 import ninja.cricks.models.MatchesModels
@@ -20,9 +21,8 @@ import ninja.cricks.models.TransactionModel
 import ninja.cricks.models.UserInfo
 import ninja.cricks.models.WalletInfo
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.ui.home.models.UsersPostDBResponse
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyPreferences.KEY_TRANSACTION_HISTORY
@@ -156,11 +156,12 @@ class NinjaApplication : MultiDexApplication() {
         if (!MyUtils.isConnectedWithInternet(this)) {
             return
         }
-        val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(this)!!
-        models.token = MyPreferences.getToken(this)!!
 
-        WebServiceClient(this).client.create(IApiMethod::class.java).getWallet(models)
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+
+        WebServiceClient(this).client.create(IApiMethod::class.java).getWallet(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
 

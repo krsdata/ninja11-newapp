@@ -1,36 +1,18 @@
-package com.deliverdas.customers.utils
+package ninja.cricks.utils
 
-import android.annotation.TargetApi
 import android.content.Context
 import android.content.pm.PackageManager
 import android.content.pm.Signature
 import android.os.Build
 import android.telephony.TelephonyManager
-import ninja.cricks.utils.HardwareInfo
-import ninja.cricks.utils.MyUtils
 import ninja.cricks.BuildConfig
 import java.io.Serializable
 import java.util.*
 
-
-@TargetApi(Build.VERSION_CODES.DONUT)
 class HardwareInfoManager(internal var hardwareContext: Context?) : Serializable {
     internal var rows = 0
 
-    /*try {
-            int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-            if (currentapiVersion >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-                DualSimManagerLolipop simManager = new DualSimManagerLolipop(hardwareContext);
-                simCount = simManager.getSimSupportedCount();
-            } else {
-                simCount = MeterPreferences.getInt(hardwareContext, LocalConstants.SIM_SUPPORTED_COUNT);
-                if (simCount == -2) {
-                    dualSim = new DualSimManager(hardwareContext);
-                    simCount = dualSim.getSupportedSimCount();
-                }
-            }
-        } catch (Exception e) {
-        }*/ val simSupportedCount: Int
+    val simSupportedCount: Int
         get() = -1
 
     val os: Int
@@ -81,10 +63,7 @@ class HardwareInfoManager(internal var hardwareContext: Context?) : Serializable
                 29 -> osName = "Q"
                 else -> osName = "N/A"
             }
-
-
             return osName
-
         }
 
     val ratsVersion: String
@@ -128,18 +107,19 @@ class HardwareInfoManager(internal var hardwareContext: Context?) : Serializable
         get() = Build.VERSION.RELEASE
 
     val timeZone: String
-        get() = TimeZone.getDefault().getDisplayName(false, TimeZone.SHORT, Locale.US).trim { it <= ' ' }
+        get() = TimeZone.getDefault().getDisplayName(false, TimeZone.SHORT, Locale.US)
+            .trim { it <= ' ' }
 
     val defaultCarrierName: String
         get() {
             var carrierName = "NA"
             try {
-                val manager = hardwareContext!!.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+                val manager =
+                    hardwareContext!!.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
                 carrierName = manager.networkOperatorName
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-
             return carrierName
         }
 
@@ -153,36 +133,36 @@ class HardwareInfoManager(internal var hardwareContext: Context?) : Serializable
             hardware.manufacturer = manufacturesName
             hardware.setOs(osName)
             hardware.os_version = Build.VERSION.RELEASE
-            hardware.country =""
-            hardware.package_name =hardwareContext!!.packageName
-            val sig: Signature = hardwareContext!!.getPackageManager().getPackageInfo(
-                hardwareContext!!.getPackageName(),
+            hardware.country = ""
+            hardware.package_name = hardwareContext!!.packageName
+            val sig: Signature = hardwareContext!!.packageManager.getPackageInfo(
+                hardwareContext!!.packageName,
                 PackageManager.GET_SIGNATURES
             ).signatures.get(0)
             hardware.signature = sig.hashCode()
             hardware.adId = "N/A"
             hardware.appVersion = ratsVersion
             hardware.versionCode = BuildConfig.VERSION_CODE
-            hardware.timeZone = TimeZone.getDefault().getDisplayName(false, TimeZone.SHORT, Locale.US).trim { it <= ' ' }
+            hardware.timeZone =
+                TimeZone.getDefault().getDisplayName(false, TimeZone.SHORT, Locale.US)
+                    .trim { it <= ' ' }
 
         } catch (ee: Exception) {
             ee.printStackTrace()
         }
-
         return hardware
     }
 
     companion object {
-
         val deviceName: String
             get() {
                 val manufacturer = Build.MANUFACTURER
                 val model = Build.MODEL
                 val s: String
-                if (model.contains(manufacturer)) {
-                    s = model
+                s = if (model.contains(manufacturer)) {
+                    model
                 } else {
-                    s = StringBuilder(manufacturer.toString()).append(" ").append(model).toString()
+                    StringBuilder(manufacturer.toString()).append(" ").append(model).toString()
                 }
                 return s
             }

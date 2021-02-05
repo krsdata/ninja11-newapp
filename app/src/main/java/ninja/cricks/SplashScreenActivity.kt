@@ -7,15 +7,16 @@ import android.os.Bundle
 import android.os.Handler
 import android.text.TextUtils
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
+import com.google.gson.JsonObject
 import io.branch.referral.Branch
 import ninja.cricks.databinding.ActivitySplashBinding
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
-import ninja.cricks.network.WebServiceClient
+import ninja.cricks.network.RetrofitClient
 import ninja.cricks.ui.BaseActivity
-import ninja.cricks.ui.home.models.UsersPostDBResponse
 import ninja.cricks.ui.login.LoginScreenActivity
 import ninja.cricks.utils.MyPreferences
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,15 +29,13 @@ class SplashScreenActivity : BaseActivity() {
     private var mDelayHandler: Handler? = null
     private val SPLASH_DELAYED: Long = 2000
 
-    //  val num = arrayOf(R.drawable.splash)
-    internal val mRunnable: Runnable = Runnable {
+    private val mRunnable: Runnable = Runnable {
         if (!isFinishing) {
             checkUserLoggedIn()
         }
     }
 
     private fun checkUserLoggedIn() {
-
         if (!MyPreferences.getLoginStatus(mContext)!!) {
             loginRequired()
         } else {
@@ -48,7 +47,6 @@ class SplashScreenActivity : BaseActivity() {
             finish()
         }
     }
-
 
     private fun loginRequired() {
         val intent = Intent(
@@ -70,21 +68,19 @@ class SplashScreenActivity : BaseActivity() {
             R.layout.activity_splash
         )
         updateCheckApk()
-        val splashCreen = MyPreferences.getSplashScreen(mContext)
+        val splashScreen = MyPreferences.getSplashScreen(mContext)
 
-        if (!TextUtils.isEmpty(splashCreen)) {
-//            Glide.with(this)
-//                .load(splashCreen)
-//                .placeholder(R.drawable.splash)
-//                .into(mBinding!!.parentSplashBackground)
+        if (!TextUtils.isEmpty(splashScreen)) {
+            Glide.with(mContext)
+                .load(splashScreen)
+                .placeholder(R.drawable.splash_ninja_red)
+                .into(mBinding!!.splashView)
         }
 
         mDelayHandler = Handler()
         mDelayHandler!!.postDelayed(mRunnable, SPLASH_DELAYED)
 
         val branch = Branch.getAutoInstance(mContext)
-        //set retry count
-        //set retry count
         branch.setRetryCount(5)
 
         branch.initSession({ referringParams, error ->
@@ -111,31 +107,36 @@ class SplashScreenActivity : BaseActivity() {
     }
 
     private fun updateCheckApk() {
-        val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(this)!!
-        models.version_code = BuildConfig.VERSION_CODE
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+        jsonRequest.addProperty("version_code", BuildConfig.VERSION_CODE)
 
-        WebServiceClient(this).client.create(IApiMethod::class.java).apkUpdate(models)
-            .enqueue(object : Callback<UsersPostDBResponse?> {
-                override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
+        RetrofitClient(mContext).client.create(IApiMethod::class.java).apkUpdate(jsonRequest)
+            .enqueue(object : Callback<JsonObject?> {
+                override fun onFailure(call: Call<JsonObject?>?, t: Throwable?) {
                     MainActivity.CHECK_APK_UPDATE_API = false
                 }
 
                 override fun onResponse(
-                    call: Call<UsersPostDBResponse?>?,
-                    response: Response<UsersPostDBResponse?>?
+                    call: Call<JsonObject?>?,
+                    response: Response<JsonObject?>?
                 ) {
-
-                    val res = response!!.body()
                     if (!isFinishing) {
-                        if (res != null) {
-                            if (res.status) {
+                        if (response!!.body() != null) {
+                            val res = JSONObject(response.body().toString())
+                            if (res.getBoolean("status")) {
                                 MainActivity.CHECK_APK_UPDATE_API = true
-                                MainActivity.CHECK_FORCE_UPDATE = res.forceupdate
-                                MainActivity.updatedApkUrl = res.updatedApkUrl
-                                MainActivity.releaseNote = res.releaseNote
-
-                                MyPreferences.setSplashScreen(this@SplashScreenActivity, res.splash)
+                                MainActivity.CHECK_FORCE_UPDATE = res.getBoolean("force_update")
+                                MainActivity.updatedApkUrl = res.getString("url")
+                                MainActivity.releaseNote = res.getString("release_note")
+                                if (res.getString("base_url") != null && res.getString("base_url") != "") {
+                                    MyPreferences.setBaseUrl(mContext, res.getString("base_url"))
+                                }
+                                MyPreferences.setSplashScreen(
+                                    this@SplashScreenActivity,
+                                    res.getString("splashScreen")
+                                )
                             }
                         }
                     }
@@ -149,26 +150,12 @@ class SplashScreenActivity : BaseActivity() {
         intent.putExtra("branch_force_new_session", true)
         Branch.getInstance()
             .initSession({ branchUniversalObject, linkProperties, error ->
-                if (error != null) {
-                    //Log.e("initSession", "branch init failed. Caused by -" + error.getMessage());
-                } else {
-                    //Log.e("initSession", "branch init complete!");
-                    if (branchUniversalObject != null) {
-                        //Log.e("initSession", "title " + branchUniversalObject.getTitle());
-                        //Log.e("initSession", "CanonicalIdentifier " + branchUniversalObject.getCanonicalIdentifier());
-                        //Log.e("initSession", "ContentMetaData metadata " + branchUniversalObject.getContentMetadata().convertToJson());
-                    }
-                    if (linkProperties != null) {
-                        //Log.e("initSession", "Channel " + linkProperties.getChannel());
-                        //Log.e("initSession", "control params " + linkProperties.getControlParams());
-                    }
-                }
+
             }, intent.data, this)
     }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        //this.setIntent(intent);
         Branch.getInstance()
             .reInitSession(
                 this

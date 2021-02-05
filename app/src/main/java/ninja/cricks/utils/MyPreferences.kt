@@ -40,6 +40,9 @@ object MyPreferences {
 
     private val KEY_DEVICE_TOKEN ="deviceToken"
     private val KEY_TEMP_REFER_CODE = "refer_code"
+    private const val KEY_INVITE_URL = "invite_url"
+    private const val KEY_BASE_URL = "base_url"
+    private const val KEY_SYSTEM_TOKEN = "system_token"
 
     /**
      * @author Manoj Prasad
@@ -619,5 +622,53 @@ object MyPreferences {
             false
         )
         return isShow
+    }
+
+    fun setInviteUrl(context: Context, value: String) {
+        putString(
+            context,
+            KEY_INVITE_URL,
+            value
+        )
+    }
+
+    fun getInviteUrl(context: Context): String? {
+        return getString(
+            context,
+            KEY_INVITE_URL,
+            ""
+        )
+    }
+
+    fun setBaseUrl(context: Context, value: String) {
+        putString(
+            context,
+            KEY_BASE_URL,
+            value
+        )
+    }
+
+    fun getBaseUrl(context: Context): String? {
+        return getString(
+            context,
+            KEY_BASE_URL,
+            ""
+        )
+    }
+
+    fun setSystemToken(context: Context, value: String) {
+        putString(
+            context,
+            KEY_SYSTEM_TOKEN,
+            value
+        )
+    }
+
+    fun getSystemToken(context: Context): String? {
+        return getString(
+            context,
+            KEY_SYSTEM_TOKEN,
+            ""
+        )
     }
 }

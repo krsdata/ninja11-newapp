@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.ui.BaseActivity
-import ninja.cricks.ui.contest.models.ContestModelLists
+import ninja.cricks.models.ContestModelLists
 import ninja.cricks.databinding.ActivityQuizContestBinding
 
 

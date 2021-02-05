@@ -16,8 +16,7 @@
         android:layout_height="match_parent"
         android:background="@color/light_grey_bg"
         android:fitsSystemWindows="true"
-        android:orientation="vertical"
-        tools:context="ninja.cricks.DocumentsListActivity">
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -45,36 +44,35 @@
                     android:layout_height="@dimen/_45sdp">
 
                     <TextView
-                        style="@style/document_verify_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_medium"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/_10sdp"
-                        android:fontFamily="@font/circular_medium"
                         android:text="Amount You can withdraw"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14sdp"/>
 
                     <TextView
                         android:id="@+id/winning_amount"
-                        style="@style/document_verify_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_medium"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="@dimen/_10sdp"
-                        android:fontFamily="@font/circular_medium"
                         android:text=""
                         android:textColor="@color/black"
-                        android:textSize="@dimen/_22sdp" />
+                        android:textSize="@dimen/_14sdp" />
                 </RelativeLayout>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/wallet_card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_20sdp"
-                    android:layout_marginRight="@dimen/_20sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
                     app:cardCornerRadius="@dimen/_10sdp">
 
                     <RadioGroup
@@ -86,44 +84,49 @@
                         <RadioButton
                             android:id="@+id/paytm_btn"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_35sdp"
+                            android:layout_height="@dimen/_30sdp"
                             android:layout_gravity="center_horizontal"
                             android:checked="false"
+                            android:fontFamily="@font/montserrat_medium"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:text="Paytm"
-                            android:textSize="@dimen/_16sdp" />
+                            android:textSize="@dimen/_14sdp" />
 
                         <RadioButton
                             android:id="@+id/bank_btn"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_35sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:fontFamily="@font/montserrat_medium"
                             android:layout_gravity="center_horizontal"
                             android:checked="false"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:text="Bank Transfer"
-                            android:textSize="@dimen/_16sdp" />
+                            android:textSize="@dimen/_14sdp" />
 
                         <RadioButton
                             android:id="@+id/upi_btn"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_35sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:fontFamily="@font/montserrat_medium"
                             android:layout_gravity="center_horizontal"
                             android:checked="false"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:text="UPI Transfer"
-                            android:textSize="@dimen/_16sdp" />
+                            android:textSize="@dimen/_14sdp" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:visibility="gone"
                             android:text="UPI/Paytm Instant payment will be charge ₹10"
                             android:textColor="@color/red2"
-                            android:fontFamily="@font/montserrat_medium"
                             android:textSize="@dimen/_10sdp"/>
                     </RadioGroup>
                 </androidx.cardview.widget.CardView>
@@ -132,9 +135,9 @@
                     android:id="@+id/view_amount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
                     app:cardCornerRadius="@dimen/_10sdp">
 
                     <LinearLayout
@@ -147,60 +150,63 @@
 
                         <TextView
                             android:id="@+id/upi_text"
-                            style="@style/document_verify_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="UPI id"
+                            android:layout_marginBottom="@dimen/_2sdp"
                             android:textColor="@color/black"
-                            android:textStyle="bold" />
+                            android:fontFamily="@font/montserrat_medium"
+                            android:textSize="@dimen/_14sdp"/>
 
                         <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/upi_edit_text"
-                            style="@style/document_verify_text"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_38sdp"
+                            android:layout_height="@dimen/_35sdp"
                             android:background="@drawable/et_style"
                             android:hint="Your UPI Id"
                             android:inputType="text"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:fontFamily="@font/montserrat_medium"
                             android:paddingStart="@dimen/_15sdp"
                             android:paddingEnd="@dimen/_15sdp"
                             android:singleLine="true"
                             android:textColor="@color/black"
                             android:textColorHint="@color/greyish"
-                            android:textSize="@dimen/_20sdp" />
+                            android:textSize="@dimen/_14sdp" />
 
                         <TextView
-                            style="@style/document_verify_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Amount"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:fontFamily="@font/montserrat_medium"
                             android:textColor="@color/black"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/_14sdp"/>
 
                         <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/edit_withdrawal_amount"
-                            style="@style/document_verify_text"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_38sdp"
                             android:background="@drawable/et_style"
                             android:hint="₹200"
                             android:inputType="number"
                             android:paddingStart="@dimen/_15sdp"
+                            android:fontFamily="@font/montserrat_medium"
                             android:paddingEnd="@dimen/_15sdp"
                             android:singleLine="true"
                             android:textColor="@color/black"
                             android:textColorHint="@color/greyish"
-                            android:textSize="@dimen/_20sdp" />
+                            android:textSize="@dimen/_14sdp" />
 
                         <Button
                             android:id="@+id/submit_btn_withdrawal"
-                            android:layout_width="180dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/_15sdp"
                             android:layout_marginBottom="@dimen/_10sdp"
                             android:background="@drawable/default_rounded_button_sportsfight"
-                            android:fontFamily="@font/montserrat_regular"
+                            android:fontFamily="@font/montserrat_medium"
                             android:gravity="center"
                             android:padding="8dp"
                             android:text="WITHDRAW NOW"
@@ -228,7 +234,6 @@
 
                         <TextView
                             android:id="@+id/alertMessage"
-                            style="@style/document_verify_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Amount"
@@ -245,8 +250,9 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_30sdp"
                     android:background="@drawable/default_rounded_button_sportsfight_red"
-                    android:fontFamily="@font/catamaran_extrabold"
+                    android:fontFamily="@font/montserrat_medium"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:text="Contact us"
                     android:textAlignment="center"
                     android:textColor="@color/white"
@@ -254,19 +260,18 @@
 
                 <TextView
                     android:id="@+id/withdrawMessage"
-                    style="@style/document_verify_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginRight="@dimen/_20sdp"
+                    android:fontFamily="@font/montserrat_medium"
                     android:gravity="center|start"
                     android:textColor="@color/colorAccent"
                     android:textSize="16sp"
                     android:visibility="gone" />
 
                 <TextView
-                    style="@style/document_verify_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/_20sdp"

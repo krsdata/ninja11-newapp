@@ -5,42 +5,34 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 
-class TransactionModel :Serializable,Cloneable {
-
+data class TransactionModel(
 
 
     @SerializedName("amount")
     @Expose
-    val depositAmount: String = ""
+    val depositAmount: String = "",
 
     @SerializedName("payment_mode")
     @Expose
-    var paymentMode: String = ""
+    var paymentMode: String = "",
 
     @SerializedName("payment_status")
     @Expose
-    var paymentStatus: String = ""
+    var paymentStatus: String = "",
 
     @SerializedName("transaction_id")
     @Expose
-    var transactionId: String = ""
+    var transactionId: String = "",
 
     @SerializedName("payment_type")
     @Expose
-    var paymentType: String = ""
+    var paymentType: String = "",
 
     @SerializedName("debit_credit_status")
     @Expose
-    var debitCreditStatus: String = ""
+    var debitCreditStatus: String = "",
 
     @SerializedName("date")
     @Expose
     var createdDate: String = ""
-
-
-    public override fun clone(): TransactionModel {
-        return super.clone() as TransactionModel
-    }
-
-
-}
+) : Serializable, Cloneable

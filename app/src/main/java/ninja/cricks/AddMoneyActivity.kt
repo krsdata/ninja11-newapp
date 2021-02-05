@@ -14,18 +14,18 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.wallet.*
+import com.google.gson.JsonObject
 import com.paytm.pgsdk.PaytmOrder
 import com.paytm.pgsdk.PaytmPGService
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback
 import com.razorpay.Checkout
 import com.razorpay.PaymentResultListener
 import ninja.cricks.databinding.ActivityAddMoneyBinding
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.payments.PaytmHandler
 import ninja.cricks.ui.BaseActivity
-import ninja.cricks.ui.home.models.UsersPostDBResponse
 import ninja.cricks.utils.BindingUtils.Companion.GOOGLE_TEZ_PACKAGE_NAME
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
@@ -50,20 +50,13 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
     private var mContext: Context? = null
 
     companion object {
-        val ADD_EXTRA_AMOUNT: String? = "add_extra_amount"
+        val ADD_EXTRA_AMOUNT: String = "add_extra_amount"
         val PAYEMENT_TYPE_PAYTM: String = "paytm"
         val PAYEMENT_TYPE_GPAY: String = "gpay"
         val PAYEMENT_TYPE_RAZORPAY: String = "razorpay"
         private const val TEZ_REQUEST_CODE = 10013
         private const val UPI_REQUEST_CODE = 10014
         private const val PAYTM_REQUEST_CODE = 10015
-    }
-
-    override fun onStart() {
-        super.onStart()
-        val infomodel = (application as NinjaApplication).userInformations
-        if (infomodel != null) {
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -83,25 +76,6 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
                 MyUtils.showToast(this@AddMoneyActivity, "Payment not completed please check")
             }
         }
-
-//        when (requestCode) {
-//            LOAD_PAYMENT_DATA_REQUEST_CODE -> {
-//                when (resultCode) {
-//                    Activity.RESULT_OK ->
-//                        PaymentData.getFromIntent(data!!)?.let(::handlePaymentSuccess)!!
-//
-//                    Activity.RESULT_CANCELED -> {
-//                        // The user cancelled without selecting a payment method.
-//                    }
-//
-//                    AutoResolveHelper.RESULT_ERROR -> {
-//                        AutoResolveHelper.getStatusFromIntent(data)?.let {
-//                            handleError(it.statusCode)
-//                        }!!
-//                    }
-//                }
-//            }
-//        }
     }
 
     private fun handleError(statusCode: Int) {
@@ -110,17 +84,12 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
 
     private fun handlePaymentSuccess(paymentData: PaymentData) {
         MyUtils.logd("gpayPayment", paymentData.toJson())
-//        val paymentMethodToken = paymentData
-//            .getJSONObject("tokenizationData")
-//            .getString("token")
     }
 
     override fun onBitmapSelected(bitmap: Bitmap) {
-        TODO("Not yet implemented")
     }
 
     override fun onUploadedImageUrl(url: String) {
-        TODO("Not yet implemented")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -152,8 +121,6 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
             MyUtils.showToast(this, "No Internet connection found")
             return
         }
-        getWalletBalances()
-
 
         mBinding!!.add100rs.setOnClickListener(View.OnClickListener {
             mBinding!!.editAmounts.setText("100")
@@ -305,6 +272,10 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
                         }
                     })
             }
+
+            override fun payNowError(t: Throwable?) {
+                customeProgressDialog.dismiss()
+            }
         }).paytmPayment("paytm" + System.currentTimeMillis(), amount)
     }
 
@@ -312,20 +283,16 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
         customeProgressDialog.show()
         paymentMode = PAYEMENT_TYPE_RAZORPAY
         val amt = amount * 100
-        val models = RequestModel()
-        models.amount = amt
-        //models.currency = "INR"
+        val models = JsonObject()
+        models.addProperty("amount", amt)
+        models.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        models.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+
         WebServiceClient(this).client.create(IApiMethod::class.java).createRazorPayOrder(models)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     customeProgressDialog.dismiss()
                     showCommonAlert("" + t!!.message)
-//                    BindingUtils.sendEventLogs(
-//                        this@AddMoneyActivity,
-//                        0,0,
-//                        userInfo!!,
-//                        BindingUtils.FIREBASE_EVENT_ITEM_ID_ADD_MONEY_ACTIVITY+t!!.message
-//                    )
                 }
 
                 override fun onResponse(
@@ -334,33 +301,45 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
                 ) {
                     customeProgressDialog.dismiss()
                     val res = response!!.body()
-                    if (res != null && res.status) {
-                        val co = Checkout()
-                        co.setImage(R.mipmap.ic_launcher)
-                        co.setKeyID(MyPreferences.getRazorPayId(this@AddMoneyActivity)!!)
-                        Checkout.clearUserData(applicationContext)
-                        try {
-                            val options = JSONObject()
-                            options.put("key", MyPreferences.getRazorPayId(this@AddMoneyActivity)!!)
-                            options.put("name", getString(R.string.app_name))
-                            options.put(
-                                "description",
-                                "Adding amount to play " + getString(R.string.app_name)
-                            )
-                            options.put("order_id", res.orderId) //order Id
-                            options.put("theme.color", getString(R.string.razorpaythemecolor))
-                            options.put("currency", "INR")
-                            options.put("amount", amt.toString())  //1000 means 10rs
-                            options.put("prefill.email", userInfo!!.userEmail)
-                            options.put("prefill.contact", userInfo!!.mobileNumber)
-                            co.open(this@AddMoneyActivity, options)
-                        } catch (e: Exception) {
-                            Toast.makeText(
-                                this@AddMoneyActivity,
-                                "Error in payment: " + e.message,
-                                Toast.LENGTH_LONG
-                            ).show()
-                            e.printStackTrace()
+                    if (res != null) {
+                        if (res.status) {
+                            val co = Checkout()
+                            co.setImage(R.mipmap.ic_launcher)
+                            co.setKeyID(MyPreferences.getRazorPayId(this@AddMoneyActivity)!!)
+                            Checkout.clearUserData(applicationContext)
+                            try {
+                                val options = JSONObject()
+                                options.put(
+                                    "key",
+                                    MyPreferences.getRazorPayId(this@AddMoneyActivity)!!
+                                )
+                                options.put("name", getString(R.string.app_name))
+                                options.put(
+                                    "description",
+                                    "Adding amount to play " + getString(R.string.app_name)
+                                )
+                                options.put("order_id", res.orderId) //order Id
+                                options.put("theme.color", getString(R.string.razorpaythemecolor))
+                                options.put("currency", "INR")
+                                options.put("amount", amt.toString())  //1000 means 10rs
+                                options.put("prefill.email", userInfo!!.userEmail)
+                                options.put("prefill.contact", userInfo!!.mobileNumber)
+                                co.open(this@AddMoneyActivity, options)
+                            } catch (e: Exception) {
+                                Toast.makeText(
+                                    this@AddMoneyActivity,
+                                    "Error in payment: " + e.message,
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                e.printStackTrace()
+                            }
+                        } else {
+                            if (res.code == 1001) {
+                                MyUtils.showMessage(this@AddMoneyActivity, res.message)
+                                MyUtils.logoutApp(this@AddMoneyActivity)
+                            } else {
+                                MyUtils.showMessage(this@AddMoneyActivity, res.message)
+                            }
                         }
                     }
                 }
@@ -546,11 +525,12 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
 
     fun getWalletBalances() {
         customeProgressDialog.show()
-        val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(this)!!
-        models.token = MyPreferences.getToken(this)!!
 
-        WebServiceClient(this).client.create(IApiMethod::class.java).getWallet(models)
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+
+        WebServiceClient(this).client.create(IApiMethod::class.java).getWallet(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     customeProgressDialog.dismiss()
@@ -563,22 +543,31 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
                     customeProgressDialog.dismiss()
                     val res = response!!.body()
                     if (res != null) {
-                        val responseModel = res.walletObjects
-                        if (responseModel != null) {
+                        if (res.status) {
+                            val responseModel = res.walletObjects
+                            if (responseModel != null) {
 
-                            MyPreferences.setRazorPayId(mContext!!, res.razorPay)
-                            MyPreferences.setShowPaytm(mContext!!, res.paytm_show)
-                            MyPreferences.setShowGpay(mContext!!, res.gpay_show)
-                            MyPreferences.setShowRazorPay(mContext!!, res.rozarpay_show)
+                                MyPreferences.setRazorPayId(mContext!!, res.razorPay)
+                                MyPreferences.setShowPaytm(mContext!!, res.paytm_show)
+                                MyPreferences.setShowGpay(mContext!!, res.gpay_show)
+                                MyPreferences.setShowRazorPay(mContext!!, res.rozarpay_show)
 
-                            MyPreferences.setShowPaytmWithdraw(mContext!!, res.paytm_withdrawal)
-                            MyPreferences.setShowBankWithdraw(mContext!!, res.bank_withdrawal)
-                            MyPreferences.setShowUPIWithdraw(mContext!!, res.upi_withdrawal)
+                                MyPreferences.setShowPaytmWithdraw(mContext!!, res.paytm_withdrawal)
+                                MyPreferences.setShowBankWithdraw(mContext!!, res.bank_withdrawal)
+                                MyPreferences.setShowUPIWithdraw(mContext!!, res.upi_withdrawal)
 
-                            (application as NinjaApplication).saveWalletInformation(
-                                responseModel
-                            )
-                            initWalletInfo()
+                                (application as NinjaApplication).saveWalletInformation(
+                                    responseModel
+                                )
+                                initWalletInfo()
+                            }
+                        } else {
+                            if (res.code == 1001) {
+                                MyUtils.showMessage(this@AddMoneyActivity, res.message)
+                                MyUtils.logoutApp(this@AddMoneyActivity)
+                            } else {
+                                MyUtils.showMessage(this@AddMoneyActivity, res.message)
+                            }
                         }
                     }
                 }
@@ -591,20 +580,20 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
             return
         }
         customeProgressDialog.show()
-        val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(this)!!
-        //models.token = MyPreferences.getToken(this)!!
-        models.deposit_amount = mBinding!!.editAmounts.text.toString()
-        models.transaction_id = transactionId
-        models.order_id = orderId
-        models.payment_mode = paymentMode
-        models.payment_status = "success"
 
-        WebServiceClient(this).client.create(IApiMethod::class.java).addMoney(models)
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+        jsonRequest.addProperty("deposit_amount", mBinding!!.editAmounts.text.toString())
+        jsonRequest.addProperty("transaction_id", transactionId)
+        jsonRequest.addProperty("order_id", orderId)
+        jsonRequest.addProperty("payment_mode", paymentMode)
+        jsonRequest.addProperty("payment_status", "success")
+
+        WebServiceClient(this).client.create(IApiMethod::class.java).addMoney(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     customeProgressDialog.dismiss()
-
                 }
 
                 override fun onResponse(
@@ -614,15 +603,23 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
                     customeProgressDialog.dismiss()
                     val res = response!!.body()
                     if (res != null) {
-
-                        val responseModel = res.walletObjects
-                        if (responseModel != null) {
-                            (application as NinjaApplication).saveWalletInformation(
-                                responseModel
-                            )
-                            MyUtils.showMessage(this@AddMoneyActivity, res.message)
-                            setResult(Activity.RESULT_OK)
-                            finish()
+                        if (res.status) {
+                            val responseModel = res.walletObjects
+                            if (responseModel != null) {
+                                (application as NinjaApplication).saveWalletInformation(
+                                    responseModel
+                                )
+                                MyUtils.showMessage(this@AddMoneyActivity, res.message)
+                                setResult(Activity.RESULT_OK)
+                                finish()
+                            }
+                        } else {
+                            if (res.code == 1001) {
+                                MyUtils.showMessage(this@AddMoneyActivity, res.message)
+                                MyUtils.logoutApp(this@AddMoneyActivity)
+                            } else {
+                                MyUtils.showMessage(this@AddMoneyActivity, res.message)
+                            }
                         }
                     }
                 }

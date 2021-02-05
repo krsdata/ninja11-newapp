@@ -5,9 +5,9 @@ import ninja.cricks.CreateTeamActivity.Companion.CREATE_TEAM_ALLROUNDER
 import ninja.cricks.CreateTeamActivity.Companion.CREATE_TEAM_BATSMAN
 import ninja.cricks.CreateTeamActivity.Companion.CREATE_TEAM_BOWLER
 import ninja.cricks.CreateTeamActivity.Companion.CREATE_TEAM_WICKET_KEEPER
-import ninja.cricks.models.UpcomingMatchesModel
-import ninja.cricks.ui.createteam.models.PlayersInfoModel
 import ninja.cricks.R
+import ninja.cricks.models.PlayersInfoModel
+import ninja.cricks.models.UpcomingMatchesModel
 
 class CricketPlayersFilters(context: Context) {
 
@@ -19,14 +19,12 @@ class CricketPlayersFilters(context: Context) {
             playersType: String
         ): ArrayList<PlayersInfoModel> {
 
-            var finalobjects: ArrayList<PlayersInfoModel> = ArrayList<PlayersInfoModel>()
-            var teamAPlayerList: ArrayList<PlayersInfoModel> = ArrayList<PlayersInfoModel>()
-            var teamBPlayerList: ArrayList<PlayersInfoModel> = ArrayList<PlayersInfoModel>()
+            val finalobjects: ArrayList<PlayersInfoModel> = ArrayList()
+            val teamAPlayerList: ArrayList<PlayersInfoModel> = ArrayList()
+            val teamBPlayerList: ArrayList<PlayersInfoModel> = ArrayList()
 
-
-
-            for (x in 0..filterPlayersLists.size - 1) {
-                var playerInfoObject = filterPlayersLists.get(x)
+            for (x in 0 until filterPlayersLists.size) {
+                val playerInfoObject = filterPlayersLists[x]
                 if (matchObject.teamAInfo!!.teamId == playerInfoObject.teamId) {
                     if (playersType.equals(CREATE_TEAM_WICKET_KEEPER)) {
                         playerInfoObject.setPlayerIcon(R.drawable.ic_player_wk_teama)
@@ -55,17 +53,17 @@ class CricketPlayersFilters(context: Context) {
             val t1 = teamAPlayerList.size
             val t2 = teamBPlayerList.size
             if (t1 > t2) {
-                for (x in 0..t1 - 1) {
-                    finalobjects.add(teamAPlayerList.get(x))
+                for (x in 0 until t1) {
+                    finalobjects.add(teamAPlayerList[x])
                     if (x < t2) {
-                        finalobjects.add(teamBPlayerList.get(x))
+                        finalobjects.add(teamBPlayerList[x])
                     }
                 }
             } else {
-                for (x in 0..t2 - 1) {
-                    finalobjects.add(teamBPlayerList.get(x))
+                for (x in 0 until t2) {
+                    finalobjects.add(teamBPlayerList[x])
                     if (x < t1) {
-                        finalobjects.add(teamAPlayerList.get(x))
+                        finalobjects.add(teamAPlayerList[x])
                     }
                 }
             }
@@ -73,35 +71,37 @@ class CricketPlayersFilters(context: Context) {
             return finalobjects
         }
 
-        fun getPlayersbyMaxSelection(filteredWicketKeepers: java.util.ArrayList<PlayersInfoModel>, isEntryAscending:Boolean): List<PlayersInfoModel> {
-            if(isEntryAscending) {
+        fun getPlayersbyMaxSelection(
+            filteredWicketKeepers: java.util.ArrayList<PlayersInfoModel>,
+            isEntryAscending: Boolean
+        ): List<PlayersInfoModel> {
+            if (isEntryAscending) {
                 return filteredWicketKeepers.sortedBy { it -> it.analyticsModel!!.selectionPc }
-            }else {
+            } else {
                 return filteredWicketKeepers.sortedByDescending { it -> it.analyticsModel!!.selectionPc }
             }
         }
 
-        fun getPlayersbyMaxPoints(filteredWicketKeepers: java.util.ArrayList<PlayersInfoModel>, isEntryAscending:Boolean): List<PlayersInfoModel> {
-            if(isEntryAscending) {
+        fun getPlayersbyMaxPoints(
+            filteredWicketKeepers: java.util.ArrayList<PlayersInfoModel>,
+            isEntryAscending: Boolean
+        ): List<PlayersInfoModel> {
+            if (isEntryAscending) {
                 return filteredWicketKeepers.sortedBy { it -> it.playerSeriesPoints }
-            }else {
+            } else {
                 return filteredWicketKeepers.sortedByDescending { it -> it.playerSeriesPoints }
             }
         }
 
-        fun getPlayersbyMaxCredits(filteredWicketKeepers: java.util.ArrayList<PlayersInfoModel>, isEntryAscending:Boolean): List<PlayersInfoModel> {
-            if(isEntryAscending) {
-                return filteredWicketKeepers.sortedBy { it -> it.fantasyPlayerRating}
-            }else {
+        fun getPlayersbyMaxCredits(
+            filteredWicketKeepers: java.util.ArrayList<PlayersInfoModel>,
+            isEntryAscending: Boolean
+        ): List<PlayersInfoModel> {
+            if (isEntryAscending) {
+                return filteredWicketKeepers.sortedBy { it -> it.fantasyPlayerRating }
+            } else {
                 return filteredWicketKeepers.sortedByDescending { it -> it.fantasyPlayerRating }
             }
         }
-
-
-
     }
-
-
-
-
 }

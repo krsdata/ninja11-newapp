@@ -44,7 +44,7 @@ class MoreOptionsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).showToolbar()
+        //(activity as MainActivity).showToolbar()
         mBinding!!.appVersion.text = String.format("App Version: %s", MyUtils.getAppVersionName(requireActivity()))
         mBinding!!.recyclerMoreoptions.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
@@ -60,62 +60,62 @@ class MoreOptionsFragment : BaseFragment() {
         allOptionsList.clear()
 
         val upcomingMModle12 = MoreOptionsModel()
-        upcomingMModle12.drawable = R.drawable.more_terms_conditions
+        upcomingMModle12.drawable = R.drawable.ic_action_affiliate
         upcomingMModle12.id = 12
         upcomingMModle12.title = "My-Affiliate"
         allOptionsList.add(upcomingMModle12)
 
         val upcomingMModle11 = MoreOptionsModel()
-        upcomingMModle11.drawable = R.drawable.more_terms_conditions
+        upcomingMModle11.drawable = R.drawable.ic_action_top_referral
         upcomingMModle11.id = 11
         upcomingMModle11.title = "Top Referral Users"
         allOptionsList.add(upcomingMModle11)
 
         val upcomingMModle10 = MoreOptionsModel()
-        upcomingMModle10.drawable = R.drawable.more_terms_conditions
+        upcomingMModle10.drawable = R.drawable.ic_action_offer
         upcomingMModle10.id = 10
-        upcomingMModle10.title = "Offers"
+        upcomingMModle10.title = "Latest Offers"
         allOptionsList.add(upcomingMModle10)
 
         val upcomingMModle1 = MoreOptionsModel()
-        upcomingMModle1.drawable = R.drawable.more_refern_earn
+        upcomingMModle1.drawable = R.drawable.ic_action_reffer
         upcomingMModle1.id = 0
         upcomingMModle1.title = "Refer & Earn"
         allOptionsList.add(upcomingMModle1)
 
         val upcomingMModle7 = MoreOptionsModel()
-        upcomingMModle7.drawable = R.drawable.more_support
+        upcomingMModle7.drawable = R.drawable.ic_support
         upcomingMModle7.id = 6
         upcomingMModle7.title = getString(R.string.label_supportteam)
         allOptionsList.add(upcomingMModle7)
 
 
         val upcomingMModle2 = MoreOptionsModel()
-        upcomingMModle2.drawable = R.drawable.more_point_system
+        upcomingMModle2.drawable = R.drawable.ic_action_point_system
         upcomingMModle2.id = 1
         upcomingMModle2.title = "Fantasy Points System"
         allOptionsList.add(upcomingMModle2)
 
         val upcomingMModle9 = MoreOptionsModel()
-        upcomingMModle9.drawable = R.drawable.more_terms_conditions
+        upcomingMModle9.drawable = R.drawable.ic_action_faq
         upcomingMModle9.id = 9
         upcomingMModle9.title = "FAQs"
         allOptionsList.add(upcomingMModle9)
 
         val upcomingMModle4 = MoreOptionsModel()
-        upcomingMModle4.drawable = R.drawable.more_about_us
+        upcomingMModle4.drawable = R.drawable.ic_action_about
         upcomingMModle4.id = 3
         upcomingMModle4.title = "About Us"
         allOptionsList.add(upcomingMModle4)
 
         val upcomingMModle6 = MoreOptionsModel()
-        upcomingMModle6.drawable = R.drawable.more_terms_conditions
+        upcomingMModle6.drawable = R.drawable.ic_action_terms
         upcomingMModle6.id = 5
         upcomingMModle6.title = "Terms and Conditions"
         allOptionsList.add(upcomingMModle6)
 
         val upcomingMModle8 = MoreOptionsModel()
-        upcomingMModle8.drawable = R.drawable.more_logout
+        upcomingMModle8.drawable = R.drawable.ic_action_logout_icon
         upcomingMModle8.id = 8
         val userId = MyPreferences.getUserID(requireActivity())!!
         if (!TextUtils.isEmpty(userId)) {
@@ -140,7 +140,6 @@ class MoreOptionsFragment : BaseFragment() {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.row_more_options, parent, false)
             return DataViewHolder(view)
-
         }
 
         override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
@@ -176,21 +175,21 @@ class MoreOptionsFragment : BaseFragment() {
         override fun onPostExecute(result: String) {
             mBinding!!.progressBar.visibility = View.INVISIBLE
 
-            val itemDecoration = DividerItemDecoration(activity!!, VERTICAL)
+            val itemDecoration = DividerItemDecoration(requireActivity(), VERTICAL)
             mBinding!!.recyclerMoreoptions.addItemDecoration(itemDecoration)
-            adapter = MoreOptionsAdaptor(activity!!, allOptionsList)
+            adapter = MoreOptionsAdaptor(requireActivity(), allOptionsList)
             mBinding!!.recyclerMoreoptions.adapter = adapter
             adapter.onItemClick = { objects ->
 
                 when (objects.id) {
                     0 -> {
-                        val intent = Intent(activity!!, InviteFriendsActivity::class.java)
+                        val intent = Intent(requireActivity(), InviteFriendsActivity::class.java)
                         val options =
                             ActivityOptions.makeSceneTransitionAnimation(activity)
                         startActivity(intent, options.toBundle())
                     }
                     1 -> {
-                        val intent = Intent(activity!!, WebActivity::class.java)
+                        val intent = Intent(requireActivity(), WebActivity::class.java)
                         intent.putExtra(
                             WebActivity.KEY_TITLE,
                             BindingUtils.WEB_TITLE_FANTASY_POINTS
@@ -201,7 +200,7 @@ class MoreOptionsFragment : BaseFragment() {
                         startActivity(intent, options.toBundle())
                     }
                     2 -> {
-                        val intent = Intent(activity!!, WebActivity::class.java)
+                        val intent = Intent(requireActivity(), WebActivity::class.java)
                         intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_HOW_TO_PLAY)
                         intent.putExtra(
                             WebActivity.KEY_URL,
@@ -212,7 +211,7 @@ class MoreOptionsFragment : BaseFragment() {
                         startActivity(intent, options.toBundle())
                     }
                     3 -> {
-                        val intent = Intent(activity!!, WebActivity::class.java)
+                        val intent = Intent(requireActivity(), WebActivity::class.java)
                         intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_ABOUT_US)
                         intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_ABOUT_US)
                         val options =
@@ -220,7 +219,7 @@ class MoreOptionsFragment : BaseFragment() {
                         startActivity(intent, options.toBundle())
                     }
                     4 -> {
-                        val intent = Intent(activity!!, WebActivity::class.java)
+                        val intent = Intent(requireActivity(), WebActivity::class.java)
                         intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_LEGALITY)
                         intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_LEGALITY)
                         val options =
@@ -228,7 +227,7 @@ class MoreOptionsFragment : BaseFragment() {
                         startActivity(intent, options.toBundle())
                     }
                     5 -> {
-                        val intent = Intent(activity!!, WebActivity::class.java)
+                        val intent = Intent(requireActivity(), WebActivity::class.java)
                         intent.putExtra(
                             WebActivity.KEY_TITLE,
                             BindingUtils.WEB_TITLE_TERMS_CONDITION
@@ -240,7 +239,7 @@ class MoreOptionsFragment : BaseFragment() {
                     }
 
                     6 -> {
-                        val intent = Intent(activity!!, SupportActivity::class.java)
+                        val intent = Intent(requireActivity(), SupportActivity::class.java)
                         val options =
                             ActivityOptions.makeSceneTransitionAnimation(activity)
                         startActivity(intent, options.toBundle())
@@ -251,7 +250,7 @@ class MoreOptionsFragment : BaseFragment() {
                     }
 
                     9 -> {
-                        val intent = Intent(activity!!, WebActivity::class.java)
+                        val intent = Intent(requireActivity(), WebActivity::class.java)
                         intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_FAQ)
                         intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_FAQ)
                         val options =
@@ -260,16 +259,21 @@ class MoreOptionsFragment : BaseFragment() {
                     }
 
                     10 -> {
-                        val intent = Intent(activity!!, WebActivity::class.java)
+                        /*val intent = Intent(requireActivity(), WebActivity::class.java)
                         intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_OFFERS)
                         intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_OFFERS)
+                        val options =
+                            ActivityOptions.makeSceneTransitionAnimation(activity)
+                        startActivity(intent, options.toBundle())*/
+
+                        val intent = Intent(requireActivity(), OfferActivity::class.java)
                         val options =
                             ActivityOptions.makeSceneTransitionAnimation(activity)
                         startActivity(intent, options.toBundle())
                     }
 
                     11 -> {
-                        val intent = Intent(activity!!, WebActivity::class.java)
+                        val intent = Intent(requireActivity(), WebActivity::class.java)
                         intent.putExtra(
                             WebActivity.KEY_TITLE,
                             BindingUtils.WEB_TITLE_TOP_REFERRAL_USER
@@ -281,7 +285,7 @@ class MoreOptionsFragment : BaseFragment() {
                     }
 
                     12 -> {
-                        val intent = Intent(activity!!, WebActivity::class.java)
+                        val intent = Intent(requireActivity(), WebActivity::class.java)
                         intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_MY_AFFILIATE)
                         intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_MY_AFFILIATE)
                         intent.putExtra(WebActivity.USER_ID, MyPreferences.getUserID(requireActivity())!!)

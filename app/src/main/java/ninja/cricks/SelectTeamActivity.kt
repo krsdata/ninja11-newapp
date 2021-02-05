@@ -7,18 +7,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonObject
 import ninja.cricks.adaptors.SelectedTeamAdapter
 import ninja.cricks.databinding.ActivitySelectTeamBinding
 import ninja.cricks.models.MyTeamModels
 import ninja.cricks.models.SelectedTeamModels
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.JoinContestActivity
-import ninja.cricks.ui.JoinContestDialogFragment
-import ninja.cricks.ui.contest.models.ContestModelLists
-import ninja.cricks.ui.home.models.UsersPostDBResponse
+import ninja.cricks.models.ContestModelLists
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
@@ -147,13 +146,20 @@ class SelectTeamActivity : AppCompatActivity() {
             return
         }
         customeProgressDialog!!.show()
-        val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(this)!!
-        // models.token =MyPreferences.getToken(this)!!
-        models.match_id = "" + matchObject.matchId
-        models.contest_id = "" + contestModel.id
 
-        WebServiceClient(this).client.create(IApiMethod::class.java).joinNewContestStatus(models)
+        /*val models = RequestModel()
+        models.user_id = MyPreferences.getUserID(this)!!
+        models.token = MyPreferences.getToken(this)!!
+        models.match_id = "" + matchObject.matchId
+        models.contest_id = "" + contestModel.id*/
+
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+        jsonRequest.addProperty("match_id", matchObject.matchId)
+        jsonRequest.addProperty("contest_id", contestModel.id)
+
+        WebServiceClient(this).client.create(IApiMethod::class.java).joinNewContestStatus(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     customeProgressDialog!!.dismiss()
@@ -167,7 +173,10 @@ class SelectTeamActivity : AppCompatActivity() {
                     val res = response!!.body()
                     if (res != null) {
                         if (!res.status) {
-                            if (res.code == 401) {
+                            if (res.code == 1001) {
+                                MyUtils.showMessage(this@SelectTeamActivity, res.message)
+                                MyUtils.logoutApp(this@SelectTeamActivity)
+                            } else if (res.code == 401) {
                                 MyUtils.showToast(
                                     this@SelectTeamActivity,
                                     res.message

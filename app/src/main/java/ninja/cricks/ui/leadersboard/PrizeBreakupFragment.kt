@@ -11,16 +11,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.JsonObject
 import ninja.cricks.ContestActivity
 import ninja.cricks.R
 import ninja.cricks.databinding.FragmentPrizeBreakupBinding
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.ui.contest.models.ContestModelLists
-import ninja.cricks.ui.home.models.UsersPostDBResponse
-import ninja.cricks.ui.leadersboard.models.PrizeBreakUpModels
+import ninja.cricks.models.ContestModelLists
+import ninja.cricks.models.UsersPostDBResponse
+import ninja.cricks.models.PrizeBreakUpModels
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import retrofit2.Call
@@ -89,13 +89,19 @@ class PrizeBreakupFragment : Fragment() {
 
     fun getPrizeBreakup() {
         mBinding!!.progressBar.visibility = View.VISIBLE
-        var models = RequestModel()
+        /*val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         models.token = MyPreferences.getToken(requireActivity())!!
         models.match_id = "" + matchObject!!.matchId
-        models.contest_id = "" + contestObject!!.id
-        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
-            .getPrizeBreakUp(models)
+        models.contest_id = "" + contestObject!!.id*/
+
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
+        jsonRequest.addProperty("match_id", matchObject!!.matchId)
+        jsonRequest.addProperty("contest_id", contestObject!!.id)
+
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getPrizeBreakUp(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
 
@@ -105,16 +111,25 @@ class PrizeBreakupFragment : Fragment() {
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    var res = response!!.body()
+                    val res = response!!.body()
                     if (res != null) {
-                        if (isVisible) {
-                            mBinding!!.progressBar.visibility = View.GONE
-                            var responseModel = res.responseObject
-                            if (responseModel!!.prizeBreakUpModelsList!!.size > 0) {
-                                prizeBreakupList.clear()
+                        if (res.status) {
+                            if (isVisible) {
+                                mBinding!!.progressBar.visibility = View.GONE
+                                val responseModel = res.responseObject
+                                if (responseModel!!.prizeBreakUpModelsList!!.size > 0) {
+                                    prizeBreakupList.clear()
 
-                                prizeBreakupList.addAll(responseModel.prizeBreakUpModelsList!!)
-                                adapter.notifyDataSetChanged()
+                                    prizeBreakupList.addAll(responseModel.prizeBreakUpModelsList!!)
+                                    adapter.notifyDataSetChanged()
+                                }
+                            }
+                        } else {
+                            if (res.code == 1001) {
+                                MyUtils.showMessage(requireActivity(), res.message)
+                                MyUtils.logoutApp(requireActivity())
+                            } else {
+                                MyUtils.showMessage(requireActivity(), res.message)
                             }
                         }
                     }

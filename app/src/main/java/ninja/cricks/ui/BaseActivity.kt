@@ -3,7 +3,7 @@ package ninja.cricks.ui
 import android.Manifest
 import android.app.Activity
 import android.content.ContentValues
-import android.content.DialogInterface
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
@@ -20,6 +20,7 @@ import android.os.Handler
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.util.Base64
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -27,25 +28,33 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.andrognito.flashbar.Flashbar
-import com.deliverdas.customers.utils.HardwareInfoManager
 import com.google.firebase.iid.FirebaseInstanceId
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import ninja.cricks.*
 import ninja.cricks.models.ResponseModel
 import ninja.cricks.models.UserInfo
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.ui.home.models.UsersPostDBResponse
+import ninja.cricks.requestmodels.RequestModel
 import ninja.cricks.utils.CustomeProgressDialog
+import ninja.cricks.utils.HardwareInfoManager
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.IOException
-
+import java.io.*
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.set
 
 abstract class BaseActivity : AppCompatActivity() {
 
@@ -59,6 +68,7 @@ abstract class BaseActivity : AppCompatActivity() {
     private var image_uri: Uri? = null
     var mBitmap: Bitmap? = null
     var mDocumentType = ""
+    var context: Context? = null
 
     companion object {
         val DOCUMENTS_TYPE_PROFILES = "profile"
@@ -70,53 +80,37 @@ abstract class BaseActivity : AppCompatActivity() {
         val PICK_IMAGE_REQUEST_CAMERA = 1001
         val PICK_IMAGE_REQUEST_GALLERY = 1002
         private val PERMISSION_CODE = 1001
+        private var TAG: String = BaseActivity::class.java.simpleName
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         customeProgressDialog = CustomeProgressDialog(this)
-        //uploadReceiver = SingleUploadBroadcastReceiver()
+        context = this
         userInfo = (application as NinjaApplication).userInformations
     }
 
     fun showDeadLineAlert(message: String) {
         val builder = AlertDialog.Builder(this)
-        //set title for alert dialog
-        // builder.setTitle("Warning")
-        //set message for alert dialog
         builder.setMessage(message)
         builder.setIcon(android.R.drawable.ic_dialog_alert)
-
-        //performing positive action
         builder.setPositiveButton("OK") { dialogInterface, which ->
-            finish()
+            dialogInterface.dismiss()
         }
-        // Create the AlertDialog
         val alertDialog: AlertDialog = builder.create()
-        // Set other dialog properties
         alertDialog.setCancelable(false)
         alertDialog.setCanceledOnTouchOutside(false)
         alertDialog.show()
     }
 
     fun showMatchTimeUpDialog() {
-        val flashbar = Flashbar.Builder(this)
+        val flashBar = Flashbar.Builder(this)
             .gravity(Flashbar.Gravity.BOTTOM)
             .title(getString(R.string.app_name))
             .message("Time Up Editing your team, match went to live.")
             .backgroundDrawable(R.color.secondery_color)
-            /*.showIcon()
-            .icon(R.mipmap.ic_launcher)
-            .iconAnimation(
-                FlashAnim.with(this)
-                    .animateIcon()
-                    .pulse()
-                    .alpha()
-                    .duration(750)
-                    .accelerate()
-            )*/
             .build()
-        flashbar.show()
+        flashBar.show()
         Handler().postDelayed(Runnable {
             val intent = Intent(this@BaseActivity, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -128,36 +122,52 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == PICK_IMAGE_REQUEST_CAMERA) {
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    mBitmap = data!!.extras!!.get("data") as Bitmap
+                mBitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    data!!.extras!!.get("data") as Bitmap
                 } else {
-                    mBitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, image_uri)
+                    MediaStore.Images.Media.getBitmap(this.contentResolver, image_uri)
                 }
+                val file = saveBitmap(System.currentTimeMillis().toString(), mBitmap!!)
+                //if (fileSize(file!!) <= 2) {
                 onBitmapSelected(mBitmap!!)
-                uploadBase64ImageToServer(mBitmap!!)
-
+                //}
+                val handler = Handler()
+                handler.postDelayed({
+                    uploadImageToServer(file!!)
+                }, 1500)
             } else if (requestCode == PICK_IMAGE_REQUEST_GALLERY) {
 
                 val selectedImage = data!!.data
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     val source = ImageDecoder.createSource(this.contentResolver, selectedImage!!)
                     mBitmap = ImageDecoder.decodeBitmap(source)
-                    uploadBase64ImageToServer(mBitmap!!)
+                    onBitmapSelected(mBitmap!!)
+
+                    val file = saveBitmap(System.currentTimeMillis().toString(), mBitmap!!)
+
+                    val handler = Handler()
+                    handler.postDelayed({
+                        uploadImageToServer(file!!)
+                    }, 1500)
                 } else {
 
                     val mImageCaptureUri = data.data
-                    var path = getRealPathFromURI(mImageCaptureUri) //from Gallery
+                    var path = getRealPathFromURI(mImageCaptureUri)
                     if (path == null) {
-                        path = mImageCaptureUri!!.path //from File Manager
+                        path = mImageCaptureUri!!.path
                     }
                     if (path != null) {
                         mBitmap = modifyOrientation(BitmapFactory.decodeFile(path), path)
                         onBitmapSelected(mBitmap!!)
-                        uploadBase64ImageToServer(mBitmap!!)
+
+                        val file = saveBitmap(System.currentTimeMillis().toString(), mBitmap!!)
+
+                        val handler = Handler()
+                        handler.postDelayed({
+                            uploadImageToServer(file!!)
+                        }, 1500)
                     }
                 }
             }
@@ -166,7 +176,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     @Throws(IOException::class)
     open fun modifyOrientation(bitmap: Bitmap, image_absolute_path: String?): Bitmap? {
-        val ei = ExifInterface(image_absolute_path)
+        val ei = ExifInterface(image_absolute_path!!)
         val orientation: Int =
             ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
         return when (orientation) {
@@ -224,25 +234,40 @@ abstract class BaseActivity : AppCompatActivity() {
     private fun getRealPathFromURI(contentUri: Uri?): String? {
         val proj = arrayOf(MediaStore.Images.Media.DATA)
         val cursor: Cursor = managedQuery(contentUri, proj, null, null, null) ?: return null
-        val column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        val columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
         cursor.moveToFirst()
-        return cursor.getString(column_index)
+        return cursor.getString(columnIndex)
     }
 
-    private fun uploadBase64ImageToServer(bitmap: Bitmap) {
-        val base64Images = getImageUrl(bitmap)
-        if (sizeofImage > 2) {
-            showCommonAlert("Image size cannot be greater than 2MB,  Current is $sizeofImage MB")
+    private fun uploadImageToServer(file: File) {
+        if (fileSize(file) > 2) {
+            showCommonAlert("Image size cannot be greater than 2MB, Current is ${fileSize(file)} MB")
             return
         }
 
+        var multipartImage: MultipartBody.Part? = null
+        val requestPanImage: RequestBody = file
+            .asRequestBody("multipart/jpg".toMediaTypeOrNull())
+        multipartImage =
+            MultipartBody.Part.createFormData("image_bytes", file.name, requestPanImage)
+
+        val userId: RequestBody = createPartFromString(MyPreferences.getUserID(context!!)!!)!!
+        val documentType: RequestBody = createPartFromString(mDocumentType)!!
+        val systemToken: RequestBody =
+            createPartFromString(MyPreferences.getSystemToken(context!!)!!)!!
+
+        val map: HashMap<String, RequestBody> = HashMap<String, RequestBody>()
+        map["user_id"] = userId
+        map["documents_type"] = documentType
+        map["system_token"] = systemToken
+
         customeProgressDialog.show()
-        WebServiceClient(this).client.create(IApiMethod::class.java)
-            .uploadImage(base64Images, MyPreferences.getUserID(this)!!, mDocumentType)
+        WebServiceClient(context!!).client.create(IApiMethod::class.java)
+            .saveDocumentImage(map, multipartImage)
             .enqueue(object : Callback<ResponseModel?> {
                 override fun onFailure(call: Call<ResponseModel?>?, t: Throwable?) {
                     customeProgressDialog.dismiss()
-                    Toast.makeText(this@BaseActivity, "" + t!!.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(context!!, "" + t!!.message, Toast.LENGTH_LONG).show()
                 }
 
                 override fun onResponse(
@@ -252,53 +277,31 @@ abstract class BaseActivity : AppCompatActivity() {
                     if (!isFinishing) {
                         customeProgressDialog.dismiss()
                         val res = response!!.body()
-                        if (res != null && res.status) {
-                            val photoUrl = res.image_url
-                            onBitmapSelected(mBitmap!!)
-                            onUploadedImageUrl(photoUrl)
-                            //Toast.makeText(this@BaseActivity, "" + res.message, Toast.LENGTH_LONG).show()
-                        } else {
-                            Toast.makeText(this@BaseActivity, "" + res!!.message, Toast.LENGTH_LONG).show()
+                        if (res != null) {
+                            if (res.status) {
+                                val photoUrl = res.image_url
+                                onBitmapSelected(mBitmap!!)
+                                onUploadedImageUrl(photoUrl)
+                            } else {
+                                MyUtils.showMessage(context!!, res.message)
+                            }
                         }
                     }
                 }
             })
     }
 
-    /**
-     * Android Q Implementations
-     */
-    private fun setImageUri(): Uri {
-        val folder = File("${getExternalFilesDir(Environment.DIRECTORY_DCIM)}")
-        folder.mkdirs()
-
-        val file = File(folder, "Image_Tmp.jpg")
-        if (file.exists())
-            file.delete()
-        file.createNewFile()
-        imageUri = FileProvider.getUriForFile(
-            this,
-            BuildConfig.APPLICATION_ID + getString(R.string.file_provider),
-            file
-        )
-        // imgPath = file.absolutePath
-        return imageUri!!
-    }
-
-    /**
-     * End of android Q impelemntations
-     */
-    fun showCommonAlert(messge: String) {
+    fun showCommonAlert(message: String) {
         val builder = AlertDialog.Builder(this)
         //set title for alert dialog
         builder.setTitle("Warning")
         //set message for alert dialog
-        builder.setMessage(messge)
+        builder.setMessage(message)
         builder.setIcon(android.R.drawable.ic_btn_speak_now)
 
         //performing positive action
         builder.setPositiveButton("Ok") { dialogInterface, which ->
-
+            dialogInterface.dismiss()
         }
         // Create the AlertDialog
         val alertDialog: AlertDialog = builder.create()
@@ -308,35 +311,26 @@ abstract class BaseActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
-    private fun getImageUrl(bitmap: Bitmap): String {
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
-        val bytes = byteArrayOutputStream.toByteArray()
-        val sizeofIamge = bytes.size
-        setSizeOfImage(sizeofIamge)
-        return Base64.encodeToString(bytes, Base64.DEFAULT)
-    }
-
-    private fun setSizeOfImage(sizeofIamge: Int) {
-        this.sizeofImage = (sizeofIamge / 1024) / 1024
-    }
-
-    fun checkAndRequestPermissions(): Boolean {
-        val camerapermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-        val writepermission =
+    private fun checkAndRequestPermissions(): Boolean {
+        val cameraPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+        val writePermission =
             ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-
+        val readPermission =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
 
         val listPermissionsNeeded = ArrayList<String>()
-
-        if (camerapermission != PackageManager.PERMISSION_GRANTED) {
+        if (cameraPermission != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.CAMERA)
         }
-        if (writepermission != PackageManager.PERMISSION_GRANTED) {
+        if (writePermission != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
 
-        if (!listPermissionsNeeded.isEmpty()) {
+        if (readPermission != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+
+        if (listPermissionsNeeded.isNotEmpty()) {
             ActivityCompat.requestPermissions(
                 this,
                 listPermissionsNeeded.toTypedArray(),
@@ -363,18 +357,15 @@ abstract class BaseActivity : AppCompatActivity() {
         val builder: android.app.AlertDialog.Builder =
             android.app.AlertDialog.Builder(this@BaseActivity)
         builder.setTitle("Add Photo!")
-        builder.setItems(options, object : DialogInterface.OnClickListener {
-            override fun onClick(dialog: DialogInterface?, items: Int) {
-                if (options[items] == "Take Photo") {
-                    openCamera(PICK_IMAGE_REQUEST_CAMERA)
-                } else if (options[items] == "Choose from Gallery") {
-                    selectGalleryImage()
-                } else if (options[items] == "Cancel") {
-                    dialog!!.dismiss()
-                }
+        builder.setItems(options) { dialog, items ->
+            if (options[items] == "Take Photo") {
+                openCamera(PICK_IMAGE_REQUEST_CAMERA)
+            } else if (options[items] == "Choose from Gallery") {
+                selectGalleryImage()
+            } else if (options[items] == "Cancel") {
+                dialog!!.dismiss()
             }
-
-        })
+        }
         builder.show()
     }
 
@@ -429,13 +420,30 @@ abstract class BaseActivity : AppCompatActivity() {
 //                        .getToken(getString(R.string.gcm_default_sender_id), "FCM")
                 val userId = MyPreferences.getUserID(this@BaseActivity)!!
                 if (!TextUtils.isEmpty(deviceToken) && !TextUtils.isEmpty(userId)) {
-                    val request = RequestModel()
+                    /*val request = RequestModel()
                     request.user_id = userId
                     request.device_id = deviceToken
                     request.token = MyPreferences.getToken(this@BaseActivity)!!
-                    request.deviceDetails = HardwareInfoManager(this@BaseActivity).collectData(deviceToken)
+                    request.deviceDetails = HardwareInfoManager(this@BaseActivity).collectData(deviceToken)*/
+
+                    val jsonRequest = JsonObject()
+                    jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+                    jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+                    jsonRequest.addProperty("device_id", deviceToken)
+
+                    val gson = Gson()
+                    val jsonString: String = gson.toJson(
+                        HardwareInfoManager(this).collectData(
+                            MyPreferences.getDeviceToken(
+                                this
+                            )!!
+                        )
+                    )
+                    val deviceDetails: JsonObject = JsonParser().parse(jsonString).asJsonObject
+                    jsonRequest.add("deviceDetails", deviceDetails)
+
                     WebServiceClient(this@BaseActivity).client.create(IApiMethod::class.java)
-                        .deviceNotification(request)
+                        .deviceNotification(jsonRequest)
                         .enqueue(object : Callback<UsersPostDBResponse?> {
                             override fun onFailure(
                                 call: Call<UsersPostDBResponse?>?,
@@ -481,8 +489,14 @@ abstract class BaseActivity : AppCompatActivity() {
             val request = RequestModel()
             request.user_id = MyPreferences.getUserID(this@BaseActivity)!!
             request.token = MyPreferences.getToken(this@BaseActivity)!!
-            WebServiceClient(this@BaseActivity).client.create(IApiMethod::class.java)
-                .logout(request)
+
+            val jsonRequest = JsonObject()
+            jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+            jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+
+            WebServiceClient(this@BaseActivity).client.create(IApiMethod::class.java).logout(
+                jsonRequest
+            )
                 .enqueue(object : Callback<UsersPostDBResponse?> {
                     override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
 
@@ -513,11 +527,45 @@ abstract class BaseActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
-    protected open fun sizeOf(data: Bitmap): Int {
-        return (data.byteCount / 1024) / 1024
+    protected open fun fileSize(file: File): Float {
+        val fileSizeInBytes = file.length()
+        Log.e(TAG, "file Size In Bytes =====> $fileSizeInBytes")
+        // Convert the bytes to Kilobytes (1 KB = 1024 Bytes)
+        val fileSizeInKB = fileSizeInBytes / 1024
+        Log.e(TAG, "file Size In KB =====> $fileSizeInKB")
+        // Convert the KB to MegaBytes (1 MB = 1024 KBytes)
+        val fileSizeInMB = (fileSizeInKB / 1024).toFloat()
+        Log.e(TAG, "file Size In MB =====> $fileSizeInMB")
+        return fileSizeInMB
+    }
+
+    open fun saveBitmap(filename: String, bitmap: Bitmap): File? {
+        val extStorageDirectory = context!!.externalCacheDir.toString()
+
+        var file = File(extStorageDirectory, "$filename.jpg")
+        if (file.exists()) {
+            file.delete()
+            file = File(extStorageDirectory, "$filename.jpg")
+            Log.e(TAG, "file exist ========> $file, Bitmap= $filename")
+        }
+        try {
+
+            val outStream: OutputStream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream)
+            outStream.flush()
+            outStream.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        Log.e(TAG, "" + file)
+        return file
+    }
+
+    open fun createPartFromString(param: String): RequestBody? {
+        return param.toRequestBody("text/plain".toMediaTypeOrNull())
+        //return param.toRequestBody("application/json".toMediaTypeOrNull())
     }
 
     abstract fun onBitmapSelected(bitmap: Bitmap)
     abstract fun onUploadedImageUrl(url: String)
-
 }

@@ -192,23 +192,24 @@
                     android:fontFamily="@font/tunga"
                     android:text="Privacy Policy"
                     android:textColor="@color/white" />
-
-
             </LinearLayout>
-
-
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/logo_value"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
+        <androidx.cardview.widget.CardView
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
             android:layout_above="@+id/tnc_policy"
-            android:fontFamily="@font/open_sans_semibold"
-            android:gravity="center_horizontal"
-            android:src="@mipmap/ic_launcher"
-            android:textColor="@color/black" />
+            android:layout_centerInParent="true"
+            android:elevation="@dimen/_10sdp"
+            app:cardElevation="@dimen/_10sdp"
+            app:cardBackgroundColor="@color/colorPrimaryDark">
 
+            <ImageView
+                android:id="@+id/logo_value"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/ic_launcher_round" />
+        </androidx.cardview.widget.CardView>
     </RelativeLayout>
-
 </layout>

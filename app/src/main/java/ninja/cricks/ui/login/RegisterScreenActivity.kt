@@ -11,16 +11,19 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import com.deliverdas.customers.utils.HardwareInfoManager
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import ninja.cricks.*
 import ninja.cricks.databinding.ActivityRegisterBinding
 import ninja.cricks.models.ResponseModel
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
+import ninja.cricks.network.RetrofitClient
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseActivity
 import ninja.cricks.ui.login.viewmodel.LoginViewModel
 import ninja.cricks.utils.BindingUtils
+import ninja.cricks.utils.HardwareInfoManager
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import retrofit2.Call
@@ -33,7 +36,6 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
     private var isActivityRequiredResult: Boolean? = false
     var name = ""
     var binding: ActivityRegisterBinding? = null
-    var viewmodel: LoginViewModel? = null
 
     companion object {
         var ISACTIVITYRESULT = "activityresult"
@@ -59,7 +61,7 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
 
         if (intent.hasExtra(ISACTIVITYRESULT)) {
             isActivityRequiredResult =
-                intent.getBooleanExtra(RegisterScreenActivity.ISACTIVITYRESULT, false)
+                intent.getBooleanExtra(ISACTIVITYRESULT, false)
         }
 
         val animation: Animation =
@@ -71,7 +73,6 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
 
         bindUI()
         initClicks()
-
     }
 
     private fun bindUI() {
@@ -97,22 +98,19 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
                 )
             )
         }
-
     }
 
     private fun initClicks() {
-        binding!!.txtTnc.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
+        binding!!.txtTnc.setOnClickListener {
 
-                val intent = Intent(this@RegisterScreenActivity, WebActivity::class.java)
-                intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_PRIVACY_POLICY)
-                intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_PRIVACY)
-                val options =
-                    ActivityOptions.makeSceneTransitionAnimation(this@RegisterScreenActivity)
-                startActivity(intent, options.toBundle())
-            }
+            val intent = Intent(this@RegisterScreenActivity, WebActivity::class.java)
+            intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_PRIVACY_POLICY)
+            intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_PRIVACY)
+            val options =
+                ActivityOptions.makeSceneTransitionAnimation(this@RegisterScreenActivity)
+            startActivity(intent, options.toBundle())
+        }
 
-        })
         binding!!.registerButton.setOnClickListener(View.OnClickListener {
 
             var referralCode = binding!!.editInvitecode.text.toString()
@@ -137,7 +135,7 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
             } else if (TextUtils.isEmpty(emailAddress) || !MyUtils.isEmailValid(emailAddress)) {
                 MyUtils.showToast(this@RegisterScreenActivity, "Please enter valid email address")
                 return@OnClickListener
-            } else if (TextUtils.isEmpty(state)){
+            } else if (TextUtils.isEmpty(state)) {
                 MyUtils.showToast(this@RegisterScreenActivity, "Please enter state")
                 return@OnClickListener
             }
@@ -162,23 +160,39 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
             return
         }
         customeProgressDialog.show()
-        val request = RequestModel()
 
-        request.user_id = userInfo!!.userId.toString()
-        request.name = name
-        request.image_url = photoUrl
-        request.email = email!!
-        request.mobile_number = mobile!!
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", userInfo!!.userId)
+        jsonRequest.addProperty("name", name)
+        jsonRequest.addProperty("image_url", photoUrl)
+        jsonRequest.addProperty("email", email)
+        jsonRequest.addProperty("mobile_number", mobile)
         if (intent.hasExtra(OtpVerifyActivity.EXTRA_KEY_PROVIDER_ID)) {
-            request.provider_id = intent.getStringExtra(OtpVerifyActivity.EXTRA_KEY_PROVIDER_ID)
+            jsonRequest.addProperty(
+                "provider_id",
+                intent.getStringExtra(OtpVerifyActivity.EXTRA_KEY_PROVIDER_ID)
+            )
         }
-        request.referral_code = binding!!.editInvitecode.text.toString()
-        request.team_name = binding!!.editTeamName.text.toString()
-        request.state = binding!!.editState.text.toString()
-        request.device_id = notificationToken
-        print(notificationToken)
-        request.deviceDetails = HardwareInfoManager(this).collectData(notificationToken)
-        WebServiceClient(this).client.create(IApiMethod::class.java).customerLogin(request)
+
+        if (intent.hasExtra(OtpVerifyActivity.EXTRA_KEY_ID_TOKEN)) {
+            jsonRequest.addProperty(
+                "id_token",
+                intent.getStringExtra(OtpVerifyActivity.EXTRA_KEY_ID_TOKEN)
+            )
+        }
+        jsonRequest.addProperty("referral_code", binding!!.editInvitecode.text.toString())
+        jsonRequest.addProperty("team_name", binding!!.editTeamName.text.toString())
+        jsonRequest.addProperty("state", binding!!.editState.text.toString())
+        jsonRequest.addProperty("device_id", notificationToken)
+
+        val gson = Gson()
+        val jsonString: String =
+            gson.toJson(HardwareInfoManager(this).collectData(notificationToken))
+        val deviceDetails: JsonObject = JsonParser().parse(jsonString).asJsonObject
+        jsonRequest.add("deviceDetails", deviceDetails)
+
+
+        RetrofitClient(this).client.create(IApiMethod::class.java).customerLogin(jsonRequest)
             .enqueue(this)
     }
 
@@ -202,6 +216,11 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
                         MyPreferences.setPaytmCallback(this, responseb.callbackurrl)
                         MyPreferences.setGooglePayId(this, responseb.gpayid)
                         MyPreferences.setRazorPayId(this, responseb.razorPay)
+
+                        if (responseb.baseUrl != null && responseb.baseUrl != "") {
+                            MyPreferences.setBaseUrl(this, responseb.baseUrl)
+                        }
+                        MyPreferences.setSystemToken(this, responseb.systemToken)
 
                         (applicationContext as NinjaApplication).saveUserInformations(
                             responseb.infomodel
@@ -255,8 +274,5 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
         Toast.makeText(
             this, "Warning , ${t?.message}", Toast.LENGTH_LONG
         ).show()
-
-
     }
-
 }

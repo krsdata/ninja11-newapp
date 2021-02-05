@@ -6,9 +6,12 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import ninja.cricks.models.ResponseModel
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
+import ninja.cricks.network.RetrofitClient
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.utils.HardwareInfo
 import ninja.cricks.utils.MyUtils
@@ -33,29 +36,34 @@ class LoginViewModel(application: Application) : AndroidViewModel(application),
         email = ObservableField("")
         password = ObservableField("")
         userLogin = MutableLiveData<ResponseModel>()
-
     }
 
     fun onEmailChanged(s: CharSequence, start: Int, befor: Int, count: Int) {
         btnSelected?.set(MyUtils.isMobileValid(s.toString()) && password?.get()!!.length >= 8)
-
-
     }
 
     fun onPasswordChanged(s: CharSequence, start: Int, befor: Int, count: Int) {
         btnSelected?.set(MyUtils.isMobileValid(email?.get()!!) && s.toString().length >= 8)
-
-
     }
 
     fun login() {
         progressDialog?.value = true
 
-        var request = RequestModel()
+        /*var request = RequestModel()
         request.username = email?.get()!!
         request.password = password?.get()!!
-        request.deviceDetails = hrdinfo
-        WebServiceClient(getApplication()).client.create(IApiMethod::class.java).customerLogin(request)
+        request.deviceDetails = hrdinfo*/
+
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("username", email!!.get())
+        jsonRequest.addProperty("password", password!!.get())
+
+        val gson = Gson()
+        val jsonString: String = gson.toJson(hrdinfo)
+        val deviceDetails: JsonObject = JsonParser().parse(jsonString).asJsonObject
+        jsonRequest.add("deviceDetails", deviceDetails)
+
+        RetrofitClient(getApplication()).client.create(IApiMethod::class.java).customerLogin(jsonRequest)
                 .enqueue(this)
 
     }

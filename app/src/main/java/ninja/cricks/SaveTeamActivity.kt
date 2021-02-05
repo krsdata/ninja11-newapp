@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.Bitmap
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -21,13 +20,13 @@ import ninja.cricks.databinding.ActivitySaveTeamBinding
 import ninja.cricks.models.MyTeamModels
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestCreateTeamModel
+import ninja.cricks.requestmodels.RequestCreateTeamModel
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseActivity
 import ninja.cricks.ui.contest.MyTeamFragment
 import ninja.cricks.ui.createteam.adaptors.PlayersSelectedAdapter
-import ninja.cricks.ui.createteam.models.PlayersInfoModel
-import ninja.cricks.ui.home.models.UsersPostDBResponse
+import ninja.cricks.models.PlayersInfoModel
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.ui.login.RegisterScreenActivity
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.CustomeProgressDialog
@@ -408,13 +407,14 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
             MyUtils.showToast(this, "No Internet connection found")
             return
         }
-        request.token = MyPreferences.getToken(this)!!
+        request.system_token = MyPreferences.getSystemToken(this)!!
+
         customeProgressDialog.show()
         WebServiceClient(this).client.create(IApiMethod::class.java).createTeam(request)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                    MyUtils.showToast(this@SaveTeamActivity, t!!.localizedMessage)
-
+                    customeProgressDialog.dismiss()
+                    MyUtils.showToast(this@SaveTeamActivity, t!!.localizedMessage!!)
                 }
 
                 override fun onResponse(
@@ -425,12 +425,6 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
                     val res = response!!.body()
                     if (res != null) {
                         if (res.status) {
-//                            BindingUtils.sendEventLogs(
-//                                this@SaveTeamActivity,
-//                                matchObject!!.matchId,0,
-//                                userInfo!!,
-//                                BindingUtils.FIREBASE_EVENT_ITEM_ID_SAVE_TEAM_ACTIVITY
-//                            )
                             Toast.makeText(
                                 this@SaveTeamActivity,
                                 "Team Created Successfully",
@@ -439,8 +433,12 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
                             setResult(Activity.RESULT_OK)
                             finish()
                         } else {
-                            Toast.makeText(this@SaveTeamActivity, res.message, Toast.LENGTH_LONG)
-                                .show()
+                            if (res.code == 1001) {
+                                MyUtils.showMessage(this@SaveTeamActivity, res.message)
+                                MyUtils.logoutApp(this@SaveTeamActivity)
+                            } else {
+                                MyUtils.showMessage(this@SaveTeamActivity, res.message)
+                            }
                         }
                     }
                 }

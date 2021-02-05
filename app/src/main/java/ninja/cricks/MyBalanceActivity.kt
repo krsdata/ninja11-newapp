@@ -8,13 +8,13 @@ import android.util.TypedValue
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.google.gson.JsonObject
 import ninja.cricks.databinding.ActivityMyBallanceBinding
 import ninja.cricks.models.AccountDocumentStatus
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.models.WalletInfo
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.ui.home.models.UsersPostDBResponse
 import ninja.cricks.ui.login.RegisterScreenActivity
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.CustomeProgressDialog
@@ -28,7 +28,6 @@ import retrofit2.Response
 class MyBalanceActivity : AppCompatActivity() {
 
     private lateinit var walletInfo: WalletInfo
-    private var customeProgressDialog: CustomeProgressDialog? = null
     private var mBinding: ActivityMyBallanceBinding? = null
     private var mContext: Context? = null
 
@@ -38,10 +37,7 @@ class MyBalanceActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(
-            this,
-            R.layout.activity_my_ballance
-        )
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_my_ballance)
 
         mContext = this
 
@@ -54,9 +50,6 @@ class MyBalanceActivity : AppCompatActivity() {
             finish()
         })
 
-        customeProgressDialog = CustomeProgressDialog(this)
-
-        getWalletBalances()
         initWalletInfo()
 
         mBinding!!.addCash.setOnClickListener(View.OnClickListener {
@@ -152,6 +145,11 @@ class MyBalanceActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        //getWalletBalances()
+    }
+
+    override fun onResume() {
+        super.onResume()
         getWalletBalances()
     }
 
@@ -163,6 +161,7 @@ class MyBalanceActivity : AppCompatActivity() {
         mBinding!!.amountAdded.text = String.format("₹%.2f", walletInfo.prizeAmount)
         mBinding!!.depositAmount.text = String.format("₹%.2f", walletInfo.depositAmount)
         mBinding!!.bonusAmount.text = String.format("₹%.2f", walletInfo.bonusAmount)
+        mBinding!!.extraCashBonus.text = String.format("₹%.2f", walletInfo.extraCash)
 
         if (walletInfo != null) {
             val accountStatus = walletInfo.accountStatus
@@ -181,49 +180,60 @@ class MyBalanceActivity : AppCompatActivity() {
             MyUtils.showToast(this, "No Internet connection found")
             return
         }
-        customeProgressDialog!!.show()
-        val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(this)!!
-        models.token = MyPreferences.getToken(this)!!
 
-        WebServiceClient(this).client.create(IApiMethod::class.java).getWallet(models)
+        mBinding!!.progressBar.visibility = View.VISIBLE
+
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+
+        WebServiceClient(this).client.create(IApiMethod::class.java).getWallet(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                    customeProgressDialog!!.dismiss()
+                    mBinding!!.progressBar.visibility = View.GONE
                 }
 
                 override fun onResponse(
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    customeProgressDialog!!.dismiss()
+                    mBinding!!.progressBar.visibility = View.GONE
+
                     val res = response!!.body()
                     if (res != null) {
                         val responseModel = res.walletObjects
                         if (responseModel != null) {
+                            if (res.status) {
+                                MyPreferences.setRazorPayId(mContext!!, res.razorPay)
+                                MyPreferences.setShowPaytm(mContext!!, res.paytm_show)
+                                MyPreferences.setShowGpay(mContext!!, res.gpay_show)
+                                MyPreferences.setShowRazorPay(mContext!!, res.rozarpay_show)
 
-                            MyPreferences.setRazorPayId(mContext!!, res.razorPay)
-                            MyPreferences.setShowPaytm(mContext!!, res.paytm_show)
-                            MyPreferences.setShowGpay(mContext!!, res.gpay_show)
-                            MyPreferences.setShowRazorPay(mContext!!, res.rozarpay_show)
+                                MyPreferences.setShowPaytmWithdraw(
+                                    mContext!!,
+                                    res.paytm_withdrawal
+                                )
+                                MyPreferences.setShowBankWithdraw(
+                                    mContext!!,
+                                    res.bank_withdrawal
+                                )
+                                MyPreferences.setShowUPIWithdraw(
+                                    mContext!!,
+                                    res.upi_withdrawal
+                                )
 
-                            MyPreferences.setShowPaytmWithdraw(
-                                mContext!!,
-                                res.paytm_withdrawal
-                            )
-                            MyPreferences.setShowBankWithdraw(
-                                mContext!!,
-                                res.bank_withdrawal
-                            )
-                            MyPreferences.setShowUPIWithdraw(
-                                mContext!!,
-                                res.upi_withdrawal
-                            )
-
-                            (application as NinjaApplication).saveWalletInformation(
-                                responseModel
-                            )
-                            initWalletInfo()
+                                (application as NinjaApplication).saveWalletInformation(
+                                    responseModel
+                                )
+                                initWalletInfo()
+                            } else {
+                                if (res.code == 1001) {
+                                    MyUtils.showMessage(this@MyBalanceActivity, res.message)
+                                    MyUtils.logoutApp(this@MyBalanceActivity)
+                                } else {
+                                    MyUtils.showMessage(this@MyBalanceActivity, res.message)
+                                }
+                            }
                         }
                     }
                 }

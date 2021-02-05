@@ -12,21 +12,20 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager.widget.ViewPager
-import com.deliverdas.customers.utils.HardwareInfoManager
 import com.edify.atrist.listener.OnContestEvents
 import com.edify.atrist.listener.OnContestLoadedListener
 import com.edify.atrist.listener.OnMatchTimerStarted
+import com.google.gson.JsonObject
 import ninja.cricks.databinding.ActivityMoreContestBinding
 import ninja.cricks.models.ContestsParentModels
 import ninja.cricks.models.MyTeamModels
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseActivity
 import ninja.cricks.ui.contest.MoreContestFragment
-import ninja.cricks.ui.contest.models.ContestModelLists
-import ninja.cricks.ui.home.models.UsersPostDBResponse
+import ninja.cricks.models.ContestModelLists
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
@@ -155,19 +154,24 @@ class MoreContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEv
     private fun getAllContest() {
         //var userInfo = (activity as PlugSportsApplication).userInformations
         mBinding!!.mycontestRefresh.isRefreshing = true
-        val models = RequestModel()
+        /*val models = RequestModel()
         models.user_id = MyPreferences.getUserID(this@MoreContestActivity)!!
-        // models.token =MyPreferences.getToken(requireActivity())!!
         models.match_id = "" + matchObject!!.matchId
         models.token = MyPreferences.getToken(this@MoreContestActivity)!!
         val deviceToken: String? = MyPreferences.getDeviceToken(this@MoreContestActivity)
-        models.deviceDetails = HardwareInfoManager(this@MoreContestActivity).collectData(deviceToken!!)
+        models.deviceDetails = HardwareInfoManager(this@MoreContestActivity).collectData(deviceToken!!)*/
+
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+        jsonRequest.addProperty("deviceToken", MyPreferences.getDeviceToken(this))
+        jsonRequest.addProperty("match_id", matchObject!!.matchId)
 
         WebServiceClient(this@MoreContestActivity).client.create(IApiMethod::class.java)
-            .getContestByMatch(models)
+            .getContestByMatch(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-
+                    mBinding!!.mycontestRefresh.isRefreshing = false
                 }
 
                 override fun onResponse(
@@ -178,22 +182,26 @@ class MoreContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEv
                     mBinding!!.mycontestRefresh.isRefreshing = false
                     val res = response!!.body()
                     if (res != null) {
-                        BindingUtils.currentTimeStamp = res.systemTime
-                        val responseModel = res.responseObject
-                        if (responseModel!!.matchContestlist != null && responseModel.matchContestlist!!.size > 0) {
-//                            checkinArrayList.clear()
-//                            checkinArrayList.addAll(responseModel.matchContestlist!!)
-//                            adapter.setMatchesList(checkinArrayList)
-//                            mListener.onMyTeam(responseModel.myjoinedTeams!!)
-//                            mListener.onMyContest(responseModel.joinedContestDetails!!)
-                            allContestList =
-                                responseModel.matchContestlist as ArrayList<ContestsParentModels>?
-                            setupViewPager(mBinding!!.viewpagerContest)
+                        if (res.status) {
+                            BindingUtils.currentTimeStamp = res.systemTime
+                            val responseModel = res.responseObject
+                            if (responseModel!!.matchContestlist != null && responseModel.matchContestlist!!.size > 0) {
+                                allContestList =
+                                    responseModel.matchContestlist as ArrayList<ContestsParentModels>?
+                                setupViewPager(mBinding!!.viewpagerContest)
+                            } else {
+                                MyUtils.showToast(
+                                    this@MoreContestActivity,
+                                    "No Contest available for this match $res"
+                                )
+                            }
                         } else {
-                            MyUtils.showToast(
-                                this@MoreContestActivity,
-                                "No Contest available for this match " + res.toString()
-                            )
+                            if (res.code == 1001) {
+                                MyUtils.showMessage(this@MoreContestActivity, res.message)
+                                MyUtils.logoutApp(this@MoreContestActivity)
+                            } else {
+                                MyUtils.showMessage(this@MoreContestActivity, res.message)
+                            }
                         }
                     }
                 }
@@ -283,17 +291,24 @@ class MoreContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEv
     }
 
     override fun onContestJoinning(objects: ContestModelLists, position: Int) {
-        customeProgressDialog.show()
-        val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(this)!!
-        //  models.token =MyPreferences.getToken(this)!!
-        models.match_id = "" + matchObject!!.matchId
-        models.contest_id = "" + objects.id
         if (!MyUtils.isConnectedWithInternet(this)) {
             MyUtils.showToast(this, "No Internet connection found")
             return
         }
-        WebServiceClient(this).client.create(IApiMethod::class.java).joinNewContestStatus(models)
+        customeProgressDialog.show()
+        /*val models = RequestModel()
+        models.user_id = MyPreferences.getUserID(this)!!
+        models.token =MyPreferences.getToken(this)!!
+        models.match_id = "" + matchObject!!.matchId
+        models.contest_id = "" + objects.id*/
+
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+        jsonRequest.addProperty("contest_id", objects.id)
+        jsonRequest.addProperty("match_id", matchObject!!.matchId)
+
+        WebServiceClient(this).client.create(IApiMethod::class.java).joinNewContestStatus(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     customeProgressDialog.dismiss()
@@ -307,6 +322,10 @@ class MoreContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEv
                     val res = response!!.body()
                     if (res != null) {
                         if (!res.status) {
+                            if (res.code == 1001) {
+                                MyUtils.showMessage(this@MoreContestActivity, res.message)
+                                MyUtils.logoutApp(this@MoreContestActivity)
+                            }
                             if (res.code == 401) {
                                 MyUtils.showToast(
                                     this@MoreContestActivity,

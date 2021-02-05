@@ -3,6 +3,7 @@ package ninja.cricks.adaptors
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.*
@@ -14,6 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import ninja.cricks.OfferActivity
 import ninja.cricks.R
 import ninja.cricks.models.MatchBannersModel
 
@@ -78,7 +80,9 @@ class BannerSliderAdapter(
     inner class ImageClick(pos: Int) : View.OnClickListener {
         var position: Int = pos
         override fun onClick(v: View?) {
-            showAlert(arrayList[position].bannerUrl)
+            //showAlert(arrayList[position].bannerUrl)
+            val intent = Intent(mContext, OfferActivity::class.java)
+            mContext.startActivity(intent)
         }
     }
 

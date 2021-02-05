@@ -1,9 +1,7 @@
 package ninja.cricks.ui.dashboard
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,21 +10,20 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.viewpager.widget.ViewPager
-import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
-import ninja.cricks.*
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import com.google.android.material.tabs.TabLayout.TabLayoutOnPageChangeListener
+import com.google.gson.JsonObject
+import ninja.cricks.NinjaApplication
+import ninja.cricks.R
 import ninja.cricks.databinding.FragmentMyaccountsBinding
-import ninja.cricks.models.UserInfo
-import ninja.cricks.models.WalletInfo
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseFragment
-import ninja.cricks.ui.home.models.UsersPostDBResponse
 import ninja.cricks.ui.myaccounts.MyAccountBalanceFragment
+import ninja.cricks.ui.myaccounts.PlayingHistoryFragment
 import ninja.cricks.ui.myaccounts.TransactionFragment
-import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import retrofit2.Call
@@ -35,10 +32,8 @@ import retrofit2.Response
 
 class MyAccountFragment : BaseFragment() {
 
-
-    private lateinit var walletInfo: WalletInfo
-    private lateinit var userInfo: UserInfo
     private var mBinding: FragmentMyaccountsBinding? = null
+    private lateinit var fragment: Fragment
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,38 +49,26 @@ class MyAccountFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        userInfo = (requireActivity().applicationContext as NinjaApplication).userInformations
-        walletInfo = (requireActivity().applicationContext as NinjaApplication).walletInfo
-        (activity as MainActivity).hideToolbar()
 
-        mBinding!!.notificationClick.setOnClickListener(View.OnClickListener {
-            val intent = Intent(requireActivity(), NotificationListActivity::class.java)
-            startActivityForResult(intent, MyBalanceActivity.REQUEST_CODE_ADD_MONEY)
+        mBinding!!.accountTabs.addTab(mBinding!!.accountTabs.newTab().setText("Balance"))
+        mBinding!!.accountTabs.addTab(mBinding!!.accountTabs.newTab().setText("History"))
+        mBinding!!.accountTabs.addTab(mBinding!!.accountTabs.newTab().setText("Transaction"))
+
+        val adapter = MyAccountViewPagerAdapter(requireActivity().supportFragmentManager)
+
+        mBinding!!.accountViewpager.adapter = adapter
+        mBinding!!.accountViewpager.addOnPageChangeListener(TabLayoutOnPageChangeListener(mBinding!!.accountTabs))
+
+        mBinding!!.accountTabs.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                mBinding!!.accountViewpager.currentItem = tab.position
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
         })
-        val viewpager: ViewPager = view.findViewById(R.id.account_viewpager)
-        val tabs: TabLayout = view.findViewById(R.id.account_tabs)
-        setupViewPager(viewpager)
-        // viewpager.addOnPageChangeListener(this)
-        tabs.setupWithViewPager(viewpager)
-    }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-//        if(resultCode == Activity.RESULT_OK) {
-//
-//        }
-        customeProgressDialog!!.show()
-        getWalletBalances()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        initProfile()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        getWalletBalances()
+        mBinding!!.accountTabs.getTabAt(0)?.select()
     }
 
     fun getWalletBalances() {
@@ -93,50 +76,62 @@ class MyAccountFragment : BaseFragment() {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-        //mBinding!!.progressBarPlayingHistory.visibility  =View.VISIBLE
-        val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(requireActivity())!!
-        models.token = MyPreferences.getToken(requireActivity())!!
 
-        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getWallet(models)
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
+
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
+            .getWallet(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                    if (isAdded) {
-                        //mBinding!!.progressBarPlayingHistory.visibility = View.GONE
-                    }
+                    //mBinding!!.progressBarMatches.visibility = View.GONE
                 }
 
                 override fun onResponse(
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
+                    //mBinding!!.progressBarMatches.visibility = View.GONE
                     if (isVisible) {
-                        customeProgressDialog!!.dismiss()
-                        //mBinding!!.progressBarPlayingHistory.visibility = View.GONE
                         val res = response!!.body()
                         if (res != null) {
-                            val responseModel = res.walletObjects
-                            if (responseModel != null) {
+                            if (res.status) {
+                                val responseModel = res.walletObjects
+                                if (responseModel != null) {
 
-                                MyPreferences.setRazorPayId(requireActivity(), res.razorPay)
-                                MyPreferences.setShowPaytm(requireActivity(), res.paytm_show)
-                                MyPreferences.setShowGpay(requireActivity(), res.gpay_show)
-                                MyPreferences.setShowRazorPay(requireActivity(), res.rozarpay_show)
+                                    MyPreferences.setRazorPayId(requireActivity(), res.razorPay)
+                                    MyPreferences.setShowPaytm(requireActivity(), res.paytm_show)
+                                    MyPreferences.setShowGpay(requireActivity(), res.gpay_show)
+                                    MyPreferences.setShowRazorPay(
+                                        requireActivity(),
+                                        res.rozarpay_show
+                                    )
 
-                                MyPreferences.setShowPaytmWithdraw(requireActivity(), res.paytm_withdrawal)
-                                MyPreferences.setShowBankWithdraw(requireActivity(), res.bank_withdrawal)
-                                MyPreferences.setShowUPIWithdraw(requireActivity(), res.upi_withdrawal)
+                                    MyPreferences.setShowPaytmWithdraw(
+                                        requireActivity(),
+                                        res.paytm_withdrawal
+                                    )
+                                    MyPreferences.setShowBankWithdraw(
+                                        requireActivity(),
+                                        res.bank_withdrawal
+                                    )
+                                    MyPreferences.setShowUPIWithdraw(
+                                        requireActivity(),
+                                        res.upi_withdrawal
+                                    )
 
-                                (activity!!.applicationContext as NinjaApplication).saveWalletInformation(
-                                    responseModel
-                                )
-                                initProfile()
-
-//                                var fragment = activity!!.getSupportFragmentManager()
-//                                    .findFragmentById("myFragmentTag") as MyAccountBalanceFragment
-//                                if (fragment != null) {
-//                                    fragment!!.initViews()
-//                                }
+                                    (activity!!.applicationContext as NinjaApplication).saveWalletInformation(
+                                        responseModel
+                                    )
+                                }
+                            } else {
+                                if (res.code == 1001) {
+                                    MyUtils.showMessage(requireActivity(), res.message)
+                                    MyUtils.logoutApp(requireActivity())
+                                } else {
+                                    MyUtils.showMessage(requireActivity(), res.message)
+                                }
                             }
                         }
                     }
@@ -144,86 +139,8 @@ class MyAccountFragment : BaseFragment() {
             })
     }
 
-    fun initProfile() {
-        if (!isVisible) {
-            return
-        }
-        if (userInfo != null) {
-            mBinding!!.profileName.text = userInfo.fullName
-            Glide.with(requireActivity())
-                .load(userInfo.profileImage)
-                .placeholder(R.drawable.player_blue)
-                .into(mBinding!!.profileImage)
-        } else {
-            mBinding!!.profileName.text = "GUEST"
-        }
-
-        mBinding!!.btnEditProfile.setOnClickListener(View.OnClickListener {
-            val intent = Intent(requireActivity(), EditProfileActivity::class.java)
-            startActivity(intent)
-        })
-        walletInfo = (requireActivity().applicationContext as NinjaApplication).walletInfo
-        if (walletInfo != null) {
-            val accountStatus = walletInfo.accountStatus
-            if (accountStatus != null) {
-                if (walletInfo.bankAccountVerified == BindingUtils.BANK_DOCUMENTS_STATUS_REJECTED) {
-                    mBinding!!.btnVerifyAccount.text = "REJECTED"
-                    mBinding!!.btnVerifyAccount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.0f)
-                    mBinding!!.btnVerifyAccount.setBackgroundResource(R.drawable.button_selector_red)
-                    mBinding!!.btnVerifyAccount.setTextColor(Color.WHITE)
-                    mBinding!!.btnVerifyAccount.setOnClickListener(View.OnClickListener {
-                        gotoDocumentsListActivity()
-                    })
-
-                } else
-                    if (walletInfo.bankAccountVerified == BindingUtils.BANK_DOCUMENTS_STATUS_VERIFIED) {
-                        mBinding!!.btnVerifyAccount.text = "Account Verified"
-                        mBinding!!.btnVerifyAccount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.0f)
-                        mBinding!!.btnVerifyAccount.setBackgroundResource(R.drawable.button_selector_green)
-                        mBinding!!.btnVerifyAccount.setTextColor(Color.WHITE)
-                        mBinding!!.btnVerifyAccount.setOnClickListener(View.OnClickListener {
-                            gotoDocumentsListActivity()
-                        })
-                    } else if (walletInfo.bankAccountVerified == BindingUtils.BANK_DOCUMENTS_STATUS_APPROVAL_PENDING) {
-                        mBinding!!.btnVerifyAccount.text = "Approval Pending"
-                        mBinding!!.btnVerifyAccount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.0f)
-                        mBinding!!.btnVerifyAccount.setBackgroundResource(R.drawable.button_selector_white)
-                        mBinding!!.btnVerifyAccount.setTextColor(Color.BLACK)
-                        mBinding!!.btnVerifyAccount.setOnClickListener(View.OnClickListener {
-                            //gotoDocumentsListActivity()
-                        })
-                    } else {
-                        mBinding!!.btnVerifyAccount.setOnClickListener(View.OnClickListener {
-                            val intent =
-                                Intent(requireActivity(), VerifyDocumentsActivity::class.java)
-                            startActivityForResult(
-                                intent,
-                                VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC
-                            )
-                        })
-                    }
-            }
-        } else {
-            mBinding!!.btnVerifyAccount.setOnClickListener(View.OnClickListener {
-                val intent = Intent(requireActivity(), VerifyDocumentsActivity::class.java)
-                startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
-            })
-        }
-    }
-
-    private fun gotoDocumentsListActivity() {
-        val intent = Intent(requireActivity(), DocumentsListActivity::class.java)
-        startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
-    }
-
-    private fun setupViewPager(viewPager: ViewPager) {
-        val adapter = MyAccountViewPagerAdapter(requireActivity().supportFragmentManager)
-        val bundle = Bundle()
-        // bundle.putSerializable(SERIALIZABLE_ACCOUNT_BAL,this)
-        adapter.addFragment(MyAccountBalanceFragment.newInstance(bundle), "BALANCE")
-        //adapter.addFragment(PlayingHistoryFragment.newInstance(bundle),"PLAYING HISTORY")
-        adapter.addFragment(TransactionFragment.newInstance(bundle), "TRANSACTION")
-        viewPager.adapter = adapter
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        fragment.onActivityResult(requestCode, resultCode, data)
     }
 
     internal inner class MyAccountViewPagerAdapter(manager: FragmentManager) :
@@ -231,24 +148,29 @@ class MyAccountFragment : BaseFragment() {
             manager,
             BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
         ) {
-        private val mFragmentList = ArrayList<Fragment>()
-        private val mFragmentTitleList = ArrayList<String>()
+        override fun getCount(): Int {
+            return mBinding!!.accountTabs.tabCount
+        }
 
         override fun getItem(position: Int): Fragment {
-            return mFragmentList[position]
-        }
-
-        override fun getCount(): Int {
-            return mFragmentList.size
-        }
-
-        fun addFragment(fragment: Fragment, title: String) {
-            mFragmentList.add(fragment)
-            mFragmentTitleList.add(title)
-        }
-
-        override fun getPageTitle(position: Int): CharSequence {
-            return mFragmentTitleList[position]
+            return when (position) {
+                0 -> {
+                    fragment = MyAccountBalanceFragment()
+                    fragment
+                }
+                1 -> {
+                    fragment = PlayingHistoryFragment()
+                    fragment
+                }
+                2 -> {
+                    fragment = TransactionFragment()
+                    fragment
+                }
+                else -> {
+                    fragment = MyAccountBalanceFragment()
+                    fragment
+                }
+            }
         }
     }
 }

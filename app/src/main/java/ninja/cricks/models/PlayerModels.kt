@@ -2,34 +2,28 @@ package ninja.cricks.models
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import ninja.cricks.ui.createteam.models.PlayersInfoModel
 import java.io.Serializable
 
 
-class PlayerModels:Serializable,Cloneable {
+data class PlayerModels(
 
     @SerializedName("bat")
     @Expose
-    var batsmen: ArrayList<PlayersInfoModel> ?=null
+    var batsmen: ArrayList<PlayersInfoModel>? = null,
 
     @SerializedName("bowl")
     @Expose
-    var bowlers: ArrayList<PlayersInfoModel> ?=null
-
+    var bowlers: ArrayList<PlayersInfoModel>? = null,
 
     @SerializedName("all")
     @Expose
-    var allRounders: ArrayList<PlayersInfoModel> ?=null
-
+    var allRounders: ArrayList<PlayersInfoModel>? = null,
 
     @SerializedName("wkbat")
     @Expose
-    var wicketKeeperBatsMan: ArrayList<PlayersInfoModel> ?=null
+    var wicketKeeperBatsMan: ArrayList<PlayersInfoModel>? = null,
 
-     @SerializedName("wk")
+    @SerializedName("wk")
     @Expose
-    var wicketKeepers: ArrayList<PlayersInfoModel> ?=null
-
-
-
-}
+    var wicketKeepers: ArrayList<PlayersInfoModel>? = null
+) : Serializable, Cloneable

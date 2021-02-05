@@ -1,45 +1,70 @@
 package ninja.cricks
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
+import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
+import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.gson.JsonObject
 import ninja.cricks.databinding.ActivityEditProfileBinding
 import ninja.cricks.models.ResponseModel
+import ninja.cricks.models.UserInfo
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseActivity
-import ninja.cricks.ui.home.models.UsersPostDBResponse
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
+import ninja.cricks.utils.setLocalImage
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
 import java.text.DecimalFormat
 import java.util.*
 
-
-class EditProfileActivity : BaseActivity() {
+class EditProfileActivity : AppCompatActivity() {
 
     private var mBinding: ActivityEditProfileBinding? = null
     private var photoUrl: String = ""
+    private lateinit var userInfo: UserInfo
+    private lateinit var customeProgressDialog: CustomeProgressDialog
+    private lateinit var mContext: Context
+    private var mImageFile: File? = null
+
+    companion object {
+        private var TAG: String = EditProfileActivity::class.java.simpleName
+        private const val GALLERY_IMAGE_REQ_CODE = 102
+        private const val CAMERA_IMAGE_REQ_CODE = 103
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        userInfo = (application as NinjaApplication).userInformations
-        customeProgressDialog = CustomeProgressDialog(this)
         mBinding = DataBindingUtil.setContentView(
             this,
             R.layout.activity_edit_profile
         )
+        mContext = this
+
+        userInfo = (application as NinjaApplication).userInformations
+        customeProgressDialog = CustomeProgressDialog(mContext)
+
         mBinding!!.toolbar.title = "Update Profile"
         mBinding!!.toolbar.setTitleTextColor(resources.getColor(R.color.white))
         mBinding!!.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
@@ -49,12 +74,11 @@ class EditProfileActivity : BaseActivity() {
         })
 
         Glide.with(this)
-            .load(userInfo!!.profileImage)
+            .load(userInfo.profileImage)
             .placeholder(R.drawable.ic_profile)
             .into(mBinding!!.profileImage)
 
         updateUserOtherInfo()
-
 
         mBinding!!.profileImage.setOnClickListener {
             if (!TextUtils.isEmpty(photoUrl)) {
@@ -63,25 +87,12 @@ class EditProfileActivity : BaseActivity() {
                 intent.putExtra(FullScreenImageViewActivity.KEY_IMAGE_URL, photoUrl)
                 startActivity(intent)
             } else {
-                if (checkAndRequestPermissions()) {
-                    selectImage(BaseActivity.DOCUMENTS_TYPE_PROFILES)
-                } else {
-                    Toast.makeText(
-                        this@EditProfileActivity,
-                        "Permission required ",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+                selectImage()
             }
         }
 
         mBinding!!.imageEdit.setOnClickListener {
-            if (checkAndRequestPermissions()) {
-                selectImage(DOCUMENTS_TYPE_PROFILES)
-            } else {
-                Toast.makeText(this@EditProfileActivity, "Permission required ", Toast.LENGTH_LONG)
-                    .show()
-            }
+            selectImage()
         }
 
         mBinding!!.dateOfBirth.setOnClickListener(View.OnClickListener {
@@ -114,42 +125,33 @@ class EditProfileActivity : BaseActivity() {
             datePickerDialog.show()
         })
 
-        mBinding!!.btnUpdateProfile.setOnClickListener(View.OnClickListener {
-
+        mBinding!!.btnUpdateProfile.setOnClickListener {
             updateProfile()
-        })
+        }
         initProfile()
         getProfile()
 
     }
 
     private fun updateUserOtherInfo() {
-        if (!TextUtils.isEmpty(userInfo!!.teamName)) {
-            mBinding!!.editTeamName.setText(userInfo!!.teamName)
-
-            mBinding!!.editTeamName.setSelection(userInfo!!.teamName.length)
+        if (!TextUtils.isEmpty(userInfo.teamName)) {
+            mBinding!!.editTeamName.setText(userInfo.teamName)
+            mBinding!!.editTeamName.setSelection(userInfo.teamName.length)
         }
 
-        if (!TextUtils.isEmpty(userInfo!!.dateOfBirth)) {
-            mBinding!!.dateOfBirth.setText(userInfo!!.dateOfBirth)
+        if (!TextUtils.isEmpty(userInfo.dateOfBirth)) {
+            mBinding!!.dateOfBirth.setText(userInfo.dateOfBirth)
         }
 
-        if (!TextUtils.isEmpty(userInfo!!.city)) {
-            mBinding!!.editCity.setText(userInfo!!.city)
+        if (!TextUtils.isEmpty(userInfo.city)) {
+            mBinding!!.editCity.setText(userInfo.city)
         }
-        /*if(!TextUtils.isEmpty(userInfo!!.pinCode)) {
-            mBinding!!.editPicode.setText(userInfo!!.pinCode)
-            mBinding!!.spinnerStates.prompt = userInfo!!.state
-
-        }*/
     }
 
-    override fun onBitmapSelected(bitmap: Bitmap) {
-        //mBinding!!.profileImage.setImageBitmap(bitmap)
-        if (!bitmap.equals("")) {
-            Glide.with(this).asBitmap().load(bitmap).placeholder(R.drawable.player_blue)
-                .into(mBinding!!.profileImage)
-        }
+    /*override fun onBitmapSelected(bitmap: Bitmap) {
+        val mBitmap: Bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
+        Glide.with(this).asBitmap().load(mBitmap).placeholder(R.drawable.player_blue)
+            .into(mBinding!!.profileImage)
     }
 
     override fun onUploadedImageUrl(url: String) {
@@ -157,18 +159,94 @@ class EditProfileActivity : BaseActivity() {
         if (url.isNotEmpty())
             Glide.with(this).load(url).placeholder(R.drawable.player_blue)
                 .into(mBinding!!.profileImage)
-        //MyPreferences.setProfilePicture(this@EditProfileActivity,photoUrl)
+    }*/
+
+    private fun selectImage() {
+        val options: Array<CharSequence> =
+            arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
+
+        val builder: AlertDialog.Builder = AlertDialog.Builder(mContext)
+        builder.setTitle("Add Photo")
+        builder.setItems(options) { dialog, items ->
+            if (options[items] == "Take Photo") {
+                getImageCamera()
+            } else if (options[items] == "Choose from Gallery") {
+                getImageGallery()
+            } else if (options[items] == "Cancel") {
+                dialog!!.dismiss()
+            }
+        }
+        builder.show()
+    }
+
+    private fun getImageCamera() {
+        ImagePicker.with(this)
+            .cameraOnly() // User can only capture image from Camera
+            .crop() // Crop Image(User can choose Aspect Ratio)
+            .compress(2048) // Image size will be less than 1024 KB
+            .saveDir(
+                File(
+                    cacheDir,
+                    "Ninja11"
+                )
+            ) // External file path
+            .start(CAMERA_IMAGE_REQ_CODE)
+    }
+
+    private fun getImageGallery() {
+        ImagePicker.with(this)
+            .galleryOnly() // User can only select image from Gallery
+            .crop() // Crop Image(User can choose Aspect Ratio)
+            .compress(2048) // Image size will be less than 2048 KB
+            .saveDir(
+                File(
+                    cacheDir,
+                    "Ninja11"
+                )
+            ) // External file path
+            .galleryMimeTypes(  //Exclude gif images
+                mimeTypes = arrayOf(
+                    "image/png",
+                    "image/jpg",
+                    "image/jpeg"
+                )
+            )
+            .maxResultSize(1080, 1920) // Image resolution will be less than 1080 x 1920
+            .start(GALLERY_IMAGE_REQ_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            Log.e(TAG, "Path:${ImagePicker.getFilePath(data)}")
+            val file = ImagePicker.getFile(data)!! // File object will not be null for RESULT_OK
+            when (requestCode) {
+                GALLERY_IMAGE_REQ_CODE -> {
+                    mImageFile = file
+                    mBinding!!.profileImage.setLocalImage(file, true)
+                    uploadImageToServer(file)
+                }
+                CAMERA_IMAGE_REQ_CODE -> {
+                    mImageFile = file
+                    mBinding!!.profileImage.setLocalImage(file, true)
+                    uploadImageToServer(file)
+                }
+            }
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            MyUtils.showToast(this, ImagePicker.getError(data))
+        } else {
+            MyUtils.showToast(this, "Task Cancelled")
+        }
     }
 
     private fun initProfile() {
-        photoUrl = userInfo!!.profileImage
-        // MyPreferences.setProfilePicture(this,photoUrl)
-        mBinding!!.editTeamName.setText(userInfo!!.teamName)
-        mBinding!!.updateProfileName.setText(userInfo!!.fullName)
-        mBinding!!.updateEmail.setText(userInfo!!.userEmail)
-        mBinding!!.updateEditMobile.setText(userInfo!!.mobileNumber)
+        photoUrl = userInfo.profileImage
+        mBinding!!.editTeamName.setText(userInfo.teamName)
+        mBinding!!.updateProfileName.setText(userInfo.fullName)
+        mBinding!!.updateEmail.setText(userInfo.userEmail)
+        mBinding!!.updateEditMobile.setText(userInfo.mobileNumber)
 
-        if (userInfo!!.gender.equals("male")) {
+        if (userInfo.gender.equals("male")) {
             mBinding!!.genderMale.isChecked = true
             mBinding!!.genderFemale.isChecked = false
         } else {
@@ -176,8 +254,8 @@ class EditProfileActivity : BaseActivity() {
             mBinding!!.genderFemale.isChecked = true
         }
 
-        if (userInfo!!.profileImage.isNotEmpty())
-            Glide.with(this).load(userInfo!!.profileImage).placeholder(R.drawable.player_blue)
+        if (userInfo.profileImage.isNotEmpty())
+            Glide.with(this).load(userInfo.profileImage).placeholder(R.drawable.player_blue)
                 .into(mBinding!!.profileImage)
     }
 
@@ -219,23 +297,23 @@ class EditProfileActivity : BaseActivity() {
         }
 
         mBinding!!.progressBar.visibility = View.VISIBLE
-        val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(this)!!
-        models.image_url = photoUrl
-        models.team_name = mBinding!!.editTeamName.text.toString()
-        models.name = editName
-        models.email = emailAddress
-        models.mobile_number = mobileNumber
-        models.city = cityName
-        models.gender = gender
-        models.dateOfBirth = dateOfBirth
-        //models.pinCode = pinCode
-        //models.state = state
 
-        WebServiceClient(this).client.create(IApiMethod::class.java).updateProfile(models)
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+        jsonRequest.addProperty("image_url", photoUrl)
+        jsonRequest.addProperty("team_name", mBinding!!.editTeamName.text.toString())
+        jsonRequest.addProperty("name", editName)
+        jsonRequest.addProperty("email", emailAddress)
+        jsonRequest.addProperty("mobile_number", mobileNumber)
+        jsonRequest.addProperty("city", cityName)
+        jsonRequest.addProperty("gender", gender)
+        jsonRequest.addProperty("dateOfBirth", dateOfBirth)
+
+        WebServiceClient(this).client.create(IApiMethod::class.java).updateProfile(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-
+                    mBinding!!.progressBar.visibility = View.GONE
                 }
 
                 override fun onResponse(
@@ -244,25 +322,31 @@ class EditProfileActivity : BaseActivity() {
                 ) {
                     mBinding!!.progressBar.visibility = View.GONE
                     val res = response!!.body()
-                    if (res != null && res.status) {
-//                        userInfo = (application as PlugSportsApplication).userInformations
-                        userInfo!!.profileImage = photoUrl
-                        userInfo!!.teamName = editTeamName
-                        userInfo!!.fullName = editName
-                        userInfo!!.city = cityName
-                        userInfo!!.gender = gender
-                        userInfo!!.dateOfBirth = dateOfBirth
-                       // userInfo.pinCode = pinCode
-//                        userInfo.state = state
+                    if (res != null) {
+                        if (res.status) {
+                            userInfo.profileImage = photoUrl
+                            userInfo.teamName = editTeamName
+                            userInfo.fullName = editName
+                            userInfo.city = cityName
+                            userInfo.gender = gender
+                            userInfo.dateOfBirth = dateOfBirth
 
-                        (application as NinjaApplication).saveUserInformations(userInfo)
+                            (application as NinjaApplication).saveUserInformations(userInfo)
 
-                        Toast.makeText(
-                            this@EditProfileActivity,
-                            "Profile updated successfully",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        finish()
+                            Toast.makeText(
+                                this@EditProfileActivity,
+                                "Profile updated successfully",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            finish()
+                        } else {
+                            if (res.code == 1001) {
+                                MyUtils.showMessage(this@EditProfileActivity, res.message)
+                                MyUtils.logoutApp(this@EditProfileActivity)
+                            } else {
+                                MyUtils.showMessage(this@EditProfileActivity, res.message)
+                            }
+                        }
                     }
                 }
             })
@@ -274,10 +358,12 @@ class EditProfileActivity : BaseActivity() {
             return
         }
         customeProgressDialog.show()
-        val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(this)!!
 
-        WebServiceClient(this).client.create(IApiMethod::class.java).getProfile(models)
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+
+        WebServiceClient(this).client.create(IApiMethod::class.java).getProfile(jsonRequest)
             .enqueue(object : Callback<ResponseModel?> {
                 override fun onFailure(call: Call<ResponseModel?>?, t: Throwable?) {
                     customeProgressDialog.dismiss()
@@ -289,22 +375,80 @@ class EditProfileActivity : BaseActivity() {
                 ) {
                     customeProgressDialog.dismiss()
                     val res = response!!.body()
-                    if (res != null && res.status) {
-
-                        val infoModels = res.infomodel
-                        if (infoModels != null) {
-                            (application as NinjaApplication).saveUserInformations(infoModels)
-                            userInfo = (application as NinjaApplication).userInformations
-                            initProfile()
-                            updateUserOtherInfo()
+                    if (res != null) {
+                        if (res.status) {
+                            val infoModels = res.infomodel
+                            if (infoModels != null) {
+                                (application as NinjaApplication).saveUserInformations(infoModels)
+                                userInfo = (application as NinjaApplication).userInformations
+                                initProfile()
+                                updateUserOtherInfo()
+                            } else {
+                                MyUtils.showToast(
+                                    this@EditProfileActivity,
+                                    "Something went wrong, please contact admin"
+                                )
+                            }
                         } else {
-                            MyUtils.showToast(
-                                this@EditProfileActivity,
-                                "Something went wrong, please contact admin"
-                            )
+                            if (res.statusCode == 1001) {
+                                MyUtils.showMessage(this@EditProfileActivity, res.message)
+                                MyUtils.logoutApp(this@EditProfileActivity)
+                            } else {
+                                MyUtils.showMessage(this@EditProfileActivity, res.message)
+                            }
                         }
                     }
                 }
             })
+    }
+
+    private fun uploadImageToServer(file: File) {
+
+        var multipartImage: MultipartBody.Part? = null
+        val requestPanImage: RequestBody = file
+            .asRequestBody("multipart/jpg".toMediaTypeOrNull())
+        multipartImage =
+            MultipartBody.Part.createFormData("image_bytes", file.name, requestPanImage)
+
+        val userId: RequestBody = createPartFromString(MyPreferences.getUserID(mContext)!!)
+        val documentType: RequestBody = createPartFromString(BaseActivity.DOCUMENTS_TYPE_PROFILES)
+        val systemToken: RequestBody =
+            createPartFromString(MyPreferences.getSystemToken(mContext)!!)
+
+        val map: HashMap<String, RequestBody> = HashMap<String, RequestBody>()
+        map["user_id"] = userId
+        map["documents_type"] = documentType
+        map["system_token"] = systemToken
+
+        customeProgressDialog.show()
+        WebServiceClient(mContext).client.create(IApiMethod::class.java)
+            .saveDocumentImage(map, multipartImage)
+            .enqueue(object : Callback<ResponseModel?> {
+                override fun onFailure(call: Call<ResponseModel?>?, t: Throwable?) {
+                    customeProgressDialog.dismiss()
+                    MyUtils.showToast(this@EditProfileActivity, t!!.localizedMessage!!)
+                }
+
+                override fun onResponse(
+                    call: Call<ResponseModel?>?,
+                    response: Response<ResponseModel?>?
+                ) {
+                    if (!isFinishing) {
+                        customeProgressDialog.dismiss()
+                        val res = response!!.body()
+                        if (res != null) {
+                            if (res.status) {
+                                MyUtils.showMessage(mContext, res.message)
+                            } else {
+                                MyUtils.showMessage(mContext, res.message)
+                            }
+                        }
+                    }
+                }
+            })
+    }
+
+    private fun createPartFromString(param: String): RequestBody {
+        return param.toRequestBody("text/plain".toMediaTypeOrNull())
     }
 }

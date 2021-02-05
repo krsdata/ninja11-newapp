@@ -12,10 +12,11 @@ import androidx.core.content.FileProvider
 import ninja.cricks.BuildConfig
 import ninja.cricks.R
 import java.io.File
+
 class DownloadController(
     private val context: Context,
     private val url: String,
-    val customeProgressDialog: CustomeProgressDialog
+    val customProgressDialog: CustomeProgressDialog
 ) {
     companion object {
         private const val FILE_NAME = "SampleDownloadApp.apk"
@@ -25,7 +26,7 @@ class DownloadController(
         private const val APP_INSTALL_PATH = "application/vnd.android.package-archive"
     }
     fun enqueueDownload() {
-        customeProgressDialog.show()
+        customProgressDialog.show()
         var destination =
             context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).toString() + "/"
         destination += FILE_NAME
@@ -38,10 +39,8 @@ class DownloadController(
         request.setMimeType(MIME_TYPE)
         request.setTitle(context.getString(R.string.title_file_download))
         request.setDescription(context.getString(R.string.downloading))
-        // set destination
         request.setDestinationUri(uri)
         showInstallOption(destination, uri)
-        // Enqueue a new download and same the referenceId
         downloadManager.enqueue(request)
         Toast.makeText(context, context.getString(R.string.downloading), Toast.LENGTH_LONG)
             .show()
@@ -50,7 +49,6 @@ class DownloadController(
         destination: String,
         uri: Uri
     ) {
-        // set BroadcastReceiver to install app when .apk is downloaded
         val onComplete = object : BroadcastReceiver() {
             override fun onReceive(
                 context: Context,
@@ -69,15 +67,14 @@ class DownloadController(
                     install.data = contentUri
                     context.startActivity(install)
                     context.unregisterReceiver(this)
-                    // finish()
                 } else {
-                    val intent = Intent(Intent.ACTION_VIEW)
-                    intent.setDataAndType(uri, APP_INSTALL_PATH)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    context.startActivity(intent)
+                    val intent1 = Intent(Intent.ACTION_VIEW)
+                    intent1.setDataAndType(uri, APP_INSTALL_PATH)
+                    intent1.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    context.startActivity(intent1)
                     context.unregisterReceiver(this)
                 }
-                customeProgressDialog.dismiss()
+                customProgressDialog.dismiss()
             }
         }
         context.registerReceiver(onComplete, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE))

@@ -4,19 +4,20 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-class MatchBannersModel : Serializable, Cloneable {
+data class MatchBannersModel(
 
     @SerializedName("url")
     @Expose
-    val bannerUrl: String = ""
+    val bannerUrl: String = "",
 
     @SerializedName("title")
     @Expose
-    val title: String = ""
+    val title: String = "",
 
     @SerializedName("description")
     @Expose
     val descriptions: String = ""
+) : Serializable, Cloneable {
 
     public override fun clone(): MatchBannersModel {
         return super.clone() as MatchBannersModel

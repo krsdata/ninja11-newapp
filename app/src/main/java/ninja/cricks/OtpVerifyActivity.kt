@@ -12,11 +12,11 @@ import android.view.KeyEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.google.gson.JsonObject
 import ninja.cricks.models.UserInfo
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.ui.home.models.UsersPostDBResponse
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.ui.login.RegisterScreenActivity
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
@@ -32,6 +32,7 @@ class OtpVerifyActivity : AppCompatActivity() {
     companion object{
         val EXTRA_KEY_EDIT_MOBILE_NUMBER : String = "isEditMobileNumber"
         val EXTRA_KEY_PROVIDER_ID : String = "providerid"
+        val EXTRA_KEY_ID_TOKEN : String = "idToken"
     }
 
     val RESEND_CODE_TIMER:Long = 1 * 60 * 1000
@@ -48,7 +49,7 @@ class OtpVerifyActivity : AppCompatActivity() {
             val second = durationInMillis / 1000 % 60
             val minute = durationInMillis / (1000 * 60) % 60
             val formattedValues = String.format("%02d:%02d", minute, second)
-            Log.d("timeTick", formattedValues)
+            //Log.d("timeTick", formattedValues)
             mBinding!!.timerOtpDetect.text = formattedValues
         }
 
@@ -156,11 +157,16 @@ class OtpVerifyActivity : AppCompatActivity() {
     private fun resendOtp() {
         customeProgressDialog!!.show()
         mBinding!!.progressBar.visibility  =View.VISIBLE
-        var models = RequestModel()
+        /*var models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
-        models.mobile_number = userInfo.mobileNumber
+        models.mobile_number = userInfo.mobileNumber*/
 
-        WebServiceClient(this).client.create(IApiMethod::class.java).generateOtp(models)
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+        jsonRequest.addProperty("mobile_number", userInfo.mobileNumber)
+
+        WebServiceClient(this).client.create(IApiMethod::class.java).generateOtp(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
 
@@ -172,10 +178,7 @@ class OtpVerifyActivity : AppCompatActivity() {
                 ) {
                     customeProgressDialog!!.hide()
                     mBinding!!.progressBar.visibility  =View.GONE
-
-
                 }
-
             })
     }
 
@@ -188,11 +191,18 @@ class OtpVerifyActivity : AppCompatActivity() {
         }
 
         mBinding!!.progressBar.visibility  =View.VISIBLE
-        var models = RequestModel()
+
+        /*var models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
-        models.mobile_number = mobileNumber
+        models.mobile_number = mobileNumber*/
+
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+        jsonRequest.addProperty("mobile_number", mobileNumber)
+
         customeProgressDialog!!.show()
-        WebServiceClient(this).client.create(IApiMethod::class.java).switchNumbers(models)
+        WebServiceClient(this).client.create(IApiMethod::class.java).switchNumbers(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     t!!.message?.let { MyUtils.showToast(this@OtpVerifyActivity, it) }
@@ -211,11 +221,8 @@ class OtpVerifyActivity : AppCompatActivity() {
                     }else {
                         MyUtils.showToast(this@OtpVerifyActivity,"unable to change your number")
                     }
-
                 }
-
             })
-
     }
 
     private fun verifyOtp() {
@@ -245,13 +252,18 @@ class OtpVerifyActivity : AppCompatActivity() {
         }
 
         mBinding!!.progressBar.visibility  =View.VISIBLE
-        var models = RequestModel()
+        /*var models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
         models.mobile_number = userInfo.mobileNumber
-        models.otp = String.format("%s%s%s%s",otpCode1,otpCode2,otpCode3,otpCode4)
+        models.otp = String.format("%s%s%s%s",otpCode1,otpCode2,otpCode3,otpCode4)*/
 
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+        jsonRequest.addProperty("mobile_number", userInfo.mobileNumber)
+        jsonRequest.addProperty("otp", String.format("%s%s%s%s",otpCode1,otpCode2,otpCode3,otpCode4))
 
-        WebServiceClient(this).client.create(IApiMethod::class.java).verifyOtp(models)
+        WebServiceClient(this).client.create(IApiMethod::class.java).verifyOtp(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
 

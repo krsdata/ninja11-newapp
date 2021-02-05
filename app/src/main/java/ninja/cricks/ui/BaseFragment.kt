@@ -5,11 +5,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.google.gson.JsonObject
 import ninja.cricks.SplashScreenActivity
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.ui.home.models.UsersPostDBResponse
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
@@ -19,46 +19,41 @@ import retrofit2.Response
 
 open class BaseFragment : Fragment() {
 
-    var customeProgressDialog: CustomeProgressDialog?=null
+    var customeProgressDialog: CustomeProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         customeProgressDialog = CustomeProgressDialog(activity)
     }
 
-    fun logoutApp(message: String,boolean: Boolean) {
+    fun logoutApp(message: String, boolean: Boolean) {
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-        genericAlertDialog(message,boolean)
+        genericAlertDialog(message, boolean)
     }
 
 
     fun genericAlertDialog(message: String, boolean: Boolean) {
         val builder = AlertDialog.Builder(requireActivity())
-        //set title for alert dialog
-        // builder.setTitle("Warning")
-        //set message for alert dialog
-
         builder.setMessage(message)
         builder.setIcon(android.R.drawable.ic_dialog_alert)
-
-        //performing positive action
-        if(boolean) {
+        if (boolean) {
             builder.setNegativeButton("Cancel", null)
         }
-        builder.setPositiveButton("OK"){
-                dialogInterface, which ->
+        builder.setPositiveButton("OK") { dialogInterface, which ->
 
             customeProgressDialog!!.show()
-            var request = RequestModel()
-            request.user_id = MyPreferences.getUserID(requireActivity())!!
-            request.token = MyPreferences.getToken(requireActivity())!!
-            WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).logout(request)
+            val jsonRequest = JsonObject()
+            jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
+            jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
+
+            WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
+                .logout(jsonRequest)
                 .enqueue(object : Callback<UsersPostDBResponse?> {
                     override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-
+                        customeProgressDialog!!.dismiss()
                     }
 
                     override fun onResponse(
@@ -80,9 +75,7 @@ open class BaseFragment : Fragment() {
 
                 })
         }
-        // Create the AlertDialog
         val alertDialog: AlertDialog = builder.create()
-        // Set other dialog properties
         alertDialog.setCancelable(false)
         alertDialog.setCanceledOnTouchOutside(false)
         alertDialog.show()

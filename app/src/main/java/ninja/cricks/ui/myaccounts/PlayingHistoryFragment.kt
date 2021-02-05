@@ -7,94 +7,105 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
-import ninja.cricks.network.WebServiceClient
+import com.google.gson.JsonObject
 import ninja.cricks.R
 import ninja.cricks.databinding.FragmentPlayingHistoryBinding
-import ninja.cricks.ui.home.models.UsersPostDBResponse
+import ninja.cricks.models.UsersPostDBResponse
+import ninja.cricks.network.IApiMethod
+import ninja.cricks.network.WebServiceClient
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class PlayingHistoryFragment : Fragment() {
 
     private var mBinding: FragmentPlayingHistoryBinding? = null
-   // var myAccountFragment: MyAccountFragment?=null
-    companion object{
-        fun newInstance(bundle : Bundle) : PlayingHistoryFragment {
+
+    companion object {
+        fun newInstance(bundle: Bundle): PlayingHistoryFragment {
             val fragment = PlayingHistoryFragment()
-            fragment.arguments=bundle
+            fragment.arguments = bundle
             return fragment
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-      //  myAccountFragment = arguments!!.get(SERIALIZABLE_ACCOUNT_BAL) as MyAccountFragment
-
-    }
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-
-        mBinding  = DataBindingUtil.inflate(inflater,
-            R.layout.fragment_playing_history, container, false)
-
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        mBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_playing_history, container, false
+        )
         return mBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBinding!!.progressBarMatches.visibility = View.GONE
+    }
+
+    override fun onResume() {
+        super.onResume()
         getPlayingMatchHistory()
     }
 
     fun getPlayingMatchHistory() {
-        if(!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
-            MyUtils.showToast(activity as AppCompatActivity,"No Internet connection found")
+        if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
+            MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-        var models = RequestModel()
-        models.user_id = MyPreferences.getUserID(activity!!)!!
-        WebServiceClient(activity!!).client.create(IApiMethod::class.java).getPlayingMatchHistory(models)
+
+        mBinding!!.progressBarMatches.visibility = View.VISIBLE
+
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
+
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
+            .getPlayingMatchHistory(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-
+                    mBinding!!.progressBarMatches.visibility = View.GONE
                 }
 
                 override fun onResponse(
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    if(isAdded) {
-                        var res = response!!.body()
-                        if(res!=null) {
-                            var responseModel = res.responseObject
-                            if(responseModel!=null) {
-                                //var totalTeamJoined = responseModel.totalTeamJoined
-                                var totalContestJoined = responseModel.totalContestJoined
-                                var totalMatchPlayed = responseModel.totalMatchPlayed
-                                var totalMatchWin = responseModel.totalMatchWin
-                                mBinding!!.txtMatchPlayed.text = String.format("%d",totalMatchPlayed)
-                                mBinding!!.txtContestPlayed.text =
-                                    String.format("%d",totalContestJoined)
-                                mBinding!!.txtContestWin.text = String.format("%d",totalMatchWin)
-                                mBinding!!.totalBalance.setText(String.format("%s",responseModel.totalWinningAmount))
+                    if (isAdded) {
+                        mBinding!!.progressBarMatches.visibility = View.GONE
+                        val res = response!!.body()
+                        if (res != null) {
+                            if (res.status) {
+                                val responseModel = res.responseObject
+                                if (responseModel != null) {
+                                    mBinding!!.txtMatchPlayed.text = responseModel.totalMatchPlayed
+                                    mBinding!!.txtContestPlayed.text =
+                                        responseModel.totalContestJoined
+                                    mBinding!!.txtContestWin.text = responseModel.totalMatchWin
+                                    mBinding!!.totalBalance.text =
+                                        String.format("₹%s", responseModel.totalWinningAmount)
+                                    mBinding!!.totalDeposit.text =
+                                        String.format("₹%s", responseModel.totalMyDeposit)
+                                    mBinding!!.totalWithdraw.text =
+                                        String.format("₹%s", responseModel.totalMyWithdrawal)
 
+                                }
+                            } else {
+                                if (res.code == 1001) {
+                                    MyUtils.showMessage(requireActivity(), res.message)
+                                    MyUtils.logoutApp(requireActivity())
+                                } else {
+                                    MyUtils.showMessage(requireActivity(), res.message)
+                                }
                             }
                         }
                     }
-
-
                 }
-
             })
-
     }
-
-
-
 }

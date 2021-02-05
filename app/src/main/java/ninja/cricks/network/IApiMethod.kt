@@ -3,189 +3,198 @@ package ninja.cricks.network
 import com.google.gson.JsonObject
 import ninja.cricks.models.DocumentsModel
 import ninja.cricks.models.ResponseModel
-import ninja.cricks.payments.RequestPaytmModel
-import ninja.cricks.ui.home.models.UsersPostDBResponse
+import ninja.cricks.models.UsersPostDBResponse
+import ninja.cricks.requestmodels.RequestCreateTeamModel
+import ninja.cricks.requestmodels.RequestPaytmModel
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
 interface IApiMethod {
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/login")
-    fun customerLogin(@Body request: RequestModel): Call<ResponseModel>
+    @POST("api/v1/login")
+    fun customerLogin(@Body request: JsonObject): Call<ResponseModel>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/member/logout")
-    fun logout(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("member/logout")
+    fun logout(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/getMatch")
-    fun getAllMatches(@Body request: RequestModel): Call<UsersPostDBResponse>
-
-
-    @Headers("Content-Type: application/json")
-    @POST("api/v2/getContestByMatch")
-    fun getContestByMatch(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("getMatch")
+    fun getAllMatches(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/getPlayer")
-    fun getPlayer(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("getContestByMatch")
+    fun getContestByMatch(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/createTeam")
+    @POST("getPlayer")
+    fun getPlayer(@Body request: JsonObject): Call<UsersPostDBResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST("createTeam")
     fun createTeam(@Body request: RequestCreateTeamModel): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/getMyTeam")
-    fun getMyTeam(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("getMyTeam")
+    fun getMyTeam(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/getMyContest")
-    fun getMyContest(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("getMyContest")
+    fun getMyContest(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/joinContest")
-    fun joinContest(@Body request: RequestModel): Call<UsersPostDBResponse>
-
-
-    @Headers("Content-Type: application/json")
-    @POST("api/v2/getWallet")
-    fun getWallet(@Body request: RequestModel): Call<UsersPostDBResponse>
-
-    @Headers("Content-Type: application/json")
-    @POST("api/v2/leaderBoard")
-    fun getLeaderBoard(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("joinContest")
+    fun joinContest(@Body request: JsonObject): Call<UsersPostDBResponse>
 
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/getPrizeBreakup")
-    fun getPrizeBreakUp(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("getWallet")
+    fun getWallet(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/forgotPassword")
-    fun forgotPassword(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("leaderBoard")
+    fun getLeaderBoard(@Body request: JsonObject): Call<UsersPostDBResponse>
+
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/deviceNotification")
-    fun deviceNotification(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("getPrizeBreakup")
+    fun getPrizeBreakUp(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/addMoney")
-    fun addMoney(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("forgotPassword")
+    fun forgotPassword(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/getPoints")
-    fun getPoints(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("deviceNotification")
+    fun deviceNotification(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/joinNewContestStatus")
-    fun joinNewContestStatus(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("addMoney")
+    fun addMoney(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/getScore")
-    fun getScore(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("getPoints")
+    fun getPoints(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/transactionHistory")
-    fun getTransactionHistory(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("joinNewContestStatus")
+    fun joinNewContestStatus(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/apkUpdate")
-    fun apkUpdate(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("getScore")
+    fun getScore(@Body request: JsonObject): Call<UsersPostDBResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST("transactionHistory")
+    fun getTransactionHistory(@Body request: JsonObject): Call<UsersPostDBResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST("api/v1/apkUpdate")
+    fun apkUpdate(@Body request: JsonObject): Call<JsonObject>
 
     @Headers("Content-Type: application/json")
     @POST("paytm/generateChecksum.php")
     fun getPaytmChecksum(@Body request: RequestPaytmModel): Call<ResponseModel>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/cloneMyTeam")
-    fun copyTeam(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("cloneMyTeam")
+    fun copyTeam(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/getMatchHistory")
-    fun getMatchHistory(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("getMatchHistory")
+    fun getMatchHistory(@Body request: JsonObject): Call<UsersPostDBResponse>
 
-    @FormUrlEncoded
-    @POST("api/v2/uploadbase64Image")
+    /*@FormUrlEncoded
+    @POST("uploadbase64Image")
     fun uploadImage(
         @Field("image_bytes") imageBytes: String,
         @Field("user_id") userid: String,
         @Field("documents_type") documentsType: String
-    ): Call<ResponseModel>
+    ): Call<ResponseModel>*/
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/saveDocuments")
+    @POST("saveDocuments")
     fun saveBankDetails(@Body request: DocumentsModel): Call<ResponseModel>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/verification")
+    @POST("verification")
     fun verification(@Body request: DocumentsModel): Call<ResponseModel>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/myReferralDetails")
-    fun myRefferalsList(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("myReferralDetails")
+    fun myRefferalsList(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/updateProfile")
-    fun updateProfile(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("updateProfile")
+    fun updateProfile(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/getProfile")
-    fun getProfile(@Body request: RequestModel): Call<ResponseModel>
+    @POST("getProfile")
+    fun getProfile(@Body request: JsonObject): Call<ResponseModel>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/generateOtp")
-    fun generateOtp(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("generateOtp")
+    fun generateOtp(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/verifyOtp")
-    fun verifyOtp(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("verifyOtp")
+    fun verifyOtp(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/mChangePassword")
-    fun changePassword(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("mChangePassword")
+    fun changePassword(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/getPlayingMatchHistory")
-    fun getPlayingMatchHistory(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("getPlayingMatchHistory")
+    fun getPlayingMatchHistory(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/getNotification")
-    fun getNotification(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("getNotification")
+    fun getNotification(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/changeMobile")
-    fun switchNumbers(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("changeMobile")
+    fun switchNumbers(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/verification")
-    fun getDocumentsList(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("verification")
+    fun getDocumentsList(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/withdrawAmount")
-    fun withdrawAmount(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("withdrawAmount")
+    fun withdrawAmount(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/createRazorPayOrder")
-    fun createRazorPayOrder(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("createRazorPayOrder")
+    fun createRazorPayOrder(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/messageApi")
-    fun getMessages(@Body request: RequestModel): Call<JsonObject>
+    @POST("messageApi")
+    fun getMessages(@Body request: JsonObject): Call<JsonObject>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/eventLog")
-    fun sendEventLogs(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("eventLog")
+    fun sendEventLogs(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/saveAllDocuments")
-    fun saveAllDocuments(@Body request: DocumentsModel): Call<ResponseModel>
+    @POST("saveAllDocuments")
+    fun saveAllDocuments(@Body request: JsonObject): Call<ResponseModel>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/withdrawAmountNinja")
-    fun withdrawAmountNew(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("withdrawAmountNinja")
+    fun withdrawAmountNew(@Body request: JsonObject): Call<UsersPostDBResponse>
 
     @Headers("Content-Type: application/json")
-    @POST("api/v2/verificationNinja")
-    fun getApprovedDocuments(@Body request: RequestModel): Call<UsersPostDBResponse>
+    @POST("verificationNinja")
+    fun getApprovedDocuments(@Body request: JsonObject): Call<UsersPostDBResponse>
+
+    @Multipart
+    @POST("uploadbase64Image")
+    fun saveDocumentImage(
+        @PartMap() partMap: Map<String, @JvmSuppressWildcards RequestBody>, @Part bankImage: MultipartBody.Part?
+    ): Call<ResponseModel>
+
 }

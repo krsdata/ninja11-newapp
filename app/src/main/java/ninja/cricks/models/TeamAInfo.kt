@@ -4,55 +4,45 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-
-class TeamAInfo :Serializable,Cloneable {
-
-
+data class TeamAInfo(
 
     @SerializedName("match_id")
     @Expose
-    val matchId: Int = 0
+    val matchId: Int = 0,
 
     @SerializedName("team_id")
     @Expose
-    val teamId: Int = 0
+    val teamId: Int = 0,
 
     @SerializedName("name")
     @Expose
-    val teamName: String = ""
+    val teamName: String = "",
 
     @SerializedName("short_name")
     @Expose
-    val teamShortName: String = ""
+    val teamShortName: String = "",
 
     @SerializedName("logo_url")
     @Expose
-    val logoUrl: String = ""
+    val logoUrl: String = "",
 
     @SerializedName("local_img_url")
     @Expose
-    var localImgUrl: String = ""
+    var localImgUrl: String = "",
 
     @SerializedName("thumb_url")
     @Expose
-    var thumbUrl: String = ""
+    var thumbUrl: String = "",
 
     @SerializedName("scores_full")
     @Expose
-    var scoresFull: String = ""
+    var scoresFull: String = "",
 
     @SerializedName("scores")
     @Expose
-    var scores: String = ""
+    var scores: String = "",
 
     @SerializedName("overs")
     @Expose
     var overs: String = ""
-
-
-    public override fun clone(): TeamAInfo {
-        return super.clone() as TeamAInfo
-    }
-
-
-}
+) : Serializable, Cloneable

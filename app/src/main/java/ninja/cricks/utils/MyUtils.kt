@@ -1,5 +1,6 @@
 package ninja.cricks.utils
 
+import android.app.Activity
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -20,6 +21,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.andrognito.flashbar.Flashbar
 import ninja.cricks.R
+import ninja.cricks.SplashScreenActivity
 import java.io.IOException
 import java.io.InputStream
 import java.net.HttpURLConnection
@@ -36,6 +38,15 @@ class MyUtils {
     companion object {
         const val INTENT_FILTER_LOCAL_BROADCAST = "com.deliverdas.vendor.notitification"
         const val KEY_DATA_RECEIVED = "com.deliverdas.vendor.notitification"
+
+        fun logoutApp(mContext: Activity) {
+            MyPreferences.clear(mContext)
+            val intent = Intent(mContext, SplashScreenActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            mContext.startActivity(intent)
+            mContext.finish()
+        }
+
         fun isEmailValid(email: String): Boolean {
             val expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$"
             val pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE)
@@ -51,7 +62,7 @@ class MyUtils {
             try {
                 val text =
                     "Hi Rats, I am interested in your demo, Please register me as \n" + name + "\n" + email // Replace with your message.
-                var toNumber = "918828002531"
+                val toNumber = "918828002531"
                 val intent = Intent(Intent.ACTION_VIEW)
                 intent.data = Uri.parse("http://api.whatsapp.com/send?phone=$toNumber&text=$text")
                 context.startActivity(intent)
@@ -80,25 +91,20 @@ class MyUtils {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-
         }
 
 
         fun parseDate(date: String): String {
-
             val originalFormat: DateFormat =
                 SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH)
-            val targetFormat: DateFormat = SimpleDateFormat("HH:mm")
-            val date: Date = originalFormat.parse(date)
-            val formattedDate: String = targetFormat.format(date) // 20120821
-
-            return formattedDate
+            val targetFormat: DateFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
+            val date: Date? = originalFormat.parse(date)
+            return targetFormat.format(date!!)
         }
 
         fun logd(s: String, image1Path: String?) {
-            Log.d(s + "ZX", image1Path)
+            Log.d(s + "ZX", image1Path!!)
         }
-
 
         fun isConnectedWithInternet(activity: Context): Boolean {
             val connectivityManager =

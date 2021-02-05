@@ -9,6 +9,7 @@ import android.view.animation.DecelerateInterpolator
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ninja.cricks.databinding.WebviewBinding
@@ -17,7 +18,6 @@ import ninja.cricks.utils.CustomeProgressDialog
 
 class WebActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
     private var mBinding: WebviewBinding? = null
-    lateinit var customProgressDialog: CustomeProgressDialog
     var mContext: Context? = null
     private var URL: String? = null
     private var userId: String? = ""
@@ -59,8 +59,7 @@ class WebActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
         }
         mBinding!!.refreshLayout.setOnRefreshListener(this)
 
-        customProgressDialog = CustomeProgressDialog(mContext)
-        customProgressDialog.show()
+        mBinding!!.progressBar.visibility = View.VISIBLE
 
         URL = intent.getStringExtra(KEY_URL)
         userId = intent.getStringExtra(USER_ID)
@@ -82,7 +81,7 @@ class WebActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
         if (userId != null && !userId.equals("")) {
             mBinding!!.webBody.loadUrl(URL + userId)
         } else {
-            mBinding!!.webBody.loadUrl(URL)
+            mBinding!!.webBody.loadUrl(URL!!)
         }
     }
 
@@ -100,8 +99,8 @@ class WebActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
             if (mBinding!!.refreshLayout.isRefreshing) {
                 mBinding!!.refreshLayout.isRefreshing = false
             }
-            if (customProgressDialog.isShowing) {
-                customProgressDialog.dismiss()
+            if (mBinding!!.progressBar.isVisible) {
+                mBinding!!.progressBar.visibility = View.GONE
             }
         }
     }

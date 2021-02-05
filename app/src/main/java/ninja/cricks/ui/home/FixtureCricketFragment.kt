@@ -23,22 +23,17 @@ import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.deliverdas.customers.utils.HardwareInfoManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.JsonObject
-import ninja.cricks.MainActivity
-import ninja.cricks.MaintainanceActivity
-import ninja.cricks.R
-import ninja.cricks.NinjaApplication
+import ninja.cricks.*
 import ninja.cricks.adaptors.MatchesAdapter
 import ninja.cricks.databinding.FragmentAllGamesBinding
 import ninja.cricks.listener.RecyclerViewLoadMoreScroll
 import ninja.cricks.models.MatchesModels
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseFragment
-import ninja.cricks.ui.home.models.UsersPostDBResponse
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
@@ -47,10 +42,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     companion object {
+        val TAG: String = FixtureCricketFragment::class.java.simpleName
         fun newInstance() = FixtureCricketFragment()
         var pageNo = 1
     }
@@ -75,12 +70,20 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
             inflater,
             R.layout.fragment_all_games, container, false
         )
+
+        /*val androidId: String = Settings.Secure.getString(
+            mContext!!.contentResolver,
+            Settings.Secure.ANDROID_ID
+        )
+
+        Log.e(TAG, "Secure ANDROID_ID ===========> $androidId")*/
+
         return mBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).showToolbar()
+        //(activity as MainActivity).showToolbar()
         // mainViewModel = ViewModelProviders.of(this).get(MatchesViewModel::class.java)
         //mainViewModel = ViewModelProviders.of(this).get(MatchesViewModel::class.java)
         mBinding!!.allGameViewRecycler.layoutManager =
@@ -152,36 +155,38 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
             return
         }
         mBinding!!.swipeRefresh.isRefreshing = true
-        val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(requireActivity())!!
-        models.token = MyPreferences.getToken(requireActivity())!!
-        val deviceToken: String? = MyPreferences.getDeviceToken(requireActivity())
-        models.deviceDetails = HardwareInfoManager(context).collectData(deviceToken!!)
+
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
 
         WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getAllMatches(
-            models
+            jsonRequest
         )
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                    // customeProgressDialog.dismiss()
+                    mBinding!!.swipeRefresh.isRefreshing = false
                 }
 
                 override fun onResponse(
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    if (isVisible) {
-                        mBinding!!.swipeRefresh.isRefreshing = false
-                        val resObje = response!!.body()
+                    if (!isVisible){
+                        return
+                    }
+                    val resObje = response!!.body()
+                    mBinding!!.swipeRefresh.isRefreshing = false
 
-                        if (resObje != null && resObje.appMaintainance) {
-                            val intent = Intent(activity, MaintainanceActivity::class.java)
-                            intent.flags =
-                                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            startActivity(intent)
-                            activity!!.finish()
-                        } else
-                            if (resObje != null && resObje.status) {
+                    if (resObje != null && resObje.appMaintainance) {
+                        val intent = Intent(activity, MaintainanceActivity::class.java)
+                        intent.flags =
+                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                        requireActivity().finish()
+                    } else
+                        if (resObje != null) {
+                            if (resObje.status) {
                                 if (resObje.sessionExpired) {
                                     logoutApp("Session Expired Please login again!!", false)
                                 } else {
@@ -189,7 +194,7 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
                                     val responseObject = resObje.responseObject
                                     val listofData =
                                         responseObject!!.matchdatalist as ArrayList<MatchesModels>?
-                                    (activity!!.applicationContext as NinjaApplication).saveUpcomingMatches(
+                                    (requireActivity().applicationContext as NinjaApplication).saveUpcomingMatches(
                                         listofData
                                     )
                                     if (listofData!!.size > 0) {
@@ -201,9 +206,16 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
                                         showAlert(offerImage)
                                     }
                                 }
+                            } else {
+                                if (resObje.code == 1001) {
+                                    MyUtils.showMessage(requireActivity(), resObje.message)
+                                    MyUtils.logoutApp(requireActivity())
+                                } else {
+                                    MyUtils.showMessage(requireActivity(), resObje.message)
+                                }
                             }
-                        updateEmptyViews()
-                    }
+                        }
+                    updateEmptyViews()
                 }
             })
     }
@@ -225,17 +237,17 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
             return
         }
         mBinding!!.swipeRefresh.isRefreshing = true
-        val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(requireActivity())!!
-        models.token = MyPreferences.getToken(requireActivity())!!
-        val deviceToken: String? = MyPreferences.getDeviceToken(requireActivity())
-        models.deviceDetails = HardwareInfoManager(context).collectData(deviceToken!!)
+
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
+        jsonRequest.addProperty("version_code", BuildConfig.VERSION_CODE)
 
         WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
-            .getMessages(models)
+            .getMessages(jsonRequest)
             .enqueue(object : Callback<JsonObject?> {
                 override fun onFailure(call: Call<JsonObject?>?, t: Throwable?) {
-                    // customeProgressDialog.dismiss()
+
                 }
 
                 override fun onResponse(

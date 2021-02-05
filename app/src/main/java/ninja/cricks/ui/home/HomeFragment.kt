@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).showToolbar()
+        //(activity as MainActivity).showToolbar()
         setupViewPager(mBinding!!.viewpager)
         mBinding!!.tabs.setupWithViewPager(mBinding!!.viewpager)
     }

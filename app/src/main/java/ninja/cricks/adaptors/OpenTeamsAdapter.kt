@@ -10,23 +10,23 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.gson.JsonObject
 import ninja.cricks.CreateTeamActivity
-import ninja.cricks.SelectTeamActivity
 import ninja.cricks.R
+import ninja.cricks.SelectTeamActivity
+import ninja.cricks.models.MyTeamId
 import ninja.cricks.models.MyTeamModels
 import ninja.cricks.models.UpcomingMatchesModel
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.contest.MyTeamFragment
-import ninja.cricks.ui.home.models.UsersPostDBResponse
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.collections.ArrayList
 
 
 class OpenTeamsAdapter(
@@ -75,17 +75,16 @@ class OpenTeamsAdapter(
 
 
 
-        viewHolder.checkBoxSelected.setOnClickListener(object: View.OnClickListener
-            {
-                override fun onClick(v: View?) {
-                    objectVal.isSelected = !objectVal.isSelected!!
-                    notifyDataSetChanged()
+        viewHolder.checkBoxSelected.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                objectVal.isSelected = !objectVal.isSelected!!
+                notifyDataSetChanged()
 
-                    //checkforAllSelections(objectVal.openTeamList, viewholderOpenTeam.checkAll)
-                }
+                //checkforAllSelections(objectVal.openTeamList, viewholderOpenTeam.checkAll)
+            }
 
 
-            })
+        })
 
         Glide.with(context)
             .load("https://")
@@ -117,22 +116,28 @@ class OpenTeamsAdapter(
         })
     }
 
-    fun copyTeam(teamid: MyTeamModels.MyTeamId?) {
+    fun copyTeam(teamid: MyTeamId?) {
         //var userInfo = (activity as PlugSportsApplication).userInformations
-        if(!MyUtils.isConnectedWithInternet(context)) {
-            MyUtils.showToast(context,"No Internet connection found")
+        if (!MyUtils.isConnectedWithInternet(context)) {
+            MyUtils.showToast(context, "No Internet connection found")
             return
         }
         customeProgressDialog.show()
-        var models = RequestModel()
+        /*var models = RequestModel()
         models.user_id = MyPreferences.getUserID(context)!!
         models.match_id =""+matchObject!!.matchId
-        models.team_id = teamid!!.teamId
+        models.team_id = teamid!!.teamId*/
 
-        WebServiceClient(context).client.create(IApiMethod::class.java).copyTeam(models)
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(context)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(context)!!)
+        jsonRequest.addProperty("match_id", matchObject!!.matchId)
+        jsonRequest.addProperty("team_id", teamid!!.teamId)
+
+        WebServiceClient(context).client.create(IApiMethod::class.java).copyTeam(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                        MyUtils.showToast(context as AppCompatActivity,t!!.localizedMessage)
+                    MyUtils.showToast(context as AppCompatActivity, t!!.localizedMessage!!)
                 }
 
                 override fun onResponse(
@@ -141,24 +146,21 @@ class OpenTeamsAdapter(
                 ) {
                     customeProgressDialog.dismiss()
                     context.refreshContents()
-
                 }
-
             })
-
     }
 
     fun setOnCheckChangedListeners(onClickListener: View.OnClickListener) {
         this.onClickListener = onClickListener
     }
 
-
-    inner  class MyMatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class MyMatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
             itemView.setOnClickListener {
                 onItemClick?.invoke(myopenTeamList[adapterPosition])
             }
         }
+
         val checkBoxSelected = itemView.findViewById<CheckBox>(R.id.selected)
 
         val userTeamName = itemView.findViewById<TextView>(R.id.user_team_name)

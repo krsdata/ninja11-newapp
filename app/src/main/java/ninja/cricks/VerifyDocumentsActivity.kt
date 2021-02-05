@@ -1,50 +1,75 @@
 package ninja.cricks
 
 import android.app.Activity
-import android.graphics.Bitmap
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import ninja.cricks.databinding.ActivityVerifyDocumentBinding
-import ninja.cricks.models.DocumentsModel
 import ninja.cricks.models.ResponseModel
+import ninja.cricks.models.UserInfo
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseActivity
 import ninja.cricks.utils.CustomeProgressDialog
+import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
+import ninja.cricks.utils.setLocalImage
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
+import java.util.*
 
+class VerifyDocumentsActivity : AppCompatActivity() {
 
-class VerifyDocumentsActivity : BaseActivity() {
+    private lateinit var userInfo: UserInfo
+    private lateinit var customeProgressDialog: CustomeProgressDialog
+    private lateinit var mContext: Context
+    private var mPanImageFile: File? = null
+    private var mPassbookImageFile: File? = null
 
-    companion object {
-        var REQUESTCODE_VERIFY_DOC = 1008
-    }
-
-    private var mIsAdharFrontSelected: Boolean = false
-
-    // private var mIsAdharFrontSelected: Boolean = false
     private var mBinding: ActivityVerifyDocumentBinding? = null
     private var isMobileNumberVerified = true
     private var isEmailVeirfied = true
 
     var pancardDocumentUrl: String = ""
-    var adharCardDocumentUrlFront: String = ""
-    var adharCardDocumentUrlBack: String = ""
     var bankPassbookUrl: String = ""
+
+    companion object {
+        private var TAG: String = VerifyDocumentsActivity::class.java.simpleName
+        var REQUESTCODE_VERIFY_DOC = 1008
+        private const val PASSBOOK_IMAGE_REQ_CODE = 102
+        private const val PAN_IMAGE_REQ_CODE = 103
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        userInfo = (application as NinjaApplication).userInformations
         mBinding = DataBindingUtil.setContentView(
             this,
             R.layout.activity_verify_document
         )
+
+        mContext = this
+
+        userInfo = (application as NinjaApplication).userInformations
+        customeProgressDialog = CustomeProgressDialog(mContext)
+
         mBinding!!.toolbar.title = "Verify Documents"
         mBinding!!.toolbar.setTitleTextColor(resources.getColor(R.color.white))
         mBinding!!.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
@@ -56,223 +81,138 @@ class VerifyDocumentsActivity : BaseActivity() {
         customeProgressDialog = CustomeProgressDialog(this)
 
         initCommunication()
-        initDocuments()
-        initBankDocuments()
-        initPaytm()
+
+        mBinding!!.imgPancard.setOnClickListener {
+            selectImage()
+        }
+
+        mBinding!!.imgBankPassbook.setOnClickListener {
+            selectImagePassbook()
+        }
+
+        initDocumentSubmit()
     }
 
     private fun initCommunication() {
         if (isMobileNumberVerified) {
             mBinding!!.linearMobileBorder.setBackgroundResource(R.drawable.btn_selector_verified)
             mBinding!!.verifyMobileMessage.text = "Your mobile number verified"
-            mBinding!!.verifyMobileNumber.text = userInfo!!.mobileNumber
+            mBinding!!.verifyMobileNumber.text = userInfo.mobileNumber
             mBinding!!.verifyMobileNumber.setTextColor(resources.getColor(R.color.green))
 
         } else {
             mBinding!!.linearMobileBorder.setBackgroundResource(R.drawable.btn_selector_not_verified)
             mBinding!!.verifyMobileMessage.text = "Your mobile number not verified"
-            mBinding!!.verifyMobileNumber.text = userInfo!!.mobileNumber
+            mBinding!!.verifyMobileNumber.text = userInfo.mobileNumber
             mBinding!!.verifyMobileNumber.setTextColor(resources.getColor(R.color.red))
         }
 
         if (isEmailVeirfied) {
             mBinding!!.linearEmailBorder.setBackgroundResource(R.drawable.btn_selector_verified)
             mBinding!!.verifyEmailMessage.text = "Your Email Address verified"
-            mBinding!!.verifyEmailAddress.text = userInfo!!.userEmail
+            mBinding!!.verifyEmailAddress.text = userInfo.userEmail
             mBinding!!.verifyEmailAddress.setTextColor(resources.getColor(R.color.green))
         } else {
             mBinding!!.linearEmailBorder.setBackgroundResource(R.drawable.btn_selector_not_verified)
             mBinding!!.verifyEmailMessage.text = "Your Email Address not verified"
-            mBinding!!.verifyEmailAddress.text = userInfo!!.userEmail
+            mBinding!!.verifyEmailAddress.text = userInfo.userEmail
             mBinding!!.verifyEmailAddress.setTextColor(resources.getColor(R.color.red))
         }
     }
 
-    private fun initDocuments() {
-        /*mBinding!!.txtSelectPancrd.setOnClickListener(View.OnClickListener {
-            mBinding!!.txtSelectPancrd.setBackgroundResource(R.drawable.default_rounded_button_sportsfight)
-            mBinding!!.txtSelectPancrd.setTextColor(resources.getColor(R.color.white))
+    private fun selectImage() {
+        val options: Array<CharSequence> =
+            arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
 
-            mBinding!!.txtSelectAdharcard.setBackgroundResource(R.drawable.button_selector_black)
-            mBinding!!.txtSelectAdharcard.setTextColor(resources.getColor(R.color.black))
-        })
-        mBinding!!.txtSelectAdharcard.setOnClickListener(View.OnClickListener {
-            mBinding!!.txtSelectPancrd.setBackgroundResource(R.drawable.button_selector_black)
-            mBinding!!.txtSelectPancrd.setTextColor(resources.getColor(R.color.black))
-
-            mBinding!!.txtSelectAdharcard.setBackgroundResource(R.drawable.default_rounded_button_sportsfight)
-            mBinding!!.txtSelectAdharcard.setTextColor(resources.getColor(R.color.white))
-        })*/
-
-        mBinding!!.imgPancard.setOnClickListener(View.OnClickListener {
-            selectImage(DOCUMENT_TYPE_PANCARD)
-        })
-
-        mBinding!!.imgAdharcardFront.setOnClickListener(View.OnClickListener {
-            mIsAdharFrontSelected = true
-            selectImage(DOCUMENT_TYPE_ADHARCARD)
-        })
-
-        mBinding!!.imgAdharcardBack.setOnClickListener(View.OnClickListener {
-            mIsAdharFrontSelected = false
-            selectImage(DOCUMENT_TYPE_ADHARCARD)
-        })
-
-        /*mBinding!!.submitDocuments.setOnClickListener(View.OnClickListener {
-            //Toast.makeText(this@VerifyDocumentsActivity,"Submitted All Documents like PAN Or Adhar",Toast.LENGTH_LONG).show()
-            val models = DocumentsModel()
-            models.user_id = userInfo!!.userId
-            models.documentType = mDocumentType
-            if (mDocumentType.equals(DOCUMENT_TYPE_PANCARD)) {
-                val pancardName = mBinding!!.editPancardName.text.toString()
-                val pancardNumber = mBinding!!.editPancardNumber.text.toString()
-                val pancardConfirmNumber = mBinding!!.editPancardConfirmNumber.text.toString()
-
-                if (TextUtils.isEmpty(pancardName)) {
-                    MyUtils.showToast(this@VerifyDocumentsActivity, "Please enter Name on Pancard")
-                    return@OnClickListener
-                } else if (TextUtils.isEmpty(pancardNumber)) {
-                    MyUtils.showToast(this@VerifyDocumentsActivity, "Please enter Pancard Number")
-                    return@OnClickListener
-                } else if (TextUtils.isEmpty(pancardConfirmNumber)) {
-                    MyUtils.showToast(this@VerifyDocumentsActivity, "Please Confirm Pancard Number")
-                    return@OnClickListener
-                } else if (!pancardNumber.equals(pancardConfirmNumber)) {
-                    MyUtils.showToast(
-                        this@VerifyDocumentsActivity,
-                        "Both Pancard number doesnot matched"
-                    )
-                    return@OnClickListener
-                } else if (TextUtils.isEmpty(pancardDocumentUrl)) {
-                    MyUtils.showToast(
-                        this@VerifyDocumentsActivity,
-                        "Please upload clear picture of pancard"
-                    )
-                    return@OnClickListener
-                }
-
-                models.panCardName = pancardName
-                models.panCardNumber = pancardConfirmNumber
-                models.pancardDocumentUrl = pancardDocumentUrl
-
-            } else {
-                val adharCardName = mBinding!!.editAdharcardName.text.toString()
-                val adharCardNumber = mBinding!!.editAdharNumber.text.toString()
-                val adharCardConfirmNumber = mBinding!!.editAdharConfirmNumber.text.toString()
-
-                if (TextUtils.isEmpty(adharCardName)) {
-
-                    MyUtils.showToast(
-                        this@VerifyDocumentsActivity,
-                        "Please enter Name on Adharcard"
-                    )
-                    return@OnClickListener
-                } else if (TextUtils.isEmpty(adharCardNumber)) {
-                    MyUtils.showToast(
-                        this@VerifyDocumentsActivity,
-                        "Please enter Aadharcard Number"
-                    )
-                    return@OnClickListener
-                } else if (TextUtils.isEmpty(adharCardConfirmNumber)) {
-                    MyUtils.showToast(
-                        this@VerifyDocumentsActivity,
-                        "Please Confirm Aadharcard Number"
-                    )
-                    return@OnClickListener
-                } else if (!adharCardNumber.equals(adharCardConfirmNumber)) {
-                    MyUtils.showToast(
-                        this@VerifyDocumentsActivity,
-                        "Both Pancard number doesnot matched"
-                    )
-                    return@OnClickListener
-                } else if (TextUtils.isEmpty(adharCardDocumentUrlFront)) {
-                    MyUtils.showToast(
-                        this@VerifyDocumentsActivity,
-                        "Please upload Front Side of Adharcard"
-                    )
-                    return@OnClickListener
-                } else if (TextUtils.isEmpty(adharCardDocumentUrlBack)) {
-                    MyUtils.showToast(
-                        this@VerifyDocumentsActivity,
-                        "Please upload Back Side of Adharcard"
-                    )
-                    return@OnClickListener
-                }
-
-                models.aadharCardName = adharCardName
-                models.aadharCardNumber = adharCardNumber
-                models.aadharCardDocumentUrlFront = adharCardDocumentUrlFront
-                models.aadharCardDocumentUrlBack = adharCardDocumentUrlBack
+        val builder: AlertDialog.Builder = AlertDialog.Builder(mContext)
+        builder.setTitle("Add Photo")
+        builder.setItems(options) { dialog, items ->
+            if (options[items] == "Take Photo") {
+                getImageCamera()
+            } else if (options[items] == "Choose from Gallery") {
+                getImageGallery()
+            } else if (options[items] == "Cancel") {
+                dialog!!.dismiss()
             }
-            submitDocuments(models, mDocumentType)
-        })*/
+        }
+        builder.show()
     }
 
-    private fun initBankDocuments() {
-        mBinding!!.imgBankPassbook.setOnClickListener(View.OnClickListener {
-            selectImage(DOCUMENT_TYPE_BANK_PASSBOOK)
-        })
+    private fun getImageCamera() {
+        ImagePicker.with(this)
+            .cameraOnly() // User can only capture image from Camera
+            .crop() // Crop Image(User can choose Aspect Ratio)
+            .compress(2048) // Image size will be less than 1024 KB
+            .saveDir(File(cacheDir, "Ninja11")) // External file path
+            .start(PAN_IMAGE_REQ_CODE)
+    }
 
-        /*mBinding!!.submitBankDocuments.setOnClickListener(View.OnClickListener {
-            Toast.makeText(
-                this@VerifyDocumentsActivity,
-                "Submitted All Bank Documents",
-                Toast.LENGTH_LONG
-            ).show()
-            val models = DocumentsModel()
-            models.user_id = userInfo!!.userId
-            val bankName = mBinding!!.editBankName.text.toString()
-            val accountHolderName = mBinding!!.editAccountHolderName.text.toString()
-            val accountNumber = mBinding!!.editAccountNumber.text.toString()
-            val ifscCode = mBinding!!.editAccountIfscCode.text.toString()
-            val accountType = mBinding!!.editAccoutType.text.toString()
-
-            if (TextUtils.isEmpty(bankName)) {
-
-                MyUtils.showToast(this@VerifyDocumentsActivity, "Please enter Your Bank Name")
-                return@OnClickListener
-            } else if (TextUtils.isEmpty(accountHolderName)) {
-                MyUtils.showToast(this@VerifyDocumentsActivity, "Please your name on Bank card")
-                return@OnClickListener
-            } else if (TextUtils.isEmpty(accountNumber)) {
-                MyUtils.showToast(this@VerifyDocumentsActivity, "Please enter bank account number")
-                return@OnClickListener
-            } else if (TextUtils.isEmpty(ifscCode)) {
-                MyUtils.showToast(this@VerifyDocumentsActivity, "Please enter IFSC Code")
-                return@OnClickListener
-            } else if (TextUtils.isEmpty(accountType)) {
-                MyUtils.showToast(this@VerifyDocumentsActivity, "Please enter Account Type")
-                return@OnClickListener
-            } else if (TextUtils.isEmpty(bankPassbookUrl)) {
-                MyUtils.showToast(
-                    this@VerifyDocumentsActivity,
-                    "Please upload passbook or cheque clear image"
+    private fun getImageGallery() {
+        ImagePicker.with(this)
+            .galleryOnly() // User can only select image from Gallery
+            .crop() // Crop Image(User can choose Aspect Ratio)
+            .compress(2048) // Image size will be less than 2048 KB
+            .saveDir(File(cacheDir, "Ninja11")) // External file path
+            .galleryMimeTypes(  //Exclude gif images
+                mimeTypes = arrayOf(
+                    "image/png",
+                    "image/jpg",
+                    "image/jpeg"
                 )
-                return@OnClickListener
-            }
-
-            models.bankName = bankName
-            models.accountHolderName = accountHolderName
-            models.accountNumber = accountNumber
-            models.ifscCode = ifscCode
-            models.accountType = accountType
-            models.bankPassbookUrl = bankPassbookUrl
-
-            submitDocuments(models, mDocumentType)
-
-        })*/
+            )
+            .maxResultSize(1080, 1920) // Image resolution will be less than 1080 x 1920
+            .start(PAN_IMAGE_REQ_CODE)
     }
 
-    private fun initPaytm() {
+    private fun selectImagePassbook() {
+        val options: Array<CharSequence> =
+            arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
 
+        val builder: AlertDialog.Builder = AlertDialog.Builder(mContext)
+        builder.setTitle("Add Photo")
+        builder.setItems(options) { dialog, items ->
+            if (options[items] == "Take Photo") {
+                getImageCameraPassbook()
+            } else if (options[items] == "Choose from Gallery") {
+                getImageGalleryPassbook()
+            } else if (options[items] == "Cancel") {
+                dialog!!.dismiss()
+            }
+        }
+        builder.show()
+    }
+
+    private fun getImageCameraPassbook() {
+        ImagePicker.with(this)
+            .cameraOnly() // User can only capture image from Camera
+            .crop() // Crop Image(User can choose Aspect Ratio)
+            .compress(2048) // Image size will be less than 1024 KB
+            .saveDir(File(cacheDir, "Ninja11")) // External file path
+            .start(PASSBOOK_IMAGE_REQ_CODE)
+    }
+
+    private fun getImageGalleryPassbook() {
+        ImagePicker.with(this)
+            .galleryOnly() // User can only select image from Gallery
+            .crop() // Crop Image(User can choose Aspect Ratio)
+            .compress(2048) // Image size will be less than 2048 KB
+            .saveDir(File(cacheDir, "Ninja11")) // External file path
+            .galleryMimeTypes(  //Exclude gif images
+                mimeTypes = arrayOf(
+                    "image/png",
+                    "image/jpg",
+                    "image/jpeg"
+                )
+            )
+            .maxResultSize(1080, 1920) // Image resolution will be less than 1080 x 1920
+            .start(PASSBOOK_IMAGE_REQ_CODE)
+    }
+
+    private fun initDocumentSubmit() {
         mBinding!!.btnSubmitVerification.setOnClickListener(View.OnClickListener {
-            val models = DocumentsModel()
-            models.user_id = userInfo!!.userId
-            models.documentType = mDocumentType
-
-            val pancardName = mBinding!!.editPancardName.text.toString()
-            val pancardNumber = mBinding!!.editPancardNumber.text.toString()
-            val pancardConfirmNumber = mBinding!!.editPancardConfirmNumber.text.toString()
+            val panCardName = mBinding!!.editPancardName.text.toString()
+            val panCardNumber = mBinding!!.editPancardNumber.text.toString()
+            val panCardConfirmNumber = mBinding!!.editPancardConfirmNumber.text.toString()
             val paytmNumber = mBinding!!.editPaytmNumber.text.toString()
 
             val bankName = mBinding!!.editBankName.text.toString()
@@ -283,16 +223,16 @@ class VerifyDocumentsActivity : BaseActivity() {
             val UPI_Id = mBinding!!.editUpiId.text.toString()
 
 
-            if (TextUtils.isEmpty(pancardName)) {
+            if (TextUtils.isEmpty(panCardName)) {
                 MyUtils.showToast(this@VerifyDocumentsActivity, "Please enter name as on Pan card")
                 return@OnClickListener
-            } else if (TextUtils.isEmpty(pancardNumber)) {
+            } else if (TextUtils.isEmpty(panCardNumber)) {
                 MyUtils.showToast(this@VerifyDocumentsActivity, "Please enter Pan card number")
                 return@OnClickListener
-            } else if (TextUtils.isEmpty(pancardConfirmNumber)) {
+            } else if (TextUtils.isEmpty(panCardConfirmNumber)) {
                 MyUtils.showToast(this@VerifyDocumentsActivity, "Please confirm Pan card number")
                 return@OnClickListener
-            } else if (!pancardNumber.equals(pancardConfirmNumber)) {
+            } else if (!panCardNumber.equals(panCardConfirmNumber)) {
                 MyUtils.showToast(
                     this@VerifyDocumentsActivity,
                     "Both Pan card number does not matched"
@@ -333,23 +273,26 @@ class VerifyDocumentsActivity : BaseActivity() {
                 MyUtils.showToast(this@VerifyDocumentsActivity, "Please enter your UPI Id")
             }
 
-            models.panCardName = pancardName
-            models.panCardNumber = pancardConfirmNumber
-            models.pancardDocumentUrl = pancardDocumentUrl
+            val models = JSONObject()
+            models.put("user_id", userInfo.userId)
+            models.put("panCardName", panCardName)
+            models.put("panCardNumber", panCardConfirmNumber)
+            models.put("pancardDocumentUrl", pancardDocumentUrl)
 
-            models.bankName = bankName
-            models.accountHolderName = accountHolderName
-            models.accountNumber = accountNumber
-            models.ifscCode = ifscCode
-            models.accountType = accountType
-            models.bankPassbookUrl = bankPassbookUrl
+            models.put("bankName", bankName)
+            models.put("accountHolderName", accountHolderName)
+            models.put("accountNumber", accountNumber)
+            models.put("ifscCode", ifscCode)
+            models.put("accountType", accountType)
+            models.put("bankPassbookUrl", bankPassbookUrl)
 
-            models.paytmNumber = paytmNumber
-            models.upi_id = UPI_Id
-            models.documentType = DOCUMENT_TYPE_PANCARD
+            models.put("paytmNumber", paytmNumber)
+            models.put("upi_id", UPI_Id)
+            models.put("documentType", BaseActivity.DOCUMENT_TYPE_PANCARD)
+            models.put("system_token", MyPreferences.getSystemToken(this)!!)
 
             if (MyUtils.isConnectedWithInternet(this@VerifyDocumentsActivity)) {
-                submitDocuments(models, DOCUMENT_TYPE_PANCARD)
+                submitDocuments(models)
             } else {
                 MyUtils.showToast(
                     this@VerifyDocumentsActivity,
@@ -359,16 +302,18 @@ class VerifyDocumentsActivity : BaseActivity() {
         })
     }
 
-    private fun submitDocuments(models: DocumentsModel, documentType: String) {
+    private fun submitDocuments(models: JSONObject) {
         customeProgressDialog.show()
-        models.documentType = DOCUMENT_TYPE_PANCARD
+
+        val jsonObject: JsonObject = JsonParser().parse(models.toString()) as JsonObject
 
         if (MyUtils.isConnectedWithInternet(this@VerifyDocumentsActivity)) {
             WebServiceClient(this@VerifyDocumentsActivity).client.create(IApiMethod::class.java)
-                .saveAllDocuments(models)
+                .saveAllDocuments(jsonObject)
                 .enqueue(object : Callback<ResponseModel?> {
                     override fun onFailure(call: Call<ResponseModel?>?, t: Throwable?) {
-                        MyUtils.showToast(this@VerifyDocumentsActivity, t!!.localizedMessage)
+                        customeProgressDialog.dismiss()
+                        MyUtils.showToast(this@VerifyDocumentsActivity, t!!.localizedMessage!!)
                     }
 
                     override fun onResponse(
@@ -377,16 +322,23 @@ class VerifyDocumentsActivity : BaseActivity() {
                     ) {
                         customeProgressDialog.dismiss()
                         val res = response!!.body()
-                        if (res != null && res.status) {
-                            Toast.makeText(
-                                this@VerifyDocumentsActivity,
-                                res.message,
-                                Toast.LENGTH_LONG
-                            ).show()
-                            setResult(Activity.RESULT_OK)
-                            finish()
-                        } else {
-                            MyUtils.showToast(this@VerifyDocumentsActivity, res!!.message)
+                        if (res != null) {
+                            if (res.status) {
+                                Toast.makeText(
+                                    this@VerifyDocumentsActivity,
+                                    res.message,
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                setResult(RESULT_OK)
+                                finish()
+                            } else {
+                                if (res.statusCode == 1001) {
+                                    MyUtils.showMessage(this@VerifyDocumentsActivity, res.message)
+                                    MyUtils.logoutApp(this@VerifyDocumentsActivity)
+                                } else {
+                                    MyUtils.showToast(this@VerifyDocumentsActivity, res.message)
+                                }
+                            }
                         }
                     }
                 })
@@ -398,43 +350,82 @@ class VerifyDocumentsActivity : BaseActivity() {
         }
     }
 
-    /*private fun showPancardDocuments() {
-        mDocumentType = DOCUMENT_TYPE_PANCARD
-        mBinding!!.linearUploadPancard.visibility = View.VISIBLE
-        mBinding!!.linearUploadAdharcard.visibility = View.GONE
-    }
-
-    private fun showAdharCardDocuments() {
-        mDocumentType = DOCUMENT_TYPE_ADHARCARD
-        mBinding!!.linearUploadPancard.visibility = View.GONE
-        mBinding!!.linearUploadAdharcard.visibility = View.VISIBLE
-    }*/
-
-    override fun onBitmapSelected(bitmap: Bitmap) {
-        if (mDocumentType.equals(DOCUMENT_TYPE_PANCARD)) {
-            mBinding!!.imgPancard.setImageBitmap(bitmap)
-        } else if (mDocumentType.equals(DOCUMENT_TYPE_ADHARCARD)) {
-            if (mIsAdharFrontSelected) {
-                mBinding!!.imgAdharcardFront.setImageBitmap(bitmap)
-            } else {
-                mBinding!!.imgAdharcardBack.setImageBitmap(bitmap)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            Log.e(TAG, "Path:${ImagePicker.getFilePath(data)}")
+            val file = ImagePicker.getFile(data)!! // File object will not be null for RESULT_OK
+            when (requestCode) {
+                PAN_IMAGE_REQ_CODE -> {
+                    mPanImageFile = file
+                    mBinding!!.imgPancard.setLocalImage(file, false)
+                    uploadImageToServer(file, BaseActivity.DOCUMENT_TYPE_PANCARD)
+                }
+                PASSBOOK_IMAGE_REQ_CODE -> {
+                    mPassbookImageFile = file
+                    mBinding!!.imgBankPassbook.setLocalImage(file, false)
+                    uploadImageToServer(file, BaseActivity.DOCUMENT_TYPE_BANK_PASSBOOK)
+                }
             }
-        } else if (mDocumentType.equals(DOCUMENT_TYPE_BANK_PASSBOOK)) {
-            mBinding!!.imgBankPassbook.setImageBitmap(bitmap)
+        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+            MyUtils.showToast(this, ImagePicker.getError(data))
+        } else {
+            MyUtils.showToast(this, "Task Cancelled")
         }
     }
 
-    override fun onUploadedImageUrl(url: String) {
-        if (mDocumentType.equals(DOCUMENT_TYPE_PANCARD)) {
-            pancardDocumentUrl = url
-        } else if (mDocumentType.equals(DOCUMENT_TYPE_ADHARCARD)) {
-            if (mIsAdharFrontSelected) {
-                adharCardDocumentUrlFront = url
-            } else {
-                adharCardDocumentUrlBack = url
-            }
-        } else if (mDocumentType.equals(DOCUMENT_TYPE_BANK_PASSBOOK)) {
-            bankPassbookUrl = url
-        }
+    private fun uploadImageToServer(file: File, docType: String) {
+
+        var multipartImage: MultipartBody.Part? = null
+        val requestPanImage: RequestBody = file
+            .asRequestBody("multipart/jpg".toMediaTypeOrNull())
+        multipartImage =
+            MultipartBody.Part.createFormData("image_bytes", file.name, requestPanImage)
+
+        val userId: RequestBody = createPartFromString(MyPreferences.getUserID(mContext)!!)
+        val documentType: RequestBody = createPartFromString(docType)
+        val systemToken: RequestBody =
+            createPartFromString(MyPreferences.getSystemToken(mContext)!!)
+
+        val map: HashMap<String, RequestBody> = HashMap<String, RequestBody>()
+        map["user_id"] = userId
+        map["documents_type"] = documentType
+        map["system_token"] = systemToken
+
+        customeProgressDialog.show()
+        WebServiceClient(mContext).client.create(IApiMethod::class.java)
+            .saveDocumentImage(map, multipartImage)
+            .enqueue(object : Callback<ResponseModel?> {
+                override fun onFailure(call: Call<ResponseModel?>?, t: Throwable?) {
+                    customeProgressDialog.dismiss()
+                    MyUtils.showToast(this@VerifyDocumentsActivity, t!!.localizedMessage!!)
+                }
+
+                override fun onResponse(
+                    call: Call<ResponseModel?>?,
+                    response: Response<ResponseModel?>?
+                ) {
+                    if (!isFinishing) {
+                        customeProgressDialog.dismiss()
+                        val res = response!!.body()
+                        if (res != null) {
+                            if (res.status) {
+                                if (docType == BaseActivity.DOCUMENT_TYPE_PANCARD) {
+                                    pancardDocumentUrl = res.image_url
+                                } else {
+                                    bankPassbookUrl = res.image_url
+                                }
+                                MyUtils.showMessage(mContext, res.message)
+                            } else {
+                                MyUtils.showMessage(mContext, res.message)
+                            }
+                        }
+                    }
+                }
+            })
+    }
+
+    private fun createPartFromString(param: String): RequestBody {
+        return param.toRequestBody("text/plain".toMediaTypeOrNull())
     }
 }

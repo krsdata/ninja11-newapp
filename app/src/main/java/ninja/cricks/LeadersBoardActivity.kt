@@ -5,7 +5,6 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -18,15 +17,15 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.edify.atrist.listener.OnMatchTimerStarted
+import com.google.gson.JsonObject
 import ninja.cricks.databinding.ActivityLeadersBoardBinding
+import ninja.cricks.models.ContestModelLists
 import ninja.cricks.models.PlayerModels
 import ninja.cricks.models.UpcomingMatchesModel
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseActivity
-import ninja.cricks.ui.contest.models.ContestModelLists
-import ninja.cricks.ui.home.models.UsersPostDBResponse
 import ninja.cricks.ui.leadersboard.LeadersBoardFragment
 import ninja.cricks.ui.leadersboard.PrizeBreakupFragment
 import ninja.cricks.utils.BindingUtils
@@ -73,21 +72,17 @@ class LeadersBoardActivity : BaseActivity() {
         contestObject = intent.getSerializableExtra(SERIALIZABLE_CONTEST_KEY) as ContestModelLists
         matchObject = intent.getSerializableExtra(SERIALIZABLE_MATCH_KEY) as UpcomingMatchesModel
 
-        mBinding!!.imgFantasyPoints.setOnClickListener(View.OnClickListener {
+        mBinding!!.imgFantasyPoints.setOnClickListener {
             val intent = Intent(this@LeadersBoardActivity, WebActivity::class.java)
             intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_FANTASY_POINTS)
             intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_FANTASY_POINTS)
-            if (Build.VERSION.SDK_INT > 20) {
-                val options = ActivityOptions.makeSceneTransitionAnimation(this)
-                startActivity(intent, options.toBundle())
-            } else {
-                startActivity(intent)
-            }
-        })
+            val options = ActivityOptions.makeSceneTransitionAnimation(this)
+            startActivity(intent, options.toBundle())
+        }
 
-        mBinding!!.imageBack.setOnClickListener(View.OnClickListener {
+        mBinding!!.imageBack.setOnClickListener {
             finish()
-        })
+        }
 
         if (matchObject!!.status == BindingUtils.MATCH_STATUS_UPCOMING) {
             mBinding!!.includeContestRow.linearTradesStatus.visibility = View.VISIBLE
@@ -140,7 +135,7 @@ class LeadersBoardActivity : BaseActivity() {
         })
     }
 
-    fun pauseCountDown() {
+    private fun pauseCountDown() {
         BindingUtils.stopTimer()
     }
 
@@ -191,12 +186,18 @@ class LeadersBoardActivity : BaseActivity() {
     }
 
     fun updateScores() {
-        val models = RequestModel()
+        /*val models = RequestModel()
         models.user_id = MyPreferences.getUserID(this)!!
         models.contest_id = "" + contestObject!!.id
-        models.match_id = "" + matchObject!!.matchId
+        models.match_id = "" + matchObject!!.matchId*/
 
-        WebServiceClient(this).client.create(IApiMethod::class.java).getScore(models)
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+        jsonRequest.addProperty("contest_id", contestObject!!.id)
+        jsonRequest.addProperty("match_id", matchObject!!.matchId)
+
+        WebServiceClient(this).client.create(IApiMethod::class.java).getScore(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     customeProgressDialog.dismiss()
@@ -230,7 +231,6 @@ class LeadersBoardActivity : BaseActivity() {
                                         String.format("(%s)", "")
                                 }
 
-
                                 mBinding!!.includeLiveMatchRow.teamBScore.text =
                                     res.scoresModel!!.teamb!!.scores
                                 mBinding!!.includeLiveMatchRow.teamBOver.text =
@@ -254,8 +254,8 @@ class LeadersBoardActivity : BaseActivity() {
     private fun initUpcomingMatchData() {
         mBinding!!.teamsa.text = matchObject!!.teamAInfo!!.teamShortName
         mBinding!!.teamsb.text = matchObject!!.teamBInfo!!.teamShortName
-        var totalSpots = contestObject!!.totalSpots
-        var filledSpots = contestObject!!.filledSpots
+        val totalSpots = contestObject!!.totalSpots
+        val filledSpots = contestObject!!.filledSpots
         mBinding!!.includeContestRow.contestPrizePool.text =
             String.format("%s%s", "₹ ", contestObject!!.totalWinningPrize)
 
@@ -332,14 +332,15 @@ class LeadersBoardActivity : BaseActivity() {
                 MyUtils.showToast(this, "No Internet connection found")
             } else {
                 customeProgressDialog.show()
-                val models = RequestModel()
-                models.user_id = MyPreferences.getUserID(this)!!
-                // models.token =MyPreferences.getToken(this)!!
-                models.match_id = "" + matchObject!!.matchId
-                models.contest_id = "" + contestObject!!.id
+
+                val jsonRequest = JsonObject()
+                jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+                jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+                jsonRequest.addProperty("contest_id", contestObject!!.id)
+                jsonRequest.addProperty("match_id", matchObject!!.matchId)
 
                 WebServiceClient(this).client.create(IApiMethod::class.java)
-                    .joinNewContestStatus(models)
+                    .joinNewContestStatus(jsonRequest)
                     .enqueue(object : Callback<UsersPostDBResponse?> {
                         override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                             customeProgressDialog.dismiss()
@@ -353,7 +354,10 @@ class LeadersBoardActivity : BaseActivity() {
                             val res = response!!.body()
                             if (res != null) {
                                 if (!res.status) {
-                                    if (res.code == 401) {
+                                    if (res.code == 1001) {
+                                        MyUtils.showMessage(this@LeadersBoardActivity, res.message)
+                                        MyUtils.logoutApp(this@LeadersBoardActivity)
+                                    } else if (res.code == 401) {
                                         MyUtils.showToast(
                                             this@LeadersBoardActivity,
                                             res.message
@@ -413,7 +417,6 @@ class LeadersBoardActivity : BaseActivity() {
                     })
             }
         })
-//        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

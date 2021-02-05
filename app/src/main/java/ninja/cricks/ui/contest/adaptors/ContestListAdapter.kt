@@ -15,7 +15,7 @@ import com.edify.atrist.listener.OnContestEvents
 import ninja.cricks.LeadersBoardActivity
 import ninja.cricks.R
 import ninja.cricks.models.UpcomingMatchesModel
-import ninja.cricks.ui.contest.models.ContestModelLists
+import ninja.cricks.models.ContestModelLists
 import ninja.cricks.utils.BindingUtils
 
 
@@ -70,33 +70,24 @@ class ContestListAdapter(
             viewHolder.winningPercentage.text = "" + objectVal.winnerCounts
         }
         viewHolder.firstPrize.text = String.format("%s%s", "₹", objectVal.firstPrice)
-        //String.format("%d%s",objectVal.winnerPercentage,"%")
-        //viewHolder.maxAllowedTeam.text = String.format("%s %d %s","Upto",objectVal.maxAllowedTeam,"teams")
 
-
-        if (objectVal.maxAllowedTeam > 1) {
-            viewHolder.allowedTeamType.text = "Multiple Entry"
-            /*viewHolder.contestMultiplayer.text = "" + objectVal.maxAllowedTeam*/
-            viewHolder.linearMulti.visibility = View.VISIBLE
+        if(TYPE_IPL_FINAL == getItemViewType(position)) {
+            if (objectVal.maxAllowedTeam > 1) {
+                viewHolder.allowedTeamType.text = "M"
+                viewHolder.linearMulti.visibility = View.VISIBLE
+            } else {
+                viewHolder.allowedTeamType.text = "S"
+                viewHolder.linearMulti.visibility = View.VISIBLE
+            }
         } else {
-            viewHolder.allowedTeamType.text = "Single Entry"
-            /*viewHolder.contestMultiplayer.text = "" + objectVal.maxAllowedTeam*/
-            viewHolder.linearMulti.visibility = View.VISIBLE
-            // viewHolder.contestMultiplayer.text =  ""+objectVal.maxAllowedTeam
-            // viewHolder.linearMulti.visibility = View.GONE
+            if (objectVal.maxAllowedTeam > 1) {
+                viewHolder.allowedTeamType.text = "Multiple Entry"
+                viewHolder.linearMulti.visibility = View.VISIBLE
+            } else {
+                viewHolder.allowedTeamType.text = "Single Entry"
+                viewHolder.linearMulti.visibility = View.VISIBLE
+            }
         }
-
-        /*if (objectVal.totalSpots > 2) {
-            viewHolder.allowedTeamType.text = "Multiple Entry"
-            //viewHolder.contestMultiplayer.text = "" + objectVal.maxAllowedTeam
-            viewHolder.linearMulti.visibility = View.VISIBLE
-        } else {
-            viewHolder.allowedTeamType.text = "Single Entry"
-            //viewHolder.contestMultiplayer.text = "" + objectVal.maxAllowedTeam
-            viewHolder.linearMulti.visibility = View.VISIBLE
-            // viewHolder.contestMultiplayer.text =  ""+objectVal.maxAllowedTeam
-            // viewHolder.linearMulti.visibility = View.GONE
-        }*/
 
         if (objectVal.usableBonus.toInt() == 0) {
             viewHolder.linearBonus.visibility = View.GONE
@@ -185,6 +176,32 @@ class ContestListAdapter(
     }
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        init {
+            itemView.setOnClickListener {
+                onItemClick?.invoke(matchesListObject[adapterPosition])
+            }
+        }
+
+        val linearContestViews: LinearLayout = itemView.findViewById(R.id.linear_trades_status)
+        val contestPrizePool: TextView = itemView.findViewById(R.id.contest_prize_pool)
+        val contestEntryPrize: TextView = itemView.findViewById(R.id.contest_entry_prize)
+        val firstPrize: TextView = itemView.findViewById(R.id.first_prize)
+        val winningPercentage: TextView = itemView.findViewById(R.id.winning_percentage)
+
+        val contestCancellation: TextView = itemView.findViewById(R.id.contest_cancellation)
+        val allowedTeamType: TextView = itemView.findViewById(R.id.allowedTeamType)
+
+        val linearMulti: LinearLayout = itemView.findViewById(R.id.linear_Multi)
+        val linearBonus: LinearLayout = itemView.findViewById(R.id.linear_bonues)
+        val contestBonus: TextView = itemView.findViewById(R.id.contest_bonus)
+
+        val totalSpotLeft: TextView = itemView.findViewById(R.id.total_spot_left)
+        val totalSpot: TextView = itemView.findViewById(R.id.total_spot)
+        val contestProgress: ProgressBar = itemView.findViewById(R.id.contest_progress)
+        val giftImage: ImageView = itemView.findViewById(R.id.gift_image)
+    }
+
+    inner class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
             itemView.setOnClickListener {
                 onItemClick?.invoke(matchesListObject[adapterPosition])

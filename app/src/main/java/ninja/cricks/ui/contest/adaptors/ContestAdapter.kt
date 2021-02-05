@@ -16,7 +16,7 @@ import com.edify.atrist.listener.OnContestEvents
 import ninja.cricks.R
 import ninja.cricks.models.ContestsParentModels
 import ninja.cricks.models.UpcomingMatchesModel
-import ninja.cricks.ui.contest.models.ContestModelLists
+import ninja.cricks.models.ContestModelLists
 
 
 class ContestAdapter(

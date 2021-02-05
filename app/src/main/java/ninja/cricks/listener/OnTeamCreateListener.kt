@@ -1,6 +1,6 @@
 package com.edify.atrist.listener
 
-import ninja.cricks.ui.createteam.models.PlayersInfoModel
+import ninja.cricks.models.PlayersInfoModel
 
 interface OnTeamCreateListener {
     fun onWicketKeeperSelected(objects: PlayersInfoModel)

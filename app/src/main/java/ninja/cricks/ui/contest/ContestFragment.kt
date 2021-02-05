@@ -15,21 +15,23 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.deliverdas.customers.utils.HardwareInfoManager
+import ninja.cricks.utils.HardwareInfoManager
 import com.edify.atrist.listener.OnContestEvents
 import com.edify.atrist.listener.OnContestLoadedListener
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import ninja.cricks.*
 import ninja.cricks.databinding.FragmentAllContestBinding
 import ninja.cricks.models.ContestCategoryModel
 import ninja.cricks.models.ContestsParentModels
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.contest.adaptors.ContestAdapter
 import ninja.cricks.ui.contest.adaptors.ContestListAdapter
-import ninja.cricks.ui.contest.models.ContestModelLists
-import ninja.cricks.ui.home.models.UsersPostDBResponse
+import ninja.cricks.models.ContestModelLists
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
@@ -379,15 +381,24 @@ class ContestFragment : Fragment() {
         if (isLoading)
             mBinding!!.progressBar.visibility = View.VISIBLE
 
-        val models = RequestModel()
+        /*val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
-        // models.token =MyPreferences.getToken(activity!!)!!
         models.match_id = "" + matchObject!!.matchId
         models.token = MyPreferences.getToken(requireActivity())!!
         val deviceToken: String? = MyPreferences.getDeviceToken(requireActivity())
-        models.deviceDetails = HardwareInfoManager(activity).collectData(deviceToken!!)
+        models.deviceDetails = HardwareInfoManager(activity).collectData(deviceToken!!)*/
 
-        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getContestByMatch(models)
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
+        jsonRequest.addProperty("match_id", matchObject!!.matchId)
+
+        val gson = Gson()
+        val jsonString: String = gson.toJson(HardwareInfoManager(requireActivity()).collectData(MyPreferences.getDeviceToken(requireActivity())!!))
+        val deviceDetails: JsonObject = JsonParser().parse(jsonString).asJsonObject
+        jsonRequest.add("deviceDetails", deviceDetails)
+
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getContestByMatch(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     if (isVisible) {
@@ -413,39 +424,49 @@ class ContestFragment : Fragment() {
                             Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
                         activity!!.finish()
-                    } else
+                    } else {
                         if (res != null) {
-                            BindingUtils.currentTimeStamp = res.systemTime
-                            val responseModel = res.responseObject
-                            if (responseModel!!.matchContestlist != null && responseModel.matchContestlist!!.size > 0) {
-                                allContestListData.clear()
-                                allContestListData.addAll(responseModel.matchContestlist!!)
+                            if (res.status) {
+                                BindingUtils.currentTimeStamp = res.systemTime
+                                val responseModel = res.responseObject
+                                if (responseModel!!.matchContestlist != null && responseModel.matchContestlist!!.size > 0) {
+                                    allContestListData.clear()
+                                    allContestListData.addAll(responseModel.matchContestlist!!)
 
-                                filterArrayList.clear()
+                                    filterArrayList.clear()
 
-                                val model = ContestCategoryModel("All", true)
-                                filterArrayList.add(model)
+                                    val model = ContestCategoryModel("All", true)
+                                    filterArrayList.add(model)
 
-                                for (i in responseModel.matchContestlist!!.indices) {
-                                    val categoryModel = ContestCategoryModel(
-                                        responseModel.matchContestlist!![i].contestTitle,
-                                        false
+                                    for (i in responseModel.matchContestlist!!.indices) {
+                                        val categoryModel = ContestCategoryModel(
+                                            responseModel.matchContestlist!![i].contestTitle,
+                                            false
+                                        )
+                                        filterArrayList.add(categoryModel)
+                                    }
+
+                                    filterAdapter.updateRecord(filterArrayList)
+
+                                    adapter.setMatchesList(allContestListData)
+                                    mListener.onMyTeam(responseModel.myjoinedTeams!!)
+                                    mListener.onMyContest(responseModel.joinedContestDetails!!)
+                                } else {
+                                    MyUtils.showToast(
+                                        activity!! as AppCompatActivity,
+                                        "No Contest available for this match $res"
                                     )
-                                    filterArrayList.add(categoryModel)
                                 }
-
-                                filterAdapter.updateRecord(filterArrayList)
-
-                                adapter.setMatchesList(allContestListData)
-                                mListener.onMyTeam(responseModel.myjoinedTeams!!)
-                                mListener.onMyContest(responseModel.joinedContestDetails!!)
                             } else {
-                                MyUtils.showToast(
-                                    activity!! as AppCompatActivity,
-                                    "No Contest available for this match $res"
-                                )
+                                if (res.code == 1001) {
+                                    MyUtils.showMessage(requireActivity(), res.message)
+                                    MyUtils.logoutApp(requireActivity())
+                                } else {
+                                    MyUtils.showMessage(requireActivity(), res.message)
+                                }
                             }
                         }
+                    }
                     updateEmptyViews()
                 }
             })
@@ -553,16 +574,24 @@ class ContestFragment : Fragment() {
     private fun getFilteredContest() {
         //mBinding!!.contestFilterRefresh.isRefreshing = true
 
-        val models = RequestModel()
+        /*val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         models.match_id = "" + matchObject!!.matchId
         models.token = MyPreferences.getToken(requireActivity())!!
         val deviceToken: String? = MyPreferences.getDeviceToken(requireActivity())
-        models.deviceDetails = HardwareInfoManager(activity).collectData(deviceToken!!)
+        models.deviceDetails = HardwareInfoManager(activity).collectData(deviceToken!!)*/
 
-        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getContestByMatch(
-            models
-        )
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
+        jsonRequest.addProperty("match_id", matchObject!!.matchId)
+
+        val gson = Gson()
+        val jsonString: String = gson.toJson(HardwareInfoManager(requireActivity()).collectData(MyPreferences.getDeviceToken(requireActivity())!!))
+        val deviceDetails: JsonObject = JsonParser().parse(jsonString).asJsonObject
+        jsonRequest.add("deviceDetails", deviceDetails)
+
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getContestByMatch(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     if (isVisible) {
@@ -588,57 +617,66 @@ class ContestFragment : Fragment() {
                         activity!!.finish()
                     } else
                         if (res != null) {
-                            BindingUtils.currentTimeStamp = res.systemTime
-                            val responseModel = res.responseObject
-                            if (responseModel!!.matchContestlist != null && responseModel.matchContestlist!!.isNotEmpty()) {
-                                allContestListData.clear()
-                                allContestListData.addAll(responseModel.matchContestlist!!)
-                                filterArrayList.clear()
+                            if (res.status) {
+                                BindingUtils.currentTimeStamp = res.systemTime
+                                val responseModel = res.responseObject
+                                if (responseModel!!.matchContestlist != null && responseModel.matchContestlist!!.isNotEmpty()) {
+                                    allContestListData.clear()
+                                    allContestListData.addAll(responseModel.matchContestlist!!)
+                                    filterArrayList.clear()
 
-                                val model = ContestCategoryModel("All", false)
-                                filterArrayList.add(model)
+                                    val model = ContestCategoryModel("All", false)
+                                    filterArrayList.add(model)
 
-                                val actualPosition = pos - 1
+                                    val actualPosition = pos - 1
 
-                                for (i in responseModel.matchContestlist!!.indices) {
-                                    if (actualPosition == i) {
-                                        val categoryModel = ContestCategoryModel(
-                                            responseModel.matchContestlist!![i].contestTitle,
-                                            true
-                                        )
-                                        filterArrayList.add(categoryModel)
-                                    } else {
-                                        val categoryModel = ContestCategoryModel(
-                                            responseModel.matchContestlist!![i].contestTitle,
-                                            false
-                                        )
-                                        filterArrayList.add(categoryModel)
-                                    }
-                                }
-
-                                filterAdapter.updateRecord(filterArrayList)
-
-
-                                showFilteredContestRecycler()
-                                filterSpotsListData.clear()
-
-                                for (i in allContestListData.indices) {
-                                    if (actualPosition == i) {
-                                        val values = allContestListData[i].allContestsRunning
-                                        if (values != null) {
-                                            filterSpotsListData.addAll(values)
+                                    for (i in responseModel.matchContestlist!!.indices) {
+                                        if (actualPosition == i) {
+                                            val categoryModel = ContestCategoryModel(
+                                                responseModel.matchContestlist!![i].contestTitle,
+                                                true
+                                            )
+                                            filterArrayList.add(categoryModel)
+                                        } else {
+                                            val categoryModel = ContestCategoryModel(
+                                                responseModel.matchContestlist!![i].contestTitle,
+                                                false
+                                            )
+                                            filterArrayList.add(categoryModel)
                                         }
                                     }
-                                }
-                                spotSizeFilterAdaptor.notifyDataSetChanged()
 
-                                mListener.onMyTeam(responseModel.myjoinedTeams!!)
-                                mListener.onMyContest(responseModel.joinedContestDetails!!)
+                                    filterAdapter.updateRecord(filterArrayList)
+
+
+                                    showFilteredContestRecycler()
+                                    filterSpotsListData.clear()
+
+                                    for (i in allContestListData.indices) {
+                                        if (actualPosition == i) {
+                                            val values = allContestListData[i].allContestsRunning
+                                            if (values != null) {
+                                                filterSpotsListData.addAll(values)
+                                            }
+                                        }
+                                    }
+                                    spotSizeFilterAdaptor.notifyDataSetChanged()
+
+                                    mListener.onMyTeam(responseModel.myjoinedTeams!!)
+                                    mListener.onMyContest(responseModel.joinedContestDetails!!)
+                                } else {
+                                    MyUtils.showToast(
+                                        activity!! as AppCompatActivity,
+                                        "No Contest available for this match $res"
+                                    )
+                                }
                             } else {
-                                MyUtils.showToast(
-                                    activity!! as AppCompatActivity,
-                                    "No Contest available for this match $res"
-                                )
+                                if (res.code == 1001) {
+                                    MyUtils.showMessage(requireActivity(), res.message)
+                                    MyUtils.logoutApp(requireActivity())
+                                } else {
+                                    MyUtils.showMessage(requireActivity(), res.message)
+                                }
                             }
                         }
                 }

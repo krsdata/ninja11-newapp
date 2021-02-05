@@ -4,10 +4,11 @@
     <string name="title_mymatches">Matches</string>
     <string name="title_account">Accounts</string>
     <string name="title_more">More</string>
-    <string name="notifications_admin_channel_name">Winner11Channel</string>
-    <string name="notifications_admin_channel_description">This is application descriptions</string>
 
-    <string name="default_notification_channel_id">Winner11</string>
+    <string name="default_notification_channel_id">Ninja11</string>
+    <string name="notifications_admin_channel_name">Ninja11</string>
+    <string name="notifications_admin_channel_description">Fantasy Cricket</string>
+
     <string name="screen_name_login">Login</string>
     <string name="screen_name_register">Register</string>
     <string name="privacy_policies">By loggin in, you accept you are 18+ and agree to our </string>
@@ -125,4 +126,5 @@
     <string name="verify_communication">Verify Communication</string>
     <string name="my_reward_points">(100 points = ₹1.00)</string>
     <string name="share_this_code_with_your_friends">Share this code with your friends and after they Signup, both of you will get ₹100 Bonus.</string>
+    <string name="arrow_image">arrow image</string>
 </resources>

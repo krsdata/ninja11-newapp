@@ -9,12 +9,12 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
+import com.google.gson.JsonObject
 import ninja.cricks.R
 import ninja.cricks.databinding.FragmentForgotPasswordBinding
 import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.RequestModel
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.ui.home.models.UsersPostDBResponse
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
@@ -45,20 +45,20 @@ class ForgotPasswordFragment(val emailAddress: String) : DialogFragment() {
             dismiss()
         })
         mBinding!!.btnForgotpassword.setOnClickListener(View.OnClickListener {
-            var emailAddress = mBinding!!.editEmail.text.toString()
+            val emailAddress = mBinding!!.editEmail.text.toString()
             if(TextUtils.isEmpty(emailAddress) || !MyUtils.isEmailValid(emailAddress)){
-                MyUtils.showMessage(activity!! as AppCompatActivity,"Please enter valid email address")
+                MyUtils.showMessage(requireActivity() as AppCompatActivity,"Please enter valid email address")
             }else {
                 if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
                     MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
                 } else {
                     customeProgressDialog.show()
-                    var models = RequestModel()
-                    models.token = MyPreferences.getToken(activity!!)!!
-                    models.email = emailAddress
 
-                    WebServiceClient(activity!!).client.create(IApiMethod::class.java)
-                        .forgotPassword(models)
+                    val jsonRequest = JsonObject()
+                    jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
+                    jsonRequest.addProperty("email", emailAddress)
+
+                    WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).forgotPassword(jsonRequest)
                         .enqueue(object : Callback<UsersPostDBResponse?> {
                             override fun onFailure(
                                 call: Call<UsersPostDBResponse?>?,
@@ -72,7 +72,7 @@ class ForgotPasswordFragment(val emailAddress: String) : DialogFragment() {
                                 response: Response<UsersPostDBResponse?>?
                             ) {
                                 customeProgressDialog.dismiss()
-                                var res = response!!.body()
+                                val res = response!!.body()
                                 if (res != null && res.status) {
                                     MyUtils.showMessage(activity!!, res.message)
                                     dismiss()
