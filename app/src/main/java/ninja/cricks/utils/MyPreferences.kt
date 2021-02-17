@@ -43,11 +43,9 @@ object MyPreferences {
     private const val KEY_INVITE_URL = "invite_url"
     private const val KEY_BASE_URL = "base_url"
     private const val KEY_SYSTEM_TOKEN = "system_token"
+    private const val KEY_MIN_WITHDRAWAL = "min_withdrawal"
 
-    /**
-     * @author Manoj Prasad
-     * List of all constants for API's Caching
-     */
+
     val KEY_UPCOMING_MATCHES = "upcoming_matches_list"
     val KEY_TRANSACTION_HISTORY = "transaction_history"
 
@@ -669,6 +667,21 @@ object MyPreferences {
             context,
             KEY_SYSTEM_TOKEN,
             ""
+        )
+    }
+
+    fun setMinWithdrawal(context: Context, value: Int) {
+        putInt(
+            context,
+            KEY_MIN_WITHDRAWAL,
+            value
+        )
+    }
+
+    fun getMinWithdrawal(context: Context): Int {
+        return getInt(
+            context,
+            KEY_MIN_WITHDRAWAL
         )
     }
 }

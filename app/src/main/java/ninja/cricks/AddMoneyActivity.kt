@@ -198,7 +198,7 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
                 } else {
                     MyUtils.showMessage(
                         this@AddMoneyActivity,
-                        "Deposit amount cannot be less than " + minimumAmount + " Rs."
+                        "Deposit amount cannot be less than ₹$minimumAmount"
                     )
                 }
             } else {
@@ -346,7 +346,7 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
             })
     }
 
-    fun createPaymentsClient(activity: Activity): PaymentsClient {
+    private fun createPaymentsClient(activity: Activity): PaymentsClient {
         val walletOptions = Wallet.WalletOptions.Builder()
             .setEnvironment(WalletConstants.ENVIRONMENT_PRODUCTION)
             .build()
@@ -555,6 +555,8 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
                                 MyPreferences.setShowPaytmWithdraw(mContext!!, res.paytm_withdrawal)
                                 MyPreferences.setShowBankWithdraw(mContext!!, res.bank_withdrawal)
                                 MyPreferences.setShowUPIWithdraw(mContext!!, res.upi_withdrawal)
+
+                                MyPreferences.setMinWithdrawal(mContext!!, res.minWithdrawal)
 
                                 (application as NinjaApplication).saveWalletInformation(
                                     responseModel

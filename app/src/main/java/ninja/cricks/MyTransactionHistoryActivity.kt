@@ -73,7 +73,7 @@ class MyTransactionHistoryActivity : AppCompatActivity() {
         getMyTransaction()
     }
 
-    fun getMyTransaction() {
+    private fun getMyTransaction() {
         mBinding!!.emptyview.visibility = View.GONE
         mBinding!!.progressBar.visibility = View.VISIBLE
 

@@ -1,4 +1,4 @@
-package ninja.cricks.ui.home
+package ninja.cricks.ui.dashboard
 
 import android.app.Dialog
 import android.content.Context
@@ -25,7 +25,10 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.JsonObject
-import ninja.cricks.*
+import ninja.cricks.BuildConfig
+import ninja.cricks.MaintainanceActivity
+import ninja.cricks.NinjaApplication
+import ninja.cricks.R
 import ninja.cricks.adaptors.MatchesAdapter
 import ninja.cricks.databinding.FragmentAllGamesBinding
 import ninja.cricks.listener.RecyclerViewLoadMoreScroll
@@ -70,22 +73,11 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
             inflater,
             R.layout.fragment_all_games, container, false
         )
-
-        /*val androidId: String = Settings.Secure.getString(
-            mContext!!.contentResolver,
-            Settings.Secure.ANDROID_ID
-        )
-
-        Log.e(TAG, "Secure ANDROID_ID ===========> $androidId")*/
-
         return mBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //(activity as MainActivity).showToolbar()
-        // mainViewModel = ViewModelProviders.of(this).get(MatchesViewModel::class.java)
-        //mainViewModel = ViewModelProviders.of(this).get(MatchesViewModel::class.java)
         mBinding!!.allGameViewRecycler.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         mBinding!!.linearEmptyContest.visibility = View.GONE
@@ -96,7 +88,6 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
 
         mBinding!!.swipeRefresh.setOnRefreshListener(this)
 
-        // initDummyContent();
         val linearLayoutManager = LinearLayoutManager(activity)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
 
@@ -160,9 +151,8 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
         jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
         jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
 
-        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getAllMatches(
-            jsonRequest
-        )
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
+            .getAllMatches(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     mBinding!!.swipeRefresh.isRefreshing = false
@@ -172,7 +162,7 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    if (!isVisible){
+                    if (!isVisible) {
                         return
                     }
                     val resObje = response!!.body()

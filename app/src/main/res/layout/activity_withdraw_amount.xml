@@ -188,7 +188,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_38sdp"
                             android:background="@drawable/et_style"
-                            android:hint="₹200"
                             android:inputType="number"
                             android:paddingStart="@dimen/_15sdp"
                             android:fontFamily="@font/montserrat_medium"

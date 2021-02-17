@@ -155,6 +155,10 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
 
     }
 
+    override fun onBackPressed() {
+        finish()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 //        menuInflater.inflate(R.menu.main_menu, menu)
 //        this.collapseMenu = menu

@@ -130,7 +130,6 @@ class EditProfileActivity : AppCompatActivity() {
         }
         initProfile()
         getProfile()
-
     }
 
     private fun updateUserOtherInfo() {
@@ -147,19 +146,6 @@ class EditProfileActivity : AppCompatActivity() {
             mBinding!!.editCity.setText(userInfo.city)
         }
     }
-
-    /*override fun onBitmapSelected(bitmap: Bitmap) {
-        val mBitmap: Bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
-        Glide.with(this).asBitmap().load(mBitmap).placeholder(R.drawable.player_blue)
-            .into(mBinding!!.profileImage)
-    }
-
-    override fun onUploadedImageUrl(url: String) {
-        this.photoUrl = url
-        if (url.isNotEmpty())
-            Glide.with(this).load(url).placeholder(R.drawable.player_blue)
-                .into(mBinding!!.profileImage)
-    }*/
 
     private fun selectImage() {
         val options: Array<CharSequence> =
@@ -332,13 +318,8 @@ class EditProfileActivity : AppCompatActivity() {
                             userInfo.dateOfBirth = dateOfBirth
 
                             (application as NinjaApplication).saveUserInformations(userInfo)
-
-                            Toast.makeText(
-                                this@EditProfileActivity,
-                                "Profile updated successfully",
-                                Toast.LENGTH_LONG
-                            ).show()
-                            finish()
+                            MyUtils.showMessage(mContext, "Profile updated successfully")
+                            //finish()
                         } else {
                             if (res.code == 1001) {
                                 MyUtils.showMessage(this@EditProfileActivity, res.message)
@@ -438,6 +419,7 @@ class EditProfileActivity : AppCompatActivity() {
                         val res = response!!.body()
                         if (res != null) {
                             if (res.status) {
+                                photoUrl = res.image_url
                                 MyUtils.showMessage(mContext, res.message)
                             } else {
                                 MyUtils.showMessage(mContext, res.message)

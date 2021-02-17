@@ -19,9 +19,7 @@ import ninja.cricks.databinding.ActivityRegisterBinding
 import ninja.cricks.models.ResponseModel
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.RetrofitClient
-import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseActivity
-import ninja.cricks.ui.login.viewmodel.LoginViewModel
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.HardwareInfoManager
 import ninja.cricks.utils.MyPreferences

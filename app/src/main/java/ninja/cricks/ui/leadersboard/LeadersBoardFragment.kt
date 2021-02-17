@@ -123,7 +123,7 @@ class LeadersBoardFragment : Fragment() {
         mBinding!!.totalTeamCounts.text = String.format("ALL TEAMS (%s)", value)
     }
 
-    fun getPoints(teamId: Int, user_id: String) {
+    private fun getPoints(teamId: Int, user_id: String) {
         customeProgressDialog.show()
 
         val jsonRequest = JsonObject()
@@ -285,7 +285,6 @@ class LeadersBoardFragment : Fragment() {
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         var onItemClick: ((LeadersBoardModels) -> Unit)? = null
         private var matchesListObject = rangeModels
-
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             val view = LayoutInflater.from(parent.context)

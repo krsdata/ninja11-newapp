@@ -61,6 +61,7 @@ class LeadersBoardActivity : BaseActivity() {
         var REFRESH_TIME: Int = 60000
         val SERIALIZABLE_MATCH_KEY: String = "matchObject"
         val SERIALIZABLE_CONTEST_KEY: String = "contest"
+        val TAG: String = LeadersBoardActivity::class.java.simpleName
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -120,7 +121,6 @@ class LeadersBoardActivity : BaseActivity() {
 
     private fun startCountDown() {
         BindingUtils.logD("TimerLogs", "initViewUpcomingMatches() called in ContestActivity")
-        // matchObject!!.timestampStart = 1591158573 + 300
         BindingUtils.countDownStart(matchObject!!.timestampStart, object : OnMatchTimerStarted {
             override fun onTimeFinished() {
                 updateTimerHeader()
@@ -186,10 +186,6 @@ class LeadersBoardActivity : BaseActivity() {
     }
 
     fun updateScores() {
-        /*val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(this)!!
-        models.contest_id = "" + contestObject!!.id
-        models.match_id = "" + matchObject!!.matchId*/
 
         val jsonRequest = JsonObject()
         jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
@@ -250,7 +246,6 @@ class LeadersBoardActivity : BaseActivity() {
             })
     }
 
-
     private fun initUpcomingMatchData() {
         mBinding!!.teamsa.text = matchObject!!.teamAInfo!!.teamShortName
         mBinding!!.teamsb.text = matchObject!!.teamBInfo!!.teamShortName
@@ -300,29 +295,17 @@ class LeadersBoardActivity : BaseActivity() {
             String.format("%s%s", "₹", contestObject!!.entryFees)
         mBinding!!.includeContestRow.firstPrize.text =
             String.format("%s%s", "₹", contestObject!!.firstPrice)
-        mBinding!!.includeContestRow.winningPercentage.text =
-            "" + contestObject!!.winnerCounts//String.format("%d%s",contestObject!!.winnerPercentage,"%")
-        // mBinding!!.includeContestRow.maxAllowedTeam.text = String.format("%s %d %s","Upto",contestObject!!.maxAllowedTeam,"teams")
+        mBinding!!.includeContestRow.winningPercentage.text = contestObject!!.winnerCounts
+
         if (contestObject!!.cancellation) {
             mBinding!!.includeContestRow.contestCancellation.visibility = View.INVISIBLE
         } else {
             mBinding!!.includeContestRow.contestCancellation.visibility = View.VISIBLE
         }
-//        if(contestObject!!.maxAllowedTeam>1){
-//            mBinding!!.includeContestRow.contestMultiplayer.text = "M"
-//            mBinding!!.includeContestRow.contestMultiplayer.visibility = View.VISIBLE
-//        }else {
-//            mBinding!!.includeContestRow.contestMultiplayer.text = "S"
-//            mBinding!!.includeContestRow.contestMultiplayer.visibility = View.GONE
-//        }
         if (contestObject!!.maxAllowedTeam > 1) {
             mBinding!!.includeContestRow.allowedTeamType.text = "Multiple Entry"
-            /*mBinding!!.includeContestRow.contestMultiplayer.text =
-                "" + contestObject!!.maxAllowedTeam*/
         } else {
             mBinding!!.includeContestRow.allowedTeamType.text = "Single Entry"
-            /*mBinding!!.includeContestRow.contestMultiplayer.text =
-                "" + contestObject!!.maxAllowedTeam*/
         }
         mBinding!!.includeContestRow.contestBonus.text =
             String.format("%s%s", contestObject!!.usableBonus, "%")
@@ -451,7 +434,7 @@ class LeadersBoardActivity : BaseActivity() {
     }
 
     internal inner class ViewPagerAdapter(manager: FragmentManager) :
-        FragmentPagerAdapter(manager) {
+        FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         private val mFragmentList = ArrayList<Fragment>()
         private val mFragmentTitleList = ArrayList<String>()
 

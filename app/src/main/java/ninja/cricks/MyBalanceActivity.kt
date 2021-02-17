@@ -221,6 +221,7 @@ class MyBalanceActivity : AppCompatActivity() {
                                     mContext!!,
                                     res.upi_withdrawal
                                 )
+                                MyPreferences.setMinWithdrawal(mContext!!, res.minWithdrawal)
 
                                 (application as NinjaApplication).saveWalletInformation(
                                     responseModel

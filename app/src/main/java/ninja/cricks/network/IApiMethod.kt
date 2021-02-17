@@ -194,7 +194,16 @@ interface IApiMethod {
     @Multipart
     @POST("uploadbase64Image")
     fun saveDocumentImage(
-        @PartMap() partMap: Map<String, @JvmSuppressWildcards RequestBody>, @Part bankImage: MultipartBody.Part?
+        @PartMap() partMap: Map<String, @JvmSuppressWildcards RequestBody>,
+        @Part bankImage: MultipartBody.Part?
     ): Call<ResponseModel>
+
+    @Headers("Content-Type: application/json")
+    @POST("globalLeaderBoard")
+    fun globalLeaderBoard(@Body request: JsonObject): Call<JsonObject>
+
+    @Headers("Content-Type: application/json")
+    @POST("getLeaderBoardUser")
+    fun getLeaderBoardUser(@Body request: JsonObject): Call<JsonObject>
 
 }

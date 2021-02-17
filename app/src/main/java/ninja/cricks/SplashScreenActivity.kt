@@ -5,7 +5,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Handler
-import android.text.TextUtils
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.google.gson.JsonObject
@@ -27,7 +27,8 @@ class SplashScreenActivity : BaseActivity() {
     private lateinit var mContext: Context
     private var mBinding: ActivitySplashBinding? = null
     private var mDelayHandler: Handler? = null
-    private val SPLASH_DELAYED: Long = 2000
+    private val SPLASH_DELAYED: Long = 2500
+    private var TAG: String = SplashScreenActivity::class.java.simpleName
 
     private val mRunnable: Runnable = Runnable {
         if (!isFinishing) {
@@ -59,20 +60,35 @@ class SplashScreenActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MainActivity.CHECK_APK_UPDATE_API = false
-        MainActivity.CHECK_WALLET_ONCE = false
-        updateFireBase()
         mContext = this
         mBinding = DataBindingUtil.setContentView(
             this,
             R.layout.activity_splash
         )
         updateCheckApk()
+
+        MainActivity.CHECK_APK_UPDATE_API = false
+        MainActivity.CHECK_WALLET_ONCE = false
+        updateFireBase()
+
         val splashScreen = MyPreferences.getSplashScreen(mContext)
 
-        if (!TextUtils.isEmpty(splashScreen)) {
+        if (splashScreen != null && splashScreen != "") {
+            Log.e(TAG, "splashScreen =======> $splashScreen")
+            if (splashScreen.contains(".gif")) {
+                Glide.with(mContext).asGif()
+                    .load(splashScreen)
+                    .placeholder(R.drawable.splash_ninja_red)
+                    .into(mBinding!!.splashView)
+            } else {
+                Glide.with(mContext)
+                    .load(splashScreen)
+                    .placeholder(R.drawable.splash_ninja_red)
+                    .into(mBinding!!.splashView)
+            }
+        } else {
             Glide.with(mContext)
-                .load(splashScreen)
+                .load(R.drawable.splash_ninja_red)
                 .placeholder(R.drawable.splash_ninja_red)
                 .into(mBinding!!.splashView)
         }
@@ -125,6 +141,10 @@ class SplashScreenActivity : BaseActivity() {
                     if (!isFinishing) {
                         if (response!!.body() != null) {
                             val res = JSONObject(response.body().toString())
+                            MyPreferences.setSplashScreen(
+                                this@SplashScreenActivity,
+                                res.getString("splashScreen")
+                            )
                             if (res.getBoolean("status")) {
                                 MainActivity.CHECK_APK_UPDATE_API = true
                                 MainActivity.CHECK_FORCE_UPDATE = res.getBoolean("force_update")
@@ -133,10 +153,6 @@ class SplashScreenActivity : BaseActivity() {
                                 if (res.getString("base_url") != null && res.getString("base_url") != "") {
                                     MyPreferences.setBaseUrl(mContext, res.getString("base_url"))
                                 }
-                                MyPreferences.setSplashScreen(
-                                    this@SplashScreenActivity,
-                                    res.getString("splashScreen")
-                                )
                             }
                         }
                     }

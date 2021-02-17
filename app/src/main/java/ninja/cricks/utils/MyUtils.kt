@@ -39,12 +39,12 @@ class MyUtils {
         const val INTENT_FILTER_LOCAL_BROADCAST = "com.deliverdas.vendor.notitification"
         const val KEY_DATA_RECEIVED = "com.deliverdas.vendor.notitification"
 
-        fun logoutApp(mContext: Activity) {
-            MyPreferences.clear(mContext)
-            val intent = Intent(mContext, SplashScreenActivity::class.java)
+        fun logoutApp(mActivity: Activity) {
+            MyPreferences.clear(mActivity)
+            val intent = Intent(mActivity, SplashScreenActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            mContext.startActivity(intent)
-            mContext.finish()
+            mActivity.startActivity(intent)
+            mActivity.finish()
         }
 
         fun isEmailValid(email: String): Boolean {

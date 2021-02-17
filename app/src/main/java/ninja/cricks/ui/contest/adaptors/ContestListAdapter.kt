@@ -14,8 +14,8 @@ import com.bumptech.glide.Glide
 import com.edify.atrist.listener.OnContestEvents
 import ninja.cricks.LeadersBoardActivity
 import ninja.cricks.R
-import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.models.ContestModelLists
+import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.utils.BindingUtils
 
 
@@ -50,36 +50,31 @@ class ContestListAdapter(
         } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.contest_rows_ipl_final, parent, false)
-            return DataViewHolder(view)
+            return ImageViewHolder(view)
         }
     }
 
     override fun onBindViewHolder(parent: RecyclerView.ViewHolder, position: Int) {
         val objectVal = matchesListObject[position]
-        val viewHolder: DataViewHolder = parent as DataViewHolder
-        viewHolder.contestPrizePool.text = String.format("%s%s", "₹", objectVal.totalWinningPrize)
 
-        if (objectVal.entryFees.toInt() == 0 && objectVal.winnerCounts!!.toInt() > 0) {
-            viewHolder.contestEntryPrize.text = "Free"
-            viewHolder.winningPercentage.text = "" + objectVal.winnerCounts
-        } else if (objectVal.entryFees.toInt() == 0 && objectVal.winnerCounts!!.toInt() == 0) {
-            viewHolder.contestEntryPrize.text = "Join"
-            viewHolder.winningPercentage.text = "Practice"
-        } else {
-            viewHolder.contestEntryPrize.text = String.format("%s%s", "₹", objectVal.entryFees)
-            viewHolder.winningPercentage.text = "" + objectVal.winnerCounts
-        }
-        viewHolder.firstPrize.text = String.format("%s%s", "₹", objectVal.firstPrice)
+        if (getItemViewType(position) == TYPE_NORMAL) {
 
-        if(TYPE_IPL_FINAL == getItemViewType(position)) {
-            if (objectVal.maxAllowedTeam > 1) {
-                viewHolder.allowedTeamType.text = "M"
-                viewHolder.linearMulti.visibility = View.VISIBLE
+            val viewHolder: DataViewHolder = parent as DataViewHolder
+            viewHolder.contestPrizePool.text =
+                String.format("%s%s", "₹", objectVal.totalWinningPrize)
+
+            if (objectVal.entryFees.toInt() == 0 && objectVal.winnerCounts!!.toInt() > 0) {
+                viewHolder.contestEntryPrize.text = "Free"
+                viewHolder.winningPercentage.text = "" + objectVal.winnerCounts
+            } else if (objectVal.entryFees.toInt() == 0 && objectVal.winnerCounts!!.toInt() == 0) {
+                viewHolder.contestEntryPrize.text = "Join"
+                viewHolder.winningPercentage.text = "Practice"
             } else {
-                viewHolder.allowedTeamType.text = "S"
-                viewHolder.linearMulti.visibility = View.VISIBLE
+                viewHolder.contestEntryPrize.text = String.format("%s%s", "₹", objectVal.entryFees)
+                viewHolder.winningPercentage.text = "" + objectVal.winnerCounts
             }
-        } else {
+            viewHolder.firstPrize.text = String.format("%s%s", "₹", objectVal.firstPrice)
+
             if (objectVal.maxAllowedTeam > 1) {
                 viewHolder.allowedTeamType.text = "Multiple Entry"
                 viewHolder.linearMulti.visibility = View.VISIBLE
@@ -87,16 +82,14 @@ class ContestListAdapter(
                 viewHolder.allowedTeamType.text = "Single Entry"
                 viewHolder.linearMulti.visibility = View.VISIBLE
             }
-        }
 
-        if (objectVal.usableBonus.toInt() == 0) {
-            viewHolder.linearBonus.visibility = View.GONE
-        } else {
-            viewHolder.linearBonus.visibility = View.VISIBLE
-            viewHolder.contestBonus.text = String.format("%s%s", objectVal.usableBonus, "%")
-        }
+            if (objectVal.usableBonus.toInt() == 0) {
+                viewHolder.linearBonus.visibility = View.GONE
+            } else {
+                viewHolder.linearBonus.visibility = View.VISIBLE
+                viewHolder.contestBonus.text = String.format("%s%s", objectVal.usableBonus, "%")
+            }
 
-        if (getItemViewType(position) == TYPE_NORMAL) {
             if (objectVal.totalSpots == 0) {
                 viewHolder.contestProgress.max =
                     objectVal.filledSpots + BindingUtils.UNLIMITED_SPOT_MARGIN
@@ -114,10 +107,67 @@ class ContestListAdapter(
                 } else {
                     viewHolder.totalSpot.text = String.format("%d spots", objectVal.totalSpots)
                     viewHolder.totalSpotLeft.text =
-                        String.format("%d  spot left", objectVal.totalSpots - objectVal.filledSpots)
+                        String.format(
+                            "%d  spot left",
+                            objectVal.totalSpots - objectVal.filledSpots
+                        )
                 }
             }
+
+            viewHolder.linearContestViews.setOnClickListener {
+                val intent = Intent(context, LeadersBoardActivity::class.java)
+                intent.putExtra(LeadersBoardActivity.SERIALIZABLE_MATCH_KEY, matchObject)
+                intent.putExtra(LeadersBoardActivity.SERIALIZABLE_CONTEST_KEY, objectVal)
+                context.startActivityForResult(intent, LeadersBoardActivity.CREATETEAM_REQUESTCODE)
+            }
+
+            if (objectVal.cancellation) {
+                viewHolder.contestCancellation.visibility = View.GONE
+            } else {
+                viewHolder.contestCancellation.visibility = View.VISIBLE
+            }
+            viewHolder.contestEntryPrize.setOnClickListener {
+                listener!!.onContestJoinning(objectVal, position)
+            }
+
+            if (objectVal.is_dashboard) {
+                viewHolder.contestLeaderBoardLabel.visibility = View.VISIBLE
+            } else {
+                viewHolder.contestLeaderBoardLabel.visibility = View.GONE
+            }
         } else {
+            val viewHolder: ImageViewHolder = parent as ImageViewHolder
+            viewHolder.contestPrizePool.text =
+                String.format("%s%s", "₹", objectVal.totalWinningPrize)
+
+            if (objectVal.entryFees.toInt() == 0 && objectVal.winnerCounts!!.toInt() > 0) {
+                viewHolder.contestEntryPrize.text = "Free"
+                viewHolder.winningPercentage.text = "" + objectVal.winnerCounts
+            } else if (objectVal.entryFees.toInt() == 0 && objectVal.winnerCounts!!.toInt() == 0) {
+                viewHolder.contestEntryPrize.text = "Join"
+                viewHolder.winningPercentage.text = "Practice"
+            } else {
+                viewHolder.contestEntryPrize.text = String.format("%s%s", "₹", objectVal.entryFees)
+                viewHolder.winningPercentage.text = "" + objectVal.winnerCounts
+            }
+            viewHolder.firstPrize.text = String.format("%s%s", "₹", objectVal.firstPrice)
+
+            if (objectVal.maxAllowedTeam > 1) {
+                viewHolder.allowedTeamType.text = "M"
+                viewHolder.linearMulti.visibility = View.VISIBLE
+            } else {
+                viewHolder.allowedTeamType.text = "S"
+                viewHolder.linearMulti.visibility = View.VISIBLE
+            }
+
+            if (objectVal.usableBonus.toInt() == 0) {
+                viewHolder.linearBonus.visibility = View.GONE
+            } else {
+                viewHolder.linearBonus.visibility = View.VISIBLE
+                viewHolder.contestBonus.text = String.format("%s%s", objectVal.usableBonus, "%")
+            }
+
+
             Glide.with(context)
                 .load(objectVal.giftUrl)
                 .placeholder(R.drawable.phone_image)
@@ -142,33 +192,29 @@ class ContestListAdapter(
                         String.format("%d", objectVal.filledSpots)
                 }
             }
+
+            viewHolder.linearContestViews.setOnClickListener {
+                val intent = Intent(context, LeadersBoardActivity::class.java)
+                intent.putExtra(LeadersBoardActivity.SERIALIZABLE_MATCH_KEY, matchObject)
+                intent.putExtra(LeadersBoardActivity.SERIALIZABLE_CONTEST_KEY, objectVal)
+                context.startActivityForResult(intent, LeadersBoardActivity.CREATETEAM_REQUESTCODE)
+            }
+
+            if (objectVal.cancellation) {
+                viewHolder.contestCancellation.visibility = View.GONE
+            } else {
+                viewHolder.contestCancellation.visibility = View.VISIBLE
+            }
+            viewHolder.contestEntryPrize.setOnClickListener {
+                listener!!.onContestJoinning(objectVal, position)
+            }
+
+            if (objectVal.is_dashboard) {
+                viewHolder.contestLeaderBoardLabel.visibility = View.VISIBLE
+            } else {
+                viewHolder.contestLeaderBoardLabel.visibility = View.GONE
+            }
         }
-
-        // viewHolder.cardBackround.setBackgroundColor(colorCode)
-        viewHolder.linearContestViews.setOnClickListener(View.OnClickListener {
-            val intent = Intent(context, LeadersBoardActivity::class.java)
-            intent.putExtra(LeadersBoardActivity.SERIALIZABLE_MATCH_KEY, matchObject)
-            intent.putExtra(LeadersBoardActivity.SERIALIZABLE_CONTEST_KEY, objectVal)
-            context.startActivityForResult(intent, LeadersBoardActivity.CREATETEAM_REQUESTCODE)
-        })
-
-        if (objectVal.cancellation) {
-            viewHolder.contestCancellation.visibility = View.GONE
-        } else {
-            viewHolder.contestCancellation.visibility = View.VISIBLE
-        }
-//        viewHolder.contestCancellation.setOnClickListener(View.OnClickListener {
-//            //MyUtils.showToast(viewHolder.contestCancellation,objectVal.cancellation)
-//        })
-
-        //if(matchObject.status==1) {
-        viewHolder.contestEntryPrize.setOnClickListener(View.OnClickListener {
-            listener!!.onContestJoinning(objectVal, position)
-
-        })
-//        }else {
-//            viewHolder.contestEntryPrize.setBackgroundResource(R.drawable.button_selector_grey)
-//        }
     }
 
     override fun getItemCount(): Int {
@@ -198,7 +244,8 @@ class ContestListAdapter(
         val totalSpotLeft: TextView = itemView.findViewById(R.id.total_spot_left)
         val totalSpot: TextView = itemView.findViewById(R.id.total_spot)
         val contestProgress: ProgressBar = itemView.findViewById(R.id.contest_progress)
-        val giftImage: ImageView = itemView.findViewById(R.id.gift_image)
+        val contestLeaderBoardLabel: TextView =
+            itemView.findViewById(R.id.contest_leader_board_label)
     }
 
     inner class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -225,5 +272,7 @@ class ContestListAdapter(
         val totalSpot: TextView = itemView.findViewById(R.id.total_spot)
         val contestProgress: ProgressBar = itemView.findViewById(R.id.contest_progress)
         val giftImage: ImageView = itemView.findViewById(R.id.gift_image)
+        val contestLeaderBoardLabel: TextView =
+            itemView.findViewById(R.id.contest_leader_board_label)
     }
 }

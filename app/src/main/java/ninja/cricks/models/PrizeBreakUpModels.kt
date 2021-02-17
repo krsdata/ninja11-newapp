@@ -3,7 +3,7 @@ package ninja.cricks.models
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-data class PrizeBreakUpModels (
+data class PrizeBreakUpModels(
 
     @SerializedName("range")
     @Expose
@@ -11,5 +11,9 @@ data class PrizeBreakUpModels (
 
     @SerializedName("price")
     @Expose
-    val winnersPrice: String = ""
+    val winnersPrice: String = "",
+
+    @SerializedName("prize_url")
+    @Expose
+    val prize_url: String = ""
 )

@@ -250,6 +250,11 @@ class MyAccountBalanceFragment : BaseFragment() {
                                         res.upi_withdrawal
                                     )
 
+                                    MyPreferences.setMinWithdrawal(
+                                        requireActivity(),
+                                        res.minWithdrawal
+                                    )
+
                                     (activity!!.applicationContext as NinjaApplication).saveWalletInformation(
                                         responseModel
                                     )

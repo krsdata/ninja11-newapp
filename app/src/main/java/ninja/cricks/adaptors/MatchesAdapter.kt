@@ -23,11 +23,11 @@ import ninja.cricks.utils.MyUtils
 import pl.pzienowicz.autoscrollviewpager.AutoScrollViewPager
 
 
-class MatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<MatchesModels>) :
+class MatchesAdapter(val context: Context, val tradeInfoModels: ArrayList<MatchesModels>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var onItemClick: ((MatchesModels) -> Unit)? = null
     var mContext: Context? = context
-    private var matchesListObject = tradeinfoModels
+    private var matchesListObject = tradeInfoModels
 
     companion object {
         const val TYPE_JOINED = 1

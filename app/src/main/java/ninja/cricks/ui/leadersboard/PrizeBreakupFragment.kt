@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -15,14 +16,15 @@ import com.google.gson.JsonObject
 import ninja.cricks.ContestActivity
 import ninja.cricks.R
 import ninja.cricks.databinding.FragmentPrizeBreakupBinding
+import ninja.cricks.models.ContestModelLists
+import ninja.cricks.models.PrizeBreakUpModels
 import ninja.cricks.models.UpcomingMatchesModel
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.models.ContestModelLists
-import ninja.cricks.models.UsersPostDBResponse
-import ninja.cricks.models.PrizeBreakUpModels
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
+import ninja.cricks.utils.setServerImage
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -55,7 +57,7 @@ class PrizeBreakupFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_prize_breakup, container, false
@@ -83,17 +85,10 @@ class PrizeBreakupFragment : Fragment() {
             mBinding!!.winnerGlory.visibility = View.GONE
             getPrizeBreakup()
         }
-
     }
 
-
-    fun getPrizeBreakup() {
+    private fun getPrizeBreakup() {
         mBinding!!.progressBar.visibility = View.VISIBLE
-        /*val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(requireActivity())!!
-        models.token = MyPreferences.getToken(requireActivity())!!
-        models.match_id = "" + matchObject!!.matchId
-        models.contest_id = "" + contestObject!!.id*/
 
         val jsonRequest = JsonObject()
         jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
@@ -101,7 +96,8 @@ class PrizeBreakupFragment : Fragment() {
         jsonRequest.addProperty("match_id", matchObject!!.matchId)
         jsonRequest.addProperty("contest_id", contestObject!!.id)
 
-        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getPrizeBreakUp(jsonRequest)
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
+            .getPrizeBreakUp(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
 
@@ -133,13 +129,9 @@ class PrizeBreakupFragment : Fragment() {
                             }
                         }
                     }
-
                 }
-
             })
-
     }
-
 
     inner class PrizeBreakUpAdapter(
         val context: Context,
@@ -149,35 +141,36 @@ class PrizeBreakupFragment : Fragment() {
         var onItemClick: ((PrizeBreakUpModels) -> Unit)? = null
         private var matchesListObject = rangeModels
 
-
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-            var view = LayoutInflater.from(parent.context)
+            val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.prize_breakup_rows, parent, false)
             return MyMatchViewHolder(view)
         }
 
         override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
-            var objectVal = matchesListObject[viewType]
+            val objectVal = matchesListObject[viewType]
             val viewHolder: MyMatchViewHolder = parent as MyMatchViewHolder
             viewHolder.rankRange.text = objectVal.rangeName
-            viewHolder.winnerPrize.text = "₹" + objectVal.winnersPrice
+            viewHolder.winnerPrize.text = String.format("₹%s", objectVal.winnersPrice)
+            if (objectVal.prize_url != null && objectVal.prize_url != "") {
+                viewHolder.priceImage.setServerImage(objectVal.prize_url, applyCircle = false)
+                viewHolder.priceImage.visibility = View.VISIBLE
+                viewHolder.plusText.visibility = View.VISIBLE
+            } else {
+                viewHolder.priceImage.visibility = View.GONE
+                viewHolder.plusText.visibility = View.GONE
+            }
         }
-
 
         override fun getItemCount(): Int {
             return matchesListObject.size
         }
 
         inner class MyMatchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-            val rankRange = itemView.findViewById<TextView>(R.id.rank_range)
-            val winnerPrize = itemView.findViewById<TextView>(R.id.winner_rpize)
-
-
+            val rankRange: TextView = itemView.findViewById(R.id.rank_range)
+            val winnerPrize: TextView = itemView.findViewById(R.id.winner_rpize)
+            val plusText: TextView = itemView.findViewById(R.id.plus_text)
+            val priceImage: ImageView = itemView.findViewById(R.id.price_image)
         }
-
-
     }
-
-
 }

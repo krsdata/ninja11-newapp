@@ -124,7 +124,11 @@ data class UsersPostDBResponse(
 
     @SerializedName("total_team")
     @Expose
-    var teamCount: String = ""
+    var teamCount: String = "",
+
+    @SerializedName("min_withdrawal")
+    @Expose
+    var minWithdrawal: Int = 0
 
 
 ) : Serializable, Cloneable

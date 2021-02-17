@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="ninja.cricks.ui.home.FixtureCricketFragment" />
+            type="ninja.cricks.ui.dashboard.FixtureCricketFragment" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

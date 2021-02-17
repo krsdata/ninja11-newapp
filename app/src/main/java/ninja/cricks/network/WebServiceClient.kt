@@ -14,7 +14,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-
 class WebServiceClient(val context: Context) {
     private lateinit var interceptor: HttpLoggingInterceptor
     private lateinit var okHttpClient: OkHttpClient
@@ -62,7 +61,6 @@ class WebServiceClient(val context: Context) {
                     .build()
             } else {
                 okHttpClient = OkHttpClient.Builder()
-                    //.addInterceptor(interceptor)
                     .addInterceptor(Interceptor { chain ->
                         val original = chain.request()
                         val builder = original.newBuilder()
@@ -93,8 +91,8 @@ class WebServiceClient(val context: Context) {
             }
             if (retrofit == null) {
                 retrofit = Retrofit.Builder()
-                    //.baseUrl(MyPreferences.getBaseUrl(context)!!)
-                    .baseUrl("https://rest.fancode11.com/api/v3/")
+//                    .baseUrl("https://rest.fancode11.com/api/v3/")
+                    .baseUrl(BindingUtils.BASE_URL_MAIN_API)
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(okHttpClient)
                     .build()

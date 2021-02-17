@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-
 data class MatchesModels(
 
     @SerializedName("viewType")
@@ -33,6 +32,6 @@ data class MatchesModels(
 
     @SerializedName("completed")
     @Expose
-    var completedMatchHistory: ArrayList<JoinedMatchModel>? = null,
+    var completedMatchHistory: ArrayList<JoinedMatchModel>? = null
 
-): Serializable, Cloneable
+) : Serializable, Cloneable

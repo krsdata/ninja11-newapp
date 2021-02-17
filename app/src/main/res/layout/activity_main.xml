@@ -52,6 +52,7 @@
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_centerVertical="true"
+                        app:civ_border_width="@dimen/_1sdp"
                         android:src="@drawable/ic_account_circle_black_24dp" />
 
                     <ImageView
@@ -75,24 +76,6 @@
                 </RelativeLayout>
             </androidx.appcompat.widget.Toolbar>
         </RelativeLayout>
-
-        <!--<ninja.cricks.bottom_nav.BottomNavBar
-            android:id="@+id/nav_view1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
-            app:bn_curve_margin="6dp"
-            app:bn_curve_rounded_corner_radius="8dp"
-            app:bn_curve_vertical_offset="0dp"
-            app:bn_fab_background_color="@color/colorPrimary"
-            app:bn_background_color="@color/white"
-            app:bn_fab_icon_color="@color/white"
-            app:bn_fab_menu_index="2"
-            app:bn_fab_size="normal"
-            app:bn_item_color="@color/red_transperent"
-            app:bn_menu="@menu/bottom_nav_menu"
-            app:menu="@menu/bottom_nav_menu" />-->
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/navigation"

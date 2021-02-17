@@ -3,20 +3,15 @@ package ninja.cricks.network
 import android.content.Context
 import ninja.cricks.BuildConfig
 import ninja.cricks.utils.BindingUtils
+import ninja.cricks.utils.MyPreferences
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import ninja.cricks.utils.BindingUtils.Companion.BASE_URL_API
-import ninja.cricks.utils.MyPreferences
-import ninja.cricks.utils.MyUtils
-import okhttp3.ConnectionSpec
-import okhttp3.Interceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 import java.util.concurrent.TimeUnit
 
-
-class RetrofitClient(val  context:Context) {
+class RetrofitClient(val context: Context) {
     private lateinit var interceptor: HttpLoggingInterceptor
     private lateinit var okHttpClient: OkHttpClient
     private var retrofit: Retrofit? = null
@@ -34,7 +29,9 @@ class RetrofitClient(val  context:Context) {
                         val original = chain.request()
                         val builder = original.newBuilder()
                         builder.addHeader("Accept", "application/json")
-                            .addHeader("version_code",
+                            .addHeader("Authorization", "Bearer " + MyPreferences.getToken(context))
+                            .addHeader(
+                                "version_code",
                                 BuildConfig.VERSION_CODE.toString()
                             )
                         val request = builder.build()
@@ -45,7 +42,7 @@ class RetrofitClient(val  context:Context) {
                         )
                         chain.proceed(request)
                     })
-                    .connectionSpecs(
+                    /*.connectionSpecs(
                         Arrays.asList(
                             ConnectionSpec.MODERN_TLS,
                             ConnectionSpec.CLEARTEXT
@@ -53,7 +50,7 @@ class RetrofitClient(val  context:Context) {
                     )
                     .followRedirects(true)
                     .followSslRedirects(true)
-                    .retryOnConnectionFailure(true)
+                    .retryOnConnectionFailure(true)*/
                     .connectTimeout(20, TimeUnit.SECONDS)
                     .readTimeout(20, TimeUnit.SECONDS)
                     .writeTimeout(20, TimeUnit.SECONDS)
@@ -65,13 +62,15 @@ class RetrofitClient(val  context:Context) {
                         val original = chain.request()
                         val builder = original.newBuilder()
                         builder.addHeader("Accept", "application/json")
-                            .addHeader("version_code",
+                            .addHeader("Authorization", "Bearer " + MyPreferences.getToken(context))
+                            .addHeader(
+                                "version_code",
                                 BuildConfig.VERSION_CODE.toString()
                             )
                         val request = builder.build()
                         chain.proceed(request)
                     })
-                    .connectionSpecs(
+                    /*.connectionSpecs(
                         Arrays.asList(
                             ConnectionSpec.MODERN_TLS,
                             ConnectionSpec.CLEARTEXT
@@ -79,7 +78,7 @@ class RetrofitClient(val  context:Context) {
                     )
                     .followRedirects(true)
                     .followSslRedirects(true)
-                    .retryOnConnectionFailure(true)
+                    .retryOnConnectionFailure(true)*/
                     .connectTimeout(20, TimeUnit.SECONDS)
                     .readTimeout(20, TimeUnit.SECONDS)
                     .writeTimeout(20, TimeUnit.SECONDS)

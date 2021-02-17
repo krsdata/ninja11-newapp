@@ -5,13 +5,14 @@
     <color name="colorPrimaryDark">#0b65b3</color>
     <color name="colorAccent">#0b65b3</color>-->
 
-    <color name="colorPrimary">#AA0A37</color>
+    <!--<color name="colorPrimary">#AA0A37</color>
     <color name="colorPrimaryDark">#AA0A37</color>
-    <color name="colorAccent">#AA0A37</color>
+    <color name="colorAccent">#AA0A37</color>-->
 
-    <!--<color name="colorPrimary">#C61D24</color>
-    <color name="colorPrimaryDark">#C61D24</color>
-    <color name="colorAccent">#C61D24</color>-->
+    <color name="colorPrimary">#c61d24</color>
+    <color name="colorPrimaryDark">#c61d24</color>
+    <color name="colorAccent">#c61d24</color>
+
 
     <!-- Here you can add color of your choice  -->
     <color name="ucrop_color_toolbar">@color/colorPrimary</color>
@@ -32,7 +33,7 @@
     <color name="white">#ffffff</color>
     <color name="grey_lighter_dense">#f0eff4</color>
     <color name="white_transperent">#60FFFFFF</color>
-    <color name="red_transperent">#60C61D24</color>
+    <color name="red_transperent">#80C61D24</color>
 
     <color name="red">#ffb02858</color>
 
@@ -206,4 +207,9 @@
 
     <color name="theme_trans">#33FFEBEE</color>
 
+    <!-- old Amber A700 -->
+    <!--<color name="amber_a_700">#FFAB00</color>-->
+    <!-- new Amber A200 -->
+    <color name="amber_a_700">#FFD740</color>
+    <color name="amber_900">#FF6F00</color>
 </resources>

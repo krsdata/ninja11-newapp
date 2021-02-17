@@ -318,37 +318,23 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
 
     private fun processStep1() {
 
-        binding!!.txtTnc.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                val intent = Intent(this@LoginScreenActivity, WebActivity::class.java)
-                intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_TERMS_CONDITION)
-                intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_TNC)
-                if (Build.VERSION.SDK_INT > 20) {
-                    val options =
-                        ActivityOptions.makeSceneTransitionAnimation(this@LoginScreenActivity)
-                    startActivity(intent, options.toBundle())
-                } else {
-                    startActivity(intent)
-                }
-            }
+        binding!!.txtTnc.setOnClickListener {
+            val intent = Intent(this@LoginScreenActivity, WebActivity::class.java)
+            intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_TERMS_CONDITION)
+            intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_TNC)
+            val options =
+                ActivityOptions.makeSceneTransitionAnimation(this@LoginScreenActivity)
+            startActivity(intent, options.toBundle())
+        }
 
-        })
-
-        binding!!.txtPrivacy.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                val intent = Intent(this@LoginScreenActivity, WebActivity::class.java)
-                intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_PRIVACY_POLICY)
-                intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_PRIVACY)
-                if (Build.VERSION.SDK_INT > 20) {
-                    val options =
-                        ActivityOptions.makeSceneTransitionAnimation(this@LoginScreenActivity)
-                    startActivity(intent, options.toBundle())
-                } else {
-                    startActivity(intent)
-                }
-            }
-
-        })
+        binding!!.txtPrivacy.setOnClickListener {
+            val intent = Intent(this@LoginScreenActivity, WebActivity::class.java)
+            intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_PRIVACY_POLICY)
+            intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_PRIVACY)
+            val options =
+                ActivityOptions.makeSceneTransitionAnimation(this@LoginScreenActivity)
+            startActivity(intent, options.toBundle())
+        }
     }
 
     override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {

@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import com.bumptech.glide.Glide
 import ninja.cricks.R
-import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.models.PlayersInfoModel
+import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.utils.BindingUtils
 
 class GridViewAdapter(
@@ -36,7 +37,8 @@ class GridViewAdapter(
         var convertView = convertView
         val viewHolder: ViewHolder
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.preview_player_info, parent, false)
+            convertView =
+                LayoutInflater.from(context).inflate(R.layout.preview_player_info, parent, false)
             viewHolder =
                 ViewHolder()
             viewHolder.imageView = convertView!!.findViewById(R.id.imageView)
@@ -62,10 +64,22 @@ class GridViewAdapter(
             .into(viewHolder.imageView)
 
         if (matchObject.teamAInfo!!.teamId == objects.teamId) {
-            viewHolder.playerName.background = context.resources.getDrawable(R.drawable.ract_white_background)
+            viewHolder.playerName.background =
+                ResourcesCompat.getDrawable(
+                    context.resources,
+                    R.drawable.ract_white_background,
+                    null
+                )
+            //context.resources.getDrawable(R.drawable.ract_white_background)
             viewHolder.playerName.setTextColor(context.resources.getColor(R.color.black))
         } else {
-            viewHolder.playerName.background = context.resources.getDrawable(R.drawable.ract_black_background)
+            viewHolder.playerName.background =
+                ResourcesCompat.getDrawable(
+                    context.resources,
+                    R.drawable.ract_black_background,
+                    null
+                )
+            //context.resources.getDrawable(R.drawable.ract_black_background)
             viewHolder.playerName.setTextColor(context.resources.getColor(R.color.white))
         }
 

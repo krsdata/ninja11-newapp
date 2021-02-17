@@ -190,17 +190,6 @@ class MyCompletedMatchesFragment : Fragment() {
             viewHolder.teamAColorView?.setBackgroundColor(getRandomColor())
             viewHolder.teamBColorView?.setBackgroundColor(getRandomColor())
 
-//            BindingUtils.countDownStart(objectVal.timestampStart,object : OnMatchTimerStarted {
-//                override fun onTimeFinished() {
-//                    viewHolder?.matchProgress.setText(objectVal.statusString)
-//                }
-//
-//                override fun onTicks(time:String) {
-//                    viewHolder?.matchProgress.setText(time)
-//                }
-//
-//            })
-
             Glide.with(context)
                 .load(objectVal.teamAInfo!!.logoUrl)
                 .placeholder(R.drawable.placeholder_player_teama)

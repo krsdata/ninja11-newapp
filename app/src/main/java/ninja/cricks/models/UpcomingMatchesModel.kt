@@ -77,6 +77,19 @@ data class UpcomingMatchesModel(
 
     @SerializedName("contest_prize")
     @Expose
-    var contestPrize: String = ""
+    var contestPrize: String = "",
+
+    @SerializedName("is_dashboard")
+    @Expose
+    var is_dashboard: Boolean = false,
+
+    @SerializedName("show_new_design")
+    @Expose
+    var show_new_design: Boolean = false,
+
+    @SerializedName("dyanamic_message")
+    @Expose
+    var dyanamic_message: String = ""
+
 
 ) : Serializable, Cloneable

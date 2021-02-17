@@ -93,5 +93,10 @@ data class WalletInfo(
 
     @SerializedName("extra_cash")
     @Expose
-    var extraCash: Double = 0.0
+    var extraCash: Double = 0.0,
+
+    @SerializedName("min_withdrawal")
+    @Expose
+    var minWithdrawal: Int = 0
+
 ) : Serializable, Cloneable

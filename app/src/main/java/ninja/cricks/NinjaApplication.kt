@@ -32,7 +32,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class NinjaApplication : MultiDexApplication() {
 
     private var mGetWallet: BroadcastReceiver = object : BroadcastReceiver() {
@@ -193,6 +192,8 @@ class NinjaApplication : MultiDexApplication() {
                                 this@NinjaApplication,
                                 res.upi_withdrawal
                             )
+
+                            MyPreferences.setMinWithdrawal(this@NinjaApplication, res.minWithdrawal)
 
                             saveWalletInformation(responseModel)
                         }

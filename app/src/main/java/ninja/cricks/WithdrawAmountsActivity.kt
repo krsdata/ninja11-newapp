@@ -13,9 +13,7 @@ import android.widget.RadioButton
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import com.andrognito.flashbar.Flashbar
-import com.google.gson.Gson
 import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import ninja.cricks.databinding.ActivityWithdrawAmountBinding
 import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.models.WalletInfo
@@ -23,7 +21,6 @@ import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseActivity
 import ninja.cricks.utils.CustomeProgressDialog
-import ninja.cricks.utils.HardwareInfoManager
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import org.json.JSONObject
@@ -55,9 +52,9 @@ class WithdrawAmountsActivity : BaseActivity() {
         mBinding!!.toolbar.setTitleTextColor(resources.getColor(R.color.white))
         mBinding!!.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
         setSupportActionBar(mBinding!!.toolbar)
-        mBinding!!.toolbar.setNavigationOnClickListener(View.OnClickListener {
+        mBinding!!.toolbar.setNavigationOnClickListener {
             finish()
-        })
+        }
 
         mBinding!!.winningAmount.text = String.format("₹%s", walletInfo!!.prizeAmount)
 
@@ -79,6 +76,10 @@ class WithdrawAmountsActivity : BaseActivity() {
             mBinding!!.upiBtn.visibility = View.GONE
         }
 
+        mBinding!!.editWithdrawalAmount.hint =
+            String.format("₹%s", MyPreferences.getMinWithdrawal(mContext!!))
+
+
         mBinding!!.radioGroup.setOnCheckedChangeListener { group, checkedId ->
             val rb = group.findViewById<RadioButton>(checkedId)
             if (rb != null) {
@@ -99,11 +100,14 @@ class WithdrawAmountsActivity : BaseActivity() {
             } else if (pageType.isEmpty()) {
                 MyUtils.showMessage(mContext!!, "Please select Withdraw type")
             } else {
+
+                val minWithdraw = MyPreferences.getMinWithdrawal(mContext!!)
+
                 if (pageType.equals("paytm", true)) {
-                    if (amount.toInt() < 200) {
+                    if (amount.toInt() < minWithdraw) {
                         MyUtils.showMessage(
                             mContext!!,
-                            "You can not withdraw amount less than ₹200"
+                            "You can not withdraw amount less than ₹$minWithdraw"
                         )
                     } else if (amount.toInt() <= 1000) {
                         showWithdrawalAlert(amount.toInt(), pageType)
@@ -132,10 +136,10 @@ class WithdrawAmountsActivity : BaseActivity() {
                         }
                     }
                 } else {
-                    if (amount.toInt() < 200) {
+                    if (amount.toInt() < minWithdraw) {
                         MyUtils.showMessage(
                             mContext!!,
-                            "You can not withdraw amount less than ₹200"
+                            "You can not withdraw amount less than ₹$minWithdraw"
                         )
                     } else if (amount.toInt() <= 10000) {
                         if (mBinding!!.upiEditText.visibility == View.VISIBLE) {
@@ -204,15 +208,6 @@ class WithdrawAmountsActivity : BaseActivity() {
             return
         }
         customeProgressDialog.show()
-        /*val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(this)!!
-        models.token = MyPreferences.getToken(this)!!
-        models.withdraw_amount = MyUtils.encodeBase64(amount.toString()).toString()
-        models.payment_taken_in = MyUtils.encodeBase64(type).toString()
-
-        if (type == "UPI") {
-            models.upi_id = mBinding!!.upiEditText.text.toString()
-        }*/
 
         val jsonRequest = JsonObject()
         jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
@@ -243,14 +238,14 @@ class WithdrawAmountsActivity : BaseActivity() {
                             successAlert(res.message, true)
                         } else {
                             if (res.code == 1001) {
-                                MyUtils.showMessage(this@WithdrawAmountsActivity, res.message)
+                                MyUtils.showMessage(mContext!!, res.message)
                                 MyUtils.logoutApp(this@WithdrawAmountsActivity)
                             } else if (res.code == 405) {
                                 mBinding!!.upiText.visibility = View.VISIBLE
                                 mBinding!!.upiEditText.visibility = View.VISIBLE
                                 errorAlert(res.message)
                             } else {
-                                MyUtils.showMessage(this@WithdrawAmountsActivity, res.message)
+                                MyUtils.showMessage(mContext!!, res.message)
                             }
                         }
                     } else {

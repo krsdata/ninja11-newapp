@@ -56,10 +56,10 @@ data class JoinedMatchModel(
 
     @SerializedName("league_title")
     @Expose
-    var leagueTitle: String = ""
-) : Serializable, Cloneable {
+    var leagueTitle: String = "",
 
-    public override fun clone(): JoinedMatchModel {
-        return super.clone() as JoinedMatchModel
-    }
-}
+    @SerializedName("is_dashboard")
+    @Expose
+    var is_dashboard: Boolean = false
+
+) : Serializable, Cloneable
