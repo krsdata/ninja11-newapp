@@ -119,17 +119,9 @@
                             android:textColor="@color/white"
                             android:textSize="@dimen/_8sdp"
                             android:textStyle="bold" />
-
-
                     </LinearLayout>
-
-
                 </LinearLayout>
-
-
             </LinearLayout>
-
-
         </RelativeLayout>
 
         <ninja.cricks.customviews.ArcBackgroundView
@@ -195,21 +187,13 @@
             </LinearLayout>
         </LinearLayout>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="@dimen/_70sdp"
-            android:layout_height="@dimen/_70sdp"
+        <ImageView
+            android:id="@+id/logo_value"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             android:layout_above="@+id/tnc_policy"
             android:layout_centerInParent="true"
-            android:elevation="@dimen/_10sdp"
-            app:cardElevation="@dimen/_10sdp"
-            app:cardBackgroundColor="@color/colorPrimaryDark">
-
-            <ImageView
-                android:id="@+id/logo_value"
-                android:layout_width="@dimen/_70sdp"
-                android:layout_height="@dimen/_70sdp"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/ic_launcher_round" />
-        </androidx.cardview.widget.CardView>
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/home_header" />
     </RelativeLayout>
 </layout>

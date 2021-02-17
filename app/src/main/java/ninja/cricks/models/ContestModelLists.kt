@@ -75,7 +75,7 @@ data class ContestModelLists(
     @Expose
     var giftUrl: String = "",
 
-    @SerializedName("is_dashboard")
+    @SerializedName("is_leaderboard")
     @Expose
     var is_dashboard: Boolean = false
 ) : Serializable, Cloneable

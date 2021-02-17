@@ -85,6 +85,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     override fun onResume() {
         super.onResume()
         updateCheckApk()
+        userInfo = (application as NinjaApplication).userInformations
         if (userInfo != null) {
             Glide.with(this)
                 .load(userInfo!!.profileImage)

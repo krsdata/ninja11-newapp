@@ -260,7 +260,6 @@ class EditProfileActivity : AppCompatActivity() {
             gender = "female"
         }
         val dateOfBirth = mBinding!!.dateOfBirth.text.toString()
-        //val state = mBinding!!.spinnerStates.selectedItem.toString()
 
         if (TextUtils.isEmpty(editName)) {
             MyUtils.showToast(this@EditProfileActivity, "Please enter your real name")
@@ -319,7 +318,6 @@ class EditProfileActivity : AppCompatActivity() {
 
                             (application as NinjaApplication).saveUserInformations(userInfo)
                             MyUtils.showMessage(mContext, "Profile updated successfully")
-                            //finish()
                         } else {
                             if (res.code == 1001) {
                                 MyUtils.showMessage(this@EditProfileActivity, res.message)
@@ -420,6 +418,7 @@ class EditProfileActivity : AppCompatActivity() {
                         if (res != null) {
                             if (res.status) {
                                 photoUrl = res.image_url
+                                userInfo.profileImage = res.image_url
                                 MyUtils.showMessage(mContext, res.message)
                             } else {
                                 MyUtils.showMessage(mContext, res.message)

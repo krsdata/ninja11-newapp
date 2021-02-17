@@ -66,10 +66,6 @@ class PreviewTeamLeaderActivity : AppCompatActivity() {
         hasmapPlayers =
             intent.getSerializableExtra(SERIALIZABLE_TEAM_PREVIEW_KEY) as HashMap<String, ArrayList<PlayersInfoModel>>
 
-        mBinding!!.imgRefresh.setOnClickListener {
-            getPoints(teamId)
-        }
-
         mBinding!!.imgClose.setOnClickListener {
             finish()
         }
@@ -82,8 +78,8 @@ class PreviewTeamLeaderActivity : AppCompatActivity() {
         }
 
         mBinding!!.teamName.text = teamName
-        mBinding!!.pointsBar.visibility = View.VISIBLE
-        mBinding!!.imgRefresh.visibility = View.VISIBLE
+        mBinding!!.pointsBar.visibility = View.GONE
+        mBinding!!.imgRefresh.visibility = View.GONE
 
         setupPlayersOnGrounds()
     }
@@ -146,88 +142,8 @@ class PreviewTeamLeaderActivity : AppCompatActivity() {
         setGridViewOnItemClickListener()
     }
 
-    private fun getPoints(teamId: Int) {
-        if (!MyUtils.isConnectedWithInternet(this)) {
-            MyUtils.showToast(this, "No Internet connection found")
-            return
-        }
-        customeProgressDialog.show()
-
-        val jsonRequest = JsonObject()
-        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
-        jsonRequest.addProperty("team_id", teamId)
-
-        WebServiceClient(this).client.create(IApiMethod::class.java).getPoints(jsonRequest)
-            .enqueue(object : Callback<UsersPostDBResponse?> {
-                override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                    customeProgressDialog.dismiss()
-                }
-
-                override fun onResponse(
-                    call: Call<UsersPostDBResponse?>?,
-                    response: Response<UsersPostDBResponse?>?
-                ) {
-                    customeProgressDialog.dismiss()
-                    val res = response!!.body()
-                    if (res != null) {
-                        if (res.status) {
-                            var totalPoints = res.totalPoints
-                            val responseModel = res.responseObject
-                            if (responseModel != null) {
-                                val playerPointsList = responseModel.playerPointsList
-                                val hasmapPlayers: HashMap<String, ArrayList<PlayersInfoModel>> =
-                                    HashMap<String, ArrayList<PlayersInfoModel>>()
-
-                                val wktKeeperList: ArrayList<PlayersInfoModel> =
-                                    ArrayList<PlayersInfoModel>()
-                                val batsManList: ArrayList<PlayersInfoModel> =
-                                    ArrayList<PlayersInfoModel>()
-                                val allRounderList: ArrayList<PlayersInfoModel> =
-                                    ArrayList<PlayersInfoModel>()
-                                val allbowlerList: ArrayList<PlayersInfoModel> =
-                                    ArrayList<PlayersInfoModel>()
-
-                                for (x in 0 until playerPointsList!!.size) {
-                                    val plyObj = playerPointsList[x]
-                                    if (plyObj.playerRole.equals("wk")) {
-                                        wktKeeperList.add(plyObj)
-                                    } else if (plyObj.playerRole.equals("bat")) {
-                                        batsManList.add(plyObj)
-                                    } else if (plyObj.playerRole.equals("all")) {
-                                        allRounderList.add(plyObj)
-                                    } else if (plyObj.playerRole.equals("bowl")) {
-                                        allbowlerList.add(plyObj)
-                                    }
-                                }
-                                hasmapPlayers[CreateTeamActivity.CREATE_TEAM_WICKET_KEEPER] =
-                                    wktKeeperList
-                                hasmapPlayers[CreateTeamActivity.CREATE_TEAM_BATSMAN] = batsManList
-                                hasmapPlayers[CreateTeamActivity.CREATE_TEAM_ALLROUNDER] =
-                                    allRounderList
-                                hasmapPlayers[CreateTeamActivity.CREATE_TEAM_BOWLER] = allbowlerList
-                                updatePlayersPoints(hasmapPlayers)
-                            }
-                        } else {
-                            if (res.code == 1001) {
-                                MyUtils.showMessage(mContext!!, res.message)
-                                MyUtils.logoutApp(this@PreviewTeamLeaderActivity)
-                            } else {
-                                MyUtils.showMessage(mContext!!, res.message)
-                            }
-                        }
-                    }
-                }
-            })
-    }
-
-    private fun updatePlayersPoints(hasmapPlayers: HashMap<String, ArrayList<PlayersInfoModel>>) {
-        this.hasmapPlayers.clear()
-        this.hasmapPlayers = hasmapPlayers
-        setupPlayersOnGrounds()
-    }
-
     private fun calculatePoints(): String {
-        var totalPoints: Double = 0.0
+        var totalPoints = 0.0
         if (hasmapPlayers.containsKey(CreateTeamActivity.CREATE_TEAM_WICKET_KEEPER)) {
             val wkKeeper = hasmapPlayers[CreateTeamActivity.CREATE_TEAM_WICKET_KEEPER]
             for (x in 0 until wkKeeper!!.size) {
