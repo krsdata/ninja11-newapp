@@ -240,7 +240,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         RetrofitClient(mContext).client.create(IApiMethod::class.java).apkUpdate(jsonRequest)
             .enqueue(object : Callback<JsonObject?> {
                 override fun onFailure(call: Call<JsonObject?>?, t: Throwable?) {
-                    MainActivity.CHECK_APK_UPDATE_API = false
+                    CHECK_APK_UPDATE_API = false
                 }
 
                 override fun onResponse(

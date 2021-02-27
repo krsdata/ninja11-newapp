@@ -69,10 +69,6 @@ class ContestAdapter(
             viewJoinedMatches.contestIconTextView.text = objectVal.icon_url
         }
 
-
-        /**
-         * Replace this part with below part once api comes
-         */
         viewJoinedMatches.viewMoreLayout.visibility = View.GONE
         val adapter = ContestListAdapter(
             context,
@@ -83,34 +79,8 @@ class ContestAdapter(
         )
         viewJoinedMatches.recyclerView.adapter = adapter
 
-        //  Settings for more Contests
-        /*val top3: ArrayList<ContestModelLists> = getFirst3Values(objectVal.allContestsRunning!!)
-        val adapter = ContestListAdapter(
-            context,
-            top3,
-            matchObject!!,
-            listener,
-            colorCode
-        )
-        viewJoinedMatches.recyclerView.adapter = adapter
-        if (objectVal.allContestsRunning != null && objectVal.allContestsRunning!!.size > 2) {
-            viewJoinedMatches.viewMoreLayout.visibility = View.VISIBLE
-
-            val count = objectVal.allContestsRunning!!.size - getFirst3Values(objectVal.allContestsRunning!!).size
-            viewJoinedMatches.moreContestClick.text = String.format("View %d More Contest", count)
-            viewJoinedMatches.moreContestClick.setOnClickListener(View.OnClickListener {
-                val intent = Intent(context, MoreContestActivity::class.java)
-                intent.putExtra(ContestActivity.SERIALIZABLE_KEY_UPCOMING_MATCHES, matchObject)
-                intent.putExtra(ContestActivity.SERIALIZABLE_KEY_JOINED_CONTEST, matchesListObject)
-                intent.putExtra(MoreContestActivity.SERIALIZABLE_KEY_LIST_POSTIION, objectVal)
-                context.startActivityForResult(intent, LeadersBoardActivity.CREATETEAM_REQUESTCODE)
-            })
-        } else {
-            viewJoinedMatches.viewMoreLayout.visibility = View.GONE
-        }*/
-
         adapter.onItemClick = { objects ->
-            //MyUtils.logd("JoinedContestAdapter","Joined Contest"+objects.country1Name+" Vs "+objects.country1Name)
+
         }
     }
 

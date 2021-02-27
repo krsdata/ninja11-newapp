@@ -12,20 +12,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
-import com.bumptech.glide.Glide
-import com.google.gson.JsonObject
 import ninja.cricks.databinding.ActivityTeamPreviewBinding
 import ninja.cricks.models.PlayersInfoModel
-import ninja.cricks.models.UsersPostDBResponse
-import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.WebServiceClient
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.CustomeProgressDialog
-import ninja.cricks.utils.MyPreferences
-import ninja.cricks.utils.MyUtils
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class PreviewTeamLeaderActivity : AppCompatActivity() {
 
@@ -95,6 +85,7 @@ class PreviewTeamLeaderActivity : AppCompatActivity() {
             GridViewAdapter(
                 mContext!!,
                 listWicketKeeper,
+                listWicketKeeper[0].teamId
             )
         mBinding!!.gridWicketKeeper.numColumns = listWicketKeeper.size
         mBinding!!.gridWicketKeeper.adapter = gridViewAdapterWicket
@@ -104,6 +95,7 @@ class PreviewTeamLeaderActivity : AppCompatActivity() {
             GridViewAdapter(
                 mContext!!,
                 listBatsMan,
+                listBatsMan[0].teamId
             )
 
         if (listBatsMan.size > 4) {
@@ -118,6 +110,7 @@ class PreviewTeamLeaderActivity : AppCompatActivity() {
             GridViewAdapter(
                 mContext!!,
                 listAllRounder,
+                listAllRounder[0].teamId
             )
         if (listAllRounder.size > 4) {
             sizeofColumn = 3
@@ -131,6 +124,7 @@ class PreviewTeamLeaderActivity : AppCompatActivity() {
             GridViewAdapter(
                 mContext!!,
                 listBowler,
+                listBowler[0].teamId
             )
         if (listBowler.size > 4) {
             sizeofColumn = 3
@@ -243,6 +237,7 @@ class PreviewTeamLeaderActivity : AppCompatActivity() {
     inner class GridViewAdapter(
         val context: Context,
         val listImageURLs: List<PlayersInfoModel>,
+        val teamId: Int
     ) :
         BaseAdapter() {
 
@@ -280,18 +275,23 @@ class PreviewTeamLeaderActivity : AppCompatActivity() {
             viewHolder.playerName.text = objects.shortName
             viewHolder.playerFantasyPoints.text = objects.playerPoints + " Pt"
 
-            Glide.with(context)
-                .load(objects.playerImage)
-                .placeholder(R.drawable.player_blue)
-                .into(viewHolder.imageView)
-
-            viewHolder.playerName.background =
-                ResourcesCompat.getDrawable(
-                    context.resources,
-                    R.drawable.ract_black_background,
-                    null
-                )
-            viewHolder.playerName.setTextColor(context.resources.getColor(R.color.white))
+            if (teamId == objects.teamId) {
+                viewHolder.playerName.background =
+                    ResourcesCompat.getDrawable(
+                        context.resources,
+                        R.drawable.ract_white_background,
+                        null
+                    )
+                viewHolder.playerName.setTextColor(context.resources.getColor(R.color.black))
+            } else {
+                viewHolder.playerName.background =
+                    ResourcesCompat.getDrawable(
+                        context.resources,
+                        R.drawable.ract_black_background,
+                        null
+                    )
+                viewHolder.playerName.setTextColor(context.resources.getColor(R.color.white))
+            }
 
             if (objects.isPlaying11) {
                 viewHolder.playing11.visibility = View.GONE

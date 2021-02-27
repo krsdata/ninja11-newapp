@@ -1,4 +1,4 @@
-package plug.cricket.ui.createteam
+package ninja.cricks.ui.createteam
 
 import android.content.Context
 import android.os.Bundle
@@ -22,7 +22,6 @@ import ninja.cricks.ui.createteam.adaptors.PlayersContestAdapter
 import ninja.cricks.models.PlayersInfoModel
 import ninja.cricks.utils.CricketPlayersFilters
 import ninja.cricks.utils.MyUtils
-
 
 class AllRounder : Fragment() {
     var allRounders: ArrayList<PlayersInfoModel>? = null

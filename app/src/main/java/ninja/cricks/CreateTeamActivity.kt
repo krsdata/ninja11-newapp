@@ -18,24 +18,20 @@ import com.edify.atrist.listener.OnMatchTimerStarted
 import com.edify.atrist.listener.OnTeamCreateListener
 import com.google.gson.JsonObject
 import ninja.cricks.databinding.ActivityCreateTeamBinding
-import ninja.cricks.models.MyTeamModels
-import ninja.cricks.models.PlayerModels
-import ninja.cricks.models.UpcomingMatchesModel
+import ninja.cricks.models.*
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseActivity
 import ninja.cricks.ui.contest.MyTeamFragment
 import ninja.cricks.ui.contest.MyTeamFragment.Companion.SERIALIZABLE_COPY_TEAM
 import ninja.cricks.ui.contest.MyTeamFragment.Companion.SERIALIZABLE_EDIT_TEAM
-import ninja.cricks.models.PlayersInfoModel
-import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
-import plug.cricket.ui.createteam.AllRounder
-import plug.cricket.ui.createteam.Batsman
-import plug.cricket.ui.createteam.Bowlers
-import plug.cricket.ui.createteam.WicketKeepers
+import ninja.cricks.ui.createteam.AllRounder
+import ninja.cricks.ui.createteam.Batsman
+import ninja.cricks.ui.createteam.Bowlers
+import ninja.cricks.ui.createteam.WicketKeepers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,7 +41,6 @@ import kotlin.collections.HashMap
 
 
 class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
-
 
     private var playersList: PlayerModels? = null
 
@@ -1002,7 +997,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
                             if (res.code == 1001) {
                                 MyUtils.showMessage(this@CreateTeamActivity, res.message)
                                 MyUtils.logoutApp(this@CreateTeamActivity)
-                            }  else {
+                            } else {
                                 MyUtils.showMessage(this@CreateTeamActivity, res.message)
                             }
                         }

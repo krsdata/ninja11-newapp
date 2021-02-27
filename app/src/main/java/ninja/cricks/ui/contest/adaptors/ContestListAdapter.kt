@@ -31,8 +31,8 @@ class ContestListAdapter(
     private var matchesListObject = contestModelList
 
     var matchObject = matchObjectModel
-    val TYPE_IPL_FINAL: Int = 1
-    val TYPE_NORMAL: Int = 100
+    private val TYPE_IPL_FINAL: Int = 1
+    private val TYPE_NORMAL: Int = 100
 
     override fun getItemViewType(position: Int): Int {
         return if (matchesListObject[position].giftUrl == "") {
@@ -76,11 +76,13 @@ class ContestListAdapter(
             viewHolder.firstPrize.text = String.format("%s%s", "₹", objectVal.firstPrice)
 
             if (objectVal.maxAllowedTeam > 1) {
-                viewHolder.allowedTeamType.text = "Multiple Entry"
+                viewHolder.allowedTeamType.text = "M"
                 viewHolder.linearMulti.visibility = View.VISIBLE
+                viewHolder.contestMultiPlayer.text = String.format("%d", objectVal.maxAllowedTeam)
             } else {
-                viewHolder.allowedTeamType.text = "Single Entry"
+                viewHolder.allowedTeamType.text = "S"
                 viewHolder.linearMulti.visibility = View.VISIBLE
+                viewHolder.contestMultiPlayer.text = String.format("%d", objectVal.maxAllowedTeam)
             }
 
             if (objectVal.usableBonus.toInt() == 0) {
@@ -131,7 +133,7 @@ class ContestListAdapter(
             }
 
             if (objectVal.is_dashboard) {
-                viewHolder.contestLeaderBoardLabel.visibility = View.VISIBLE
+                viewHolder.contestLeaderBoardLabel.visibility = View.GONE
             } else {
                 viewHolder.contestLeaderBoardLabel.visibility = View.GONE
             }
@@ -155,9 +157,11 @@ class ContestListAdapter(
             if (objectVal.maxAllowedTeam > 1) {
                 viewHolder.allowedTeamType.text = "M"
                 viewHolder.linearMulti.visibility = View.VISIBLE
+                viewHolder.contestMultiPlayer.text = String.format("%d", objectVal.maxAllowedTeam)
             } else {
                 viewHolder.allowedTeamType.text = "S"
                 viewHolder.linearMulti.visibility = View.VISIBLE
+                viewHolder.contestMultiPlayer.text = String.format("%d", objectVal.maxAllowedTeam)
             }
 
             if (objectVal.usableBonus.toInt() == 0) {
@@ -210,7 +214,7 @@ class ContestListAdapter(
             }
 
             if (objectVal.is_dashboard) {
-                viewHolder.contestLeaderBoardLabel.visibility = View.VISIBLE
+                viewHolder.contestLeaderBoardLabel.visibility = View.GONE
             } else {
                 viewHolder.contestLeaderBoardLabel.visibility = View.GONE
             }
@@ -246,6 +250,8 @@ class ContestListAdapter(
         val contestProgress: ProgressBar = itemView.findViewById(R.id.contest_progress)
         val contestLeaderBoardLabel: TextView =
             itemView.findViewById(R.id.contest_leader_board_label)
+
+        val contestMultiPlayer: TextView = itemView.findViewById(R.id.contest_multiplayer);
     }
 
     inner class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -274,5 +280,6 @@ class ContestListAdapter(
         val giftImage: ImageView = itemView.findViewById(R.id.gift_image)
         val contestLeaderBoardLabel: TextView =
             itemView.findViewById(R.id.contest_leader_board_label)
+        val contestMultiPlayer: TextView = itemView.findViewById(R.id.contest_multiplayer)
     }
 }

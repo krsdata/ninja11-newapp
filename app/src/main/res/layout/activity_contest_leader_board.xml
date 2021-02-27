@@ -31,9 +31,6 @@
             app:cardCornerRadius="@dimen/_30sdp"
             app:cardElevation="@dimen/_5sdp">
 
-            <!--             app:cardBackgroundColor="@color/colorAccent_light"
-
-            -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
@@ -45,8 +42,8 @@
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
                     android:layoutAnimation="@anim/layout_animation"
-                    android:paddingStart="@dimen/_10sdp"
-                    android:paddingEnd="@dimen/_10sdp" />
+                    android:paddingStart="@dimen/_7sdp"
+                    android:paddingEnd="@dimen/_7sdp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

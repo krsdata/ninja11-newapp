@@ -333,7 +333,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:gravity="center"
+                    android:gravity="center|end"
                     android:orientation="horizontal">
 
                     <TextView
@@ -351,7 +351,7 @@
                         android:textSize="@dimen/_10sdp"
                         android:visibility="gone" />
 
-                    <LinearLayout
+                    <!--<LinearLayout
                         android:id="@+id/linear_Multi"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_16sdp"
@@ -369,26 +369,29 @@
                             android:textColor="@color/black"
                             android:textSize="@dimen/_10sdp"
                             android:textStyle="bold" />
-                    </LinearLayout>
+                    </LinearLayout>-->
 
-                    <!--<LinearLayout
+                    <LinearLayout
                         android:id="@+id/linear_Multi"
-                        android:layout_width="20dp"
+                        android:layout_width="50dp"
                         android:layout_height="18dp"
                         android:layout_marginStart="@dimen/_5sdp"
-                        android:background="@drawable/rectangle_red"
+                        android:background="@drawable/rectangle_orange"
+                        android:layout_gravity="end|center"
+                        android:gravity="end|center"
                         android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/allowedTeamType"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
+                            android:layout_weight="0.9"
+                            android:fontFamily="@font/montserrat_bold"
                             android:gravity="center"
                             android:scaleType="centerInside"
                             android:text="M"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/_10sdp" />
+                            android:textSize="@dimen/_11sdp" />
 
                         <TextView
                             android:id="@+id/contest_multiplayer"
@@ -397,16 +400,15 @@
                             android:layout_marginTop="2dp"
                             android:layout_marginEnd="2dp"
                             android:layout_marginBottom="2dp"
-                            android:layout_weight="1"
-                            android:background="@color/white"
+                            android:layout_weight="1.1"
+                            android:background="@drawable/bonus_value_back"
                             android:fontFamily="@font/montserrat_regular"
                             android:gravity="center"
                             android:scaleType="centerInside"
-                            android:text="1"
+                            android:text="11"
                             android:textColor="@color/black"
-                            android:textSize="@dimen/_8sdp"
-                            android:visibility="gone" />
-                    </LinearLayout>-->
+                            android:textSize="@dimen/_9sdp" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/linear_bonues_old"

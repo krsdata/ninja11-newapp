@@ -65,13 +65,13 @@ class MyAccountBalanceFragment : BaseFragment() {
         mBinding!!.btnWithdraw.setOnClickListener(View.OnClickListener {
             if (walletInfo.bankAccountVerified == BindingUtils.BANK_DOCUMENTS_STATUS_VERIFIED) {
                 val amount = walletInfo.walletAmount
-                if (amount >= 200) {
+                if (amount >= MyPreferences.getMinWithdrawal(requireActivity())) {
                     val intent = Intent(requireActivity(), WithdrawAmountsActivity::class.java)
                     startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
                 } else {
                     MyUtils.showToast(
                         requireActivity() as AppCompatActivity,
-                        "Amount is less than 200 INR"
+                        "Amount is less than ₹${MyPreferences.getMinWithdrawal(requireActivity())}"
                     )
                 }
             } else {

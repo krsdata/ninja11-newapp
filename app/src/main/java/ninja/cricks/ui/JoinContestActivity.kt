@@ -131,7 +131,7 @@ class JoinContestActivity : AppCompatActivity() {
 
             if (actualPayable > walletAmount && !contestModel!!.isBonusContest) {
                 val intent = Intent(mContext, AddMoneyActivity::class.java)
-                intent.putExtra(AddMoneyActivity.ADD_EXTRA_AMOUNT, Math.abs(actualPayable) + 10)
+                intent.putExtra(AddMoneyActivity.ADD_EXTRA_AMOUNT, Math.abs(actualPayable))
                 startActivityForResult(intent, MyBalanceActivity.REQUEST_CODE_ADD_MONEY)
                 finish()
             } else {

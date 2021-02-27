@@ -44,13 +44,13 @@ class UpdateApplicationActivity : BaseActivity() {
         mBinding!!.toolbar.setTitleTextColor(resources.getColor(R.color.white))
         mBinding!!.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
         setSupportActionBar(mBinding!!.toolbar)
-        mBinding!!.toolbar.setNavigationOnClickListener(View.OnClickListener {
+        mBinding!!.toolbar.setNavigationOnClickListener{
             finish()
-        })
+        }
 
-        mBinding!!.addCash.setOnClickListener(View.OnClickListener {
+        mBinding!!.addCash.setOnClickListener{
             checkStoragePermission()
-        })
+        }
     }
 
     override fun onBitmapSelected(bitmap: Bitmap) {
@@ -69,9 +69,6 @@ class UpdateApplicationActivity : BaseActivity() {
             if (grantResults.size == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // start downloading
                 downloadController.enqueueDownload()
-            } else {
-                // Permission request was denied.
-                // maincontainer.showSnackbar(R.string.storage_permission_denied, Snackbar.LENGTH_SHORT)
             }
         }
     }

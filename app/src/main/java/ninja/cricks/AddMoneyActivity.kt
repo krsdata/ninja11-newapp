@@ -426,8 +426,6 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
     private fun requestPayment() {
         val paymentDataRequest =
             PaymentDataRequest.fromJson(paymentDataRequestJson.toString())
-
-
         AutoResolveHelper.resolveTask(
             paymentsClient.loadPaymentData(paymentDataRequest),
             this, LOAD_PAYMENT_DATA_REQUEST_CODE
@@ -521,59 +519,6 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
         } else {
             mBinding!!.useWalletPhonepay.visibility = View.GONE
         }
-    }
-
-    fun getWalletBalances() {
-        customeProgressDialog.show()
-
-        val jsonRequest = JsonObject()
-        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
-        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
-
-        WebServiceClient(this).client.create(IApiMethod::class.java).getWallet(jsonRequest)
-            .enqueue(object : Callback<UsersPostDBResponse?> {
-                override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                    customeProgressDialog.dismiss()
-                }
-
-                override fun onResponse(
-                    call: Call<UsersPostDBResponse?>?,
-                    response: Response<UsersPostDBResponse?>?
-                ) {
-                    customeProgressDialog.dismiss()
-                    val res = response!!.body()
-                    if (res != null) {
-                        if (res.status) {
-                            val responseModel = res.walletObjects
-                            if (responseModel != null) {
-
-                                MyPreferences.setRazorPayId(mContext!!, res.razorPay)
-                                MyPreferences.setShowPaytm(mContext!!, res.paytm_show)
-                                MyPreferences.setShowGpay(mContext!!, res.gpay_show)
-                                MyPreferences.setShowRazorPay(mContext!!, res.rozarpay_show)
-
-                                MyPreferences.setShowPaytmWithdraw(mContext!!, res.paytm_withdrawal)
-                                MyPreferences.setShowBankWithdraw(mContext!!, res.bank_withdrawal)
-                                MyPreferences.setShowUPIWithdraw(mContext!!, res.upi_withdrawal)
-
-                                MyPreferences.setMinWithdrawal(mContext!!, res.minWithdrawal)
-
-                                (application as NinjaApplication).saveWalletInformation(
-                                    responseModel
-                                )
-                                initWalletInfo()
-                            }
-                        } else {
-                            if (res.code == 1001) {
-                                MyUtils.showMessage(this@AddMoneyActivity, res.message)
-                                MyUtils.logoutApp(this@AddMoneyActivity)
-                            } else {
-                                MyUtils.showMessage(this@AddMoneyActivity, res.message)
-                            }
-                        }
-                    }
-                }
-            })
     }
 
     fun addWalletBalance() {

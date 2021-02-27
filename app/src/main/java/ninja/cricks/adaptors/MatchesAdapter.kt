@@ -152,9 +152,9 @@ class MatchesAdapter(val context: Context, val tradeInfoModels: ArrayList<Matche
     }
 
     inner class ViewHolderJoinedMatches(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val recyclerView = itemView.findViewById<RecyclerView>(R.id.recycler_joined_matches)
-        val txtViewAll = itemView.findViewById<TextView>(R.id.txtViewAll)
-        val backgroundImage = itemView.findViewById<ImageView>(R.id.imageView4)
+        val recyclerView: RecyclerView = itemView.findViewById(R.id.recycler_joined_matches)
+        val txtViewAll: TextView = itemView.findViewById(R.id.txtViewAll)
+        val backgroundImage: ImageView = itemView.findViewById(R.id.imageView4)
     }
 
     inner class BannersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -162,8 +162,8 @@ class MatchesAdapter(val context: Context, val tradeInfoModels: ArrayList<Matche
     }
 
     inner class UpcomingMatchesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val recyclerView = itemView.findViewById<RecyclerView>(R.id.recycler_upcoming_matches)
-        val linearEmptyView = itemView.findViewById<LinearLayout>(R.id.linear_empty_view)
+        val recyclerView: RecyclerView = itemView.findViewById(R.id.recycler_upcoming_matches)
+        val linearEmptyView: LinearLayout = itemView.findViewById(R.id.linear_empty_view)
 
     }
 }

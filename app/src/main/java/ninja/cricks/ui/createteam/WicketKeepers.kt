@@ -1,4 +1,4 @@
-package plug.cricket.ui.createteam
+package ninja.cricks.ui.createteam
 
 import android.content.Context
 import android.os.Bundle
