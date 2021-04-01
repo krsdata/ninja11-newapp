@@ -147,7 +147,8 @@
         <activity
             android:name="ninja.cricks.UpdateApplicationActivity"
             android:label=""
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/Translucent" />
 
         <activity
             android:name="ninja.cricks.WebActivity"

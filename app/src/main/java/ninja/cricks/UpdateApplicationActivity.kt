@@ -1,12 +1,13 @@
 package ninja.cricks
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.View
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import ninja.cricks.databinding.ActivityUpdateApplicationBinding
 import ninja.cricks.ui.BaseActivity
@@ -20,6 +21,7 @@ class UpdateApplicationActivity : BaseActivity() {
     lateinit var downloadController: DownloadController
 
     companion object {
+        val TAG: String = UpdateApplicationActivity::class.java.simpleName
         val REQUEST_CODE_APK_UPDATE: String = "apkupdateurl"
         val REQUEST_RELEASE_NOTE: String = "release_note"
         const val PERMISSION_REQUEST_STORAGE = 0
@@ -35,6 +37,7 @@ class UpdateApplicationActivity : BaseActivity() {
 
         val apkUrl = intent.getStringExtra(REQUEST_CODE_APK_UPDATE)
         val releaseNote = intent.getStringExtra(REQUEST_RELEASE_NOTE)
+        Log.e(TAG, "releaseNotes ======> $releaseNote")
         if (!TextUtils.isEmpty(releaseNote)) {
             mBinding!!.releaseNote.text = releaseNote
         }
@@ -44,11 +47,11 @@ class UpdateApplicationActivity : BaseActivity() {
         mBinding!!.toolbar.setTitleTextColor(resources.getColor(R.color.white))
         mBinding!!.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
         setSupportActionBar(mBinding!!.toolbar)
-        mBinding!!.toolbar.setNavigationOnClickListener{
+        mBinding!!.toolbar.setNavigationOnClickListener {
             finish()
         }
 
-        mBinding!!.addCash.setOnClickListener{
+        mBinding!!.addCash.setOnClickListener {
             checkStoragePermission()
         }
     }
@@ -86,7 +89,6 @@ class UpdateApplicationActivity : BaseActivity() {
 
     private fun requestStoragePermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
             if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 requestPermissions(
                     arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
@@ -99,5 +101,14 @@ class UpdateApplicationActivity : BaseActivity() {
                 )
             }
         }
+    }
+
+
+    override fun onBackPressed() {
+        //super.onBackPressed()
+        val intent = Intent(Intent.ACTION_MAIN)
+        intent.addCategory(Intent.CATEGORY_HOME)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
     }
 }

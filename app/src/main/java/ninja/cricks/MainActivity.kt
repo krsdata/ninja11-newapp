@@ -1,5 +1,6 @@
 package ninja.cricks
 
+import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -16,7 +17,6 @@ import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.RetrofitClient
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseActivity
-import ninja.cricks.ui.UpdateAppDialogFragment
 import ninja.cricks.ui.dashboard.FixtureCricketFragment
 import ninja.cricks.ui.dashboard.MoreOptionsFragment
 import ninja.cricks.ui.dashboard.MyAccountFragment
@@ -120,11 +120,16 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         super.onStart()
         if (CHECK_APK_UPDATE_API) {
             CHECK_APK_UPDATE_API = false
-            val fm = supportFragmentManager
+            /*val fm = supportFragmentManager
             val pioneersFragment =
                 UpdateAppDialogFragment(updatedApkUrl, releaseNote)
             pioneersFragment.isCancelable = false
-            pioneersFragment.show(fm, "updateapp_tag")
+            pioneersFragment.show(fm, "updateapp_tag")*/
+
+            val intent = Intent(this@MainActivity, UpdateApplicationActivity::class.java)
+            intent.putExtra(UpdateApplicationActivity.REQUEST_CODE_APK_UPDATE, updatedApkUrl)
+            intent.putExtra(UpdateApplicationActivity.REQUEST_RELEASE_NOTE, releaseNote)
+            startActivity(intent)
         }
     }
 
@@ -272,16 +277,45 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
                                 if (CHECK_APK_UPDATE_API) {
                                     CHECK_APK_UPDATE_API = false
-                                    val fm = supportFragmentManager
+                                    /*val fm = supportFragmentManager
                                     val pioneersFragment =
                                         UpdateAppDialogFragment(updatedApkUrl, releaseNote)
                                     pioneersFragment.isCancelable = false
-                                    pioneersFragment.show(fm, "updateapp_tag")
+                                    pioneersFragment.show(fm, "updateapp_tag")*/
+
+                                    if(!isActivityRunning(UpdateApplicationActivity::class.java)){
+
+                                    val intent = Intent(
+                                        this@MainActivity,
+                                        UpdateApplicationActivity::class.java
+                                    )
+                                    intent.putExtra(
+                                        UpdateApplicationActivity.REQUEST_CODE_APK_UPDATE,
+                                        updatedApkUrl
+                                    )
+                                    intent.putExtra(
+                                        UpdateApplicationActivity.REQUEST_RELEASE_NOTE,
+                                        releaseNote
+                                    )
+                                    startActivity(intent)
+                                    }
                                 }
                             }
                         }
                     }
                 }
             })
+    }
+
+    private fun isActivityRunning(aClass: Class<*>): Boolean {
+        return try {
+            val am = mContext.getSystemService(ACTIVITY_SERVICE) as ActivityManager
+            val taskInfo = am.getRunningTasks(1)
+            val componentInfo = taskInfo[0].topActivity
+            componentInfo!!.className == aClass.name
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
     }
 }

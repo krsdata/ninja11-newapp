@@ -200,8 +200,8 @@
                     android:background="@drawable/team_circle_white"
                     android:fontFamily="@font/montserrat_bold"
                     android:gravity="center"
-                    android:text="C"
-                    android:textColor="@color/white"
+                    android:text=""
+                    android:textColor="@color/black"
                     android:textSize="@dimen/_9sdp" />
 
                 <TextView

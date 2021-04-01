@@ -90,8 +90,8 @@ class TeamPreviewActivity : AppCompatActivity(),
             finish()
         }
 
-        mBinding!!.teamOne.text = matchObject.teamAInfo!!.teamShortName.toString()
-        mBinding!!.teamTwo.text = matchObject.teamBInfo!!.teamShortName.toString()
+        mBinding!!.teamOne.text = matchObject.teamAInfo!!.teamShortName
+        mBinding!!.teamTwo.text = matchObject.teamBInfo!!.teamShortName
 
         /*mBinding!!.fantasyPointsWebsview.setOnClickListener {
             val intent = Intent(mContext, WebActivity::class.java)
@@ -102,7 +102,7 @@ class TeamPreviewActivity : AppCompatActivity(),
 
         mBinding!!.teamName.text = teamName
         if (matchObject.status == BindingUtils.MATCH_STATUS_UPCOMING) {
-            mBinding!!.pointsBar.visibility = View.GONE
+            mBinding!!.pointsBar.visibility = View.VISIBLE
             mBinding!!.imgRefresh.visibility = View.GONE
         } else {
             mBinding!!.pointsBar.visibility = View.VISIBLE
