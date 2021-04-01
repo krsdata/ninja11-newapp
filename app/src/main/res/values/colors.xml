@@ -212,4 +212,6 @@
     <!-- new Amber A200 -->
     <color name="amber_a_700">#FFD740</color>
     <color name="amber_900">#FF6F00</color>
+
+    <color name="black_transparent">#80000000</color>
 </resources>

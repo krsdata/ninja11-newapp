@@ -60,12 +60,15 @@ class PreviewTeamLeaderActivity : AppCompatActivity() {
             finish()
         }
 
-        mBinding!!.fantasyPointsWebsview.setOnClickListener {
+        /*mBinding!!.teamOne.text = matchObject.teamAInfo!!.teamShortName.toString()
+        mBinding!!.teamTwo.text = matchObject.teamBInfo!!.teamShortName.toString()*/
+
+        /*mBinding!!.fantasyPointsWebsview.setOnClickListener {
             val intent = Intent(mContext, WebActivity::class.java)
             intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_FANTASY_POINTS)
             intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_FANTASY_POINTS)
             startActivity(intent)
-        }
+        }*/
 
         mBinding!!.teamName.text = teamName
         mBinding!!.pointsBar.visibility = View.GONE
@@ -80,6 +83,9 @@ class PreviewTeamLeaderActivity : AppCompatActivity() {
         addBatsman()
         addAllRounder()
         addBowler()
+
+        /*mBinding!!.teamOneCount.text = String.format("%d", teamACount)
+        mBinding!!.teamTwoCount.text = String.format("%d", teamBCount)*/
 
         val gridViewAdapterWicket =
             GridViewAdapter(

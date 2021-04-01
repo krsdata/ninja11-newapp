@@ -1,7 +1,6 @@
 package ninja.cricks
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -13,11 +12,11 @@ import ninja.cricks.CreateTeamActivity.Companion.CREATE_TEAM_BOWLER
 import ninja.cricks.CreateTeamActivity.Companion.CREATE_TEAM_WICKET_KEEPER
 import ninja.cricks.customviews.ScreenshotDetectionDelegate
 import ninja.cricks.databinding.ActivityTeamPreviewBinding
+import ninja.cricks.models.PlayersInfoModel
 import ninja.cricks.models.UpcomingMatchesModel
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.models.PlayersInfoModel
-import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.ui.previewteam.adaptors.GridViewAdapter
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.CustomeProgressDialog
@@ -45,6 +44,8 @@ class TeamPreviewActivity : AppCompatActivity(),
     private val screenshotDetectionDelegate = ScreenshotDetectionDelegate(this, this)
     private var contestId: String = ""
     private var userId: String = ""
+    private var teamACount: Int = 0
+    private var teamBCount: Int = 0
 
     companion object {
         const val SERIALIZABLE_TEAM_PREVIEW_KEY: String = "teampreview"
@@ -89,12 +90,15 @@ class TeamPreviewActivity : AppCompatActivity(),
             finish()
         }
 
-        mBinding!!.fantasyPointsWebsview.setOnClickListener {
+        mBinding!!.teamOne.text = matchObject.teamAInfo!!.teamShortName.toString()
+        mBinding!!.teamTwo.text = matchObject.teamBInfo!!.teamShortName.toString()
+
+        /*mBinding!!.fantasyPointsWebsview.setOnClickListener {
             val intent = Intent(mContext, WebActivity::class.java)
             intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_FANTASY_POINTS)
             intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_FANTASY_POINTS)
             startActivity(intent)
-        }
+        }*/
 
         mBinding!!.teamName.text = teamName
         if (matchObject.status == BindingUtils.MATCH_STATUS_UPCOMING) {
@@ -114,6 +118,9 @@ class TeamPreviewActivity : AppCompatActivity(),
         addBatsman()
         addAllRounder()
         addBowler()
+
+        mBinding!!.teamOneCount.text = String.format("%d", teamACount)
+        mBinding!!.teamTwoCount.text = String.format("%d", teamBCount)
 
         val gridViewAdapterWicket =
             GridViewAdapter(
@@ -177,10 +184,6 @@ class TeamPreviewActivity : AppCompatActivity(),
         }
         customeProgressDialog.show()
 
-        /*val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(this)!!
-        models.team_id = teamId*/
-
         val jsonRequest = JsonObject()
         jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
         jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
@@ -233,6 +236,8 @@ class TeamPreviewActivity : AppCompatActivity(),
                                 hasmapPlayers.put(CREATE_TEAM_ALLROUNDER, allRounderList)
                                 hasmapPlayers.put(CREATE_TEAM_BOWLER, allbowlerList)
 
+                                teamACount = 0
+                                teamBCount = 0
                                 updatePlayersPoints(hasmapPlayers)
                             }
                         } else {
@@ -312,8 +317,10 @@ class TeamPreviewActivity : AppCompatActivity(),
                 val playerObject = listOfPlayers[i]
                 if (playerObject.teamId == matchObject.teamAInfo!!.teamId) {
                     playerObject.setPlayerIcon(R.drawable.ic_player_wk_teama)
+                    teamACount += 1
                 } else {
                     playerObject.setPlayerIcon(R.drawable.ic_player_wk_teamb)
+                    teamBCount += 1
                 }
             }
             listWicketKeeper.addAll(listOfPlayers)
@@ -327,9 +334,11 @@ class TeamPreviewActivity : AppCompatActivity(),
             for (i in 0 until listOfPlayers.size) {
                 val playerObject = listOfPlayers[i]
                 if (playerObject.teamId == matchObject.teamAInfo!!.teamId) {
-                    playerObject.setPlayerIcon(R.drawable.ic_player_bat_teama)
+                    playerObject.setPlayerIcon(R.drawable.ic_player_wk_teama)
+                    teamACount += 1
                 } else {
-                    playerObject.setPlayerIcon(R.drawable.ic_player_bat_teamb)
+                    playerObject.setPlayerIcon(R.drawable.ic_player_wk_teamb)
+                    teamBCount += 1
                 }
             }
             listBatsMan.addAll(listOfPlayers)
@@ -343,9 +352,11 @@ class TeamPreviewActivity : AppCompatActivity(),
             for (i in 0 until listOfPlayers.size) {
                 val playerObject = listOfPlayers[i]
                 if (playerObject.teamId == matchObject.teamAInfo!!.teamId) {
-                    playerObject.setPlayerIcon(R.drawable.ic_player_all_teama)
+                    playerObject.setPlayerIcon(R.drawable.ic_player_wk_teama)
+                    teamACount += 1
                 } else {
-                    playerObject.setPlayerIcon(R.drawable.ic_player_all_teamb)
+                    playerObject.setPlayerIcon(R.drawable.ic_player_wk_teamb)
+                    teamBCount += 1
                 }
             }
             listAllRounder.addAll(listOfPlayers)
@@ -359,9 +370,11 @@ class TeamPreviewActivity : AppCompatActivity(),
             for (i in 0 until listOfPlayers.size) {
                 val playerObject = listOfPlayers[i]
                 if (playerObject.teamId == matchObject.teamAInfo!!.teamId) {
-                    playerObject.setPlayerIcon(R.drawable.ic_player_bowler_teama)
+                    playerObject.setPlayerIcon(R.drawable.ic_player_wk_teama)
+                    teamACount += 1
                 } else {
-                    playerObject.setPlayerIcon(R.drawable.ic_player_bowler_teamb)
+                    playerObject.setPlayerIcon(R.drawable.ic_player_wk_teamb)
+                    teamBCount += 1
                 }
             }
             listBowler.addAll(listOfPlayers)
@@ -379,7 +392,7 @@ class TeamPreviewActivity : AppCompatActivity(),
     }
 
     override fun onScreenCaptured(path: String) {
-        if(contestId != null && contestId != "") {
+        if (contestId != null && contestId != "") {
             BindingUtils.sendEventLogs(
                 mContext!!, matchObject.matchId.toString(), contestId, userId, teamId,
                 (application as NinjaApplication).userInformations, "captured"
@@ -388,7 +401,7 @@ class TeamPreviewActivity : AppCompatActivity(),
     }
 
     override fun onScreenCapturedWithDeniedPermission() {
-        if(contestId != null && contestId != "") {
+        if (contestId != null && contestId != "") {
             BindingUtils.sendEventLogs(
                 mContext!!, matchObject.matchId.toString(), contestId, userId, teamId,
                 (application as NinjaApplication).userInformations, "captured"
