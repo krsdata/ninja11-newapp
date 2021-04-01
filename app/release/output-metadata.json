@@ -10,9 +10,9 @@
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 3204,
-      "versionName": "2.04",
-      "outputFile": "Ninja11-2.04-release.apk"
+      "versionCode": 3205,
+      "versionName": "2.05",
+      "outputFile": "Ninja11-2.05-release.apk"
     }
   ]
 }

@@ -386,8 +386,7 @@ class EditProfileActivity : AppCompatActivity() {
         var multipartImage: MultipartBody.Part? = null
         val requestPanImage: RequestBody = file
             .asRequestBody("multipart/jpg".toMediaTypeOrNull())
-        multipartImage =
-            MultipartBody.Part.createFormData("image_bytes", file.name, requestPanImage)
+        multipartImage = MultipartBody.Part.createFormData("image_bytes", file.name, requestPanImage)
 
         val userId: RequestBody = createPartFromString(MyPreferences.getUserID(mContext)!!)
         val documentType: RequestBody = createPartFromString(BaseActivity.DOCUMENTS_TYPE_PROFILES)

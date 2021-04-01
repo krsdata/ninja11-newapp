@@ -57,12 +57,12 @@ class MyAccountBalanceFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mBinding!!.btnAddCash.setOnClickListener(View.OnClickListener {
+        mBinding!!.btnAddCash.setOnClickListener {
             val intent = Intent(requireActivity(), AddMoneyActivity::class.java)
             startActivity(intent)
-        })
+        }
 
-        mBinding!!.btnWithdraw.setOnClickListener(View.OnClickListener {
+        mBinding!!.btnWithdraw.setOnClickListener {
             if (walletInfo.bankAccountVerified == BindingUtils.BANK_DOCUMENTS_STATUS_VERIFIED) {
                 val amount = walletInfo.walletAmount
                 if (amount >= MyPreferences.getMinWithdrawal(requireActivity())) {
@@ -83,12 +83,12 @@ class MyAccountBalanceFragment : BaseFragment() {
                 }
                 MyUtils.showToast(requireActivity() as AppCompatActivity, message)
             }
-        })
+        }
 
-        mBinding!!.refferalList.setOnClickListener(View.OnClickListener {
+        mBinding!!.refferalList.setOnClickListener {
             val intent = Intent(requireActivity(), InviteFriendsActivity::class.java)
             startActivity(intent)
-        })
+        }
         initViews()
     }
 
@@ -115,10 +115,10 @@ class MyAccountBalanceFragment : BaseFragment() {
             mBinding!!.profileName.text = "GUEST"
         }
 
-        mBinding!!.btnEditProfile.setOnClickListener(View.OnClickListener {
+        mBinding!!.btnEditProfile.setOnClickListener {
             val intent = Intent(requireActivity(), EditProfileActivity::class.java)
             startActivity(intent)
-        })
+        }
 
         if (walletInfo != null) {
             val accountStatus = walletInfo.accountStatus
@@ -199,7 +199,7 @@ class MyAccountBalanceFragment : BaseFragment() {
         getWalletBalances()
     }
 
-    fun getWalletBalances() {
+    private fun getWalletBalances() {
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return

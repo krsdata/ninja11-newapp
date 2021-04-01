@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -17,7 +16,6 @@ import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.login.RegisterScreenActivity
 import ninja.cricks.utils.BindingUtils
-import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import retrofit2.Call
@@ -46,13 +44,13 @@ class MyBalanceActivity : AppCompatActivity() {
         mBinding!!.toolbar.setTitleTextColor(resources.getColor(R.color.white))
         mBinding!!.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
         setSupportActionBar(mBinding!!.toolbar)
-        mBinding!!.toolbar.setNavigationOnClickListener(View.OnClickListener {
+        mBinding!!.toolbar.setNavigationOnClickListener {
             finish()
-        })
+        }
 
         initWalletInfo()
 
-        mBinding!!.addCash.setOnClickListener(View.OnClickListener {
+        mBinding!!.addCash.setOnClickListener {
             if (MyPreferences.getLoginStatus(mContext!!)!!) {
                 val intent = Intent(mContext!!, AddMoneyActivity::class.java)
                 startActivityForResult(intent, REQUEST_CODE_ADD_MONEY)
@@ -61,19 +59,20 @@ class MyBalanceActivity : AppCompatActivity() {
                 intent.putExtra(RegisterScreenActivity.ISACTIVITYRESULT, true)
                 startActivityForResult(intent, RegisterScreenActivity.REQUESTCODE_LOGIN)
             }
-        })
+        }
 
-        mBinding!!.btnWithdraw.setOnClickListener(View.OnClickListener {
+        mBinding!!.btnWithdraw.setOnClickListener {
             if (walletInfo.bankAccountVerified == BindingUtils.BANK_DOCUMENTS_STATUS_VERIFIED) {
                 val value = walletInfo.walletAmount
-                val amount = value.toDouble()
-                if (amount >= 200) {
+                if (value >= MyPreferences.getMinWithdrawal(mContext!!)) {
                     val intent = Intent(mContext!!, WithdrawAmountsActivity::class.java)
                     startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
                 } else {
-                    MyUtils.showToast(this@MyBalanceActivity, "Amount is less than 200 INR")
+                    MyUtils.showToast(
+                        this@MyBalanceActivity,
+                        "Amount is less than ₹${MyPreferences.getMinWithdrawal(mContext!!)}"
+                    )
                 }
-
             } else {
                 var message = "Please Verify your account"
                 if (walletInfo.bankAccountVerified == BindingUtils.BANK_DOCUMENTS_STATUS_APPROVAL_PENDING) {
@@ -83,14 +82,12 @@ class MyBalanceActivity : AppCompatActivity() {
                 }
                 MyUtils.showToast(this@MyBalanceActivity, message)
             }
+        }
 
-        })
-
-        mBinding!!.txtRecentTransaction.setOnClickListener(View.OnClickListener {
-
+        mBinding!!.txtRecentTransaction.setOnClickListener {
             val intent = Intent(mContext!!, MyTransactionHistoryActivity::class.java)
             startActivityForResult(intent, REQUEST_CODE_ADD_MONEY)
-        })
+        }
     }
 
     private fun updateAccountVerification(accountStatus: AccountDocumentStatus?) {
@@ -108,32 +105,30 @@ class MyBalanceActivity : AppCompatActivity() {
             if (accountStatus.documentsVerified == BindingUtils.BANK_DOCUMENTS_STATUS_VERIFIED) {
                 mBinding!!.verifyAccountMessage.visibility = View.GONE
                 mBinding!!.verifyAccount.text = "Account Verified"
-                mBinding!!.verifyAccount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.0f)
                 mBinding!!.verifyAccount.setBackgroundResource(R.drawable.button_selector_green)
                 mBinding!!.verifyAccount.setTextColor(Color.WHITE)
-                mBinding!!.verifyAccount.setOnClickListener(View.OnClickListener {
+                mBinding!!.verifyAccount.setOnClickListener {
                     gotoDocumentsListActivity()
-                })
+                }
 
             } else if (accountStatus.documentsVerified == BindingUtils.BANK_DOCUMENTS_STATUS_APPROVAL_PENDING) {
                 mBinding!!.verifyAccountMessage.visibility = View.GONE
                 mBinding!!.verifyAccount.text = "Approval Pending"
-                mBinding!!.verifyAccount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.0f)
                 mBinding!!.verifyAccount.setBackgroundResource(R.drawable.button_selector_white)
                 mBinding!!.verifyAccount.setTextColor(Color.BLACK)
-                mBinding!!.verifyAccount.setOnClickListener(View.OnClickListener {
+                mBinding!!.verifyAccount.setOnClickListener {
                     //gotoDocumentsListActivity()
-                })
+                }
             } else {
                 mBinding!!.verifyAccountMessage.visibility = View.VISIBLE
-                mBinding!!.verifyAccount.setOnClickListener(View.OnClickListener {
+                mBinding!!.verifyAccount.setOnClickListener {
                     val intent =
                         Intent(mContext!!, VerifyDocumentsActivity::class.java)
                     startActivityForResult(
                         intent,
                         VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC
                     )
-                })
+                }
             }
         }
     }
@@ -141,11 +136,6 @@ class MyBalanceActivity : AppCompatActivity() {
     private fun gotoDocumentsListActivity() {
         val intent = Intent(this, DocumentsListActivity::class.java)
         startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        //getWalletBalances()
     }
 
     override fun onResume() {
@@ -168,14 +158,14 @@ class MyBalanceActivity : AppCompatActivity() {
             updateAccountVerification(accountStatus)
         } else {
             mBinding!!.verifyAccountMessage.visibility = View.VISIBLE
-            mBinding!!.verifyAccount.setOnClickListener(View.OnClickListener {
+            mBinding!!.verifyAccount.setOnClickListener {
                 val intent = Intent(mContext!!, VerifyDocumentsActivity::class.java)
                 startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
-            })
+            }
         }
     }
 
-    fun getWalletBalances() {
+    private fun getWalletBalances() {
         if (!MyUtils.isConnectedWithInternet(this)) {
             MyUtils.showToast(this, "No Internet connection found")
             return
