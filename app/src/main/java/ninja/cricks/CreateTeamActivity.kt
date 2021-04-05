@@ -81,9 +81,9 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         var teamBId = 0
 
         var COUNT_WICKET_KEEPER: Int = 0
-        var COUNT_BATS_MAN: Int = 0
+        var COUNT_BATS_MAN: Int = 3
         var COUNT_ALL_ROUNDER: Int = 0
-        var COUNT_BOWLER: Int = 0
+        var COUNT_BOWLER: Int = 3
         var isAllPlayersSelected: Boolean? = false
         var totalPlayers: Int = 0
 
@@ -901,7 +901,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         })
     }
 
-    fun pauseCountDown() {
+    private fun pauseCountDown() {
         BindingUtils.stopTimer()
     }
 
@@ -957,11 +957,6 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
     }
 
     private fun getAllPlayers() {
-
-        /*val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(this)!!
-        models.token = MyPreferences.getToken(this)!!
-        models.match_id = "" + matchObject!!.matchId*/
 
         if (!MyUtils.isConnectedWithInternet(this)) {
             MyUtils.showToast(this, "No Internet connection found")

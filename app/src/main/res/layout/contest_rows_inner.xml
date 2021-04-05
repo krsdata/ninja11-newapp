@@ -39,15 +39,36 @@
                     android:textSize="@dimen/small_info_size"
                     android:visibility="visible" />
 
-                <TextView
+                <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="end|center"
                     android:layout_weight="1"
-                    android:fontFamily="@font/montserrat_medium"
-                    android:gravity="end|center"
-                    android:text="Entry"
-                    android:textColor="@color/black" />
+                    android:gravity="end|center">
+
+                    <TextView
+                        android:id="@+id/discountedPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toStartOf="@+id/entryLabel"
+                        android:gravity="center"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text=""
+                        android:textColor="@color/black" />
+
+                    <!--android:background="@drawable/strikethrough_layerlist"-->
+
+                    <TextView
+                        android:id="@+id/entryLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:gravity="center"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:text="Entry"
+                        android:textColor="@color/black" />
+                </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -246,6 +267,17 @@
                         android:textSize="@dimen/_9sdp" />
 
                     <TextView
+                        android:id="@+id/discountTimer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/_9sdp" />
+
+                    <TextView
                         android:id="@+id/total_spot"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
@@ -312,7 +344,7 @@
                         android:layout_height="match_parent"
                         android:fontFamily="@font/montserrat_medium"
                         android:gravity="center"
-                        android:text="10000"
+                        android:text=""
                         android:textColor="@color/black"
                         android:textSize="@dimen/_10sdp"
                         android:textStyle="bold" />
@@ -375,9 +407,9 @@
                         android:id="@+id/linear_Multi"
                         android:layout_width="50dp"
                         android:layout_height="18dp"
+                        android:layout_gravity="end|center"
                         android:layout_marginStart="@dimen/_5sdp"
                         android:background="@drawable/rectangle_orange"
-                        android:layout_gravity="end|center"
                         android:gravity="end|center"
                         android:orientation="horizontal">
 

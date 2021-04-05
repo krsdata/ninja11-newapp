@@ -10,8 +10,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ninja.cricks.R
-import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.models.PlayersInfoModel
+import ninja.cricks.models.UpcomingMatchesModel
 
 
 class PlayersContestAdapter(
@@ -34,29 +34,32 @@ class PlayersContestAdapter(
         val objectVal = playerListObject[viewType]
         val viewHolder: DataViewHolder = parent as DataViewHolder
         if (objectVal.analyticsModel != null) {
-            viewHolder.playerSelectionPercentage?.text = "Sel by ${objectVal.analyticsModel!!.selectionPc}%"
+            viewHolder.playerSelectionPercentage.text =
+                "Sel by ${objectVal.analyticsModel!!.selectionPc}%"
         } else {
-            viewHolder.playerSelectionPercentage?.text = ""
+            viewHolder.playerSelectionPercentage.text = ""
         }
-        viewHolder.playerName?.text = objectVal.shortName
-        viewHolder.teamName?.text = objectVal.teamShortName
+        viewHolder.playerName.text = objectVal.shortName
+        viewHolder.teamName.text = objectVal.teamShortName
         if (matchObject.teamAInfo!!.teamId == objectVal.teamId) {
-            viewHolder.teamName?.background = context.resources.getDrawable(R.drawable.ract_white_background)
-            viewHolder.teamName?.setTextColor(context.resources.getColor(R.color.black))
+            viewHolder.teamName.background =
+                context.resources.getDrawable(R.drawable.ract_white_background)
+            viewHolder.teamName.setTextColor(context.resources.getColor(R.color.black))
         } else {
-            viewHolder.teamName?.background = context.resources.getDrawable(R.drawable.ract_black_background)
-            viewHolder.teamName?.setTextColor(context.resources.getColor(R.color.white))
+            viewHolder.teamName.background =
+                context.resources.getDrawable(R.drawable.ract_black_background)
+            viewHolder.teamName.setTextColor(context.resources.getColor(R.color.white))
         }
-        viewHolder.fantasyPoints?.text = "${objectVal.fantasyPlayerRating}"
-        viewHolder.playerPoints?.text = "${objectVal.playerSeriesPoints}"
+        viewHolder.fantasyPoints.text = "${objectVal.fantasyPlayerRating}"
+        viewHolder.playerPoints.text = "${objectVal.playerSeriesPoints}"
 
         if (objectVal.isPlaying11 /*&& matchObject.isLineup*/) {
-            viewHolder.anouncedIndicatorCircle?.setBackgroundResource(R.drawable.circle_green)
-            viewHolder.anouncedIndicatorText?.text = "Announced"
-            viewHolder.anouncedIndicatorText?.setTextColor(context.resources.getColor(R.color.green))
+            viewHolder.anouncedIndicatorCircle.setBackgroundResource(R.drawable.circle_green)
+            viewHolder.anouncedIndicatorText.text = "Playing"
+            viewHolder.anouncedIndicatorText.setTextColor(context.resources.getColor(R.color.green))
         } else {
-            viewHolder.anouncedIndicatorText?.text = ""
-            viewHolder.anouncedIndicatorCircle?.setBackgroundResource(R.drawable.circle_red)
+            viewHolder.anouncedIndicatorText.text = ""
+            viewHolder.anouncedIndicatorCircle.setBackgroundResource(R.drawable.circle_red)
         }
 
         Glide.with(context)
@@ -84,18 +87,18 @@ class PlayersContestAdapter(
             }
         }
 
-        val linearTradesStatus = itemView.findViewById<LinearLayout>(R.id.linear_trades_status)
-        val playerSelectionPercentage =
-            itemView.findViewById<TextView>(R.id.player_selection_percentage)
-        val playerName = itemView.findViewById<TextView>(R.id.player_name)
-        val playerImage = itemView.findViewById<ImageView>(R.id.player_image)
-        val teamName = itemView.findViewById<TextView>(R.id.team_name)
-        val fantasyPoints = itemView.findViewById<TextView>(R.id.fantasy_points)
-        val playerPoints = itemView.findViewById<TextView>(R.id.player_points)
-        val anouncedIndicatorCircle =
-            itemView.findViewById<TextView>(R.id.anounced_indicator_circle)
-        val anouncedIndicatorText = itemView.findViewById<TextView>(R.id.anounced_indicator_text)
-        val addImage = itemView.findViewById<ImageView>(R.id.add_image)
+        val linearTradesStatus: LinearLayout = itemView.findViewById(R.id.linear_trades_status)
+        val playerSelectionPercentage: TextView =
+            itemView.findViewById(R.id.player_selection_percentage)
+        val playerName: TextView = itemView.findViewById(R.id.player_name)
+        val playerImage: ImageView = itemView.findViewById(R.id.player_image)
+        val teamName: TextView = itemView.findViewById(R.id.team_name)
+        val fantasyPoints: TextView = itemView.findViewById(R.id.fantasy_points)
+        val playerPoints: TextView = itemView.findViewById(R.id.player_points)
+        val anouncedIndicatorCircle: TextView =
+            itemView.findViewById(R.id.anounced_indicator_circle)
+        val anouncedIndicatorText: TextView = itemView.findViewById(R.id.anounced_indicator_text)
+        val addImage: ImageView = itemView.findViewById(R.id.add_image)
     }
 }
 

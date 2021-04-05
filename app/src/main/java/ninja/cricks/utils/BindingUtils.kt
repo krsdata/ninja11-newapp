@@ -146,15 +146,14 @@ class BindingUtils {
         }
 
         fun countDownStartForAdaptors(
-            starttimeStamp: Long,
+            startTimeStamp: Long,
             listeners: OnMatchTimerStarted
         ) {
-            if (starttimeStamp > currentTimeStamp) {
+            if (startTimeStamp > currentTimeStamp) {
                 //BindingUtils.logD("TimerLogs","Count Down timer Called Adaptors")
-                val timerAdapters = object : CountDownTimer(starttimeStamp, 1000) {
+                val timerAdapters = object : CountDownTimer(startTimeStamp, 1000) {
                     override fun onTick(millisUntilFinished: Long) {
-                        val itemLong = starttimeStamp
-                        val date = Date(itemLong * 1000L)
+                        val date = Date(startTimeStamp * 1000L)
                         //val date2 = Date(currentTimeStamp*1000L)
                         val date2 = Date()
                         if (date2.before(date)) {

@@ -62,7 +62,7 @@ class Batsman : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_create_team_list, container, false
@@ -148,22 +148,15 @@ class Batsman : Fragment() {
 
         mBinding!!.sortByPoints.setOnClickListener(View.OnClickListener {
             (activity as CreateTeamActivity).sortByPoints()
-
             activatePointsSorting()
-
         })
         mBinding!!.sortByPointsArrow.visibility = View.GONE
-
 
         mBinding!!.sortByCredits.setOnClickListener(View.OnClickListener {
             (activity as CreateTeamActivity).sortByCredits()
             activateCreditSorting()
-
-
         })
         mBinding!!.sortByCreditsArrow.visibility = View.GONE
-
-
     }
 
     private fun activateCreditSorting() {

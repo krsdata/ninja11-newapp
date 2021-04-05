@@ -77,5 +77,18 @@ data class ContestModelLists(
 
     @SerializedName("is_leaderboard")
     @Expose
-    var is_dashboard: Boolean = false
+    var is_dashboard: Boolean = false,
+
+    @SerializedName("discounted_price")
+    @Expose
+    var discounted_price: String = "",
+
+    @SerializedName("extra_cash_usable")
+    @Expose
+    var extra_cash_usable: String = "",
+
+    @SerializedName("offer_end_at")
+    @Expose
+    var offer_end_at: String = ""
+
 ) : Serializable, Cloneable

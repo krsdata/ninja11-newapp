@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import ninja.cricks.utils.HardwareInfoManager
 import com.edify.atrist.listener.OnContestEvents
 import com.edify.atrist.listener.OnContestLoadedListener
 import com.google.gson.Gson
@@ -23,16 +22,13 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import ninja.cricks.*
 import ninja.cricks.databinding.FragmentAllContestBinding
-import ninja.cricks.models.ContestCategoryModel
-import ninja.cricks.models.ContestsParentModels
-import ninja.cricks.models.UpcomingMatchesModel
+import ninja.cricks.models.*
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.contest.adaptors.ContestAdapter
 import ninja.cricks.ui.contest.adaptors.ContestListAdapter
-import ninja.cricks.models.ContestModelLists
-import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.utils.BindingUtils
+import ninja.cricks.utils.HardwareInfoManager
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import retrofit2.Call
@@ -148,7 +144,7 @@ class ContestFragment : Fragment() {
 
     private fun registerSpotSizeSelection() {
 
-        mBinding!!.sortBy2spots.setOnClickListener(View.OnClickListener {
+        mBinding!!.sortBy2spots.setOnClickListener {
 
             mBinding!!.sortBy2spots.setBackgroundResource(R.drawable.circle_app_color)
             mBinding!!.sortBy2spots.setTextColor(resources.getColor(R.color.white))
@@ -167,9 +163,9 @@ class ContestFragment : Fragment() {
             mBinding!!.rupees.setTextColor(resources.getColor(R.color.black))
 
             showRecyclerListBySpotSize(2)
-        })
+        }
 
-        mBinding!!.sortBy3spots.setOnClickListener(View.OnClickListener {
+        mBinding!!.sortBy3spots.setOnClickListener {
 
             mBinding!!.sortBy2spots.setBackgroundResource(R.drawable.circle_grey)
             mBinding!!.sortBy2spots.setTextColor(resources.getColor(R.color.black))
@@ -188,9 +184,9 @@ class ContestFragment : Fragment() {
             mBinding!!.rupees.setTextColor(resources.getColor(R.color.black))
 
             showRecyclerListBySpotSize(3)
-        })
+        }
 
-        mBinding!!.sortBy4spots.setOnClickListener(View.OnClickListener {
+        mBinding!!.sortBy4spots.setOnClickListener {
 
             mBinding!!.sortBy2spots.setBackgroundResource(R.drawable.circle_grey)
             mBinding!!.sortBy2spots.setTextColor(resources.getColor(R.color.black))
@@ -209,9 +205,9 @@ class ContestFragment : Fragment() {
             mBinding!!.rupees.setTextColor(resources.getColor(R.color.black))
 
             showRecyclerListBySpotSize(4)
-        })
+        }
 
-        mBinding!!.linearEntryPrizeSort.setOnClickListener(View.OnClickListener {
+        mBinding!!.linearEntryPrizeSort.setOnClickListener {
 
             mBinding!!.sortBy2spots.setBackgroundResource(R.drawable.circle_grey)
             mBinding!!.sortBy2spots.setTextColor(resources.getColor(R.color.black))
@@ -231,11 +227,11 @@ class ContestFragment : Fragment() {
             mBinding!!.rupees.setTextColor(resources.getColor(R.color.white))
 
             filterByEntryPrize()
-        })
+        }
 
-        mBinding!!.filterByAll.setOnClickListener(View.OnClickListener {
+        mBinding!!.filterByAll.setOnClickListener {
             selectAllContest()
-        })
+        }
     }
 
     private fun selectAllContest() {
@@ -394,11 +390,16 @@ class ContestFragment : Fragment() {
         jsonRequest.addProperty("match_id", matchObject!!.matchId)
 
         val gson = Gson()
-        val jsonString: String = gson.toJson(HardwareInfoManager(requireActivity()).collectData(MyPreferences.getDeviceToken(requireActivity())!!))
+        val jsonString: String = gson.toJson(
+            HardwareInfoManager(requireActivity()).collectData(
+                MyPreferences.getDeviceToken(requireActivity())!!
+            )
+        )
         val deviceDetails: JsonObject = JsonParser().parse(jsonString).asJsonObject
         jsonRequest.add("deviceDetails", deviceDetails)
 
-        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getContestByMatch(jsonRequest)
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
+            .getContestByMatch(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     if (isVisible) {
@@ -572,14 +573,6 @@ class ContestFragment : Fragment() {
     }
 
     private fun getFilteredContest() {
-        //mBinding!!.contestFilterRefresh.isRefreshing = true
-
-        /*val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(requireActivity())!!
-        models.match_id = "" + matchObject!!.matchId
-        models.token = MyPreferences.getToken(requireActivity())!!
-        val deviceToken: String? = MyPreferences.getDeviceToken(requireActivity())
-        models.deviceDetails = HardwareInfoManager(activity).collectData(deviceToken!!)*/
 
         val jsonRequest = JsonObject()
         jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
@@ -587,11 +580,16 @@ class ContestFragment : Fragment() {
         jsonRequest.addProperty("match_id", matchObject!!.matchId)
 
         val gson = Gson()
-        val jsonString: String = gson.toJson(HardwareInfoManager(requireActivity()).collectData(MyPreferences.getDeviceToken(requireActivity())!!))
+        val jsonString: String = gson.toJson(
+            HardwareInfoManager(requireActivity()).collectData(
+                MyPreferences.getDeviceToken(requireActivity())!!
+            )
+        )
         val deviceDetails: JsonObject = JsonParser().parse(jsonString).asJsonObject
         jsonRequest.add("deviceDetails", deviceDetails)
 
-        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getContestByMatch(jsonRequest)
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
+            .getContestByMatch(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     if (isVisible) {

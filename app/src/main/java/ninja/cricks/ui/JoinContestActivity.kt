@@ -4,6 +4,7 @@ import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -15,13 +16,9 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import ninja.cricks.*
 import ninja.cricks.databinding.FragmentJoinContestConfirmationBinding
-import ninja.cricks.models.MyTeamModels
-import ninja.cricks.models.UpcomingMatchesModel
-import ninja.cricks.models.UserInfo
+import ninja.cricks.models.*
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.models.ContestModelLists
-import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
@@ -29,13 +26,15 @@ import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.math.abs
 
 class JoinContestActivity : AppCompatActivity() {
 
     private lateinit var userInfo: UserInfo
     private lateinit var customeProgressDialog: CustomeProgressDialog
-    var walletAmount: Double = 0.0
-    var bonusAmount: Double = 0.0
+    private var walletAmount: Double = 0.0
+    private var bonusAmount: Double = 0.0
+    private var extraCashAmount: Double = 0.0
     var createdTeamIdList: ArrayList<Int>? = null
     private var mBinding: FragmentJoinContestConfirmationBinding? = null
     private var mContext: Context? = null
@@ -44,6 +43,7 @@ class JoinContestActivity : AppCompatActivity() {
     var contestModel: ContestModelLists? = null
 
     companion object {
+        val TAG: String = JoinContestActivity::class.java.simpleName
         var DISCOUNT_ON_BONUS: Int = 0
     }
 
@@ -55,9 +55,12 @@ class JoinContestActivity : AppCompatActivity() {
         )
         mContext = this
 
-        matchObject = intent.getSerializableExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY) as UpcomingMatchesModel?
-        contestModel = intent.getSerializableExtra(CreateTeamActivity.SERIALIZABLE_CONTEST_KEY) as ContestModelLists?
-        myTeamArrayList = intent.getSerializableExtra(CreateTeamActivity.SERIALIZABLE_SELECTED_TEAMS) as ArrayList<MyTeamModels>
+        matchObject =
+            intent.getSerializableExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY) as UpcomingMatchesModel?
+        contestModel =
+            intent.getSerializableExtra(CreateTeamActivity.SERIALIZABLE_CONTEST_KEY) as ContestModelLists?
+        myTeamArrayList =
+            intent.getSerializableExtra(CreateTeamActivity.SERIALIZABLE_SELECTED_TEAMS) as ArrayList<MyTeamModels>
 
         customeProgressDialog = CustomeProgressDialog(mContext)
         mBinding!!.imgClose.setOnClickListener(View.OnClickListener {
@@ -78,6 +81,7 @@ class JoinContestActivity : AppCompatActivity() {
         JoinContestDialogFragment.DISCOUNT_ON_BONUS = contestModel!!.usableBonus.toInt()
         walletAmount = walletInfo.walletAmount
         bonusAmount = walletInfo.bonusAmount
+        extraCashAmount = walletInfo.extraCash
         createdTeamIdList = ArrayList<Int>()
         var totalEntryFees = 0.0
         var discountFromBonusAmount = 0.0
@@ -89,20 +93,22 @@ class JoinContestActivity : AppCompatActivity() {
                 String.format("Amount Added + Bonus =₹%.2f", walletAmount + bonusAmount)
         }
 
-        for (x in 0..myTeamArrayList.size - 1) {
-            val objects = myTeamArrayList.get(x)
+        for (x in 0 until myTeamArrayList.size) {
+            val objects = myTeamArrayList[x]
             if (objects.isSelected!!) {
                 createdTeamIdList!!.add(objects.teamId!!.teamId)
+
                 totalEntryFees += contestModel!!.entryFees.toInt()
             }
         }
 
-        var actualPayable = 0.0
+        var actualPayable: Double = 0.0
         if (contestModel!!.isBonusContest) {
             actualPayable = totalEntryFees
             mBinding!!.entryFees.text = "0"
             mBinding!!.usableCashbonus.text = String.format("₹%.2f", actualPayable)
         } else {
+
             discountFromBonusAmount =
                 ((totalEntryFees * JoinContestDialogFragment.DISCOUNT_ON_BONUS)) / 100
 
@@ -112,22 +118,34 @@ class JoinContestActivity : AppCompatActivity() {
                 discountFromBonusAmount = 0.0
                 totalPayable = totalEntryFees - discountFromBonusAmount
             }
-//            if (totalPayable <= walletAmount) {
-//                actualPayable = 0.0
-//            } else {
             actualPayable = totalPayable
-            // }
             mBinding!!.entryFees.text = String.format("₹%.2f", totalEntryFees)
             mBinding!!.usableCashbonus.text = String.format("₹%.2f", discountFromBonusAmount)
+
+            Log.e(TAG, "actualPayable ======> $actualPayable")
         }
 
-        //var finalAmount = walletAmount - totalPayable
-        mBinding!!.usableTopay.text = String.format("₹%.2f", Math.abs(actualPayable))
+        if (contestModel!!.extra_cash_usable == "1") {
+            mBinding!!.extraLayout.visibility = View.VISIBLE
+            if (extraCashAmount >= totalEntryFees) {
+                mBinding!!.usableExtraCash.text = String.format("₹%.2f", totalEntryFees)
+                actualPayable = 0.0
+            } else if(totalEntryFees >= extraCashAmount) {
+                mBinding!!.usableExtraCash.text = String.format("₹%.2f", extraCashAmount)
+                actualPayable -= extraCashAmount
+            }
+        } else {
+            mBinding!!.extraLayout.visibility = View.GONE
+        }
+
+        Log.e(TAG, "actualPayable ======> $actualPayable")
+
+        mBinding!!.usableTopay.text = String.format("₹%.2f", abs(actualPayable))
         if (actualPayable > walletAmount) {
             mBinding!!.joinContest.text = "Pay Now"
             mBinding!!.joinContest.setBackgroundResource(R.drawable.default_flat_button_sportsfight)
         }
-        mBinding!!.joinContest.setOnClickListener(View.OnClickListener {
+        mBinding!!.joinContest.setOnClickListener {
 
             if (actualPayable > walletAmount && !contestModel!!.isBonusContest) {
                 val intent = Intent(mContext, AddMoneyActivity::class.java)
@@ -137,7 +155,7 @@ class JoinContestActivity : AppCompatActivity() {
             } else {
                 placeOrders(totalEntryFees, actualPayable, discountFromBonusAmount)
             }
-        })
+        }
 
         mBinding!!.termsCondition.setOnClickListener(View.OnClickListener {
             val intent = Intent(mContext, WebActivity::class.java)
@@ -159,15 +177,6 @@ class JoinContestActivity : AppCompatActivity() {
             return
         }
         customeProgressDialog.show()
-        /*val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(mContext!!)!!
-        models.match_id = "" + matchObject!!.matchId
-        models.contest_id = "" + contestModel!!.id
-        models.created_team_id = createdTeamIdList
-        models.token = MyPreferences.getToken(mContext!!)!!
-        models.entryFees = totalEntryFees.toString()
-        models.totalPaidAmount = totalPayable.toString()
-        models.discountOnBonusAmount = discountFromBonusAmount.toString()*/
 
         val jsonRequest = JsonObject()
         jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
@@ -198,7 +207,7 @@ class JoinContestActivity : AppCompatActivity() {
                     customeProgressDialog.dismiss()
                     val res = response!!.body()
                     if (res != null) {
-                        if (res.status){
+                        if (res.status) {
                             if (res.sessionExpired) {
                                 logoutApp("Session Expired Please login again!!", false)
                             } else {

@@ -2,6 +2,7 @@ package ninja.cricks.ui.contest.adaptors
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.edify.atrist.listener.OnContestEvents
+import com.edify.atrist.listener.OnMatchTimerStarted
 import ninja.cricks.LeadersBoardActivity
 import ninja.cricks.R
 import ninja.cricks.models.ContestModelLists
@@ -66,12 +68,45 @@ class ContestListAdapter(
             if (objectVal.entryFees.toInt() == 0 && objectVal.winnerCounts!!.toInt() > 0) {
                 viewHolder.contestEntryPrize.text = "Free"
                 viewHolder.winningPercentage.text = "" + objectVal.winnerCounts
+                viewHolder.discountTimer.visibility = View.GONE
+                viewHolder.discountedPrice.visibility = View.GONE
             } else if (objectVal.entryFees.toInt() == 0 && objectVal.winnerCounts!!.toInt() == 0) {
                 viewHolder.contestEntryPrize.text = "Join"
                 viewHolder.winningPercentage.text = "Practice"
+                viewHolder.discountTimer.visibility = View.GONE
+                viewHolder.discountedPrice.visibility = View.GONE
             } else {
-                viewHolder.contestEntryPrize.text = String.format("%s%s", "₹", objectVal.entryFees)
-                viewHolder.winningPercentage.text = "" + objectVal.winnerCounts
+                if (objectVal.discounted_price != "" && objectVal.discounted_price.toDouble() > 0) {
+
+                    viewHolder.discountedPrice.text =
+                        String.format(" %s%s ", "₹", objectVal.discounted_price)
+                    viewHolder.contestEntryPrize.text =
+                        String.format("%s%s", "₹", objectVal.entryFees)
+                    viewHolder.winningPercentage.text = objectVal.winnerCounts
+                    viewHolder.discountTimer.visibility = View.VISIBLE
+                    viewHolder.discountedPrice.visibility = View.VISIBLE
+
+                    BindingUtils.countDownStartForAdaptors(objectVal.offer_end_at.toLong(),
+                        object : OnMatchTimerStarted {
+                            override fun onTimeFinished() {
+                                viewHolder.discountTimer.text = "nilesh"
+                            }
+
+                            override fun onTicks(time: String) {
+                                viewHolder.discountTimer.text = time
+                            }
+                        })
+
+                    viewHolder.discountedPrice.paintFlags =
+                        viewHolder.discountedPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+
+                } else {
+                    viewHolder.contestEntryPrize.text =
+                        String.format("%s%s", "₹", objectVal.entryFees)
+                    viewHolder.winningPercentage.text = objectVal.winnerCounts
+                    viewHolder.discountTimer.visibility = View.GONE
+                    viewHolder.discountedPrice.visibility = View.GONE
+                }
             }
             viewHolder.firstPrize.text = String.format("%s%s", "₹", objectVal.firstPrice)
 
@@ -251,7 +286,9 @@ class ContestListAdapter(
         val contestLeaderBoardLabel: TextView =
             itemView.findViewById(R.id.contest_leader_board_label)
 
-        val contestMultiPlayer: TextView = itemView.findViewById(R.id.contest_multiplayer);
+        val contestMultiPlayer: TextView = itemView.findViewById(R.id.contest_multiplayer)
+        val discountTimer: TextView = itemView.findViewById(R.id.discountTimer)
+        val discountedPrice: TextView = itemView.findViewById(R.id.discountedPrice)
     }
 
     inner class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

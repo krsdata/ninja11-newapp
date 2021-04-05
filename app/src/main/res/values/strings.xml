@@ -114,7 +114,7 @@
     <string name="label_login_agree">By creating an account or logging in, you agree to Ninja11</string>
     <string name="label_policy">READ Ninja11 Policies</string>
     <string name="label_acceptance1">By joining this,you accept Ninja11 </string>
-    <string name="label_acceptance2">and confirm that you are not a resident of
+    <string name="label_acceptance2">And confirm that you are not a resident of
                 Andhra Pradesh, Assam, Odisha, Telangana, Nagaland and Sikkim. I also agree to be contacted by Ninja11 and their partner.</string>
     <string name="label_document_safe">Your documents are safe with "ninja11.in". We do not share this documents with anyone else nor we disclose the personal identifications.</string>
     <string name="label_register_on_sf">"Register on Ninja11 application with referral code "</string>
