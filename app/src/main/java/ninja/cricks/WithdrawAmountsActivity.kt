@@ -258,7 +258,7 @@ class WithdrawAmountsActivity : BaseActivity() {
     private fun successAlert(message: String, isClose: Boolean) {
         val flashbar = Flashbar.Builder(this@WithdrawAmountsActivity)
             .gravity(Flashbar.Gravity.TOP)
-            .title(getString(R.string.app_name))
+            //.title(getString(R.string.app_name))
             .message(message)
             .backgroundDrawable(R.color.green)
             .build()
@@ -275,9 +275,9 @@ class WithdrawAmountsActivity : BaseActivity() {
     private fun errorAlert(message: String) {
         val flashBar = Flashbar.Builder(this@WithdrawAmountsActivity)
             .gravity(Flashbar.Gravity.TOP)
-            .title(getString(R.string.app_name))
+            //.title(getString(R.string.app_name))
             .message(message)
-            .backgroundDrawable(R.color.red2)
+            .backgroundDrawable(R.color.green)
             .build()
         flashBar.show()
         Handler().postDelayed(Runnable { flashBar.dismiss() }, 2000L)

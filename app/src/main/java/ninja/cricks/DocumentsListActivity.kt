@@ -57,8 +57,8 @@ class DocumentsListActivity : BaseActivity() {
         }
         customeProgressDialog.show()
         val jsonRequest = JsonObject()
-        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
-        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+        jsonRequest.addProperty("match_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("player_id", MyPreferences.getSystemToken(this)!!)
 
         WebServiceClient(this).client.create(IApiMethod::class.java)
             .getApprovedDocuments(jsonRequest)

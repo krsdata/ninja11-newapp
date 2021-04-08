@@ -216,6 +216,8 @@
                     android:layout_gravity="center"
                     android:paddingStart="@dimen/_15sdp"
                     android:paddingEnd="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     android:background="@drawable/default_rounded_button_sportsfight"
                     android:fontFamily="@font/montserrat_medium"
                     android:gravity="center"

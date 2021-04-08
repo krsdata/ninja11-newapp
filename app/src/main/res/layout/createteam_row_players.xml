@@ -20,6 +20,11 @@
             android:scaleType="fitXY"
             android:src="@drawable/player_blue" />
 
+        <ImageView
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:src="@drawable/ic_action_info" />
+
         <TextView
             android:id="@+id/team_name"
             android:layout_width="wrap_content"
@@ -41,14 +46,14 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginStart="@dimen/_4sdp"
-        android:layout_weight="2"
+        android:layout_weight="2.5"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/player_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat_bold"
+            android:fontFamily="@font/montserrat_medium"
             android:maxLines="1"
             android:padding="@dimen/_2sdp"
             android:singleLine="true"
@@ -97,7 +102,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.7"
+        android:layout_weight="0.8"
         android:gravity="center_vertical|end"
         android:minWidth="55dp"
         android:orientation="horizontal">
@@ -118,7 +123,7 @@
         android:id="@+id/linear_selection_"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="1.4"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 

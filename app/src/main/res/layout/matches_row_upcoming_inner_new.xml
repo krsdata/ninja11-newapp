@@ -263,11 +263,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:background="@color/green_light"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginEnd="@dimen/_2sdp"
+        android:background="@drawable/home_free_view"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="center"
         android:padding="3dp"
         android:text="Win smart watch"
-        android:textColor="@color/white"
-        android:textSize="@dimen/small_info_size" />
+        android:textColor="@color/green"
+        android:textSize="@dimen/_9sdp" />
 </androidx.cardview.widget.CardView>

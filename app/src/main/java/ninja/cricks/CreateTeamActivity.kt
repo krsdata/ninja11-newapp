@@ -81,9 +81,9 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         var teamBId = 0
 
         var COUNT_WICKET_KEEPER: Int = 0
-        var COUNT_BATS_MAN: Int = 3
+        var COUNT_BATS_MAN: Int = 0
         var COUNT_ALL_ROUNDER: Int = 0
-        var COUNT_BOWLER: Int = 3
+        var COUNT_BOWLER: Int = 0
         var isAllPlayersSelected: Boolean? = false
         var totalPlayers: Int = 0
 

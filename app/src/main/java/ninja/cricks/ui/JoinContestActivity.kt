@@ -211,6 +211,7 @@ class JoinContestActivity : AppCompatActivity() {
                             if (res.sessionExpired) {
                                 logoutApp("Session Expired Please login again!!", false)
                             } else {
+                                MyUtils.showMessage(mContext!!, res.message)
                                 val intent1 = Intent(BindingUtils.EXTRA_DATA_GET_WALLET)
                                 LocalBroadcastManager.getInstance(mContext!!).sendBroadcast(intent1)
                                 setResult(RESULT_OK)

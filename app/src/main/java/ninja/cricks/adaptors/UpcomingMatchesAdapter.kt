@@ -57,19 +57,19 @@ class UpcomingMatchesAdapter(
         if (getItemViewType(viewType) == TYPE_NORMAL) {
             val viewHolder: OldDataViewHolder = parent as OldDataViewHolder
             if (objectVal.isLineup) {
-                viewHolder.matchTitle?.visibility = View.VISIBLE
+                viewHolder.matchTitle.visibility = View.VISIBLE
             } else {
-                viewHolder.matchTitle?.visibility = View.INVISIBLE
+                viewHolder.matchTitle.visibility = View.INVISIBLE
             }
-            viewHolder.tournamentTitle?.text = objectVal.leagueTitle
+            viewHolder.tournamentTitle.text = objectVal.leagueTitle
             // viewHolder?.matchProgress?.text = ""+objectVal.timestampEnd
-            viewHolder.opponent1?.text = objectVal.teamAInfo!!.teamShortName
-            viewHolder.opponent2?.text = objectVal.teamBInfo!!.teamShortName
+            viewHolder.opponent1.text = objectVal.teamAInfo!!.teamShortName
+            viewHolder.opponent2.text = objectVal.teamBInfo!!.teamShortName
 
             if (objectVal.freeContest) {
-                viewHolder.freeView?.visibility = View.VISIBLE
+                viewHolder.freeView.visibility = View.VISIBLE
             } else {
-                viewHolder.freeView?.visibility = View.GONE
+                viewHolder.freeView.visibility = View.GONE
             }
             if (!TextUtils.isEmpty(objectVal.dateStart)) {
                 viewHolder.matchtime.visibility = View.VISIBLE
@@ -78,8 +78,8 @@ class UpcomingMatchesAdapter(
                 viewHolder.matchtime.visibility = View.GONE
             }
 
-            viewHolder.teamAColorView?.setBackgroundColor(getRandomColor())
-            viewHolder.teamBColorView?.setBackgroundColor(getRandomColor())
+            viewHolder.teamAColorView.setBackgroundColor(getRandomColor())
+            viewHolder.teamBColorView.setBackgroundColor(getRandomColor())
 
             BindingUtils.countDownStartForAdaptors(objectVal.timestampStart,
                 object : OnMatchTimerStarted {

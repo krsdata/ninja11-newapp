@@ -244,6 +244,11 @@
             android:label=""
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name="ninja.cricks.PlayerInfoActivity"
+            android:label=""
+            android:screenOrientation="portrait" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"

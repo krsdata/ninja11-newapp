@@ -106,9 +106,9 @@ abstract class BaseActivity : AppCompatActivity() {
     fun showMatchTimeUpDialog() {
         val flashBar = Flashbar.Builder(this)
             .gravity(Flashbar.Gravity.BOTTOM)
-            .title(getString(R.string.app_name))
+            //.title(getString(R.string.app_name))
             .message("Time Up Editing your team, match went to live.")
-            .backgroundDrawable(R.color.secondery_color)
+            .backgroundDrawable(R.color.green)
             .build()
         flashBar.show()
         Handler().postDelayed(Runnable {

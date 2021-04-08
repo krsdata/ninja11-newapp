@@ -149,11 +149,11 @@ class MyTransactionHistoryActivity : AppCompatActivity() {
             viewHolder.transactionDate?.text = objectVal.createdDate
 
             if (objectVal.debitCreditStatus.equals("+")) {
-                viewHolder.transactionAmount.setTextColor(resources.getColor(R.color.colorAccent))
+                viewHolder.transactionAmount.setTextColor(context.resources.getColor(R.color.green))
                 viewHolder.transactionAmount?.text =
                     objectVal.debitCreditStatus + "₹" + objectVal.depositAmount
             } else {
-                viewHolder.transactionAmount.setTextColor(resources.getColor(R.color.red))
+                viewHolder.transactionAmount.setTextColor(context.resources.getColor(R.color.red))
                 viewHolder.transactionAmount?.text =
                     objectVal.debitCreditStatus + "₹" + objectVal.depositAmount
             }

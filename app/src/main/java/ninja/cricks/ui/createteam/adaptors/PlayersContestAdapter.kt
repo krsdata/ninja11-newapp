@@ -1,14 +1,17 @@
 package ninja.cricks.ui.createteam.adaptors
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import ninja.cricks.PlayerInfoActivity
 import ninja.cricks.R
 import ninja.cricks.models.PlayersInfoModel
 import ninja.cricks.models.UpcomingMatchesModel
@@ -74,6 +77,13 @@ class PlayersContestAdapter(
             viewHolder.addImage.setImageResource(R.drawable.ic_add_circle_outline_black_24dp)
             viewHolder.linearTradesStatus.setBackgroundColor(context.resources.getColor(R.color.white))
         }
+
+        viewHolder.relPlayerImage.setOnClickListener{
+            val intent = Intent(context, PlayerInfoActivity::class.java)
+            intent.putExtra("matchData", matchObject)
+            intent.putExtra("playerData", objectVal)
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -99,6 +109,7 @@ class PlayersContestAdapter(
             itemView.findViewById(R.id.anounced_indicator_circle)
         val anouncedIndicatorText: TextView = itemView.findViewById(R.id.anounced_indicator_text)
         val addImage: ImageView = itemView.findViewById(R.id.add_image)
+        val relPlayerImage: RelativeLayout = itemView.findViewById(R.id.rel_player_image)
     }
 }
 

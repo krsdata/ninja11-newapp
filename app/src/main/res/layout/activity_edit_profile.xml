@@ -79,7 +79,6 @@
                         android:editable="false"
                         android:enabled="false"
                         android:focusable="false"
-                        android:maxLength="8"
                         android:maxLines="1"
                         android:singleLine="true"
                         android:textColor="@color/text_view_color"

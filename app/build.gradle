@@ -13,8 +13,8 @@ android {
         applicationId "ninja.cricks"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 3205
-        versionName "2.05"
+        versionCode 3206
+        versionName "2.06"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         setProperty("archivesBaseName", "Ninja11-$versionName")
@@ -59,8 +59,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.4'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.4'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'

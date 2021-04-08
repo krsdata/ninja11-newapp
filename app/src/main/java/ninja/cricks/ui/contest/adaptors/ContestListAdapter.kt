@@ -58,9 +58,7 @@ class ContestListAdapter(
 
     override fun onBindViewHolder(parent: RecyclerView.ViewHolder, position: Int) {
         val objectVal = matchesListObject[position]
-
         if (getItemViewType(position) == TYPE_NORMAL) {
-
             val viewHolder: DataViewHolder = parent as DataViewHolder
             viewHolder.contestPrizePool.text =
                 String.format("%s%s", "₹", objectVal.totalWinningPrize)
@@ -70,42 +68,48 @@ class ContestListAdapter(
                 viewHolder.winningPercentage.text = "" + objectVal.winnerCounts
                 viewHolder.discountTimer.visibility = View.GONE
                 viewHolder.discountedPrice.visibility = View.GONE
+                viewHolder.timerLayout.visibility = View.INVISIBLE
             } else if (objectVal.entryFees.toInt() == 0 && objectVal.winnerCounts!!.toInt() == 0) {
                 viewHolder.contestEntryPrize.text = "Join"
                 viewHolder.winningPercentage.text = "Practice"
                 viewHolder.discountTimer.visibility = View.GONE
                 viewHolder.discountedPrice.visibility = View.GONE
+                viewHolder.timerLayout.visibility = View.INVISIBLE
             } else {
                 if (objectVal.discounted_price != "" && objectVal.discounted_price.toDouble() > 0) {
-
                     viewHolder.discountedPrice.text =
                         String.format(" %s%s ", "₹", objectVal.discounted_price)
                     viewHolder.contestEntryPrize.text =
                         String.format("%s%s", "₹", objectVal.entryFees)
                     viewHolder.winningPercentage.text = objectVal.winnerCounts
-                    viewHolder.discountTimer.visibility = View.VISIBLE
                     viewHolder.discountedPrice.visibility = View.VISIBLE
-
-                    BindingUtils.countDownStartForAdaptors(objectVal.offer_end_at.toLong(),
-                        object : OnMatchTimerStarted {
-                            override fun onTimeFinished() {
-                                viewHolder.discountTimer.text = "nilesh"
-                            }
-
-                            override fun onTicks(time: String) {
-                                viewHolder.discountTimer.text = time
-                            }
-                        })
-
                     viewHolder.discountedPrice.paintFlags =
                         viewHolder.discountedPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
 
+                    if (objectVal.offer_end_at != "0") {
+                        viewHolder.discountTimer.visibility = View.VISIBLE
+                        viewHolder.timerLayout.visibility = View.VISIBLE
+                        BindingUtils.countDownStartForAdaptors(objectVal.offer_end_at.toLong(),
+                            object : OnMatchTimerStarted {
+                                override fun onTimeFinished() {
+                                    viewHolder.discountTimer.text = ""
+                                }
+
+                                override fun onTicks(time: String) {
+                                    viewHolder.discountTimer.text = time.replace("left", "")
+                                }
+                            })
+                    } else {
+                        viewHolder.discountTimer.text = ""
+                        viewHolder.timerLayout.visibility = View.INVISIBLE
+                    }
                 } else {
                     viewHolder.contestEntryPrize.text =
                         String.format("%s%s", "₹", objectVal.entryFees)
                     viewHolder.winningPercentage.text = objectVal.winnerCounts
                     viewHolder.discountTimer.visibility = View.GONE
                     viewHolder.discountedPrice.visibility = View.GONE
+                    viewHolder.timerLayout.visibility = View.INVISIBLE
                 }
             }
             viewHolder.firstPrize.text = String.format("%s%s", "₹", objectVal.firstPrice)
@@ -289,6 +293,7 @@ class ContestListAdapter(
         val contestMultiPlayer: TextView = itemView.findViewById(R.id.contest_multiplayer)
         val discountTimer: TextView = itemView.findViewById(R.id.discountTimer)
         val discountedPrice: TextView = itemView.findViewById(R.id.discountedPrice)
+        val timerLayout: LinearLayout = itemView.findViewById(R.id.timerLayout)
     }
 
     inner class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

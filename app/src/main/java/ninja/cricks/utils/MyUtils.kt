@@ -139,9 +139,9 @@ class MyUtils {
             if (activity != null && !activity.isFinishing) {
                 val flashbar = Flashbar.Builder(activity)
                     .gravity(Flashbar.Gravity.TOP)
-                    .title(activity.resources.getString(R.string.app_name))
+                    //.title(activity.resources.getString(R.string.app_name))
                     .message(message)
-                    .backgroundDrawable(R.color.secondery_color)
+                    .backgroundDrawable(R.color.green)
                     .build()
                 flashbar.show()
                 Handler().postDelayed(Runnable { flashbar.dismiss() }, 2000L)
