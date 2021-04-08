@@ -113,19 +113,19 @@ class Batsman : Fragment() {
                         } else {
                             MyUtils.showToast(
                                 requireActivity() as AppCompatActivity,
-                                "MAX Player Reached limit  " + objects.teamShortName
+                                "Max Player Reached limit  " + objects.teamShortName
                             )
                         }
                     } else {
                         MyUtils.showToast(
                             requireActivity() as AppCompatActivity,
-                            "MAX ALLOWED is " + CreateTeamActivity.MAX_BATSMAN[1]
+                            "Max Allowed is " + CreateTeamActivity.MAX_BATSMAN[1]
                         )
                     }
                 } else {
                     MyUtils.showToast(
                         requireActivity() as AppCompatActivity,
-                        "ALL 11 Players Selected"
+                        "All 11 Players Selected"
                     )
                 }
             }

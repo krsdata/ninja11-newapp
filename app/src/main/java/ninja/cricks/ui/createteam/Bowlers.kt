@@ -115,17 +115,17 @@ class Bowlers : Fragment() {
                         } else {
                             MyUtils.showToast(
                                 requireActivity() as AppCompatActivity,
-                                "MAX Player Reached limit  " + objects.teamShortName
+                                "Max Player Reached limit  " + objects.teamShortName
                             )
                         }
                     } else {
                         MyUtils.showToast(
                             requireActivity() as AppCompatActivity,
-                            "MAX ALLOWED is " + CreateTeamActivity.MAX_BOWLER[1]
+                            "Max Allowed is " + CreateTeamActivity.MAX_BOWLER[1]
                         )
                     }
                 } else {
-                    MyUtils.showToast(requireActivity() as AppCompatActivity, "ALL 11 Players Selected")
+                    MyUtils.showToast(requireActivity() as AppCompatActivity, "All 11 Players Selected")
                 }
             }
             adapter.notifyDataSetChanged()

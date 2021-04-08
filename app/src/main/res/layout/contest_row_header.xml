@@ -52,7 +52,7 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:text="Mega Contest"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_11sdp" />
+                android:textSize="@dimen/_12sdp" />
 
             <TextView
                 android:id="@+id/contest_sub_title"
