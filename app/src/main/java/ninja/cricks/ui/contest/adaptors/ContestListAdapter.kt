@@ -93,6 +93,7 @@ class ContestListAdapter(
                             object : OnMatchTimerStarted {
                                 override fun onTimeFinished() {
                                     viewHolder.discountTimer.text = ""
+                                    viewHolder.timerLayout.visibility = View.INVISIBLE
                                 }
 
                                 override fun onTicks(time: String) {

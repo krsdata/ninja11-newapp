@@ -274,6 +274,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:visibility="invisible"
                         android:orientation="vertical">
 
                         <TextView
@@ -283,7 +284,7 @@
                             android:gravity="center"
                             android:text="Offer End in"
                             android:textColor="@color/green"
-                            android:visibility="invisible"
+                            android:visibility="visible"
                             android:textSize="@dimen/_9sdp" />
 
                         <TextView

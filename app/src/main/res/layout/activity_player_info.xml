@@ -96,10 +96,9 @@
                             android:fontFamily="@font/montserrat_bold"
                             android:ellipsize="end"
                             android:gravity="center"
-                            android:text=""
+                            android:text="Rohit Sharma"
                             android:textColor="@color/white"
-                            android:textSize="@dimen/_11sdp"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/_16sdp"/>
                     </LinearLayout>
 
                     <View
@@ -284,19 +283,21 @@
             <TextView
                 android:id="@+id/stat_title"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_25sdp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:ellipsize="end"
+                android:paddingTop="@dimen/_3sdp"
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
                 android:text="Matchwise Fantasy Stats"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_12sdp" />
+                android:textSize="@dimen/_13sdp" />
 
             <LinearLayout
                 android:id="@+id/list_header_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_25sdp"
+                android:background="@color/greybackround"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:orientation="horizontal"
                 android:visibility="visible"
@@ -313,7 +314,7 @@
                     android:text="Match"
                     android:fontFamily="@font/montserrat_bold"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -325,7 +326,7 @@
                     android:text="Selection %"
                     android:fontFamily="@font/montserrat_bold"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/_12sdp" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -338,7 +339,7 @@
                     android:text="Points"
                     android:fontFamily="@font/montserrat_bold"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/_12sdp" />
             </LinearLayout>
 
             <ListView
