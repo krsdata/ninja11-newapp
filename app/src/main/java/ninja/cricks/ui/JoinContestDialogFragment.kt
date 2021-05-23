@@ -289,6 +289,11 @@ class JoinContestDialogFragment(
                                             res.upi_withdrawal
                                         )
 
+                                        MyPreferences.setPaytmWithdrawBtn(
+                                            requireActivity(),
+                                            res.paytm_withdrawal_btn
+                                        )
+
                                         MyPreferences.setMinWithdrawal(requireActivity(), res.minWithdrawal)
 
                                         (activity!!.applicationContext as NinjaApplication).saveWalletInformation(

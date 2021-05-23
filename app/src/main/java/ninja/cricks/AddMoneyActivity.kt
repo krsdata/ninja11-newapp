@@ -8,35 +8,32 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.wallet.*
 import com.google.gson.JsonObject
+import com.paytm.pgsdk.Log
 import com.paytm.pgsdk.PaytmOrder
-import com.paytm.pgsdk.PaytmPGService
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback
+import com.paytm.pgsdk.TransactionManager
 import com.razorpay.Checkout
 import com.razorpay.PaymentResultListener
 import ninja.cricks.databinding.ActivityAddMoneyBinding
 import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.payments.PaytmHandler
 import ninja.cricks.ui.BaseActivity
+import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.BindingUtils.Companion.GOOGLE_TEZ_PACKAGE_NAME
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
-import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
-
 
 class AddMoneyActivity : BaseActivity(), PaymentResultListener {
 
@@ -44,10 +41,12 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
     var paymentMode = ""
     var transactionId = ""
     var orderId = ""
-    private lateinit var paymentsClient: PaymentsClient
-    val LOAD_PAYMENT_DATA_REQUEST_CODE = 0
     private val TAG: String? = AddMoneyActivity::class.java.simpleName
     private var mContext: Context? = null
+    private var ActivityRequestCode = 2
+    private var paytmOrderId = ""
+    private var isValidCoupon: Boolean = false
+    private var appliedCouponCode: String = ""
 
     companion object {
         val ADD_EXTRA_AMOUNT: String = "add_extra_amount"
@@ -57,33 +56,6 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
         private const val TEZ_REQUEST_CODE = 10013
         private const val UPI_REQUEST_CODE = 10014
         private const val PAYTM_REQUEST_CODE = 10015
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == TEZ_REQUEST_CODE) {
-            if (data != null && data.extras != null) {
-                if (data.extras!!.getString("Status").equals("SUCCESS", ignoreCase = true)) {
-                    transactionId = data.extras!!.getString("txnId")!!
-                    addWalletBalance()
-                } else {
-                    MyUtils.showToast(
-                        this@AddMoneyActivity,
-                        "Payment not completed, if any amount deducted, please contact us on our support system within 24hr with proof"
-                    )
-                }
-            } else {
-                MyUtils.showToast(this@AddMoneyActivity, "Payment not completed please check")
-            }
-        }
-    }
-
-    private fun handleError(statusCode: Int) {
-
-    }
-
-    private fun handlePaymentSuccess(paymentData: PaymentData) {
-        MyUtils.logd("gpayPayment", paymentData.toJson())
     }
 
     override fun onBitmapSelected(bitmap: Bitmap) {
@@ -104,16 +76,16 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
         mBinding!!.toolbar.setTitleTextColor(resources.getColor(R.color.white))
         mBinding!!.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
         setSupportActionBar(mBinding!!.toolbar)
-        paymentsClient = createPaymentsClient(this)
-        mBinding!!.toolbar.setNavigationOnClickListener(View.OnClickListener {
+
+        mBinding!!.toolbar.setNavigationOnClickListener {
             finish()
-        })
+        }
 
         if (intent.hasExtra(ADD_EXTRA_AMOUNT)) {
             val additionalAmount = intent.getDoubleExtra(ADD_EXTRA_AMOUNT, 0.0)
-            mBinding!!.editAmounts.setText("" + additionalAmount)
-
+            mBinding!!.editAmounts.setText(String.format("%s", additionalAmount))
         }
+
         customeProgressDialog = CustomeProgressDialog(this)
         initWalletInfo()
 
@@ -135,8 +107,8 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
 
             mBinding!!.add500rs.setBackgroundResource(R.drawable.button_selector_black)
             mBinding!!.add500rs.setTextColor(resources.getColor(R.color.black))
-
         })
+
         mBinding!!.add200rs.setOnClickListener(View.OnClickListener {
             mBinding!!.editAmounts.setText("200")
             mBinding!!.add100rs.setBackgroundResource(R.drawable.button_selector_black)
@@ -150,9 +122,8 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
 
             mBinding!!.add500rs.setBackgroundResource(R.drawable.button_selector_black)
             mBinding!!.add500rs.setTextColor(resources.getColor(R.color.black))
-
-
         })
+
         mBinding!!.add300rs.setOnClickListener(View.OnClickListener {
             mBinding!!.editAmounts.setText("300")
             mBinding!!.add100rs.setBackgroundResource(R.drawable.button_selector_black)
@@ -167,6 +138,7 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
             mBinding!!.add500rs.setBackgroundResource(R.drawable.button_selector_black)
             mBinding!!.add500rs.setTextColor(resources.getColor(R.color.black))
         })
+
         mBinding!!.add500rs.setOnClickListener(View.OnClickListener {
             mBinding!!.editAmounts.setText("500")
             mBinding!!.add100rs.setBackgroundResource(R.drawable.button_selector_black)
@@ -182,14 +154,14 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
             mBinding!!.add500rs.setTextColor(resources.getColor(R.color.white))
         })
 
-        mBinding!!.addCash.setOnClickListener(View.OnClickListener {
+        mBinding!!.addCash.setOnClickListener {
             val amount = mBinding!!.editAmounts.text.toString()
             if (!TextUtils.isEmpty(amount)) {
                 val amt = amount.toDouble()
                 val minimumAmount = MyPreferences.getMinimumDeposit(this@AddMoneyActivity)
                 if (amt >= minimumAmount!!) {
                     if (mBinding!!.usePaytmWallet.isChecked) {
-                        payUsingPaytm(amt)
+                        startPaytmPayment(amt)
                     } else if (mBinding!!.useWalletGpay.isChecked) {
                         payUsingGooglePay(amt)
                     } else if (mBinding!!.useWalletPhonepay.isChecked) {
@@ -204,79 +176,11 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
             } else {
                 MyUtils.showMessage(this@AddMoneyActivity, "Please enter amount")
             }
+        }
 
-        })
-        //checkGpayAvalable()
-    }
-
-    private fun payUsingPaytm(amount: Double) {
-
-        customeProgressDialog.show()
-        paymentMode = PAYEMENT_TYPE_PAYTM
-        PaytmHandler(this, object : PaytmHandler.OnCheckSumGenerated {
-            override fun payNow(pmap: HashMap<String, String>) {
-                customeProgressDialog.dismiss()
-                val order = PaytmOrder(pmap)
-                //PaytmPGService Service = PaytmPGService.getStagingService();
-                val service = PaytmPGService.getProductionService()
-                service.initialize(order, null)
-                service.startPaymentTransaction(this@AddMoneyActivity,
-                    true, true, object : PaytmPaymentTransactionCallback {
-                        override fun onTransactionResponse(inResponse: Bundle?) {
-                            var status = inResponse!!.getString("STATUS")
-
-                            if (status!!.equals("TXN_SUCCESS", false)) {
-                                transactionId = inResponse.getString("TXNID")!!
-                                orderId = inResponse.getString("ORDERID")!!
-                                addWalletBalance()
-                            } else {
-                                MyUtils.showToast(
-                                    this@AddMoneyActivity,
-                                    "Unable to process the payment"
-                                )
-                            }
-                        }
-
-                        override fun clientAuthenticationFailed(inErrorMessage: String?) {
-                            MyUtils.logd("myauth", inErrorMessage)
-                        }
-
-                        override fun someUIErrorOccurred(inErrorMessage: String?) {
-                            MyUtils.logd("myauth", inErrorMessage)
-                        }
-
-                        override fun onTransactionCancel(
-                            inErrorMessage: String?,
-                            inResponse: Bundle?
-                        ) {
-                            MyUtils.logd("myauth", inErrorMessage)
-                        }
-
-                        override fun networkNotAvailable() {
-                            MyUtils.logd("myauth", "Paytm Network not available")
-                        }
-
-                        override fun onErrorLoadingWebPage(
-                            iniErrorCode: Int,
-                            inErrorMessage: String?,
-                            inFailingUrl: String?
-                        ) {
-
-                        }
-
-                        override fun onBackPressedCancelTransaction() {
-                            MyUtils.showMessage(
-                                this@AddMoneyActivity,
-                                "You have cancelled this transactions. Please try again!!"
-                            )
-                        }
-                    })
-            }
-
-            override fun payNowError(t: Throwable?) {
-                customeProgressDialog.dismiss()
-            }
-        }).paytmPayment("paytm" + System.currentTimeMillis(), amount)
+        mBinding!!.coupoCodeApply.setOnClickListener {
+            checkCouponCode()
+        }
     }
 
     private fun payUsingRazorPay(amount: Int) {
@@ -346,90 +250,12 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
             })
     }
 
-    private fun createPaymentsClient(activity: Activity): PaymentsClient {
-        val walletOptions = Wallet.WalletOptions.Builder()
-            .setEnvironment(WalletConstants.ENVIRONMENT_PRODUCTION)
-            .build()
-        return Wallet.getPaymentsClient(activity, walletOptions)
-    }
-
-    fun checkGpayAvalable() {
-        val readyToPayRequest =
-            IsReadyToPayRequest.fromJson(googlePayBaseConfiguration.toString())
-        val readyToPayTask = paymentsClient.isReadyToPay(readyToPayRequest)
-        readyToPayTask.addOnCompleteListener { readyToPayTask ->
-            try {
-                readyToPayTask.getResult(ApiException::class.java)
-                    ?.let { setGooglePayAvailable(true) }
-            } catch (exception: ApiException) {
-                // Error determining readiness to use Google Pay.
-                // Inspect the logs for more details.
-            }
-        }
-
-    }
-
     private fun setGooglePayAvailable(available: Boolean) {
         if (available) {
             mBinding!!.useWalletGpay.visibility = View.VISIBLE
-            // mBinding!!.useWalletGpay.setOnClickListener { requestPayment() }
         } else {
-            // Unable to pay using Google Pay. Update your UI accordingly.
+            mBinding!!.useWalletGpay.visibility = View.GONE
         }
-    }
-
-    private val tokenizationSpecification = JSONObject().apply {
-        put("type", "PAYMENT_GATEWAY")
-        put(
-            "parameters", JSONObject(
-                mapOf(
-                    "gateway" to "example",
-                    "gatewayMerchantId" to "exampleGatewayMerchantId"
-                )
-            )
-        )
-    }
-
-    private val transactionInfo = JSONObject().apply {
-        put("totalPrice", "123.45")
-        put("totalPriceStatus", "FINAL")
-        put("currencyCode", "USD")
-    }
-
-    private val baseCardPaymentMethod = JSONObject().apply {
-        put("type", "CARD")
-        put("parameters", JSONObject().apply {
-            put("allowedCardNetworks", JSONArray(listOf("VISA", "MASTERCARD")))
-            put("allowedAuthMethods", JSONArray(listOf("PAN_ONLY", "CRYPTOGRAM_3DS")))
-        })
-    }
-
-    private val googlePayBaseConfiguration = JSONObject().apply {
-        put("apiVersion", 2)
-        put("apiVersionMinor", 0)
-        put("allowedPaymentMethods", JSONArray().put(baseCardPaymentMethod))
-    }
-
-    private val merchantInfo = JSONObject().apply {
-        put("merchantName", "SportsFight")
-        put("merchantId", "BCR2DN6TVOXIX527")
-        //put("merchantId", "BCR2DN6TVOXKVXKT")
-        //put("merchantId", "01234567890123456789")
-    }
-
-    private val paymentDataRequestJson = JSONObject(googlePayBaseConfiguration.toString()).apply {
-        put("allowedPaymentMethods", JSONArray().put(baseCardPaymentMethod))
-        put("transactionInfo", transactionInfo)
-        put("merchantInfo", merchantInfo)
-    }
-
-    private fun requestPayment() {
-        val paymentDataRequest =
-            PaymentDataRequest.fromJson(paymentDataRequestJson.toString())
-        AutoResolveHelper.resolveTask(
-            paymentsClient.loadPaymentData(paymentDataRequest),
-            this, LOAD_PAYMENT_DATA_REQUEST_CODE
-        )
     }
 
     private fun payUsingGooglePay(amount: Double) {
@@ -456,12 +282,9 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
                 .authority("pay")
                 .appendQueryParameter("pa", upiId)
                 .appendQueryParameter("pn", "Ninja 11 Service")
-                //.appendQueryParameter("mc", "BCR2DN6T4XOJNV")
                 .appendQueryParameter("tr", System.currentTimeMillis().toString())
-                //.appendQueryParameter("tn", "Thank you for being our valued customers.")
                 .appendQueryParameter("am", amount.toString())
                 .appendQueryParameter("cu", "INR")
-                //.appendQueryParameter("url", BindingUtils.BASE_URL_API)
                 .build()
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = uri
@@ -473,7 +296,7 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
         } else {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(
-                "https://play.google.com/store/apps/details?id=" + GOOGLE_TEZ_PACKAGE_NAME
+                "https://play.google.com/store/apps/details?id=$GOOGLE_TEZ_PACKAGE_NAME"
             )
             intent.setPackage("com.android.vending")
             startActivity(intent)
@@ -521,7 +344,7 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
         }
     }
 
-    fun addWalletBalance() {
+    private fun addWalletBalance() {
         if (!MyUtils.isConnectedWithInternet(this)) {
             MyUtils.showToast(this, "No Internet connection found")
             return
@@ -536,6 +359,9 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
         jsonRequest.addProperty("order_id", orderId)
         jsonRequest.addProperty("payment_mode", paymentMode)
         jsonRequest.addProperty("payment_status", "success")
+        if (mBinding!!.editCoupon.text.toString().isNotEmpty() && isValidCoupon) {
+            jsonRequest.addProperty("coupon", appliedCouponCode)
+        }
 
         WebServiceClient(this).client.create(IApiMethod::class.java).addMoney(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
@@ -579,7 +405,6 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
         } catch (e: Exception) {
             Log.e(TAG, "Exception in onPaymentSuccess", e)
         }
-
     }
 
     override fun onPaymentSuccess(razorpayPaymentId: String?) {
@@ -589,6 +414,335 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
             addWalletBalance()
         } catch (e: Exception) {
             Log.e(TAG, "Exception in onPaymentSuccess", e)
+        }
+    }
+
+    private fun startPaytmPayment(amt: Double) {
+        if (MyUtils.isNetworkConnected(mContext!!)) {
+            customeProgressDialog.show()
+            try {
+                val jsonRequest = JsonObject()
+                jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+                jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+                jsonRequest.addProperty("deposit_amount", amt.toString())
+
+                WebServiceClient(this).client.create(IApiMethod::class.java)
+                    .initiateTransaction(jsonRequest)
+                    .enqueue(object : Callback<JsonObject?> {
+                        override fun onResponse(
+                            call: Call<JsonObject?>,
+                            response: Response<JsonObject?>
+                        ) {
+                            customeProgressDialog.dismiss()
+                            if (response.body() != null) {
+                                try {
+                                    val jsonObject = JSONObject(response.body().toString())
+                                    if (jsonObject.getBoolean("status")) {
+                                        paytmOrderId =
+                                            jsonObject.getJSONObject("data").getString("order_id")
+                                        val mid = jsonObject.getJSONObject("data").getString("mid")
+                                        val txnToken =
+                                            jsonObject.getJSONObject("data").getString("txnToken")
+                                        paytmNewPayment(paytmOrderId, mid, txnToken, amt.toString())
+                                    } else {
+                                        if (jsonObject.getInt("code") == 1001) {
+                                            MyUtils.showMessage(
+                                                mContext!!,
+                                                jsonObject.getString("message")
+                                            )
+                                            MyUtils.logoutApp(this@AddMoneyActivity)
+                                        } else {
+                                            MyUtils.showMessage(
+                                                mContext!!,
+                                                jsonObject.getString("message")
+                                            )
+                                        }
+                                    }
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                }
+                            }
+                        }
+
+                        override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
+                            customeProgressDialog.dismiss()
+                            Log.e(TAG, "paytmDeposit t =======> ${t.localizedMessage}")
+                        }
+                    })
+            } catch (e: Exception) {
+                customeProgressDialog.dismiss()
+                e.printStackTrace()
+            }
+        } else {
+            MyUtils.showToast(
+                this@AddMoneyActivity,
+                resources.getString(R.string.internetconnection)
+            )
+        }
+    }
+
+    private fun paytmNewPayment(
+        orderIdString: String,
+        midString: String,
+        txnTokenString: String,
+        txnAmountString: String
+    ) {
+        customeProgressDialog.show()
+
+        val callBackUrl: String = BindingUtils.PAYTM.callBackUrl + orderIdString
+        Log.e(TAG, "callBackUrl =======> $callBackUrl")
+
+        val paytmOrder = PaytmOrder(
+            orderIdString,
+            midString,
+            txnTokenString,
+            txnAmountString,
+            callBackUrl
+        )
+        val transactionManager = TransactionManager(
+            paytmOrder,
+            object : PaytmPaymentTransactionCallback {
+                override fun onTransactionResponse(inResponse: Bundle?) {
+                    try {
+                        if (inResponse != null) {
+                            Log.e(TAG, "Response onTransactionResponse =====> $inResponse")
+                            val jsonObject = JSONObject()
+                            for (key in inResponse.keySet()) {
+                                Log.e(
+                                    TAG,
+                                    "Response Key ========> $key  value ========> ${inResponse[key]}"
+                                )
+                                jsonObject.put(key, inResponse[key])
+                            }
+                            transactionId = inResponse["TXNID"].toString()
+                            addWalletBalance()
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun networkNotAvailable() {
+                    Log.e(TAG, mContext!!.resources.getString(R.string.internetconnection))
+                }
+
+                override fun onErrorProceed(inErrorMessage: String?) {
+                    Log.e(TAG, "onErrorProceed  =======>  $inErrorMessage")
+                }
+
+                override fun clientAuthenticationFailed(inErrorMessage: String?) {
+                    Log.e(TAG, "clientAuthenticationFailed  =======>  $inErrorMessage")
+                }
+
+                override fun someUIErrorOccurred(inErrorMessage: String?) {
+                    Log.e(TAG, "someUIErrorOccurred  =======>  $inErrorMessage")
+                }
+
+                override fun onErrorLoadingWebPage(
+                    iniErrorCode: Int,
+                    inErrorMessage: String,
+                    inFailingUrl: String
+                ) {
+                    Log.e(TAG, "someUIErrorOccurred  =======>  $inErrorMessage")
+                }
+
+                override fun onBackPressedCancelTransaction() {
+                    Log.e(TAG, "onBackPressedCancelTransaction  =======>  ")
+                    try {
+                        val jsonObject = JSONObject()
+                        jsonObject.put("STATUS", "USER_CANCELLED")
+                        //updateOrderStatus(paytmOrderId, jsonObject)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+
+                override fun onTransactionCancel(inErrorMessage: String, inResponse: Bundle) {
+                    Log.e(TAG, "onTransactionCancel  =======>  $inErrorMessage")
+                    try {
+                        if (inResponse != null) {
+                            Log.e(TAG, "onTransactionCancel  =======>  $inResponse")
+                            val jsonObject = JSONObject()
+                            for (key in inResponse.keySet()) {
+                                jsonObject.put(key, inResponse[key])
+                            }
+                            //updateOrderStatus(paytmOrderId, jsonObject)
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            })
+
+        transactionManager.setShowPaymentUrl(BindingUtils.PAYTM.PaymentUrl)
+        customeProgressDialog.dismiss()
+        transactionManager.startTransaction(this, ActivityRequestCode)
+        //transactionManager.startTransactionForONUS(this, ActivityRequestCode)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == TEZ_REQUEST_CODE) {
+            if (data != null && data.extras != null) {
+                if (data.extras!!.getString("Status").equals("SUCCESS", ignoreCase = true)) {
+                    transactionId = data.extras!!.getString("txnId")!!
+                    addWalletBalance()
+                } else {
+                    MyUtils.showToast(
+                        this@AddMoneyActivity,
+                        "Payment not completed, if any amount deducted, please contact us on our support system within 24hr with proof"
+                    )
+                }
+            } else {
+                MyUtils.showToast(this@AddMoneyActivity, "Payment not completed please check")
+            }
+        } else if (requestCode == ActivityRequestCode && data != null) {
+            MyUtils.showMessage(
+                mContext!!,
+                data.getStringExtra("nativeSdkForMerchantMessage") + data.getStringExtra("response")
+            )
+            try {
+                if (data.getStringExtra("response") != null) {
+                    if (data.getStringExtra("response") != "") {
+                        Log.e(TAG, "onActivityResult ======> " + data.getStringExtra("response"))
+                        val inResponse = JSONObject(data.getStringExtra("response"))
+                        Log.e(TAG, "response ======> $inResponse")
+                        transactionId = inResponse.getString("TXNID")
+                        addWalletBalance()
+
+                    } else
+                        try {
+                            val jsonObject = JSONObject()
+                            jsonObject.put("STATUS", "USER_CANCELLED")
+                            //updateOrderStatus(paytmOrderId, jsonObject)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    private fun addToWallet(transactionId: String, paytmOrderId: String, b: Boolean) {
+        if (MyUtils.isConnectedWithInternet(this)) {
+            customeProgressDialog.show()
+
+            val jsonRequest = JsonObject()
+            jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+            jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+            jsonRequest.addProperty("deposit_amount", mBinding!!.editAmounts.text.toString())
+            jsonRequest.addProperty("transaction_id", transactionId)
+            jsonRequest.addProperty("order_id", paytmOrderId)
+            jsonRequest.addProperty("payment_mode", paymentMode)
+            if (b) {
+                jsonRequest.addProperty("payment_status", "success")
+            } else {
+                jsonRequest.addProperty("payment_status", "failed")
+            }
+
+            WebServiceClient(this).client.create(IApiMethod::class.java).addMoney(jsonRequest)
+                .enqueue(object : Callback<UsersPostDBResponse?> {
+                    override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
+                        customeProgressDialog.dismiss()
+                    }
+
+                    override fun onResponse(
+                        call: Call<UsersPostDBResponse?>?,
+                        response: Response<UsersPostDBResponse?>?
+                    ) {
+                        customeProgressDialog.dismiss()
+                        val res = response!!.body()
+                        if (res != null) {
+                            if (res.status) {
+                                val responseModel = res.walletObjects
+                                if (responseModel != null) {
+                                    (application as NinjaApplication).saveWalletInformation(
+                                        responseModel
+                                    )
+                                    MyUtils.showMessage(this@AddMoneyActivity, res.message)
+                                    setResult(Activity.RESULT_OK)
+                                    finish()
+                                }
+                            } else {
+                                if (res.code == 1001) {
+                                    MyUtils.showMessage(this@AddMoneyActivity, res.message)
+                                    MyUtils.logoutApp(this@AddMoneyActivity)
+                                } else {
+                                    MyUtils.showMessage(this@AddMoneyActivity, res.message)
+                                }
+                            }
+                        }
+                    }
+                })
+        } else {
+            MyUtils.showToast(
+                this@AddMoneyActivity,
+                mContext!!.resources.getString(R.string.internetconnection)
+            )
+        }
+    }
+
+    private fun checkCouponCode() {
+        if (mBinding!!.editCoupon.text.toString().length < 0) {
+            MyUtils.showMessage(mContext!!, "Please add coupon code")
+        } else {
+            if (MyUtils.isConnectedWithInternet(this)) {
+                customeProgressDialog.show()
+
+                val jsonRequest = JsonObject()
+                jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+                jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+                jsonRequest.addProperty("code", mBinding!!.editCoupon.text.toString())
+
+                WebServiceClient(this).client.create(IApiMethod::class.java)
+                    .validateCoupon(jsonRequest)
+                    .enqueue(object : Callback<JsonObject?> {
+                        override fun onFailure(call: Call<JsonObject?>?, t: Throwable?) {
+                            customeProgressDialog.dismiss()
+                        }
+
+                        override fun onResponse(
+                            call: Call<JsonObject?>?,
+                            response: Response<JsonObject?>?
+                        ) {
+                            customeProgressDialog.dismiss()
+
+                            if (response!!.body() != null) {
+                                val res = JSONObject(response.body().toString())
+                                if (res.getBoolean("status")) {
+                                    isValidCoupon = true
+                                    appliedCouponCode = mBinding!!.editCoupon.text.toString()
+                                    MyUtils.showToast(
+                                        this@AddMoneyActivity,
+                                        res.getString("message")
+                                    )
+                                } else {
+                                    isValidCoupon = false
+                                    appliedCouponCode = ""
+                                    if (res.getInt("code") == 1001) {
+                                        MyUtils.showMessage(
+                                            this@AddMoneyActivity,
+                                            res.getString("message")
+                                        )
+                                        MyUtils.logoutApp(this@AddMoneyActivity)
+                                    } else {
+                                        MyUtils.showToast(
+                                            this@AddMoneyActivity,
+                                            res.getString("message")
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    })
+            } else {
+                MyUtils.showToast(
+                    this@AddMoneyActivity,
+                    mContext!!.resources.getString(R.string.internetconnection)
+                )
+            }
         }
     }
 }

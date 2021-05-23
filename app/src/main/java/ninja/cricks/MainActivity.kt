@@ -177,6 +177,11 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                                     res.minWithdrawal
                                 )
 
+                                MyPreferences.setPaytmWithdrawBtn(
+                                    this@MainActivity,
+                                    res.paytm_withdrawal_btn
+                                )
+
                                 (application as NinjaApplication).saveWalletInformation(
                                     responseModel
                                 )

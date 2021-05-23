@@ -187,6 +187,17 @@ class MyAccountBalanceFragment : BaseFragment() {
             responseModel.depositAmount + responseModel.prizeAmount + responseModel.bonusAmount
         mBinding!!.totalBalance.text = String.format("₹%.2f", totalBalance)
         mBinding!!.friendsCounts.text = String.format("%d", responseModel.refferalCounts)
+
+        if (MyPreferences.getPaytmWithdrawBtn(requireActivity())) {
+            mBinding!!.btnPaytmWithdraw.visibility = View.VISIBLE
+        } else {
+            mBinding!!.btnPaytmWithdraw.visibility = View.GONE
+        }
+
+        mBinding!!.btnPaytmWithdraw.setOnClickListener {
+            val intent = Intent(requireContext(), PaytmWithdrawActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onResume() {
@@ -253,6 +264,11 @@ class MyAccountBalanceFragment : BaseFragment() {
                                     MyPreferences.setMinWithdrawal(
                                         requireActivity(),
                                         res.minWithdrawal
+                                    )
+
+                                    MyPreferences.setPaytmWithdrawBtn(
+                                        requireActivity(),
+                                        res.paytm_withdrawal_btn
                                     )
 
                                     (activity!!.applicationContext as NinjaApplication).saveWalletInformation(

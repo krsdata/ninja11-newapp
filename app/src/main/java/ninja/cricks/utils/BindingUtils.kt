@@ -8,9 +8,9 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import ninja.cricks.BuildConfig
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.models.UsersPostDBResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -222,7 +222,13 @@ class BindingUtils {
 
             val gson = Gson()
             val userInfoString: String = gson.toJson(userInfo).toString()
-            val deviceDetailsString: String = gson.toJson(HardwareInfoManager(context).collectData(MyPreferences.getDeviceToken(context)!!)).toString()
+            val deviceDetailsString: String = gson.toJson(
+                HardwareInfoManager(context).collectData(
+                    MyPreferences.getDeviceToken(
+                        context
+                    )!!
+                )
+            ).toString()
             val userInfoJson: JsonObject = JsonParser().parse(userInfoString).asJsonObject
             val deviceDetailsJson: JsonObject = JsonParser().parse(deviceDetailsString).asJsonObject
 
@@ -244,5 +250,11 @@ class BindingUtils {
                     }
                 })
         }
+    }
+
+    object PAYTM {
+        const val host = "https://securegw.paytm.in/"
+        const val callBackUrl = host + "theia/paytmCallback?ORDER_ID="
+        const val PaymentUrl = host + "theia/api/v1/showPaymentPage"
     }
 }

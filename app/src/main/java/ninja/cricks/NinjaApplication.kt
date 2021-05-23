@@ -193,6 +193,11 @@ class NinjaApplication : MultiDexApplication() {
                                 res.upi_withdrawal
                             )
 
+                            MyPreferences.setPaytmWithdrawBtn(
+                                this@NinjaApplication,
+                                res.paytm_withdrawal_btn
+                            )
+
                             MyPreferences.setMinWithdrawal(this@NinjaApplication, res.minWithdrawal)
 
                             saveWalletInformation(responseModel)

@@ -209,4 +209,14 @@ interface IApiMethod {
     @Headers("Content-Type: application/json")
     @POST("playerDetails")
     fun getPlayerDetails(@Body request: JsonObject): Call<JsonObject>
+
+    @Headers("Content-Type: application/json")
+    @POST("initiateTransaction")
+    fun initiateTransaction(@Body request: JsonObject): Call<JsonObject>
+
+    @Headers("Content-Type: application/json")
+    @POST("validateCoupon")
+    fun validateCoupon(@Body request: JsonObject): Call<JsonObject>
+
+
 }

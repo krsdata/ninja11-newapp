@@ -3,23 +3,22 @@ package ninja.cricks
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.text.Html
 import android.view.View
-import android.widget.RadioButton
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.andrognito.flashbar.Flashbar
 import com.google.gson.JsonObject
-import ninja.cricks.databinding.ActivityWithdrawAmountBinding
+import ninja.cricks.databinding.ActivityPaytmWithdrawBinding
+import ninja.cricks.models.UserInfo
 import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.models.WalletInfo
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.ui.BaseActivity
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
@@ -27,23 +26,23 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
 
-class WithdrawAmountsActivity : BaseActivity() {
+class PaytmWithdrawActivity : AppCompatActivity() {
 
-    private var walletInfo: WalletInfo? = null
-    private var mBinding: ActivityWithdrawAmountBinding? = null
-    private var pageType: String = ""
-    private var mContext: Context? = null
+    var mContext: Context? = null
+    var mBinding: ActivityPaytmWithdrawBinding? = null
+    var progressDialog: CustomeProgressDialog? = null
+    var userInfo: UserInfo? = null
+    var walletInfo: WalletInfo? = null
+    private val pageType: String = "paytm"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        customeProgressDialog = CustomeProgressDialog(this)
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_paytm_withdraw)
+        mContext = this
+        progressDialog = CustomeProgressDialog(this)
         userInfo = (application as NinjaApplication).userInformations
         walletInfo = (application as NinjaApplication).walletInfo
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_withdraw_amount)
-
-        mContext = this
 
         mBinding!!.toolbar.title = "Withdraw Money"
         mBinding!!.toolbar.setTitleTextColor(resources.getColor(R.color.white))
@@ -55,39 +54,8 @@ class WithdrawAmountsActivity : BaseActivity() {
 
         mBinding!!.winningAmount.text = String.format("₹%s", walletInfo!!.prizeAmount)
 
-        if (MyPreferences.getShowPaytmWithdraw(mContext!!)) {
-            mBinding!!.paytmBtn.visibility = View.VISIBLE
-        } else {
-            mBinding!!.paytmBtn.visibility = View.GONE
-        }
-
-        if (MyPreferences.getShowBankWithdraw(mContext!!)) {
-            mBinding!!.bankBtn.visibility = View.VISIBLE
-        } else {
-            mBinding!!.bankBtn.visibility = View.GONE
-        }
-
-        if (MyPreferences.getShowUPIWithdraw(mContext!!)) {
-            mBinding!!.upiBtn.visibility = View.VISIBLE
-        } else {
-            mBinding!!.upiBtn.visibility = View.GONE
-        }
-
         mBinding!!.editWithdrawalAmount.hint =
             String.format("₹%s", MyPreferences.getMinWithdrawal(mContext!!))
-
-        mBinding!!.radioGroup.setOnCheckedChangeListener { group, checkedId ->
-            val rb = group.findViewById<RadioButton>(checkedId)
-            if (rb != null) {
-                if (rb.text.toString().equals("paytm", true)) {
-                    pageType = "paytm"
-                } else if (rb.text.toString().equals("Bank Transfer", true)) {
-                    pageType = "bank account"
-                } else {
-                    pageType = "UPI"
-                }
-            }
-        }
 
         mBinding!!.submitBtnWithdrawal.setOnClickListener {
             val amount = mBinding!!.editWithdrawalAmount.text.toString().trim()
@@ -107,7 +75,7 @@ class WithdrawAmountsActivity : BaseActivity() {
                         )
                     } else if (amount.toInt() <= 1000) {
                         if (mBinding!!.paytmEditText.visibility == View.VISIBLE) {
-                            if (mBinding!!.paytmEditText.text.toString().length < 0) {
+                            if (mBinding!!.paytmEditText.text.toString().isEmpty()) {
                                 MyUtils.showMessage(
                                     mContext!!,
                                     "Please add your Paytm number"
@@ -124,62 +92,11 @@ class WithdrawAmountsActivity : BaseActivity() {
                             "Please try Bank or UPI withdraw."
                         )
                     }
-                } else if (pageType.equals("bank account", true)) {
-                    when {
-                        amount.toInt() < 1001 -> {
-                            MyUtils.showMessage(
-                                mContext!!,
-                                "Please try Paytm or UPI"
-                            )
-                        }
-                        amount.toInt() <= 10000 -> {
-                            showWithdrawalAlert(amount.toInt(), pageType)
-                        }
-                        else -> {
-                            MyUtils.showMessage(
-                                mContext!!,
-                                "You can not withdraw amount more then ₹10000"
-                            )
-                        }
-                    }
-                } else {
-                    if (amount.toInt() < minWithdraw) {
-                        MyUtils.showMessage(
-                            mContext!!,
-                            "You can not withdraw amount less than ₹$minWithdraw"
-                        )
-                    } else if (amount.toInt() <= 10000) {
-                        if (mBinding!!.upiEditText.visibility == View.VISIBLE) {
-                            if (mBinding!!.upiEditText.text.toString().length < 0) {
-                                MyUtils.showMessage(
-                                    mContext!!,
-                                    "Please add your UPI id"
-                                )
-                            } else {
-                                showWithdrawalAlert(amount.toInt(), pageType)
-                            }
-                        } else {
-                            showWithdrawalAlert(amount.toInt(), pageType)
-                        }
-                    } else {
-                        MyUtils.showMessage(
-                            mContext!!,
-                            "You can not withdraw amount more then ₹10000"
-                        )
-                    }
                 }
             }
         }
 
-        mBinding!!.contactUs.setOnClickListener {
-            val intent = Intent(this@WithdrawAmountsActivity, SupportActivity::class.java)
-            startActivity(intent)
-        }
-
         getMessage()
-
-        mBinding!!.upiText.visibility = View.GONE
-        mBinding!!.upiEditText.visibility = View.GONE
     }
 
     private fun showWithdrawalAlert(amount: Int, type: String) {
@@ -214,7 +131,7 @@ class WithdrawAmountsActivity : BaseActivity() {
             MyUtils.showToast(this, "No Internet connection found")
             return
         }
-        customeProgressDialog.show()
+        progressDialog!!.show()
 
         val jsonRequest = JsonObject()
         jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
@@ -224,23 +141,20 @@ class WithdrawAmountsActivity : BaseActivity() {
             MyUtils.encodeBase64(amount.toString()).toString()
         )
         jsonRequest.addProperty("payment_taken_in", MyUtils.encodeBase64(type).toString())
-        if (type == "UPI") {
-            jsonRequest.addProperty("upi_id", mBinding!!.upiEditText.text.toString())
-        }
         if (type == "paytm") {
             jsonRequest.addProperty("paytm_number", mBinding!!.paytmEditText.text.toString())
         }
         WebServiceClient(this).client.create(IApiMethod::class.java).withdrawAmountNew(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                    customeProgressDialog.dismiss()
+                    progressDialog!!.dismiss()
                 }
 
                 override fun onResponse(
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    customeProgressDialog.dismiss()
+                    progressDialog!!.dismiss()
                     val res = response!!.body()
                     if (res != null) {
                         if (res.status) {
@@ -248,11 +162,7 @@ class WithdrawAmountsActivity : BaseActivity() {
                         } else {
                             if (res.code == 1001) {
                                 MyUtils.showMessage(mContext!!, res.message)
-                                MyUtils.logoutApp(this@WithdrawAmountsActivity)
-                            } else if (res.code == 405) {
-                                mBinding!!.upiText.visibility = View.VISIBLE
-                                mBinding!!.upiEditText.visibility = View.VISIBLE
-                                errorAlert(res.message)
+                                MyUtils.logoutApp(this@PaytmWithdrawActivity)
                             } else if (res.code == 406) {
                                 mBinding!!.paytmText.visibility = View.VISIBLE
                                 mBinding!!.paytmEditText.visibility = View.VISIBLE
@@ -269,7 +179,7 @@ class WithdrawAmountsActivity : BaseActivity() {
     }
 
     private fun successAlert(message: String, isClose: Boolean) {
-        val flashbar = Flashbar.Builder(this@WithdrawAmountsActivity)
+        val flashbar = Flashbar.Builder(this@PaytmWithdrawActivity)
             .gravity(Flashbar.Gravity.TOP)
             //.title(getString(R.string.app_name))
             .message(message)
@@ -286,7 +196,7 @@ class WithdrawAmountsActivity : BaseActivity() {
     }
 
     private fun errorAlert(message: String) {
-        val flashBar = Flashbar.Builder(this@WithdrawAmountsActivity)
+        val flashBar = Flashbar.Builder(this@PaytmWithdrawActivity)
             .gravity(Flashbar.Gravity.TOP)
             //.title(getString(R.string.app_name))
             .message(message)
@@ -294,14 +204,6 @@ class WithdrawAmountsActivity : BaseActivity() {
             .build()
         flashBar.show()
         Handler().postDelayed(Runnable { flashBar.dismiss() }, 2000L)
-    }
-
-    override fun onBitmapSelected(bitmap: Bitmap) {
-
-    }
-
-    override fun onUploadedImageUrl(url: String) {
-
     }
 
     private fun getMessage() {
@@ -353,17 +255,19 @@ class WithdrawAmountsActivity : BaseActivity() {
                         val withdrawData = array.getJSONObject(2)
 
                         if (withdrawData.optInt("message_status") == 0) {
-                            mBinding!!.walletCard.visibility = View.GONE
                             mBinding!!.viewAmount.visibility = View.GONE
                             mBinding!!.showAlert.visibility = View.VISIBLE
                             mBinding!!.alertMessage.text = withdrawData.getString("message")
                         } else {
-                            mBinding!!.walletCard.visibility = View.VISIBLE
                             mBinding!!.viewAmount.visibility = View.VISIBLE
                             mBinding!!.showAlert.visibility = View.GONE
                         }
                     }
                 }
             })
+    }
+
+    companion object {
+        private val TAG = PaytmWithdrawActivity::class.java.simpleName
     }
 }

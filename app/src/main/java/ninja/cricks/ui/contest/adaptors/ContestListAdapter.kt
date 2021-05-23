@@ -12,6 +12,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.edify.atrist.listener.OnContestEvents
 import com.edify.atrist.listener.OnMatchTimerStarted
 import ninja.cricks.LeadersBoardActivity
@@ -214,7 +215,8 @@ class ContestListAdapter(
 
             Glide.with(context)
                 .load(objectVal.giftUrl)
-                .placeholder(R.drawable.phone_image)
+                //.placeholder(R.drawable.phone_image)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(viewHolder.giftImage)
 
             if (objectVal.totalSpots == 0) {

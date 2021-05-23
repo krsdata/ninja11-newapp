@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.net.Uri
 import android.os.Handler
 import android.provider.Settings
@@ -38,6 +39,20 @@ class MyUtils {
     companion object {
         const val INTENT_FILTER_LOCAL_BROADCAST = "com.deliverdas.vendor.notitification"
         const val KEY_DATA_RECEIVED = "com.deliverdas.vendor.notitification"
+
+        fun isNetworkConnected(context: Context): Boolean {
+            val connectivity =
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            if (connectivity != null) {
+                val info = connectivity.allNetworkInfo
+                if (info != null) {
+                    for (networkInfo in info) if (networkInfo.state == NetworkInfo.State.CONNECTED) {
+                        return true
+                    }
+                }
+            }
+            return false
+        }
 
         fun logoutApp(mActivity: Activity) {
             MyPreferences.clear(mActivity)

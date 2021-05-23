@@ -128,7 +128,10 @@ data class UsersPostDBResponse(
 
     @SerializedName("min_withdrawal")
     @Expose
-    var minWithdrawal: Int = 0
+    var minWithdrawal: Int = 0,
 
+    @SerializedName("paytm_withdrawal_btn")
+    @Expose
+    var paytm_withdrawal_btn:Boolean = false,
 
 ) : Serializable, Cloneable

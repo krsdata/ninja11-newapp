@@ -175,6 +175,34 @@
                             android:textSize="@dimen/_14sdp" />
 
                         <TextView
+                            android:id="@+id/paytm_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Paytm number"
+                            android:visibility="gone"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:textSize="@dimen/_14sdp"/>
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/paytm_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_35sdp"
+                            android:background="@drawable/et_style"
+                            android:hint="Your Paytm Number"
+                            android:inputType="text"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:paddingStart="@dimen/_15sdp"
+                            android:paddingEnd="@dimen/_15sdp"
+                            android:singleLine="true"
+                            android:visibility="gone"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/greyish"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Amount"

@@ -38,12 +38,14 @@ object MyPreferences {
     private val KEY_PREF_BANK_WITHDRAW = "bank_withdrawal"
     private val KEY_PREF_UPI_WITHDRAW = "upi_withdrawal"
 
-    private val KEY_DEVICE_TOKEN ="deviceToken"
+    private val KEY_DEVICE_TOKEN = "deviceToken"
     private val KEY_TEMP_REFER_CODE = "refer_code"
     private const val KEY_INVITE_URL = "invite_url"
     private const val KEY_BASE_URL = "base_url"
     private const val KEY_SYSTEM_TOKEN = "system_token"
     private const val KEY_MIN_WITHDRAWAL = "min_withdrawal"
+
+    private const val KEY_PAYTM_WITHDRAW_BTN = "paytm_withdraw_btn"
 
 
     val KEY_UPCOMING_MATCHES = "upcoming_matches_list"
@@ -683,5 +685,22 @@ object MyPreferences {
             context,
             KEY_MIN_WITHDRAWAL
         )
+    }
+
+    fun setPaytmWithdrawBtn(context: Context, value: Boolean) {
+        putBoolean(
+            context,
+            KEY_PAYTM_WITHDRAW_BTN,
+            value
+        )
+    }
+
+    fun getPaytmWithdrawBtn(context: Context): Boolean {
+        val isShow = getBoolean(
+            context,
+            KEY_PAYTM_WITHDRAW_BTN,
+            false
+        )
+        return isShow
     }
 }

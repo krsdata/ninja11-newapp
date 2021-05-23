@@ -88,6 +88,11 @@ class MyBalanceActivity : AppCompatActivity() {
             val intent = Intent(mContext!!, MyTransactionHistoryActivity::class.java)
             startActivityForResult(intent, REQUEST_CODE_ADD_MONEY)
         }
+
+        mBinding!!.btnPaytmWithdraw.setOnClickListener {
+            val intent = Intent(mContext!!, PaytmWithdrawActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun updateAccountVerification(accountStatus: AccountDocumentStatus?) {
@@ -163,6 +168,12 @@ class MyBalanceActivity : AppCompatActivity() {
                 startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
             }
         }
+
+        if (MyPreferences.getPaytmWithdrawBtn(mContext!!)) {
+            mBinding!!.btnPaytmWithdraw.visibility = View.VISIBLE
+        } else {
+            mBinding!!.btnPaytmWithdraw.visibility = View.GONE
+        }
     }
 
     private fun getWalletBalances() {
@@ -212,6 +223,11 @@ class MyBalanceActivity : AppCompatActivity() {
                                     res.upi_withdrawal
                                 )
                                 MyPreferences.setMinWithdrawal(mContext!!, res.minWithdrawal)
+
+                                MyPreferences.setPaytmWithdrawBtn(
+                                    mContext!!,
+                                    res.paytm_withdrawal_btn
+                                )
 
                                 (application as NinjaApplication).saveWalletInformation(
                                     responseModel

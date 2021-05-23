@@ -123,6 +123,11 @@ class MyAccountFragment : BaseFragment() {
 
                                     MyPreferences.setMinWithdrawal(requireActivity(), res.minWithdrawal)
 
+                                    MyPreferences.setPaytmWithdrawBtn(
+                                        requireActivity(),
+                                        res.paytm_withdrawal_btn
+                                    )
+
                                     (activity!!.applicationContext as NinjaApplication).saveWalletInformation(
                                         responseModel
                                     )

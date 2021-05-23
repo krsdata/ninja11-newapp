@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="contentviews"
             type="ninja.cricks.AddMoneyActivity" />
@@ -240,8 +242,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="0.8dp"
                         android:layout_marginTop="5dp"
-                        android:visibility="gone"
-                        android:background="@color/greyish" />
+                        android:background="@color/greyish"
+                        android:visibility="gone" />
 
                     <RadioButton
                         android:id="@+id/use_wallet_gpay"
@@ -261,8 +263,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="0.8dp"
                         android:layout_marginTop="5dp"
-                        android:visibility="gone"
-                        android:background="@color/greyish" />
+                        android:background="@color/greyish"
+                        android:visibility="gone" />
 
                     <RadioButton
                         android:id="@+id/use_wallet_phonepay"
@@ -287,11 +289,75 @@
                 </RadioGroup>
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/coupon_code_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lineapayment"
+                android:layout_margin="10dp"
+                android:background="@drawable/rounded_corner_white"
+                android:orientation="vertical"
+                android:padding="10dip">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:text="Coupon Code"
+                    android:textColor="@color/grey"
+                    android:textSize="@dimen/_12sdp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <EditText
+                        android:id="@+id/edit_coupon"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:layout_weight="2"
+                        android:background="@drawable/button_selector_verify"
+                        android:fontFamily="@font/montserrat_medium"
+                        android:hint="Coupon code add here"
+                        android:inputType="textCapCharacters"
+                        android:maxLines="1"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:singleLine="true"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <RelativeLayout
+                        android:id="@+id/coupo_code_apply"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android:background="@drawable/default_rounded_button_sportsfight"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/montserrat_bold"
+                            android:gravity="center"
+                            android:text="Apply"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12sdp" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
             <RelativeLayout
                 android:id="@+id/rel_payment"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_45sdp"
-                android:layout_below="@+id/lineapayment"
+                android:layout_below="@+id/coupon_code_layout"
                 android:layout_margin="10dp"
                 android:background="@drawable/default_rounded_button_sportsfight"
                 android:orientation="vertical"

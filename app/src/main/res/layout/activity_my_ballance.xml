@@ -175,6 +175,22 @@
                                 android:text="Withdraw"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_12sdp" />
+
+                            <TextView
+                                android:id="@+id/btn_paytm_withdraw"
+                                android:layout_width="140dp"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/btn_withdraw"
+                                android:layout_alignParentEnd="true"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="10dip"
+                                android:background="@drawable/button_selector_verify"
+                                android:fontFamily="@font/montserrat_regular"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="Paytm Withdraw"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/_12sdp" />
                         </RelativeLayout>
 
                         <View

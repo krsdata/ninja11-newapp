@@ -308,7 +308,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_15sdp"
-                            android:layout_toStartOf="@+id/btn_withdraw"
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/btn_group_layout"
                             android:layout_toEndOf="@+id/trophy_icon"
                             android:orientation="vertical">
 
@@ -332,11 +333,18 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/btn_group_layout"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+                        <LinearLayout
                             android:id="@+id/btn_withdraw"
                             android:layout_width="80dp"
                             android:layout_height="32dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
                             android:background="@drawable/add_cash_button"
                             android:gravity="center_vertical">
 
@@ -347,6 +355,24 @@
                                 android:text="Withdraw"
                                 android:textColor="@color/colorAccent"
                                 android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/btn_paytm_withdraw"
+                            android:layout_width="80dp"
+                            android:layout_height="32dp"
+                            android:visibility="gone"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@drawable/btn_selector_verified">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="Paytm Withdraw"
+                                android:textColor="@color/green"
+                                android:textSize="12sp" />
+                        </LinearLayout>
                         </LinearLayout>
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
