@@ -25,7 +25,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-
 class SelectTeamActivity : AppCompatActivity() {
 
     private var customeProgressDialog: CustomeProgressDialog? = null
@@ -205,7 +204,9 @@ class SelectTeamActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
-            setResult(RESULT_OK)
+            val intent = Intent()
+            intent.putExtra("keyName", data!!.getStringExtra("keyName"))
+            setResult(RESULT_OK, intent)
             finish()
         }
     }

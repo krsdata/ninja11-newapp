@@ -273,7 +273,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:fontFamily="@font/montserrat_regular"
-                                android:text="Extra Cash"
+                                android:text="Extra Cash Amount"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_12sdp" />
 
@@ -294,6 +294,7 @@
                                 android:fontFamily="@font/montserrat_regular"
                                 android:text="This amount will be used in Mega Contest only."
                                 android:textColor="@color/black"
+                                android:visibility="gone"
                                 android:textSize="@dimen/_10sdp" />
 
                         </LinearLayout>

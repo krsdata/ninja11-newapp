@@ -163,7 +163,7 @@ class MyUpcomingMatchesFragment : Fragment() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.matches_row_upcoming_inner, parent, false)
+                .inflate(R.layout.my_matches_row, parent, false)
             return DataViewHolder(view)
 
         }

@@ -150,16 +150,15 @@ class MyUtils {
         }
 
         fun showToast(activity: AppCompatActivity, message: String) {
-
             if (activity != null && !activity.isFinishing) {
-                val flashbar = Flashbar.Builder(activity)
+                val flashBar = Flashbar.Builder(activity)
                     .gravity(Flashbar.Gravity.TOP)
                     //.title(activity.resources.getString(R.string.app_name))
                     .message(message)
                     .backgroundDrawable(R.color.green)
                     .build()
-                flashbar.show()
-                Handler().postDelayed(Runnable { flashbar.dismiss() }, 2000L)
+                flashBar.show()
+                Handler().postDelayed(Runnable { flashBar.dismiss() }, 2000L)
             }
         }
 

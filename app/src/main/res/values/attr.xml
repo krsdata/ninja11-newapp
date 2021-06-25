@@ -20,4 +20,16 @@
         <attr name="bn_fab_icon_color" format="color"/>
 
     </declare-styleable>
+
+    <declare-styleable name="RoundedCornerLayoutView">
+        <attr name="backgroundColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundedView">
+        <attr name="topLeftCornerRadius" format="dimension" />
+        <attr name="topRightCornerRadius" format="dimension" />
+        <attr name="bottomLeftCornerRadius" format="dimension" />
+        <attr name="bottomRightCornerRadius" format="dimension" />
+    </declare-styleable>
+
 </resources>

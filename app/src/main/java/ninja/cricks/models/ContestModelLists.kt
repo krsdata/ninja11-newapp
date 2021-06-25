@@ -89,6 +89,10 @@ data class ContestModelLists(
 
     @SerializedName("offer_end_at")
     @Expose
-    var offer_end_at: String = ""
+    var offer_end_at: String = "",
+
+    @SerializedName("usable_extra_cash")
+    @Expose
+    var usableExtraCashPercent: Int = 0
 
 ) : Serializable, Cloneable

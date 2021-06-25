@@ -144,6 +144,11 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            if (data != null) {
+                MyUtils.showToast(this@ContestActivity, data.getStringExtra("keyName")!!)
+            }
+        }
         mBinding!!.viewpagerContest.currentItem = 0
     }
 

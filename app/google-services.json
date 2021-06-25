@@ -8,20 +8,41 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:701940049916:android:f1926ef56b2239e0bdf479",
+        "android_client_info": {
+          "package_name": "fancode11.cricks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "701940049916-je9ne0m9ld1k4i91cm2s3vbqhgqfegdf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwWrnxQwOdD2Z0YvqxCytkwAhf7_-xCzU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "701940049916-je9ne0m9ld1k4i91cm2s3vbqhgqfegdf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:701940049916:android:9bb50fc1751a4754bdf479",
         "android_client_info": {
           "package_name": "ninja.admin"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "701940049916-g28vgp8ru1pdpmflu25rq6kauiqmm5nv.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "ninja.admin",
-            "certificate_hash": "f1b976f3394c4e4d3bc57f68c5f52a7fb879da4d"
-          }
-        },
         {
           "client_id": "701940049916-609don7h7chjlf5negk4hd23ui78kq54.apps.googleusercontent.com",
           "client_type": 1,
@@ -31,11 +52,19 @@
           }
         },
         {
-          "client_id": "701940049916-r94v392ujfn3h37stt8hbpvb6gj1qosr.apps.googleusercontent.com",
+          "client_id": "701940049916-bbu63fp0ph2bo0it2crjmrnnd11hma2o.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "ninja.admin",
-            "certificate_hash": "ab5f8c45320a1f45c1a317c1468e5a3a2a5bcd2a"
+            "certificate_hash": "1e5e818febb8f318e723727fc628832d1953e6b5"
+          }
+        },
+        {
+          "client_id": "701940049916-g28vgp8ru1pdpmflu25rq6kauiqmm5nv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ninja.admin",
+            "certificate_hash": "f1b976f3394c4e4d3bc57f68c5f52a7fb879da4d"
           }
         },
         {
@@ -44,6 +73,14 @@
           "android_info": {
             "package_name": "ninja.admin",
             "certificate_hash": "0c41d49f02f219628b2bb734d1b4e90b0fc7510a"
+          }
+        },
+        {
+          "client_id": "701940049916-r94v392ujfn3h37stt8hbpvb6gj1qosr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ninja.admin",
+            "certificate_hash": "ab5f8c45320a1f45c1a317c1468e5a3a2a5bcd2a"
           }
         },
         {
@@ -76,11 +113,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "701940049916-jm3dvkllhtfcpfacmg4tcg6u94dg723a.apps.googleusercontent.com",
+          "client_id": "701940049916-1dr80tqrrik2iipdv938m7iicqb05t5i.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "ninja.cricks",
-            "certificate_hash": "1e5e818febb8f318e723727fc628832d1953e6b5"
+            "certificate_hash": "3da4ee13b414e0fe4fc6acf84c6a8d80ea264cd3"
           }
         },
         {
@@ -89,38 +126,6 @@
           "android_info": {
             "package_name": "ninja.cricks",
             "certificate_hash": "b3c3c7b67d18eae37a4880503ed409967782bc03"
-          }
-        },
-        {
-          "client_id": "701940049916-t07teah9ba2j0db0buorp4boi9ir3j3d.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "ninja.cricks",
-            "certificate_hash": "ab5f8c45320a1f45c1a317c1468e5a3a2a5bcd2a"
-          }
-        },
-        {
-          "client_id": "701940049916-o7sqkfe3lk8fvqckpb2jlfg74m5o10c0.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "ninja.cricks",
-            "certificate_hash": "769ce44f22ccaa71a68cf17403d6b91f1e3fcad6"
-          }
-        },
-        {
-          "client_id": "701940049916-tchrj9tr46g01gog8vgnh23ta9ivgo1t.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "ninja.cricks",
-            "certificate_hash": "0c41d49f02f219628b2bb734d1b4e90b0fc7510a"
-          }
-        },
-        {
-          "client_id": "701940049916-1dr80tqrrik2iipdv938m7iicqb05t5i.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "ninja.cricks",
-            "certificate_hash": "3da4ee13b414e0fe4fc6acf84c6a8d80ea264cd3"
           }
         },
         {
@@ -137,6 +142,46 @@
           "android_info": {
             "package_name": "ninja.cricks",
             "certificate_hash": "f1b976f3394c4e4d3bc57f68c5f52a7fb879da4d"
+          }
+        },
+        {
+          "client_id": "701940049916-jm3dvkllhtfcpfacmg4tcg6u94dg723a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ninja.cricks",
+            "certificate_hash": "1e5e818febb8f318e723727fc628832d1953e6b5"
+          }
+        },
+        {
+          "client_id": "701940049916-o2shkfq500kia0mfilmki2opuqed0d9d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ninja.cricks",
+            "certificate_hash": "9e1310278674f0bb7cdd54a7b9c7ef7afab95c2c"
+          }
+        },
+        {
+          "client_id": "701940049916-o7sqkfe3lk8fvqckpb2jlfg74m5o10c0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ninja.cricks",
+            "certificate_hash": "769ce44f22ccaa71a68cf17403d6b91f1e3fcad6"
+          }
+        },
+        {
+          "client_id": "701940049916-t07teah9ba2j0db0buorp4boi9ir3j3d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ninja.cricks",
+            "certificate_hash": "ab5f8c45320a1f45c1a317c1468e5a3a2a5bcd2a"
+          }
+        },
+        {
+          "client_id": "701940049916-tchrj9tr46g01gog8vgnh23ta9ivgo1t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ninja.cricks",
+            "certificate_hash": "0c41d49f02f219628b2bb734d1b4e90b0fc7510a"
           }
         },
         {

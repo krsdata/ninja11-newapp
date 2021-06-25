@@ -41,23 +41,26 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/_6sdp"
                 android:background="@color/background_default" />
-
         </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ll_title"
-            android:layout_marginTop="@dimen/matches_gap_between_each_views"
-            android:orientation="horizontal">
+            android:layout_height="@dimen/_70sdp"
+            android:layout_below="@+id/ll_title"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:weightSum="5">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1.1"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <RelativeLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <View
@@ -71,7 +74,7 @@
                         android:id="@+id/teama_logo"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_marginStart="30dp"
+                        android:layout_centerHorizontal="true"
                         android:scaleType="fitCenter"
                         android:src="@drawable/flag_indian"
                         app:civ_border="true"
@@ -84,22 +87,24 @@
 
                 <TextView
                     android:id="@+id/upcoming_opponent1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:text="IND"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/_11sdp" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2.8"
                 android:orientation="vertical">
 
                 <TextView
@@ -144,43 +149,32 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/upcoming_opponent2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="@dimen/_3sdp"
-                    android:fontFamily="@font/open_sans_semibold"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:text="NZ"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_10sdp" />
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1.1"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <RelativeLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <View
                         android:id="@+id/countrybcolorview"
-                        android:layout_width="@dimen/_45sdp"
+                        android:layout_width="45dp"
                         android:layout_height="25dp"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="15dp"
+                        android:layout_alignParentEnd="true"
                         android:background="@color/red" />
 
                     <com.mikhaellopez.circularimageview.CircularImageView
                         android:id="@+id/teamb_logo"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_alignParentStart="true"
+                        android:layout_centerHorizontal="true"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/flag_newzeland"
+                        android:src="@drawable/flag_indian"
                         app:civ_border="true"
                         app:civ_border_color="@color/white"
                         app:civ_border_width="2dp"
@@ -188,8 +182,23 @@
                         app:civ_circle_color_end="@color/white"
                         app:civ_circle_color_start="@color/white" />
                 </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/upcoming_opponent2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="IND"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_11sdp" />
             </LinearLayout>
-        </RelativeLayout>
+        </LinearLayout>
     </RelativeLayout>
 
     <RelativeLayout

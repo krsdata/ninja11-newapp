@@ -300,19 +300,22 @@
                 android:padding="10dip">
 
                 <TextView
+                    android:id="@+id/ask_coupon_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_regular"
-                    android:text="Coupon Code"
-                    android:textColor="@color/grey"
+                    android:text="Do you have Coupon Code?"
+                    android:textColor="@color/wallet_link_text_light"
                     android:textSize="@dimen/_12sdp" />
 
                 <LinearLayout
+                    android:id="@+id/code_layout"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:orientation="horizontal"
                     android:weightSum="3">
 

@@ -45,6 +45,7 @@ class JoinContestActivity : AppCompatActivity() {
     companion object {
         val TAG: String = JoinContestActivity::class.java.simpleName
         var DISCOUNT_ON_BONUS: Int = 0
+        var DISCOUNT_ON_EXTRA_CASH: Int = 0
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,7 +79,8 @@ class JoinContestActivity : AppCompatActivity() {
     private fun initWalletInfo() {
         val walletInfo = (applicationContext as NinjaApplication).walletInfo
         userInfo = (applicationContext as NinjaApplication).userInformations
-        JoinContestDialogFragment.DISCOUNT_ON_BONUS = contestModel!!.usableBonus.toInt()
+        DISCOUNT_ON_BONUS = contestModel!!.usableBonus.toInt()
+        DISCOUNT_ON_EXTRA_CASH = contestModel!!.usableExtraCashPercent
         walletAmount = walletInfo.walletAmount
         bonusAmount = walletInfo.bonusAmount
         extraCashAmount = walletInfo.extraCash
@@ -86,6 +88,7 @@ class JoinContestActivity : AppCompatActivity() {
         var totalEntryFees = 0.0
         var discountFromBonusAmount = 0.0
         var totalPayable = 0.0
+        var extraCashPercent = 0.0
         if (contestModel!!.isBonusContest) {
             mBinding!!.walletTotalAmount.text = String.format("Bonus Amount =₹%.2f", bonusAmount)
         } else {
@@ -109,8 +112,7 @@ class JoinContestActivity : AppCompatActivity() {
             mBinding!!.usableCashbonus.text = String.format("₹%.2f", actualPayable)
         } else {
 
-            discountFromBonusAmount =
-                ((totalEntryFees * JoinContestDialogFragment.DISCOUNT_ON_BONUS)) / 100
+            discountFromBonusAmount = ((totalEntryFees * DISCOUNT_ON_BONUS)) / 100
 
             if (bonusAmount >= discountFromBonusAmount) {
                 totalPayable = totalEntryFees - discountFromBonusAmount
@@ -127,13 +129,27 @@ class JoinContestActivity : AppCompatActivity() {
 
         if (contestModel!!.extra_cash_usable == "1") {
             mBinding!!.extraLayout.visibility = View.VISIBLE
-            if (extraCashAmount >= totalEntryFees) {
+
+            extraCashPercent = ((totalEntryFees * DISCOUNT_ON_EXTRA_CASH)) / 100
+
+            if (extraCashAmount >= extraCashPercent) {
+                actualPayable -= extraCashPercent
+            } else {
+                extraCashPercent = 0.0
+                actualPayable -= extraCashPercent
+            }
+            mBinding!!.usableExtraCash.text = String.format("₹%.2f", extraCashPercent)
+
+            Log.e(TAG, "extra_cash_usable actualPayable ========> $actualPayable")
+
+            // old code changed on 23-05-21
+            /*if (extraCashAmount >= totalEntryFees) {
                 mBinding!!.usableExtraCash.text = String.format("₹%.2f", totalEntryFees)
                 actualPayable = 0.0
             } else if(totalEntryFees >= extraCashAmount) {
                 mBinding!!.usableExtraCash.text = String.format("₹%.2f", extraCashAmount)
                 actualPayable -= extraCashAmount
-            }
+            }*/
         } else {
             mBinding!!.extraLayout.visibility = View.GONE
         }
@@ -149,7 +165,7 @@ class JoinContestActivity : AppCompatActivity() {
 
             if (actualPayable > walletAmount && !contestModel!!.isBonusContest) {
                 val intent = Intent(mContext, AddMoneyActivity::class.java)
-                intent.putExtra(AddMoneyActivity.ADD_EXTRA_AMOUNT, Math.abs(actualPayable))
+                intent.putExtra(AddMoneyActivity.ADD_EXTRA_AMOUNT, abs(actualPayable))
                 startActivityForResult(intent, MyBalanceActivity.REQUEST_CODE_ADD_MONEY)
                 finish()
             } else {
@@ -157,14 +173,14 @@ class JoinContestActivity : AppCompatActivity() {
             }
         }
 
-        mBinding!!.termsCondition.setOnClickListener(View.OnClickListener {
+        mBinding!!.termsCondition.setOnClickListener {
             val intent = Intent(mContext, WebActivity::class.java)
             intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_TERMS_CONDITION)
             intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_TNC)
             val options =
                 ActivityOptions.makeSceneTransitionAnimation(this@JoinContestActivity)
             startActivity(intent, options.toBundle())
-        })
+        }
     }
 
     private fun placeOrders(
@@ -211,10 +227,13 @@ class JoinContestActivity : AppCompatActivity() {
                             if (res.sessionExpired) {
                                 logoutApp("Session Expired Please login again!!", false)
                             } else {
-                                MyUtils.showMessage(mContext!!, res.message)
+                                //MyUtils.showMessage(mContext!!, res.message)
+                                //MyUtils.showToast(this@JoinContestActivity, res.message)
                                 val intent1 = Intent(BindingUtils.EXTRA_DATA_GET_WALLET)
                                 LocalBroadcastManager.getInstance(mContext!!).sendBroadcast(intent1)
-                                setResult(RESULT_OK)
+                                val intent = Intent()
+                                intent.putExtra("keyName", res.message)
+                                setResult(RESULT_OK, intent)
                                 finish()
                             }
                         } else {

@@ -66,10 +66,7 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(
-            this,
-            R.layout.activity_add_money
-        )
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_money)
         mContext = this
 
         mBinding!!.toolbar.title = "Add Cash"
@@ -175,6 +172,13 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
                 }
             } else {
                 MyUtils.showMessage(this@AddMoneyActivity, "Please enter amount")
+            }
+        }
+
+        mBinding!!.askCouponText.setOnClickListener {
+            if (mBinding!!.codeLayout.visibility == View.GONE) {
+                mBinding!!.codeLayout.visibility = View.VISIBLE
+                mBinding!!.askCouponText.visibility = View.GONE
             }
         }
 
@@ -359,7 +363,7 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
         jsonRequest.addProperty("order_id", orderId)
         jsonRequest.addProperty("payment_mode", paymentMode)
         jsonRequest.addProperty("payment_status", "success")
-        if (mBinding!!.editCoupon.text.toString().isNotEmpty() && isValidCoupon) {
+        if (appliedCouponCode != "" && isValidCoupon) {
             jsonRequest.addProperty("coupon", appliedCouponCode)
         }
 
@@ -401,7 +405,8 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
 
     override fun onPaymentError(errorCode: Int, response: String?) {
         try {
-            Toast.makeText(this, "Payment failed $errorCode \n $response", Toast.LENGTH_LONG).show()
+            MyUtils.showMessage(this@AddMoneyActivity, "Transaction has been cancelled")
+            Log.e(TAG, "Payment failed $errorCode \n $response")
         } catch (e: Exception) {
             Log.e(TAG, "Exception in onPaymentSuccess", e)
         }
@@ -409,7 +414,7 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
 
     override fun onPaymentSuccess(razorpayPaymentId: String?) {
         try {
-            Toast.makeText(this, "Payment Successful $razorpayPaymentId", Toast.LENGTH_LONG).show()
+            //MyUtils.showMessage(this@AddMoneyActivity, "Payment Successfully added")
             transactionId = razorpayPaymentId!!
             addWalletBalance()
         } catch (e: Exception) {
@@ -440,6 +445,7 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
                                     if (jsonObject.getBoolean("status")) {
                                         paytmOrderId =
                                             jsonObject.getJSONObject("data").getString("order_id")
+                                        orderId = jsonObject.getJSONObject("data").getString("order_id")
                                         val mid = jsonObject.getJSONObject("data").getString("mid")
                                         val txnToken =
                                             jsonObject.getJSONObject("data").getString("txnToken")
@@ -488,7 +494,7 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
         txnAmountString: String
     ) {
         customeProgressDialog.show()
-
+        paymentMode = PAYEMENT_TYPE_PAYTM
         val callBackUrl: String = BindingUtils.PAYTM.callBackUrl + orderIdString
         Log.e(TAG, "callBackUrl =======> $callBackUrl")
 
@@ -577,7 +583,6 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
         transactionManager.setShowPaymentUrl(BindingUtils.PAYTM.PaymentUrl)
         customeProgressDialog.dismiss()
         transactionManager.startTransaction(this, ActivityRequestCode)
-        //transactionManager.startTransactionForONUS(this, ActivityRequestCode)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -597,9 +602,9 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
                 MyUtils.showToast(this@AddMoneyActivity, "Payment not completed please check")
             }
         } else if (requestCode == ActivityRequestCode && data != null) {
-            MyUtils.showMessage(
-                mContext!!,
-                data.getStringExtra("nativeSdkForMerchantMessage") + data.getStringExtra("response")
+            Log.e(
+                TAG,
+                data.getStringExtra("nativeSdkForMerchantMessage") + " " + data.getStringExtra("response")
             )
             try {
                 if (data.getStringExtra("response") != null) {
@@ -610,77 +615,11 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
                         transactionId = inResponse.getString("TXNID")
                         addWalletBalance()
 
-                    } else
-                        try {
-                            val jsonObject = JSONObject()
-                            jsonObject.put("STATUS", "USER_CANCELLED")
-                            //updateOrderStatus(paytmOrderId, jsonObject)
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
+                    }
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-        }
-    }
-
-    private fun addToWallet(transactionId: String, paytmOrderId: String, b: Boolean) {
-        if (MyUtils.isConnectedWithInternet(this)) {
-            customeProgressDialog.show()
-
-            val jsonRequest = JsonObject()
-            jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
-            jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
-            jsonRequest.addProperty("deposit_amount", mBinding!!.editAmounts.text.toString())
-            jsonRequest.addProperty("transaction_id", transactionId)
-            jsonRequest.addProperty("order_id", paytmOrderId)
-            jsonRequest.addProperty("payment_mode", paymentMode)
-            if (b) {
-                jsonRequest.addProperty("payment_status", "success")
-            } else {
-                jsonRequest.addProperty("payment_status", "failed")
-            }
-
-            WebServiceClient(this).client.create(IApiMethod::class.java).addMoney(jsonRequest)
-                .enqueue(object : Callback<UsersPostDBResponse?> {
-                    override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                        customeProgressDialog.dismiss()
-                    }
-
-                    override fun onResponse(
-                        call: Call<UsersPostDBResponse?>?,
-                        response: Response<UsersPostDBResponse?>?
-                    ) {
-                        customeProgressDialog.dismiss()
-                        val res = response!!.body()
-                        if (res != null) {
-                            if (res.status) {
-                                val responseModel = res.walletObjects
-                                if (responseModel != null) {
-                                    (application as NinjaApplication).saveWalletInformation(
-                                        responseModel
-                                    )
-                                    MyUtils.showMessage(this@AddMoneyActivity, res.message)
-                                    setResult(Activity.RESULT_OK)
-                                    finish()
-                                }
-                            } else {
-                                if (res.code == 1001) {
-                                    MyUtils.showMessage(this@AddMoneyActivity, res.message)
-                                    MyUtils.logoutApp(this@AddMoneyActivity)
-                                } else {
-                                    MyUtils.showMessage(this@AddMoneyActivity, res.message)
-                                }
-                            }
-                        }
-                    }
-                })
-        } else {
-            MyUtils.showToast(
-                this@AddMoneyActivity,
-                mContext!!.resources.getString(R.string.internetconnection)
-            )
         }
     }
 

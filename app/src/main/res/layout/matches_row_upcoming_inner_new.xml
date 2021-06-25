@@ -46,10 +46,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_86sdp"
-            android:layout_below="@id/ll_title"
+            android:layout_below="@+id/ll_title"
+            android:baselineAligned="false"
             android:orientation="horizontal"
-            android:weightSum="5"
-            android:baselineAligned="false">
+            android:weightSum="5">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -65,21 +65,21 @@
 
                     <View
                         android:id="@+id/countrycolorview"
-                        android:layout_width="match_parent"
-                        android:layout_height="35dp"
+                        android:layout_width="45dp"
+                        android:layout_height="25dp"
                         android:layout_centerVertical="true"
                         android:background="@color/red" />
 
                     <com.mikhaellopez.circularimageview.CircularImageView
                         android:id="@+id/teama_logo"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
                         android:scaleType="fitCenter"
                         android:src="@drawable/flag_indian"
                         app:civ_border="true"
                         app:civ_border_color="@color/white"
-                        app:civ_border_width="3dp"
+                        app:civ_border_width="2dp"
                         app:civ_circle_color="@color/white"
                         app:civ_circle_color_end="@color/white"
                         app:civ_circle_color_start="@color/white" />
@@ -124,10 +124,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/match_leaderboard"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="@drawable/match_leaderboard"
                     android:visibility="visible" />
 
                 <TextView
@@ -174,21 +174,22 @@
 
                     <View
                         android:id="@+id/countrybcolorview"
-                        android:layout_width="match_parent"
-                        android:layout_height="35dp"
+                        android:layout_width="45dp"
+                        android:layout_height="25dp"
                         android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
                         android:background="@color/red" />
 
                     <com.mikhaellopez.circularimageview.CircularImageView
                         android:id="@+id/teamb_logo"
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
                         android:scaleType="fitCenter"
                         android:src="@drawable/flag_indian"
                         app:civ_border="true"
                         app:civ_border_color="@color/white"
-                        app:civ_border_width="3dp"
+                        app:civ_border_width="2dp"
                         app:civ_circle_color="@color/white"
                         app:civ_circle_color_end="@color/white"
                         app:civ_circle_color_start="@color/white" />
