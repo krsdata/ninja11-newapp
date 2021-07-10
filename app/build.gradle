@@ -98,7 +98,7 @@ dependencies {
 
 
     // paytm all in one sdk
-    implementation 'com.paytm.appinvokesdk:appinvokesdk:1.5.4'
+    implementation 'com.paytm.appinvokesdk:appinvokesdk:1.6.0'
     // razor pay payment sdk
     implementation 'com.razorpay:checkout:1.6.3'
 

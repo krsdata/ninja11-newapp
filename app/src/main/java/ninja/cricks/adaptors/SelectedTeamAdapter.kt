@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import ninja.cricks.R
 import ninja.cricks.SelectTeamActivity
 import ninja.cricks.models.MyTeamModels
-import ninja.cricks.R
 import ninja.cricks.models.SelectedTeamModels
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.utils.CustomeProgressDialog
@@ -22,8 +22,8 @@ class SelectedTeamAdapter(
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var onItemClick: ((SelectedTeamModels) -> Unit)? = null
-    var mContext:SelectTeamActivity ? =context
-    private var matchesListObject =  tradeinfoModels
+    var mContext: SelectTeamActivity? = context
+    private var matchesListObject = tradeinfoModels
 
     companion object {
         const val TYPE_CLOSED = 1
@@ -32,20 +32,20 @@ class SelectedTeamAdapter(
 
     override fun getItemViewType(position: Int): Int {
         val comparable = matchesListObject.get(position)
-         if(comparable.closeTeamList!=null &&comparable.closeTeamList!!.size>0) {
-             return TYPE_CLOSED
-         }else {
-             return  TYPE_OPENED
-         }
+        if (comparable.closeTeamList != null && comparable.closeTeamList!!.size > 0) {
+            return TYPE_CLOSED
+        } else {
+            return TYPE_OPENED
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if(viewType== TYPE_CLOSED){
-            var view = LayoutInflater.from(parent.context)
+        if (viewType == TYPE_CLOSED) {
+            val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.selected_team_created_label, parent, false)
             return ViewHolderJoinedMatches(view)
-        }else if(viewType== TYPE_OPENED){
-            var view = LayoutInflater.from(parent.context)
+        } else if (viewType == TYPE_OPENED) {
+            val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.unselectedselected_team_created_labe, parent, false)
             return UpcomingMatchesViewHolder(view)
         }
@@ -53,51 +53,49 @@ class SelectedTeamAdapter(
     }
 
     override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
-
-
-        if(parent.itemViewType==TYPE_CLOSED){
-            var objectVal = matchesListObject[viewType]
+        if (parent.itemViewType == TYPE_CLOSED) {
+            val objectVal = matchesListObject[viewType]
             val viewJoinedMatches: ViewHolderJoinedMatches = parent as ViewHolderJoinedMatches
             viewJoinedMatches.recyclerView.layoutManager =
                 LinearLayoutManager(mContext, RecyclerView.VERTICAL, false)
-            var adapter = ClosedTeamsAdapter(
+            val adapter = ClosedTeamsAdapter(
                 mContext!!,
                 matchObject,
                 customeProgressDialog,
                 objectVal.closeTeamList!!
             )
             viewJoinedMatches.recyclerView.adapter = adapter
-        } else  if(parent.itemViewType== TYPE_OPENED) {
-            var objectVal = matchesListObject[viewType]
+        } else if (parent.itemViewType == TYPE_OPENED) {
+            val objectVal = matchesListObject[viewType]
             val viewholderOpenTeam: UpcomingMatchesViewHolder = parent as UpcomingMatchesViewHolder
             viewholderOpenTeam.recyclerView.layoutManager =
                 LinearLayoutManager(mContext, RecyclerView.VERTICAL, false)
             if (objectVal.openTeamList != null && objectVal.openTeamList!!.size > 0) {
-                var adapter = OpenTeamsAdapter(
+                val adapter = OpenTeamsAdapter(
                     mContext!!,
                     matchObject,
                     customeProgressDialog,
                     objectVal.openTeamList!!
                 )
                 adapter.setOnCheckChangedListeners(View.OnClickListener {
-                   checkforAllSelections(objectVal.openTeamList, viewholderOpenTeam.checkAll)
+                    checkforAllSelections(objectVal.openTeamList, viewholderOpenTeam.checkAll)
 
                 })
                 viewholderOpenTeam.checkAll.setOnClickListener(View.OnClickListener {
-                        if(viewholderOpenTeam.checkAll.isChecked){
-                              for (x in 0..objectVal.openTeamList!!.size-1){
-                                  var values = objectVal.openTeamList!!.get(x)
-                                  values.isSelected = true
-                                  objectVal.openTeamList!!.set(x,values)
+                    if (viewholderOpenTeam.checkAll.isChecked) {
+                        for (x in 0 until objectVal.openTeamList!!.size) {
+                            val values = objectVal.openTeamList!!.get(x)
+                            values.isSelected = true
+                            objectVal.openTeamList!!.set(x, values)
 
-                              }
-                        }else {
-                            for (x in 0..objectVal.openTeamList!!.size-1){
-                                var values = objectVal.openTeamList!!.get(x)
-                                values.isSelected = false
-                                objectVal.openTeamList!!.set(x,values)
-                            }
                         }
+                    } else {
+                        for (x in 0 until objectVal.openTeamList!!.size) {
+                            val values = objectVal.openTeamList!!.get(x)
+                            values.isSelected = false
+                            objectVal.openTeamList!!.set(x, values)
+                        }
+                    }
 
                     adapter.notifyDataSetChanged()
                 })
@@ -118,19 +116,19 @@ class SelectedTeamAdapter(
 
     private fun checkforAllSelections(
         openlist: ArrayList<MyTeamModels>?,
-        checkAll: CheckBox) {
+        checkAll: CheckBox
+    ) {
         var isAllChecked = false
-        for (x in 0..openlist!!.size-1){
-            var values = openlist.get(x)
-            if(values.isSelected!!){
+        for (x in 0 until openlist!!.size) {
+            val values = openlist.get(x)
+            if (values.isSelected!!) {
                 isAllChecked = true
-            }else {
+            } else {
                 isAllChecked = false
                 break
             }
 
         }
-
         checkAll.isChecked = isAllChecked
     }
 
@@ -138,16 +136,13 @@ class SelectedTeamAdapter(
         return matchesListObject.size
     }
 
-    inner  class ViewHolderJoinedMatches(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val recyclerView = itemView.findViewById<RecyclerView>(R.id.recycler_joined_team)
+    inner class ViewHolderJoinedMatches(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val recyclerView: RecyclerView = itemView.findViewById(R.id.recycler_joined_team)
     }
 
-    inner  class UpcomingMatchesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val recyclerView = itemView.findViewById<RecyclerView>(R.id.recycler_joined_team)
-        val checkAll = itemView.findViewById<CheckBox>(R.id.checkbox_selected_team)
-
+    inner class UpcomingMatchesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val recyclerView: RecyclerView = itemView.findViewById(R.id.recycler_joined_team)
+        val checkAll: CheckBox = itemView.findViewById(R.id.checkbox_selected_team)
     }
-
-
 }
 

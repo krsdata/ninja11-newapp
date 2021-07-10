@@ -45,8 +45,8 @@ class MyTeamFragment : Fragment() {
     private var isVisibleToUser: Boolean = false
 
     companion object {
-        val SERIALIZABLE_EDIT_TEAM: String = "editteam"
-        val SERIALIZABLE_COPY_TEAM: String = "copyteam"
+        const val SERIALIZABLE_EDIT_TEAM: String = "editteam"
+        const val SERIALIZABLE_COPY_TEAM: String = "copyteam"
 
         fun newInstance(bundle: Bundle): MyTeamFragment {
             val fragment = MyTeamFragment()
@@ -59,13 +59,12 @@ class MyTeamFragment : Fragment() {
         super.onCreate(savedInstanceState)
         matchObject =
             requireArguments().get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_my_team, container, false
@@ -88,14 +87,14 @@ class MyTeamFragment : Fragment() {
             getPoints(objects.teamId!!.teamId)
 
         }
-        mBinding!!.btnCreateTeam.setOnClickListener(View.OnClickListener {
+        mBinding!!.btnCreateTeam.setOnClickListener{
             val intent = Intent(activity, CreateTeamActivity::class.java)
             intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
             startActivity(intent)
-        })
-        mBinding!!.myteamRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
+        }
+        mBinding!!.myteamRefresh.setOnRefreshListener {
             getMyTeam()
-        })
+        }
 
 
     }
@@ -112,7 +111,7 @@ class MyTeamFragment : Fragment() {
         this.isVisibleToUser = isVisibleToUser
     }
 
-    fun getPoints(teamId: Int) {
+    private fun getPoints(teamId: Int) {
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
@@ -303,11 +302,11 @@ class MyTeamFragment : Fragment() {
             val objectVal = matchesListObject[viewType]
             val viewHolder: MyMatchViewHolder = parent as MyMatchViewHolder
             viewHolder.userTeamName.text = objectVal.teamName
-            viewHolder.teamaName.text = objectVal.teamsInfo!!.get(0).teamName
-            viewHolder.teambName.text = objectVal.teamsInfo!!.get(1).teamName
+            viewHolder.teamaName.text = objectVal.teamsInfo!![0].teamName
+            viewHolder.teambName.text = objectVal.teamsInfo!![1].teamName
 
-            viewHolder.teamaCount.text = "" + objectVal.teamsInfo!!.get(0).count
-            viewHolder.teambCount.text = "" + objectVal.teamsInfo!!.get(1).count
+            viewHolder.teamaCount.text = "" + objectVal.teamsInfo!![0].count
+            viewHolder.teambCount.text = "" + objectVal.teamsInfo!![1].count
 
             viewHolder.captainPlayerName.text = objectVal.captain!!.playerName
             viewHolder.vcPlayerName.text = objectVal.viceCaptain!!.playerName
@@ -330,6 +329,7 @@ class MyTeamFragment : Fragment() {
                 .load(R.drawable.player_blue)
                 .placeholder(R.drawable.player_blue)
                 .into(viewHolder.vcImageView)
+
 
             if (matchObject!!.status == BindingUtils.MATCH_STATUS_UPCOMING) {
                 viewHolder.linearTeamCountViews.visibility = View.VISIBLE

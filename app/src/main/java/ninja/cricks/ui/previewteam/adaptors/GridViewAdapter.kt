@@ -67,7 +67,7 @@ class GridViewAdapter(
             viewHolder.playerName.background =
                 ResourcesCompat.getDrawable(
                     context.resources,
-                    R.drawable.ract_white_background,
+                    R.drawable.preview_name_white,
                     null
                 )
             //context.resources.getDrawable(R.drawable.ract_white_background)
@@ -76,7 +76,7 @@ class GridViewAdapter(
             viewHolder.playerName.background =
                 ResourcesCompat.getDrawable(
                     context.resources,
-                    R.drawable.ract_black_background,
+                    R.drawable.preview_name_black,
                     null
                 )
             //context.resources.getDrawable(R.drawable.ract_black_background)

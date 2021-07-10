@@ -89,7 +89,10 @@ data class UpcomingMatchesModel(
 
     @SerializedName("dyanamic_message")
     @Expose
-    var dyanamic_message: String = ""
+    var dyanamic_message: String = "",
 
+    @SerializedName("notification")
+    @Expose
+    var notification: String = "",
 
 ) : Serializable, Cloneable

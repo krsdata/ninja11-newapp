@@ -50,16 +50,16 @@
                     android:layout_toEndOf="@+id/image_back"
                     android:fontFamily="@font/montserrat_bold"
                     android:text="Contests"
-                    android:visibility="gone"
                     android:textColor="@color/white"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
-                    android:layout_toEndOf="@+id/image_back"
                     android:layout_toStartOf="@+id/img_fantasy_points"
+                    android:layout_toEndOf="@+id/image_back"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:weightSum="2">
@@ -108,8 +108,8 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
                         android:layout_gravity="center|end"
+                        android:layout_weight="1"
                         android:gravity="center|end"
                         android:orientation="horizontal">
 
@@ -118,8 +118,8 @@
                             android:layout_width="22dp"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="5dp"
-                            android:visibility="gone"
                             android:src="@drawable/ic_av_timer_black_24dp"
+                            android:visibility="gone"
                             app:tint="@color/white" />
 
                         <TextView
@@ -127,13 +127,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center|end"
+                            android:background="@drawable/rounded_timer_back"
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center|end"
+                            android:paddingStart="@dimen/_7sdp"
                             android:paddingTop="@dimen/_4sdp"
                             android:paddingEnd="@dimen/_7sdp"
-                            android:paddingStart="@dimen/_7sdp"
                             android:paddingBottom="@dimen/_4sdp"
-                            android:background="@drawable/rounded_timer_back"
                             android:text=""
                             android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/_10sdp" />
@@ -176,11 +176,78 @@
 
         </RelativeLayout>
 
+        <LinearLayout
+            android:id="@+id/view_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/contest_views"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/confirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:gravity="start"
+                    android:text="C = Confirmed"
+                    android:textColor="@color/grand_league"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/multi_join"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="M = Multiple Team Join"
+                    android:textColor="@color/grand_league"
+                    android:textSize="@dimen/_12sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/bonus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:gravity="start"
+                    android:text="B = Bonus"
+                    android:textColor="@color/grand_league"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/extra_cash"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="EC = Extra Cash"
+                    android:textColor="@color/grand_league"
+                    android:textSize="@dimen/_12sdp"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+
         <RelativeLayout
             android:id="@+id/relative_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/contest_views">
+            android:layout_below="@+id/view_layout">
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"

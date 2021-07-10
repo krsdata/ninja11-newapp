@@ -163,6 +163,7 @@
                 app:tabGravity="fill"
                 app:tabMode="fixed"
                 app:tabSelectedTextColor="@color/colorPrimary"
+                app:tabIndicatorColor="@color/green"
                 app:tabTextColor="@color/black" />
 
             <!--<androidx.viewpager.widget.ViewPager

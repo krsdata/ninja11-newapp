@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/_55sdp"
-    android:layout_height="@dimen/_59sdp"
+    android:layout_height="@dimen/_63sdp"
     android:orientation="vertical">
 
     <ImageView
@@ -16,12 +16,13 @@
     <TextView
         android:id="@+id/player_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_17sdp"
         android:layout_below="@+id/imageView"
-        android:background="@drawable/ract_black_background"
+        android:background="@drawable/preview_name_black"
         android:fontFamily="@font/roboto"
         android:maxLines="1"
         android:paddingEnd="@dimen/_5sdp"
+        android:gravity="center"
         android:paddingStart="@dimen/_5sdp"
         android:paddingTop="1.5dp"
         android:paddingBottom="1.5dp"

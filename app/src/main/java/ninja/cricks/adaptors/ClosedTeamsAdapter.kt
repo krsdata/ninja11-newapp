@@ -34,13 +34,13 @@ class ClosedTeamsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        var view = LayoutInflater.from(parent.context)
+        val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.myteam_rows, parent, false)
         return MyMatchViewHolder(view)
     }
 
     override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
-        var objectVal = matchesListObject[viewType]
+        val objectVal = matchesListObject[viewType]
         val viewHolder: MyMatchViewHolder =
             parent as MyMatchViewHolder
         viewHolder.userTeamName.text = objectVal.teamName

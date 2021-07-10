@@ -159,8 +159,9 @@
         <LinearLayout
             android:id="@+id/top_new_filter"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:background="@color/greybackround"
+            android:layout_height="@dimen/_25sdp"
+            android:background="@color/white"
+            android:layout_marginTop="@dimen/_2sdp"
             android:orientation="horizontal">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -169,7 +170,6 @@
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
                 android:layoutAnimation="@anim/layout_animation"
-                android:paddingBottom="80dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         </LinearLayout>
 

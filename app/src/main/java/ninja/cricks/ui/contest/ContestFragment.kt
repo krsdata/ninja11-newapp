@@ -377,13 +377,6 @@ class ContestFragment : Fragment() {
         if (isLoading)
             mBinding!!.progressBar.visibility = View.VISIBLE
 
-        /*val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(requireActivity())!!
-        models.match_id = "" + matchObject!!.matchId
-        models.token = MyPreferences.getToken(requireActivity())!!
-        val deviceToken: String? = MyPreferences.getDeviceToken(requireActivity())
-        models.deviceDetails = HardwareInfoManager(activity).collectData(deviceToken!!)*/
-
         val jsonRequest = JsonObject()
         jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
         jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
@@ -430,13 +423,13 @@ class ContestFragment : Fragment() {
                             if (res.status) {
                                 BindingUtils.currentTimeStamp = res.systemTime
                                 val responseModel = res.responseObject
-                                if (responseModel!!.matchContestlist != null && responseModel.matchContestlist!!.size > 0) {
+                                if (responseModel!!.matchContestlist != null && responseModel.matchContestlist!!.isNotEmpty()) {
                                     allContestListData.clear()
                                     allContestListData.addAll(responseModel.matchContestlist!!)
 
                                     filterArrayList.clear()
 
-                                    val model = ContestCategoryModel("All", true)
+                                    val model = ContestCategoryModel("All Contest", true)
                                     filterArrayList.add(model)
 
                                     for (i in responseModel.matchContestlist!!.indices) {
@@ -455,7 +448,7 @@ class ContestFragment : Fragment() {
                                 } else {
                                     MyUtils.showToast(
                                         activity!! as AppCompatActivity,
-                                        "No Contest available for this match $res"
+                                        "No Contest available for this match"
                                     )
                                 }
                             } else {
@@ -623,7 +616,7 @@ class ContestFragment : Fragment() {
                                     allContestListData.addAll(responseModel.matchContestlist!!)
                                     filterArrayList.clear()
 
-                                    val model = ContestCategoryModel("All", false)
+                                    val model = ContestCategoryModel("All Contest", false)
                                     filterArrayList.add(model)
 
                                     val actualPosition = pos - 1

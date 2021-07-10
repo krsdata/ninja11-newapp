@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.edify.atrist.listener.OnMatchTimerStarted
 import com.edify.atrist.listener.OnRolesSelected
 import ninja.cricks.CreateTeamActivity.Companion.CREATE_TEAM_ALLROUNDER
@@ -82,6 +83,18 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
             intent.getSerializableExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY) as UpcomingMatchesModel
         hasmapPlayers =
             intent.getSerializableExtra(TeamPreviewActivity.SERIALIZABLE_TEAM_PREVIEW_KEY) as HashMap<String, ArrayList<PlayersInfoModel>>
+
+        Glide.with(this)
+            .load(matchObject.teamAInfo!!.logoUrl)
+            .placeholder(R.drawable.placeholder_player_teama)
+            .into(mBinding!!.teamaLogo)
+
+
+        Glide.with(this)
+            .load(matchObject.teamBInfo!!.logoUrl)
+            .placeholder(R.drawable.placeholder_player_teama)
+            .into(mBinding!!.teambLogo)
+
 
         if (intent.hasExtra(MyTeamFragment.SERIALIZABLE_EDIT_TEAM)) {
             CreateTeamActivity.isEditMode = true

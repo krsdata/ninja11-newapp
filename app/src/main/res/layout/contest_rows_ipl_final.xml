@@ -293,7 +293,43 @@
                                     android:fontFamily="@font/montserrat_bold"
                                     android:gravity="center"
                                     android:scaleType="centerInside"
-                                    android:text="100%"
+                                    android:text=""
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/_8sdp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/linear_ec"
+                                android:layout_width="65dp"
+                                android:layout_height="18dp"
+                                android:layout_marginStart="10dp"
+                                android:background="@drawable/rectangle_green_ec"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:fontFamily="@font/montserrat_bold"
+                                    android:scaleType="centerInside"
+                                    android:text="EC"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/_10sdp"  />
+
+                                <TextView
+                                    android:id="@+id/contest_extra_cash"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="2dp"
+                                    android:layout_marginEnd="2dp"
+                                    android:layout_marginBottom="2dp"
+                                    android:layout_weight="1"
+                                    android:background="@color/white"
+                                    android:fontFamily="@font/montserrat_bold"
+                                    android:gravity="center"
+                                    android:scaleType="centerInside"
+                                    android:text=""
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/_8sdp" />
                             </LinearLayout>

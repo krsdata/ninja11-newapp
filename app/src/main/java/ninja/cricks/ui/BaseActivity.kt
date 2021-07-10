@@ -15,18 +15,15 @@ import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.os.Handler
 import android.provider.MediaStore
 import android.text.TextUtils
-import android.util.Base64
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import com.andrognito.flashbar.Flashbar
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.gson.Gson
@@ -472,10 +469,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     private fun genericAlertDialog(message: String, boolean: Boolean) {
         val builder = AlertDialog.Builder(this@BaseActivity)
-        //set title for alert dialog
-        // builder.setTitle("Warning")
-        //set message for alert dialog
-
         builder.setMessage(message)
         builder.setIcon(android.R.drawable.ic_dialog_alert)
 
@@ -494,9 +487,8 @@ abstract class BaseActivity : AppCompatActivity() {
             jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
             jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
 
-            WebServiceClient(this@BaseActivity).client.create(IApiMethod::class.java).logout(
-                jsonRequest
-            )
+            WebServiceClient(this@BaseActivity).client.create(IApiMethod::class.java)
+                .logout(jsonRequest)
                 .enqueue(object : Callback<UsersPostDBResponse?> {
                     override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
 

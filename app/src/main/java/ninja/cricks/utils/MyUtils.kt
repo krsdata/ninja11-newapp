@@ -149,7 +149,7 @@ class MyUtils {
             return androidId
         }
 
-        fun showToast(activity: AppCompatActivity, message: String) {
+        fun showToast(activity: Activity, message: String) {
             if (activity != null && !activity.isFinishing) {
                 val flashBar = Flashbar.Builder(activity)
                     .gravity(Flashbar.Gravity.TOP)

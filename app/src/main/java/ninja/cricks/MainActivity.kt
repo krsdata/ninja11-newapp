@@ -1,26 +1,33 @@
 package ninja.cricks
 
 import android.app.ActivityManager
+import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.view.Gravity
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.JsonObject
+import ninja.cricks.customviews.CircleImageView
 import ninja.cricks.databinding.ActivityMainBinding
 import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.RetrofitClient
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseActivity
-import ninja.cricks.ui.dashboard.FixtureCricketFragment
+import ninja.cricks.ui.dashboard.FragmentDrawer
 import ninja.cricks.ui.dashboard.MoreOptionsFragment
 import ninja.cricks.ui.dashboard.MyAccountFragment
 import ninja.cricks.ui.dashboard.MyMatchesFragment
+import ninja.cricks.ui.home.HomeFragment
+import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import org.json.JSONObject
@@ -30,11 +37,13 @@ import retrofit2.Response
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
+    FragmentDrawer.FragmentDrawerListener {
 
     var fragment: Fragment? = null
     private var mBinding: ActivityMainBinding? = null
     private lateinit var mContext: Context
+    private var drawerFragment: FragmentDrawer? = null
 
     companion object {
         var menuArrayList = ArrayList<JSONObject>()
@@ -55,6 +64,9 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         mContext = this
         userInfo = (application as NinjaApplication).userInformations
         setSupportActionBar(mBinding!!.toolbar)
+        supportActionBar!!.setDisplayShowHomeEnabled(true)
+        supportActionBar!!.setDisplayShowTitleEnabled(false)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         mBinding!!.imgWalletAmount.setOnClickListener {
             val intent = Intent(mContext, MyBalanceActivity::class.java)
@@ -66,20 +78,26 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         }
 
         getWalletBalances()
-
-        Glide.with(this).load(userInfo!!.profileImage)
-            .placeholder(R.drawable.player_blue).into(mBinding!!.profileImage)
-
-        mBinding!!.profileImage.setOnClickListener {
-            val intent = Intent(mContext, EditProfileActivity::class.java)
-            intent.putExtra(FullScreenImageViewActivity.KEY_IMAGE_URL, userInfo!!.profileImage)
-            startActivity(intent)
-        }
+        setProfileData()
 
         mBinding!!.navigation.setOnNavigationItemSelectedListener(this)
 
-        fragment = FixtureCricketFragment()
+        fragment = HomeFragment()
         loadFragment()
+
+        drawerFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment_navigation_drawer) as FragmentDrawer?
+        drawerFragment!!.setUp(
+            R.id.fragment_navigation_drawer,
+            mBinding!!.drawerLayout,
+            mBinding!!.toolbar
+        )
+        drawerFragment!!.setDrawerListener(this)
+
+        mBinding!!.profileImage.setOnClickListener {
+            mBinding!!.drawerLayout.visibility = View.VISIBLE
+            mBinding!!.drawerLayout.openDrawer(Gravity.LEFT)
+        }
     }
 
     override fun onResume() {
@@ -120,11 +138,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         super.onStart()
         if (CHECK_APK_UPDATE_API) {
             CHECK_APK_UPDATE_API = false
-            /*val fm = supportFragmentManager
-            val pioneersFragment =
-                UpdateAppDialogFragment(updatedApkUrl, releaseNote)
-            pioneersFragment.isCancelable = false
-            pioneersFragment.show(fm, "updateapp_tag")*/
 
             val intent = Intent(this@MainActivity, UpdateApplicationActivity::class.java)
             intent.putExtra(UpdateApplicationActivity.REQUEST_CODE_APK_UPDATE, updatedApkUrl)
@@ -209,7 +222,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
             R.id.navigation_home -> {
-                fragment = FixtureCricketFragment()
+                fragment = HomeFragment()
                 loadFragment()
                 return true
             }
@@ -218,6 +231,11 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                 loadFragment()
                 return true
             }
+            /*R.id.navigation_leader->{
+                fragment = GlobalLeaderBoardFragment()
+                loadFragment()
+                return true
+            }*/
             R.id.navigation_myaccount -> {
                 fragment = MyAccountFragment()
                 loadFragment()
@@ -288,21 +306,21 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                                     pioneersFragment.isCancelable = false
                                     pioneersFragment.show(fm, "updateapp_tag")*/
 
-                                    if(!isActivityRunning(UpdateApplicationActivity::class.java)){
+                                    if (!isActivityRunning(UpdateApplicationActivity::class.java)) {
 
-                                    val intent = Intent(
-                                        this@MainActivity,
-                                        UpdateApplicationActivity::class.java
-                                    )
-                                    intent.putExtra(
-                                        UpdateApplicationActivity.REQUEST_CODE_APK_UPDATE,
-                                        updatedApkUrl
-                                    )
-                                    intent.putExtra(
-                                        UpdateApplicationActivity.REQUEST_RELEASE_NOTE,
-                                        releaseNote
-                                    )
-                                    startActivity(intent)
+                                        val intent = Intent(
+                                            this@MainActivity,
+                                            UpdateApplicationActivity::class.java
+                                        )
+                                        intent.putExtra(
+                                            UpdateApplicationActivity.REQUEST_CODE_APK_UPDATE,
+                                            updatedApkUrl
+                                        )
+                                        intent.putExtra(
+                                            UpdateApplicationActivity.REQUEST_RELEASE_NOTE,
+                                            releaseNote
+                                        )
+                                        startActivity(intent)
                                     }
                                 }
                             }
@@ -322,5 +340,48 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             e.printStackTrace()
             false
         }
+    }
+
+    override fun onDrawerItemSelected(view: View?, position: Int) {
+        displayView(position)
+    }
+
+    private fun displayView(position: Int) {
+        if (position == 0) {
+            val intent = Intent(mContext, EditProfileActivity::class.java)
+            intent.putExtra(FullScreenImageViewActivity.KEY_IMAGE_URL, userInfo!!.profileImage)
+            startActivity(intent)
+        } else if (position == 1) {
+            val intent = Intent(mContext, MyBalanceActivity::class.java)
+            startActivityForResult(intent, MyBalanceActivity.REQUEST_CODE_ADD_MONEY)
+        } else if (position == 2) {
+            val intent = Intent(mContext, InviteFriendsActivity::class.java)
+            val options = ActivityOptions.makeSceneTransitionAnimation(this@MainActivity)
+            startActivity(intent, options.toBundle())
+        } else if (position == 3) {
+            val intent = Intent(mContext, WebActivity::class.java)
+            intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_FANTASY_POINTS)
+            intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_FANTASY_POINTS)
+            val options = ActivityOptions.makeSceneTransitionAnimation(this@MainActivity)
+            startActivity(intent, options.toBundle())
+        } else if (position == 4) {
+            fragment = MoreOptionsFragment()
+            loadFragment()
+            mBinding!!.navigation.selectedItemId = R.id.navigation_notifications
+        } else if (position == 5) {
+            logoutApp("Are you sure you want to logout", true)
+        }
+    }
+
+    private fun setProfileData() {
+        Glide.with(this).load(userInfo!!.profileImage)
+            .placeholder(R.drawable.player_blue).into(mBinding!!.profileImage)
+
+        Glide.with(this).load(userInfo!!.profileImage)
+            .placeholder(R.drawable.player_blue)
+            .into(findViewById<CircleImageView>(R.id.profile_image_drawer))
+
+        findViewById<TextView>(R.id.name).text = userInfo!!.fullName
+        findViewById<TextView>(R.id.mobile).text = String.format("@%s", userInfo!!.teamName)
     }
 }

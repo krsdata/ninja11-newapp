@@ -26,17 +26,10 @@ class MyMatchesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val root = inflater.inflate(R.layout.fragment_mymatches, container, false)
-
-        //(activity as MainActivity).showToolbar()
         viewpager= root.findViewById(R.id.viewpager)
         tabLayout = root.findViewById(R.id.tabs)
         setupViewPager()
-
-        // viewpager.addOnPageChangeListener(this)
-        //tabs.setupWithViewPager(viewpager)
-
         return root
     }
 

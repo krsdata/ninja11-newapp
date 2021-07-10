@@ -286,8 +286,10 @@ class LeadersBoardActivity : BaseActivity() {
 
         if (contestObject!!.usableBonus.toInt() == 0) {
             mBinding!!.includeContestRow.linearBonues.visibility = View.GONE
+            mBinding!!.bonus.visibility =  View.GONE
         } else {
             mBinding!!.includeContestRow.linearBonues.visibility = View.VISIBLE
+            mBinding!!.bonus.visibility =  View.VISIBLE
             mBinding!!.includeContestRow.contestBonus.text =
                 String.format("%s%s", contestObject!!.usableBonus, "%")
         }
@@ -299,16 +301,29 @@ class LeadersBoardActivity : BaseActivity() {
 
         if (contestObject!!.cancellation) {
             mBinding!!.includeContestRow.contestCancellation.visibility = View.INVISIBLE
+            mBinding!!.confirm.visibility = View.GONE
         } else {
             mBinding!!.includeContestRow.contestCancellation.visibility = View.VISIBLE
+            mBinding!!.confirm.visibility = View.VISIBLE
         }
         if (contestObject!!.maxAllowedTeam > 1) {
-            mBinding!!.includeContestRow.allowedTeamType.text = "Multiple Entry"
+            mBinding!!.includeContestRow.allowedTeamType.text = "M"
+            mBinding!!.multiJoin.text =  "M = Multiple Team Join"
+            mBinding!!.multiJoin.visibility = View.VISIBLE
         } else {
-            mBinding!!.includeContestRow.allowedTeamType.text = "Single Entry"
+            mBinding!!.includeContestRow.allowedTeamType.text = "S"
+            mBinding!!.multiJoin.text =  "S = Single Team Join"
+            mBinding!!.multiJoin.visibility = View.VISIBLE
         }
-        mBinding!!.includeContestRow.contestBonus.text =
-            String.format("%s%s", contestObject!!.usableBonus, "%")
+
+        if(contestObject!!.extra_cash_usable == "1"){
+            mBinding!!.includeContestRow.linearEc.visibility = View.VISIBLE
+            mBinding!!.includeContestRow.contestExtraCash.text = String.format("%d%s", contestObject!!.usableExtraCashPercent, "%")
+        } else {
+            mBinding!!.includeContestRow.linearEc.visibility = View.GONE
+        }
+
+        mBinding!!.includeContestRow.contestMultiplayer.text = String.format("%d",contestObject!!.maxAllowedTeam)
 
         mBinding!!.includeContestRow.contestEntryPrize.setOnClickListener(View.OnClickListener {
             if (!MyUtils.isConnectedWithInternet(this)) {

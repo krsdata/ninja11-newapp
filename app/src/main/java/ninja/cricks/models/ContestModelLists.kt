@@ -93,6 +93,10 @@ data class ContestModelLists(
 
     @SerializedName("usable_extra_cash")
     @Expose
-    var usableExtraCashPercent: Int = 0
+    var usableExtraCashPercent: Int = 0,
+
+    @SerializedName("title")
+    @Expose
+    var title: String = ""
 
 ) : Serializable, Cloneable

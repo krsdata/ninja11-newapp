@@ -35,7 +35,7 @@ open class BaseFragment : Fragment() {
     }
 
 
-    fun genericAlertDialog(message: String, boolean: Boolean) {
+    private fun genericAlertDialog(message: String, boolean: Boolean) {
         val builder = AlertDialog.Builder(requireActivity())
         builder.setMessage(message)
         builder.setIcon(android.R.drawable.ic_dialog_alert)

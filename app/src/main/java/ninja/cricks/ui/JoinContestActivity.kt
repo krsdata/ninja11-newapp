@@ -65,14 +65,13 @@ class JoinContestActivity : AppCompatActivity() {
 
         customeProgressDialog = CustomeProgressDialog(mContext)
         mBinding!!.imgClose.setOnClickListener(View.OnClickListener {
-            setResult(RESULT_OK)
-            finish()
+            onBackPressed()
         })
         initWalletInfo()
     }
 
     override fun onBackPressed() {
-        setResult(RESULT_OK)
+        setResult(RESULT_CANCELED)
         finish()
     }
 

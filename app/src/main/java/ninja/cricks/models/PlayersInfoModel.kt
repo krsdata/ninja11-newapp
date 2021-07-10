@@ -69,7 +69,11 @@ data class PlayersInfoModel(
 
     @SerializedName("analytics")
     @Expose
-    var analyticsModel: AnalyticsModel? = null
+    var analyticsModel: AnalyticsModel? = null,
+
+    @SerializedName("played_last_match")
+    @Expose
+    var playedLastMatch: String? = null
 
 ) : Serializable, Cloneable {
 

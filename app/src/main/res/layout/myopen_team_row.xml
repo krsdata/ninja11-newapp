@@ -57,7 +57,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:src="@drawable/ic_edit_black_24dp"
-                        android:visibility="gone" />
+                        android:visibility="invisible" />
 
                     <ImageView
                         android:id="@+id/team_copy"
@@ -178,23 +178,24 @@
 
                         <ImageView
                             android:id="@+id/captain_imageView"
-                            android:layout_width="@dimen/_35sdp"
+                            android:layout_width="@dimen/_40sdp"
                             android:layout_height="@dimen/_35sdp"
+                            android:scaleType="fitXY"
                             android:src="@drawable/player_blue" />
 
                         <TextView
                             android:id="@+id/captain_player_name"
                             android:layout_width="@dimen/_55sdp"
-                            android:layout_height="15dp"
+                            android:layout_height="@dimen/_17sdp"
                             android:layout_gravity="center"
-                            android:background="@drawable/ract_black_background"
+                            android:background="@drawable/ract_white_background"
                             android:gravity="center"
                             android:maxLines="1"
                             android:paddingLeft="@dimen/_5sdp"
                             android:paddingRight="@dimen/_5sdp"
                             android:singleLine="true"
                             android:text="Virat Kohli"
-                            android:textColor="@color/white"
+                            android:textColor="@color/black"
                             android:textSize="@dimen/_8sdp" />
                     </LinearLayout>
 
@@ -226,14 +227,15 @@
 
                         <ImageView
                             android:id="@+id/vc_imageView"
-                            android:layout_width="@dimen/_35sdp"
+                            android:layout_width="@dimen/_40sdp"
                             android:layout_height="@dimen/_35sdp"
+                            android:scaleType="fitXY"
                             android:src="@drawable/player_blue" />
 
                         <TextView
                             android:id="@+id/vc_player_name"
                             android:layout_width="@dimen/_55sdp"
-                            android:layout_height="15dp"
+                            android:layout_height="@dimen/_17sdp"
                             android:layout_gravity="center"
                             android:background="@drawable/ract_black_background"
                             android:gravity="center"

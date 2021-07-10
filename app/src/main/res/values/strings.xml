@@ -130,4 +130,24 @@
     <string name="lineup_feature">Lineup feature is for your convenience. Please do due research before create team.</string>
     <string name="internetconnection">Please check your Internet connection</string>
 
+    <string name="profile">Profile</string>
+    <string name="wallet">Wallet</string>
+    <string name="refer">Refer Friends</string>
+    <string name="point_system">Point System</string>
+    <string name="more">More</string>
+    <string name="logout">Logout</string>
+
+    <string-array name="nav_drawer_labels_new">
+        <item>@string/profile</item>
+        <item>@string/wallet</item>
+        <item>@string/refer</item>
+        <item>@string/point_system</item>
+        <item>@string/more</item>
+        <item>@string/logout</item>
+    </string-array>
+
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+
 </resources>

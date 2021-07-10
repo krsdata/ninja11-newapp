@@ -178,6 +178,24 @@ class ContestListAdapter(
             } else {
                 viewHolder.contestLeaderBoardLabel.visibility = View.GONE
             }
+
+            if (objectVal.extra_cash_usable == "1") {
+                viewHolder.linearEC.visibility = View.VISIBLE
+                viewHolder.contestExtraCash.text =
+                    String.format("%d%s", objectVal.usableExtraCashPercent, "%")
+            } else {
+                viewHolder.linearEC.visibility = View.GONE
+            }
+
+            if (objectVal.title != null && objectVal.title != "null" && objectVal.title != "") {
+                viewHolder.titleView.text = objectVal.title
+                viewHolder.titleView.visibility = View.VISIBLE
+                viewHolder.pricePool.visibility = View.GONE
+            } else {
+                viewHolder.titleView.visibility = View.GONE
+                viewHolder.pricePool.visibility = View.VISIBLE
+            }
+
         } else {
             val viewHolder: ImageViewHolder = parent as ImageViewHolder
             viewHolder.contestPrizePool.text =
@@ -211,7 +229,6 @@ class ContestListAdapter(
                 viewHolder.linearBonus.visibility = View.VISIBLE
                 viewHolder.contestBonus.text = String.format("%s%s", objectVal.usableBonus, "%")
             }
-
 
             Glide.with(context)
                 .load(objectVal.giftUrl)
@@ -260,6 +277,14 @@ class ContestListAdapter(
             } else {
                 viewHolder.contestLeaderBoardLabel.visibility = View.GONE
             }
+
+            if (objectVal.extra_cash_usable == "1") {
+                viewHolder.linearEC.visibility = View.VISIBLE
+                viewHolder.contestExtraCash.text =
+                    String.format("%d%s", objectVal.usableExtraCashPercent, "%")
+            } else {
+                viewHolder.linearEC.visibility = View.GONE
+            }
         }
     }
 
@@ -297,6 +322,12 @@ class ContestListAdapter(
         val discountTimer: TextView = itemView.findViewById(R.id.discountTimer)
         val discountedPrice: TextView = itemView.findViewById(R.id.discountedPrice)
         val timerLayout: LinearLayout = itemView.findViewById(R.id.timerLayout)
+
+        val linearEC: LinearLayout = itemView.findViewById(R.id.linear_ec)
+        val contestExtraCash: TextView = itemView.findViewById(R.id.contest_extra_cash)
+
+        val titleView: TextView = itemView.findViewById(R.id.free_view)
+        val pricePool: TextView = itemView.findViewById(R.id.pricePool)
     }
 
     inner class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -326,5 +357,8 @@ class ContestListAdapter(
         val contestLeaderBoardLabel: TextView =
             itemView.findViewById(R.id.contest_leader_board_label)
         val contestMultiPlayer: TextView = itemView.findViewById(R.id.contest_multiplayer)
+
+        val linearEC: LinearLayout = itemView.findViewById(R.id.linear_ec)
+        val contestExtraCash: TextView = itemView.findViewById(R.id.contest_extra_cash)
     }
 }

@@ -61,8 +61,14 @@ class PlayersContestAdapter(
             viewHolder.anouncedIndicatorText.text = "Playing"
             viewHolder.anouncedIndicatorText.setTextColor(context.resources.getColor(R.color.green))
         } else {
-            viewHolder.anouncedIndicatorText.text = ""
-            viewHolder.anouncedIndicatorCircle.setBackgroundResource(R.drawable.circle_red)
+            if (objectVal.playedLastMatch != null &&  objectVal.playedLastMatch != "null"
+                && objectVal.playedLastMatch != ""){
+                viewHolder.anouncedIndicatorText.text = objectVal.playedLastMatch
+                viewHolder.anouncedIndicatorCircle.setBackgroundResource(R.drawable.circle_red)
+            } else {
+                viewHolder.anouncedIndicatorText.text = ""
+                viewHolder.anouncedIndicatorCircle.setBackgroundResource(R.drawable.circle_red)
+            }
         }
 
         Glide.with(context)
