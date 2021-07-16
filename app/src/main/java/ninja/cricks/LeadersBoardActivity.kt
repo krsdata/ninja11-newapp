@@ -149,6 +149,8 @@ class LeadersBoardActivity : BaseActivity() {
     }
 
     private fun initScoreCard() {
+        mBinding!!.viewLayout.visibility = View.GONE
+
         mBinding!!.teamsa.text = matchObject!!.teamAInfo!!.teamShortName
         mBinding!!.teamsb.text = matchObject!!.teamBInfo!!.teamShortName
         Glide.with(this)
@@ -247,6 +249,8 @@ class LeadersBoardActivity : BaseActivity() {
     }
 
     private fun initUpcomingMatchData() {
+        mBinding!!.viewLayout.visibility = View.VISIBLE
+
         mBinding!!.teamsa.text = matchObject!!.teamAInfo!!.teamShortName
         mBinding!!.teamsb.text = matchObject!!.teamBInfo!!.teamShortName
         val totalSpots = contestObject!!.totalSpots
@@ -431,9 +435,7 @@ class LeadersBoardActivity : BaseActivity() {
     override fun onUploadedImageUrl(url: String) {
     }
 
-    private fun setupViewPager(
-        viewPager: ViewPager
-    ) {
+    private fun setupViewPager(viewPager: ViewPager) {
         this.playersList = playersList
 
         viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)

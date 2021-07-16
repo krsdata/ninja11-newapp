@@ -162,6 +162,7 @@
             android:layout_height="@dimen/_25sdp"
             android:background="@color/white"
             android:layout_marginTop="@dimen/_2sdp"
+            android:elevation="@dimen/_15sdp"
             android:orientation="horizontal">
 
             <androidx.recyclerview.widget.RecyclerView

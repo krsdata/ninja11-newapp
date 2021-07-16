@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/_95sdp"
     android:layout_marginStart="@dimen/_8sdp"
     android:layout_marginTop="@dimen/matches_view_top_margin"
     android:layout_marginEnd="@dimen/_8sdp"
@@ -45,7 +45,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_70sdp"
+            android:layout_height="match_parent"
             android:layout_below="@+id/ll_title"
             android:baselineAligned="false"
             android:orientation="horizontal"
@@ -101,7 +101,7 @@
                     android:textSize="@dimen/_11sdp" />
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2.8"
@@ -109,31 +109,36 @@
 
                 <TextView
                     android:id="@+id/upcoming_match_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/montserrat_bold"
                     android:gravity="center"
                     android:text="LINE UP"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentTop="true"
                     android:textColor="@color/green"
                     android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/upcoming_match_progress"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/_12sdp"
                     android:fontFamily="@font/montserrat_bold"
                     android:maxLines="1"
                     android:singleLine="true"
+                    android:gravity="center"
+                    android:layout_centerVertical="true"
+                    android:layout_centerInParent="true"
                     android:text="1D:24H:30M:40S"
                     android:textColor="@color/text"
                     android:textSize="@dimen/_10sdp" />
 
                 <TextView
                     android:id="@+id/match_time"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/_3sdp"
@@ -142,11 +147,13 @@
                     android:minWidth="@dimen/_60sdp"
                     android:paddingStart="@dimen/_7sdp"
                     android:paddingEnd="@dimen/_7sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentBottom="true"
                     android:text="7:30PM"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="12sp"
                     android:textStyle="bold" />
-            </LinearLayout>
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="0dp"

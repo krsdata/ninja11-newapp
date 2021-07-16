@@ -116,6 +116,17 @@ data class Response(
 
     @SerializedName("total_my_withdrawal")
     @Expose
-    var totalMyWithdrawal: String = "0.0"
+    var totalMyWithdrawal: String = "0.0",
 
+    @SerializedName("upcomingmatches")
+    @Expose
+    var upComingMatches: ArrayList<UpcomingMatchesModel>? = null,
+
+    @SerializedName("joinedmatches")
+    @Expose
+    var joinedMatchModel: ArrayList<JoinedMatchModel>? = null,
+
+    @SerializedName("banners")
+    @Expose
+    var matchBanners: ArrayList<MatchBannersModel>? = null
 ) : Serializable

@@ -49,6 +49,7 @@ object MyPreferences {
 
 
     val KEY_UPCOMING_MATCHES = "upcoming_matches_list"
+    val KEY_NEW_UPCOMING_MATCHES = "new_upcoming_matches_list"
     val KEY_TRANSACTION_HISTORY = "transaction_history"
 
     private fun getPreferences(context: Context?): SharedPreferences? {

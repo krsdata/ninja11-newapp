@@ -117,7 +117,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     }
 
     fun viewAllMatches() {
-        mBinding!!.navigation.selectedItemId = R.id.navigation_home
+        mBinding!!.navigation.selectedItemId = R.id.navigation_dashboard
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -365,8 +365,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             val options = ActivityOptions.makeSceneTransitionAnimation(this@MainActivity)
             startActivity(intent, options.toBundle())
         } else if (position == 4) {
-            fragment = MoreOptionsFragment()
-            loadFragment()
             mBinding!!.navigation.selectedItemId = R.id.navigation_notifications
         } else if (position == 5) {
             logoutApp("Are you sure you want to logout", true)

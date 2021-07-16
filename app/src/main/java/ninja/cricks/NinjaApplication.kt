@@ -16,15 +16,12 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import io.branch.referral.Branch
-import ninja.cricks.models.MatchesModels
-import ninja.cricks.models.TransactionModel
-import ninja.cricks.models.UserInfo
-import ninja.cricks.models.WalletInfo
+import ninja.cricks.models.*
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
+import ninja.cricks.utils.MyPreferences.KEY_NEW_UPCOMING_MATCHES
 import ninja.cricks.utils.MyPreferences.KEY_TRANSACTION_HISTORY
 import ninja.cricks.utils.MyPreferences.KEY_UPCOMING_MATCHES
 import ninja.cricks.utils.MyUtils
@@ -206,4 +203,26 @@ class NinjaApplication : MultiDexApplication() {
                 }
             })
     }
+
+    fun saveNewUpcomingMatches(value: ArrayList<UpcomingMatchesModel>?) {
+        if (value != null) {
+            val gson = Gson()
+            val data = gson.toJson(value)
+            MyPreferences.setSFApiCaches(applicationContext, KEY_NEW_UPCOMING_MATCHES, data)
+        }
+    }
+
+    val getNewUpcomingMatches: ArrayList<UpcomingMatchesModel>
+        get() {
+            var mStoreListModels: ArrayList<UpcomingMatchesModel>? = null
+            val type = object : TypeToken<ArrayList<UpcomingMatchesModel>>() {
+
+            }.type
+            val gson = Gson()
+            val gsonObject = MyPreferences.getSFApiCaches(this, KEY_NEW_UPCOMING_MATCHES)
+            if (gsonObject != null) {
+                mStoreListModels = gson.fromJson<ArrayList<UpcomingMatchesModel>>(gsonObject, type)
+            }
+            return mStoreListModels ?: ArrayList()
+        }
 }

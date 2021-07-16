@@ -44,7 +44,7 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_50sdp"
+                    android:layout_height="@dimen/_45sdp"
                     android:layout_weight="1"
                     android:background="@color/secondery_color"
                     android:gravity="center|start"
@@ -93,7 +93,7 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_50sdp"
+                    android:layout_height="@dimen/_45sdp"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_weight="1"
                     android:background="@color/player_bg_dark_yellow"
@@ -170,10 +170,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/matches_view_left_margin_inner"
+                android:layout_marginStart="@dimen/matches_view_left_margin_inner"
                 android:layout_marginTop="@dimen/matches_gap_between_each_views"
-                android:layout_marginRight="@dimen/matches_view_right_margin_inner"
-                android:orientation="horizontal">
+                android:layout_marginEnd="@dimen/matches_view_right_margin_inner"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -198,8 +200,6 @@
                         android:text="₹3 Lakhs"
                         android:textColor="@color/black"
                         android:textSize="@dimen/small_info_size" />
-
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -225,8 +225,6 @@
                         android:text="6689"
                         android:textColor="@color/black"
                         android:textSize="@dimen/small_info_size" />
-
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -252,21 +250,15 @@
                         android:text="₹49"
                         android:textColor="@color/black"
                         android:textSize="@dimen/small_info_size" />
-
-
                 </LinearLayout>
-
-
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.4dp"
                 android:layout_marginTop="10dp"
+                android:visibility="gone"
                 android:background="@color/greyish" />
-
-
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
 </layout>

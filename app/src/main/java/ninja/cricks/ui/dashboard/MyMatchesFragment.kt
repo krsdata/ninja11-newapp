@@ -11,7 +11,6 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayout.TabLayoutOnPageChangeListener
-import ninja.cricks.MainActivity
 import ninja.cricks.R
 import ninja.cricks.ui.mymatches.MyCompletedMatchesFragment
 import ninja.cricks.ui.mymatches.MyLiveMatchesFragment
@@ -27,14 +26,10 @@ class MyMatchesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_mymatches, container, false)
-        viewpager= root.findViewById(R.id.viewpager)
+        viewpager = root.findViewById(R.id.viewpager)
         tabLayout = root.findViewById(R.id.tabs)
         setupViewPager()
         return root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     private fun setupViewPager() {
@@ -59,29 +54,6 @@ class MyMatchesFragment : Fragment() {
 
         val tab = tabLayout!!.getTabAt(0)
         tab?.select()
-    }
-
-    internal inner class ViewPagerAdapter(manager: FragmentManager) :
-        FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-        private val mFragmentList = ArrayList<Fragment>()
-        private val mFragmentTitleList = ArrayList<String>()
-
-        override fun getItem(position: Int): Fragment {
-            return mFragmentList[position]
-        }
-
-        override fun getCount(): Int {
-            return mFragmentList.size
-        }
-
-        fun addFragment(fragment: Fragment, title: String) {
-            mFragmentList.add(fragment)
-            mFragmentTitleList.add(title)
-        }
-
-        override fun getPageTitle(position: Int): CharSequence {
-            return mFragmentTitleList[position]
-        }
     }
 
     class MyAdapter internal constructor(fm: FragmentManager?, var totalTabs: Int) :

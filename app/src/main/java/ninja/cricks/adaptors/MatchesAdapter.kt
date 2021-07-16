@@ -101,7 +101,7 @@ class MatchesAdapter(val context: Context, val tradeInfoModels: ArrayList<Matche
             viewBanners.recyclerView.setDirection(AutoScrollViewPager.Direction.RIGHT)
             viewBanners.recyclerView.setCycle(true)
             viewBanners.recyclerView.setBorderAnimation(true)
-            viewBanners.recyclerView.visibility = View.VISIBLE
+            viewBanners.recyclerView.visibility = View.GONE
 
         } else if (objectVal.viewType == TYPE_UPCOMING_MATCHES) {
             val objectVal = matchesListObject[position]
@@ -130,7 +130,7 @@ class MatchesAdapter(val context: Context, val tradeInfoModels: ArrayList<Matche
         }
     }
 
-    fun setMatchesList(matchesList: java.util.ArrayList<MatchesModels>?) {
+    fun setMatchesList(matchesList: ArrayList<MatchesModels>?) {
         this.matchesListObject = matchesList!!
         notifyDataSetChanged()
     }
@@ -167,4 +167,3 @@ class MatchesAdapter(val context: Context, val tradeInfoModels: ArrayList<Matche
 
     }
 }
-

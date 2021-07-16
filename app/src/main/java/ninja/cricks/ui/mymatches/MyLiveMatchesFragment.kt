@@ -45,7 +45,6 @@ class MyLiveMatchesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         mBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_my_live, container, false

@@ -8,21 +8,30 @@
             type="ninja.cricks.ui.mymatches.MyCompletedMatchesFragment" />
     </data>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/light_grey_bg">
 
+        <include
+            android:id="@+id/include_live_match_row"
+            layout="@layout/score_board_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_my_upcoming"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_below="@+id/include_live_match_row" />
 
         <LinearLayout
             android:id="@+id/linear_empty_contest"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
+            android:layout_below="@+id/include_live_match_row"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -62,7 +71,7 @@
             android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_gravity="center" />
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </RelativeLayout>
 </layout>

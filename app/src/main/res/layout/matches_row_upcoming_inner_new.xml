@@ -11,6 +11,7 @@
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginTop="@dimen/matches_view_top_margin"
         android:layout_marginEnd="@dimen/_8sdp"
+        android:minHeight="@dimen/_95sdp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="6dp"
         app:cardElevation="12dp">
@@ -58,8 +59,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ll_title"
                     android:baselineAligned="false"
-                    android:orientation="horizontal"
                     android:minHeight="@dimen/_65sdp"
+                    android:orientation="horizontal"
                     android:weightSum="5">
 
                     <LinearLayout
@@ -115,8 +116,8 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="2.8"
                         android:layout_gravity="center"
+                        android:layout_weight="2.8"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -285,9 +286,9 @@
         android:layout_alignParentEnd="true"
         android:layout_gravity="end"
         android:layout_marginStart="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_25sdp"
         android:layout_marginBottom="@dimen/_5sdp"
-        android:layout_marginTop="@dimen/_5sdp"
         android:background="@drawable/fixture_match_notification"
         android:fontFamily="@font/montserrat_regular"
         android:gravity="center"
