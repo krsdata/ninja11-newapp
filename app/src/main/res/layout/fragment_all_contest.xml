@@ -194,6 +194,8 @@
             android:id="@+id/contest_filter_refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_above="@+id/bottom_layout"
             android:layout_below="@+id/top_new_filter">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -211,7 +213,7 @@
         <LinearLayout
             android:id="@+id/bottom_layout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_height="@dimen/_40sdp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:background="@color/greybackround">
@@ -219,7 +221,7 @@
             <TextView
                 android:id="@+id/btn_create_team"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_40sdp"
+                android:layout_height="@dimen/_35sdp"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:layout_gravity="center"

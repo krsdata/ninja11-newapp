@@ -203,7 +203,7 @@
                     <TextView
                         android:id="@+id/captain_player_name"
                         android:layout_width="@dimen/_55sdp"
-                        android:layout_height="@dimen/_17sdp"
+                        android:layout_height="@dimen/_15sdp"
                         android:layout_gravity="center"
                         android:background="@drawable/ract_white_background"
                         android:gravity="center"
@@ -252,7 +252,7 @@
                     <TextView
                         android:id="@+id/vc_player_name"
                         android:layout_width="@dimen/_55sdp"
-                        android:layout_height="@dimen/_17sdp"
+                        android:layout_height="@dimen/_15sdp"
                         android:layout_gravity="center"
                         android:background="@drawable/ract_black_background"
                         android:gravity="center"

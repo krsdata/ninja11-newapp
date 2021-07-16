@@ -5,5 +5,5 @@
     android:layout_height="@dimen/_75sdp"
     android:layout_marginLeft="@dimen/_8sdp"
     android:layout_marginTop="@dimen/matches_view_top_margin"
-    android:visibility="gone"
+    android:visibility="visible"
     android:layout_marginRight="@dimen/_8sdp" />

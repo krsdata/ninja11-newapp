@@ -104,7 +104,6 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
         adapter = MatchesAdapter(requireActivity(), allmatchesArrayList)
         mBinding!!.allGameViewRecycler.adapter = adapter
         getAllMatches()
-        getMessage()
     }
 
     private fun isValidRequest(): Boolean {
@@ -219,65 +218,6 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
 
     override fun onRefresh() {
         getAllMatches()
-        getMessage()
-    }
-
-    private fun getMessage() {
-        if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
-            return
-        }
-        mBinding!!.swipeRefresh.isRefreshing = true
-
-        val jsonRequest = JsonObject()
-        jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
-        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
-        jsonRequest.addProperty("version_code", BuildConfig.VERSION_CODE)
-
-        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
-            .getMessages(jsonRequest)
-            .enqueue(object : Callback<JsonObject?> {
-                override fun onFailure(call: Call<JsonObject?>?, t: Throwable?) {
-
-                }
-
-                override fun onResponse(
-                    call: Call<JsonObject?>?,
-                    response: Response<JsonObject?>?
-                ) {
-                    if (isVisible) {
-                        mBinding!!.swipeRefresh.isRefreshing = false
-                        val resObje = response!!.body().toString()
-                        val jsonObject = JSONObject(resObje)
-                        if (jsonObject.optBoolean("status")) {
-                            val array = jsonObject.getJSONArray("data")
-                            val data = array.getJSONObject(0)
-                            if (data.optInt("message_status") == 0) {
-                                mBinding!!.messageCard.visibility = View.GONE
-                            } else {
-                                if (data.getString("message_type") == "HTML") {
-                                    mBinding!!.labelMessage.linksClickable = true
-                                    mBinding!!.labelMessage.movementMethod =
-                                        LinkMovementMethod.getInstance()
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                        mBinding!!.labelMessage.text =
-                                            Html.fromHtml(
-                                                data.getString("message"),
-                                                Html.FROM_HTML_MODE_COMPACT
-                                            )
-                                    } else {
-                                        mBinding!!.labelMessage.text = Html.fromHtml(
-                                            data.getString("message")
-                                        )
-                                    }
-                                } else {
-                                    mBinding!!.labelMessage.text = data.getString("message")
-                                }
-                                mBinding!!.messageCard.visibility = View.VISIBLE
-                            }
-                        }
-                    }
-                }
-            })
     }
 
     private fun showAlert(offerImage: String) {

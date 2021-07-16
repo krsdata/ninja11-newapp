@@ -250,6 +250,7 @@ class LeadersBoardActivity : BaseActivity() {
 
     private fun initUpcomingMatchData() {
         mBinding!!.viewLayout.visibility = View.VISIBLE
+        mBinding!!.includeContestRow.freeView.visibility = View.GONE
 
         mBinding!!.teamsa.text = matchObject!!.teamAInfo!!.teamShortName
         mBinding!!.teamsb.text = matchObject!!.teamBInfo!!.teamShortName
@@ -322,9 +323,11 @@ class LeadersBoardActivity : BaseActivity() {
 
         if(contestObject!!.extra_cash_usable == "1"){
             mBinding!!.includeContestRow.linearEc.visibility = View.VISIBLE
+            mBinding!!.extraCash.visibility = View.VISIBLE
             mBinding!!.includeContestRow.contestExtraCash.text = String.format("%d%s", contestObject!!.usableExtraCashPercent, "%")
         } else {
             mBinding!!.includeContestRow.linearEc.visibility = View.GONE
+            mBinding!!.extraCash.visibility = View.GONE
         }
 
         mBinding!!.includeContestRow.contestMultiplayer.text = String.format("%d",contestObject!!.maxAllowedTeam)

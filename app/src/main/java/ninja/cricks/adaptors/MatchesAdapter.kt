@@ -22,7 +22,6 @@ import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyUtils
 import pl.pzienowicz.autoscrollviewpager.AutoScrollViewPager
 
-
 class MatchesAdapter(val context: Context, val tradeInfoModels: ArrayList<MatchesModels>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var onItemClick: ((MatchesModels) -> Unit)? = null
@@ -75,11 +74,6 @@ class MatchesAdapter(val context: Context, val tradeInfoModels: ArrayList<Matche
                 }
             }
 
-            Glide.with(context)
-                .load(BindingUtils.BASE_URL_MAIN + "banners/joined_contest_bg.jpg")
-                .placeholder(R.drawable.placeholder_player_teama)
-                .into(viewJoinedMatches.backgroundImage)
-
             viewJoinedMatches.txtViewAll.setOnClickListener {
                 (mContext as MainActivity).viewAllMatches()
             }
@@ -101,7 +95,6 @@ class MatchesAdapter(val context: Context, val tradeInfoModels: ArrayList<Matche
             viewBanners.recyclerView.setDirection(AutoScrollViewPager.Direction.RIGHT)
             viewBanners.recyclerView.setCycle(true)
             viewBanners.recyclerView.setBorderAnimation(true)
-            viewBanners.recyclerView.visibility = View.GONE
 
         } else if (objectVal.viewType == TYPE_UPCOMING_MATCHES) {
             val objectVal = matchesListObject[position]
@@ -154,7 +147,6 @@ class MatchesAdapter(val context: Context, val tradeInfoModels: ArrayList<Matche
     inner class ViewHolderJoinedMatches(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val recyclerView: RecyclerView = itemView.findViewById(R.id.recycler_joined_matches)
         val txtViewAll: TextView = itemView.findViewById(R.id.txtViewAll)
-        val backgroundImage: ImageView = itemView.findViewById(R.id.imageView4)
     }
 
     inner class BannersViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -164,6 +156,5 @@ class MatchesAdapter(val context: Context, val tradeInfoModels: ArrayList<Matche
     inner class UpcomingMatchesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val recyclerView: RecyclerView = itemView.findViewById(R.id.recycler_upcoming_matches)
         val linearEmptyView: LinearLayout = itemView.findViewById(R.id.linear_empty_view)
-
     }
 }

@@ -165,7 +165,8 @@
                 android:id="@+id/include_contest_row"
                 layout="@layout/contest_rows_inner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_8sdp"/>
 
             <include
                 android:id="@+id/include_live_match_row"

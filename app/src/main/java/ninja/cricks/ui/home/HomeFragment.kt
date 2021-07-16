@@ -81,8 +81,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupViewPager() {
-        mBinding.viewpager.visibility = View.INVISIBLE
-        mBinding.tabs.visibility = View.INVISIBLE
         mBinding.tabs.addTab(mBinding.tabs.newTab().setText(getString(R.string.mymatch_upcoming)))
         mBinding.tabs.addTab(mBinding.tabs.newTab().setText(getString(R.string.mymatch_live)))
         mBinding.tabs.addTab(mBinding.tabs.newTab().setText(getString(R.string.mymatch_completed)))
@@ -103,6 +101,67 @@ class HomeFragment : Fragment() {
 
         val tab = mBinding.tabs.getTabAt(0)
         tab!!.select()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getMessage()
+    }
+
+    private fun getMessage() {
+        if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
+            return
+        }
+
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
+        jsonRequest.addProperty("version_code", BuildConfig.VERSION_CODE)
+
+        WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
+            .getMessages(jsonRequest)
+            .enqueue(object : Callback<JsonObject?> {
+                override fun onFailure(call: Call<JsonObject?>?, t: Throwable?) {
+
+                }
+
+                override fun onResponse(
+                    call: Call<JsonObject?>?,
+                    response: Response<JsonObject?>?
+                ) {
+                    if (isVisible) {
+                        val resObje = response!!.body().toString()
+                        val jsonObject = JSONObject(resObje)
+                        if (jsonObject.optBoolean("status")) {
+                            val array = jsonObject.getJSONArray("data")
+                            val data = array.getJSONObject(0)
+                            if (data.optInt("message_status") == 0) {
+                                mBinding!!.messageCard.visibility = View.GONE
+                            } else {
+                                if (data.getString("message_type") == "HTML") {
+                                    mBinding!!.labelMessage.linksClickable = true
+                                    mBinding!!.labelMessage.movementMethod =
+                                        LinkMovementMethod.getInstance()
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                        mBinding!!.labelMessage.text =
+                                            Html.fromHtml(
+                                                data.getString("message"),
+                                                Html.FROM_HTML_MODE_COMPACT
+                                            )
+                                    } else {
+                                        mBinding!!.labelMessage.text = Html.fromHtml(
+                                            data.getString("message")
+                                        )
+                                    }
+                                } else {
+                                    mBinding!!.labelMessage.text = data.getString("message")
+                                }
+                                mBinding!!.messageCard.visibility = View.VISIBLE
+                            }
+                        }
+                    }
+                }
+            })
     }
 
     inner class MyAdapter(fm: FragmentManager?, var totalTabs: Int) :
