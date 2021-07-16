@@ -196,7 +196,7 @@
                     <ImageView
                         android:id="@+id/captain_imageView"
                         android:layout_width="@dimen/_40sdp"
-                        android:layout_height="@dimen/_35sdp"
+                        android:layout_height="@dimen/_30sdp"
                         android:scaleType="fitXY"
                         android:src="@drawable/player_blue" />
 
@@ -245,7 +245,7 @@
                     <ImageView
                         android:id="@+id/vc_imageView"
                         android:layout_width="@dimen/_40sdp"
-                        android:layout_height="@dimen/_35sdp"
+                        android:layout_height="@dimen/_30sdp"
                         android:scaleType="fitXY"
                         android:src="@drawable/player_blue" />
 

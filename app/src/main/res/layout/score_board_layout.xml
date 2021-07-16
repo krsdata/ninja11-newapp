@@ -31,6 +31,7 @@
                     android:text="SCORECARD"
                     android:textColor="@color/black"
                     android:textSize="16sp"
+                    android:layout_margin="@dimen/_5sdp"
                     android:textStyle="bold" />
             </RelativeLayout>
 
@@ -44,7 +45,7 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="@dimen/_40sdp"
                     android:layout_weight="1"
                     android:background="@color/secondery_color"
                     android:gravity="center|start"
@@ -93,7 +94,7 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_45sdp"
+                    android:layout_height="@dimen/_40sdp"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_weight="1"
                     android:background="@color/player_bg_dark_yellow"

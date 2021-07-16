@@ -16,7 +16,7 @@
     <TextView
         android:id="@+id/player_name"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_17sdp"
+        android:layout_height="@dimen/_16sdp"
         android:layout_below="@+id/imageView"
         android:background="@drawable/preview_name_black"
         android:fontFamily="@font/roboto"

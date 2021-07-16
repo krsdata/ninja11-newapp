@@ -181,12 +181,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/contest_views"
-            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_7sdp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_7sdp"
             android:layout_marginBottom="@dimen/_5sdp"
             android:baselineAligned="false"
             android:orientation="horizontal"
+            android:padding="@dimen/_5sdp"
+            android:background="@color/greybackround"
             android:weightSum="2">
 
             <LinearLayout
@@ -210,7 +212,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
-                    android:text="M = Multiple Team Join"
+                    android:text="M = Multiple Team"
                     android:textColor="@color/grand_league"
                     android:textSize="@dimen/_12sdp" />
             </LinearLayout>

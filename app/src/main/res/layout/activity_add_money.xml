@@ -361,10 +361,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_45sdp"
                 android:layout_below="@+id/coupon_code_layout"
-                android:layout_margin="10dp"
+                android:layout_margin="35dp"
+                android:layout_marginLeft="@dimen/_10sdp"
                 android:background="@drawable/default_rounded_button_sportsfight"
                 android:orientation="vertical"
-                android:padding="10dip">
+
+                android:padding="5dip">
 
                 <TextView
                     android:id="@+id/add_Cash"
