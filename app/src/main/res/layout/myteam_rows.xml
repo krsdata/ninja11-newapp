@@ -41,9 +41,10 @@
 
                 <ImageView
                     android:id="@+id/team_edit"
-                    android:layout_width="0dp"
+                    android:layout_width="30dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_weight="3"
                     android:src="@drawable/ic_edit_black_24dp"
                     android:visibility="invisible" />
 
@@ -103,7 +104,7 @@
                             android:fontFamily="@font/montserrat_bold"
                             android:maxLength="4"
                             android:maxLines="1"
-                            android:text="SL-W"
+                            android:text="SL"
                             android:textColor="@color/white"
                             android:textSize="10sp" />
 
@@ -134,7 +135,7 @@
                             android:fontFamily="@font/montserrat_bold"
                             android:maxLength="4"
                             android:maxLines="1"
-                            android:text="BD-W"
+                            android:text="IND"
                             android:textColor="@color/white"
                             android:textSize="10sp" />
 
@@ -205,14 +206,14 @@
                         android:layout_width="@dimen/_55sdp"
                         android:layout_height="@dimen/_15sdp"
                         android:layout_gravity="center"
-                        android:background="@drawable/ract_white_background"
+                        android:background="@drawable/ract_black_background"
                         android:gravity="center"
                         android:maxLines="1"
                         android:paddingLeft="@dimen/_5sdp"
                         android:paddingRight="@dimen/_5sdp"
                         android:singleLine="true"
                         android:text="Virat Kohli"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_8sdp" />
                 </LinearLayout>
 

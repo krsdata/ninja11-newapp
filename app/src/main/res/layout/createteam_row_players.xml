@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/linear_trades_status"
     android:layout_width="match_parent"
-    android:layout_height="63dp"
+    android:layout_height="65dp"
     android:background="@color/white"
     android:baselineAligned="false"
     android:orientation="horizontal"
@@ -53,7 +53,7 @@
             android:id="@+id/player_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat_medium"
+            android:fontFamily="@font/open_sans_semibold"
             android:maxLines="1"
             android:padding="@dimen/_2sdp"
             android:singleLine="true"
@@ -94,8 +94,9 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:text="Announced"
+                android:fontFamily="@font/open_sans_semibold"
                 android:textColor="@color/green"
-                android:textSize="@dimen/_7sdp" />
+                android:textSize="@dimen/_8sdp" />
         </LinearLayout>
     </LinearLayout>
 

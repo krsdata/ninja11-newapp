@@ -38,9 +38,9 @@
                     android:id="@+id/top_layout"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_90sdp"
-                    android:background="#545454">
+                    android:background="@color/text_view_color">
 
-                    <ImageView
+                   <ImageView
                         android:id="@+id/player_in_lineup"
                         android:layout_width="@dimen/_7sdp"
                         android:layout_height="@dimen/_7sdp"
@@ -82,7 +82,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_alignParentTop="true"
-                        android:background="#545454"
+                        android:background="@color/downwhite"
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -93,11 +93,11 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginEnd="@dimen/_10sdp"
-                            android:fontFamily="@font/montserrat_medium"
+                            android:fontFamily="@font/open_sans_semibold"
                             android:ellipsize="end"
                             android:gravity="center"
-                            android:text=""
-                            android:textColor="@color/white"
+                            android:text="MSD"
+                            android:textColor="@color/black"
                             android:textSize="@dimen/_16sdp"/>
                     </LinearLayout>
 
@@ -286,7 +286,7 @@
                 android:layout_height="@dimen/_30sdp"
                 android:layout_gravity="center"
                 android:ellipsize="end"
-                android:fontFamily="@font/montserrat_medium"
+                android:fontFamily="@font/open_sans_light"
                 android:gravity="center"
                 android:background="@color/button_material_light"
                 android:text="Matchwise Fantasy Stats"

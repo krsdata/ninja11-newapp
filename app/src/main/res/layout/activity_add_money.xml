@@ -135,7 +135,7 @@
                     android:maxLength="5"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="500"
+                    android:text="100"
                     android:textSize="@dimen/_18sdp" />
 
                 <LinearLayout

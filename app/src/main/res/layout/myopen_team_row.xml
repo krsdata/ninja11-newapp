@@ -188,14 +188,14 @@
                             android:layout_width="@dimen/_55sdp"
                             android:layout_height="@dimen/_15sdp"
                             android:layout_gravity="center"
-                            android:background="@drawable/ract_white_background"
+                            android:background="@drawable/ract_black_background"
                             android:gravity="center"
                             android:maxLines="1"
                             android:paddingLeft="@dimen/_5sdp"
                             android:paddingRight="@dimen/_5sdp"
                             android:singleLine="true"
                             android:text="Virat Kohli"
-                            android:textColor="@color/black"
+                            android:textColor="@color/white"
                             android:textSize="@dimen/_8sdp" />
                     </LinearLayout>
 

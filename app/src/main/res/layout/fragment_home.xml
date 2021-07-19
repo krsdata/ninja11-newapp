@@ -60,6 +60,7 @@
             app:tabTextAppearance="@style/TabTextAppearance"
             app:tabTextColor="@color/black" />
 
+<!--
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
@@ -67,6 +68,15 @@
             android:layout_below="@+id/tabs"
             android:layout_marginTop="@dimen/_10sdp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+-->
+
+        <ninja.cricks.customviews.NoSwipeViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/tabs"
+            android:elevation="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_height="match_parent" />
 
     </RelativeLayout>
 </layout>

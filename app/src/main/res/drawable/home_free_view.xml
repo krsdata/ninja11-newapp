@@ -4,7 +4,7 @@
 
     <solid
         android:color="@color/home_free_view"/>
-
+    <solid android:color="@color/lightblue" />
     <corners
         android:bottomRightRadius="@dimen/_2sdp"
         android:topRightRadius="@dimen/_2sdp"
