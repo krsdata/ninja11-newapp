@@ -80,20 +80,7 @@ class MoreOptionsFragment : BaseFragment() {
             }
         }
 
-        val upcomingModel10 = MoreOptionsModel()
-        upcomingModel10.viewType = TYPE_LOCAL
-        upcomingModel10.drawable = R.drawable.ic_action_affiliate
-        upcomingModel10.id = 10
-        upcomingModel10.title = "LeaderBoard Contest"
-        allOptionsList.add(upcomingModel10)
-
-        val upcomingModel = MoreOptionsModel()
-        upcomingModel.viewType = TYPE_LOCAL
-        upcomingModel.drawable = R.drawable.ic_action_affiliate
-        upcomingModel.id = 0
-        upcomingModel.title = "My-Affiliate"
-        allOptionsList.add(upcomingModel)
-
+        
         val upcomingModel1 = MoreOptionsModel()
         upcomingModel1.viewType = TYPE_LOCAL
         upcomingModel1.drawable = R.drawable.ic_action_top_referral
@@ -218,11 +205,7 @@ class MoreOptionsFragment : BaseFragment() {
                     when (objects.id) {
                         0 -> {
                             val intent = Intent(requireActivity(), WebActivity::class.java)
-                            intent.putExtra(
-                                WebActivity.KEY_TITLE,
-                                BindingUtils.WEB_TITLE_MY_AFFILIATE
-                            )
-                            intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_MY_AFFILIATE)
+
                             intent.putExtra(
                                 WebActivity.USER_ID,
                                 MyPreferences.getUserID(requireActivity())!!
@@ -308,13 +291,7 @@ class MoreOptionsFragment : BaseFragment() {
                         9 -> {
                             logoutApp("Are you sure you want to logout", true)
                         }
-                        10 -> {
-                            val intent =
-                                Intent(requireActivity(), ContestLeaderBoardActivity::class.java)
-                            val options =
-                                ActivityOptions.makeSceneTransitionAnimation(activity)
-                            startActivity(intent, options.toBundle())
-                        }
+                         
                     }
                 }
             }
@@ -450,15 +427,7 @@ class MoreOptionsFragment : BaseFragment() {
                         startActivity(intent, options.toBundle())
                     }
 
-                    12 -> {
-                        val intent = Intent(requireActivity(), WebActivity::class.java)
-                        intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_MY_AFFILIATE)
-                        intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_MY_AFFILIATE)
-                        intent.putExtra(WebActivity.USER_ID, MyPreferences.getUserID(requireActivity())!!)
-                        val options =
-                            ActivityOptions.makeSceneTransitionAnimation(activity)
-                        startActivity(intent, options.toBundle())
-                    }
+                     
                 }
             }
         }

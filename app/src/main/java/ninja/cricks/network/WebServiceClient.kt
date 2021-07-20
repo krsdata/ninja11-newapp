@@ -91,7 +91,7 @@ class WebServiceClient(val context: Context) {
             }
             if (retrofit == null) {
                 retrofit = Retrofit.Builder()
-//                    .baseUrl("https://rest.fancode11.com/api/v3/")
+//                    .baseUrl("https://api.justkhelo.com/api/v3/")
                     .baseUrl(BindingUtils.BASE_URL_MAIN_API)
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(okHttpClient)

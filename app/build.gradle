@@ -11,13 +11,13 @@ android {
 
     defaultConfig {
         applicationId "ninja.cricks"
-        minSdkVersion 21
+        minSdkVersion 20
         targetSdkVersion 30
-        versionCode 3207
-        versionName "2.07"
+        versionCode 1000
+        versionName "1.0"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
-        setProperty("archivesBaseName", "Ninja11-$versionName")
+        setProperty("archivesBaseName", "justkhelo-$versionName")
     }
 
     dataBinding {

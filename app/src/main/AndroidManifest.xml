@@ -46,7 +46,7 @@
             <intent-filter>
                 <data
                     android:host="open"
-                    android:scheme="ninja11" />
+                    android:scheme="justkhelo" />
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />

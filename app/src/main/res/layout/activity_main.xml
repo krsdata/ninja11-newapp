@@ -45,7 +45,7 @@
                         android:layout_marginTop="@dimen/_7sdp"
                         android:layout_marginBottom="@dimen/_7sdp"
                         android:adjustViewBounds="true"
-                        android:src="@drawable/home_header" />
+                        android:src="@drawable/home_hdr_logo" />
 
                     <com.mikhaellopez.circularimageview.CircularImageView
                         android:id="@+id/profile_image"
@@ -62,7 +62,8 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:src="@drawable/ic_wallet_new"
-                        app:tint="@color/white" />
+                        app:tint="@color/white"
+                        android:visibility="gone"/>
 
                     <ImageView
                         android:id="@+id/notification_id"

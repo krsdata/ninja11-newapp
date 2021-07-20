@@ -68,7 +68,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
                         android:layout_centerVertical="true"
-                        android:background="@color/red" />
+                        android:background="@color/red"
+                        android:visibility="gone"/>
 
                     <com.mikhaellopez.circularimageview.CircularImageView
                         android:id="@+id/teama_logo"
@@ -177,7 +178,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
                         android:layout_centerVertical="true"
-                        android:background="@color/red" />
+                        android:background="@color/red"
+                        android:visibility="gone"/>
 
                     <com.mikhaellopez.circularimageview.CircularImageView
                         android:id="@+id/teamb_logo"

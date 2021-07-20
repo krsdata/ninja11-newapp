@@ -25,7 +25,7 @@
             android:layout_marginRight="60dp"
             android:fontFamily="@font/catamaran_extrabold"
             android:gravity="center"
-            android:text="INDIA'S BIGGEST FANTASY SPORTS PLATFORM"
+            android:text="JUST KHELO"
             android:textColor="@color/white"
             android:textSize="@dimen/_14sdp" />
 
@@ -194,6 +194,6 @@
             android:layout_above="@+id/tnc_policy"
             android:layout_centerInParent="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/home_header" />
+            android:src="@drawable/home_hdr_logo" />
     </RelativeLayout>
 </layout>

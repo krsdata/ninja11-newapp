@@ -57,7 +57,7 @@ class InviteFriendsActivity : AppCompatActivity() {
         mBinding!!.rereralCode.text = userInfo!!.referalCode
 
         buo = BranchUniversalObject()
-            .setTitle("Ninja11")
+            .setTitle("Justkhelo")
             .setContentDescription("Cricket Fantasy App")
             .setContentIndexingMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
             .setLocalIndexMode(BranchUniversalObject.CONTENT_INDEX_MODE.PUBLIC)
@@ -96,8 +96,8 @@ class InviteFriendsActivity : AppCompatActivity() {
         }
 
         shareSheetStyle = ShareSheetStyle(
-            mContext!!, "Ninja11",
-            "Welcome to Ninja11. Register on Ninja11 application with this link.\n\nUse my referral code \"" + userInfo!!.referalCode +
+            mContext!!, "Justkhelo",
+            "Welcome to Justkhelo. Register on Justkhelo application with this link.\n\nUse my referral code \"" + userInfo!!.referalCode +
                     "\" and get extra Rs. 100 Bonus on Joining.".trimIndent()
         )
             .setAsFullWidthStyle(false)
@@ -121,20 +121,20 @@ class InviteFriendsActivity : AppCompatActivity() {
     private fun shareReferCode() {
 
         if (url == null || url == "") {
-            url = "https://www.ninja11.in/Ninja11.apk"
+            url = "https://www.justkhelo.com/justkhelo.apk"
         }
 
         val msg: String =
-            "Welcome to Ninja11.\n\nRegister on Ninja11 application with this link.\n\nUse my referral code \"" + userInfo!!.referalCode +
+            "Welcome to Justkhelo.\n\nRegister on justkhelo application with this link.\n\nUse my referral code \"" + userInfo!!.referalCode +
                     "\" and get extra Rs. 100 Bonus on Joining.\n\n $url".trimIndent()
         FirebaseCrashlytics.getInstance().log("share message =========> $msg")
 
         val sendIntent = Intent()
         sendIntent.action = Intent.ACTION_SEND
         sendIntent.putExtra(Intent.EXTRA_TEXT, msg)
-        sendIntent.putExtra(Intent.EXTRA_TITLE, "Ninja11")
+        sendIntent.putExtra(Intent.EXTRA_TITLE, "Justkhelo")
         sendIntent.type = "text/plain"
-        val shareIntent = Intent.createChooser(sendIntent, "Ninja11")
+        val shareIntent = Intent.createChooser(sendIntent, "Justkhelo")
         startActivity(shareIntent)
     }
 }

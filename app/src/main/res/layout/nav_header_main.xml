@@ -19,7 +19,7 @@
             android:id="@+id/nav_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Manoj Prasad"
+            android:text="App"
             android:textSize="18sp"
             android:textColor="@color/white"
             android:fontFamily="@font/catamaran_extrabold"/>
@@ -27,7 +27,7 @@
             android:id="@+id/nav_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Manoj Prasad"
+            android:text="APP"
             android:textSize="14sp"
             android:textColor="@color/white"
             android:fontFamily="@font/roboto"/>
@@ -36,7 +36,7 @@
             android:id="@+id/nav_phonenumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="8767572614"
+            android:text="xxxxxxx"
             android:textSize="14sp"
             android:layout_marginTop="5dp"
             android:textColor="@color/white"
