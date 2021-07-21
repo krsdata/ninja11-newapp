@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="ninja.cricks"
+    package="justkhelo.cricks"
     tools:ignore="LockedOrientationActivity">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -18,7 +18,7 @@
         android:required="true" />
 
     <application
-        android:name="ninja.cricks.NinjaApplication"
+        android:name="justkhelo.cricks.NinjaApplication"
         android:allowBackup="false"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
@@ -33,7 +33,7 @@
         tools:replace="android:icon,android:theme">
 
         <activity
-            android:name="ninja.cricks.SplashScreenActivity"
+            android:name="justkhelo.cricks.SplashScreenActivity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -61,7 +61,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="ninja11.app.link"
+                    android:host="justkhelo.app.link"
                     android:scheme="https" />
             </intent-filter>
 
@@ -73,179 +73,179 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="ninja11-alternate.app.link"
+                    android:host="justkhelo-alternate.app.link"
                     android:scheme="https" />
             </intent-filter>
         </activity>
 
         <activity
-            android:name="ninja.cricks.ui.login.LoginScreenActivity"
+            android:name="justkhelo.cricks.ui.login.LoginScreenActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/screen_name_login"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.ui.login.RegisterScreenActivity"
+            android:name="justkhelo.cricks.ui.login.RegisterScreenActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/screen_name_register"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.MainActivity"
+            android:name="justkhelo.cricks.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/dashboard_theme" />
 
         <activity
-            android:name="ninja.cricks.ContestActivity"
+            android:name="justkhelo.cricks.ContestActivity"
             android:label="@string/activity_type_contest"
             android:screenOrientation="portrait" />
         <activity
-            android:name="ninja.cricks.MaintainanceActivity"
-            android:label="@string/activity_type_contest"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="ninja.cricks.QuizContestActivity"
+            android:name="justkhelo.cricks.MaintainanceActivity"
             android:label="@string/activity_type_contest"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.CreateTeamActivity"
+            android:name="justkhelo.cricks.QuizContestActivity"
+            android:label="@string/activity_type_contest"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="justkhelo.cricks.CreateTeamActivity"
             android:label="@string/activity_type_create_team"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.TeamPreviewActivity"
+            android:name="justkhelo.cricks.TeamPreviewActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.NotificationListActivity"
+            android:name="justkhelo.cricks.NotificationListActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.SaveTeamActivity"
+            android:name="justkhelo.cricks.SaveTeamActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.SelectTeamActivity"
+            android:name="justkhelo.cricks.SelectTeamActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.MyBalanceActivity"
+            android:name="justkhelo.cricks.MyBalanceActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.AddMoneyActivity"
+            android:name="justkhelo.cricks.AddMoneyActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.UpdateApplicationActivity"
+            android:name="justkhelo.cricks.UpdateApplicationActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/Translucent" />
 
         <activity
-            android:name="ninja.cricks.WebActivity"
+            android:name="justkhelo.cricks.WebActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.LeadersBoardActivity"
+            android:name="justkhelo.cricks.LeadersBoardActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.MoreContestActivity"
+            android:name="justkhelo.cricks.MoreContestActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.InviteFriendsActivity"
+            android:name="justkhelo.cricks.InviteFriendsActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.SupportActivity"
+            android:name="justkhelo.cricks.SupportActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.FullScreenImageViewActivity"
+            android:name="justkhelo.cricks.FullScreenImageViewActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.VerifyDocumentsActivity"
+            android:name="justkhelo.cricks.VerifyDocumentsActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.WithdrawAmountsActivity"
+            android:name="justkhelo.cricks.WithdrawAmountsActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.DocumentsListActivity"
+            android:name="justkhelo.cricks.DocumentsListActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.MyTransactionHistoryActivity"
+            android:name="justkhelo.cricks.MyTransactionHistoryActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.EditProfileActivity"
+            android:name="justkhelo.cricks.EditProfileActivity"
             android:label="Update Profile"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.ChangePasswordActivity"
+            android:name="justkhelo.cricks.ChangePasswordActivity"
             android:label="Change Password"
             android:screenOrientation="portrait" />
         <activity
-            android:name="ninja.cricks.RefferalFriendsListActivity"
+            android:name="justkhelo.cricks.RefferalFriendsListActivity"
             android:label="Update Profile"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.OtpVerifyActivity"
+            android:name="justkhelo.cricks.OtpVerifyActivity"
             android:label="Update Profile"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.ui.JoinContestActivity"
+            android:name="justkhelo.cricks.ui.JoinContestActivity"
             android:label="Join Contest"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.OfferActivity"
+            android:name="justkhelo.cricks.OfferActivity"
             android:label="Latest Offers"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.ContestLeaderBoardActivity"
+            android:name="justkhelo.cricks.ContestLeaderBoardActivity"
             android:label="Contest LeaderBoard"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.ViewUserDetailActivity"
+            android:name="justkhelo.cricks.ViewUserDetailActivity"
             android:label="User Info"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.PreviewTeamLeaderActivity"
+            android:name="justkhelo.cricks.PreviewTeamLeaderActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.PlayerInfoActivity"
+            android:name="justkhelo.cricks.PlayerInfoActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
@@ -265,7 +265,7 @@
         </provider>
 
         <service
-            android:name="ninja.cricks.fcm.MyFirebaseMessagingService"
+            android:name="justkhelo.cricks.fcm.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -303,7 +303,7 @@
         <!-- Branch init -->
         <meta-data
             android:name="io.branch.sdk.BranchKey"
-            android:value="key_live_kmLX9H0wFiENeUk9LH5cecnkBAoH4Qjv" />
+            android:value="key_live_jm3xaNlJA1941rJXbB9schlkFzj7h6zO" />
         <!-- Branch testing (TestMode "true" to simulate fresh installs on dev environment) -->
         <meta-data
             android:name="io.branch.sdk.TestMode"

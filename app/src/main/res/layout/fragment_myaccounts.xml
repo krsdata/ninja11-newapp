@@ -6,7 +6,7 @@
 
         <variable
             name="accountsmodel"
-            type="ninja.cricks.ui.dashboard.MyAccountFragment" />
+            type="justkhelo.cricks.ui.dashboard.MyAccountFragment" />
     </data>
 
     <RelativeLayout

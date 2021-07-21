@@ -6,7 +6,7 @@
 
         <variable
             name="onRefernEarn"
-            type="ninja.cricks.InviteFriendsActivity" />
+            type="justkhelo.cricks.InviteFriendsActivity" />
     </data>
 
     <LinearLayout

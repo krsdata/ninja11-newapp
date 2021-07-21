@@ -6,7 +6,7 @@
 
         <variable
             name="contentviews"
-            type="ninja.cricks.ui.login.LoginScreenActivity" />
+            type="justkhelo.cricks.ui.login.LoginScreenActivity" />
     </data>
 
     <RelativeLayout
@@ -124,7 +124,7 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <ninja.cricks.customviews.ArcBackgroundView
+        <justkhelo.cricks.customviews.ArcBackgroundView
             android:id="@+id/arc_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

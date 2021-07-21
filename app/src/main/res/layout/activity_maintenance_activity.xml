@@ -6,7 +6,7 @@
     <data>
         <variable
             name="contentviews"
-            type="ninja.cricks.MaintainanceActivity" />
+            type="justkhelo.cricks.MaintainanceActivity" />
     </data>
 
     <RelativeLayout
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="ninja.cricks.ContestActivity"
+        tools:context="justkhelo.cricks.ContestActivity"
         android:background="@color/white"
         >
 

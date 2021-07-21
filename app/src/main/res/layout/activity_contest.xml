@@ -7,7 +7,7 @@
 
         <variable
             name="contentviews"
-            type="ninja.cricks.ContestActivity" />
+            type="justkhelo.cricks.ContestActivity" />
     </data>
 
     <RelativeLayout
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="ninja.cricks.ContestActivity">
+        tools:context="justkhelo.cricks.ContestActivity">
 
         <LinearLayout
             android:id="@+id/linear_top_bar"
@@ -170,7 +170,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="0dp" />-->
-            <ninja.cricks.customviews.NoSwipeViewPager
+            <justkhelo.cricks.customviews.NoSwipeViewPager
                 android:id="@+id/viewpager_contest"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />

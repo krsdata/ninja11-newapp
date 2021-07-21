@@ -7,7 +7,7 @@
 
         <variable
             name="contentviews"
-            type="ninja.cricks.MyBalanceActivity" />
+            type="justkhelo.cricks.MyBalanceActivity" />
     </data>
 
     <RelativeLayout
@@ -17,7 +17,7 @@
         android:background="@color/light_grey_bg"
         android:fitsSystemWindows="true"
         android:orientation="vertical"
-        tools:context="ninja.cricks.CreateTeamActivity">
+        tools:context="justkhelo.cricks.CreateTeamActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"

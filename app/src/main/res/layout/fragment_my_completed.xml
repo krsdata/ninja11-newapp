@@ -5,7 +5,7 @@
 
         <variable
             name="viewmodel"
-            type="ninja.cricks.ui.mymatches.MyCompletedMatchesFragment" />
+            type="justkhelo.cricks.ui.mymatches.MyCompletedMatchesFragment" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

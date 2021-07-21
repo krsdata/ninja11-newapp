@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="ninja.cricks.ui.dashboard.FixtureCricketFragment"
+        android:name="justkhelo.cricks.ui.dashboard.FixtureCricketFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="ninja.cricks.ui.dashboard.MyMatchesFragment"
+        android:name="justkhelo.cricks.ui.dashboard.MyMatchesFragment"
         android:label="@string/title_mymatches"
         tools:layout="@layout/fragment_mymatches" />
 
     <fragment
         android:id="@+id/navigation_myaccount"
-        android:name="ninja.cricks.ui.dashboard.MyAccountFragment"
+        android:name="justkhelo.cricks.ui.dashboard.MyAccountFragment"
         android:label="@string/title_mymatches"
         tools:layout="@layout/fragment_mymatches" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="ninja.cricks.ui.dashboard.MoreOptionsFragment"
+        android:name="justkhelo.cricks.ui.dashboard.MoreOptionsFragment"
         android:label="@string/title_more"
         tools:layout="@layout/fragment_moreoptions" />
 </navigation>

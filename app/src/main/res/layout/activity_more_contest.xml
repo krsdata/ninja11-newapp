@@ -7,7 +7,7 @@
 
         <variable
             name="contentviews"
-            type="ninja.cricks.MoreContestActivity" />
+            type="justkhelo.cricks.MoreContestActivity" />
     </data>
 
     <RelativeLayout
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="ninja.cricks.MoreContestActivity">
+        tools:context="justkhelo.cricks.MoreContestActivity">
 
         <LinearLayout
             android:id="@+id/linear_top_bar"
