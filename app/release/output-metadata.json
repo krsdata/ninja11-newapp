@@ -4,7 +4,7 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "justkhelo.cricks",
+  "applicationId": "ninja.cricks",
   "variantName": "processReleaseResources",
   "elements": [
     {
@@ -12,7 +12,7 @@
       "filters": [],
       "versionCode": 3206,
       "versionName": "2.06",
-      "outputFile": "justkhelo-1.0-release.apk"
+      "outputFile": "Ninja11-2.06-release.apk"
     }
   ]
 }

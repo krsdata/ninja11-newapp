@@ -3,7 +3,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="justkhelo.cricks.ui.dashboard.FixtureCricketFragment" />
+            type="ninja.cricks.ui.dashboard.FixtureCricketFragment" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

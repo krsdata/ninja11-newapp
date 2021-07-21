@@ -6,7 +6,7 @@
 
         <variable
             name="contentviews"
-            type="justkhelo.cricks.ChangePasswordActivity" />
+            type="ninja.cricks.ChangePasswordActivity" />
     </data>
 
     <RelativeLayout

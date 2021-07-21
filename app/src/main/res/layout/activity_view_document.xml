@@ -6,7 +6,7 @@
 
         <variable
             name="contentviews"
-            type="justkhelo.cricks.DocumentsListActivity" />
+            type="ninja.cricks.DocumentsListActivity" />
     </data>
 
     <RelativeLayout
@@ -16,7 +16,7 @@
         android:background="@color/white"
         android:fitsSystemWindows="true"
         android:orientation="vertical"
-        tools:context="justkhelo.cricks.DocumentsListActivity">
+        tools:context="ninja.cricks.DocumentsListActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"

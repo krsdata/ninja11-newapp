@@ -6,7 +6,7 @@
 
         <variable
             name="contentviews"
-            type="justkhelo.cricks.WebActivity" />
+            type="ninja.cricks.WebActivity" />
     </data>
 
     <RelativeLayout

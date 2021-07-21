@@ -6,7 +6,7 @@
 
         <variable
             name="contentviews"
-            type="justkhelo.cricks.ContestLeaderBoardActivity" />
+            type="ninja.cricks.ContestLeaderBoardActivity" />
     </data>
 
     <RelativeLayout

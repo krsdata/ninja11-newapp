@@ -5,7 +5,7 @@
     <data>
         <variable
             name="contentviews"
-            type="justkhelo.cricks.RefferalFriendsListActivity" />
+            type="ninja.cricks.RefferalFriendsListActivity" />
     </data>
 
     <RelativeLayout
@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="justkhelo.cricks.RefferalFriendsListActivity"
+        tools:context="ninja.cricks.RefferalFriendsListActivity"
         android:orientation="vertical"
         android:background="@color/light_grey_bg"
         >

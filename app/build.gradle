@@ -10,7 +10,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "justkhelo.cricks"
+        applicationId "ninja.cricks"
         minSdkVersion 20
         targetSdkVersion 30
         versionCode 1000

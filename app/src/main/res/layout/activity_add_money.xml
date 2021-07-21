@@ -6,7 +6,7 @@
 
         <variable
             name="contentviews"
-            type="justkhelo.cricks.AddMoneyActivity" />
+            type="ninja.cricks.AddMoneyActivity" />
     </data>
 
     <androidx.core.widget.NestedScrollView

@@ -6,7 +6,7 @@
 
         <variable
             name="contentviews"
-            type="justkhelo.cricks.NotificationListActivity" />
+            type="ninja.cricks.NotificationListActivity" />
     </data>
 
     <RelativeLayout
@@ -16,7 +16,7 @@
         android:background="@color/light_grey_bg"
         android:fitsSystemWindows="true"
         android:orientation="vertical"
-        tools:context="justkhelo.cricks.CreateTeamActivity">
+        tools:context="ninja.cricks.CreateTeamActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
