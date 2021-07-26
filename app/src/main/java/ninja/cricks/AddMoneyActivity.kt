@@ -11,7 +11,6 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import com.google.android.gms.wallet.*
 import com.google.gson.JsonObject
 import com.paytm.pgsdk.Log
 import com.paytm.pgsdk.PaytmOrder

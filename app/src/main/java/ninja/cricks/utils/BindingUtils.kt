@@ -26,6 +26,7 @@ class BindingUtils {
         const val REUEST_STATUS_CODE_FRAUD: Int = 420
         const val MATCH_STATUS_UPCOMING: Int = 1
         const val MATCH_STATUS_LIVE: Int = 3
+        const val MATCH_STATUS_COMPLETED: Int = 2
 
         const val BANK_DOCUMENTS_STATUS_REJECTED: Int = 3
         const val BANK_DOCUMENTS_STATUS_VERIFIED: Int = 2

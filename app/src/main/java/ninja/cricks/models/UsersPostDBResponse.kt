@@ -132,6 +132,6 @@ data class UsersPostDBResponse(
 
     @SerializedName("paytm_withdrawal_btn")
     @Expose
-    var paytm_withdrawal_btn:Boolean = false,
+    var paytm_withdrawal_btn: Boolean = false
 
 ) : Serializable, Cloneable

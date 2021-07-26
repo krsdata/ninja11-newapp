@@ -77,6 +77,7 @@ public class FragmentDrawer extends Fragment {
                     R.drawable.ic_baseline_profile_24,
                     R.drawable.ic_wallet_new,
                     R.drawable.ic_action_reffer,
+                    /*R.drawable.ic_action_reffer,*/
                     R.drawable.ic_action_point_system,
                     R.drawable.ic_more_horiz_24dp,
                     R.drawable.ic_baseline_logout_24

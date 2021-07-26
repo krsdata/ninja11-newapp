@@ -86,8 +86,7 @@ class OfferActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener 
         jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
         jsonRequest.addProperty("version_code", BuildConfig.VERSION_CODE)
 
-        WebServiceClient(mContext!!).client.create(IApiMethod::class.java)
-            .getMessages(jsonRequest)
+        WebServiceClient(mContext!!).client.create(IApiMethod::class.java).getMessages(jsonRequest)
             .enqueue(object : Callback<JsonObject?> {
                 override fun onFailure(call: Call<JsonObject?>?, t: Throwable?) {
                     mBinding!!.progressBar.visibility = View.GONE

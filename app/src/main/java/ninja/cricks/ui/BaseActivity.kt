@@ -25,7 +25,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.andrognito.flashbar.Flashbar
-import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -406,57 +406,48 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     fun updateFireBase() {
-        FirebaseInstanceId.getInstance().instanceId
-            .addOnSuccessListener { instanceIdResult ->
-                val deviceToken = instanceIdResult.token
-                if (!TextUtils.isEmpty(deviceToken)) {
-                    notificationToken = deviceToken
-                    MyPreferences.setDeviceToken(this@BaseActivity, deviceToken)
-                }
-//                    var notid =  FirebaseInstanceId.getInstance()
-//                        .getToken(getString(R.string.gcm_default_sender_id), "FCM")
-                val userId = MyPreferences.getUserID(this@BaseActivity)!!
-                if (!TextUtils.isEmpty(deviceToken) && !TextUtils.isEmpty(userId)) {
-                    /*val request = RequestModel()
-                    request.user_id = userId
-                    request.device_id = deviceToken
-                    request.token = MyPreferences.getToken(this@BaseActivity)!!
-                    request.deviceDetails = HardwareInfoManager(this@BaseActivity).collectData(deviceToken)*/
-
-                    val jsonRequest = JsonObject()
-                    jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
-                    jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
-                    jsonRequest.addProperty("device_id", deviceToken)
-
-                    val gson = Gson()
-                    val jsonString: String = gson.toJson(
-                        HardwareInfoManager(this).collectData(
-                            MyPreferences.getDeviceToken(
-                                this
-                            )!!
-                        )
-                    )
-                    val deviceDetails: JsonObject = JsonParser().parse(jsonString).asJsonObject
-                    jsonRequest.add("deviceDetails", deviceDetails)
-
-                    WebServiceClient(this@BaseActivity).client.create(IApiMethod::class.java)
-                        .deviceNotification(jsonRequest)
-                        .enqueue(object : Callback<UsersPostDBResponse?> {
-                            override fun onFailure(
-                                call: Call<UsersPostDBResponse?>?,
-                                t: Throwable?
-                            ) {
-                            }
-
-                            override fun onResponse(
-                                call: Call<UsersPostDBResponse?>?,
-                                response: Response<UsersPostDBResponse?>?
-                            ) {
-                                MyUtils.logd("deviceId", "Posted successfully")
-                            }
-                        })
-                }
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            val deviceToken = it.result
+            if (!TextUtils.isEmpty(deviceToken)) {
+                notificationToken = deviceToken
+                MyPreferences.setDeviceToken(this@BaseActivity, deviceToken)
             }
+            val userId = MyPreferences.getUserID(this@BaseActivity)!!
+            if (!TextUtils.isEmpty(deviceToken) && !TextUtils.isEmpty(userId)) {
+                val jsonRequest = JsonObject()
+                jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+                jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+                jsonRequest.addProperty("device_id", deviceToken)
+
+                val gson = Gson()
+                val jsonString: String = gson.toJson(
+                    HardwareInfoManager(this).collectData(
+                        MyPreferences.getDeviceToken(
+                            this
+                        )!!
+                    )
+                )
+                val deviceDetails: JsonObject = JsonParser().parse(jsonString).asJsonObject
+                jsonRequest.add("deviceDetails", deviceDetails)
+
+                WebServiceClient(this@BaseActivity).client.create(IApiMethod::class.java)
+                    .deviceNotification(jsonRequest)
+                    .enqueue(object : Callback<UsersPostDBResponse?> {
+                        override fun onFailure(
+                            call: Call<UsersPostDBResponse?>?,
+                            t: Throwable?
+                        ) {
+                        }
+
+                        override fun onResponse(
+                            call: Call<UsersPostDBResponse?>?,
+                            response: Response<UsersPostDBResponse?>?
+                        ) {
+                            MyUtils.logd("deviceId", "Posted successfully")
+                        }
+                    })
+            }
+        }
     }
 
     fun logoutApp(message: String, boolean: Boolean) {

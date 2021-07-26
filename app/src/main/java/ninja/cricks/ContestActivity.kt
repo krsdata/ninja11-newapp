@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.bumptech.glide.Glide
 import com.edify.atrist.listener.OnContestEvents
 import com.edify.atrist.listener.OnContestLoadedListener
 import com.edify.atrist.listener.OnMatchTimerStarted
@@ -23,6 +24,7 @@ import ninja.cricks.ui.BaseActivity
 import ninja.cricks.ui.contest.ContestFragment
 import ninja.cricks.ui.contest.MyContestFragment
 import ninja.cricks.ui.contest.MyTeamFragment
+import ninja.cricks.ui.leadersboard.LeadersBoardFragment
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
@@ -73,14 +75,14 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
             initViewUpcomingMatches()
         }
 
-        mBinding!!.imageBack.setOnClickListener(View.OnClickListener {
+        mBinding!!.imageBack.setOnClickListener{
             finish()
-        })
+        }
 
-        mBinding!!.imgWallet.setOnClickListener(View.OnClickListener {
+        mBinding!!.imgWallet.setOnClickListener{
             val intent = Intent(this@ContestActivity, MyBalanceActivity::class.java)
             startActivity(intent)
-        })
+        }
         setupViewPager(mBinding!!.viewpagerContest)
         mBinding!!.tabs.setupWithViewPager(mBinding!!.viewpagerContest)
     }
@@ -192,6 +194,13 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
             )
         )
         viewPager.adapter = adapter
+
+        if (matchObject!!.status == BindingUtils.MATCH_STATUS_COMPLETED) {
+            mBinding!!.includeMatchRow.liveMatchesRow.visibility = View.VISIBLE
+        } else {
+            mBinding!!.includeMatchRow.liveMatchesRow.visibility = View.GONE
+        }
+        initScoreCard()
     }
 
     internal inner class ViewPagerAdapter(manager: FragmentManager) :
@@ -324,5 +333,88 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
 
     override fun onShareContest(objects: ContestModelLists) {
 
+    }
+
+    private fun initScoreCard() {
+
+        /*mBinding!!.teamsa.text = matchObject!!.teamAInfo!!.teamShortName
+        mBinding!!.teamsb.text = matchObject!!.teamBInfo!!.teamShortName*/
+        Glide.with(this)
+            .load(matchObject!!.teamAInfo!!.logoUrl)
+            .placeholder(R.drawable.placeholder_player_teama)
+            .into(mBinding!!.includeMatchRow.imgTeamaLogo)
+
+        Glide.with(this)
+            .load(matchObject!!.teamBInfo!!.logoUrl)
+            .placeholder(R.drawable.placeholder_player_teama)
+            .into(mBinding!!.includeMatchRow.imgTeambLogo)
+
+        mBinding!!.matchTimer.text = matchObject!!.statusString.toUpperCase(Locale.ENGLISH)
+        mBinding!!.matchTimer.setTextColor(resources.getColor(R.color.colorPrimary))
+        mBinding!!.watchTimerImg.visibility = View.GONE
+
+        mBinding!!.includeMatchRow.teamAName.text = matchObject!!.teamAInfo!!.teamShortName
+        mBinding!!.includeMatchRow.teamBName.text = matchObject!!.teamBInfo!!.teamShortName
+
+        mBinding!!.includeMatchRow.teamAScore.text = "0-0"
+        mBinding!!.includeMatchRow.teamAOver.text = "(0)"
+
+        mBinding!!.includeMatchRow.teamBScore.text = "0-0"
+        mBinding!!.includeMatchRow.teamBOver.text = "0-0"
+
+        updateScores()
+    }
+
+    private fun updateScores() {
+
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+        jsonRequest.addProperty("contest_id", "")
+        jsonRequest.addProperty("match_id", matchObject!!.matchId)
+
+        WebServiceClient(this).client.create(IApiMethod::class.java).getScore(jsonRequest)
+            .enqueue(object : Callback<UsersPostDBResponse?> {
+                override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
+                    customeProgressDialog.dismiss()
+                }
+
+                override fun onResponse(
+                    call: Call<UsersPostDBResponse?>?,
+                    response: Response<UsersPostDBResponse?>?
+                ) {
+                    customeProgressDialog.dismiss()
+                    val res = response!!.body()
+                    if (res != null) {
+                        if (res.scoresModel != null) {
+                            if (res.sessionExpired) {
+                                logoutApp("Session Expired Please login again!!", false)
+                            } else {
+                                mBinding!!.includeMatchRow.statusNote.text =
+                                    res.scoresModel!!.statusNote
+                                if (res.scoresModel!!.teama!!.scores != null) {
+                                    mBinding!!.includeMatchRow.teamAScore.text =
+                                        res.scoresModel!!.teama!!.scores
+                                } else {
+                                    mBinding!!.includeMatchRow.teamAScore.text = ""
+                                }
+
+                                if (res.scoresModel!!.teama!!.overs != null) {
+                                    mBinding!!.includeMatchRow.teamAOver.text =
+                                        String.format("(%s)", res.scoresModel!!.teama!!.overs)
+                                } else {
+                                    mBinding!!.includeMatchRow.teamAOver.text =
+                                        String.format("(%s)", "")
+                                }
+
+                                mBinding!!.includeMatchRow.teamBScore.text =
+                                    res.scoresModel!!.teamb!!.scores
+                                mBinding!!.includeMatchRow.teamBOver.text =
+                                    String.format("(%s)", res.scoresModel!!.teamb!!.overs)
+                            }
+                        }
+                    }
+                }
+            })
     }
 }

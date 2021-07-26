@@ -214,4 +214,5 @@
     <color name="selected_orange_lite">#FFE4BA</color>
     <color name="home_free_view">#8080CBC4</color>
     <color name="hyperlink">#0bb4de</color>
+    <color name="wallet_link_text_light">#707070</color>
 </resources>

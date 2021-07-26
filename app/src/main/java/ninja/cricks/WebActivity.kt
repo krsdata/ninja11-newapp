@@ -78,6 +78,8 @@ class WebActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
     private fun loadURL() {
         mBinding!!.webBody.webViewClient = MyWebViewClient()
         mBinding!!.webBody.settings.javaScriptEnabled = true
+        mBinding!!.webBody.settings.setAppCacheEnabled(false)
+        mBinding!!.webBody.clearCache(true)
         if (userId != null && !userId.equals("")) {
             mBinding!!.webBody.loadUrl(URL + userId)
         } else {

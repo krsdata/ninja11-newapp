@@ -12,7 +12,7 @@ import android.os.PowerManager
 import android.text.TextUtils
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
@@ -40,12 +40,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         super.onNewToken(token)
         Log.e(TAG, token)
         val userId = MyPreferences.getUserID(applicationContext)!!
-        val notid = FirebaseInstanceId.getInstance()
-            .getToken(getString(R.string.gcm_default_sender_id), "FCM")
 
         MyPreferences.setDeviceToken(this, token)
 
-        if (!TextUtils.isEmpty(notid) && !TextUtils.isEmpty(userId)) {
+        if (!TextUtils.isEmpty(token) && !TextUtils.isEmpty(userId)) {
 
             val jsonRequest = JsonObject()
             jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)

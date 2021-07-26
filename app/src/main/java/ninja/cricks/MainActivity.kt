@@ -358,7 +358,13 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             val intent = Intent(mContext, InviteFriendsActivity::class.java)
             val options = ActivityOptions.makeSceneTransitionAnimation(this@MainActivity)
             startActivity(intent, options.toBundle())
-        } else if (position == 3) {
+        }/* else if (position == 3) {
+            val intent = Intent(mContext, WebActivity::class.java)
+            intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_FANTASY_POINTS)
+            intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_FANTASY_POINTS)
+            val options = ActivityOptions.makeSceneTransitionAnimation(this@MainActivity)
+            startActivity(intent, options.toBundle())
+        }*/ else if (position == 3) {
             val intent = Intent(mContext, WebActivity::class.java)
             intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_FANTASY_POINTS)
             intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_FANTASY_POINTS)

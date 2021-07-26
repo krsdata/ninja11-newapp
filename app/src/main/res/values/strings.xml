@@ -133,6 +133,7 @@
     <string name="profile">Profile</string>
     <string name="wallet">Wallet</string>
     <string name="refer">Refer Friends</string>
+    <string name="live_score">Live Score</string>
     <string name="point_system">Point System</string>
     <string name="more">More</string>
     <string name="logout">Logout</string>
@@ -141,6 +142,7 @@
         <item>@string/profile</item>
         <item>@string/wallet</item>
         <item>@string/refer</item>
+        <!--<item>@string/live_score</item>-->
         <item>@string/point_system</item>
         <item>@string/more</item>
         <item>@string/logout</item>
