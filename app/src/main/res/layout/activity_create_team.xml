@@ -28,7 +28,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimaryDark"
+                android:background="@drawable/header_gradient"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -99,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/linear_top_bar"
-            android:background="@color/colorPrimaryDark"
+            android:background="@drawable/header_gradient"
             android:orientation="vertical"
             android:paddingBottom="10dp">
 

@@ -48,8 +48,9 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_40sdp"
                     android:layout_weight="1"
-                    android:background="@color/secondery_color"
+                    android:background="@color/accent_material_light"
                     android:gravity="center|start"
+
                     android:orientation="horizontal">
 
                     <com.mikhaellopez.circularimageview.CircularImageView
@@ -150,6 +151,7 @@
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="@dimen/_5sdp"
+                android:background="@drawable/kandy"
                 android:gravity="center_horizontal">
 
                 <TextView
@@ -157,7 +159,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_regular"
-                    android:text=""
+                    android:text="Score"
+                    android:padding="@dimen/_5sdp"
                     android:textColor="@color/green"
                     android:textSize="@dimen/small_info_size"
                     android:textStyle="bold" />

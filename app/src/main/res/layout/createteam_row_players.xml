@@ -6,11 +6,12 @@
     android:background="@color/white"
     android:baselineAligned="false"
     android:orientation="horizontal"
-    android:paddingTop="@dimen/_2sdp">
+    android:paddingTop="0dp">
 
     <RelativeLayout
         android:id="@+id/rel_player_image"
         android:layout_width="65dp"
+        android:background="@color/back_net_banking"
         android:layout_height="match_parent">
 
         <ImageView
@@ -32,11 +33,11 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="@dimen/_5sdp"
-            android:background="@color/white"
-            android:paddingBottom="@dimen/_1sdp"
-            android:paddingTop="@dimen/_1sdp"
-            android:paddingStart="@dimen/_3sdp"
-            android:paddingEnd="@dimen/_3sdp"
+            android:background="@color/back_net_banking"
+            android:paddingBottom="0dp"
+            android:paddingTop="0dp"
+            android:paddingStart="@dimen/_5sdp"
+            android:paddingEnd="@dimen/_5sdp"
             android:text="AU-W"
             android:textColor="@color/black"
             android:textSize="@dimen/_8sdp" />

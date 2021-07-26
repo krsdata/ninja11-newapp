@@ -246,7 +246,7 @@
         android:background="@color/green_light"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="center"
-        android:padding="3dip"
+        android:padding="1dip"
         android:src="@drawable/left_triangle"
         android:text="Giveaway"
         android:textColor="@color/white"

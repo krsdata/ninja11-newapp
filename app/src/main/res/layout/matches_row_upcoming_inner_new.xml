@@ -288,12 +288,12 @@
                 android:layout_marginTop="@dimen/_2sdp"
                 android:layout_marginEnd="@dimen/_2sdp"
                 android:background="@drawable/home_free_view"
-                android:fontFamily="@font/open_sans_semibold"
+                android:fontFamily="@font/montserratsemibold"
                 android:gravity="center"
-                android:padding="3dp"
-                android:text="Win smart watch"
-                android:textColor="@color/green"
-                android:textSize="@dimen/_9sdp" />
+                android:padding="2dp"
+                android:text="Giveaway"
+                android:textColor="@color/darkgreen"
+                android:textSize="@dimen/_8sdp" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

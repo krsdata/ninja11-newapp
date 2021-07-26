@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentTop="true"
-            android:background="@color/colorPrimaryDark"
+            android:background="@drawable/header_gradient"
             android:orientation="vertical" />
 
         <LinearLayout
@@ -38,7 +38,7 @@
                     android:id="@+id/top_layout"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_90sdp"
-                    android:background="@color/text_view_color">
+                    android:background="@color/bottom_nav_color">
 
                    <ImageView
                         android:id="@+id/player_in_lineup"

@@ -37,7 +37,7 @@ class BindingUtils {
         const val EMAIL: String = "support@ninja11.in"
         const val PHONE_NUMBER: String = "=+918103194076"
         const val GOOGLE_TEZ_PACKAGE_NAME = "com.google.android.apps.nbu.paisa.user"
-        const val PAYMENT_GOOGLEPAY_UPI = "9340301139@okbizaxis"
+        const val PAYMENT_GOOGLEPAY_UPI = "7974343960@okbizaxis"
         const val PAYMENT_RAZOR_PAY_KEY = "rzp_live_SiMilNQfyJNzJe"
         const val BASE_URL_MAIN = "https://ninja.fancode11.com/"
         const val BASE_URL_API = "https://rest.fancode11.com/"

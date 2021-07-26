@@ -219,6 +219,7 @@
             android:layout_height="@dimen/_40sdp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:background="@color/greybackround">
 
             <TextView
@@ -228,7 +229,7 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_gravity="center"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/header_gradient"
                 android:fontFamily="@font/montserratsemibold"
                 android:gravity="center"
                 android:text="CREATE TEAM"

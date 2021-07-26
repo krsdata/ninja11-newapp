@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentTop="true"
-            android:background="@color/colorPrimaryDark"
+            android:background="@drawable/header_gradient"
             android:orientation="vertical" />
 
         <androidx.core.widget.NestedScrollView

@@ -38,7 +38,8 @@
             android:padding="10px"
             android:layout_marginBottom="35dp"
             android:textColor="@color/black"
-            android:text="We sincerely apologize for the incovenience. We will right back soon."/>
+            android:text="If you have any question, feel free to reach us
+@ support@ninja11.in"/>
 
     </RelativeLayout>
 
