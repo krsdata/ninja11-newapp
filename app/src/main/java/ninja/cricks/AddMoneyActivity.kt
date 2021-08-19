@@ -1,6 +1,7 @@
 package  ninja.cricks
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -253,50 +254,37 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
             })
     }
 
-    private fun setGooglePayAvailable(available: Boolean) {
-        if (available) {
-            mBinding!!.useWalletGpay.visibility = View.VISIBLE
-        } else {
-            mBinding!!.useWalletGpay.visibility = View.GONE
-        }
-    }
-
     private fun payUsingGooglePay(amount: Double) {
         paymentMode = PAYEMENT_TYPE_GPAY
-
-        if (isAppInstalled(GOOGLE_TEZ_PACKAGE_NAME)) {
-            // showProgress();
-            val upiId: String = MyPreferences.getGooglePayId(this@AddMoneyActivity)!!
-            //Log.e(TAG, "upiId =======> $upiId")
-            /*Uri.Builder()
-                .scheme("upi")
-                .authority("pay")
-                .appendQueryParameter("pa", "your-merchant-vpa@xxx")
-                .appendQueryParameter("pn", "your-merchant-name")
-                .appendQueryParameter("mc", "your-merchant-code")
-                .appendQueryParameter("tr", "your-transaction-ref-id")
-                .appendQueryParameter("tn", "your-transaction-note")
-                .appendQueryParameter("am", "your-order-amount")
-                .appendQueryParameter("cu", "INR")
-                .appendQueryParameter("url", "your-transaction-url")
-                .build()*/
-            val uri = Uri.Builder()
-                .scheme("upi")
-                .authority("pay")
-                .appendQueryParameter("pa", upiId)
-                .appendQueryParameter("pn", "Ninja 11 Service")
-                .appendQueryParameter("tr", System.currentTimeMillis().toString())
-                .appendQueryParameter("am", amount.toString())
-                .appendQueryParameter("cu", "INR")
-                .build()
+        val upiId: String = MyPreferences.getGooglePayId(this@AddMoneyActivity)!!
+//            Uri.Builder()
+//                .scheme("upi")
+//                .authority("pay")
+//                .appendQueryParameter("pa", "your-merchant-vpa@xxx")
+//                .appendQueryParameter("pn", "your-merchant-name")
+//                .appendQueryParameter("mc", "your-merchant-code")
+//                .appendQueryParameter("tr", "your-transaction-ref-id")
+//                .appendQueryParameter("tn", "your-transaction-note")
+//                .appendQueryParameter("am", "your-order-amount")
+//                .appendQueryParameter("cu", "INR")
+//                .appendQueryParameter("url", "your-transaction-url")
+//                .build()
+        val uri = Uri.Builder()
+            .scheme("upi")
+            .authority("pay")
+            .appendQueryParameter("pa", upiId)
+            .appendQueryParameter("pn", "Ninja 11 Service")
+            .appendQueryParameter("tr", System.currentTimeMillis().toString())
+            .appendQueryParameter("am", amount.toString())
+            .appendQueryParameter("cu", "INR")
+            .build()
+        try {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = uri
             intent.setPackage(GOOGLE_TEZ_PACKAGE_NAME)
-            startActivityForResult(
-                intent,
-                TEZ_REQUEST_CODE
-            )
-        } else {
+            startActivityForResult(intent, TEZ_REQUEST_CODE)
+        } catch (e: ActivityNotFoundException) {
+            e.printStackTrace()
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(
                 "https://play.google.com/store/apps/details?id=$GOOGLE_TEZ_PACKAGE_NAME"
@@ -304,18 +292,6 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
             intent.setPackage("com.android.vending")
             startActivity(intent)
         }
-    }
-
-    private fun isAppInstalled(packageName: String): Boolean {
-        val pm: PackageManager = packageManager
-        var installed = false
-        installed = try {
-            pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
-            true
-        } catch (e: PackageManager.NameNotFoundException) {
-            false
-        }
-        return installed
     }
 
     private fun initWalletInfo() {
@@ -444,7 +420,8 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
                                     if (jsonObject.getBoolean("status")) {
                                         paytmOrderId =
                                             jsonObject.getJSONObject("data").getString("order_id")
-                                        orderId = jsonObject.getJSONObject("data").getString("order_id")
+                                        orderId =
+                                            jsonObject.getJSONObject("data").getString("order_id")
                                         val mid = jsonObject.getJSONObject("data").getString("mid")
                                         val txnToken =
                                             jsonObject.getJSONObject("data").getString("txnToken")
@@ -588,6 +565,9 @@ class AddMoneyActivity : BaseActivity(), PaymentResultListener {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == TEZ_REQUEST_CODE) {
             if (data != null && data.extras != null) {
+                for (key in data.extras!!.keySet()) {
+                    Log.e(TAG, "$key==\"${data.extras!!.get(key)}\"")
+                }
                 if (data.extras!!.getString("Status").equals("SUCCESS", ignoreCase = true)) {
                     transactionId = data.extras!!.getString("txnId")!!
                     addWalletBalance()
