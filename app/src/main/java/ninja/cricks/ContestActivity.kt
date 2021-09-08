@@ -24,7 +24,7 @@ import ninja.cricks.ui.BaseActivity
 import ninja.cricks.ui.contest.ContestFragment
 import ninja.cricks.ui.contest.MyContestFragment
 import ninja.cricks.ui.contest.MyTeamFragment
-import ninja.cricks.ui.leadersboard.LeadersBoardFragment
+import ninja.cricks.ui.contest.PlayerStatsFragment
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
@@ -75,11 +75,11 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
             initViewUpcomingMatches()
         }
 
-        mBinding!!.imageBack.setOnClickListener{
+        mBinding!!.imageBack.setOnClickListener {
             finish()
         }
 
-        mBinding!!.imgWallet.setOnClickListener{
+        mBinding!!.imgWallet.setOnClickListener {
             val intent = Intent(this@ContestActivity, MyBalanceActivity::class.java)
             startActivity(intent)
         }
@@ -177,22 +177,21 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
         bundle.putSerializable(SERIALIZABLE_KEY_MATCH_OBJECT, matchObject)
         val adapter = ViewPagerAdapter(supportFragmentManager)
         if (matchObject!!.status == BindingUtils.MATCH_STATUS_UPCOMING) {
-            adapter.addFragment(
-                ContestFragment.newInstance(bundle), getString(
+            adapter.addFragment(ContestFragment.newInstance(bundle), getString(
                     R.string.contest_type_contests
-                )
-            )
+                ))
         }
-        adapter.addFragment(
-            MyContestFragment.newInstance(bundle), getString(
+        adapter.addFragment(MyContestFragment.newInstance(bundle), getString(
                 R.string.contest_type_mycontest
-            )
-        )
-        adapter.addFragment(
-            MyTeamFragment.newInstance(bundle), getString(
+            ))
+        adapter.addFragment(MyTeamFragment.newInstance(bundle), getString(
                 R.string.contest_type_myteam
-            )
-        )
+            ))
+
+        if (matchObject!!.status != BindingUtils.MATCH_STATUS_UPCOMING) {
+            adapter.addFragment(PlayerStatsFragment.newInstance(bundle), getString(R.string.contest_type_playerstats))
+        }
+
         viewPager.adapter = adapter
 
         if (matchObject!!.status == BindingUtils.MATCH_STATUS_COMPLETED) {

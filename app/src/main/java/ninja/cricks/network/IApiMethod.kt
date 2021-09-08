@@ -219,12 +219,8 @@ interface IApiMethod {
     fun validateCoupon(@Body request: JsonObject): Call<JsonObject>
 
     @Headers("Content-Type: application/json")
-    @POST("getBanner")
-    fun getBanner(@Body request: JsonObject): Call<UsersPostDBResponse>
-
-    @Headers("Content-Type: application/json")
-    @POST("getMatchFixture")
-    fun getMatchFixture(@Body request: JsonObject): Call<UsersPostDBResponse>
+    @POST("playerStat")
+    fun getPlayerStat(@Body request: JsonObject): Call<JsonObject>
 
 
 }
