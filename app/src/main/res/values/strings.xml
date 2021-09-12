@@ -30,7 +30,7 @@
     <string name="contest_type_contests">Contests</string>
     <string name="contest_type_mycontest">My Contest(0)</string>
     <string name="contest_type_myteam">My Team(0)</string>
-    <string name="contest_type_playerstats">Player Stats</string>
+    <string name="contest_type_playerstats">Stats</string>
 
     <string name="createteam_type_wk">WK(0)</string>
     <string name="createteam_type_bat">BAT(0)</string>

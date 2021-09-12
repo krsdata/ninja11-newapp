@@ -101,4 +101,7 @@ dependencies {
     // razor pay payment sdk
     implementation 'com.razorpay:checkout:1.6.3'
 
+    implementation('com.alibaba.android:ultraviewpager:1.0.7.7@aar') {
+        transitive = true
+    }
 }

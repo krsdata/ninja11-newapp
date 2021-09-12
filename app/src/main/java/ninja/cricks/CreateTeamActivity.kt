@@ -39,7 +39,10 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-
+// "selected_by_me": true/false
+// "vc_selection":
+// "c_selection":
+// 3 min batsman, 1-4  all rounder, 3-6 bowler
 class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
     private var playersList: PlayerModels? = null

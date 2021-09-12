@@ -225,6 +225,10 @@
             android:name=".PaytmWithdrawActivity"
             android:label=""
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".PlayerStatsInfoActivity"
+            android:label=""
+            android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

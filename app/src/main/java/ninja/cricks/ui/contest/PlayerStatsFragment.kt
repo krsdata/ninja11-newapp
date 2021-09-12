@@ -1,6 +1,7 @@
 package ninja.cricks.ui.contest
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,26 +11,34 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.gson.Gson
 import com.google.gson.JsonObject
 import ninja.cricks.ContestActivity
+import ninja.cricks.PlayerStatsInfoActivity
 import ninja.cricks.R
 import ninja.cricks.databinding.FragmentPlayerStatsBinding
+import ninja.cricks.models.PlayerStatsInfoModel
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
+import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
+import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+import kotlin.collections.ArrayList
+
 
 class PlayerStatsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
@@ -46,7 +55,7 @@ class PlayerStatsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     var objectMatches: UpcomingMatchesModel? = null
     private lateinit var binding: FragmentPlayerStatsBinding
     private lateinit var customProgressDialog: CustomeProgressDialog
-    var playerStatsList = ArrayList<JSONObject>()
+    var playerStatsList = ArrayList<PlayerStatsInfoModel>()
     var adapter: PlayerStatsAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +82,8 @@ class PlayerStatsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         val layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         binding.recyclerView.layoutManager = layoutManager
-
+        val divider = DividerItemDecoration(mContext!!, layoutManager.orientation)
+        binding.recyclerView.addItemDecoration(divider)
     }
 
     override fun onResume() {
@@ -90,7 +100,9 @@ class PlayerStatsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-        customProgressDialog.show()
+        if (b) {
+            customProgressDialog.show()
+        }
         val jsonRequest = JsonObject()
         jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
         jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
@@ -109,9 +121,43 @@ class PlayerStatsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                         if (jsonObject.getBoolean("status")) {
                             val jsonArray = jsonObject.getJSONArray("data")
 
+
                             for (i in 0 until jsonArray.length()) {
-                                playerStatsList.add(jsonArray.getJSONObject(i))
+                                val childJsonObject = jsonArray.getJSONObject(i)
+                                val childArrayList = ArrayList<JSONObject>()
+                                val statsArray: JSONArray = childJsonObject.getJSONArray("match_points")
+
+                                for (j in 0 until statsArray.length()) {
+                                    val key: String = statsArray.optJSONObject(j).optString("key")
+                                    if (key != "" && key.isNotEmpty()) {
+                                        childArrayList.add(statsArray.optJSONObject(j))
+                                    }
+                                }
+
+                                val playerStatsInfoModel = PlayerStatsInfoModel(
+                                    childJsonObject.getString("pid"),
+                                    childJsonObject.getString("name"),
+                                    childJsonObject.getString("role"),
+                                    childJsonObject.getString("rating"),
+                                    childJsonObject.getString("point"),
+                                    childJsonObject.getString("team_name"),
+                                    childJsonObject.getString("selection"),
+                                    childJsonObject.getString("c_selection"),
+                                    childJsonObject.getString("vc_selection"),
+                                    childJsonObject.getString("nationality"),
+                                    childArrayList
+                                )
+                                playerStatsList.add(playerStatsInfoModel)
                             }
+//                            for (i in 0 until jsonArray.length()) {
+//                                playerStatsList.add(jsonArray.getJSONObject(i))
+//                            }
+
+                            playerStatsList.sortWith { lhs, rhs ->
+                                rhs.point.toDouble()
+                                    .compareTo(lhs.point.toDouble())
+                            }
+
                             adapter = PlayerStatsAdapter(playerStatsList)
                             binding.recyclerView.adapter = adapter
                             adapter!!.notifyDataSetChanged()
@@ -128,7 +174,7 @@ class PlayerStatsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             })
     }
 
-    inner class PlayerStatsAdapter(private val arrayList: ArrayList<JSONObject>) :
+    inner class PlayerStatsAdapter(private val arrayList: ArrayList<PlayerStatsInfoModel>) :
         RecyclerView.Adapter<PlayerStatsAdapter.ViewHolder>() {
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -156,12 +202,21 @@ class PlayerStatsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             try {
                 val jsonObject = arrayList[position]
                 Log.e(TAG, "jsonObject =======> $jsonObject")
-                holder.playerName.text = jsonObject.getString("name")
-                holder.playerRole.text = jsonObject.getString("role")
-                holder.playerRatting.text = jsonObject.getString("rating")
-                holder.playerPoint.text = jsonObject.getString("point")
-                holder.playerTeam.text = jsonObject.getString("team_name")
-                holder.playerSelection.text = jsonObject.getString("selection")
+                holder.playerName.text = jsonObject.name
+                holder.playerRole.text = jsonObject.role
+                holder.playerRatting.text = String.format("Ratting: %s", jsonObject.rating)
+                holder.playerPoint.text = jsonObject.point
+                holder.playerTeam.text = jsonObject.teamName
+                holder.playerSelection.text = String.format("Selected by: %s%s", jsonObject.selection, "%")
+
+                holder.mainLayout.setOnClickListener {
+                    val jsonPlayerStats = Gson().toJson(arrayList)
+
+                    val intent = Intent(mContext, PlayerStatsInfoActivity::class.java)
+                    intent.putExtra(BindingUtils.playerStatsList, jsonPlayerStats)
+                    intent.putExtra(BindingUtils.position, position)
+                    startActivity(intent)
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             }

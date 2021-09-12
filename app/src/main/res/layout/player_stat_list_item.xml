@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center"
         android:paddingTop="@dimen/_5sdp"
         android:paddingBottom="@dimen/_5sdp"
         android:weightSum="5">
@@ -16,12 +17,14 @@
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:layout_weight="4">
 
             <ImageView
                 android:id="@+id/player_image"
-                android:layout_width="@dimen/_60sdp"
-                android:layout_height="@dimen/_60sdp"
+                android:layout_width="@dimen/_50sdp"
+                android:layout_height="@dimen/_50sdp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:scaleType="centerInside"
@@ -96,6 +99,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
                         android:gravity="center"
                         android:text=""
                         android:textColor="@color/black"
