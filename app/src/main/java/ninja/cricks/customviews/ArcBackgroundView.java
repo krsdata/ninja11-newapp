@@ -69,16 +69,16 @@ public class ArcBackgroundView extends View {
         super.onDraw(canvas);
         mPath.reset();
         mPath.moveTo(0, 0);
-        mPath.quadTo(mWidth/2, mArcImageViewTopHeight * 2,mWidth, 0);
-        mPath.lineTo(mWidth,mHeight);
-        mPath.lineTo(0,mHeight);
+        mPath.quadTo(mWidth / 2, mArcImageViewTopHeight * 2, mWidth, 0);
+        mPath.lineTo(mWidth, mHeight);
+        mPath.lineTo(0, mHeight);
         mPath.close();
         if (mPathShape == null) {
-            mPathShape = new PathShape(mPath, mWidth,mHeight);
+            mPathShape = new PathShape(mPath, mWidth, mHeight);
             mLinearGradient = new LinearGradient(0, 0, 0, mHeight, mColors, null, Shader.TileMode.CLAMP);
         }
         mShapeDrawable.setShape(mPathShape);
-        mShapeDrawable.setBounds(0,0,mWidth,mHeight);
+        mShapeDrawable.setBounds(0, 0, mWidth, mHeight);
         mShapeDrawable.getPaint().setShader(mLinearGradient);
         mShapeDrawable.draw(canvas);
     }

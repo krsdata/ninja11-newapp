@@ -54,7 +54,6 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
     var emailid = ""
     var idToken = ""
     var binding: ActivityLoginBinding? = null
-//    var viewmodel: LoginViewModel? = null
 
     companion object {
         var AUTH_TYPE_GMAIL = "googleAuth"
