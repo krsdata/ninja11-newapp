@@ -81,6 +81,8 @@ class GridViewAdapter(
                 )
             //context.resources.getDrawable(R.drawable.ract_black_background)
             viewHolder.playerName.setTextColor(context.resources.getColor(R.color.white))
+        //    val typeface = context.resources.getFont(R.font.open_sans_semibold)
+         //   viewHolder.playerName.setTypeface(typeface)
         }
 
         if (objects.isPlaying11) {
