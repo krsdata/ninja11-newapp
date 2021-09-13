@@ -12,6 +12,7 @@
     <color name="ucrop_color_widget_active">@color/colorPrimary</color>
 
     <color name="colorAccent_light">#bcdde6</color>
+    <color name="colorAccent_light_red">#FFA8B3</color>
     <color name="secondery_color">#ED1C24</color>
     <color name="greenish_color">#03989E</color>
 

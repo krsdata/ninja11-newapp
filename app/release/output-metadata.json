@@ -4,15 +4,15 @@
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "mysuccess.cricks",
-  "variantName": "processReleaseResources",
+  "applicationId": "ninja.cricks",
+"variantName": "processReleaseResources",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 1000,
-      "versionName": "1.0",
-      "outputFile": "mysuccess11-1.0-release.apk"
+      "versionCode": 3300,
+      "versionName": "3.0",
+      "outputFile": "Ninja11-3.0-release.apk"
     }
   ]
 }

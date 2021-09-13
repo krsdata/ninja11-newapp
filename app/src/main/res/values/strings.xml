@@ -11,9 +11,9 @@
 
     <string name="screen_name_login">Login</string>
     <string name="screen_name_register">Register</string>
-    <string name="privacy_policies">By loggin in, you accept you are 18+ and agree to our </string>
+    <string name="privacy_policies">By loggin in, you accept you are 18+ and agree to our</string>
     <string name="tnc_text"><u> T&amp;C </u></string>
-    <string name="and">&amp; </string>
+    <string name="and">&amp;</string>
     <string name="privacypolicy_text"> <u>Privacy Policy </u></string>
     <string name="state_warnings"> We do not allow players from Telangana, Orissa, Sikkim, Nagaland and Assam to play cash games. You  ust be 18+ years to play real money skill games</string>
     <string name="activity_type_contest">Contest</string>
@@ -30,6 +30,7 @@
     <string name="contest_type_contests">Contests</string>
     <string name="contest_type_mycontest">My Contest(0)</string>
     <string name="contest_type_myteam">My Team(0)</string>
+    <string name="contest_type_playerstats">Stats</string>
 
     <string name="createteam_type_wk">WK(0)</string>
     <string name="createteam_type_bat">BAT(0)</string>

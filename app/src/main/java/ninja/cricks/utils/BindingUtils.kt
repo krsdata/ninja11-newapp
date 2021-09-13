@@ -2,7 +2,6 @@ package ninja.cricks.utils
 
 import android.content.Context
 import android.os.CountDownTimer
-import android.util.Log
 import com.edify.atrist.listener.OnMatchTimerStarted
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -67,10 +66,12 @@ class BindingUtils {
         const val WEB_TITLE_MY_AFFILIATE: String = "My-Affiliate"
         const val EXTRA_DATA_GET_WALLET: String = "EXTRA_DATA_GET_WALLET"
         var currentTimeStamp: Long = 0
+        const val playerStatsList = "playerStatsList"
+        const val position = "position"
 
         fun logD(tag: String, message: String) {
             if (BuildConfig.MLOG) {
-                Log.e("MX:$tag", message)
+                //Log.e("MX:$tag", message)
             }
         }
 

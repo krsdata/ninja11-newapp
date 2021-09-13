@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@null"
-        tools:src="@drawable/ground_bg" />
+        android:scaleType="fitXY"
+        tools:src="@drawable/ground" />
 
     <ImageView
         android:id="@+id/imageClose"

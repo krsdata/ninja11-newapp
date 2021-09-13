@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,6 +54,7 @@ class ContestFragment : Fragment() {
     private var pos = 0
 
     companion object {
+        private val TAG: String = ContestFragment::class.java.simpleName
         fun newInstance(bundle: Bundle): ContestFragment {
             val fragment = ContestFragment()
             fragment.arguments = bundle
@@ -331,18 +333,18 @@ class ContestFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        pos = 0
-        for (i in filterArrayList.indices) {
-            filterArrayList[i].isStatus = pos == i
-        }
-
-        filterAdapter.updateRecord(filterArrayList)
-
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
-            return
+        } else {
+            getAllContest(true)
         }
-        getAllContest(true)
+        //pos = 0
+        Log.e(TAG, "pos =======> $pos")
+//        for (i in filterArrayList.indices) {
+//            filterArrayList[i].isStatus = pos == i
+//        }
+//
+//        filterAdapter.updateRecord(filterArrayList)
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -371,7 +373,7 @@ class ContestFragment : Fragment() {
 
     private fun getAllContest(isLoading: Boolean) {
         //var userInfo = (activity as PlugSportsApplication).userInformations
-        selectAllContest()
+        //selectAllContest()
         mBinding!!.contestRefresh.isRefreshing = false
         //mBinding!!.filterBar.visibility = View.GONE
         if (isLoading)
@@ -440,7 +442,13 @@ class ContestFragment : Fragment() {
                                         filterArrayList.add(categoryModel)
                                     }
 
-                                    filterAdapter.updateRecord(filterArrayList)
+                                    Log.e(TAG, "pos =======> $pos")
+                                    updateContestData(pos)
+                                    /*for (i in filterArrayList.indices) {
+                                        filterArrayList[i].isStatus = pos == i
+                                    }
+
+                                    filterAdapter.updateRecord(filterArrayList)*/
 
                                     adapter.setMatchesList(allContestListData)
                                     mListener.onMyTeam(responseModel.myjoinedTeams!!)
@@ -539,7 +547,6 @@ class ContestFragment : Fragment() {
             filterArrayList[i].isStatus = pos == i
         }
 
-        //filterAdapter.notifyDataSetChanged()
         filterAdapter.updateRecord(filterArrayList)
 
         this.pos = pos

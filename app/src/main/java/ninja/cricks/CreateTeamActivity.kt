@@ -39,19 +39,18 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-
+// "selected_by_me": true/false
+// "vc_selection":
+// "c_selection":
+// 1-4 wicket keepers, 3-6 batsman, 1-4 all rounder, 3-6 bowler
 class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
     private var playersList: PlayerModels? = null
-
-    // private var isMatchLive: Boolean = false
     var myTeamModel: MyTeamModels? = null
 
-    // private var playersList: PlayerModels? = null
     private lateinit var viewPagerAdapter: ViewPagerAdapter
     var matchObject: UpcomingMatchesModel? = null
-    var crateTeamHashMap: HashMap<String, ArrayList<PlayersInfoModel>> =
-        HashMap<String, ArrayList<PlayersInfoModel>>()
+    var crateTeamHashMap: HashMap<String, ArrayList<PlayersInfoModel>> = HashMap()
     private var mBinding: ActivityCreateTeamBinding? = null
 
     companion object {
@@ -69,9 +68,9 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         var isEditMode: Boolean = false
         var isCopyTeam: Boolean = false
         val MAX_WICKET_KEEPER: IntArray = intArrayOf(1, 4)
-        val MAX_BATSMAN: IntArray = intArrayOf(1, 6)
-        val MAX_ALL_ROUNDER: IntArray = intArrayOf(1, 6)
-        val MAX_BOWLER: IntArray = intArrayOf(1, 6)
+        val MAX_BATSMAN: IntArray = intArrayOf(3, 6)
+        val MAX_ALL_ROUNDER: IntArray = intArrayOf(1, 4)
+        val MAX_BOWLER: IntArray = intArrayOf(3, 6)
         val MAX_PLAYERS_CRICKET: Int = 11
         val MAX_PLAYERS_FROM_TEAM: Int = 7
 

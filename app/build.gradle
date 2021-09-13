@@ -20,9 +20,10 @@ android {
         setProperty("archivesBaseName", "Ninja11-$versionName")
     }
 
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding true
     }
+
     buildTypes {
         debug {
             buildConfigField "boolean", "MLOG", "true"
@@ -80,7 +81,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:22.0.0'
     implementation 'com.google.firebase:firebase-core:19.0.0'
 
-    implementation 'com.google.firebase:firebase-crashlytics-ktx:18.2.0'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx:18.2.1'
     implementation 'com.google.firebase:firebase-analytics-ktx:19.0.0'
 
     implementation 'net.gotev:uploadservice:2.1'
@@ -100,4 +101,7 @@ dependencies {
     // razor pay payment sdk
     implementation 'com.razorpay:checkout:1.6.3'
 
+    implementation('com.alibaba.android:ultraviewpager:1.0.7.7@aar') {
+        transitive = true
+    }
 }
