@@ -12,21 +12,20 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/header_gradient"
+        android:background="@color/colorAccent"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/_topbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/logo_value"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="60dp"
             android:layout_marginTop="50dp"
             android:layout_marginRight="60dp"
             android:fontFamily="@font/catamaran_extrabold"
             android:gravity="center"
-            android:text="India's Biggest Fantasy Sports Platform"
+            android:text="INDIA'S BIGGEST FANTASY SPORTS PLATFORM"
             android:textColor="@color/white"
             android:textSize="@dimen/_14sdp" />
 
@@ -46,8 +45,7 @@
                 android:gravity="center"
                 android:text="Login With"
                 android:textColor="@color/white"
-                android:textSize="@dimen/_18sdp"
-                android:visibility="invisible" />
+                android:textSize="@dimen/_18sdp" />
 
             <LinearLayout
                 android:id="@+id/login_panel"
@@ -55,15 +53,74 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/_login_with"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="@dimen/_40sdp"
+                android:layout_marginLeft="@dimen/_50sdp"
                 android:layout_marginTop="20dp"
-                android:layout_marginRight="@dimen/_40sdp"
+                android:layout_marginRight="@dimen/_50sdp"
                 android:orientation="vertical">
 
                 <com.google.android.gms.common.SignInButton
                     android:id="@+id/sign_in_button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:gravity="center"
+                        android:text="@string/privacy_policies"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_8sdp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/terms_condition"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:gravity="center"
+                            android:text="@string/tnc_text"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_8sdp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:gravity="center"
+                            android:text="@string/and"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_8sdp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/privacy_policy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:fontFamily="@font/montserrat_regular"
+                            android:gravity="center"
+                            android:text="@string/privacypolicy_text"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_8sdp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
 
@@ -73,70 +130,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/login_label"
             android:layout_alignParentBottom="true"
-            android:visibility="visible"
+            android:layout_marginTop="90dp"
+            android:visibility="gone"
             app:ArcBackgroundViewEndColor="@color/colorAccent"
-            app:ArcBackgroundViewStartColor="@color/secondery_color"
-            app:ArcBackgroundViewTopHeight="@dimen/_50sdp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/_20sdp"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_regular"
-                android:gravity="center"
-                android:text="@string/privacy_policies"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_9sdp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/terms_condition"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:gravity="center"
-                    android:text="@string/tnc_text"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_9sdp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="5dp"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:gravity="center"
-                    android:text="@string/and"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_9sdp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/privacy_policy"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="5dp"
-                    android:fontFamily="@font/montserrat_regular"
-                    android:gravity="center"
-                    android:text="@string/privacypolicy_text"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_9sdp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </LinearLayout>
+            app:ArcBackgroundViewStartColor="@color/colorAccent_light"
+            app:ArcBackgroundViewTopHeight="80dp" />
 
         <LinearLayout
             android:id="@+id/tnc_policy"
@@ -145,8 +143,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/checkbox_tnc"
@@ -192,9 +189,9 @@
 
         <ImageView
             android:id="@+id/logo_value"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="?attr/actionBarSize"
-            android:layout_alignParentTop="true"
+            android:layout_above="@+id/tnc_policy"
             android:layout_centerInParent="true"
             android:layout_centerHorizontal="true"
             android:src="@drawable/home_header" />

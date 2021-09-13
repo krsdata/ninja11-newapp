@@ -216,23 +216,23 @@
         <LinearLayout
             android:id="@+id/bottom_layout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
+            android:layout_height="@dimen/_60sdp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/_5sdp"
-            android:background="@color/greybackround">
+            android:layout_marginBottom="@dimen/_5sdp">
 
             <TextView
                 android:id="@+id/btn_create_team"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_35sdp"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_height="@dimen/_33sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_80sdp"
+                android:layout_marginEnd="@dimen/_80sdp"
                 android:layout_gravity="center"
-                android:background="@drawable/header_gradient"
-                android:fontFamily="@font/montserratsemibold"
+                android:background="@drawable/create_team"
+                android:fontFamily="@font/open_sans_semibold"
                 android:gravity="center"
-                android:text="CREATE TEAM"
+                android:text="Create Team"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14sdp"
                 android:textStyle="bold" />

@@ -27,7 +27,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar"
             android:layout_margin="@dimen/_10sdp"
-            app:cardBackgroundColor="@color/colorAccent_light"
+            android:paddingTop="@dimen/_30sdp"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/_30sdp"
             app:cardElevation="@dimen/_5sdp">
 
@@ -43,6 +44,7 @@
                     android:clipToPadding="false"
                     android:layoutAnimation="@anim/layout_animation"
                     android:paddingStart="@dimen/_7sdp"
+                    android:paddingTop="@dimen/_7sdp"
                     android:paddingEnd="@dimen/_7sdp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>

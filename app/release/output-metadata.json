@@ -5,14 +5,14 @@
     "kind": "Directory"
   },
   "applicationId": "ninja.cricks",
-"variantName": "processReleaseResources",
+  "variantName": "processReleaseResources",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 3300,
-      "versionName": "3.0",
-      "outputFile": "Ninja11-3.0-release.apk"
+      "versionCode": 3302,
+      "versionName": "3.2",
+      "outputFile": "Ninja11-3.2-release.apk"
     }
   ]
 }
