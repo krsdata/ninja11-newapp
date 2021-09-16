@@ -79,6 +79,10 @@ class PrizeBreakupFragment : Fragment() {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
         if (contestObject!!.winnerCounts!!.toInt() == 0) {
             mBinding!!.winnerGlory.visibility = View.VISIBLE
         } else {

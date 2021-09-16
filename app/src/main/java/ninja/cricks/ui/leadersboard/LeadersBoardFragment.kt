@@ -116,6 +116,10 @@ class LeadersBoardFragment : Fragment() {
             getLeadersBoards()
         }
         setTotalTeamCounts("0")
+    }
+
+    override fun onResume() {
+        super.onResume()
         getLeadersBoards()
     }
 

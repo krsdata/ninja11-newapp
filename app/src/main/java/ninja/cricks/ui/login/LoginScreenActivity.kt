@@ -4,11 +4,9 @@ import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.Bitmap
-import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
@@ -30,7 +28,6 @@ import ninja.cricks.models.ResponseModel
 import ninja.cricks.models.UserInfo
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.RetrofitClient
-import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseActivity
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.HardwareInfoManager
@@ -89,23 +86,23 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
             val smaller = Math.min(it.paddingLeft, it.paddingRight)
             it.setPadding(smaller, it.paddingTop, smaller, it.paddingBottom)
         }
-        binding!!.signInButton.setOnClickListener(View.OnClickListener {
+        binding!!.signInButton.setOnClickListener {
             signIn()
-        })
+        }
 
-        binding!!.termsCondition.setOnClickListener(View.OnClickListener {
+        binding!!.termsCondition.setOnClickListener {
             val intent = Intent(this@LoginScreenActivity, WebActivity::class.java)
             intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_TERMS_CONDITION)
             intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_TNC)
             startActivity(intent)
-        })
+        }
 
-        binding!!.privacyPolicy.setOnClickListener(View.OnClickListener {
+        binding!!.privacyPolicy.setOnClickListener {
             val intent = Intent(this@LoginScreenActivity, WebActivity::class.java)
             intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_PRIVACY_POLICY)
             intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_PRIVACY)
             startActivity(intent)
-        })
+        }
     }
 
     private fun configureGoogleSignIn() {
