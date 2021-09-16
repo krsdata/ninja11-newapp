@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#0172AC</color>
-    <color name="colorPrimaryDark">#0172AC</color>
-    <color name="colorAccent">#0172AC</color>
+    <color name="colorPrimary">#B1090B</color>
+    <color name="colorPrimaryDark">#B1090B</color>
+    <color name="colorAccent">#B1090B</color>
 
+    <color name="theme_color">#B1090B</color>
 
-    <!-- Here you can add color of your choice  -->
+    <!-- 0172AC Here you can add color of your choice  -->
     <color name="ucrop_color_toolbar">@color/colorPrimary</color>
     <color name="ucrop_color_statusbar">@color/colorPrimary</color>
     <color name="ucrop_color_widget_active">@color/colorPrimary</color>
