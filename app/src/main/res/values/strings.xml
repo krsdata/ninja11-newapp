@@ -153,4 +153,24 @@
     <string name="drawer_close">Close</string>
 
 
+    <string name="sign_in_with_google">Sign in with Google+</string>
+    <string name="login_with_mobile_number">Login With Mobile</string>
+    <string name="continue_with_phone">Continue with Phone</string>
+    <string name="enter_your_phone_number">" your mobile number"</string>
+    <string name="enter_phone_number_here">Enter mobile number here</string>
+    <string name="continue_amp_verify"><![CDATA[Continue & Verify]]></string>
+    <string name="verify_and_wait">Verify and Proceed</string>
+    <string name="confirm_otp">Confirm OTP</string>
+    <string name="enter_otp_we_just_sent_to_your_phone_number">" OTP We just Sent to your Phone Number"</string>
+    <string name="verify_amp_next"><![CDATA[Verify & Next]]></string>
+    <string name="resend">Resend</string>
+    <string name="time_remaining_2_00s">Time Remaining 2:00s</string>
+    <string name="or">or</string>
+    <string name="by_logging_in_you_accept_you_are_18_amp_agree_to_our"><![CDATA[By logging in, You accept you are 18+ & Agree to our]]></string>
+    <string name="t_c"><![CDATA[T&C]]></string>
+    <string name="aand"> <![CDATA[&]]> </string>
+    <string name="privacy"> Privacy</string>
+    <string name="need_help">Need Help</string>
+    <string name="india_s_biggest_fantasy_sports_platform">INDIA\'S BIGGEST FANTASY SPORTS PLATFORM</string>
+    <string name="please_enter_passcode">Please Enter Passcode</string>
 </resources>

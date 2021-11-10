@@ -18,6 +18,10 @@ interface IApiMethod {
     fun customerLogin(@Body request: JsonObject): Call<ResponseModel>
 
     @Headers("Content-Type: application/json")
+    @POST("api/v3/mobileLogin")
+    fun phoneLogin(@Body request: JsonObject): Call<ResponseModel>
+
+    @Headers("Content-Type: application/json")
     @POST("member/logout")
     fun logout(@Body request: JsonObject): Call<UsersPostDBResponse>
 

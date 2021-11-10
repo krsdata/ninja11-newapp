@@ -65,7 +65,6 @@ class SplashScreenActivity : BaseActivity() {
             this,
             R.layout.activity_splash
         )
-        updateCheckApk()
 
         MainActivity.CHECK_APK_UPDATE_API = false
         MainActivity.CHECK_WALLET_ONCE = false
@@ -122,43 +121,6 @@ class SplashScreenActivity : BaseActivity() {
 
     }
 
-    private fun updateCheckApk() {
-        val jsonRequest = JsonObject()
-        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
-        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
-        jsonRequest.addProperty("version_code", BuildConfig.VERSION_CODE)
-
-        RetrofitClient(mContext).client.create(IApiMethod::class.java).apkUpdate(jsonRequest)
-            .enqueue(object : Callback<JsonObject?> {
-                override fun onFailure(call: Call<JsonObject?>?, t: Throwable?) {
-                    MainActivity.CHECK_APK_UPDATE_API = false
-                }
-
-                override fun onResponse(
-                    call: Call<JsonObject?>?,
-                    response: Response<JsonObject?>?
-                ) {
-                    if (!isFinishing) {
-                        if (response!!.body() != null) {
-                            val res = JSONObject(response.body().toString())
-                            MyPreferences.setSplashScreen(
-                                this@SplashScreenActivity,
-                                res.getString("splashScreen")
-                            )
-                            if (res.getBoolean("status")) {
-                                MainActivity.CHECK_APK_UPDATE_API = true
-                                MainActivity.CHECK_FORCE_UPDATE = res.getBoolean("force_update")
-                                MainActivity.updatedApkUrl = res.getString("url")
-                                MainActivity.releaseNote = res.getString("release_note")
-                                if (res.getString("base_url") != null && res.getString("base_url") != "") {
-                                    MyPreferences.setBaseUrl(mContext, res.getString("base_url"))
-                                }
-                            }
-                        }
-                    }
-                }
-            })
-    }
 
     override fun onStart() {
         super.onStart()

@@ -178,6 +178,13 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
                 intent.getStringExtra(OtpVerifyActivity.EXTRA_KEY_ID_TOKEN)
             )
         }
+
+        if (intent.hasExtra("passcode")) {
+            jsonRequest.addProperty(
+                "pass_code",
+                intent.getStringExtra("passcode")
+            )
+        }
         jsonRequest.addProperty("referral_code", binding!!.editInvitecode.text.toString())
         jsonRequest.addProperty("team_name", binding!!.editTeamName.text.toString())
         jsonRequest.addProperty("state", binding!!.editState.text.toString())
@@ -189,9 +196,15 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
         val deviceDetails: JsonObject = JsonParser().parse(jsonString).asJsonObject
         jsonRequest.add("deviceDetails", deviceDetails)
 
+        if (intent.hasExtra("isFromPhoneVerification") && intent.getBooleanExtra("isFromPhoneVerification",false)) {
+            RetrofitClient(this).client.create(IApiMethod::class.java).phoneLogin(jsonRequest)
+                .enqueue(this)
+        }
+        else {
+            RetrofitClient(this).client.create(IApiMethod::class.java).customerLogin(jsonRequest)
+                .enqueue(this)
+        }
 
-        RetrofitClient(this).client.create(IApiMethod::class.java).customerLogin(jsonRequest)
-            .enqueue(this)
     }
 
     override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {

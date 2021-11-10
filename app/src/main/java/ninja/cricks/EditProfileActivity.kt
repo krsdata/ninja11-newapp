@@ -255,6 +255,7 @@ class EditProfileActivity : AppCompatActivity() {
         val mobileNumber = mBinding!!.updateEditMobile.text.toString()
         val emailAddress = mBinding!!.updateEmail.text.toString()
         val cityName = mBinding!!.editCity.text.toString()
+        val passcode = mBinding!!.editPasscode.text.toString()
         var gender = "male"
         if (!mBinding!!.genderMale.isChecked) {
             gender = "female"
@@ -279,9 +280,13 @@ class EditProfileActivity : AppCompatActivity() {
         } else if (TextUtils.isEmpty(dateOfBirth)) {
             MyUtils.showToast(this@EditProfileActivity, "Please enter your Date of Birth")
             return
+        }else if (TextUtils.isEmpty(passcode) && passcode.length != 6) {
+            MyUtils.showToast(this@EditProfileActivity, "Please enter new passcode")
+            return
         }
 
-        mBinding!!.progressBar.visibility = View.VISIBLE
+
+            mBinding!!.progressBar.visibility = View.VISIBLE
 
         val jsonRequest = JsonObject()
         jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
@@ -294,6 +299,7 @@ class EditProfileActivity : AppCompatActivity() {
         jsonRequest.addProperty("city", cityName)
         jsonRequest.addProperty("gender", gender)
         jsonRequest.addProperty("dateOfBirth", dateOfBirth)
+        jsonRequest.addProperty("pass_code", passcode)
 
         WebServiceClient(this).client.create(IApiMethod::class.java).updateProfile(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {

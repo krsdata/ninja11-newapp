@@ -4,9 +4,11 @@ import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
+import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
@@ -28,6 +30,7 @@ import ninja.cricks.models.ResponseModel
 import ninja.cricks.models.UserInfo
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.RetrofitClient
+import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseActivity
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.HardwareInfoManager
@@ -51,6 +54,7 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
     var emailid = ""
     var idToken = ""
     var binding: ActivityLoginBinding? = null
+//    var viewmodel: LoginViewModel? = null
 
     companion object {
         var AUTH_TYPE_GMAIL = "googleAuth"
@@ -63,6 +67,7 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
         firebaseAuth = FirebaseAuth.getInstance()
+        window.statusBarColor = resources.getColor(R.color.blue)
 
         if (intent.hasExtra(RegisterScreenActivity.ISACTIVITYRESULT)) {
             isActivityRequiredResult =
@@ -82,27 +87,34 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
     }
 
     private fun initClicks() {
+/*
         binding!!.signInButton.getChildAt(0)?.let {
             val smaller = Math.min(it.paddingLeft, it.paddingRight)
             it.setPadding(smaller, it.paddingTop, smaller, it.paddingBottom)
         }
-        binding!!.signInButton.setOnClickListener {
+*/
+        binding!!.signInButton.setOnClickListener(View.OnClickListener {
             signIn()
+        })
+
+        binding!!.signInWithPhoneButton.setOnClickListener {
+            val intent = Intent(this@LoginScreenActivity, PhoneNumberActivity::class.java)
+            startActivity(intent)
         }
 
-        binding!!.termsCondition.setOnClickListener {
+      /*  binding!!.termsCondition.setOnClickListener(View.OnClickListener {
             val intent = Intent(this@LoginScreenActivity, WebActivity::class.java)
             intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_TERMS_CONDITION)
             intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_TNC)
             startActivity(intent)
-        }
+        })
 
-        binding!!.privacyPolicy.setOnClickListener {
+        binding!!.privacyPolicy.setOnClickListener(View.OnClickListener {
             val intent = Intent(this@LoginScreenActivity, WebActivity::class.java)
             intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_PRIVACY_POLICY)
             intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_PRIVACY)
             startActivity(intent)
-        }
+        })*/
     }
 
     private fun configureGoogleSignIn() {

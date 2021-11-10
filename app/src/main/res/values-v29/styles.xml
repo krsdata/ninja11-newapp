@@ -10,6 +10,7 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowDisablePreview">true</item>
         <item name="android:forceDarkAllowed">true</item>
+        <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
     </style>
 
     <style name="Translucent" parent="@style/Theme.AppCompat.Light.NoActionBar">

@@ -19,7 +19,7 @@
         android:required="true" />
 
     <application
-        android:name=".NinjaApplication"
+        android:name="ninja.cricks.NinjaApplication"
         android:allowBackup="false"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
@@ -36,8 +36,10 @@
             android:name="com.google.android.actions"
             android:resource="@xml/teamname_border" />
 
+        <activity android:name=".ui.login.PhoneLoginActivity"></activity>
+        <activity android:name=".ui.login.PhoneNumberActivity" />
         <activity
-            android:name=".SplashScreenActivity"
+            android:name="ninja.cricks.SplashScreenActivity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -51,7 +53,6 @@
                 <data
                     android:host="open"
                     android:scheme="ninja11" />
-
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -82,135 +83,165 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
+
         <activity
-            android:name=".ui.login.LoginScreenActivity"
+            android:name="ninja.cricks.ui.login.LoginScreenActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/screen_name_login"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".ui.login.RegisterScreenActivity"
+            android:name="ninja.cricks.ui.login.RegisterScreenActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/screen_name_register"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".MainActivity"
+            android:name="ninja.cricks.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/dashboard_theme" />
+
         <activity
-            android:name=".ContestActivity"
+            android:name="ninja.cricks.ContestActivity"
             android:label="@string/activity_type_contest"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MaintainanceActivity"
+            android:name="ninja.cricks.MaintainanceActivity"
             android:label="@string/activity_type_contest"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".QuizContestActivity"
+            android:name="ninja.cricks.QuizContestActivity"
             android:label="@string/activity_type_contest"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".CreateTeamActivity"
+            android:name="ninja.cricks.CreateTeamActivity"
             android:label="@string/activity_type_create_team"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".TeamPreviewActivity"
+            android:name="ninja.cricks.TeamPreviewActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".NotificationListActivity"
+            android:name="ninja.cricks.NotificationListActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".SaveTeamActivity"
+            android:name="ninja.cricks.SaveTeamActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".SelectTeamActivity"
+            android:name="ninja.cricks.SelectTeamActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".MyBalanceActivity"
+            android:name="ninja.cricks.MyBalanceActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".AddMoneyActivity"
+            android:name="ninja.cricks.AddMoneyActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".UpdateApplicationActivity"
+            android:name="ninja.cricks.UpdateApplicationActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/Translucent" />
+
         <activity
-            android:name=".WebActivity"
+            android:name="ninja.cricks.WebActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".LeadersBoardActivity"
+            android:name="ninja.cricks.LeadersBoardActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".MoreContestActivity"
+            android:name="ninja.cricks.MoreContestActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".InviteFriendsActivity"
+            android:name="ninja.cricks.InviteFriendsActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".SupportActivity"
+            android:name="ninja.cricks.SupportActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".FullScreenImageViewActivity"
+            android:name="ninja.cricks.FullScreenImageViewActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".VerifyDocumentsActivity"
+            android:name="ninja.cricks.VerifyDocumentsActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".WithdrawAmountsActivity"
+            android:name="ninja.cricks.WithdrawAmountsActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".DocumentsListActivity"
+            android:name="ninja.cricks.DocumentsListActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".MyTransactionHistoryActivity"
+            android:name="ninja.cricks.MyTransactionHistoryActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".EditProfileActivity"
+            android:name="ninja.cricks.EditProfileActivity"
             android:label="Update Profile"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".ChangePasswordActivity"
+            android:name="ninja.cricks.ChangePasswordActivity"
             android:label="Change Password"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".RefferalFriendsListActivity"
+            android:name="ninja.cricks.RefferalFriendsListActivity"
             android:label="Update Profile"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".OtpVerifyActivity"
+            android:name="ninja.cricks.OtpVerifyActivity"
             android:label="Update Profile"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".ui.JoinContestActivity"
+            android:name="ninja.cricks.ui.JoinContestActivity"
             android:label="Join Contest"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".OfferActivity"
+            android:name="ninja.cricks.OfferActivity"
             android:label="Latest Offers"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".ContestLeaderBoardActivity"
+            android:name="ninja.cricks.ContestLeaderBoardActivity"
             android:label="Contest LeaderBoard"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".ViewUserDetailActivity"
+            android:name="ninja.cricks.ViewUserDetailActivity"
             android:label="User Info"
             android:screenOrientation="portrait" />
         <activity
@@ -225,8 +256,9 @@
             android:name=".PaytmWithdrawActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".PlayerStatsInfoActivity"
+            android:name="ninja.cricks.PlayerInfoActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
@@ -241,7 +273,7 @@
         </provider>
 
         <service
-            android:name=".fcm.MyFirebaseMessagingService"
+            android:name="ninja.cricks.fcm.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -251,27 +283,35 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_notification_icon" />
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/accent_material_light" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
+
         <meta-data
             android:name="fontProviderRequests"
             android:value="Noto Color Emoji Compat" />
+
         <meta-data
             android:name="com.google.android.gms.wallet.api.enabled"
             android:value="true" />
+
         <meta-data
             android:name="com.razorpay.ApiKey"
             android:value="@string/razorpay_key" />
+
         <meta-data
             android:name="firebase_analytics_collection_enabled"
-            android:value="true" /> <!-- Branch init -->
+            android:value="true" />
+
+        <!-- Branch init -->
         <meta-data
             android:name="io.branch.sdk.BranchKey"
-            android:value="key_live_kmLX9H0wFiENeUk9LH5cecnkBAoH4Qjv" /> <!-- Branch testing (TestMode "true" to simulate fresh installs on dev environment) -->
+            android:value="key_live_kmLX9H0wFiENeUk9LH5cecnkBAoH4Qjv" />
+        <!-- Branch testing (TestMode "true" to simulate fresh installs on dev environment) -->
         <meta-data
             android:name="io.branch.sdk.TestMode"
             android:value="false" />
