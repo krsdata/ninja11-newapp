@@ -48,7 +48,7 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_40sdp"
                     android:layout_weight="1"
-                    android:background="@color/accent_material_light"
+                    android:background="@drawable/score_card"
                     android:gravity="center|start"
 
                     android:orientation="horizontal">
@@ -99,7 +99,7 @@
                     android:layout_height="@dimen/_40sdp"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_weight="1"
-                    android:background="@color/player_bg_dark_yellow"
+                    android:background="@drawable/score_card_2"
                     android:gravity="center|start"
                     android:orientation="horizontal">
 

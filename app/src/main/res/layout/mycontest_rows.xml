@@ -98,16 +98,16 @@
                 android:gravity="right"
                 android:orientation="horizontal">
 
+
                 <TextView
                     android:id="@+id/contest_entry_prize"
                     android:layout_width="75dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_height="match_parent"
                     android:background="@drawable/default_rounded_button_sportsfight"
-                    android:fontFamily="@font/open_sans_semibold"
+                    android:backgroundTint="@color/green"
                     android:gravity="center"
                     android:padding="6dp"
-                    android:text="Rs39"
+                    android:text="₹39"
                     android:textColor="@color/white"
                     android:textSize="@dimen/header_size"
                     android:textStyle="bold" />
@@ -182,6 +182,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical|left"
+                android:background="@drawable/kandy"
                 android:orientation="horizontal">
 
                 <ImageView

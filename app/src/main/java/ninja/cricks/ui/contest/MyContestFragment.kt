@@ -216,7 +216,7 @@ class MyContestFragment : Fragment() {
             val objectVal = matchesListObject[position]
             val viewHolder: MyMatchViewHolder = parent as MyMatchViewHolder
             viewHolder.contestPrizePool.text = String.format("₹%s", objectVal.totalWinningPrize)
-            viewHolder.contestEntryPrize.text = String.format("%s", objectVal.entryFees)
+            viewHolder.contestEntryPrize.text = String.format("₹%s",objectVal.entryFees)
             if (objectVal.isContestCancelled) {
                 viewHolder.contestInfo.text = "Cancelled"
                 viewHolder.contestInfo.textSize = 18.0f

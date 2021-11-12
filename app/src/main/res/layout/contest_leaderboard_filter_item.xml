@@ -5,7 +5,6 @@
     android:layout_height="@dimen/_30sdp"
     android:gravity="center"
     android:background="@drawable/filter_round_back_amber"
-    android:layout_margin="@dimen/_5sdp"
     android:orientation="vertical">
 
     <TextView
@@ -14,8 +13,6 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_bold"
         android:text="Mega Contest"
-        android:paddingStart="@dimen/_10sdp"
-        android:paddingEnd="@dimen/_10sdp"
         android:textColor="@color/white"
         android:textSize="@dimen/header_size" />
 
