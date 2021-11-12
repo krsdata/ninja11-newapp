@@ -22,7 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/rectangle_ground_green"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/myteam"
             android:orientation="vertical">
 
             <LinearLayout

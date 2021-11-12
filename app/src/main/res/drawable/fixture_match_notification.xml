@@ -3,7 +3,7 @@
     android:shape="rectangle">
 
     <solid
-        android:color="@color/colorPrimary"/>
+        android:color="@color/notification"/>
 
     <corners
         android:topRightRadius="@dimen/_7sdp"

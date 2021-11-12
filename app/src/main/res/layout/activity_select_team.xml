@@ -88,7 +88,6 @@
                 android:text="CREATE TEAM"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_11sdp" />
-
             <TextView
                 android:id="@+id/team_continue"
                 android:layout_width="0dp"
@@ -102,6 +101,8 @@
                 android:text="JOIN CONTEST"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_11sdp" />
+
+
         </LinearLayout>
     </RelativeLayout>
 </layout>

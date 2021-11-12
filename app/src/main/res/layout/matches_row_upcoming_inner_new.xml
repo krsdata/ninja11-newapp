@@ -103,14 +103,14 @@
 
                             <com.mikhaellopez.circularimageview.CircularImageView
                                 android:id="@+id/teama_logo"
-                                android:layout_width="45dp"
-                                android:layout_height="45dp"
-                                android:layout_centerHorizontal="true"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
                                 android:scaleType="fitCenter"
                                 android:src="@drawable/flag_indian"
                                 app:civ_border="true"
+                                android:layout_marginLeft="@dimen/_10sdp"
                                 app:civ_border_color="@color/white"
-                                app:civ_border_width="3dp"
+                                app:civ_border_width="0dp"
                                 app:civ_circle_color="@color/white"
                                 app:civ_circle_color_end="@color/white"
                                 app:civ_circle_color_start="@color/white" />
@@ -215,14 +215,14 @@
 
                             <com.mikhaellopez.circularimageview.CircularImageView
                                 android:id="@+id/teamb_logo"
-                                android:layout_width="45dp"
-                                android:layout_height="45dp"
-                                android:layout_centerHorizontal="true"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_marginLeft="@dimen/_26sdp"
                                 android:scaleType="fitCenter"
                                 android:src="@drawable/flag_indian"
                                 app:civ_border="true"
                                 app:civ_border_color="@color/white"
-                                app:civ_border_width="3dp"
+                                app:civ_border_width="0dp"
                                 app:civ_circle_color="@color/white"
                                 app:civ_circle_color_end="@color/white"
                                 app:civ_circle_color_start="@color/white" />
