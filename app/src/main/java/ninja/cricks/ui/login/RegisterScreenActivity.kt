@@ -223,10 +223,10 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
                         MyPreferences.setOtpAuthRequired(this, responseb.isOTPRequired)
                         MyPreferences.setToken(this, responseb.token)
                         MyPreferences.setUserID(this, "" + responseb.infomodel!!.userId)
-                        MyPreferences.setPaytmMid(this, responseb.paytmMid)
+                       /* MyPreferences.setPaytmMid(this, responseb.paytmMid)
                         MyPreferences.setPaytmCallback(this, responseb.callbackurrl)
                         MyPreferences.setGooglePayId(this, responseb.gpayid)
-                        MyPreferences.setRazorPayId(this, responseb.razorPay)
+                        MyPreferences.setRazorPayId(this, responseb.razorPay)*/
 
                         if (responseb.baseUrl != null && responseb.baseUrl != "") {
                             MyPreferences.setBaseUrl(this, responseb.baseUrl)

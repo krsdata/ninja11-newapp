@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -28,16 +29,14 @@ import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.contest.adaptors.ContestAdapter
 import ninja.cricks.ui.contest.adaptors.ContestListAdapter
-import ninja.cricks.utils.BindingUtils
-import ninja.cricks.utils.HardwareInfoManager
-import ninja.cricks.utils.MyPreferences
-import ninja.cricks.utils.MyUtils
+import ninja.cricks.utils.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class ContestFragment : Fragment() {
 
+    private var customeProgressDialog: CustomeProgressDialog? = null
     private var objectMatches: UpcomingMatchesModel? = null
     var matchObject: UpcomingMatchesModel? = null
     var mListenerContestEvents: OnContestEvents? = null
@@ -64,8 +63,18 @@ class ContestFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        customeProgressDialog = CustomeProgressDialog(context)
+        customeProgressDialog!!.show();
         objectMatches =
             requireArguments().get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
+        matchObject = objectMatches
+        getAllContest(true)
+        parentFragmentManager.setFragmentResultListener(CreateTeamActivity.CREATETEAM_REQUESTCODE.toString(),this,
+            { s: String, bundle: Bundle ->
+                if (bundle.get(ContestActivity.SERIALIZABLE_KEY_CREATE_TEAM) == "result_ok") {
+                    getAllContest(true)
+                }
+            })
     }
 
     override fun onCreateView(
@@ -81,7 +90,6 @@ class ContestFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        matchObject = objectMatches
         mBinding!!.contestViewRecycler.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         adapter = ContestAdapter(
@@ -335,8 +343,13 @@ class ContestFragment : Fragment() {
         super.onResume()
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
-        } else {
-            getAllContest(true)
+            return
+        }
+        if ((activity as ContestActivity).getAllContestResponseModel != null) {
+            allContest((activity as ContestActivity).getAllContestResponseModel!!)
+        }
+        else if (mBinding != null) {
+            mBinding!!.linearEmptyContest.visibility = View.VISIBLE
         }
         //pos = 0
         Log.e(TAG, "pos =======> $pos")
@@ -374,10 +387,13 @@ class ContestFragment : Fragment() {
     private fun getAllContest(isLoading: Boolean) {
         //var userInfo = (activity as PlugSportsApplication).userInformations
         //selectAllContest()
-        mBinding!!.contestRefresh.isRefreshing = false
+        if (mBinding != null) {
+            mBinding!!.contestRefresh.isRefreshing = false
+        }
         //mBinding!!.filterBar.visibility = View.GONE
         if (isLoading)
-            mBinding!!.progressBar.visibility = View.VISIBLE
+          //  mBinding!!.progressBar.visibility = View.VISIBLE
+              customeProgressDialog!!.show()
 
         val jsonRequest = JsonObject()
         jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
@@ -399,8 +415,9 @@ class ContestFragment : Fragment() {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     if (isVisible) {
                         MyUtils.showToast(activity!! as AppCompatActivity, "Something went wrong!!")
-                        mBinding!!.contestRefresh.isRefreshing = false
-                        mBinding!!.progressBar.visibility = View.GONE
+                        if (mBinding != null)  mBinding!!.contestRefresh.isRefreshing = false
+                   //     mBinding!!.progressBar.visibility = View.GONE
+                        customeProgressDialog!!.dismiss()
                     }
                 }
 
@@ -411,8 +428,11 @@ class ContestFragment : Fragment() {
                     if (!isVisible) {
                         return
                     }
-                    mBinding!!.contestRefresh.isRefreshing = false
-                    mBinding!!.progressBar.visibility = View.GONE
+                    if (mBinding != null) {
+                        mBinding!!.contestRefresh.isRefreshing = false
+                        //mBinding!!.progressBar.visibility = View.GONE
+                    }
+                    customeProgressDialog!!.dismiss()
                     val res = response!!.body()
                     if (res != null && res.appMaintainance) {
                         val intent = Intent(activity, MaintainanceActivity::class.java)
@@ -423,42 +443,8 @@ class ContestFragment : Fragment() {
                     } else {
                         if (res != null) {
                             if (res.status) {
-                                BindingUtils.currentTimeStamp = res.systemTime
-                                val responseModel = res.responseObject
-                                if (responseModel!!.matchContestlist != null && responseModel.matchContestlist!!.isNotEmpty()) {
-                                    allContestListData.clear()
-                                    allContestListData.addAll(responseModel.matchContestlist!!)
-
-                                    filterArrayList.clear()
-
-                                    val model = ContestCategoryModel("All Contest", true)
-                                    filterArrayList.add(model)
-
-                                    for (i in responseModel.matchContestlist!!.indices) {
-                                        val categoryModel = ContestCategoryModel(
-                                            responseModel.matchContestlist!![i].contestTitle,
-                                            false
-                                        )
-                                        filterArrayList.add(categoryModel)
-                                    }
-
-                                    Log.e(TAG, "pos =======> $pos")
-                                    updateContestData(pos)
-                                    /*for (i in filterArrayList.indices) {
-                                        filterArrayList[i].isStatus = pos == i
-                                    }
-
-                                    filterAdapter.updateRecord(filterArrayList)*/
-
-                                    adapter.setMatchesList(allContestListData)
-                                    mListener.onMyTeam(responseModel.myjoinedTeams!!)
-                                    mListener.onMyContest(responseModel.joinedContestDetails!!)
-                                } else {
-                                    MyUtils.showToast(
-                                        activity!! as AppCompatActivity,
-                                        "No Contest available for this match"
-                                    )
-                                }
+                                (activity as ContestActivity).getAllContestResponseModel = res
+                            allContest(res)
                             } else {
                                 if (res.code == 1001) {
                                     MyUtils.showMessage(requireActivity(), res.message)
@@ -472,6 +458,46 @@ class ContestFragment : Fragment() {
                     updateEmptyViews()
                 }
             })
+    }
+
+    private fun allContest(res: UsersPostDBResponse) {
+        BindingUtils.currentTimeStamp = res.systemTime
+        val responseModel = res.responseObject
+
+        if (responseModel!!.matchContestlist != null && responseModel.matchContestlist!!.isNotEmpty()) {
+            allContestListData.clear()
+            allContestListData.addAll(responseModel.matchContestlist!!)
+
+            filterArrayList.clear()
+
+            val model = ContestCategoryModel("All Contest", true)
+            filterArrayList.add(model)
+
+            for (i in responseModel.matchContestlist!!.indices) {
+                val categoryModel = ContestCategoryModel(
+                    responseModel.matchContestlist!![i].contestTitle,
+                    false
+                )
+                filterArrayList.add(categoryModel)
+            }
+
+            Log.e(TAG, "pos =======> $pos")
+            updateContestData(pos)
+            /*for (i in filterArrayList.indices) {
+                filterArrayList[i].isStatus = pos == i
+            }
+
+            filterAdapter.updateRecord(filterArrayList)*/
+
+            adapter.setMatchesList(allContestListData)
+            mListener.onMyTeam(responseModel.myjoinedTeams!!)
+            mListener.onMyContest(responseModel.joinedContestDetails!!)
+        } else {
+            MyUtils.showToast(
+                requireActivity() as AppCompatActivity,
+                "No Contest available for this match"
+            )
+        }
     }
 
     fun updateEmptyViews() {

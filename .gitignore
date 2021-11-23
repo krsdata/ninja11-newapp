@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+/app/release/Ninja11-3.2-release.apk
+/keystore_temp

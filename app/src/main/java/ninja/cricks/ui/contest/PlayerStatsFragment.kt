@@ -63,6 +63,8 @@ class PlayerStatsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         mContext = requireActivity()
         objectMatches =
             arguments?.get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
+        customProgressDialog = CustomeProgressDialog(activity)
+        getPlayerStats(true)
     }
 
     override fun onCreateView(
@@ -77,18 +79,23 @@ class PlayerStatsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        customProgressDialog = CustomeProgressDialog(activity)
         binding.refreshLayout.setOnRefreshListener(this)
 
         val layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         binding.recyclerView.layoutManager = layoutManager
         val divider = DividerItemDecoration(mContext!!, layoutManager.orientation)
         binding.recyclerView.addItemDecoration(divider)
+        adapter = PlayerStatsAdapter(playerStatsList)
+        binding.recyclerView.adapter = adapter
     }
 
     override fun onResume() {
         super.onResume()
-        getPlayerStats(true)
+        if ((activity as ContestActivity).resPlayerStatsList.isNotEmpty() && adapter != null) {
+            playerStatsList.clear()
+            playerStatsList.addAll((activity as ContestActivity).resPlayerStatsList)
+            adapter?.notifyDataSetChanged()
+        }
     }
 
     override fun onRefresh() {
@@ -157,9 +164,8 @@ class PlayerStatsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                                 rhs.point.toDouble()
                                     .compareTo(lhs.point.toDouble())
                             }
-
-                            adapter = PlayerStatsAdapter(playerStatsList)
-                            binding.recyclerView.adapter = adapter
+                            (activity as ContestActivity).resPlayerStatsList.clear()
+                            (activity as ContestActivity).resPlayerStatsList.addAll(playerStatsList)
                             adapter!!.notifyDataSetChanged()
                         } else {
                             MyUtils.showMessage(mContext!!, "Please try after sometime")

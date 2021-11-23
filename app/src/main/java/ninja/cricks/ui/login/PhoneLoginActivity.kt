@@ -295,10 +295,12 @@ class PhoneLoginActivity : BaseActivity(), Callback<ResponseModel> {
                         MyPreferences.setOtpAuthRequired(this, responseBody.isOTPRequired)
                         MyPreferences.setToken(this, responseBody.token)
                         MyPreferences.setUserID(this, "" + responseBody.infomodel!!.userId)
-                        MyPreferences.setPaytmMid(this, responseBody.paytmMid)
-                        MyPreferences.setPaytmCallback(this, responseBody.callbackurrl)
+                    /*    if (responseBody.paytmMid != null) {
+                            MyPreferences.setPaytmMid(this, responseBody.paytmMid)
+                        }
+                        MyPreferences.setPaytmCallback(this, responseBody.infomodel!!.callbackurrl)
                         MyPreferences.setGooglePayId(this, responseBody.gpayid)
-                        MyPreferences.setRazorPayId(this, responseBody.razorPay)
+                        MyPreferences.setRazorPayId(this, responseBody.razorPay)*/
 
                         if (responseBody.baseUrl != "") {
                             MyPreferences.setBaseUrl(this, responseBody.baseUrl)

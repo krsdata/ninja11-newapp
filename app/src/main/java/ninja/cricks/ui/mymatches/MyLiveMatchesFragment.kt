@@ -26,6 +26,7 @@ import ninja.cricks.models.JoinedMatchModel
 import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
+import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import retrofit2.Call
@@ -40,6 +41,12 @@ class MyLiveMatchesFragment : Fragment() {
     private var mBinding: FragmentMyLiveBinding? = null
     lateinit var adapter: MyMatchesAdapter
     var checkInArrayList = ArrayList<JoinedMatchModel>()
+    lateinit var customeProgressDialog: CustomeProgressDialog
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        customeProgressDialog = CustomeProgressDialog(activity)
+        getMatchHistory()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,7 +84,13 @@ class MyLiveMatchesFragment : Fragment() {
             return
         }
         Log.e(TAG, "onResume")
-        getMatchHistory()
+        if ((activity as MainActivity).resLiveCheckinArraylist.isNotEmpty()) {
+            checkInArrayList.clear()
+            checkInArrayList.addAll((activity as MainActivity).resLiveCheckinArraylist)
+            adapter.notifyDataSetChanged()
+        } else if (mBinding != null) {
+            mBinding!!.linearEmptyContest.visibility = View.VISIBLE
+        }
     }
 
     private fun getMatchHistory() {
@@ -85,8 +98,11 @@ class MyLiveMatchesFragment : Fragment() {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-        mBinding!!.progressBar.visibility = View.VISIBLE
-        mBinding!!.linearEmptyContest.visibility = View.GONE
+        //mBinding!!.progressBar.visibility = View.VISIBLE
+        customeProgressDialog.show()
+        if (mBinding != null) {
+            mBinding!!.linearEmptyContest.visibility = View.GONE
+        }
 
         val jsonRequest = JsonObject()
         jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
@@ -97,9 +113,12 @@ class MyLiveMatchesFragment : Fragment() {
             .getMatchHistory(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
+/*
                     if (mBinding!!.progressBar.visibility == View.VISIBLE) {
                         mBinding!!.progressBar.visibility = View.GONE
                     }
+*/
+                    customeProgressDialog.dismiss()
                     updateEmptyViews()
                 }
 
@@ -110,7 +129,8 @@ class MyLiveMatchesFragment : Fragment() {
                     if (!isVisible){
                         return
                     }
-                    mBinding!!.progressBar.visibility = View.GONE
+                   // mBinding!!.progressBar.visibility = View.GONE
+                    customeProgressDialog.dismiss()
                     val res = response!!.body()
                     if (res != null) {
                         if (res.status) {
@@ -118,7 +138,9 @@ class MyLiveMatchesFragment : Fragment() {
                             if (responseModel != null) {
                                 if (responseModel.matchdatalist != null && responseModel.matchdatalist!!.isNotEmpty()) {
                                     checkInArrayList.clear()
+                                    (activity as MainActivity).resLiveCheckinArraylist.clear()
                                     checkInArrayList.addAll(responseModel.matchdatalist!![0].liveMatchHistory!!)
+                                    (activity as MainActivity).resLiveCheckinArraylist.addAll(responseModel.matchdatalist!![0].liveMatchHistory!!)
                                     adapter.notifyDataSetChanged()
                                 }
                             }

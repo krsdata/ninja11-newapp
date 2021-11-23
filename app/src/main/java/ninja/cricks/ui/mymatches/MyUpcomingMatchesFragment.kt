@@ -28,6 +28,7 @@ import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.utils.BindingUtils
+import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import retrofit2.Call
@@ -42,6 +43,13 @@ class MyUpcomingMatchesFragment : Fragment() {
     private var mBinding: FragmentMyUpcomingBinding? = null
     lateinit var adapter: MyMatchesAdapter
     var checkinArrayList = ArrayList<UpcomingMatchesModel>()
+    lateinit var customeProgressDialog: CustomeProgressDialog
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        customeProgressDialog = CustomeProgressDialog(activity)
+        getMatchHistory()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -80,7 +88,14 @@ class MyUpcomingMatchesFragment : Fragment() {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-        getMatchHistory()
+        if ((activity as MainActivity).resCheckinArrayList.isNotEmpty()) {
+            checkinArrayList.clear()
+            checkinArrayList.addAll((activity as MainActivity).resCheckinArrayList)
+            adapter.notifyDataSetChanged()
+        }
+        else if (mBinding != null) {
+            mBinding!!.linearEmptyContest.visibility = View.VISIBLE
+        }
     }
 
     private fun getMatchHistory() {
@@ -89,9 +104,13 @@ class MyUpcomingMatchesFragment : Fragment() {
             return
         }
         //if (checkinArrayList.size == 0) {
-        mBinding!!.progressBar.visibility = View.VISIBLE
+        //mBinding!!.progressBar.visibility = View.VISIBLE
+        customeProgressDialog.show()
         //}
-        mBinding!!.linearEmptyContest.visibility = View.GONE
+        if (mBinding != null) {
+            mBinding!!.linearEmptyContest.visibility = View.GONE
+        }
+
         /*val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         models.action_type = "upcoming"*/
@@ -105,8 +124,11 @@ class MyUpcomingMatchesFragment : Fragment() {
             .getMatchHistory(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                    if (mBinding!!.progressBar.visibility == View.VISIBLE) {
+                    /*if (mBinding!!.progressBar.visibility == View.VISIBLE) {
                         mBinding!!.progressBar.visibility = View.GONE
+                    }*/
+                    if (customeProgressDialog.isShowing) {
+                        customeProgressDialog.dismiss()
                     }
                     updateEmptyViews()
                 }
@@ -118,7 +140,8 @@ class MyUpcomingMatchesFragment : Fragment() {
                     if (!isVisible){
                         return
                     }
-                    mBinding!!.progressBar.visibility = View.GONE
+                    //mBinding!!.progressBar.visibility = View.GONE
+                    customeProgressDialog.dismiss()
                     val res = response!!.body()
                     if (res != null) {
                         if (res.status) {
@@ -126,7 +149,9 @@ class MyUpcomingMatchesFragment : Fragment() {
                             if (responseModel != null) {
                                 if (responseModel.matchdatalist != null && responseModel.matchdatalist!!.size > 0) {
                                     checkinArrayList.clear()
+                                    (activity as MainActivity).resCheckinArrayList.clear()
                                     checkinArrayList.addAll(responseModel.matchdatalist!!.get(0).upcomingMatchHistory!!)
+                                    (activity as MainActivity).resCheckinArrayList.addAll(responseModel.matchdatalist!!.get(0).upcomingMatchHistory!!)
                                     adapter.notifyDataSetChanged()
                                 }
                             }
@@ -137,6 +162,7 @@ class MyUpcomingMatchesFragment : Fragment() {
                             } else {
                                 MyUtils.showMessage(requireActivity(), res.message)
                             }
+
                         }
                     }
                     updateEmptyViews()

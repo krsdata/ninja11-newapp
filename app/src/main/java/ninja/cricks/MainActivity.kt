@@ -17,6 +17,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.JsonObject
 import ninja.cricks.customviews.CircleImageView
 import ninja.cricks.databinding.ActivityMainBinding
+import ninja.cricks.models.JoinedMatchModel
+import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.RetrofitClient
@@ -44,6 +46,9 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     private var mBinding: ActivityMainBinding? = null
     private lateinit var mContext: Context
     private var drawerFragment: FragmentDrawer? = null
+    var resCheckinArrayList = ArrayList<UpcomingMatchesModel>()
+    var resLiveCheckinArraylist = ArrayList<JoinedMatchModel>()
+    var resCompletedMatchesCheckinArraylist = ArrayList<JoinedMatchModel>()
 
     companion object {
         var menuArrayList = ArrayList<JSONObject>()

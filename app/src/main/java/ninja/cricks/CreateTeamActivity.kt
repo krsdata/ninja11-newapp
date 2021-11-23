@@ -56,6 +56,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
     companion object {
 
         var CREATETEAM_REQUESTCODE: Int = 2001
+        var CREATETEAM_REQUESTCODE1: Int = 20011
         val SERIALIZABLE_MATCH_KEY: String = "matchObject"
         val SERIALIZABLE_CONTEST_KEY: String = "contest"
         val SERIALIZABLE_SELECTED_TEAMS: String = "selected_teams"

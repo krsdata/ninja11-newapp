@@ -59,6 +59,14 @@ class MyTeamFragment : Fragment() {
         super.onCreate(savedInstanceState)
         matchObject =
             requireArguments().get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
+        customeProgressDialog = CustomeProgressDialog(activity)
+        getMyTeam()
+        parentFragmentManager.setFragmentResultListener(CreateTeamActivity.CREATETEAM_REQUESTCODE1.toString(),this,
+            { s: String, bundle: Bundle ->
+                if (bundle.get(ContestActivity.SERIALIZABLE_KEY_CREATE_TEAM1) == "result_ok") {
+                    getMyTeam()
+                }
+            })
     }
 
     override fun onCreateView(
@@ -74,7 +82,6 @@ class MyTeamFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        customeProgressDialog = CustomeProgressDialog(activity)
         mBinding!!.recyclerMyTeam.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
 
@@ -95,15 +102,20 @@ class MyTeamFragment : Fragment() {
         mBinding!!.myteamRefresh.setOnRefreshListener {
             getMyTeam()
         }
-
-
     }
 
     override fun onResume() {
         super.onResume()
         //if (isVisibleToUser) {
-        getMyTeam()
-        //}
+        if ((activity as ContestActivity).responseMyTeamList.isNotEmpty()) {
+            myTeamArrayList.clear()
+            myTeamArrayList.addAll((activity as ContestActivity).responseMyTeamList)
+            adapter.notifyDataSetChanged()
+            mListener.onMyTeam(myTeamArrayList)
+        }
+        else if (mBinding != null) {
+            mBinding!!.linearEmptyContest.visibility = View.VISIBLE
+        }
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -225,8 +237,11 @@ class MyTeamFragment : Fragment() {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-        mBinding!!.linearEmptyContest.visibility = View.GONE
-        mBinding!!.progressMyteam.visibility = View.VISIBLE
+        if(mBinding != null) {
+            mBinding!!.linearEmptyContest.visibility = View.GONE
+        }
+        ///mBinding!!.progressMyteam.visibility = View.VISIBLE
+        customeProgressDialog.show()
         /*val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         models.token = MyPreferences.getToken(requireActivity())!!
@@ -241,9 +256,12 @@ class MyTeamFragment : Fragment() {
             .getMyTeam(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                    mBinding!!.myteamRefresh.isRefreshing = false
+                    if (mBinding != null) {
+                        mBinding!!.myteamRefresh.isRefreshing = false
+                    }
                     MyUtils.showToast(activity!! as AppCompatActivity, t!!.localizedMessage!!)
-                    mBinding!!.progressMyteam.visibility = View.GONE
+                    //mBinding!!.progressMyteam.visibility = View.GONE
+                    customeProgressDialog.dismiss()
                     updateEmptyViews()
                 }
 
@@ -251,8 +269,11 @@ class MyTeamFragment : Fragment() {
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    mBinding!!.myteamRefresh.isRefreshing = false
-                    mBinding!!.progressMyteam.visibility = View.GONE
+                    if(mBinding != null) {
+                        mBinding!!.myteamRefresh.isRefreshing = false
+                    }
+                    //mBinding!!.progressMyteam.visibility = View.GONE
+                    customeProgressDialog.dismiss()
                     val res = response!!.body()
                     if (res != null) {
                         if (res.status) {
@@ -260,6 +281,8 @@ class MyTeamFragment : Fragment() {
                             if (responseModel != null) {
                                 if (responseModel.myTeamList != null && responseModel.myTeamList!!.size > 0) {
                                     myTeamArrayList.clear()
+                                    (activity as ContestActivity).responseMyTeamList.clear()
+                                    (activity as ContestActivity).responseMyTeamList.addAll(responseModel.myTeamList!!)
                                     myTeamArrayList.addAll(responseModel.myTeamList!!)
                                     adapter.notifyDataSetChanged()
                                     mListener.onMyTeam(myTeamArrayList)
@@ -383,9 +406,12 @@ class MyTeamFragment : Fragment() {
                 .enqueue(object : Callback<UsersPostDBResponse?> {
                     override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                         if (isVisible) {
-                            mBinding!!.myteamRefresh.isRefreshing = false
+                            if (mBinding != null) {
+                                mBinding!!.myteamRefresh.isRefreshing = false
+                            }
                             MyUtils.showToast(activity!! as AppCompatActivity, t!!.localizedMessage)
-                            mBinding!!.progressMyteam.visibility = View.GONE
+                           // mBinding!!.progressMyteam.visibility = View.GONE
+                            customeProgressDialog.dismiss()
                             updateEmptyViews()
                         }
                     }

@@ -59,7 +59,11 @@ data class ResponseModel(
 
     @SerializedName("system_token")
     @Expose
-    var systemToken: String = ""
+    var systemToken: String = "",
+
+    @SerializedName("pass_code")
+    @Expose
+    var passcode: Boolean
 
 
 ) : Serializable

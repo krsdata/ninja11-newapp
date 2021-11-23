@@ -60,6 +60,9 @@ data class UserInfo(
 
     @SerializedName("apk_url")
     @Expose
-    var apkUrl: String = ""
+    var apkUrl: String = "",
+    @SerializedName("call_url")
+    @Expose
+    val callbackurrl: String = ""
 
 ) : Serializable, Cloneable

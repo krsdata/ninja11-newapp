@@ -43,7 +43,7 @@ import retrofit2.Response
 class MyContestFragment : Fragment() {
     //private var isMatchStarted: Boolean= false
     var objectMatches: UpcomingMatchesModel? = null
-    private lateinit var customeProgressDialog: CustomeProgressDialog
+    private lateinit var customProgressDialog: CustomeProgressDialog
     private lateinit var mListener: OnContestLoadedListener
     var mContestListeners: OnContestEvents? = null
     private var mBinding: FragmentMyContestBinding? = null
@@ -64,6 +64,8 @@ class MyContestFragment : Fragment() {
         super.onCreate(savedInstanceState)
         objectMatches =
             arguments?.get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
+        customProgressDialog = CustomeProgressDialog(activity)
+        getMyJoinedContest()
 
     }
 
@@ -80,7 +82,6 @@ class MyContestFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        customeProgressDialog = CustomeProgressDialog(activity)
 
         mBinding!!.recyclerMyContest.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
@@ -110,7 +111,15 @@ class MyContestFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        getMyJoinedContest()
+        if ((activity as ContestActivity).responseMyJoinedContest.isNotEmpty() ) {
+            checkinArrayList.clear()
+            checkinArrayList.addAll((activity as ContestActivity).responseMyJoinedContest)
+            mListener.onMyContest(checkinArrayList)
+            adapter.notifyDataSetChanged()
+        }
+        else if (mBinding != null) {
+            mBinding!!.linearEmptyContest.visibility = View.VISIBLE
+        }
     }
 
     override fun onAttach(context: Context) {
@@ -137,9 +146,12 @@ class MyContestFragment : Fragment() {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-        mBinding!!.linearEmptyContest.visibility = View.GONE
-        mBinding!!.progressContest.visibility = View.VISIBLE
+        if (mBinding != null) {
+            mBinding!!.linearEmptyContest.visibility = View.GONE
+        }
 
+        //mBinding!!.progressContest.visibility = View.VISIBLE
+        customProgressDialog.show()
         /*val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         models.token = MyPreferences.getToken(requireActivity())!!
@@ -153,24 +165,32 @@ class MyContestFragment : Fragment() {
         WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getMyContest(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                    mBinding!!.mycontestRefresh.isRefreshing = false
-                    mBinding!!.progressContest.visibility = View.GONE
+                    if (mBinding != null) {
+                        mBinding!!.mycontestRefresh.isRefreshing = false
+                    }
+                    //mBinding!!.progressContest.visibility = View.GONE
+                    customProgressDialog.dismiss()
                 }
 
                 override fun onResponse(
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    mBinding!!.mycontestRefresh.isRefreshing = false
-                    mBinding!!.progressContest.visibility = View.GONE
+                    if (mBinding != null) {
+                        mBinding!!.mycontestRefresh.isRefreshing = false
+                    }
+                    //mBinding!!.progressContest.visibility = View.GONE
+                    customProgressDialog.dismiss()
                     val res = response!!.body()
                     if (res != null) {
                         if (res.status) {
                             val responseModel = res.responseObject
                             if (responseModel != null) {
                                 if (responseModel.myJoinedContest != null && responseModel.myJoinedContest!!.size > 0) {
+                                    (activity as ContestActivity).responseMyJoinedContest.clear()
                                     checkinArrayList.clear()
-                                    checkinArrayList.addAll(responseModel.myJoinedContest!!)
+                                    (activity as ContestActivity).responseMyJoinedContest.addAll(responseModel.myJoinedContest!!)
+                                    checkinArrayList.addAll((activity as ContestActivity).responseMyJoinedContest)
                                     mListener.onMyContest(checkinArrayList)
                                     adapter.notifyDataSetChanged()
                                 }
@@ -378,7 +398,7 @@ class MyContestFragment : Fragment() {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-        customeProgressDialog.show()
+        customProgressDialog.show()
         /*val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         models.token =MyPreferences.getToken(activity!!)!!
@@ -392,14 +412,14 @@ class MyContestFragment : Fragment() {
         WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getPoints(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                    customeProgressDialog.dismiss()
+                    customProgressDialog.dismiss()
                 }
 
                 override fun onResponse(
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    customeProgressDialog.dismiss()
+                    customProgressDialog.dismiss()
                     val res = response!!.body()
                     if (res != null) {
                         if (res.status) {

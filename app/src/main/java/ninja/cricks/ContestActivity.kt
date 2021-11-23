@@ -42,12 +42,19 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
     var joinedTeamList: java.util.ArrayList<MyTeamModels>? = null
     var contestObjects: ArrayList<ContestModelLists>? = null
     private var mBinding: ActivityContestBinding? = null
+    public var getAllContestResponseModel: UsersPostDBResponse? = null
+    var responseMyJoinedContest: ArrayList<ContestModelLists> = ArrayList()
+    var responseMyTeamList: ArrayList<MyTeamModels> = ArrayList()
+    var resPlayerStatsList = ArrayList<PlayerStatsInfoModel>()
+
 
     companion object {
         val SERIALIZABLE_KEY_UPCOMING_MATCHES: String = "contest"
         val SERIALIZABLE_KEY_JOINED_CONTEST: String = "joinedcontest"
         val SERIALIZABLE_KEY_MATCH_OBJECT: String = "matchobject"
         val SERIALIZABLE_KEY_CONTEST_OBJECT: String = "contestmodel"
+        val SERIALIZABLE_KEY_CREATE_TEAM: String = "create_team"
+        val SERIALIZABLE_KEY_CREATE_TEAM1: String = "create_team1"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -149,6 +156,21 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
         if (resultCode == RESULT_OK) {
             if (data != null) {
                 MyUtils.showToast(this@ContestActivity, data.getStringExtra("keyName")!!)
+            }
+            if (requestCode == CreateTeamActivity.CREATETEAM_REQUESTCODE && resultCode == RESULT_OK) {
+                val bundle = Bundle()
+                bundle.putString(SERIALIZABLE_KEY_CREATE_TEAM, "result_ok")
+                supportFragmentManager.setFragmentResult(
+                    CreateTeamActivity.CREATETEAM_REQUESTCODE.toString(),
+                    bundle
+                )
+                val bundle1 = Bundle()
+                bundle1.putString(SERIALIZABLE_KEY_CREATE_TEAM1, "result_ok")
+                supportFragmentManager.setFragmentResult(
+                    CreateTeamActivity.CREATETEAM_REQUESTCODE1.toString(),
+                    bundle1
+                )
+
             }
         }
         mBinding!!.viewpagerContest.currentItem = 0

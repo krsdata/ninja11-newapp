@@ -48,7 +48,7 @@ data class Response(
 
     @SerializedName("myteam")
     @Expose
-    var myTeamList: List<MyTeamModels>? = null,
+        var myTeamList: List<MyTeamModels>? = null,
 
     @SerializedName("my_joined_contest")
     @Expose

@@ -47,6 +47,7 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var customeProgressDialog: CustomeProgressDialog
     private lateinit var mContext: Context
     private var mImageFile: File? = null
+    private var isPasscode: Boolean? =false
 
     companion object {
         private var TAG: String = EditProfileActivity::class.java.simpleName
@@ -144,6 +145,10 @@ class EditProfileActivity : AppCompatActivity() {
 
         if (!TextUtils.isEmpty(userInfo.city)) {
             mBinding!!.editCity.setText(userInfo.city)
+        }
+
+        {
+
         }
     }
 
@@ -280,7 +285,7 @@ class EditProfileActivity : AppCompatActivity() {
         } else if (TextUtils.isEmpty(dateOfBirth)) {
             MyUtils.showToast(this@EditProfileActivity, "Please enter your Date of Birth")
             return
-        }else if (TextUtils.isEmpty(passcode) && passcode.length != 6) {
+        }else if (TextUtils.isEmpty(passcode) && passcode.length != 6 && !isPasscode!!) {
             MyUtils.showToast(this@EditProfileActivity, "Please enter new passcode")
             return
         }
@@ -366,8 +371,11 @@ class EditProfileActivity : AppCompatActivity() {
                             if (infoModels != null) {
                                 (application as NinjaApplication).saveUserInformations(infoModels)
                                 userInfo = (application as NinjaApplication).userInformations
-                                initProfile()
-                                updateUserOtherInfo()
+                                if (res.passcode != null){
+                                    isPasscode = res.passcode
+                                }
+                                    initProfile()
+                                    updateUserOtherInfo()
                             } else {
                                 MyUtils.showToast(
                                     this@EditProfileActivity,

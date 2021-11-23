@@ -24,6 +24,7 @@ import ninja.cricks.models.JoinedMatchModel
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.models.UsersPostDBResponse
+import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import retrofit2.Call
@@ -38,6 +39,13 @@ class MyCompletedMatchesFragment : Fragment() {
     private var mBinding: FragmentMyCompletedBinding? = null
     lateinit var adapter: MyMatchesAdapter
     var checkinArrayList = ArrayList<JoinedMatchModel>()
+    lateinit var customeProgressDialog: CustomeProgressDialog
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        customeProgressDialog = CustomeProgressDialog(activity)
+        getMatchHistory()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,7 +84,16 @@ class MyCompletedMatchesFragment : Fragment() {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-        getMatchHistory()
+        if ((activity as MainActivity).resCompletedMatchesCheckinArraylist.isNotEmpty()) {
+            checkinArrayList.clear()
+            checkinArrayList.addAll((activity as MainActivity).resCompletedMatchesCheckinArraylist)
+            adapter.notifyDataSetChanged()
+        }
+        else {
+            if (mBinding != null) {
+                mBinding!!.linearEmptyContest.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun getMatchHistory() {
@@ -84,10 +101,13 @@ class MyCompletedMatchesFragment : Fragment() {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-        if (checkinArrayList.size == 0) {
+        /*if (checkinArrayList.size == 0) {
             mBinding!!.progressBar.visibility = View.VISIBLE
+        }*/
+        customeProgressDialog.show()
+        if (mBinding != null) {
+            mBinding!!.linearEmptyContest.visibility = View.GONE
         }
-        mBinding!!.linearEmptyContest.visibility = View.GONE
 
         /*val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
@@ -101,9 +121,10 @@ class MyCompletedMatchesFragment : Fragment() {
         WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getMatchHistory(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                    if(mBinding!!.progressBar.visibility == View.VISIBLE){
+                    /*if(mBinding!!.progressBar.visibility == View.VISIBLE){
                         mBinding!!.progressBar.visibility = View.GONE
-                    }
+                    }*/
+                    customeProgressDialog.dismiss()
                     updateEmptyViews()
                 }
 
@@ -114,7 +135,8 @@ class MyCompletedMatchesFragment : Fragment() {
                     if (!isVisible){
                         return
                     }
-                    mBinding!!.progressBar.visibility = View.GONE
+                    //mBinding!!.progressBar.visibility = View.GONE
+                    customeProgressDialog.dismiss()
                     val res = response!!.body()
                     if (res != null) {
                         if (res.status) {
@@ -122,7 +144,9 @@ class MyCompletedMatchesFragment : Fragment() {
                             if (responseModel != null) {
                                 if (responseModel.matchdatalist != null && responseModel.matchdatalist!!.size > 0) {
                                     checkinArrayList.clear()
+                                    (activity as MainActivity).resCompletedMatchesCheckinArraylist.clear()
                                     checkinArrayList.addAll(responseModel.matchdatalist!!.get(0).completedMatchHistory!!)
+                                    (activity as MainActivity).resCompletedMatchesCheckinArraylist.addAll(responseModel.matchdatalist!!.get(0).completedMatchHistory!!)
                                     adapter.notifyDataSetChanged()
                                 }
                             }
