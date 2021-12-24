@@ -37,17 +37,24 @@ import kotlin.collections.ArrayList
 class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents {
 
     //private var isMatchLive: Boolean = false
+
     var matchObject: UpcomingMatchesModel? = null
     var isTimeUp: Boolean = false
     var joinedTeamList: java.util.ArrayList<MyTeamModels>? = null
     var contestObjects: ArrayList<ContestModelLists>? = null
     private var mBinding: ActivityContestBinding? = null
-    public var getAllContestResponseModel: UsersPostDBResponse? = null
     var responseMyJoinedContest: ArrayList<ContestModelLists> = ArrayList()
     var responseMyTeamList: ArrayList<MyTeamModels> = ArrayList()
     var resPlayerStatsList = ArrayList<PlayerStatsInfoModel>()
-
-
+    var allContestListData = ArrayList<ContestsParentModels>()
+    var filteredAllContestListData = ArrayList<ContestsParentModels>()
+    var filterTitleArray = ArrayList<FilterChipModel>()
+    var filter2selected = false
+    var filter_text_2 = false
+    var filter_text_3 = false
+    var filter_text_11 = false
+    var filter_text_101 = false
+    var filter_text_1001 =false
     companion object {
         val SERIALIZABLE_KEY_UPCOMING_MATCHES: String = "contest"
         val SERIALIZABLE_KEY_JOINED_CONTEST: String = "joinedcontest"
@@ -438,4 +445,76 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
                 }
             })
     }
+    public fun filterContestList() {
+        var tempContestList = ArrayList<ContestsParentModels>()
+        for (i in allContestListData.indices) {
+            val tt = ContestsParentModels()
+            tt.contestSubTitle = allContestListData[i].contestSubTitle
+            tt.contestTitle = allContestListData[i].contestTitle
+            tt.contestTypeId = allContestListData[i].contestTypeId
+            tt.icon_url = allContestListData[i].icon_url
+            tt.allContestsRunning = ArrayList()
+            for (j in allContestListData[i].allContestsRunning!!) {
+                tt.allContestsRunning?.add(j)
+            }
+            tempContestList.add(tt)
+        }
+        if (!filter_text_2 && !filter_text_3 && !filter_text_11 && !filter_text_101 && !filter_text_1001 && !filter2selected) {
+            filteredAllContestListData.clear()
+            filteredAllContestListData.addAll(tempContestList)
+        }
+        else {
+            val value = ArrayList<ContestsParentModels>()
+            value.addAll(tempContestList)
+            if (value != null && filter2selected) {
+                val filteredValue: ArrayList<ContestsParentModels> = ArrayList()
+                for (k in filterTitleArray) {
+                    if (k.selected) {
+                        val j = value.filter { it.contestTitle == k.title }
+                        filteredValue.addAll(j)
+                    }
+                }
+                    tempContestList.clear()
+                    tempContestList.addAll(filteredValue)
+            }
+
+            if (filter_text_2 || filter_text_3 || filter_text_11 || filter_text_101 || filter_text_1001) {
+                for (i in tempContestList.indices) {
+                    val values = tempContestList[i].allContestsRunning
+                    if (values != null) {
+                        val filteredValue: ArrayList<ContestModelLists> = ArrayList()
+                        if (filter_text_2) {
+                            val j = values.filter { it.maxAllowedTeam <= 2 }
+                            filteredValue.addAll(j)
+                        }
+                        if (filter_text_3) {
+                            val j = values.filter { it.maxAllowedTeam >2 && it.maxAllowedTeam < 11 }
+                            filteredValue.addAll(j)
+                        }
+                        if (filter_text_11) {
+                            val j = values.filter { it.maxAllowedTeam >10 && it.maxAllowedTeam < 101 }
+                            filteredValue.addAll(j)
+                        }
+                        if (filter_text_101) {
+                            val j = values.filter { it.maxAllowedTeam >100 && it.maxAllowedTeam < 1001 }
+                            filteredValue.addAll(j)
+                        }
+                        if (filter_text_1001) {
+                            val j = values.filter { it.maxAllowedTeam > 1000 }
+                            filteredValue.addAll(j)
+                        }
+                        tempContestList[i].allContestsRunning?.clear()
+                        tempContestList[i].allContestsRunning?.addAll(filteredValue)
+                    }
+                }
+            }
+
+
+            filteredAllContestListData.clear()
+            filteredAllContestListData.addAll(tempContestList)
+        }
+
+    }
 }
+
+

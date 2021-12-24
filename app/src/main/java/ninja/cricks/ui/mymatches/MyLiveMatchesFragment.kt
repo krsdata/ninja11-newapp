@@ -14,19 +14,25 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import com.google.gson.JsonObject
+import kotlinx.coroutines.*
+import ninja.cricks.Constant
 import ninja.cricks.ContestActivity
 import ninja.cricks.MainActivity
 import ninja.cricks.R
 import ninja.cricks.databinding.FragmentMyLiveBinding
+import ninja.cricks.models.ContestPreferenceModel
 import ninja.cricks.models.JoinedMatchModel
 import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.utils.CustomeProgressDialog
+import ninja.cricks.roomDatabase.ResponseDatabase
+import ninja.cricks.utils.CustomProgressDialog2
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import retrofit2.Call
@@ -41,11 +47,12 @@ class MyLiveMatchesFragment : Fragment() {
     private var mBinding: FragmentMyLiveBinding? = null
     lateinit var adapter: MyMatchesAdapter
     var checkInArrayList = ArrayList<JoinedMatchModel>()
-    lateinit var customeProgressDialog: CustomeProgressDialog
+    lateinit var customeProgressDialog: CustomProgressDialog2
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        customeProgressDialog = CustomeProgressDialog(activity)
-        getMatchHistory()
+        customeProgressDialog = CustomProgressDialog2(activity)
+        val activity = activity
+            getMatchHistory()
     }
 
     override fun onCreateView(
@@ -88,22 +95,45 @@ class MyLiveMatchesFragment : Fragment() {
             checkInArrayList.clear()
             checkInArrayList.addAll((activity as MainActivity).resLiveCheckinArraylist)
             adapter.notifyDataSetChanged()
+            updateEmptyViews()
         } else if (mBinding != null) {
             mBinding!!.linearEmptyContest.visibility = View.VISIBLE
         }
     }
 
     private fun getMatchHistory() {
-        if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
+        val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(requireContext(),
+            (Constant.myLiveMatchesFragmentDatabaseId)
+        )
+        if (lastTimeApiCall!!+ Constant.delayApiSeconds > System.currentTimeMillis()) {
+            if (activity != null && isAdded)getMatchHistoryApiCall()
+        }
+        else {
+            CoroutineScope(Dispatchers.IO).launch {
+                val value = ResponseDatabase.getInstance(requireContext()).responseDao().getResponse(
+                    (Constant.myLiveMatchesFragmentDatabaseId)
+                )
+
+                if (value != null && value.type == (Constant.myLiveMatchesFragmentDatabaseId) && value.timestamp+ Constant.delayApiSeconds < System.currentTimeMillis()){
+                    withContext(Dispatchers.Main){if (activity != null && isAdded)getMatchHistory2(value.res)}
+                }
+                else {
+                    withContext(Dispatchers.Main){if (activity != null && isAdded)getMatchHistoryApiCall()}
+                }
+            }
+        }
+    }
+
+    private fun getMatchHistoryApiCall() {
+        if (activity != null && !MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
         //mBinding!!.progressBar.visibility = View.VISIBLE
-        customeProgressDialog.show()
+       // customeProgressDialog.show()
         if (mBinding != null) {
             mBinding!!.linearEmptyContest.visibility = View.GONE
         }
-
         val jsonRequest = JsonObject()
         jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
         jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
@@ -129,19 +159,20 @@ class MyLiveMatchesFragment : Fragment() {
                     if (!isVisible){
                         return
                     }
-                   // mBinding!!.progressBar.visibility = View.GONE
+                    // mBinding!!.progressBar.visibility = View.GONE
                     customeProgressDialog.dismiss()
                     val res = response!!.body()
                     if (res != null) {
                         if (res.status) {
                             val responseModel = res.responseObject
                             if (responseModel != null) {
-                                if (responseModel.matchdatalist != null && responseModel.matchdatalist!!.isNotEmpty()) {
-                                    checkInArrayList.clear()
-                                    (activity as MainActivity).resLiveCheckinArraylist.clear()
-                                    checkInArrayList.addAll(responseModel.matchdatalist!![0].liveMatchHistory!!)
-                                    (activity as MainActivity).resLiveCheckinArraylist.addAll(responseModel.matchdatalist!![0].liveMatchHistory!!)
-                                    adapter.notifyDataSetChanged()
+                                viewLifecycleOwner.lifecycleScope.launch {
+                                    withContext(Dispatchers.Main){ getMatchHistory2(res) }
+                                    withContext(Dispatchers.IO){
+                                        MyPreferences.saveLastTimeForApiCall(context!!,Constant.myLiveMatchesFragmentDatabaseId, System.currentTimeMillis())
+                                        ResponseDatabase.getInstance(context!!).responseDao().saveResponse(ninja.cricks.roomDatabase.Response(
+                                            Constant.myLiveMatchesFragmentDatabaseId, System.currentTimeMillis(), res))
+                                    }
                                 }
                             }
                         } else {
@@ -156,6 +187,20 @@ class MyLiveMatchesFragment : Fragment() {
                     updateEmptyViews()
                 }
             })
+    }
+
+    private fun getMatchHistory2(res: UsersPostDBResponse) {
+        customeProgressDialog.dismiss()
+        val responseModel = res.responseObject
+        if (responseModel?.matchdatalist != null && responseModel.matchdatalist!!.isNotEmpty()) {
+            checkInArrayList.clear()
+            if (activity != null && isAdded) {
+                (requireActivity() as MainActivity).resLiveCheckinArraylist.clear()
+                checkInArrayList.addAll(responseModel.matchdatalist!![0].liveMatchHistory!!)
+                (activity as MainActivity).resLiveCheckinArraylist.addAll(responseModel.matchdatalist!![0].liveMatchHistory!!)
+                adapter.notifyDataSetChanged()
+            }
+        }
     }
 
     private fun updateEmptyViews() {

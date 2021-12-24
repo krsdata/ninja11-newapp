@@ -16,12 +16,17 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.edify.atrist.listener.OnContestEvents
 import com.edify.atrist.listener.OnContestLoadedListener
 import com.google.gson.JsonObject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ninja.cricks.*
 import ninja.cricks.databinding.FragmentMyContestBinding
 import ninja.cricks.models.MyTeamModels
@@ -31,10 +36,8 @@ import ninja.cricks.network.WebServiceClient
 import ninja.cricks.models.ContestModelLists
 import ninja.cricks.models.PlayersInfoModel
 import ninja.cricks.models.UsersPostDBResponse
-import ninja.cricks.utils.BindingUtils
-import ninja.cricks.utils.CustomeProgressDialog
-import ninja.cricks.utils.MyPreferences
-import ninja.cricks.utils.MyUtils
+import ninja.cricks.roomDatabase.ResponseDatabase
+import ninja.cricks.utils.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,7 +46,7 @@ import retrofit2.Response
 class MyContestFragment : Fragment() {
     //private var isMatchStarted: Boolean= false
     var objectMatches: UpcomingMatchesModel? = null
-    private lateinit var customProgressDialog: CustomeProgressDialog
+    private lateinit var customProgressDialog: CustomProgressDialog2
     private lateinit var mListener: OnContestLoadedListener
     var mContestListeners: OnContestEvents? = null
     private var mBinding: FragmentMyContestBinding? = null
@@ -64,7 +67,7 @@ class MyContestFragment : Fragment() {
         super.onCreate(savedInstanceState)
         objectMatches =
             arguments?.get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
-        customProgressDialog = CustomeProgressDialog(activity)
+        customProgressDialog = CustomProgressDialog2(activity)
         getMyJoinedContest()
 
     }
@@ -142,6 +145,29 @@ class MyContestFragment : Fragment() {
     }
 
     private fun getMyJoinedContest() {
+
+        val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(requireContext(),
+            (Constant.myContestFragmentDatabaseId+objectMatches!!.matchId)
+        )
+        if (lastTimeApiCall!!+Constant.delayApiSeconds < System.currentTimeMillis()) {
+            allContestsApiCall()
+        }
+        else {
+            CoroutineScope(Dispatchers.IO).launch {
+                val value = ResponseDatabase.getInstance(requireContext()).responseDao().getResponse((Constant.myContestFragmentDatabaseId+ objectMatches!!.matchId).toLong())
+
+                if (value != null && value.type == (Constant.myContestFragmentDatabaseId + objectMatches!!.matchId) && value.timestamp+Constant.delayApiSeconds > System.currentTimeMillis()){
+                    withContext(Dispatchers.Main){allContests(value.res)}
+                }
+                else {
+                    withContext(Dispatchers.Main){allContestsApiCall()}
+                }
+            }
+        }
+
+    }
+
+    private fun allContestsApiCall() {
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
@@ -186,14 +212,15 @@ class MyContestFragment : Fragment() {
                         if (res.status) {
                             val responseModel = res.responseObject
                             if (responseModel != null) {
-                                if (responseModel.myJoinedContest != null && responseModel.myJoinedContest!!.size > 0) {
-                                    (activity as ContestActivity).responseMyJoinedContest.clear()
-                                    checkinArrayList.clear()
-                                    (activity as ContestActivity).responseMyJoinedContest.addAll(responseModel.myJoinedContest!!)
-                                    checkinArrayList.addAll((activity as ContestActivity).responseMyJoinedContest)
-                                    mListener.onMyContest(checkinArrayList)
-                                    adapter.notifyDataSetChanged()
+                                viewLifecycleOwner.lifecycleScope.launch {
+                                    withContext(Dispatchers.Main){  allContests(res)}
+                                    withContext(Dispatchers.IO){
+                                        MyPreferences.saveLastTimeForApiCall(context!!,Constant.myContestFragmentDatabaseId + objectMatches!!.matchId, System.currentTimeMillis())
+                                        ResponseDatabase.getInstance(context!!).responseDao().saveResponse(ninja.cricks.roomDatabase.Response(
+                                            (Constant.myContestFragmentDatabaseId + objectMatches!!.matchId),System.currentTimeMillis(),res))
+                                    }
                                 }
+
                             }
                         } else {
                             if (res.code == 1001) {
@@ -207,6 +234,20 @@ class MyContestFragment : Fragment() {
                     updateEmptyViews()
                 }
             })
+    }
+
+    private fun allContests(res: UsersPostDBResponse) {
+        if (res.status) {
+            val responseModel = res.responseObject
+            if (responseModel!!.myJoinedContest != null && responseModel.myJoinedContest!!.size > 0) {
+                (activity as ContestActivity).responseMyJoinedContest.clear()
+                checkinArrayList.clear()
+                (activity as ContestActivity).responseMyJoinedContest.addAll(responseModel.myJoinedContest!!)
+                checkinArrayList.addAll((activity as ContestActivity).responseMyJoinedContest)
+                mListener.onMyContest(checkinArrayList)
+                adapter.notifyDataSetChanged()
+            }
+        }
     }
 
     fun updateEmptyViews() {

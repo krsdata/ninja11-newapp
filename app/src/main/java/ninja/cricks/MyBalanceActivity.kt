@@ -204,6 +204,7 @@ class MyBalanceActivity : AppCompatActivity() {
                     if (res != null) {
                         val responseModel = res.walletObjects
                         if (responseModel != null) {
+
                             if (res.status) {
                                 MyPreferences.setRazorPayId(mContext!!, res.razorPay)
                                 MyPreferences.setShowPaytm(mContext!!, res.paytm_show)

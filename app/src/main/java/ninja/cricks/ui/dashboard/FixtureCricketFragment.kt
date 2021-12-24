@@ -6,10 +6,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.text.Html
-import android.text.method.LinkMovementMethod
 import android.view.*
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -25,7 +22,6 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.JsonObject
-import ninja.cricks.BuildConfig
 import ninja.cricks.MaintainanceActivity
 import ninja.cricks.NinjaApplication
 import ninja.cricks.R
@@ -40,7 +36,6 @@ import ninja.cricks.ui.BaseFragment
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -97,13 +92,16 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
 
         val upcomingmatchlist =
             (requireActivity().applicationContext as NinjaApplication).getUpcomingMatches
-        if (upcomingmatchlist != null && upcomingmatchlist.size > 0) {
+        if (upcomingmatchlist.size > 0) {
             allmatchesArrayList.clear()
             allmatchesArrayList.addAll(upcomingmatchlist)
         }
         adapter = MatchesAdapter(requireActivity(), allmatchesArrayList)
         mBinding!!.allGameViewRecycler.adapter = adapter
-        getAllMatches()
+
+        if (NinjaApplication.lastApiCallForMatch + 120000 < System.currentTimeMillis()) {
+            getAllMatches()
+        }
     }
 
     private fun isValidRequest(): Boolean {
@@ -180,6 +178,7 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
                                     logoutApp("Session Expired Please login again!!", false)
                                 } else {
                                     BindingUtils.currentTimeStamp = resObje.systemTime
+                                    NinjaApplication.lastApiCallForMatch = System.currentTimeMillis()
                                     val responseObject = resObje.responseObject
                                     val listofData =
                                         responseObject!!.matchdatalist as ArrayList<MatchesModels>?

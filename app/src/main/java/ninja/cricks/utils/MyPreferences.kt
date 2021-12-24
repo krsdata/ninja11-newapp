@@ -704,4 +704,50 @@ object MyPreferences {
         )
         return isShow
     }
+
+    fun saveContest(context: Context, contest: String, matchId: String) {
+        setStringPrefrence(context,matchId, contest)
+    }
+
+    fun getContest(context: Context, matchId: String): String? {
+       return getStringPrefrence(context, matchId)
+    }
+
+    fun saveUpcomingMatchesHistory(context: Context, matchHistory: String) {
+        setStringPrefrence(context, "upcoming_matches_history", matchHistory)
+    }
+
+    fun getUpcomingMatchesHistory(context: Context): String?{
+        return getStringPrefrence(context, "upcoming_matches_history")
+    }
+
+    fun saveMyLiveMatchesHistory(context: Context, matchHistory: String) {
+        setStringPrefrence(context, "my_live_matches_history", matchHistory)
+    }
+
+    fun getMyLiveMatchesHistory(context: Context): String?{
+        return getStringPrefrence(context, "my_live_matches_history")
+    }
+
+    fun saveMyCompletedMatches(context: Context, matchHistory: String) {
+        setStringPrefrence(context, "my_completed_matches", matchHistory)
+    }
+
+    fun getMyCompletedMatches(context: Context): String?{
+        return getStringPrefrence(context, "my_completed_matches")
+    }
+
+    fun saveLastTimeForApiCall(context: Context, id: Long, time: Long) {
+        setStringPrefrence(context, id.toString(), time.toString())
+    }
+
+    fun getLastTimeForApiCall(context: Context, id: Long): Long? {
+        if(getStringPrefrence(context, id.toString()).isNullOrEmpty()) {
+            return 0L
+        }
+        else
+        {
+            return getStringPrefrence(context, id.toString())!!.toLong()
+        }
+    }
 }

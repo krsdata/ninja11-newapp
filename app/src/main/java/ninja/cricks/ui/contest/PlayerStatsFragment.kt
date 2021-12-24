@@ -13,12 +13,18 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import ninja.cricks.Constant
 import ninja.cricks.ContestActivity
 import ninja.cricks.PlayerStatsInfoActivity
 import ninja.cricks.R
@@ -27,10 +33,8 @@ import ninja.cricks.models.PlayerStatsInfoModel
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.utils.BindingUtils
-import ninja.cricks.utils.CustomeProgressDialog
-import ninja.cricks.utils.MyPreferences
-import ninja.cricks.utils.MyUtils
+import ninja.cricks.roomDatabase.ResponseDatabase
+import ninja.cricks.utils.*
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
@@ -54,7 +58,7 @@ class PlayerStatsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     var mContext: Context? = null
     var objectMatches: UpcomingMatchesModel? = null
     private lateinit var binding: FragmentPlayerStatsBinding
-    private lateinit var customProgressDialog: CustomeProgressDialog
+    private lateinit var customProgressDialog: CustomProgressDialog2
     var playerStatsList = ArrayList<PlayerStatsInfoModel>()
     var adapter: PlayerStatsAdapter? = null
 
@@ -63,7 +67,7 @@ class PlayerStatsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         mContext = requireActivity()
         objectMatches =
             arguments?.get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
-        customProgressDialog = CustomeProgressDialog(activity)
+        customProgressDialog = CustomProgressDialog2(activity)
         getPlayerStats(true)
     }
 
@@ -103,6 +107,26 @@ class PlayerStatsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun getPlayerStats(b: Boolean) {
+        val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(requireContext(),
+            (Constant.playerStatsFragmentDatabaseId+objectMatches!!.matchId)
+        )
+        if (lastTimeApiCall!!+ Constant.delayApiSeconds < System.currentTimeMillis()) {
+            getPlayerStatsApiCall(b)
+        }
+        else {
+            CoroutineScope(Dispatchers.IO).launch {
+                val value = ResponseDatabase.getInstance(requireContext()).responseDao().getResponseJsonObject(
+                    (Constant.playerStatsFragmentDatabaseId+ objectMatches!!.matchId)
+                )
+
+                if (value != null && value.type == (Constant.playerStatsFragmentDatabaseId + objectMatches!!.matchId) && value.timestamp+ Constant.delayApiSeconds > System.currentTimeMillis()){
+                    withContext(Dispatchers.Main){playerstats(value.res)}
+                }
+            }
+        }
+    }
+
+    private fun getPlayerStatsApiCall(b: Boolean) {
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
@@ -122,53 +146,15 @@ class PlayerStatsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                     customProgressDialog.dismiss()
                     binding.refreshLayout.isRefreshing = false
                     if (response.body() != null) {
-                        playerStatsList.clear()
-                        Log.e(TAG, "res ======> ${response.body()}")
-                        val jsonObject = JSONObject(response.body().toString())
-                        if (jsonObject.getBoolean("status")) {
-                            val jsonArray = jsonObject.getJSONArray("data")
-
-
-                            for (i in 0 until jsonArray.length()) {
-                                val childJsonObject = jsonArray.getJSONObject(i)
-                                val childArrayList = ArrayList<JSONObject>()
-                                val statsArray: JSONArray = childJsonObject.getJSONArray("match_points")
-
-                                for (j in 0 until statsArray.length()) {
-                                    val key: String = statsArray.optJSONObject(j).optString("key")
-                                    if (key != "" && key.isNotEmpty()) {
-                                        childArrayList.add(statsArray.optJSONObject(j))
-                                    }
-                                }
-
-                                val playerStatsInfoModel = PlayerStatsInfoModel(
-                                    childJsonObject.getString("pid"),
-                                    childJsonObject.getString("name"),
-                                    childJsonObject.getString("role"),
-                                    childJsonObject.getString("rating"),
-                                    childJsonObject.getString("point"),
-                                    childJsonObject.getString("team_name"),
-                                    childJsonObject.getString("selection"),
-                                    childJsonObject.getString("c_selection"),
-                                    childJsonObject.getString("vc_selection"),
-                                    childJsonObject.getString("nationality"),
-                                    childArrayList
-                                )
-                                playerStatsList.add(playerStatsInfoModel)
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            withContext(Dispatchers.Main){ playerstats(response.body()) }
+                            withContext(Dispatchers.IO){
+                                MyPreferences.saveLastTimeForApiCall(context!!,Constant.playerStatsFragmentDatabaseId + objectMatches!!.matchId, System.currentTimeMillis())
+                                ResponseDatabase.getInstance(context!!).responseDao().saveResponseJsonObject(ninja.cricks.roomDatabase.ResponseJsonObject(
+                                    (Constant.playerStatsFragmentDatabaseId + objectMatches!!.matchId),System.currentTimeMillis(),
+                                    response.body()!!
+                                ))
                             }
-//                            for (i in 0 until jsonArray.length()) {
-//                                playerStatsList.add(jsonArray.getJSONObject(i))
-//                            }
-
-                            playerStatsList.sortWith { lhs, rhs ->
-                                rhs.point.toDouble()
-                                    .compareTo(lhs.point.toDouble())
-                            }
-                            (activity as ContestActivity).resPlayerStatsList.clear()
-                            (activity as ContestActivity).resPlayerStatsList.addAll(playerStatsList)
-                            adapter!!.notifyDataSetChanged()
-                        } else {
-                            MyUtils.showMessage(mContext!!, "Please try after sometime")
                         }
                     }
                 }
@@ -178,6 +164,58 @@ class PlayerStatsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                     binding.refreshLayout.isRefreshing = false
                 }
             })
+
+    }
+
+    private fun playerstats(responseBody: JsonObject?) {
+            playerStatsList.clear()
+            Log.e(TAG, "res ======> ${responseBody}")
+            val jsonObject = JSONObject(responseBody.toString())
+            if (jsonObject.getBoolean("status")) {
+                val jsonArray = jsonObject.getJSONArray("data")
+
+
+                for (i in 0 until jsonArray.length()) {
+                    val childJsonObject = jsonArray.getJSONObject(i)
+                    val childArrayList = ArrayList<JSONObject>()
+                    val statsArray: JSONArray = childJsonObject.getJSONArray("match_points")
+
+                    for (j in 0 until statsArray.length()) {
+                        val key: String = statsArray.optJSONObject(j).optString("key")
+                        if (key != "" && key.isNotEmpty()) {
+                            childArrayList.add(statsArray.optJSONObject(j))
+                        }
+                    }
+
+                    val playerStatsInfoModel = PlayerStatsInfoModel(
+                        childJsonObject.getString("pid"),
+                        childJsonObject.getString("name"),
+                        childJsonObject.getString("role"),
+                        childJsonObject.getString("rating"),
+                        childJsonObject.getString("point"),
+                        childJsonObject.getString("team_name"),
+                        childJsonObject.getString("selection"),
+                        childJsonObject.getString("c_selection"),
+                        childJsonObject.getString("vc_selection"),
+                        childJsonObject.getString("nationality"),
+                        childArrayList
+                    )
+                    playerStatsList.add(playerStatsInfoModel)
+                }
+//                            for (i in 0 until jsonArray.length()) {
+//                                playerStatsList.add(jsonArray.getJSONObject(i))
+//                            }
+
+                playerStatsList.sortWith { lhs, rhs ->
+                    rhs.point.toDouble()
+                        .compareTo(lhs.point.toDouble())
+                }
+                (activity as ContestActivity).resPlayerStatsList.clear()
+                (activity as ContestActivity).resPlayerStatsList.addAll(playerStatsList)
+                adapter!!.notifyDataSetChanged()
+            } else {
+                MyUtils.showMessage(mContext!!, "Please try after sometime")
+            }
     }
 
     inner class PlayerStatsAdapter(private val arrayList: ArrayList<PlayerStatsInfoModel>) :

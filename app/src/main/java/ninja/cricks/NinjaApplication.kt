@@ -31,6 +31,10 @@ import retrofit2.Response
 
 class NinjaApplication : MultiDexApplication() {
 
+    companion object{
+        public var lastApiCallForMatch: Long = 0
+    }
+
     private var mGetWallet: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             getWalletBalances()

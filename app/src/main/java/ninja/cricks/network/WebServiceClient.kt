@@ -1,6 +1,7 @@
 package ninja.cricks.network
 
 import android.content.Context
+import android.widget.Toast
 import ninja.cricks.BuildConfig
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
@@ -96,6 +97,7 @@ class WebServiceClient(val context: Context) {
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(okHttpClient)
                     .build()
+                Toast.makeText(context,"api call", Toast.LENGTH_SHORT).show()
             }
             return retrofit!!
         }

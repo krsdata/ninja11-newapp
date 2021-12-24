@@ -40,7 +40,6 @@ class ContestAdapter(
     override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
         val objectVal = matchesListObject[viewType]
         val viewJoinedMatches: ViewHolderJoinedContest = parent as ViewHolderJoinedContest
-
         viewJoinedMatches.contestTitle.text = objectVal.contestTitle
         viewJoinedMatches.contestSubTitle.text = objectVal.contestSubTitle
 
@@ -97,8 +96,13 @@ class ContestAdapter(
     }
 
     fun setMatchesList(matchesList: ArrayList<ContestsParentModels>?) {
-        this.matchesListObject = matchesList!!
-        // this.mContext = mContext
+        this.matchesListObject = ArrayList()
+        this.matchesListObject.clear()
+        for (i in matchesList!!) {
+            if (i.allContestsRunning!!.isNotEmpty()) {
+                this.matchesListObject.add(i)
+            }
+        }
         notifyDataSetChanged()
     }
 

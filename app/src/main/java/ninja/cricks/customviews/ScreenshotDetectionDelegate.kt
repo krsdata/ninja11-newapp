@@ -54,7 +54,7 @@ class ScreenshotDetectionDelegate(
     @FlowPreview
     @ExperimentalCoroutinesApi
     fun startScreenshotDetection() {
-        job = GlobalScope.launch(Dispatchers.Main) {
+        job = GlobalScope.launch(Dispatchers.IO) {
             createContentObserverFlow()
                 .debounce(500)
                 .collect { uri ->

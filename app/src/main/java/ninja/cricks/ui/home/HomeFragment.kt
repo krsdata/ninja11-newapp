@@ -1,45 +1,34 @@
 package ninja.cricks.ui.home
 
 import android.content.Context
-import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
-import android.text.TextUtils
 import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.edify.atrist.listener.OnMatchTimerStarted
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.JsonObject
-import ninja.cricks.BuildConfig
-import ninja.cricks.ContestActivity
-import ninja.cricks.MainActivity
-import ninja.cricks.R
-import ninja.cricks.adaptors.BannerSliderAdapter
-import ninja.cricks.adaptors.JoinedMatchesAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import ninja.cricks.*
 import ninja.cricks.databinding.FragmentHomeBinding
-import ninja.cricks.models.JoinedMatchModel
-import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
+import ninja.cricks.roomDatabase.ResponseDatabase
 import ninja.cricks.ui.dashboard.FixtureCricketFragment
 import ninja.cricks.ui.mymatches.MyCompletedMatchesFragment
 import ninja.cricks.ui.mymatches.MyLiveMatchesFragment
-import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import org.json.JSONObject
@@ -47,7 +36,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
-import kotlin.collections.ArrayList
 
 class HomeFragment : Fragment() {
 
@@ -56,11 +44,6 @@ class HomeFragment : Fragment() {
 
     companion object {
         val TAG: String = HomeFragment::class.java.simpleName
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        mContext = requireContext()
     }
 
     override fun onCreateView(
@@ -77,7 +60,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupViewPager()
+        if (savedInstanceState == null) setupViewPager()
+        getMessage()
     }
 
     private fun setupViewPager() {
@@ -103,13 +87,69 @@ class HomeFragment : Fragment() {
         tab!!.select()
     }
 
-    override fun onResume() {
-        super.onResume()
-        getMessage()
-    }
 
     private fun getMessage() {
-        if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
+        val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(requireContext(),
+            (Constant.getMessagesDatabaseId)
+        )
+        if (lastTimeApiCall!!+ Constant.delayApiSeconds < System.currentTimeMillis()) {
+            // if (activity != null && isAdded) {
+            getMessageApiCall()
+            //   }
+        }
+        else {
+            CoroutineScope(Dispatchers.IO).launch {
+                val value = ResponseDatabase.getInstance(requireContext()).responseDao().getResponseJsonObject(
+                    (Constant.getMessagesDatabaseId)
+                )
+
+                if (value != null && value.type == (Constant.getMessagesDatabaseId)){
+                    withContext(Dispatchers.Main){getMessage2(value.res)}
+                }
+                else {
+                    withContext(Dispatchers.Main){
+                        if (activity != null && isAdded) {
+                            getMessageApiCall()
+                        }
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    private fun getMessage2(resObje: JsonObject) {
+        val jsonObject = JSONObject(resObje.toString())
+        val array = jsonObject.getJSONArray("data")
+        val data = array.getJSONObject(0)
+        if (data.optInt("message_status") == 0) {
+            mBinding!!.messageCard.visibility = View.GONE
+        } else {
+            if (data.getString("message_type") == "HTML") {
+                mBinding!!.labelMessage.linksClickable = true
+                mBinding!!.labelMessage.movementMethod =
+                    LinkMovementMethod.getInstance()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    mBinding!!.labelMessage.text =
+                        Html.fromHtml(
+                            data.getString("message"),
+                            Html.FROM_HTML_MODE_COMPACT
+                        )
+                } else {
+                    mBinding!!.labelMessage.text = Html.fromHtml(
+                        data.getString("message")
+                    )
+                }
+            } else {
+                mBinding!!.labelMessage.text = data.getString("message")
+            }
+            mBinding!!.messageCard.visibility = View.VISIBLE
+        }
+    }
+
+    private fun getMessageApiCall() {
+        if (activity != null && !MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             return
         }
 
@@ -122,7 +162,7 @@ class HomeFragment : Fragment() {
             .getMessages(jsonRequest)
             .enqueue(object : Callback<JsonObject?> {
                 override fun onFailure(call: Call<JsonObject?>?, t: Throwable?) {
-
+                    Log.d("api", "failed")
                 }
 
                 override fun onResponse(
@@ -133,30 +173,15 @@ class HomeFragment : Fragment() {
                         val resObje = response!!.body().toString()
                         val jsonObject = JSONObject(resObje)
                         if (jsonObject.optBoolean("status")) {
-                            val array = jsonObject.getJSONArray("data")
-                            val data = array.getJSONObject(0)
-                            if (data.optInt("message_status") == 0) {
-                                mBinding!!.messageCard.visibility = View.GONE
-                            } else {
-                                if (data.getString("message_type") == "HTML") {
-                                    mBinding!!.labelMessage.linksClickable = true
-                                    mBinding!!.labelMessage.movementMethod =
-                                        LinkMovementMethod.getInstance()
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                        mBinding!!.labelMessage.text =
-                                            Html.fromHtml(
-                                                data.getString("message"),
-                                                Html.FROM_HTML_MODE_COMPACT
-                                            )
-                                    } else {
-                                        mBinding!!.labelMessage.text = Html.fromHtml(
-                                            data.getString("message")
-                                        )
-                                    }
-                                } else {
-                                    mBinding!!.labelMessage.text = data.getString("message")
+                            viewLifecycleOwner.lifecycleScope.launch {
+                                withContext(Dispatchers.Main){ getMessage2(response.body()!!) }
+                                withContext(Dispatchers.IO){
+                                    MyPreferences.saveLastTimeForApiCall(context!!,Constant.getMessagesDatabaseId, System.currentTimeMillis())
+                                    ResponseDatabase.getInstance(context!!).responseDao().saveResponseJsonObject(ninja.cricks.roomDatabase.ResponseJsonObject(
+                                        (Constant.getMessagesDatabaseId),System.currentTimeMillis(),
+                                        response.body()!!
+                                    ))
                                 }
-                                mBinding!!.messageCard.visibility = View.VISIBLE
                             }
                         }
                     }

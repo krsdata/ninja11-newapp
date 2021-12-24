@@ -173,4 +173,14 @@
     <string name="need_help">Need Help</string>
     <string name="india_s_biggest_fantasy_sports_platform">INDIA\'S BIGGEST FANTASY SPORTS PLATFORM</string>
     <string name="please_enter_passcode">Please Enter Passcode</string>
+    <string name="clear">clear</string>
+    <string name="filter">Filter</string>
+    <string name="_1_001_above"><![CDATA[1,001 & above]]></string>
+    <string name="number_of_teams">Number of teams</string>
+    <string name="single_entry">Single Entry</string>
+    <string name="multi_entry">Multi Entry</string>
+    <string name="single_winner">Single Winner</string>
+    <string name="multi_winner">Multi Winner</string>
+    <string name="guaranteed">Guaranteed</string>
+    <string name="apply">Apply</string>
 </resources>

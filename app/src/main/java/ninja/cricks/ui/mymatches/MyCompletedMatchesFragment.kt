@@ -12,21 +12,30 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.gson.Gson
 import com.google.gson.JsonObject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import ninja.cricks.Constant
 import ninja.cricks.ContestActivity
 import ninja.cricks.MainActivity
 import ninja.cricks.R
 import ninja.cricks.databinding.FragmentMyCompletedBinding
+import ninja.cricks.models.ContestPreferenceModel
 import ninja.cricks.models.JoinedMatchModel
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.models.UsersPostDBResponse
-import ninja.cricks.utils.CustomeProgressDialog
+import ninja.cricks.roomDatabase.ResponseDatabase
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
+import ninja.cricks.utils.CustomProgressDialog2
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,11 +48,11 @@ class MyCompletedMatchesFragment : Fragment() {
     private var mBinding: FragmentMyCompletedBinding? = null
     lateinit var adapter: MyMatchesAdapter
     var checkinArrayList = ArrayList<JoinedMatchModel>()
-    lateinit var customeProgressDialog: CustomeProgressDialog
+    lateinit var customeProgressDialog: CustomProgressDialog2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        customeProgressDialog = CustomeProgressDialog(activity)
+        customeProgressDialog = CustomProgressDialog2(activity)
         getMatchHistory()
     }
 
@@ -97,6 +106,30 @@ class MyCompletedMatchesFragment : Fragment() {
     }
 
     private fun getMatchHistory() {
+        val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(requireContext(),
+            (Constant.myCompletedMatchesFragmentDatabaseId)
+        )
+        if (lastTimeApiCall!!+ Constant.delayApiSeconds < System.currentTimeMillis()) {
+            getMatchHistoryApiCall()
+        }
+        else {
+            CoroutineScope(Dispatchers.IO).launch {
+                val value = ResponseDatabase.getInstance(requireContext()).responseDao().getResponse(
+                    (Constant.myCompletedMatchesFragmentDatabaseId)
+                )
+
+                if (value != null && value.type == (Constant.myCompletedMatchesFragmentDatabaseId) && value.timestamp+ Constant.delayApiSeconds < System.currentTimeMillis()){
+                    withContext(Dispatchers.Main){getMatchHistory2(value.res)}
+                }
+                else {
+                    withContext(Dispatchers.Main){getMatchHistoryApiCall()}
+                }
+            }
+        }
+
+    }
+
+    private fun getMatchHistoryApiCall() {
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
@@ -142,12 +175,13 @@ class MyCompletedMatchesFragment : Fragment() {
                         if (res.status) {
                             val responseModel = res.responseObject
                             if (responseModel != null) {
-                                if (responseModel.matchdatalist != null && responseModel.matchdatalist!!.size > 0) {
-                                    checkinArrayList.clear()
-                                    (activity as MainActivity).resCompletedMatchesCheckinArraylist.clear()
-                                    checkinArrayList.addAll(responseModel.matchdatalist!!.get(0).completedMatchHistory!!)
-                                    (activity as MainActivity).resCompletedMatchesCheckinArraylist.addAll(responseModel.matchdatalist!!.get(0).completedMatchHistory!!)
-                                    adapter.notifyDataSetChanged()
+                                viewLifecycleOwner.lifecycleScope.launch {
+                                    withContext(Dispatchers.Main){getMatchHistory2(res)}
+                                    withContext(Dispatchers.IO){
+                                        MyPreferences.saveLastTimeForApiCall(context!!,Constant.myCompletedMatchesFragmentDatabaseId, System.currentTimeMillis())
+                                        ResponseDatabase.getInstance(context!!).responseDao().saveResponse(ninja.cricks.roomDatabase.Response(
+                                            Constant.myCompletedMatchesFragmentDatabaseId, System.currentTimeMillis(), res))
+                                    }
                                 }
                             }
                         } else {
@@ -161,7 +195,18 @@ class MyCompletedMatchesFragment : Fragment() {
                     }
                     updateEmptyViews()
                 }
-            })
+            })    }
+
+    private fun getMatchHistory2(res: UsersPostDBResponse) {
+        customeProgressDialog.dismiss()
+        val responseModel = res.responseObject
+        if (responseModel!!.matchdatalist != null && responseModel.matchdatalist!!.size > 0) {
+            checkinArrayList.clear()
+            (activity as MainActivity).resCompletedMatchesCheckinArraylist.clear()
+            checkinArrayList.addAll(responseModel.matchdatalist!!.get(0).completedMatchHistory!!)
+            (activity as MainActivity).resCompletedMatchesCheckinArraylist.addAll(responseModel.matchdatalist!!.get(0).completedMatchHistory!!)
+            adapter.notifyDataSetChanged()
+        }
     }
 
     private fun updateEmptyViews() {

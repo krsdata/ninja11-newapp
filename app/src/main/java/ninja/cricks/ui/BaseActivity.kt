@@ -100,6 +100,7 @@ abstract class BaseActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
+
     fun showMatchTimeUpDialog() {
         val flashBar = Flashbar.Builder(this)
             .gravity(Flashbar.Gravity.BOTTOM)

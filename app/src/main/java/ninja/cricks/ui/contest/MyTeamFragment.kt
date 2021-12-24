@@ -12,24 +12,23 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.edify.atrist.listener.OnContestLoadedListener
 import com.google.gson.JsonObject
-import ninja.cricks.ContestActivity
-import ninja.cricks.CreateTeamActivity
-import ninja.cricks.R
-import ninja.cricks.TeamPreviewActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import ninja.cricks.*
 import ninja.cricks.databinding.FragmentMyTeamBinding
 import ninja.cricks.models.*
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.utils.BindingUtils
-import ninja.cricks.utils.CustomeProgressDialog
-import ninja.cricks.utils.MyPreferences
-import ninja.cricks.utils.MyUtils
+import ninja.cricks.roomDatabase.ResponseDatabase
+import ninja.cricks.utils.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,7 +37,7 @@ class MyTeamFragment : Fragment() {
     var matchObject: UpcomingMatchesModel? = null
     private var teamName: String? = ""
     private lateinit var mListener: OnContestLoadedListener
-    private lateinit var customeProgressDialog: CustomeProgressDialog
+    private lateinit var customeProgressDialog: CustomProgressDialog2
     private var mBinding: FragmentMyTeamBinding? = null
     lateinit var adapter: MyTeamAdapter
     var myTeamArrayList = ArrayList<MyTeamModels>()
@@ -59,12 +58,12 @@ class MyTeamFragment : Fragment() {
         super.onCreate(savedInstanceState)
         matchObject =
             requireArguments().get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
-        customeProgressDialog = CustomeProgressDialog(activity)
+        customeProgressDialog = CustomProgressDialog2(activity)
         getMyTeam()
         parentFragmentManager.setFragmentResultListener(CreateTeamActivity.CREATETEAM_REQUESTCODE1.toString(),this,
             { s: String, bundle: Bundle ->
                 if (bundle.get(ContestActivity.SERIALIZABLE_KEY_CREATE_TEAM1) == "result_ok") {
-                    getMyTeam()
+                    getMyteamApiCall()
                 }
             })
     }
@@ -233,6 +232,40 @@ class MyTeamFragment : Fragment() {
     }
 
     fun getMyTeam() {
+        val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(requireContext(),
+            (Constant.myTeamFragmentDatabaseId+matchObject!!.matchId)
+        )
+        if (lastTimeApiCall!!+ Constant.delayApiSeconds < System.currentTimeMillis()) {
+            getMyteamApiCall()
+        }
+        else {
+            CoroutineScope(Dispatchers.IO).launch {
+                val value = ResponseDatabase.getInstance(requireContext()).responseDao().getResponse((Constant.myTeamFragmentDatabaseId+ matchObject!!.matchId).toLong())
+
+                if (value != null && value.type == (Constant.myTeamFragmentDatabaseId + matchObject!!.matchId) && value.timestamp+ Constant.delayApiSeconds > System.currentTimeMillis()){
+                    withContext(Dispatchers.Main){allTeam(value.res)}
+                }
+            }
+        }
+
+    }
+
+    private fun allTeam(res: UsersPostDBResponse) {
+        val responseModel = res.responseObject
+        if (responseModel != null) {
+            if (responseModel.myTeamList != null && responseModel.myTeamList!!.isNotEmpty()) {
+                mBinding!!.linearEmptyContest.visibility = View.GONE
+                myTeamArrayList.clear()
+                (activity as ContestActivity).responseMyTeamList.clear()
+                (activity as ContestActivity).responseMyTeamList.addAll(responseModel.myTeamList!!)
+                myTeamArrayList.addAll(responseModel.myTeamList!!)
+                adapter.notifyDataSetChanged()
+                mListener.onMyTeam(myTeamArrayList)
+            }
+        }
+    }
+
+    private fun getMyteamApiCall() {
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
@@ -279,13 +312,13 @@ class MyTeamFragment : Fragment() {
                         if (res.status) {
                             val responseModel = res.responseObject
                             if (responseModel != null) {
-                                if (responseModel.myTeamList != null && responseModel.myTeamList!!.size > 0) {
-                                    myTeamArrayList.clear()
-                                    (activity as ContestActivity).responseMyTeamList.clear()
-                                    (activity as ContestActivity).responseMyTeamList.addAll(responseModel.myTeamList!!)
-                                    myTeamArrayList.addAll(responseModel.myTeamList!!)
-                                    adapter.notifyDataSetChanged()
-                                    mListener.onMyTeam(myTeamArrayList)
+                                viewLifecycleOwner.lifecycleScope.launch {
+                                    withContext(Dispatchers.Main){ allTeam(res) }
+                                    withContext(Dispatchers.IO){
+                                        MyPreferences.saveLastTimeForApiCall(context!!,Constant.myTeamFragmentDatabaseId + matchObject!!.matchId, System.currentTimeMillis())
+                                        ResponseDatabase.getInstance(context!!).responseDao().saveResponse(ninja.cricks.roomDatabase.Response(
+                                            (Constant.myTeamFragmentDatabaseId + matchObject!!.matchId),System.currentTimeMillis(),res))
+                                    }
                                 }
                             }
                         } else {
@@ -299,8 +332,7 @@ class MyTeamFragment : Fragment() {
                     }
                     updateEmptyViews()
                 }
-            })
-    }
+            })    }
 
     fun updateEmptyViews() {
         if (myTeamArrayList.size == 0) {

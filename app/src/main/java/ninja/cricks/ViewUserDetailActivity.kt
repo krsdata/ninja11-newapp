@@ -18,7 +18,6 @@ import ninja.cricks.databinding.ActivityViewUserDetailBinding
 import ninja.cricks.models.*
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import org.json.JSONObject

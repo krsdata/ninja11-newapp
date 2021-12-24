@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
@@ -13,6 +14,7 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.JsonObject
 import ninja.cricks.customviews.CircleImageView
@@ -24,10 +26,7 @@ import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.RetrofitClient
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseActivity
-import ninja.cricks.ui.dashboard.FragmentDrawer
-import ninja.cricks.ui.dashboard.MoreOptionsFragment
-import ninja.cricks.ui.dashboard.MyAccountFragment
-import ninja.cricks.ui.dashboard.MyMatchesFragment
+import ninja.cricks.ui.dashboard.*
 import ninja.cricks.ui.home.HomeFragment
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
@@ -58,6 +57,12 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         var releaseNote: String = ""
         var CHECK_APK_UPDATE_API: Boolean = false
         var CHECK_FORCE_UPDATE: Boolean = true
+
+        const val ID_HOME = 1
+        const val ID_DASHBOARD = 2
+        const val ID_PREDICT_WIN = 3
+        const val ID_MY_ACCOUNT = 4
+        const val ID_NOTIFICATIONS = 5
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,8 +89,9 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
         getWalletBalances()
         setProfileData()
+        updateCheckApk()
 
-        mBinding!!.navigation.setOnNavigationItemSelectedListener(this)
+      ///  mBinding!!.navigation.setOnNavigationItemSelectedListener(this)
 
         fragment = HomeFragment()
         loadFragment()
@@ -103,11 +109,101 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             mBinding!!.drawerLayout.visibility = View.VISIBLE
             mBinding!!.drawerLayout.openDrawer(Gravity.LEFT)
         }
+        initBottomNavigation()
     }
+
+    private fun initBottomNavigation() {
+        mBinding?.navigation?.apply {
+
+            add(
+                MeowBottomNavigation.Model(
+                    ID_HOME,
+                    R.drawable.ic_home_black_24dp,
+                )
+            )
+
+            add(
+                MeowBottomNavigation.Model(
+                    ID_DASHBOARD,
+                    R.drawable.ic_dashboard_black_24dp
+                )
+            )
+            add(
+                MeowBottomNavigation.Model(
+                    ID_MY_ACCOUNT,
+                    R.drawable.ic_wallet_new
+                )
+            )
+            add(
+                MeowBottomNavigation.Model(
+                    ID_NOTIFICATIONS,
+                    R.drawable.ic_more_horiz_black_24dp
+                )
+            )
+/*
+            add(
+                MeowBottomNavigation.Model(
+                    temp_leaderboard,
+                    R.drawable.king
+                )
+            )
+*/
+
+            //setCount(ID_NOTIFICATION, "115")
+
+            setOnShowListener {
+                val name = when (it.id) {
+                    ID_HOME -> {
+                        fragment = HomeFragment()
+                        loadFragment()
+                    }
+                    ID_DASHBOARD -> {
+                        fragment = MyMatchesFragment()
+                        loadFragment()
+                    }
+                    ID_MY_ACCOUNT -> {
+                        fragment = MyAccountFragment()
+                        loadFragment()
+                    }
+                    ID_NOTIFICATIONS -> {
+                        fragment = MoreOptionsFragment()
+                        loadFragment()
+                    }
+/*
+                    temp_leaderboard -> {
+                        startActivity(Intent(this@MainActivity,ContestLeaderBoardActivity::class.java))
+                    }
+*/
+                    else -> ""
+                }
+
+                //xxtvSelected.text = getString(R.string.main_page_selected, name)
+            }
+
+            setOnClickMenuListener {
+                val name = when (it.id) {
+                    ID_HOME -> "HOME"
+                    ID_DASHBOARD -> "EXPLORE"
+                    ID_PREDICT_WIN -> "MESSAGE"
+                    ID_NOTIFICATIONS -> "NOTIFICATION"
+                    ID_MY_ACCOUNT -> "ACCOUNT"
+                    else -> ""
+                }
+            }
+
+            setOnReselectListener {
+                //  Toast.makeText(this@MainActivity, "item ${it.id} is reselected.", Toast.LENGTH_LONG).show()
+            }
+
+            show(ID_HOME)
+
+        }
+
+    }
+
 
     override fun onResume() {
         super.onResume()
-        updateCheckApk()
         userInfo = (application as NinjaApplication).userInformations
         if (userInfo != null) {
             Glide.with(this)
@@ -118,11 +214,17 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     }
 
     fun viewUpcomingMatches() {
-        mBinding!!.navigation.selectedItemId = R.id.navigation_home
+       // mBinding!!.navigation.selectedItemId = R.id.navigation_home
+        mBinding!!.navigation.show(ID_HOME,true)
+        fragment = FixtureCricketFragment()
+        loadFragment()
     }
 
     fun viewAllMatches() {
-        mBinding!!.navigation.selectedItemId = R.id.navigation_dashboard
+       // mBinding!!.navigation.selectedItemId = R.id.navigation_dashboard
+        mBinding!!.navigation.show(ID_DASHBOARD,true)
+        fragment = MyMatchesFragment()
+        loadFragment()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -376,7 +478,10 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             val options = ActivityOptions.makeSceneTransitionAnimation(this@MainActivity)
             startActivity(intent, options.toBundle())
         } else if (position == 4) {
-            mBinding!!.navigation.selectedItemId = R.id.navigation_notifications
+       //     mBinding!!.navigation.selectedItemId = R.id.navigation_notifications
+            mBinding!!.navigation.show(ID_NOTIFICATIONS,true)
+            fragment = FixtureCricketFragment()
+            loadFragment()
         } else if (position == 5) {
             logoutApp("Are you sure you want to logout", true)
         }

@@ -63,10 +63,6 @@ class OfferActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener 
         mBinding!!.recyclerView.visibility = View.VISIBLE
 
         mBinding!!.progressBar.visibility = View.GONE
-    }
-
-    override fun onResume() {
-        super.onResume()
         getAllOffers(true)
     }
 

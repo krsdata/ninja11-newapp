@@ -24,6 +24,6 @@ data class ContestsParentModels(
     var icon_url: String = "",
 
     @SerializedName("contests")
-    @Expose
+            @Expose
     var allContestsRunning: ArrayList<ContestModelLists>? = null
 ) : Serializable, Cloneable

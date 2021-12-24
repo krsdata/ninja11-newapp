@@ -13,7 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentResultListener
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -22,11 +22,16 @@ import com.edify.atrist.listener.OnContestLoadedListener
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ninja.cricks.*
 import ninja.cricks.databinding.FragmentAllContestBinding
 import ninja.cricks.models.*
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
+import ninja.cricks.roomDatabase.ResponseDatabase
 import ninja.cricks.ui.contest.adaptors.ContestAdapter
 import ninja.cricks.ui.contest.adaptors.ContestListAdapter
 import ninja.cricks.utils.*
@@ -36,7 +41,7 @@ import retrofit2.Response
 
 class ContestFragment : Fragment() {
 
-    private var customeProgressDialog: CustomeProgressDialog? = null
+    private var customProgressDialog2: CustomProgressDialog2? = null
     private var objectMatches: UpcomingMatchesModel? = null
     var matchObject: UpcomingMatchesModel? = null
     var mListenerContestEvents: OnContestEvents? = null
@@ -44,12 +49,11 @@ class ContestFragment : Fragment() {
     private var mBinding: FragmentAllContestBinding? = null
     lateinit var adapter: ContestAdapter
     private lateinit var spotSizeFilterAdaptor: ContestListAdapter
-    var allContestListData = ArrayList<ContestsParentModels>()
     var filterSpotsListData = ArrayList<ContestModelLists>()
     var filterArrayList = ArrayList<ContestCategoryModel>()
     var isEntryAscending = false
     private var isVisibleToUser: Boolean = false
-    private lateinit var filterAdapter: FilterAdapter
+    private var filterAdapter: FilterAdapter? = null
     private var pos = 0
 
     companion object {
@@ -63,8 +67,7 @@ class ContestFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        customeProgressDialog = CustomeProgressDialog(context)
-        customeProgressDialog!!.show();
+        customProgressDialog2 = CustomProgressDialog2(context)
         objectMatches =
             requireArguments().get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
         matchObject = objectMatches
@@ -72,9 +75,21 @@ class ContestFragment : Fragment() {
         parentFragmentManager.setFragmentResultListener(CreateTeamActivity.CREATETEAM_REQUESTCODE.toString(),this,
             { s: String, bundle: Bundle ->
                 if (bundle.get(ContestActivity.SERIALIZABLE_KEY_CREATE_TEAM) == "result_ok") {
-                    getAllContest(true)
+                    allContestsApiCall(true)
                 }
             })
+        parentFragmentManager.setFragmentResultListener("filter", this, {
+                s: String, bundle: Bundle ->
+            (activity as ContestActivity).filterContestList()
+            if ((activity as ContestActivity).filteredAllContestListData.isNotEmpty()) {
+                allContest((activity as ContestActivity).filteredAllContestListData)
+                mBinding!!.linearEmptyContest.visibility = View.GONE
+            }
+            else if (mBinding != null) {
+                mBinding!!.linearEmptyContest.visibility = View.VISIBLE
+            }
+
+        })
     }
 
     override fun onCreateView(
@@ -85,24 +100,15 @@ class ContestFragment : Fragment() {
             inflater,
             R.layout.fragment_all_contest, container, false
         )
-        return mBinding!!.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         mBinding!!.contestViewRecycler.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         adapter = ContestAdapter(
             requireActivity(),
-            allContestListData,
+            (activity as ContestActivity).filteredAllContestListData,
             matchObject,
             mListenerContestEvents!!
         )
-        mBinding!!.linearEmptyContest.visibility = View.GONE
         mBinding!!.contestViewRecycler.adapter = adapter
-
-        registerSpotSizeSelection()
-
         mBinding!!.recyclerBySpotsize.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
 
@@ -114,15 +120,23 @@ class ContestFragment : Fragment() {
             0
         )
         mBinding!!.recyclerBySpotsize.adapter = spotSizeFilterAdaptor
-
-        mBinding!!.linearEmptyContest.visibility = View.GONE
         mBinding!!.contestViewRecycler.adapter = adapter
-
         mBinding!!.filterRecyclerView.layoutManager =
             LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
         filterAdapter = FilterAdapter(requireActivity(), filterArrayList)
-
         mBinding!!.filterRecyclerView.adapter = filterAdapter
+        return mBinding!!.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mBinding!!.linearEmptyContest.visibility = View.GONE
+        registerSpotSizeSelection()
+        mBinding!!.linearEmptyContest.visibility = View.GONE
+        mBinding!!.imgFilter.setOnClickListener{
+          var filterFragment = FilterFragment()
+            filterFragment.show(parentFragmentManager,"filter")
+        }
 
         mBinding!!.btnCreateTeam.setOnClickListener(View.OnClickListener {
             val intent = Intent(activity, CreateTeamActivity::class.java)
@@ -172,7 +186,7 @@ class ContestFragment : Fragment() {
             mBinding!!.prizeArrow.visibility = View.GONE
             mBinding!!.rupees.setTextColor(resources.getColor(R.color.black))
 
-            showRecyclerListBySpotSize(2)
+            showRecyclerListBySpotSize(2, (activity as ContestActivity).filteredAllContestListData)
         }
 
         mBinding!!.sortBy3spots.setOnClickListener {
@@ -193,7 +207,7 @@ class ContestFragment : Fragment() {
             mBinding!!.prizeArrow.visibility = View.GONE
             mBinding!!.rupees.setTextColor(resources.getColor(R.color.black))
 
-            showRecyclerListBySpotSize(3)
+            showRecyclerListBySpotSize(3,(activity as ContestActivity).filteredAllContestListData)
         }
 
         mBinding!!.sortBy4spots.setOnClickListener {
@@ -214,7 +228,7 @@ class ContestFragment : Fragment() {
             mBinding!!.prizeArrow.visibility = View.GONE
             mBinding!!.rupees.setTextColor(resources.getColor(R.color.black))
 
-            showRecyclerListBySpotSize(4)
+            showRecyclerListBySpotSize(4, (activity as ContestActivity).filteredAllContestListData)
         }
 
         mBinding!!.linearEntryPrizeSort.setOnClickListener {
@@ -236,7 +250,7 @@ class ContestFragment : Fragment() {
 
             mBinding!!.rupees.setTextColor(resources.getColor(R.color.white))
 
-            filterByEntryPrize()
+            filterByEntryPrize((activity as ContestActivity).filteredAllContestListData)
         }
 
         mBinding!!.filterByAll.setOnClickListener {
@@ -265,20 +279,39 @@ class ContestFragment : Fragment() {
     }
 
     private fun showAllContestRecycler() {
-        mBinding!!.contestViewRecycler.visibility = View.VISIBLE
-        mBinding!!.contestRefresh.visibility = View.VISIBLE
-        mBinding!!.contestFilterRefresh.visibility = View.GONE
-        mBinding!!.recyclerBySpotsize.visibility = View.GONE
+        var isAllContestListEmpty = true
+        for (i in (activity as ContestActivity).filteredAllContestListData) {
+            if (i.allContestsRunning!!.isNotEmpty()) {
+                isAllContestListEmpty = false
+            }
+        }
+        if (isAllContestListEmpty) {
+            mBinding!!.linearEmptyContest.visibility = View.VISIBLE
+            mBinding!!.btnCreateTeam.visibility = View.GONE
+            mBinding!!.contestViewRecycler.visibility = View.GONE
+            mBinding!!.contestRefresh.visibility = View.GONE
+            mBinding!!.contestFilterRefresh.visibility = View.VISIBLE
+            mBinding!!.recyclerBySpotsize.visibility = View.VISIBLE
+        }
+        else {
+            mBinding!!.btnCreateTeam.visibility = View.VISIBLE
+            mBinding!!.linearEmptyContest.visibility = View.GONE
+            mBinding!!.contestViewRecycler.visibility = View.VISIBLE
+            mBinding!!.contestRefresh.visibility = View.VISIBLE
+            mBinding!!.contestFilterRefresh.visibility = View.GONE
+            mBinding!!.recyclerBySpotsize.visibility = View.GONE
+        }
     }
 
     private fun showFilteredContestRecycler() {
+        mBinding!!.btnCreateTeam.visibility = View.VISIBLE
         mBinding!!.contestViewRecycler.visibility = View.GONE
         mBinding!!.contestRefresh.visibility = View.GONE
         mBinding!!.contestFilterRefresh.visibility = View.VISIBLE
         mBinding!!.recyclerBySpotsize.visibility = View.VISIBLE
     }
 
-    private fun filterByEntryPrize() {
+    private fun filterByEntryPrize(allContestListData: ArrayList<ContestsParentModels>) {
 
         isEntryAscending = !isEntryAscending
         if (isEntryAscending) {
@@ -315,7 +348,7 @@ class ContestFragment : Fragment() {
         mBinding!!.recyclerBySpotsize.scheduleLayoutAnimation()
     }
 
-    private fun showRecyclerListBySpotSize(spotSize: Int) {
+    private fun showRecyclerListBySpotSize(spotSize: Int, allContestListData: ArrayList<ContestsParentModels>) {
         mBinding!!.contestViewRecycler.visibility = View.GONE
         mBinding!!.recyclerBySpotsize.visibility = View.VISIBLE
         filterSpotsListData.clear()
@@ -343,10 +376,11 @@ class ContestFragment : Fragment() {
         super.onResume()
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
+            customProgressDialog2?.dismiss()
             return
         }
-        if ((activity as ContestActivity).getAllContestResponseModel != null) {
-            allContest((activity as ContestActivity).getAllContestResponseModel!!)
+        if ((activity as ContestActivity).filteredAllContestListData.isNotEmpty()) {
+            allContest((activity as ContestActivity).filteredAllContestListData)
         }
         else if (mBinding != null) {
             mBinding!!.linearEmptyContest.visibility = View.VISIBLE
@@ -385,15 +419,36 @@ class ContestFragment : Fragment() {
     }
 
     private fun getAllContest(isLoading: Boolean) {
-        //var userInfo = (activity as PlugSportsApplication).userInformations
-        //selectAllContest()
+            val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(requireContext(),
+                (Constant.contestFragmentDatabaseId+matchObject!!.matchId)
+            )
+        if (lastTimeApiCall!!+Constant.delayApiSeconds < System.currentTimeMillis()) {
+            allContestsApiCall(isLoading)
+        }
+        else {
+            CoroutineScope(Dispatchers.IO).launch {
+                val value = ResponseDatabase.getInstance(requireContext()).responseDao().getResponse((Constant.contestFragmentDatabaseId+ matchObject!!.matchId).toLong())
+
+                if (value != null && value.type == (Constant.contestFragmentDatabaseId + matchObject!!.matchId) && value.timestamp+Constant.delayApiSeconds > System.currentTimeMillis()){
+                    withContext(Dispatchers.Main){allContests(value.res)}
+                }
+                else {
+                    withContext(Dispatchers.Main){allContestsApiCall(isLoading)}
+                }
+            }
+        }
+
+    }
+
+    private fun allContestsApiCall(isLoading: Boolean) {
         if (mBinding != null) {
             mBinding!!.contestRefresh.isRefreshing = false
         }
         //mBinding!!.filterBar.visibility = View.GONE
         if (isLoading)
-          //  mBinding!!.progressBar.visibility = View.VISIBLE
-              customeProgressDialog!!.show()
+        //  mBinding!!.progressBar.visibility = View.VISIBLE
+            customProgressDialog2!!.show()
+
 
         val jsonRequest = JsonObject()
         jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
@@ -416,8 +471,8 @@ class ContestFragment : Fragment() {
                     if (isVisible) {
                         MyUtils.showToast(activity!! as AppCompatActivity, "Something went wrong!!")
                         if (mBinding != null)  mBinding!!.contestRefresh.isRefreshing = false
-                   //     mBinding!!.progressBar.visibility = View.GONE
-                        customeProgressDialog!!.dismiss()
+                        //     mBinding!!.progressBar.visibility = View.GONE
+                        customProgressDialog2!!.dismiss()
                     }
                 }
 
@@ -432,7 +487,7 @@ class ContestFragment : Fragment() {
                         mBinding!!.contestRefresh.isRefreshing = false
                         //mBinding!!.progressBar.visibility = View.GONE
                     }
-                    customeProgressDialog!!.dismiss()
+                    customProgressDialog2!!.dismiss()
                     val res = response!!.body()
                     if (res != null && res.appMaintainance) {
                         val intent = Intent(activity, MaintainanceActivity::class.java)
@@ -443,8 +498,15 @@ class ContestFragment : Fragment() {
                     } else {
                         if (res != null) {
                             if (res.status) {
-                                (activity as ContestActivity).getAllContestResponseModel = res
-                            allContest(res)
+                                viewLifecycleOwner.lifecycleScope.launch {
+                                    withContext(Dispatchers.Main){allContests(res)}
+                                    withContext(Dispatchers.IO){
+                                        MyPreferences.saveLastTimeForApiCall(context!!,Constant.contestFragmentDatabaseId + matchObject!!.matchId, System.currentTimeMillis())
+                                        ResponseDatabase.getInstance(context!!).responseDao().saveResponse(ninja.cricks.roomDatabase.Response(
+                                            (Constant.contestFragmentDatabaseId + matchObject!!.matchId),System.currentTimeMillis(),res))
+                                    }
+                                }
+
                             } else {
                                 if (res.code == 1001) {
                                     MyUtils.showMessage(requireActivity(), res.message)
@@ -460,39 +522,25 @@ class ContestFragment : Fragment() {
             })
     }
 
-    private fun allContest(res: UsersPostDBResponse) {
+    private fun allContests(res: UsersPostDBResponse) {
+        customProgressDialog2?.dismiss()
+        if (mBinding != null) {
+            mBinding!!.contestRefresh.isRefreshing = false
+        }
         BindingUtils.currentTimeStamp = res.systemTime
         val responseModel = res.responseObject
 
         if (responseModel!!.matchContestlist != null && responseModel.matchContestlist!!.isNotEmpty()) {
-            allContestListData.clear()
-            allContestListData.addAll(responseModel.matchContestlist!!)
-
-            filterArrayList.clear()
-
-            val model = ContestCategoryModel("All Contest", true)
-            filterArrayList.add(model)
-
-            for (i in responseModel.matchContestlist!!.indices) {
-                val categoryModel = ContestCategoryModel(
-                    responseModel.matchContestlist!![i].contestTitle,
-                    false
-                )
-                filterArrayList.add(categoryModel)
-            }
-
-            Log.e(TAG, "pos =======> $pos")
-            updateContestData(pos)
-            /*for (i in filterArrayList.indices) {
-                filterArrayList[i].isStatus = pos == i
-            }
-
-            filterAdapter.updateRecord(filterArrayList)*/
-
-            adapter.setMatchesList(allContestListData)
+            (activity as ContestActivity).allContestListData.clear()
+            (activity as ContestActivity).allContestListData.addAll(
+                responseModel.matchContestlist!!
+            )
+            (activity as ContestActivity).filterContestList()
+            allContest((activity as ContestActivity).filteredAllContestListData)
             mListener.onMyTeam(responseModel.myjoinedTeams!!)
             mListener.onMyContest(responseModel.joinedContestDetails!!)
-        } else {
+        }
+        else {
             MyUtils.showToast(
                 requireActivity() as AppCompatActivity,
                 "No Contest available for this match"
@@ -500,8 +548,37 @@ class ContestFragment : Fragment() {
         }
     }
 
+    private fun allContest(resAllContestList: ArrayList<ContestsParentModels>) {
+            customProgressDialog2!!.dismiss()
+            filterArrayList.clear()
+            val model = ContestCategoryModel("All Contest", true)
+            filterArrayList.add(model)
+
+            for (i in resAllContestList.indices) {
+                val categoryModel = ContestCategoryModel(
+                    resAllContestList[i].contestTitle,
+                    false
+                )
+                filterArrayList.add(categoryModel)
+                if (!(activity as ContestActivity).filterTitleArray.contains(FilterChipModel(resAllContestList[i].contestTitle, false)) && !(activity as ContestActivity).filterTitleArray.contains(FilterChipModel(resAllContestList[i].contestTitle, true))) {
+                    (activity as ContestActivity).filterTitleArray.add(FilterChipModel(resAllContestList[i].contestTitle, false))
+                }
+
+            }
+
+            Log.e(TAG, "pos =======> $pos")
+            updateContestData(pos,resAllContestList)
+            /*for (i in filterArrayList.indices) {
+                filterArrayList[i].isStatus = pos == i
+            }
+
+            filterAdapter.updateRecord(filterArrayList)*/
+
+            adapter.setMatchesList(resAllContestList)
+    }
+
     fun updateEmptyViews() {
-        if (allContestListData.size == 0) {
+        if ((activity as ContestActivity).filteredAllContestListData.size == 0) {
             mBinding!!.linearEmptyContest.visibility = View.VISIBLE
         } else {
             mBinding!!.linearEmptyContest.visibility = View.GONE
@@ -549,7 +626,7 @@ class ContestFragment : Fragment() {
             var pos = position
 
             override fun onClick(v: View?) {
-                updateContestData(pos)
+                updateContestData(pos,(activity as ContestActivity).filteredAllContestListData)
             }
         }
 
@@ -568,12 +645,11 @@ class ContestFragment : Fragment() {
         }
     }
 
-    private fun updateContestData(pos: Int) {
+    private fun updateContestData(pos: Int, allContestListData: ArrayList<ContestsParentModels>) {
         for (i in filterArrayList.indices) {
             filterArrayList[i].isStatus = pos == i
         }
-
-        filterAdapter.updateRecord(filterArrayList)
+        filterAdapter!!.updateRecord(filterArrayList)
 
         this.pos = pos
 
@@ -595,6 +671,15 @@ class ContestFragment : Fragment() {
                 }
             }
             spotSizeFilterAdaptor.notifyDataSetChanged()
+            if (filterSpotsListData.isEmpty()) {
+                mBinding!!.linearEmptyContest.visibility = View.VISIBLE
+                mBinding!!.btnCreateTeam.visibility = View.GONE
+
+            }
+            else{
+                mBinding!!.linearEmptyContest.visibility = View.GONE
+                mBinding!!.btnCreateTeam.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -645,8 +730,8 @@ class ContestFragment : Fragment() {
                                 BindingUtils.currentTimeStamp = res.systemTime
                                 val responseModel = res.responseObject
                                 if (responseModel!!.matchContestlist != null && responseModel.matchContestlist!!.isNotEmpty()) {
-                                    allContestListData.clear()
-                                    allContestListData.addAll(responseModel.matchContestlist!!)
+                                    (activity as ContestActivity).allContestListData.clear()
+                                    (activity as ContestActivity).allContestListData.addAll(responseModel.matchContestlist!!)
                                     filterArrayList.clear()
 
                                     val model = ContestCategoryModel("All Contest", false)
@@ -670,15 +755,15 @@ class ContestFragment : Fragment() {
                                         }
                                     }
 
-                                    filterAdapter.updateRecord(filterArrayList)
+                                    filterAdapter?.updateRecord(filterArrayList)
 
 
                                     showFilteredContestRecycler()
                                     filterSpotsListData.clear()
 
-                                    for (i in allContestListData.indices) {
+                                    for (i in (activity as ContestActivity).filteredAllContestListData.indices) {
                                         if (actualPosition == i) {
-                                            val values = allContestListData[i].allContestsRunning
+                                            val values = (activity as ContestActivity).filteredAllContestListData[i].allContestsRunning
                                             if (values != null) {
                                                 filterSpotsListData.addAll(values)
                                             }
