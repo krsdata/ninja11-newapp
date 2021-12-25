@@ -22,7 +22,7 @@
             android:layout_gravity="center_vertical"
             android:textColor="@color/grey"
             android:layout_marginLeft="5dip"
-            android:fontFamily="@font/montserrat_regular"
+            android:fontFamily="droidsans"
             />
         <TextView
             android:id="@+id/transaction_date"
@@ -33,7 +33,7 @@
             android:layout_gravity="center_vertical"
             android:textColor="@color/black"
             android:layout_marginLeft="15dip"
-            android:fontFamily="@font/montserrat_regular"
+            android:fontFamily="droidsans"
             />
 
 
@@ -63,7 +63,7 @@
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/black"
                 android:layout_marginLeft="5dip"
-                android:fontFamily="@font/montserrat_bold"
+                android:fontFamily="droidsans"
                 />
         </LinearLayout>
 
@@ -83,7 +83,7 @@
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/black"
                 android:layout_marginLeft="15dip"
-                android:fontFamily="@font/montserrat_regular"
+                android:fontFamily="droidsans"
                 />
 
             <TextView
@@ -95,7 +95,7 @@
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/black"
                 android:layout_marginLeft="15dip"
-                android:fontFamily="@font/montserrat_regular"
+                android:fontFamily="droidsans"
                 />
 
 

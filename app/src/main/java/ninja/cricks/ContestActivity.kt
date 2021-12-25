@@ -219,6 +219,7 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
 
         if (matchObject!!.status != BindingUtils.MATCH_STATUS_UPCOMING) {
             adapter.addFragment(PlayerStatsFragment.newInstance(bundle), getString(R.string.contest_type_playerstats))
+            initScoreCard()
         }
 
         viewPager.adapter = adapter
@@ -228,7 +229,6 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
         } else {
             mBinding!!.includeMatchRow.liveMatchesRow.visibility = View.GONE
         }
-        initScoreCard()
     }
 
     internal inner class ViewPagerAdapter(manager: FragmentManager) :

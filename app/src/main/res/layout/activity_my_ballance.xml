@@ -58,7 +58,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:fontFamily="@font/montserrat_regular"
+                            android:fontFamily="droidsans"
                             android:text="TOTAL BALANCE"
                             android:textColor="@color/grey"
                             android:textSize="@dimen/_12sdp" />
@@ -69,7 +69,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="10dip"
-                            android:fontFamily="@font/montserrat_regular"
+                            android:fontFamily="droidsans"
                             android:text="₹0"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/_12sdp" />
@@ -81,7 +81,7 @@
                             android:layout_gravity="center"
                             android:layout_marginTop="10dip"
                             android:background="@drawable/default_rounded_button_sportsfight"
-                            android:fontFamily="@font/montserrat_bold"
+                            android:fontFamily="droidsans"
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="ADD CASH"
@@ -112,7 +112,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/montserrat_regular"
+                            android:fontFamily="droidsans"
                             android:text="Winning Amount"
                             android:textColor="@color/grey"
                             android:textSize="@dimen/_12sdp" />
@@ -127,7 +127,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dip"
-                                android:fontFamily="@font/montserrat_regular"
+                                android:fontFamily="droidsans"
                                 android:text="₹0"
                                 android:textColor="@color/colorPrimaryDark"
                                 android:textSize="@dimen/_12sdp" />
@@ -140,7 +140,7 @@
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:layout_marginEnd="@dimen/_5sdp"
                                 android:layout_toStartOf="@+id/verify_account"
-                                android:fontFamily="@font/montserrat_regular"
+                                android:fontFamily="droidsans"
                                 android:text="Verify your account to be eligible to withdraw."
                                 android:textColor="@color/primary_dark_material_light"
                                 android:textSize="@dimen/_7sdp" />
@@ -153,7 +153,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dip"
                                 android:background="@drawable/button_selector_verify"
-                                android:fontFamily="@font/montserrat_regular"
+                                android:fontFamily="droidsans"
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="VERIFY NOW"
@@ -169,7 +169,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dip"
                                 android:background="@drawable/button_selector_verify"
-                                android:fontFamily="@font/montserrat_regular"
+                                android:fontFamily="droidsans"
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="Withdraw"
@@ -185,7 +185,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dip"
                                 android:background="@drawable/button_selector_verify"
-                                android:fontFamily="@font/montserrat_regular"
+                                android:fontFamily="droidsans"
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="Paytm Withdraw"
@@ -208,7 +208,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:fontFamily="@font/montserrat_regular"
+                                android:fontFamily="droidsans"
                                 android:text="Deposit Amount"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_12sdp" />
@@ -218,7 +218,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dip"
-                                android:fontFamily="@font/montserrat_regular"
+                                android:fontFamily="droidsans"
                                 android:text="₹0"
                                 android:textColor="@color/colorPrimaryDark"
                                 android:textSize="@dimen/_12sdp" />
@@ -240,7 +240,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:fontFamily="@font/montserrat_regular"
+                                android:fontFamily="droidsans"
                                 android:text="Bonus Amount"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_12sdp" />
@@ -250,7 +250,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dip"
-                                android:fontFamily="@font/montserrat_regular"
+                                android:fontFamily="droidsans"
                                 android:text="₹0"
                                 android:textColor="@color/colorPrimaryDark"
                                 android:textSize="@dimen/_12sdp" />
@@ -272,7 +272,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:fontFamily="@font/montserrat_regular"
+                                android:fontFamily="droidsans"
                                 android:text="Extra Cash Amount"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_12sdp" />
@@ -282,7 +282,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dip"
-                                android:fontFamily="@font/montserrat_regular"
+                                android:fontFamily="droidsans"
                                 android:text="₹0"
                                 android:textColor="@color/colorPrimaryDark"
                                 android:textSize="@dimen/_12sdp" />
@@ -291,7 +291,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_5sdp"
-                                android:fontFamily="@font/montserrat_regular"
+                                android:fontFamily="droidsans"
                                 android:text="This amount will be used in Mega Contest only."
                                 android:textColor="@color/black"
                                 android:visibility="gone"
@@ -320,7 +320,7 @@
                             android:id="@+id/txt_recent_transaction"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:fontFamily="@font/montserrat_regular"
+                            android:fontFamily="droidsans"
                             android:gravity="center|start"
                             android:text="My Recent Transactions"
                             android:textColor="@color/black"

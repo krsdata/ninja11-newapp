@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_10sdp"
-                android:fontFamily="@font/montserrat_regular"
+                android:fontFamily="droidsans"
                 android:gravity="center_vertical"
                 android:text="Select 1 - 4 Wicket - Keepers"
                 android:textColor="@color/black"
@@ -73,7 +73,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/open_sans_light"
+                    android:fontFamily="droidsans"
                     android:text="SELECTED BY"
                     android:textColor="@color/black"
                     android:textSize="12sp" />

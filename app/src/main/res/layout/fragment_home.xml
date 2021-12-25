@@ -52,6 +52,7 @@
             android:layout_marginRight="@dimen/_10sdp"
             android:background="@drawable/tab_layout_background"
             android:elevation="@dimen/_15sdp"
+            android:visibility="gone"
             app:tabBackground="@drawable/tab_layout_selector"
             app:tabIndicatorHeight="0dp"
             app:tabMode="fixed"

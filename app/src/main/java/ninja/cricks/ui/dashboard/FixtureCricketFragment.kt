@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -142,7 +143,7 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
             }.setActionTextColor(resources.getColor(R.color.red)).show()
             return
         }
-        //mBinding!!.swipeRefresh.isRefreshing = true
+        mBinding!!.swipeRefresh.isRefreshing = true
 
         val jsonRequest = JsonObject()
         jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)

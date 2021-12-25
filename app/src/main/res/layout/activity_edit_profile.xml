@@ -33,7 +33,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:orientation="vertical">
 
@@ -64,7 +63,7 @@
                     style="@style/OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_1sdp"
                     app:hintAnimationEnabled="true"
                     android:clickable="false"
                     app:hintEnabled="true">
@@ -73,7 +72,7 @@
                         android:id="@+id/edit_team_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans_semibold"
+                        android:fontFamily="droidsans"
                         android:hint="Team Name (Nick Name)"
                         android:clickable="false"
                         android:editable="false"
@@ -91,7 +90,7 @@
                     style="@style/OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_1sdp"
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true">
 
@@ -99,9 +98,9 @@
                         android:id="@+id/update_profile_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/open_sans_semibold"
+                        android:fontFamily="droidsans"
                         android:hint="Name"
-                        android:maxLines="1"
+                        android:maxLines="0"
                         android:singleLine="true"
                         android:textColor="@color/text_view_color"
                         android:textSize="@dimen/_14sdp" />
@@ -111,7 +110,7 @@
                     style="@style/OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_1sdp"
                     android:clickable="false"
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true">
@@ -124,7 +123,7 @@
                         android:editable="false"
                         android:enabled="false"
                         android:focusable="false"
-                        android:fontFamily="@font/open_sans_semibold"
+                        android:fontFamily="droidsans"
                         android:hint="Email"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/text_view_color"
@@ -136,7 +135,7 @@
                     style="@style/OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_1sdp"
                     android:clickable="false"
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true">
@@ -197,7 +196,7 @@
                     style="@style/OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_1sdp"
                     android:editable="false"
                     android:focusable="true"
                     app:hintAnimationEnabled="true"
@@ -220,7 +219,7 @@
                     style="@style/OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_1sdp"
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true">
 
@@ -238,7 +237,7 @@
                     style="@style/OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_1sdp"
                     app:hintAnimationEnabled="true"
                     app:hintEnabled="true">
 
@@ -255,7 +254,7 @@
                 <Button
                     android:id="@+id/btn_update_profile"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_35sdp"
+                    android:layout_height="@dimen/_45sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:background="@drawable/rounded_corner_filled_blue"

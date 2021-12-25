@@ -25,7 +25,7 @@
             android:text="BONUS ON SIGNUP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat_bold"/>
+            android:fontFamily="droidsans"/>
 
 
         <TextView
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="6 days ago"
-            android:fontFamily="@font/open_sans_semibold"
+            android:fontFamily="droidsans"
             android:layout_marginTop="4dp" />
     </LinearLayout>
 

@@ -2,7 +2,7 @@ package ninja.cricks
 
 class Constant {
     companion object {
-        const val delayApiSeconds = 120000L
+        const val delayApiSeconds = 30000L
         const val contestFragmentDatabaseId = 1000000000L
         const val myContestFragmentDatabaseId = 2000000000L
         const val myTeamFragmentDatabaseId = 30000000L

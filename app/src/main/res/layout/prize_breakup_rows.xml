@@ -19,7 +19,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat_bold"
+            android:fontFamily="droidsans"
             android:text="#"
             android:textColor="@color/greyish"
             android:textSize="@dimen/_13sdp" />
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:fontFamily="@font/montserrat_bold"
+            android:fontFamily="droidsans"
             android:text="1"
             android:textColor="@color/black"
             android:textSize="@dimen/_13sdp" />
@@ -57,7 +57,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/_5sdp"
             android:layout_toStartOf="@+id/winner_rpize"
-            android:fontFamily="@font/montserrat_bold"
+            android:fontFamily="droidsans"
             android:gravity="center"
             android:text="+"
             android:textColor="@color/black"
@@ -69,7 +69,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="5dp"
-            android:fontFamily="@font/montserrat_bold"
+            android:fontFamily="droidsans"
             android:gravity="center|end"
             android:text="₹10 Lakhs"
             android:textColor="@color/black"

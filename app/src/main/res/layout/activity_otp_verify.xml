@@ -76,7 +76,7 @@
 				android:id="@+id/timer_otp_detect"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:fontFamily="@font/open_sans"
+				android:fontFamily="droidsans"
 				android:text="00:43"
 				android:gravity="center"
 				android:textAllCaps="false"
@@ -165,6 +165,7 @@
 			android:background="@drawable/rounded_corner_filled_blue"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:padding="@dimen/_10sdp"
 			android:layout_marginTop="16dp"
 			android:text="Continue"
 			android:textAllCaps="false" />

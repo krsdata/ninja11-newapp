@@ -153,7 +153,7 @@
     <string name="drawer_close">Close</string>
 
 
-    <string name="sign_in_with_google">Sign in with Google+</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
     <string name="login_with_mobile_number">Login With Mobile</string>
     <string name="continue_with_phone">Continue with Phone</string>
     <string name="enter_your_phone_number">" your mobile number"</string>

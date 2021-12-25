@@ -19,7 +19,7 @@
         android:layout_height="@dimen/_16sdp"
         android:layout_below="@+id/imageView"
         android:background="@drawable/preview_name_black"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="droidsans"
         android:maxLines="1"
         android:paddingEnd="@dimen/_3sdp"
         android:gravity="center"

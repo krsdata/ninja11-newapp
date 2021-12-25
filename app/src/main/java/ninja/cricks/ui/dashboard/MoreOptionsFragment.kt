@@ -306,6 +306,7 @@ class MoreOptionsFragment : BaseFragment() {
                             startActivity(intent, options.toBundle())
                         }
                         9 -> {
+                            NinjaApplication.lastApiCallForMatch = 0L
                             logoutApp("Are you sure you want to logout", true)
                         }
                         10 -> {

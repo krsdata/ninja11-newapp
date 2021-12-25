@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:text="Get In Touch"
                     android:layout_marginLeft="15dip"
-                    android:fontFamily="@font/open_sans_semibold"
+                    android:fontFamily="droidsans"
                     android:textColor="@color/colorAccent"
                     android:textSize="28sp"/>
                 <View
@@ -63,7 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Our support team available on given WhatsApp, Call, Email &amp; SMS. "
-                    android:fontFamily="@font/open_sans_semibold"
+                    android:fontFamily="droidsans"
                     android:textColor="@color/black"
                     android:layout_marginTop="40dp"
                     android:layout_marginLeft="15dip"
@@ -73,7 +73,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Please feel free to contact us"
-                    android:fontFamily="@font/open_sans_light"
+                    android:fontFamily="droidsans"
                     android:textColor="@color/black"
                     android:layout_marginTop="8dp"
                     android:layout_marginLeft="15dip"
@@ -86,7 +86,7 @@
                     android:text="CONNECT WITH "
                     android:textStyle="bold"
                     android:gravity="center"
-                    android:fontFamily="@font/open_sans_semibold"
+                    android:fontFamily="droidsans"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:layout_marginTop="25dip"/>
@@ -125,7 +125,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Email"
                                 android:layout_gravity="center_vertical|bottom|center_horizontal"
-                                android:fontFamily="@font/open_sans_light"
+                                android:fontFamily="droidsans"
                                 android:textColor="@color/black"/>
 
                         </androidx.cardview.widget.CardView>
@@ -153,7 +153,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="SMS"
                                 android:layout_gravity="center_vertical|bottom|center_horizontal"
-                                android:fontFamily="@font/open_sans_light"
+                                android:fontFamily="droidsans"
                                 android:textColor="@color/black"/>
 
                         </androidx.cardview.widget.CardView>
@@ -189,7 +189,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="WhatsApp"
                                 android:layout_gravity="center_vertical|bottom|center_horizontal"
-                                android:fontFamily="@font/open_sans_light"
+                                android:fontFamily="droidsans"
                                 android:textColor="@color/black"/>
 
                         </androidx.cardview.widget.CardView>
@@ -217,7 +217,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Phone"
                                 android:layout_gravity="center_vertical|bottom|center_horizontal"
-                                android:fontFamily="@font/open_sans_light"
+                                android:fontFamily="droidsans"
                                 android:textColor="@color/black"/>
 
                         </androidx.cardview.widget.CardView>

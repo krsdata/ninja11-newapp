@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/default_rounded_button_sportsfight"
-                android:fontFamily="@font/montserratsemibold"
+                android:fontFamily="droidsans"
                 android:padding="10dp"
                 android:text="@string/label_policy"
                 android:textColor="@color/white"
