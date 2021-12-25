@@ -202,6 +202,7 @@ class MyAccountBalanceFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
+        if (isVisible)
         getWalletBalances()
     }
 

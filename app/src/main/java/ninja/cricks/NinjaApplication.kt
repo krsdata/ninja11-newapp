@@ -108,7 +108,7 @@ class NinjaApplication : MultiDexApplication() {
             return mStoreListModels ?: WalletInfo()
         }
 
-    fun saveUpcomingMatches(value: ArrayList<MatchesModels>?) {
+    /*fun saveUpcomingMatches(value: ArrayList<MatchesModels>?) {
         if (value != null) {
             val gson = Gson()
             val data = gson.toJson(value)
@@ -128,7 +128,7 @@ class NinjaApplication : MultiDexApplication() {
                 mStoreListModels = gson.fromJson<ArrayList<MatchesModels>>(gsonObject, type)
             }
             return mStoreListModels ?: ArrayList()
-        }
+        }*/
 
     fun saveTransactionHistory(value: ArrayList<TransactionModel>?) {
         if (value != null) {

@@ -11,5 +11,7 @@ class Constant {
         const val myLiveMatchesFragmentDatabaseId = 6000000000L
         const val myCompletedMatchesFragmentDatabaseId = 7000000000L
         const val getMessagesDatabaseId = 8000000000L
+        const val getAllMatcesDatabaseId = 9000000000L
+
     }
 }

@@ -47,7 +47,7 @@ import retrofit2.Response
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
+class MainActivity : BaseActivity(), /*BottomNavigationView.OnNavigationItemSelectedListener,*/
     FragmentDrawer.FragmentDrawerListener {
 
     public var resGetMessage = MutableLiveData<JsonObject>()
@@ -162,6 +162,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
             //setCount(ID_NOTIFICATION, "115")
 
+/*
             setOnShowListener {
                 val name = when (it.id) {
                     ID_HOME -> {
@@ -180,24 +181,43 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                         fragment = MoreOptionsFragment()
                         loadFragment()
                     }
+*/
 /*
                     temp_leaderboard -> {
                         startActivity(Intent(this@MainActivity,ContestLeaderBoardActivity::class.java))
                     }
-*/
+*//*
+
                     else -> ""
                 }
 
                 //xxtvSelected.text = getString(R.string.main_page_selected, name)
             }
+*/
 
             setOnClickMenuListener {
                 val name = when (it.id) {
-                    ID_HOME -> "HOME"
-                    ID_DASHBOARD -> "EXPLORE"
+                    ID_HOME -> {
+                        "HOME"
+                        fragment = HomeFragment()
+                        loadFragment()
+                    }
+                    ID_DASHBOARD -> {
+                        "EXPLORE"
+                        fragment = MyMatchesFragment()
+                        loadFragment()
+                    }
                     ID_PREDICT_WIN -> "MESSAGE"
-                    ID_NOTIFICATIONS -> "NOTIFICATION"
-                    ID_MY_ACCOUNT -> "ACCOUNT"
+                    ID_NOTIFICATIONS -> {
+                        "NOTIFICATION"
+                        fragment = MoreOptionsFragment()
+                        loadFragment()
+                    }
+                    ID_MY_ACCOUNT -> {
+                        "ACCOUNT"
+                        fragment = MyAccountFragment()
+                        loadFragment()
+                    }
                     else -> ""
                 }
             }
@@ -410,6 +430,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         return super.onOptionsItemSelected(item)
     }
 
+/*
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
             R.id.navigation_home -> {
@@ -422,11 +443,13 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                 loadFragment()
                 return true
             }
-            /*R.id.navigation_leader->{
+            */
+/*R.id.navigation_leader->{
                 fragment = GlobalLeaderBoardFragment()
                 loadFragment()
                 return true
-            }*/
+            }*//*
+
             R.id.navigation_myaccount -> {
                 fragment = MyAccountFragment()
                 loadFragment()
@@ -440,6 +463,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         }
         return false
     }
+*/
 
     private fun loadFragment() {
         if (fragment != null) {
