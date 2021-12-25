@@ -114,7 +114,7 @@ class MyUpcomingMatchesFragment : Fragment() {
         val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(requireContext(),
             (Constant.myUpcomingMatchesFragmentDatabaseId)
         )
-        if (lastTimeApiCall!!+ Constant.delayApiSeconds > System.currentTimeMillis()) {
+        if (lastTimeApiCall!!+ Constant.delayApiSeconds < System.currentTimeMillis()) {
             getMatchHistoryApiCall()
         }
         else {
@@ -123,7 +123,7 @@ class MyUpcomingMatchesFragment : Fragment() {
                     (Constant.myUpcomingMatchesFragmentDatabaseId)
                 )
 
-                if (value != null && value.type == (Constant.myUpcomingMatchesFragmentDatabaseId) && value.timestamp+ Constant.delayApiSeconds < System.currentTimeMillis()){
+                if (value != null && value.type == (Constant.myUpcomingMatchesFragmentDatabaseId)){
                     withContext(Dispatchers.Main){getMatchHistory2(value.res)}
                 }
                 else {

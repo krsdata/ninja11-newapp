@@ -11,12 +11,20 @@ import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.JsonObject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import ninja.cricks.customviews.CircleImageView
 import ninja.cricks.databinding.ActivityMainBinding
 import ninja.cricks.models.JoinedMatchModel
@@ -25,6 +33,7 @@ import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.RetrofitClient
 import ninja.cricks.network.WebServiceClient
+import ninja.cricks.roomDatabase.ResponseDatabase
 import ninja.cricks.ui.BaseActivity
 import ninja.cricks.ui.dashboard.*
 import ninja.cricks.ui.home.HomeFragment
@@ -41,6 +50,7 @@ import kotlin.collections.ArrayList
 class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
     FragmentDrawer.FragmentDrawerListener {
 
+    public var resGetMessage = MutableLiveData<JsonObject>()
     var fragment: Fragment? = null
     private var mBinding: ActivityMainBinding? = null
     private lateinit var mContext: Context
@@ -87,9 +97,10 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             startActivityForResult(intent, MyBalanceActivity.REQUEST_CODE_ADD_MONEY)
         }
 
-        getWalletBalances()
+      //  getWalletBalances()
         setProfileData()
         updateCheckApk()
+        getMessage()
 
       ///  mBinding!!.navigation.setOnNavigationItemSelectedListener(this)
 
@@ -252,6 +263,79 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             startActivity(intent)
         }
     }
+
+    private fun getMessage() {
+        val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(this,
+            (Constant.getMessagesDatabaseId)
+        )
+        if (lastTimeApiCall!!+ Constant.delayApiSeconds < System.currentTimeMillis()) {
+            // if (activity != null && isAdded) {
+            getMessageApiCall()
+            //   }
+        }
+        else {
+            CoroutineScope(Dispatchers.IO).launch {
+                val value = ResponseDatabase.getInstance(this@MainActivity).responseDao().getResponseJsonObject(
+                    (Constant.getMessagesDatabaseId)
+                )
+
+                if (value != null && value.type == (Constant.getMessagesDatabaseId)){
+                    withContext(Dispatchers.Main){getMessage2(value.res)}
+                }
+                else {
+                    withContext(Dispatchers.Main){
+                            getMessageApiCall()
+                    }
+                }
+            }
+        }
+
+
+    }
+
+    private fun getMessageApiCall() {
+        if (!MyUtils.isConnectedWithInternet(this)) {
+            return
+        }
+
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this))
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this))
+        jsonRequest.addProperty("version_code", BuildConfig.VERSION_CODE)
+
+        WebServiceClient(this).client.create(IApiMethod::class.java)
+            .getMessages(jsonRequest)
+            .enqueue(object : Callback<JsonObject?> {
+                override fun onFailure(call: Call<JsonObject?>?, t: Throwable?) {
+                    Log.d("api", "failed")
+                }
+
+                override fun onResponse(
+                    call: Call<JsonObject?>?,
+                    response: Response<JsonObject?>?
+                ) {
+                        val resObje = response!!.body().toString()
+                        val jsonObject = JSONObject(resObje)
+                        if (jsonObject.optBoolean("status")) {
+                            lifecycleScope.launch {
+                                withContext(Dispatchers.Main){ getMessage2(response.body()!!) }
+                                withContext(Dispatchers.IO){
+                                    MyPreferences.saveLastTimeForApiCall(this@MainActivity,Constant.getMessagesDatabaseId, System.currentTimeMillis())
+                                    ResponseDatabase.getInstance(this@MainActivity).responseDao().saveResponseJsonObject(ninja.cricks.roomDatabase.ResponseJsonObject(
+                                        (Constant.getMessagesDatabaseId),System.currentTimeMillis(),
+                                        response.body()!!
+                                    ))
+                                }
+                            }
+                        }
+                }
+            })
+    }
+
+    private fun getMessage2(resObje: JsonObject) {
+        resGetMessage.value = resObje
+    }
+
 
     private fun getWalletBalances() {
         val jsonRequest = JsonObject()

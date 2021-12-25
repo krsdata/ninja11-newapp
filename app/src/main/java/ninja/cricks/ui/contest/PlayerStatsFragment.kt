@@ -119,7 +119,7 @@ class PlayerStatsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                     (Constant.playerStatsFragmentDatabaseId+ objectMatches!!.matchId)
                 )
 
-                if (value != null && value.type == (Constant.playerStatsFragmentDatabaseId + objectMatches!!.matchId) && value.timestamp+ Constant.delayApiSeconds > System.currentTimeMillis()){
+                if (value != null && value.type == (Constant.playerStatsFragmentDatabaseId + objectMatches!!.matchId)){
                     withContext(Dispatchers.Main){playerstats(value.res)}
                 }
             }

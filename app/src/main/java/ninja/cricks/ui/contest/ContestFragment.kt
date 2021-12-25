@@ -429,7 +429,7 @@ class ContestFragment : Fragment() {
             CoroutineScope(Dispatchers.IO).launch {
                 val value = ResponseDatabase.getInstance(requireContext()).responseDao().getResponse((Constant.contestFragmentDatabaseId+ matchObject!!.matchId).toLong())
 
-                if (value != null && value.type == (Constant.contestFragmentDatabaseId + matchObject!!.matchId) && value.timestamp+Constant.delayApiSeconds > System.currentTimeMillis()){
+                if (value != null && value.type == (Constant.contestFragmentDatabaseId + matchObject!!.matchId)){
                     withContext(Dispatchers.Main){allContests(value.res)}
                 }
                 else {

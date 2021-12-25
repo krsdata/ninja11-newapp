@@ -118,7 +118,7 @@ class MyCompletedMatchesFragment : Fragment() {
                     (Constant.myCompletedMatchesFragmentDatabaseId)
                 )
 
-                if (value != null && value.type == (Constant.myCompletedMatchesFragmentDatabaseId) && value.timestamp+ Constant.delayApiSeconds < System.currentTimeMillis()){
+                if (value != null && value.type == (Constant.myCompletedMatchesFragmentDatabaseId)){
                     withContext(Dispatchers.Main){getMatchHistory2(value.res)}
                 }
                 else {

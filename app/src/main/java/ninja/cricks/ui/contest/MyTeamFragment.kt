@@ -242,7 +242,7 @@ class MyTeamFragment : Fragment() {
             CoroutineScope(Dispatchers.IO).launch {
                 val value = ResponseDatabase.getInstance(requireContext()).responseDao().getResponse((Constant.myTeamFragmentDatabaseId+ matchObject!!.matchId).toLong())
 
-                if (value != null && value.type == (Constant.myTeamFragmentDatabaseId + matchObject!!.matchId) && value.timestamp+ Constant.delayApiSeconds > System.currentTimeMillis()){
+                if (value != null && value.type == (Constant.myTeamFragmentDatabaseId + matchObject!!.matchId)){
                     withContext(Dispatchers.Main){allTeam(value.res)}
                 }
             }

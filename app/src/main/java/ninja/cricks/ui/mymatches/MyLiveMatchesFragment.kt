@@ -105,7 +105,7 @@ class MyLiveMatchesFragment : Fragment() {
         val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(requireContext(),
             (Constant.myLiveMatchesFragmentDatabaseId)
         )
-        if (lastTimeApiCall!!+ Constant.delayApiSeconds > System.currentTimeMillis()) {
+        if (lastTimeApiCall!!+ Constant.delayApiSeconds < System.currentTimeMillis()) {
             if (activity != null && isAdded)getMatchHistoryApiCall()
         }
         else {
@@ -114,7 +114,7 @@ class MyLiveMatchesFragment : Fragment() {
                     (Constant.myLiveMatchesFragmentDatabaseId)
                 )
 
-                if (value != null && value.type == (Constant.myLiveMatchesFragmentDatabaseId) && value.timestamp+ Constant.delayApiSeconds < System.currentTimeMillis()){
+                if (value != null && value.type == (Constant.myLiveMatchesFragmentDatabaseId)){
                     withContext(Dispatchers.Main){if (activity != null && isAdded)getMatchHistory2(value.res)}
                 }
                 else {
