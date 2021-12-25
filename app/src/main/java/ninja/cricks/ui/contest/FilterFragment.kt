@@ -20,7 +20,7 @@ class FilterFragment: BottomSheetDialogFragment() {
     var filter_text_3 = false
     var filter_text_11 = false
     var filter_text_101 = false
-    var filter_text_1001 =false
+    var filter_text_1001 = false
     var filterGroup2ItemList: ArrayList<Chip> = ArrayList()
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,7 +51,6 @@ class FilterFragment: BottomSheetDialogFragment() {
             filterGroup2ItemList.add(chip)
             mBinding.chipGroup2.addView(chip)
         }
-
     }
 
     private fun initClickListeners() {
@@ -117,6 +116,5 @@ class FilterFragment: BottomSheetDialogFragment() {
         mBinding.txt11.isChecked = filter_text_11
         mBinding.txt101.isChecked = filter_text_101
         mBinding.txt1001.isChecked = filter_text_1001
-
     }
 }
