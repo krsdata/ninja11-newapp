@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,15 +14,30 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.tabs.TabLayout
 import com.google.gson.JsonObject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import ninja.cricks.BuildConfig
+import ninja.cricks.Constant
 import ninja.cricks.MainActivity
 import ninja.cricks.R
 import ninja.cricks.databinding.FragmentHomeBinding
+import ninja.cricks.network.IApiMethod
+import ninja.cricks.network.WebServiceClient
+import ninja.cricks.roomDatabase.ResponseDatabase
 import ninja.cricks.ui.dashboard.FixtureCricketFragment
 import ninja.cricks.ui.mymatches.MyCompletedMatchesFragment
 import ninja.cricks.ui.mymatches.MyLiveMatchesFragment
+import ninja.cricks.utils.MyPreferences
+import ninja.cricks.utils.MyUtils
 import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class HomeFragment : Fragment() {
 
@@ -46,10 +62,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (savedInstanceState == null) setupViewPager()
-        (requireActivity() as MainActivity).resGetMessage.observe(viewLifecycleOwner, Observer {
-            getMessage2(it)
-        })
+        setupViewPager()
+        getMessage()
     }
 
     private fun setupViewPager() {
@@ -76,6 +90,70 @@ class HomeFragment : Fragment() {
     }
 
 
+    private fun getMessage() {
+        val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(requireContext(),
+            (Constant.getMessagesDatabaseId)
+        )
+        if (lastTimeApiCall!!+ Constant.delayApiSeconds < System.currentTimeMillis()) {
+            // if (activity != null && isAdded) {
+            getMessageApiCall()
+            //   }
+        }
+        else {
+            CoroutineScope(Dispatchers.IO).launch {
+                val value = ResponseDatabase.getInstance(requireContext()).responseDao().getResponseJsonObject(
+                    (Constant.getMessagesDatabaseId)
+                )
+
+                if (value != null && value.type == (Constant.getMessagesDatabaseId)){
+                    withContext(Dispatchers.Main){getMessage2(value.res)}
+                }
+                else {
+                    withContext(Dispatchers.Main){
+                        getMessageApiCall()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun getMessageApiCall() {
+        if (!MyUtils.isConnectedWithInternet(requireActivity())) {
+            return
+        }
+
+        val jsonRequest = JsonObject()
+        jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireContext()))
+        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireContext()))
+        jsonRequest.addProperty("version_code", BuildConfig.VERSION_CODE)
+
+        WebServiceClient(requireContext()).client.create(IApiMethod::class.java)
+            .getMessages(jsonRequest)
+            .enqueue(object : Callback<JsonObject?> {
+                override fun onFailure(call: Call<JsonObject?>?, t: Throwable?) {
+                }
+
+                override fun onResponse(
+                    call: Call<JsonObject?>?,
+                    response: Response<JsonObject?>?
+                ) {
+                    val resObje = response!!.body().toString()
+                    val jsonObject = JSONObject(resObje)
+                    if (jsonObject.optBoolean("status")) {
+                        lifecycleScope.launch {
+                            withContext(Dispatchers.Main){ getMessage2(response.body()!!) }
+                            withContext(Dispatchers.IO){
+                                MyPreferences.saveLastTimeForApiCall(requireContext(),Constant.getMessagesDatabaseId, System.currentTimeMillis())
+                                ResponseDatabase.getInstance(requireContext()).responseDao().saveResponseJsonObject(ninja.cricks.roomDatabase.ResponseJsonObject(
+                                    (Constant.getMessagesDatabaseId),System.currentTimeMillis(),
+                                    response.body()!!
+                                ))
+                            }
+                        }
+                    }
+                }
+            })
+    }
 
     private fun getMessage2(resObje: JsonObject) {
         val jsonObject = JSONObject(resObje.toString())

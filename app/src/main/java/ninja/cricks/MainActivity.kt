@@ -100,7 +100,6 @@ class MainActivity : BaseActivity(), /*BottomNavigationView.OnNavigationItemSele
       //  getWalletBalances()
         setProfileData()
         updateCheckApk()
-        getMessage()
 
       ///  mBinding!!.navigation.setOnNavigationItemSelectedListener(this)
 
@@ -283,79 +282,6 @@ class MainActivity : BaseActivity(), /*BottomNavigationView.OnNavigationItemSele
             startActivity(intent)
         }
     }
-
-    private fun getMessage() {
-        val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(this,
-            (Constant.getMessagesDatabaseId)
-        )
-        if (lastTimeApiCall!!+ Constant.delayApiSeconds < System.currentTimeMillis()) {
-            // if (activity != null && isAdded) {
-            getMessageApiCall()
-            //   }
-        }
-        else {
-            CoroutineScope(Dispatchers.IO).launch {
-                val value = ResponseDatabase.getInstance(this@MainActivity).responseDao().getResponseJsonObject(
-                    (Constant.getMessagesDatabaseId)
-                )
-
-                if (value != null && value.type == (Constant.getMessagesDatabaseId)){
-                    withContext(Dispatchers.Main){getMessage2(value.res)}
-                }
-                else {
-                    withContext(Dispatchers.Main){
-                            getMessageApiCall()
-                    }
-                }
-            }
-        }
-
-
-    }
-
-    private fun getMessageApiCall() {
-        if (!MyUtils.isConnectedWithInternet(this)) {
-            return
-        }
-
-        val jsonRequest = JsonObject()
-        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this))
-        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this))
-        jsonRequest.addProperty("version_code", BuildConfig.VERSION_CODE)
-
-        WebServiceClient(this).client.create(IApiMethod::class.java)
-            .getMessages(jsonRequest)
-            .enqueue(object : Callback<JsonObject?> {
-                override fun onFailure(call: Call<JsonObject?>?, t: Throwable?) {
-                    Log.d("api", "failed")
-                }
-
-                override fun onResponse(
-                    call: Call<JsonObject?>?,
-                    response: Response<JsonObject?>?
-                ) {
-                        val resObje = response!!.body().toString()
-                        val jsonObject = JSONObject(resObje)
-                        if (jsonObject.optBoolean("status")) {
-                            lifecycleScope.launch {
-                                withContext(Dispatchers.Main){ getMessage2(response.body()!!) }
-                                withContext(Dispatchers.IO){
-                                    MyPreferences.saveLastTimeForApiCall(this@MainActivity,Constant.getMessagesDatabaseId, System.currentTimeMillis())
-                                    ResponseDatabase.getInstance(this@MainActivity).responseDao().saveResponseJsonObject(ninja.cricks.roomDatabase.ResponseJsonObject(
-                                        (Constant.getMessagesDatabaseId),System.currentTimeMillis(),
-                                        response.body()!!
-                                    ))
-                                }
-                            }
-                        }
-                }
-            })
-    }
-
-    private fun getMessage2(resObje: JsonObject) {
-        resGetMessage.value = resObje
-    }
-
 
     private fun getWalletBalances() {
         val jsonRequest = JsonObject()

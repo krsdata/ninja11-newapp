@@ -108,19 +108,19 @@ xmlns:tools="http://schemas.android.com/tools">
             android:layout_height="45dp"
             android:layout_toEndOf="@id/txt_country_code"
             android:background="@drawable/et_phone_style"
+            android:fontFamily="@font/open_sans"
             android:gravity="center_vertical"
             android:hint="@string/enter_phone_number_here"
-            android:textColorHint="@color/gray_8ba6c1"
             android:inputType="phone"
             android:lineSpacingExtra="10sp"
+            android:maxLength="10"
             android:paddingStart="@dimen/_10sdp"
             android:paddingEnd="@dimen/_10sdp"
             android:textColor="@color/white"
-            android:textSize="14sp"
-            android:textStyle="normal"
-            android:maxLength="10"
+            android:textColorHint="@color/gray_8ba6c1"
             android:textCursorDrawable="@null"
-            android:fontFamily="@font/open_sans" />
+            android:textSize="14sp"
+            android:textStyle="normal" />
     </RelativeLayout>
 
 

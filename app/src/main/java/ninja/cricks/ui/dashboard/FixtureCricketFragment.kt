@@ -251,7 +251,7 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
     }
 
     override fun onRefresh() {
-        getAllMatches()
+        allContestsApiCall()
     }
 
     private fun showAlert(offerImage: String) {
