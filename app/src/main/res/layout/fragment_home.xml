@@ -19,7 +19,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:visibility="gone"
                 android:padding="@dimen/_5sdp">
 
                 <ImageView
@@ -52,7 +51,7 @@
             android:layout_marginRight="@dimen/_10sdp"
             android:background="@drawable/tab_layout_background"
             android:elevation="@dimen/_15sdp"
-            android:visibility="gone"
+            android:layout_below="@+id/message_card"
             app:tabBackground="@drawable/tab_layout_selector"
             app:tabIndicatorHeight="0dp"
             app:tabMode="fixed"
@@ -74,10 +73,10 @@
         <ninja.cricks.customviews.NoSwipeViewPager
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_below="@+id/tabs"
-            android:elevation="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_5sdp"
-            android:layout_height="match_parent" />
+            android:elevation="@dimen/_10sdp" />
 
     </RelativeLayout>
 </layout>
