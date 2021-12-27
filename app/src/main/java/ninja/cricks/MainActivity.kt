@@ -47,7 +47,7 @@ import retrofit2.Response
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
+class MainActivity : BaseActivity(), /*BottomNavigationView.OnNavigationItemSelectedListener,*/
     FragmentDrawer.FragmentDrawerListener {
 
     public var resGetMessage = MutableLiveData<JsonObject>()
@@ -100,7 +100,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
       //  getWalletBalances()
         setProfileData()
         updateCheckApk()
-        getMessage()
 
       ///  mBinding!!.navigation.setOnNavigationItemSelectedListener(this)
 
@@ -162,6 +161,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
             //setCount(ID_NOTIFICATION, "115")
 
+/*
             setOnShowListener {
                 val name = when (it.id) {
                     ID_HOME -> {
@@ -180,24 +180,43 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                         fragment = MoreOptionsFragment()
                         loadFragment()
                     }
+*/
 /*
                     temp_leaderboard -> {
                         startActivity(Intent(this@MainActivity,ContestLeaderBoardActivity::class.java))
                     }
-*/
+*//*
+
                     else -> ""
                 }
 
                 //xxtvSelected.text = getString(R.string.main_page_selected, name)
             }
+*/
 
             setOnClickMenuListener {
                 val name = when (it.id) {
-                    ID_HOME -> "HOME"
-                    ID_DASHBOARD -> "EXPLORE"
+                    ID_HOME -> {
+                        "HOME"
+                        fragment = HomeFragment()
+                        loadFragment()
+                    }
+                    ID_DASHBOARD -> {
+                        "EXPLORE"
+                        fragment = MyMatchesFragment()
+                        loadFragment()
+                    }
                     ID_PREDICT_WIN -> "MESSAGE"
-                    ID_NOTIFICATIONS -> "NOTIFICATION"
-                    ID_MY_ACCOUNT -> "ACCOUNT"
+                    ID_NOTIFICATIONS -> {
+                        "NOTIFICATION"
+                        fragment = MoreOptionsFragment()
+                        loadFragment()
+                    }
+                    ID_MY_ACCOUNT -> {
+                        "ACCOUNT"
+                        fragment = MyAccountFragment()
+                        loadFragment()
+                    }
                     else -> ""
                 }
             }
@@ -263,79 +282,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             startActivity(intent)
         }
     }
-
-    private fun getMessage() {
-        val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(this,
-            (Constant.getMessagesDatabaseId)
-        )
-        if (lastTimeApiCall!!+ Constant.delayApiSeconds < System.currentTimeMillis()) {
-            // if (activity != null && isAdded) {
-            getMessageApiCall()
-            //   }
-        }
-        else {
-            CoroutineScope(Dispatchers.IO).launch {
-                val value = ResponseDatabase.getInstance(this@MainActivity).responseDao().getResponseJsonObject(
-                    (Constant.getMessagesDatabaseId)
-                )
-
-                if (value != null && value.type == (Constant.getMessagesDatabaseId)){
-                    withContext(Dispatchers.Main){getMessage2(value.res)}
-                }
-                else {
-                    withContext(Dispatchers.Main){
-                            getMessageApiCall()
-                    }
-                }
-            }
-        }
-
-
-    }
-
-    private fun getMessageApiCall() {
-        if (!MyUtils.isConnectedWithInternet(this)) {
-            return
-        }
-
-        val jsonRequest = JsonObject()
-        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this))
-        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this))
-        jsonRequest.addProperty("version_code", BuildConfig.VERSION_CODE)
-
-        WebServiceClient(this).client.create(IApiMethod::class.java)
-            .getMessages(jsonRequest)
-            .enqueue(object : Callback<JsonObject?> {
-                override fun onFailure(call: Call<JsonObject?>?, t: Throwable?) {
-                    Log.d("api", "failed")
-                }
-
-                override fun onResponse(
-                    call: Call<JsonObject?>?,
-                    response: Response<JsonObject?>?
-                ) {
-                        val resObje = response!!.body().toString()
-                        val jsonObject = JSONObject(resObje)
-                        if (jsonObject.optBoolean("status")) {
-                            lifecycleScope.launch {
-                                withContext(Dispatchers.Main){ getMessage2(response.body()!!) }
-                                withContext(Dispatchers.IO){
-                                    MyPreferences.saveLastTimeForApiCall(this@MainActivity,Constant.getMessagesDatabaseId, System.currentTimeMillis())
-                                    ResponseDatabase.getInstance(this@MainActivity).responseDao().saveResponseJsonObject(ninja.cricks.roomDatabase.ResponseJsonObject(
-                                        (Constant.getMessagesDatabaseId),System.currentTimeMillis(),
-                                        response.body()!!
-                                    ))
-                                }
-                            }
-                        }
-                }
-            })
-    }
-
-    private fun getMessage2(resObje: JsonObject) {
-        resGetMessage.value = resObje
-    }
-
 
     private fun getWalletBalances() {
         val jsonRequest = JsonObject()
@@ -410,6 +356,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         return super.onOptionsItemSelected(item)
     }
 
+/*
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
             R.id.navigation_home -> {
@@ -422,11 +369,13 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                 loadFragment()
                 return true
             }
-            /*R.id.navigation_leader->{
+            */
+/*R.id.navigation_leader->{
                 fragment = GlobalLeaderBoardFragment()
                 loadFragment()
                 return true
-            }*/
+            }*//*
+
             R.id.navigation_myaccount -> {
                 fragment = MyAccountFragment()
                 loadFragment()
@@ -440,6 +389,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         }
         return false
     }
+*/
 
     private fun loadFragment() {
         if (fragment != null) {

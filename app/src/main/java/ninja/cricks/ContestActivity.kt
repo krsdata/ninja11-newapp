@@ -484,23 +484,23 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
                     if (values != null) {
                         val filteredValue: ArrayList<ContestModelLists> = ArrayList()
                         if (filter_text_2) {
-                            val j = values.filter { it.maxAllowedTeam <= 2 }
+                            val j = values.filter { it.totalSpots <= 2 }
                             filteredValue.addAll(j)
                         }
                         if (filter_text_3) {
-                            val j = values.filter { it.maxAllowedTeam >2 && it.maxAllowedTeam < 11 }
+                            val j = values.filter { it.totalSpots >2 && it.totalSpots < 11 }
                             filteredValue.addAll(j)
                         }
                         if (filter_text_11) {
-                            val j = values.filter { it.maxAllowedTeam >10 && it.maxAllowedTeam < 101 }
+                            val j = values.filter { it.totalSpots >10 && it.totalSpots < 101 }
                             filteredValue.addAll(j)
                         }
                         if (filter_text_101) {
-                            val j = values.filter { it.maxAllowedTeam >100 && it.maxAllowedTeam < 1001 }
+                            val j = values.filter { it.totalSpots >100 && it.totalSpots < 1001 }
                             filteredValue.addAll(j)
                         }
                         if (filter_text_1001) {
-                            val j = values.filter { it.maxAllowedTeam > 1000 }
+                            val j = values.filter { it.totalSpots > 1000 }
                             filteredValue.addAll(j)
                         }
                         tempContestList[i].allContestsRunning?.clear()

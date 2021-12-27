@@ -69,6 +69,13 @@ class MyContestFragment : Fragment() {
         objectMatches =
             arguments?.get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
         customProgressDialog = CustomProgressDialog2(activity)
+        parentFragmentManager.setFragmentResultListener(CreateTeamActivity.CREATETEAM_REQUESTCODE.toString(),this,
+            { s: String, bundle: Bundle ->
+                if (bundle.get(ContestActivity.SERIALIZABLE_KEY_CREATE_TEAM) == "result_ok") {
+                    allContestsApiCall()
+                }
+            })
+
         getMyJoinedContest()
 
     }
@@ -109,7 +116,7 @@ class MyContestFragment : Fragment() {
         }
 
         mBinding!!.mycontestRefresh.setOnRefreshListener {
-            getMyJoinedContest()
+            allContestsApiCall()
         }
     }
 

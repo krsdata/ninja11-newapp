@@ -205,6 +205,7 @@ class MyCompletedMatchesFragment : Fragment() {
             (activity as MainActivity).resCompletedMatchesCheckinArraylist.clear()
             checkinArrayList.addAll(responseModel.matchdatalist!!.get(0).completedMatchHistory!!)
             (activity as MainActivity).resCompletedMatchesCheckinArraylist.addAll(responseModel.matchdatalist!!.get(0).completedMatchHistory!!)
+            updateEmptyViews()
             adapter.notifyDataSetChanged()
         }
     }

@@ -198,6 +198,7 @@ class MyLiveMatchesFragment : Fragment() {
                 (requireActivity() as MainActivity).resLiveCheckinArraylist.clear()
                 checkInArrayList.addAll(responseModel.matchdatalist!![0].liveMatchHistory!!)
                 (activity as MainActivity).resLiveCheckinArraylist.addAll(responseModel.matchdatalist!![0].liveMatchHistory!!)
+                updateEmptyViews()
                 adapter.notifyDataSetChanged()
             }
         }

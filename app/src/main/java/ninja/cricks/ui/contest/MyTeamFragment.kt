@@ -60,9 +60,9 @@ class MyTeamFragment : Fragment() {
             requireArguments().get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
         customeProgressDialog = CustomProgressDialog2(activity)
         getMyTeam()
-        parentFragmentManager.setFragmentResultListener(CreateTeamActivity.CREATETEAM_REQUESTCODE1.toString(),this,
+        parentFragmentManager.setFragmentResultListener(CreateTeamActivity.CREATETEAM_REQUESTCODE.toString(),this,
             { s: String, bundle: Bundle ->
-                if (bundle.get(ContestActivity.SERIALIZABLE_KEY_CREATE_TEAM1) == "result_ok") {
+                if (bundle.get(ContestActivity.SERIALIZABLE_KEY_CREATE_TEAM) == "result_ok") {
                     getMyteamApiCall()
                 }
             })
@@ -96,10 +96,13 @@ class MyTeamFragment : Fragment() {
         mBinding!!.btnCreateTeam.setOnClickListener{
             val intent = Intent(activity, CreateTeamActivity::class.java)
             intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
-            startActivity(intent)
+            requireActivity().startActivityForResult(
+                intent,
+                CreateTeamActivity.CREATETEAM_REQUESTCODE
+            )
         }
         mBinding!!.myteamRefresh.setOnRefreshListener {
-            getMyTeam()
+            getMyteamApiCall()
         }
     }
 

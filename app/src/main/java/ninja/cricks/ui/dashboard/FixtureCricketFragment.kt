@@ -13,6 +13,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -23,8 +24,12 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.JsonObject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import ninja.cricks.Constant
 import ninja.cricks.MaintainanceActivity
-import ninja.cricks.NinjaApplication
 import ninja.cricks.R
 import ninja.cricks.adaptors.MatchesAdapter
 import ninja.cricks.databinding.FragmentAllGamesBinding
@@ -33,6 +38,7 @@ import ninja.cricks.models.MatchesModels
 import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
+import ninja.cricks.roomDatabase.ResponseDatabase
 import ninja.cricks.ui.BaseFragment
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
@@ -91,18 +97,15 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
 
         mBinding!!.allGameViewRecycler.layoutManager = linearLayoutManager
 
-        val upcomingmatchlist =
+        /*val upcomingmatchlist =
             (requireActivity().applicationContext as NinjaApplication).getUpcomingMatches
         if (upcomingmatchlist.size > 0) {
             allmatchesArrayList.clear()
             allmatchesArrayList.addAll(upcomingmatchlist)
-        }
+        }*/
         adapter = MatchesAdapter(requireActivity(), allmatchesArrayList)
         mBinding!!.allGameViewRecycler.adapter = adapter
-
-        if (NinjaApplication.lastApiCallForMatch + 120000 < System.currentTimeMillis()) {
-            getAllMatches()
-        }
+        getAllMatches()
     }
 
     private fun isValidRequest(): Boolean {
@@ -130,9 +133,33 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
     }
 
     private fun getAllMatches() {
+        val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(requireContext(), (Constant.getAllMatcesDatabaseId))
+        if (lastTimeApiCall!!+Constant.delayApiSeconds < System.currentTimeMillis()) {
+            allContestsApiCall()
+        }
+        else {
+            getAllContestFromDatabase()
+        }
+    }
+
+    private fun getAllContestFromDatabase() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val value = ResponseDatabase.getInstance(requireContext()).responseDao().getResponse(Constant.getAllMatcesDatabaseId)
+
+            if (value != null && value.type == Constant.getAllMatcesDatabaseId){
+                withContext(Dispatchers.Main){allContests(value.res)}
+            }
+            else {
+                withContext(Dispatchers.Main){allContestsApiCall()}
+            }
+        }
+
+    }
+
+    private fun allContestsApiCall() {
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             mBinding!!.swipeRefresh.isRefreshing = false
-
+            getAllContestFromDatabase()
             Snackbar.make(
                 requireActivity().findViewById(android.R.id.content),
                 "NO Internet Connection found!!",
@@ -179,21 +206,15 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
                                     logoutApp("Session Expired Please login again!!", false)
                                 } else {
                                     BindingUtils.currentTimeStamp = resObje.systemTime
-                                    NinjaApplication.lastApiCallForMatch = System.currentTimeMillis()
-                                    val responseObject = resObje.responseObject
-                                    val listofData =
-                                        responseObject!!.matchdatalist as ArrayList<MatchesModels>?
-                                    (requireActivity().applicationContext as NinjaApplication).saveUpcomingMatches(
-                                        listofData
-                                    )
-                                    if (listofData!!.size > 0) {
-                                        addAllList(listofData)
-                                        adapter.setMatchesList(allmatchesArrayList)
+                                    viewLifecycleOwner.lifecycleScope.launch {
+                                        withContext(Dispatchers.Main){allContests(resObje)}
+                                        withContext(Dispatchers.IO){
+                                            MyPreferences.saveLastTimeForApiCall(context!!,Constant.getAllMatcesDatabaseId, System.currentTimeMillis())
+                                            ResponseDatabase.getInstance(context!!).responseDao().saveResponse(ninja.cricks.roomDatabase.Response(
+                                                (Constant.getAllMatcesDatabaseId),System.currentTimeMillis(),resObje))
+                                        }
                                     }
-                                    val offerImage = resObje.offerImage
-                                    if (offerImage != "" && offerImage.contains("http")) {
-                                        showAlert(offerImage)
-                                    }
+
                                 }
                             } else {
                                 if (resObje.code == 1001) {
@@ -206,7 +227,21 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
                         }
                     updateEmptyViews()
                 }
-            })
+            })    }
+
+    private fun allContests(resObje: UsersPostDBResponse) {
+        val responseObject = resObje.responseObject
+        val listofData =
+            responseObject!!.matchdatalist as ArrayList<MatchesModels>?
+        if (listofData!!.size > 0) {
+            addAllList(listofData)
+            adapter.setMatchesList(allmatchesArrayList)
+        }
+        val offerImage = resObje.offerImage
+        if (offerImage != "" && offerImage.contains("http")) {
+            showAlert(offerImage)
+        }
+
     }
 
     private fun addAllList(userPostData: java.util.ArrayList<MatchesModels>) {
@@ -217,7 +252,7 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
     }
 
     override fun onRefresh() {
-        getAllMatches()
+        allContestsApiCall()
     }
 
     private fun showAlert(offerImage: String) {
