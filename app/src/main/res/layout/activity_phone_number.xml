@@ -11,7 +11,7 @@ xmlns:tools="http://schemas.android.com/tools">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent">
+    android:background="@color/theme_color_hdr">
 
     <ImageView
         android:id="@+id/close"
@@ -32,7 +32,7 @@ xmlns:tools="http://schemas.android.com/tools">
         android:textColor="#ffffff"
         android:textSize="16sp"
         android:textStyle="normal"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="droidsans"
         app:layout_constraintBottom_toBottomOf="@+id/close"
         app:layout_constraintEnd_toEndOf="@id/imageView5"
         app:layout_constraintStart_toStartOf="@id/imageView5"
@@ -59,7 +59,7 @@ xmlns:tools="http://schemas.android.com/tools">
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="normal"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="droidsans"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
@@ -74,7 +74,7 @@ xmlns:tools="http://schemas.android.com/tools">
         android:textColor="@color/white"
         android:textSize="13sp"
         android:textStyle="normal"
-        android:fontFamily="@font/open_sans"
+        android:fontFamily="droidsans"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +99,7 @@ xmlns:tools="http://schemas.android.com/tools">
             android:gravity="center"
             android:text="+91"
             android:textColor="@color/white"
-            android:fontFamily="@font/open_sans"
+            android:fontFamily="droidsans"
             android:textSize="14sp" />
 
         <EditText
@@ -108,19 +108,19 @@ xmlns:tools="http://schemas.android.com/tools">
             android:layout_height="45dp"
             android:layout_toEndOf="@id/txt_country_code"
             android:background="@drawable/et_phone_style"
-            android:fontFamily="@font/open_sans"
             android:gravity="center_vertical"
             android:hint="@string/enter_phone_number_here"
+            android:textColorHint="@color/white"
             android:inputType="phone"
             android:lineSpacingExtra="10sp"
-            android:maxLength="10"
             android:paddingStart="@dimen/_10sdp"
             android:paddingEnd="@dimen/_10sdp"
             android:textColor="@color/white"
-            android:textColorHint="@color/gray_8ba6c1"
-            android:textCursorDrawable="@null"
             android:textSize="14sp"
-            android:textStyle="normal" />
+            android:textStyle="normal"
+            android:maxLength="10"
+            android:textCursorDrawable="@null"
+            android:fontFamily="droidsans" />
     </RelativeLayout>
 
 
@@ -132,6 +132,7 @@ xmlns:tools="http://schemas.android.com/tools">
         android:background="@drawable/ractangle_curve_bg"
         android:backgroundTint="@color/white"
         android:textColor="#333434"
+        android:padding="@dimen/_5sdp"
         android:textStyle="normal"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"

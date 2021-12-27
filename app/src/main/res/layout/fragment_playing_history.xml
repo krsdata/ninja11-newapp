@@ -34,7 +34,7 @@
                                 android:textSize="16sp"
                                 android:textColor="@color/black"
                                 android:lineSpacingExtra="6sp"
-                                android:fontFamily="@font/open_sans_semibold"
+                                android:fontFamily="droidsans"
                                 />
             </LinearLayout>
 
@@ -83,7 +83,7 @@
                                 android:textSize="16sp"
                                 android:textColor="@color/black"
                                 android:lineSpacingExtra="6sp"
-                                android:fontFamily="@font/open_sans_semibold"
+                                android:fontFamily="droidsans"
                                 />
                             <TextView
                                 android:layout_width="wrap_content"
@@ -92,7 +92,7 @@
                                 android:textSize="10sp"
                                 android:textColor="@color/black"
                                 android:lineSpacingExtra="7sp"
-                                android:fontFamily="@font/open_sans_light"
+                                android:fontFamily="droidsans"
                                 />
 
                         </LinearLayout>
@@ -137,7 +137,7 @@
                                 android:text="0"
                                 android:textSize="16sp"
                                 android:textColor="@color/black"
-                                android:fontFamily="@font/open_sans_semibold"
+                                android:fontFamily="droidsans"
                                 />
                             <TextView
                                 android:layout_width="wrap_content"
@@ -145,7 +145,7 @@
                                 android:text="Contest Played"
                                 android:textSize="10sp"
                                 android:textColor="@color/black"
-                                android:fontFamily="@font/open_sans_light"
+                                android:fontFamily="droidsans"
                                 />
 
                         </LinearLayout>
@@ -199,7 +199,7 @@
                                 android:textSize="16sp"
                                 android:textColor="@color/black"
                                 android:lineSpacingExtra="6sp"
-                                android:fontFamily="@font/open_sans_semibold"
+                                android:fontFamily="droidsans"
                                 />
                             <TextView
                                 android:layout_width="wrap_content"
@@ -208,7 +208,7 @@
                                 android:textSize="10sp"
                                 android:textColor="@color/black"
                                 android:lineSpacingExtra="7sp"
-                                android:fontFamily="@font/open_sans_light"
+                                android:fontFamily="droidsans"
                                 />
 
                         </LinearLayout>
@@ -253,7 +253,7 @@
                                 android:text="0.0"
                                 android:textSize="16sp"
                                 android:textColor="@color/black"
-                                android:fontFamily="@font/open_sans_semibold"
+                                android:fontFamily="droidsans"
                                 />
                             <TextView
                                 android:layout_width="wrap_content"
@@ -261,7 +261,7 @@
                                 android:text="Total Winning"
                                 android:textSize="10sp"
                                 android:textColor="@color/black"
-                                android:fontFamily="@font/open_sans_light"
+                                android:fontFamily="droidsans"
                                 />
 
                         </LinearLayout>
@@ -315,7 +315,7 @@
                                 android:textSize="16sp"
                                 android:textColor="@color/black"
                                 android:lineSpacingExtra="6sp"
-                                android:fontFamily="@font/open_sans_semibold"
+                                android:fontFamily="droidsans"
                                 />
                             <TextView
                                 android:layout_width="wrap_content"
@@ -324,7 +324,7 @@
                                 android:textSize="10sp"
                                 android:textColor="@color/black"
                                 android:lineSpacingExtra="7sp"
-                                android:fontFamily="@font/open_sans_light"
+                                android:fontFamily="droidsans"
                                 />
 
                         </LinearLayout>
@@ -370,14 +370,14 @@
                                 android:text="0.0"
                                 android:textSize="16sp"
                                 android:textColor="@color/black"
-                                android:fontFamily="@font/open_sans_semibold" />
+                                android:fontFamily="droidsans" />
                             <!--<TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Total Withdraw"
                                 android:textSize="10sp"
                                 android:textColor="@color/black"
-                                android:fontFamily="@font/open_sans_light"
+                                android:fontFamily="droidsans"
                                 />-->
                             <TextView
                                 android:layout_width="wrap_content"
@@ -385,7 +385,7 @@
                                 android:text="Total Withdraw"
                                 android:textSize="10sp"
                                 android:textColor="@color/black"
-                                android:fontFamily="@font/open_sans_light"
+                                android:fontFamily="droidsans"
                                 />
 
 

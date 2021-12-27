@@ -62,7 +62,7 @@
                     android:layout_marginTop="20dp"
                     android:text="YOU HAVE NOT REFFERED WITH ANY FRIENDS"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/montserrat_bold"/>
+                    android:fontFamily="droidsans"/>
 
                 <Button
                     android:id="@+id/reffer_now_button"

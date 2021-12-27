@@ -97,6 +97,7 @@ class WebServiceClient(val context: Context) {
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(okHttpClient)
                     .build()
+                //Toast.makeText(context,"api call", Toast.LENGTH_SHORT).show()
             }
             return retrofit!!
         }

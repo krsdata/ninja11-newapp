@@ -18,7 +18,7 @@
           android:id="@+id/team_name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:fontFamily="@font/open_sans_light"
+          android:fontFamily="droidsans"
           android:text="EXODUSX1(T1)"
           android:textColor="@color/black"
           android:textSize="16sp" />
@@ -29,7 +29,7 @@
           android:layout_height="wrap_content"
           android:text="You Won $35"
           android:textColor="@color/green"
-          android:fontFamily="@font/montserrat_medium"
+          android:fontFamily="droidsans"
           android:textSize="14sp"/>
    </LinearLayout>
 
@@ -47,7 +47,7 @@
           android:text="804"
           android:gravity="center"
           android:textColor="@color/black"
-          android:fontFamily="@font/open_sans_light"
+          android:fontFamily="droidsans"
           android:textSize="16sp"/>
 
       <TextView
@@ -58,7 +58,7 @@
           android:layout_height="wrap_content"
           android:text="#1"
           android:textColor="@color/black"
-          android:fontFamily="@font/montserrat_medium"
+          android:fontFamily="droidsans"
           android:textSize="14sp"/>
    </LinearLayout>
 

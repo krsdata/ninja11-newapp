@@ -35,7 +35,7 @@
                     android:id="@+id/total_team_counts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_regular"
+                    android:fontFamily="droidsans"
                     android:text="ALL TEAMS (6689)"
                     android:textColor="@color/greyish"
                     android:textSize="@dimen/_10sdp" />
@@ -55,7 +55,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:fontFamily="@font/montserrat_regular"
+                    android:fontFamily="droidsans"
                     android:text="Points"
                     android:textColor="@color/greyish"
                     android:textSize="@dimen/_10sdp" />
@@ -72,7 +72,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:fontFamily="@font/montserrat_regular"
+                        android:fontFamily="droidsans"
                         android:gravity="right"
                         android:text="RANK"
                         android:textColor="@color/greyish"

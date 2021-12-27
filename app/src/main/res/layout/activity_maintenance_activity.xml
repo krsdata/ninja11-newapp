@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:textSize="18sp"
-            android:fontFamily="@font/montserrat_regular"
+            android:fontFamily="droidsans"
             android:gravity="center"
             android:padding="10px"
             android:layout_marginBottom="35dp"

@@ -12,11 +12,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/matches_view_left_margin_consolidated"
-        android:fontFamily="@font/montserrat_bold"
         android:text="MY MATCHES"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:textColor="@color/black"
+        android:fontFamily="droidsans"
+        android:textStyle="bold"
         android:textSize="@dimen/header_size" />
 
     <TextView
@@ -24,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/matches_view_left_margin_consolidated"
-        android:fontFamily="@font/montserrat_bold"
+        android:fontFamily="droidsans"
         android:text="View All"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"

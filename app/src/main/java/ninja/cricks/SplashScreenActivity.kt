@@ -77,18 +77,18 @@ class SplashScreenActivity : BaseActivity() {
             if (splashScreen.contains(".gif")) {
                 Glide.with(mContext).asGif()
                     .load(splashScreen)
-                    .placeholder(R.drawable.splash_ninja_red_new)
+                    .placeholder(R.drawable.splash)
                     .into(mBinding!!.splashView)
             } else {
                 Glide.with(mContext)
                     .load(splashScreen)
-                    .placeholder(R.drawable.splash_ninja_red_new)
+                    .placeholder(R.drawable.splash)
                     .into(mBinding!!.splashView)
             }
         } else {
             Glide.with(mContext)
-                .load(R.drawable.splash_ninja_red_new)
-                .placeholder(R.drawable.splash_ninja_red_new)
+                .load(R.drawable.splash)
+                .placeholder(R.drawable.splash)
                 .into(mBinding!!.splashView)
         }
 

@@ -54,7 +54,7 @@
                                     android:layout_height="0dp"
                                     android:layout_marginStart="@dimen/_5sdp"
                                     android:layout_weight="1"
-                                    android:fontFamily="@font/open_sans_semibold"
+                                    android:fontFamily="droidsans"
                                     android:text=""
                                     android:textColor="@color/colorPrimary"
                                     android:textSize="@dimen/_10sdp" />
@@ -65,7 +65,7 @@
                                     android:layout_height="0dp"
                                     android:layout_marginStart="@dimen/_5sdp"
                                     android:layout_weight="1"
-                                    android:fontFamily="@font/open_sans_semibold"
+                                    android:fontFamily="droidsans"
                                     android:text=""
                                     android:textColor="@color/colorPrimary"
                                     android:textSize="@dimen/_10sdp" />
@@ -140,7 +140,7 @@
                                 android:id="@+id/total_balance"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans_semibold"
+                                android:fontFamily="droidsans"
                                 android:maxLines="1"
                                 android:singleLine="true"
                                 android:text="₹ 0.0"
@@ -150,7 +150,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans_light"
+                                android:fontFamily="droidsans"
                                 android:text="Total Balance"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_10sdp" />
@@ -169,6 +169,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:padding="@dimen/_10sdp">
 
                         <ImageView
@@ -190,7 +191,7 @@
                                 android:id="@+id/earned_points"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans_semibold"
+                                android:fontFamily="droidsans"
                                 android:text="0"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
@@ -199,7 +200,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_5sdp"
-                                android:fontFamily="@font/open_sans_light"
+                                android:fontFamily="droidsans"
                                 android:text="Reward points are automatically redeemed after 2000 points."
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_10sdp" />
@@ -207,7 +208,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans_light"
+                                android:fontFamily="droidsans"
                                 android:text="@string/my_reward_points"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_10sdp" />
@@ -248,7 +249,7 @@
                                 android:id="@+id/added_amount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans_semibold"
+                                android:fontFamily="droidsans"
                                 android:text="₹0.0"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
@@ -256,7 +257,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans_light"
+                                android:fontFamily="droidsans"
                                 android:text="My Deposit"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_10sdp" />
@@ -317,7 +318,7 @@
                                 android:id="@+id/winning_amount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans_semibold"
+                                android:fontFamily="droidsans"
                                 android:text="₹0.0"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
@@ -325,7 +326,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans_light"
+                                android:fontFamily="droidsans"
                                 android:text="My Winnings"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_10sdp" />
@@ -411,7 +412,7 @@
                                 android:id="@+id/cash_bonus"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans_semibold"
+                                android:fontFamily="droidsans"
                                 android:maxLines="1"
                                 android:singleLine="true"
                                 android:text="₹ 0.0"
@@ -421,7 +422,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans_light"
+                                android:fontFamily="droidsans"
                                 android:text="Cash Bonus"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_10sdp" />
@@ -463,7 +464,7 @@
                                 android:id="@+id/extra_cash_bonus"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans_semibold"
+                                android:fontFamily="droidsans"
                                 android:maxLines="1"
                                 android:singleLine="true"
                                 android:text="₹ 0.0"
@@ -473,7 +474,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans_light"
+                                android:fontFamily="droidsans"
                                 android:text="Extra Cash"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_10sdp" />
@@ -522,7 +523,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/open_sans_semibold"
+                                    android:fontFamily="droidsans"
                                     android:text="You have referred"
                                     android:textColor="@color/black"
                                     android:textSize="14sp" />
@@ -538,7 +539,7 @@
                                         android:id="@+id/friends_counts"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:fontFamily="@font/open_sans_semibold"
+                                        android:fontFamily="droidsans"
                                         android:text="0"
                                         android:textColor="@color/black"
                                         android:textSize="@dimen/_13sdp" />
@@ -546,7 +547,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:fontFamily="@font/open_sans"
+                                        android:fontFamily="droidsans"
                                         android:text=" Friends"
                                         android:textColor="@color/black"
                                         android:textSize="@dimen/_11sdp" />
@@ -562,7 +563,7 @@
                                         android:id="@+id/earning_refferal"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:fontFamily="@font/open_sans_semibold"
+                                        android:fontFamily="droidsans"
                                         android:text="0"
                                         android:textColor="@color/black"
                                         android:textSize="22sp" />
@@ -570,7 +571,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:fontFamily="@font/open_sans"
+                                        android:fontFamily="droidsans"
                                         android:text=" Earned"
                                         android:textColor="@color/black"
                                         android:textSize="14sp" />
@@ -579,7 +580,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/open_sans_light"
+                                    android:fontFamily="droidsans"
                                     android:text="Earn and Play Matches"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/_10sdp"

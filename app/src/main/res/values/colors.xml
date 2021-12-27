@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#0172AC</color>
-    <color name="colorPrimaryDark">#0172AC</color>
-    <color name="colorAccent">#0172AC</color>
+    <color name="colorPrimary">#CB0016</color>
+    <color name="colorPrimaryDark">#CB0016</color>
+    <color name="colorAccent">#CB0016</color>
+    <color name="colorAccent2">#0172AC</color>
 
-    <color name="theme_color">#0172AC</color>
+
+
+    <color name="theme_color_hdr">#24292f</color>
+
+
     <color name="notification">#c61d24</color>
 
     <!-- 0172AC Here you can add color of your choice  -->
@@ -20,7 +25,7 @@
 
     <color name="player_bg_dark_red">#D84728</color>
     <color name="player_bg_dark_yellow">#00203A</color>
-    <color name="player_seelction_color_shade">@color/player_bg_dark_yellow</color>
+    <color name="player_seelction_color_shade">#008000</color>
     <color name="color_website">#00203A</color>
     <color name="button_material_light">#ffd6d7d7</color>
     <color name="light_grey_bg">#F7F4F4</color>
