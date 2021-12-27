@@ -262,6 +262,7 @@ class MyTeamFragment : Fragment() {
                 (activity as ContestActivity).responseMyTeamList.clear()
                 (activity as ContestActivity).responseMyTeamList.addAll(responseModel.myTeamList!!)
                 myTeamArrayList.addAll(responseModel.myTeamList!!)
+                updateEmptyViews()
                 adapter.notifyDataSetChanged()
                 mListener.onMyTeam(myTeamArrayList)
             }

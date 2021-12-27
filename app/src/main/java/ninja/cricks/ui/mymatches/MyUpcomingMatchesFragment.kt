@@ -221,6 +221,7 @@ class MyUpcomingMatchesFragment : Fragment() {
                     0
                 ).upcomingMatchHistory!!
             )
+            updateEmptyViews()
             adapter.notifyDataSetChanged()
         }
     }

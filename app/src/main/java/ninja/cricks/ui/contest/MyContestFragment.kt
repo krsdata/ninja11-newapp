@@ -255,6 +255,7 @@ class MyContestFragment : Fragment() {
                 (activity as ContestActivity).responseMyJoinedContest.addAll(responseModel.myJoinedContest!!)
                 checkinArrayList.addAll((activity as ContestActivity).responseMyJoinedContest)
                 mListener.onMyContest(checkinArrayList)
+                updateEmptyViews()
                 adapter.notifyDataSetChanged()
             }
         }
