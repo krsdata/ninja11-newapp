@@ -382,9 +382,9 @@ class ContestFragment : Fragment() {
         if ((activity as ContestActivity).filteredAllContestListData.isNotEmpty()) {
             allContest((activity as ContestActivity).filteredAllContestListData)
         }
-        else if (mBinding != null) {
-            mBinding!!.linearEmptyContest.visibility = View.VISIBLE
-        }
+//        else if (mBinding != null) {
+//            mBinding!!.linearEmptyContest.visibility = View.VISIBLE
+//        }
         //pos = 0
         Log.e(TAG, "pos =======> $pos")
 //        for (i in filterArrayList.indices) {
@@ -554,27 +554,27 @@ class ContestFragment : Fragment() {
             val model = ContestCategoryModel("All Contest", true)
             filterArrayList.add(model)
 
-            for (i in resAllContestList.indices) {
-                val categoryModel = ContestCategoryModel(
-                    resAllContestList[i].contestTitle,
-                    false
-                )
-                filterArrayList.add(categoryModel)
-                if (!(activity as ContestActivity).filterTitleArray.contains(FilterChipModel(resAllContestList[i].contestTitle, false)) && !(activity as ContestActivity).filterTitleArray.contains(FilterChipModel(resAllContestList[i].contestTitle, true))) {
-                    (activity as ContestActivity).filterTitleArray.add(FilterChipModel(resAllContestList[i].contestTitle, false))
-                }
-
+        for (i in resAllContestList.indices) {
+            val categoryModel = ContestCategoryModel(
+                resAllContestList[i].contestTitle,
+                false
+            )
+            filterArrayList.add(categoryModel)
+            if (!(activity as ContestActivity).filterTitleArray.contains(FilterChipModel(resAllContestList[i].contestTitle, false)) && !(activity as ContestActivity).filterTitleArray.contains(FilterChipModel(resAllContestList[i].contestTitle, true))) {
+                (activity as ContestActivity).filterTitleArray.add(FilterChipModel(resAllContestList[i].contestTitle, false))
             }
 
-            Log.e(TAG, "pos =======> $pos")
-            updateContestData(pos,resAllContestList)
-            /*for (i in filterArrayList.indices) {
-                filterArrayList[i].isStatus = pos == i
-            }
+        }
 
-            filterAdapter.updateRecord(filterArrayList)*/
+        Log.e(TAG, "pos =======> $pos")
+        /*for (i in filterArrayList.indices) {
+            filterArrayList[i].isStatus = pos == i
+        }
 
-            adapter.setMatchesList(resAllContestList)
+        filterAdapter.updateRecord(filterArrayList)*/
+
+        adapter.setMatchesList(resAllContestList)
+        updateContestData(pos,resAllContestList)
     }
 
     fun updateEmptyViews() {
@@ -734,7 +734,7 @@ class ContestFragment : Fragment() {
                                     (activity as ContestActivity).allContestListData.addAll(responseModel.matchContestlist!!)
                                     filterArrayList.clear()
 
-                                    val model = ContestCategoryModel("All Contest", false)
+                                    val model = ContestCategoryModel("All", false)
                                     filterArrayList.add(model)
 
                                     val actualPosition = pos - 1
