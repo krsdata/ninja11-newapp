@@ -72,7 +72,7 @@
                         android:id="@+id/edit_team_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="droidsans"
+                        android:fontFamily="open_sans"
                         android:hint="Team Name (Nick Name)"
                         android:clickable="false"
                         android:editable="false"
@@ -98,7 +98,7 @@
                         android:id="@+id/update_profile_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="droidsans"
+                        android:fontFamily="open_sans"
                         android:hint="Name"
                         android:maxLines="0"
                         android:singleLine="true"
@@ -123,7 +123,7 @@
                         android:editable="false"
                         android:enabled="false"
                         android:focusable="false"
-                        android:fontFamily="droidsans"
+                        android:fontFamily="open_sans"
                         android:hint="Email"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/text_view_color"
@@ -259,6 +259,7 @@
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:background="@drawable/rounded_corner_filled_blue"
                     android:text="Update Profile"
+
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_14sdp" />
@@ -269,6 +270,7 @@
             android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:indeterminateTint="@color/theme_color_hdr"
             android:layout_centerInParent="true"
             android:indeterminate="true"
             android:visibility="gone" />

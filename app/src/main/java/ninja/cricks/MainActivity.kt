@@ -5,6 +5,7 @@ import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -77,6 +78,7 @@ class MainActivity : BaseActivity(), /*BottomNavigationView.OnNavigationItemSele
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.SecondryTheme)
         mBinding = DataBindingUtil.setContentView(
             this,
             R.layout.activity_main
@@ -95,6 +97,11 @@ class MainActivity : BaseActivity(), /*BottomNavigationView.OnNavigationItemSele
         mBinding!!.notificationId.setOnClickListener {
             val intent = Intent(mContext, NotificationListActivity::class.java)
             startActivityForResult(intent, MyBalanceActivity.REQUEST_CODE_ADD_MONEY)
+        }
+
+        mBinding!!.telegramPage.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(BindingUtils.TELEGRAM_LINK))
+            startActivity(intent)
         }
 
       //  getWalletBalances()

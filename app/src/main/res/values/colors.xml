@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Primary theme colors -->
     <color name="colorPrimary">#CB0016</color>
-    <color name="colorPrimaryDark">#CB0016</color>
+    <color name="colorPrimaryDark">#24292f</color>
     <color name="colorAccent">#CB0016</color>
+
+    <!-- Secondry theme colors -->
+    <color name="colorSecond">#CB0016</color>
+    <color name="colorSecondDark">#CB0016</color>
+    <color name="colorSecondAccent">#CB0016</color>
+
+
     <color name="colorAccent2">#0172AC</color>
 
 

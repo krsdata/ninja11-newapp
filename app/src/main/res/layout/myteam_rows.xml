@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/_120sdp"
-        android:padding="@dimen/_5sdp"
+        android:padding="@dimen/_3sdp"
         android:background="@drawable/myteam"
         android:orientation="vertical">
 
@@ -28,7 +28,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:fontFamily="droidsans"
+                android:fontFamily="open_sans"
                 android:gravity="center_vertical"
                 android:text="TEAMA(T1)"
                 android:textColor="@color/white"
@@ -103,7 +103,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:maxLength="4"
                             android:maxLines="1"
                             android:text="SL"
@@ -115,7 +115,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:text="5"
                             android:textColor="@color/white"
                             android:textSize="14sp" />
@@ -134,7 +134,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:maxLength="4"
                             android:maxLines="1"
                             android:text="IND"
@@ -146,7 +146,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:text="6"
                             android:textColor="@color/white"
                             android:textSize="14sp" />
@@ -165,7 +165,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="droidsans"
+                        android:fontFamily="open_sans"
                         android:text="POINTS"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_10sdp" />
@@ -175,7 +175,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="droidsans"
+                        android:fontFamily="open_sans"
                         android:text="300"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_13sdp" />
@@ -223,7 +223,7 @@
                     android:layout_width="@dimen/_18sdp"
                     android:layout_height="@dimen/_18sdp"
                     android:background="@drawable/circle_black"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:text="C"
                     android:textColor="@color/white"
@@ -272,7 +272,7 @@
                     android:layout_width="@dimen/_18sdp"
                     android:layout_height="@dimen/_18sdp"
                     android:background="@drawable/circle_black"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:text="VC"
                     android:textColor="@color/white"
@@ -288,22 +288,22 @@
             android:baselineAligned="false"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/_8sdp"
-            android:paddingRight="@dimen/_8sdp">
+            android:paddingLeft="@dimen/_4sdp"
+            android:paddingRight="@dimen/_4sdp">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/_8sdp"
-                android:paddingRight="@dimen/_8sdp">
+                android:paddingLeft="@dimen/_4sdp"
+                android:paddingRight="@dimen/_4sdp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:text="WK"
                     android:textColor="@color/black"
                     android:textSize="10sp" />
@@ -314,7 +314,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/_8sdp"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:text="2"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -333,7 +333,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:text="BAT"
                     android:textColor="@color/black"
                     android:textSize="10sp" />
@@ -344,7 +344,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/_8sdp"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:text="6"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -363,7 +363,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:text="ALL"
                     android:textColor="@color/black"
                     android:textSize="10sp" />
@@ -374,7 +374,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/_8sdp"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:text="4"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -393,7 +393,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:text="BOWL"
                     android:textColor="@color/black"
                     android:textSize="10sp" />
@@ -404,7 +404,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/_8sdp"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:text="4"
                     android:textColor="@color/black"
                     android:textSize="16sp" />

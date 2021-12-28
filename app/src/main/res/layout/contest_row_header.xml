@@ -24,7 +24,7 @@
                 android:id="@+id/contest_icon_text"
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="match_parent"
-                android:fontFamily="droidsans"
+                android:fontFamily="open_sans"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_25sdp" />
@@ -49,17 +49,18 @@
                 android:id="@+id/contest_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto"
+                android:fontFamily="@font/open_sans_semibold"
+                android:elevation="@dimen/_5sdp"
                 android:text="Mega Contest"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/red"
                 android:textStyle="bold"
-                android:textSize= "@dimen/_13sdp" />
+                android:textSize= "@dimen/_15sdp" />
 
             <TextView
                 android:id="@+id/contest_sub_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto"
+                android:fontFamily="@font/open_sans"
                 android:text="Get ready for mega winning!!"
                 android:textColor="@color/greyish"
                 android:textSize="@dimen/small_info_size" />
@@ -86,7 +87,7 @@
             android:layout_gravity="end"
             android:layout_marginEnd="@dimen/_20sdp"
             android:layout_toStartOf="@+id/image_more"
-            android:fontFamily="droidsans"
+            android:fontFamily="open_sans"
             android:gravity="center"
             android:paddingStart="@dimen/_10sdp"
             android:paddingEnd="@dimen/_10sdp"

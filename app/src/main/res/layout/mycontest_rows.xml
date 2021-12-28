@@ -25,7 +25,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="droidsans"
+                android:fontFamily="open_sans"
                 android:text="Share this contest with your friends"
                 android:textColor="@color/black"
                 android:textSize="@dimen/small_info_size" />
@@ -47,7 +47,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="droidsans"
+                android:fontFamily="open_sans"
                 android:text="Prize Pool"
                 android:textColor="@color/black"
                 android:textSize="@dimen/small_info_size" />
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:fontFamily="droidsans"
+                android:fontFamily="open_sans"
                 android:text="Entry"
                 android:textColor="@color/black" />
         </RelativeLayout>
@@ -82,7 +82,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dip"
 
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:text="Rs 50 LAKHS"
                     android:textColor="@color/black"
                     android:textSize="@dimen/header_size"
@@ -131,6 +131,7 @@
                 android:id="@+id/contest_progress"
                 android:layout_width="match_parent"
                 android:layout_height="6dp"
+                android:indeterminateTint="@color/theme_color_hdr"
                 android:indeterminateDrawable="@android:drawable/progress_indeterminate_horizontal"
                 android:indeterminateOnly="false"
                 android:progressDrawable="@drawable/progressbar_inderminate" />
@@ -145,7 +146,7 @@
                     android:id="@+id/total_spot_left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:text="1,979 spots left"
                     android:textColor="@color/error_color_material_dark"
                     android:textSize="13dp"
@@ -157,7 +158,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:text="50,000 spots"
                     android:textColor="@color/error_color_material_dark"
                     android:textSize="13dp" />
@@ -188,7 +189,7 @@
                 <ImageView
                     android:layout_width="18dp"
                     android:layout_height="18dp"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:scaleType="centerInside"
                     android:src="@drawable/trophy_first_pos" />
@@ -198,7 +199,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_3sdp"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:text="₹5 Lakh"
                     android:textSize="@dimen/_8sdp" />

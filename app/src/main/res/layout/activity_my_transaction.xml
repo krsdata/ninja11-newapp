@@ -42,6 +42,7 @@
                  android:id="@+id/progress_bar"
                  android:layout_width="30dp"
                  android:layout_height="30dp"
+                 android:indeterminateTint="@color/theme_color_hdr"
                  android:layout_centerInParent="true"/>
 
              <TextView

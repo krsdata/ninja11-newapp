@@ -13,19 +13,20 @@
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/grey_lighter_dense"
+            android:background="@color/white_transperent"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/colorPrimaryDark"
+                android:background="@color/colorSecondDark"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark"
                 app:popupTheme="@style/AppTheme" />
@@ -35,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_marginStart="@dimen/_12sdp"
-                android:background="@color/colorPrimaryDark"
+                android:background="@color/colorSecondDark"
                 android:layout_marginEnd="@dimen/_12sdp">
 
                 <ImageView
@@ -73,7 +74,17 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:src="@drawable/ic_notifications_black_24dp"
-                    android:visibility="visible"
+                    android:visibility="gone"
+                    app:tint="@color/white" />
+
+                <ImageView
+                    android:id="@+id/telegramPage"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/telegram_icon_new"
+                    android:padding="@dimen/_5sdp"
                     app:tint="@color/white" />
             </RelativeLayout>
 
@@ -100,8 +111,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="bottom"
-                app:mbn_backgroundBottomColor="@color/colorPrimary"
-                app:mbn_circleColor="@color/colorPrimary"
+                app:mbn_backgroundBottomColor="@color/colorSecond"
+                app:mbn_circleColor="@color/accent_material_light"
                 app:mbn_countBackgroundColor="@color/white"
                 app:mbn_countTextColor="@color/white"
                 app:mbn_defaultIconColor="@color/white"

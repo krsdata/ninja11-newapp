@@ -32,7 +32,7 @@ xmlns:tools="http://schemas.android.com/tools">
         android:textColor="#ffffff"
         android:textSize="16sp"
         android:textStyle="normal"
-        android:fontFamily="droidsans"
+        android:fontFamily="open_sans"
         app:layout_constraintBottom_toBottomOf="@+id/close"
         app:layout_constraintEnd_toEndOf="@id/imageView5"
         app:layout_constraintStart_toStartOf="@id/imageView5"
@@ -59,7 +59,7 @@ xmlns:tools="http://schemas.android.com/tools">
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="normal"
-        android:fontFamily="droidsans"
+        android:fontFamily="open_sans"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
@@ -74,7 +74,7 @@ xmlns:tools="http://schemas.android.com/tools">
         android:textColor="@color/white"
         android:textSize="13sp"
         android:textStyle="normal"
-        android:fontFamily="droidsans"
+        android:fontFamily="open_sans"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +99,7 @@ xmlns:tools="http://schemas.android.com/tools">
             android:gravity="center"
             android:text="+91"
             android:textColor="@color/white"
-            android:fontFamily="droidsans"
+            android:fontFamily="open_sans"
             android:textSize="14sp" />
 
         <EditText
@@ -120,7 +120,7 @@ xmlns:tools="http://schemas.android.com/tools">
             android:textStyle="normal"
             android:maxLength="10"
             android:textCursorDrawable="@null"
-            android:fontFamily="droidsans" />
+            android:fontFamily="open_sans" />
     </RelativeLayout>
 
 

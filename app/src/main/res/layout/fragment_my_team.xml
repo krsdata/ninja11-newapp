@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/default_rounded_button_sportsfight"
-                android:fontFamily="droidsans"
+                android:fontFamily="open_sans"
                 android:padding="10dp"
                 android:text="CREATE A TEAM"
                 android:textColor="@color/white"
@@ -68,6 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:indeterminateTint="@color/theme_color_hdr"
             android:visibility="gone"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

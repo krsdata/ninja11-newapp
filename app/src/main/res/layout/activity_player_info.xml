@@ -93,7 +93,7 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginEnd="@dimen/_10sdp"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:ellipsize="end"
                             android:gravity="center"
                             android:text="MSD"
@@ -129,7 +129,7 @@
                                 android:layout_gravity="center"
                                 android:ellipsize="end"
                                 android:gravity="center"
-                                android:fontFamily="droidsans"
+                                android:fontFamily="open_sans"
                                 android:text="Credits"
                                 android:textColor="@color/grey"
                                 android:textSize="@dimen/_13sdp"/>
@@ -141,7 +141,7 @@
                                 android:layout_gravity="center"
                                 android:ellipsize="end"
                                 android:gravity="center"
-                                android:fontFamily="droidsans"
+                                android:fontFamily="open_sans"
                                 android:text=""
                                 android:textColor="@color/grey"
                                 android:textSize="@dimen/_13sdp" />
@@ -167,7 +167,7 @@
                                 android:layout_gravity="center"
                                 android:ellipsize="end"
                                 android:gravity="center"
-                                android:fontFamily="droidsans"
+                                android:fontFamily="open_sans"
                                 android:text="Total Points"
                                 android:textColor="@color/grey"
                                 android:textSize="@dimen/_13sdp" />
@@ -179,7 +179,7 @@
                                 android:layout_gravity="center"
                                 android:ellipsize="end"
                                 android:gravity="center"
-                                android:fontFamily="droidsans"
+                                android:fontFamily="open_sans"
                                 android:text=""
                                 android:textColor="@color/grey"
                                 android:textSize="@dimen/_13sdp" />
@@ -217,7 +217,7 @@
                             android:layout_gravity="center"
                             android:ellipsize="end"
                             android:gravity="center|start"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:text="Role"
                             android:textColor="@color/grand_league"
                             android:textSize="@dimen/_13sdp"/>
@@ -228,7 +228,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:ellipsize="end"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:gravity="center"
                             android:minHeight="@dimen/_25sdp"
                             android:text=""
@@ -252,7 +252,7 @@
                             android:layout_height="@dimen/_25sdp"
                             android:layout_gravity="center"
                             android:ellipsize="end"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:gravity="center"
                             android:text="Team Name"
                             android:textColor="@color/grand_league"
@@ -264,7 +264,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:ellipsize="end"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:gravity="center"
                             android:minHeight="@dimen/_25sdp"
                             android:text=""
@@ -286,7 +286,7 @@
                 android:layout_height="@dimen/_30sdp"
                 android:layout_gravity="center"
                 android:ellipsize="end"
-                android:fontFamily="droidsans"
+                android:fontFamily="open_sans"
                 android:gravity="center"
                 android:background="@color/button_material_light"
                 android:text="Matchwise Fantasy Stats"
@@ -311,7 +311,7 @@
                     android:ellipsize="end"
                     android:gravity="center|start"
                     android:text="Match"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
@@ -323,7 +323,7 @@
                     android:ellipsize="end"
                     android:gravity="center|end"
                     android:text="Selection %"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
@@ -336,7 +336,7 @@
                     android:ellipsize="end"
                     android:gravity="center|end"
                     android:text="Points"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
             </LinearLayout>

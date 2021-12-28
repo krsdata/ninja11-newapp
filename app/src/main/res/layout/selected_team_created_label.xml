@@ -23,7 +23,7 @@
           android:textColor="@color/black"
           android:layout_gravity="center"
           android:textSize="12sp"
-          android:fontFamily="droidsans"/>
+          android:fontFamily="open_sans"/>
 
 
    </LinearLayout>

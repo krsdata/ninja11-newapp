@@ -11,7 +11,7 @@
         android:id="@+id/contest_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="droidsans"
+        android:fontFamily="@font/bebasneue_bold"
         android:text="Mega Contest"
         android:textColor="@color/white"
         android:textSize="@dimen/header_size" />

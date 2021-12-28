@@ -21,4 +21,18 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowAnimationStyle">@android:style/Animation</item>
     </style>
+
+    <style name="SecondryTheme" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="colorAccent">@color/colorSecondAccent</item>
+        <item name="colorPrimary">@color/colorSecond</item>
+        <item name="colorPrimaryDark">@color/colorSecondDark</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowDisablePreview">true</item>
+        <item name="android:forceDarkAllowed">true</item>
+        <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
+    </style>
+
+
 </resources>

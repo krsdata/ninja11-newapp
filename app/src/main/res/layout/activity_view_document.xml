@@ -54,7 +54,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="droidsans"
+                        android:fontFamily="open_sans"
                         android:text="UPI ID"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="@dimen/_15sdp" />
@@ -64,7 +64,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:fontFamily="droidsans"
+                        android:fontFamily="open_sans"
                         android:text="@string/action_settings"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="@dimen/_14sdp" />
@@ -86,7 +86,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="droidsans"
+                        android:fontFamily="open_sans"
                         android:text="PAYTM"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="@dimen/_15sdp" />
@@ -96,7 +96,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:fontFamily="droidsans"
+                        android:fontFamily="open_sans"
                         android:text="@string/action_settings"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="@dimen/_14sdp" />
@@ -124,7 +124,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:text="Pan Card"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/_15sdp" />
@@ -134,7 +134,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_5sdp"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:text="@string/action_settings"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/_11sdp" />
@@ -144,7 +144,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_5sdp"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:text="@string/action_settings"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/_11sdp" />
@@ -183,7 +183,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:text="Bank Document"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/_15sdp" />
@@ -192,7 +192,7 @@
                             android:id="@+id/bank_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:text="Bank Name"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/_10sdp" />
@@ -201,7 +201,7 @@
                             android:id="@+id/bank_account_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:text="Account Name"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/_10sdp" />
@@ -210,7 +210,7 @@
                             android:id="@+id/bank_account_number"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:text="Account Number"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/_10sdp" />
@@ -219,7 +219,7 @@
                             android:id="@+id/bank_account_type"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:text="Account IFSC"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/_10sdp" />

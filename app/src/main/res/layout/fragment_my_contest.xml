@@ -44,7 +44,7 @@
                 android:layout_marginTop="20dp"
                 android:scaleType="fitXY"
                 android:background="@color/colorPrimary"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/ic_launcher_round" />
 
             <TextView
                 android:id="@+id/btn_join_contest"
@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/default_rounded_button_sportsfight"
-                android:fontFamily="droidsans"
+                android:fontFamily="open_sans"
                 android:padding="10dp"
                 android:text="JOIN A CONTEST"
                 android:textColor="@color/white"
@@ -64,6 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:indeterminateTint="@color/theme_color_hdr"
             android:layout_gravity="center" />-->
     </RelativeLayout>
 </layout>

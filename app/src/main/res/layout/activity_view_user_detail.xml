@@ -51,7 +51,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
-                        android:fontFamily="droidsans"
+                        android:fontFamily="open_sans"
                         android:text="League Name:"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11sdp" />
@@ -61,7 +61,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.2"
-                        android:fontFamily="droidsans"
+                        android:fontFamily="open_sans"
                         android:text=""
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/_11sdp" />
@@ -84,7 +84,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
-                        android:fontFamily="droidsans"
+                        android:fontFamily="open_sans"
                         android:text="League Duration:"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11sdp" />
@@ -94,7 +94,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.2"
-                        android:fontFamily="droidsans"
+                        android:fontFamily="open_sans"
                         android:text=""
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/_11sdp" />
@@ -117,7 +117,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
-                        android:fontFamily="droidsans"
+                        android:fontFamily="open_sans"
                         android:text="Name:"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11sdp" />
@@ -127,7 +127,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.2"
-                        android:fontFamily="droidsans"
+                        android:fontFamily="open_sans"
                         android:text=""
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/_11sdp" />
@@ -150,7 +150,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
-                        android:fontFamily="droidsans"
+                        android:fontFamily="open_sans"
                         android:text="Team Name:"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11sdp" />
@@ -160,7 +160,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.2"
-                        android:fontFamily="droidsans"
+                        android:fontFamily="open_sans"
                         android:text=""
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/_11sdp" />
@@ -183,7 +183,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
-                        android:fontFamily="droidsans"
+                        android:fontFamily="open_sans"
                         android:text="Total Points:"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11sdp" />
@@ -193,7 +193,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.2"
-                        android:fontFamily="droidsans"
+                        android:fontFamily="open_sans"
                         android:text=""
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/_11sdp" />
@@ -216,7 +216,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
-                        android:fontFamily="droidsans"
+                        android:fontFamily="open_sans"
                         android:text="Current Rank:"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11sdp" />
@@ -226,7 +226,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.2"
-                        android:fontFamily="droidsans"
+                        android:fontFamily="open_sans"
                         android:text=""
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/_11sdp" />
@@ -259,7 +259,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center|start"
                 android:layout_weight="2.4"
-                android:fontFamily="droidsans"
+                android:fontFamily="open_sans"
                 android:gravity="center|start"
                 android:text="Match Played"
                 android:textColor="@color/material_grey_800"
@@ -270,7 +270,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1.3"
-                android:fontFamily="droidsans"
+                android:fontFamily="open_sans"
                 android:gravity="center"
                 android:text="Points"
                 android:textColor="@color/material_grey_800"
@@ -281,7 +281,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1.3"
-                android:fontFamily="droidsans"
+                android:fontFamily="open_sans"
                 android:gravity="center"
                 android:text="Team"
                 android:textColor="@color/material_grey_800"
@@ -317,6 +317,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:indeterminateTint="@color/theme_color_hdr"
             android:layout_gravity="center" />
     </RelativeLayout>
 </layout>

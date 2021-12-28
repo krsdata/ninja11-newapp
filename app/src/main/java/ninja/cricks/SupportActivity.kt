@@ -76,11 +76,9 @@ class SupportActivity : AppCompatActivity() {
             }
         })
 
-        mBinding!!.callWhatsapp.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
+        mBinding!!.callWhatsapp.setOnClickListener{
                 raiseIssuesOnWhatsApp()
-            }
-        })
+        }
     }
 
     fun raiseIssuesOnWhatsApp() {

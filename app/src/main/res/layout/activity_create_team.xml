@@ -48,7 +48,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:text=""
                     android:textColor="@color/white"
@@ -61,7 +61,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:text="Max 7 player from a team"
                     android:textColor="@color/white"
                     android:textSize="@dimen/create_team_text_size_normal" />
@@ -142,7 +142,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:text="0"
                             android:textColor="@color/white"
                             android:textSize="@dimen/create_team_text_size_normal" />
@@ -151,7 +151,7 @@
                             android:id="@+id/teama_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:text="AU-W"
                             android:textColor="@color/white"
                             android:textSize="@dimen/create_team_text_size_normal" />
@@ -170,7 +170,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:fontFamily="droidsans"
+                        android:fontFamily="open_sans"
                         android:gravity="center"
                         android:text="Players"
                         android:textColor="@color/white"
@@ -187,7 +187,7 @@
                             android:id="@+id/totalplayer_selected"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:text="0"
                             android:textColor="@color/white"
                             android:textSize="@dimen/create_team_text_size_normal" />
@@ -196,7 +196,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:text="/"
                             android:textColor="@color/white"
                             android:textSize="@dimen/create_team_text_size_normal" />
@@ -205,7 +205,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:text="11"
                             android:textColor="@color/white"
                             android:textSize="@dimen/create_team_text_size_normal" />
@@ -233,7 +233,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:text="0"
                             android:textColor="@color/white"
                             android:textSize="@dimen/create_team_text_size_normal" />
@@ -242,7 +242,7 @@
                             android:id="@+id/teamb_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="droidsans"
+                            android:fontFamily="open_sans"
                             android:text="SL-W"
                             android:textColor="@color/white"
                             android:textSize="@dimen/create_team_text_size_normal" />
@@ -273,7 +273,7 @@
                     android:layout_height="@dimen/_13sdp"
                     android:layout_weight="1"
                     android:background="@drawable/rectangle_left_top_curve"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:text="1"
                     android:textSize="@dimen/_9sdp" />
@@ -285,7 +285,7 @@
                     android:layout_marginStart="@dimen/_1sdp"
                     android:layout_weight="1"
                     android:background="@drawable/rectangle_no_curve"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:text="2"
                     android:textSize="@dimen/_9sdp" />
@@ -297,7 +297,7 @@
                     android:layout_marginStart="@dimen/_1sdp"
                     android:layout_weight="1"
                     android:background="@drawable/rectangle_no_curve"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:text="3"
                     android:textSize="@dimen/_9sdp" />
@@ -309,7 +309,7 @@
                     android:layout_marginStart="@dimen/_1sdp"
                     android:layout_weight="1"
                     android:background="@drawable/rectangle_no_curve"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:text="4"
                     android:textSize="@dimen/_9sdp" />
@@ -321,7 +321,7 @@
                     android:layout_marginStart="@dimen/_1sdp"
                     android:layout_weight="1"
                     android:background="@drawable/rectangle_no_curve"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:text="5"
                     android:textSize="@dimen/_9sdp" />
@@ -333,7 +333,7 @@
                     android:layout_marginStart="@dimen/_1sdp"
                     android:layout_weight="1"
                     android:background="@drawable/rectangle_no_curve"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:text="6"
                     android:textSize="@dimen/_9sdp" />
@@ -345,7 +345,7 @@
                     android:layout_marginStart="@dimen/_1sdp"
                     android:layout_weight="1"
                     android:background="@drawable/rectangle_no_curve"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:text="7"
                     android:textSize="@dimen/_9sdp" />
@@ -357,7 +357,7 @@
                     android:layout_marginStart="@dimen/_1sdp"
                     android:layout_weight="1"
                     android:background="@drawable/rectangle_no_curve"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:text="8"
                     android:textSize="@dimen/_9sdp" />
@@ -370,7 +370,7 @@
                     android:layout_marginStart="@dimen/_1sdp"
                     android:layout_weight="1"
                     android:background="@drawable/rectangle_no_curve"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:text="9"
                     android:textSize="@dimen/_9sdp" />
@@ -382,7 +382,7 @@
                     android:layout_marginStart="@dimen/_1sdp"
                     android:layout_weight="1"
                     android:background="@drawable/rectangle_no_curve"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:text="10"
                     android:textSize="@dimen/_9sdp" />
@@ -394,7 +394,7 @@
                     android:layout_marginStart="@dimen/_1sdp"
                     android:layout_weight="1"
                     android:background="@drawable/rectangle_right_top_curve"
-                    android:fontFamily="droidsans"
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:text="11"
                     android:textSize="@dimen/_9sdp" />
@@ -436,7 +436,7 @@
                 android:layout_gravity="center|start"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
-                android:fontFamily="droidsans"
+                android:fontFamily="open_sans"
                 android:gravity="center|start"
                 android:text="@string/lineup_feature"
                 android:textColor="@color/colorPrimary"
@@ -466,6 +466,7 @@
                 android:layout_height="match_parent"
                 android:layout_below="@+id/tabs"
                 android:layout_alignParentEnd="true"
+                android:layout_marginTop="-4dp"
                 android:layout_marginEnd="0dp" />
         </RelativeLayout>
 
@@ -473,6 +474,7 @@
             android:id="@+id/progressBar"
             android:layout_width="45dp"
             android:layout_height="45dp"
+            android:indeterminateTint="@color/theme_color_hdr"
             android:layout_centerInParent="true" />
 
         <LinearLayout
@@ -492,7 +494,7 @@
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:layout_weight="1"
                 android:background="@drawable/button_selector_white"
-                android:fontFamily="droidsans"
+                android:fontFamily="open_sans"
                 android:gravity="center"
                 android:text="PREVIEW"
                 android:textColor="@color/colorAccent"
@@ -507,7 +509,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/button_selector_grey"
                 android:enabled="false"
-                android:fontFamily="droidsans"
+                android:fontFamily="open_sans"
                 android:gravity="center"
                 android:text="CONTINUE"
                 android:textColor="@color/white"
