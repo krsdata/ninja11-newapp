@@ -1,11 +1,11 @@
 # compiler: R8
 # compiler_version: 2.1.86
 # min_api: 21
-# pg_map_id: 80b1354
+# pg_map_id: 9d2dff1
 # common_typos_disable
 $$ServiceLoaderMethods -> a:
-    java.util.Iterator $load$44409() -> a
-    java.util.Iterator $load$44932() -> b
+    java.util.Iterator $load$44414() -> a
+    java.util.Iterator $load$44937() -> b
 $r8$backportedMethods$utility$Boolean$1$hashCode -> b:
     int hashCode(boolean) -> a
 $r8$backportedMethods$utility$Double$1$hashCode -> c:
@@ -112933,9 +112933,9 @@ ninja.cricks.MainActivity -> ninja.cricks.MainActivity:
     1:4:void displayView(int):499:499 -> h1
     5:7:void displayView(int):503:503 -> h1
     8:11:void displayView(int):506:506 -> h1
-    12:17:void displayView(int):516:516 -> h1
-    18:20:void displayView(int):523:525 -> h1
-    21:21:void displayView(int):527:527 -> h1
+    12:17:void displayView(int):510:510 -> h1
+    18:20:void displayView(int):517:519 -> h1
+    21:21:void displayView(int):521:521 -> h1
     1:1:java.util.ArrayList getResCheckinArrayList():59:59 -> i1
     1:1:java.util.ArrayList getResCompletedMatchesCheckinArraylist():61:61 -> j1
     1:1:java.util.ArrayList getResLiveCheckinArraylist():60:60 -> k1
@@ -112976,9 +112976,9 @@ ninja.cricks.MainActivity -> ninja.cricks.MainActivity:
     1:3:void onStart():282:284 -> onStart
     4:7:void onStart():286:289 -> onStart
     1:1:void setFragment(androidx.fragment.app.Fragment):55:55 -> p1
-    1:2:void setProfileData():532:533 -> q1
-    3:5:void setProfileData():535:537 -> q1
-    6:7:void setProfileData():539:540 -> q1
+    1:2:void setProfileData():526:527 -> q1
+    3:5:void setProfileData():529:531 -> q1
+    6:7:void setProfileData():533:534 -> q1
     1:4:void updateCheckApk():411:414 -> r1
     5:7:void updateCheckApk():416:416 -> r1
     1:3:void viewAllMatches():262:264 -> s1
@@ -114123,150 +114123,153 @@ ninja.cricks.RefferalFriendsListActivity$onCreate$2 -> ninja.cricks.RefferalFrie
     4:7:void onClick(android.view.View):60:63 -> onClick
     8:8:void onClick(android.view.View):66:66 -> onClick
 ninja.cricks.SaveTeamActivity -> ninja.cricks.SaveTeamActivity:
-    ninja.cricks.requestmodels.RequestCreateTeamModel mCreateTeamRequest -> J
-    boolean isViceCaptainSelected -> M
-    ninja.cricks.models.UpcomingMatchesModel matchObject -> N
-    boolean isCaptainSelected -> L
-    ninja.cricks.models.MyTeamModels myTeamModel -> K
-    ninja.cricks.ui.createteam.adaptors.PlayersSelectedAdapter adapter -> R
-    java.util.HashMap hasmapPlayers -> O
-    ninja.cricks.databinding.ActivitySaveTeamBinding mBinding -> P
-    java.util.ArrayList savedTeamList -> Q
-    1:1:void <init>():44:44 -> <init>
-    2:2:void <init>():54:54 -> <init>
+    boolean isCaptainSelected -> M
+    ninja.cricks.requestmodels.RequestCreateTeamModel mCreateTeamRequest -> K
+    boolean isViceCaptainSelected -> N
+    ninja.cricks.models.UpcomingMatchesModel matchObject -> O
+    ninja.cricks.databinding.ActivitySaveTeamBinding mBinding -> Q
+    java.lang.String TAG -> J
+    ninja.cricks.models.MyTeamModels myTeamModel -> L
+    java.util.HashMap hasmapPlayers -> P
+    java.util.ArrayList savedTeamList -> R
+    ninja.cricks.ui.createteam.adaptors.PlayersSelectedAdapter adapter -> S
+    1:1:void <init>():45:45 -> <init>
+    2:2:void <init>():47:47 -> <init>
+    3:3:void <init>():56:56 -> <init>
     void onBitmapSelected(android.graphics.Bitmap) -> H0
-    1:1:void onUploadedImageUrl(java.lang.String):71:71 -> I0
-    1:3:void onViceCaptainSelected(ninja.cricks.models.PlayersInfoModel,int):386:388 -> J
-    4:7:void onViceCaptainSelected(ninja.cricks.models.PlayersInfoModel,int):390:393 -> J
-    8:9:void onViceCaptainSelected(ninja.cricks.models.PlayersInfoModel,int):395:396 -> J
-    10:12:void onViceCaptainSelected(ninja.cricks.models.PlayersInfoModel,int):399:399 -> J
-    1:1:java.util.HashMap access$getHasmapPlayers$p(ninja.cricks.SaveTeamActivity):44:44 -> T0
-    1:1:ninja.cricks.databinding.ActivitySaveTeamBinding access$getMBinding$p(ninja.cricks.SaveTeamActivity):44:44 -> U0
-    1:1:ninja.cricks.requestmodels.RequestCreateTeamModel access$getMCreateTeamRequest$p(ninja.cricks.SaveTeamActivity):44:44 -> V0
-    1:1:ninja.cricks.models.UpcomingMatchesModel access$getMatchObject$p(ninja.cricks.SaveTeamActivity):44:44 -> W0
-    1:1:ninja.cricks.requestmodels.RequestCreateTeamModel access$getRequest(ninja.cricks.SaveTeamActivity):44:44 -> X0
-    1:1:void access$setMCreateTeamRequest$p(ninja.cricks.SaveTeamActivity,ninja.cricks.requestmodels.RequestCreateTeamModel):44:44 -> Y0
-    1:1:void access$updateTimerHeader(ninja.cricks.SaveTeamActivity):44:44 -> Z0
-    1:2:void createTeam(ninja.cricks.requestmodels.RequestCreateTeamModel):419:420 -> a1
-    3:3:void createTeam(ninja.cricks.requestmodels.RequestCreateTeamModel):423:423 -> a1
-    4:6:void createTeam(ninja.cricks.requestmodels.RequestCreateTeamModel):425:427 -> a1
-    1:1:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():207:207 -> b1
-    2:5:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():213:216 -> b1
-    6:7:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():218:219 -> b1
-    8:9:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():221:222 -> b1
-    10:10:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():224:224 -> b1
-    11:11:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():229:229 -> b1
-    12:12:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():233:233 -> b1
-    13:17:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():236:240 -> b1
-    18:23:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():242:247 -> b1
-    24:25:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():249:250 -> b1
-    26:26:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():242:242 -> b1
-    27:27:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():238:238 -> b1
-    28:28:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():237:237 -> b1
-    1:2:void initPlayers():258:259 -> c1
-    3:4:void initPlayers():261:262 -> c1
-    5:5:void initPlayers():264:264 -> c1
-    6:6:void initPlayers():266:266 -> c1
-    7:11:void initPlayers():268:272 -> c1
-    12:16:void initPlayers():274:278 -> c1
-    17:18:void initPlayers():280:281 -> c1
-    19:19:void initPlayers():284:284 -> c1
-    20:20:void initPlayers():268:268 -> c1
-    21:21:void initPlayers():287:287 -> c1
-    22:31:void initPlayers():289:298 -> c1
-    32:33:void initPlayers():300:301 -> c1
-    34:34:void initPlayers():303:303 -> c1
-    35:35:void initPlayers():289:289 -> c1
-    36:36:void initPlayers():307:307 -> c1
-    37:46:void initPlayers():309:318 -> c1
-    47:48:void initPlayers():320:321 -> c1
-    49:49:void initPlayers():323:323 -> c1
-    50:50:void initPlayers():309:309 -> c1
-    51:51:void initPlayers():326:326 -> c1
-    52:61:void initPlayers():328:337 -> c1
-    62:63:void initPlayers():339:340 -> c1
-    64:64:void initPlayers():342:342 -> c1
-    65:65:void initPlayers():328:328 -> c1
-    66:66:void initPlayers():346:346 -> c1
-    67:67:void initPlayers():326:326 -> c1
-    68:68:void initPlayers():307:307 -> c1
-    69:69:void initPlayers():287:287 -> c1
-    70:70:void initPlayers():266:266 -> c1
-    1:3:void onReady():406:408 -> d1
-    4:5:void onReady():410:411 -> d1
-    1:1:void pauseCountDown():195:195 -> e1
-    1:1:void startCountDown():173:173 -> f1
-    2:2:void startCountDown():175:175 -> f1
-    1:3:void updateTimerHeader():168:168 -> g1
-    1:4:void onActivityResult(int,int,android.content.Intent):58:61 -> onActivityResult
-    1:2:void onCreate(android.os.Bundle):76:77 -> onCreate
-    3:3:void onCreate(android.os.Bundle):81:81 -> onCreate
-    4:4:void onCreate(android.os.Bundle):83:83 -> onCreate
-    5:5:void onCreate(android.os.Bundle):85:85 -> onCreate
-    6:9:void onCreate(android.os.Bundle):87:90 -> onCreate
-    10:13:void onCreate(android.os.Bundle):93:96 -> onCreate
-    14:15:void onCreate(android.os.Bundle):99:100 -> onCreate
-    16:16:void onCreate(android.os.Bundle):102:102 -> onCreate
-    17:17:void onCreate(android.os.Bundle):105:105 -> onCreate
-    18:18:void onCreate(android.os.Bundle):108:108 -> onCreate
-    19:19:void onCreate(android.os.Bundle):113:113 -> onCreate
-    20:20:void onCreate(android.os.Bundle):121:121 -> onCreate
-    21:21:void onCreate(android.os.Bundle):124:124 -> onCreate
-    22:22:void onCreate(android.os.Bundle):126:126 -> onCreate
-    23:23:void onCreate(android.os.Bundle):128:128 -> onCreate
-    24:24:void onCreate(android.os.Bundle):130:130 -> onCreate
-    25:25:void onCreate(android.os.Bundle):126:126 -> onCreate
-    26:27:void onCreate(android.os.Bundle):132:133 -> onCreate
-    28:28:void onCreate(android.os.Bundle):135:135 -> onCreate
-    29:29:void onCreate(android.os.Bundle):142:142 -> onCreate
-    30:30:void onCreate(android.os.Bundle):132:132 -> onCreate
-    31:31:void onCreate(android.os.Bundle):130:130 -> onCreate
-    32:32:void onCreate(android.os.Bundle):94:94 -> onCreate
-    33:33:void onCreate(android.os.Bundle):88:88 -> onCreate
-    1:2:void onPause():199:200 -> onPause
-    1:3:void onResume():159:161 -> onResume
-    4:4:void onResume():163:163 -> onResume
-    5:5:void onResume():160:160 -> onResume
+    void onUploadedImageUrl(java.lang.String) -> I0
+    1:3:void onViceCaptainSelected(ninja.cricks.models.PlayersInfoModel,int):383:385 -> J
+    4:7:void onViceCaptainSelected(ninja.cricks.models.PlayersInfoModel,int):387:390 -> J
+    8:9:void onViceCaptainSelected(ninja.cricks.models.PlayersInfoModel,int):392:393 -> J
+    10:12:void onViceCaptainSelected(ninja.cricks.models.PlayersInfoModel,int):396:396 -> J
+    1:1:java.util.HashMap access$getHasmapPlayers$p(ninja.cricks.SaveTeamActivity):45:45 -> T0
+    1:1:ninja.cricks.databinding.ActivitySaveTeamBinding access$getMBinding$p(ninja.cricks.SaveTeamActivity):45:45 -> U0
+    1:1:ninja.cricks.requestmodels.RequestCreateTeamModel access$getMCreateTeamRequest$p(ninja.cricks.SaveTeamActivity):45:45 -> V0
+    1:1:ninja.cricks.models.UpcomingMatchesModel access$getMatchObject$p(ninja.cricks.SaveTeamActivity):45:45 -> W0
+    1:1:ninja.cricks.requestmodels.RequestCreateTeamModel access$getRequest(ninja.cricks.SaveTeamActivity):45:45 -> X0
+    1:1:void access$setMCreateTeamRequest$p(ninja.cricks.SaveTeamActivity,ninja.cricks.requestmodels.RequestCreateTeamModel):45:45 -> Y0
+    1:1:void access$updateTimerHeader(ninja.cricks.SaveTeamActivity):45:45 -> Z0
+    1:2:void createTeam(ninja.cricks.requestmodels.RequestCreateTeamModel):415:416 -> a1
+    3:3:void createTeam(ninja.cricks.requestmodels.RequestCreateTeamModel):419:419 -> a1
+    4:4:void createTeam(ninja.cricks.requestmodels.RequestCreateTeamModel):421:421 -> a1
+    5:7:void createTeam(ninja.cricks.requestmodels.RequestCreateTeamModel):424:426 -> a1
+    1:1:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():204:204 -> b1
+    2:5:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():210:213 -> b1
+    6:7:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():215:216 -> b1
+    8:9:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():218:219 -> b1
+    10:10:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():221:221 -> b1
+    11:11:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():226:226 -> b1
+    12:12:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():230:230 -> b1
+    13:17:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():233:237 -> b1
+    18:23:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():239:244 -> b1
+    24:25:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():246:247 -> b1
+    26:26:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():239:239 -> b1
+    27:27:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():235:235 -> b1
+    28:28:ninja.cricks.requestmodels.RequestCreateTeamModel getRequest():234:234 -> b1
+    1:2:void initPlayers():255:256 -> c1
+    3:4:void initPlayers():258:259 -> c1
+    5:5:void initPlayers():261:261 -> c1
+    6:6:void initPlayers():263:263 -> c1
+    7:11:void initPlayers():265:269 -> c1
+    12:16:void initPlayers():271:275 -> c1
+    17:18:void initPlayers():277:278 -> c1
+    19:19:void initPlayers():281:281 -> c1
+    20:20:void initPlayers():265:265 -> c1
+    21:21:void initPlayers():284:284 -> c1
+    22:31:void initPlayers():286:295 -> c1
+    32:33:void initPlayers():297:298 -> c1
+    34:34:void initPlayers():300:300 -> c1
+    35:35:void initPlayers():286:286 -> c1
+    36:36:void initPlayers():304:304 -> c1
+    37:46:void initPlayers():306:315 -> c1
+    47:48:void initPlayers():317:318 -> c1
+    49:49:void initPlayers():320:320 -> c1
+    50:50:void initPlayers():306:306 -> c1
+    51:51:void initPlayers():323:323 -> c1
+    52:61:void initPlayers():325:334 -> c1
+    62:63:void initPlayers():336:337 -> c1
+    64:64:void initPlayers():339:339 -> c1
+    65:65:void initPlayers():325:325 -> c1
+    66:66:void initPlayers():343:343 -> c1
+    67:67:void initPlayers():323:323 -> c1
+    68:68:void initPlayers():304:304 -> c1
+    69:69:void initPlayers():284:284 -> c1
+    70:70:void initPlayers():263:263 -> c1
+    1:3:void onReady():402:404 -> d1
+    4:5:void onReady():406:407 -> d1
+    1:1:void pauseCountDown():192:192 -> e1
+    1:1:void startCountDown():170:170 -> f1
+    2:2:void startCountDown():172:172 -> f1
+    1:3:void updateTimerHeader():165:165 -> g1
+    1:4:void onActivityResult(int,int,android.content.Intent):60:63 -> onActivityResult
+    1:2:void onCreate(android.os.Bundle):74:75 -> onCreate
+    3:3:void onCreate(android.os.Bundle):79:79 -> onCreate
+    4:4:void onCreate(android.os.Bundle):81:81 -> onCreate
+    5:5:void onCreate(android.os.Bundle):83:83 -> onCreate
+    6:9:void onCreate(android.os.Bundle):85:88 -> onCreate
+    10:13:void onCreate(android.os.Bundle):91:94 -> onCreate
+    14:15:void onCreate(android.os.Bundle):97:98 -> onCreate
+    16:16:void onCreate(android.os.Bundle):100:100 -> onCreate
+    17:17:void onCreate(android.os.Bundle):103:103 -> onCreate
+    18:18:void onCreate(android.os.Bundle):106:106 -> onCreate
+    19:19:void onCreate(android.os.Bundle):111:111 -> onCreate
+    20:20:void onCreate(android.os.Bundle):119:119 -> onCreate
+    21:21:void onCreate(android.os.Bundle):122:122 -> onCreate
+    22:22:void onCreate(android.os.Bundle):124:124 -> onCreate
+    23:23:void onCreate(android.os.Bundle):126:126 -> onCreate
+    24:24:void onCreate(android.os.Bundle):128:128 -> onCreate
+    25:25:void onCreate(android.os.Bundle):124:124 -> onCreate
+    26:27:void onCreate(android.os.Bundle):130:131 -> onCreate
+    28:28:void onCreate(android.os.Bundle):133:133 -> onCreate
+    29:29:void onCreate(android.os.Bundle):140:140 -> onCreate
+    30:30:void onCreate(android.os.Bundle):130:130 -> onCreate
+    31:31:void onCreate(android.os.Bundle):128:128 -> onCreate
+    32:32:void onCreate(android.os.Bundle):92:92 -> onCreate
+    33:33:void onCreate(android.os.Bundle):86:86 -> onCreate
+    1:2:void onPause():196:197 -> onPause
+    1:3:void onResume():156:158 -> onResume
+    4:4:void onResume():160:160 -> onResume
+    5:5:void onResume():157:157 -> onResume
     void onTrumpSelected(ninja.cricks.models.PlayersInfoModel,int) -> p
-    1:3:void onCaptainSelected(ninja.cricks.models.PlayersInfoModel,int):368:370 -> z
-    4:7:void onCaptainSelected(ninja.cricks.models.PlayersInfoModel,int):372:375 -> z
-    8:9:void onCaptainSelected(ninja.cricks.models.PlayersInfoModel,int):377:378 -> z
-    10:12:void onCaptainSelected(ninja.cricks.models.PlayersInfoModel,int):381:381 -> z
+    1:3:void onCaptainSelected(ninja.cricks.models.PlayersInfoModel,int):365:367 -> z
+    4:7:void onCaptainSelected(ninja.cricks.models.PlayersInfoModel,int):369:372 -> z
+    8:9:void onCaptainSelected(ninja.cricks.models.PlayersInfoModel,int):374:375 -> z
+    10:12:void onCaptainSelected(ninja.cricks.models.PlayersInfoModel,int):378:378 -> z
 ninja.cricks.SaveTeamActivity$createTeam$1 -> ninja.cricks.SaveTeamActivity$a:
     ninja.cricks.SaveTeamActivity this$0 -> g
-    1:1:void <init>(ninja.cricks.SaveTeamActivity):427:427 -> <init>
-    1:2:void onFailure(retrofit2.Call,java.lang.Throwable):429:430 -> D
-    1:2:void onResponse(retrofit2.Call,retrofit2.Response):437:438 -> y
-    3:3:void onResponse(retrofit2.Call,retrofit2.Response):440:440 -> y
-    4:4:void onResponse(retrofit2.Call,retrofit2.Response):442:442 -> y
-    5:5:void onResponse(retrofit2.Call,retrofit2.Response):441:441 -> y
-    6:8:void onResponse(retrofit2.Call,retrofit2.Response):445:447 -> y
-    9:11:void onResponse(retrofit2.Call,retrofit2.Response):449:451 -> y
-    12:12:void onResponse(retrofit2.Call,retrofit2.Response):453:453 -> y
+    1:1:void <init>(ninja.cricks.SaveTeamActivity):426:426 -> <init>
+    1:2:void onFailure(retrofit2.Call,java.lang.Throwable):428:429 -> D
+    1:2:void onResponse(retrofit2.Call,retrofit2.Response):436:437 -> y
+    3:3:void onResponse(retrofit2.Call,retrofit2.Response):439:439 -> y
+    4:4:void onResponse(retrofit2.Call,retrofit2.Response):441:441 -> y
+    5:5:void onResponse(retrofit2.Call,retrofit2.Response):440:440 -> y
+    6:8:void onResponse(retrofit2.Call,retrofit2.Response):444:446 -> y
+    9:11:void onResponse(retrofit2.Call,retrofit2.Response):448:450 -> y
+    12:12:void onResponse(retrofit2.Call,retrofit2.Response):452:452 -> y
 ninja.cricks.SaveTeamActivity$onCreate$1 -> ninja.cricks.SaveTeamActivity$b:
     ninja.cricks.SaveTeamActivity this$0 -> g
-    1:1:void onClick(android.view.View):106:106 -> onClick
+    1:1:void onClick(android.view.View):104:104 -> onClick
 ninja.cricks.SaveTeamActivity$onCreate$2 -> ninja.cricks.SaveTeamActivity$c:
     ninja.cricks.SaveTeamActivity this$0 -> g
-    1:2:void onClick(android.view.View):109:110 -> onClick
+    1:2:void onClick(android.view.View):107:108 -> onClick
 ninja.cricks.SaveTeamActivity$onCreate$3 -> ninja.cricks.SaveTeamActivity$d:
     ninja.cricks.SaveTeamActivity this$0 -> g
-    1:3:void onClick(android.view.View):114:116 -> onClick
-    4:5:void onClick(android.view.View):118:119 -> onClick
+    1:3:void onClick(android.view.View):112:114 -> onClick
+    4:5:void onClick(android.view.View):116:117 -> onClick
 ninja.cricks.SaveTeamActivity$onCreate$4 -> ninja.cricks.SaveTeamActivity$e:
     ninja.cricks.SaveTeamActivity this$0 -> g
-    1:4:void onClick(android.view.View):136:139 -> onClick
+    1:4:void onClick(android.view.View):134:137 -> onClick
 ninja.cricks.SaveTeamActivity$onCreate$5 -> ninja.cricks.SaveTeamActivity$f:
     ninja.cricks.SaveTeamActivity this$0 -> g
-    1:4:void onClick(android.view.View):143:146 -> onClick
-    5:7:void onClick(android.view.View):149:151 -> onClick
+    1:4:void onClick(android.view.View):141:144 -> onClick
+    5:7:void onClick(android.view.View):147:149 -> onClick
 ninja.cricks.SaveTeamActivity$startCountDown$1 -> ninja.cricks.SaveTeamActivity$g:
     ninja.cricks.SaveTeamActivity this$0 -> a
-    1:1:void <init>(ninja.cricks.SaveTeamActivity):175:175 -> <init>
-    1:2:void onTicks(java.lang.String):186:187 -> a
-    3:3:void onTicks(java.lang.String):189:189 -> a
-    1:1:void onTimeFinished():178:178 -> b
-    2:3:void onTimeFinished():180:181 -> b
+    1:1:void <init>(ninja.cricks.SaveTeamActivity):172:172 -> <init>
+    1:2:void onTicks(java.lang.String):183:184 -> a
+    3:3:void onTicks(java.lang.String):186:186 -> a
+    1:1:void onTimeFinished():175:175 -> b
+    2:3:void onTimeFinished():177:178 -> b
 ninja.cricks.SelectTeamActivity -> ninja.cricks.SelectTeamActivity:
     ninja.cricks.utils.CustomeProgressDialog customeProgressDialog -> v
     ninja.cricks.adaptors.SelectedTeamAdapter adapter -> z
@@ -118487,16 +118490,27 @@ ninja.cricks.network.WebServiceClient$client$2 -> ninja.cricks.network.c$a:
     6:6:okhttp3.Response intercept(okhttp3.Interceptor$Chain):70:70 -> intercept
     7:8:okhttp3.Response intercept(okhttp3.Interceptor$Chain):75:76 -> intercept
 ninja.cricks.requestmodels.RequestCreateTeamModel -> ninja.cricks.e.a:
-    1:1:void <init>():4:4 -> <init>
-    void setCaptain(int) -> a
-    void setCreate_team_id(int) -> b
-    void setMatch_id(java.lang.String) -> c
-    void setSystem_token(java.lang.String) -> d
-    void setTeam_id(java.util.ArrayList) -> e
-    void setTeams(java.util.ArrayList) -> f
-    void setTrump(int) -> g
-    void setUser_id(java.lang.String) -> h
-    void setVice_captain(int) -> i
+    java.lang.String user_id -> g
+    java.util.ArrayList team_id -> o
+    java.util.ArrayList teams -> n
+    java.lang.String match_id -> i
+    int captain -> l
+    java.lang.String token -> h
+    int vice_captain -> m
+    int create_team_id -> j
+    int trump -> k
+    java.lang.String system_token -> p
+    1:1:void <init>(java.lang.String,java.lang.String,java.lang.String,int,int,int,int,java.util.ArrayList,java.util.ArrayList,java.lang.String):7:7 -> <init>
+    2:2:void <init>(java.lang.String,java.lang.String,java.lang.String,int,int,int,int,java.util.ArrayList,java.util.ArrayList,java.lang.String,int,kotlin.jvm.internal.DefaultConstructorMarker):16:16 -> <init>
+    1:1:void setCaptain(int):12:12 -> a
+    1:1:void setCreate_team_id(int):10:10 -> b
+    1:1:void setMatch_id(java.lang.String):9:9 -> c
+    1:1:void setSystem_token(java.lang.String):16:16 -> d
+    1:1:void setTeam_id(java.util.ArrayList):15:15 -> e
+    1:1:void setTeams(java.util.ArrayList):14:14 -> f
+    1:1:void setTrump(int):11:11 -> g
+    1:1:void setUser_id(java.lang.String):7:7 -> h
+    1:1:void setVice_captain(int):13:13 -> i
 ninja.cricks.requestmodels.RequestModel -> ninja.cricks.e.b:
     1:1:void <init>():8:8 -> <init>
     void setToken(java.lang.String) -> a
@@ -119732,24 +119746,24 @@ ninja.cricks.ui.contest.MyTeamFragment -> ninja.cricks.ui.b.e:
     1:3:void onAttach(android.content.Context):227:229 -> B0
     4:6:void onAttach(android.content.Context):231:231 -> B0
     1:1:void onCreate(android.os.Bundle):58:58 -> E0
-    2:6:void onCreate(android.os.Bundle):60:64 -> E0
-    7:7:void onCreate(android.os.Bundle):63:63 -> E0
-    1:1:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):75:75 -> I0
-    2:2:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):79:79 -> I0
+    2:2:void onCreate(android.os.Bundle):60:60 -> E0
+    1:1:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):67:67 -> I0
+    2:2:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):71:71 -> I0
     1:1:void setUserVisibleHint(boolean):124:124 -> X1
     1:1:void onResume():110:110 -> Z0
     2:6:void onResume():112:116 -> Z0
     7:7:void onResume():115:115 -> Z0
     8:9:void onResume():118:119 -> Z0
     1:1:void access$allTeam(ninja.cricks.ui.contest.MyTeamFragment,ninja.cricks.models.UsersPostDBResponse):36:36 -> c2
-    1:1:void onViewCreated(android.view.View,android.os.Bundle):83:83 -> d1
-    2:2:void onViewCreated(android.view.View,android.os.Bundle):85:85 -> d1
-    3:5:void onViewCreated(android.view.View,android.os.Bundle):87:89 -> d1
-    6:6:void onViewCreated(android.view.View,android.os.Bundle):91:91 -> d1
-    7:7:void onViewCreated(android.view.View,android.os.Bundle):96:96 -> d1
-    8:8:void onViewCreated(android.view.View,android.os.Bundle):104:104 -> d1
-    9:9:void onViewCreated(android.view.View,android.os.Bundle):91:91 -> d1
-    10:10:void onViewCreated(android.view.View,android.os.Bundle):88:88 -> d1
+    1:5:void onViewCreated(android.view.View,android.os.Bundle):75:79 -> d1
+    6:6:void onViewCreated(android.view.View,android.os.Bundle):78:78 -> d1
+    7:7:void onViewCreated(android.view.View,android.os.Bundle):85:85 -> d1
+    8:10:void onViewCreated(android.view.View,android.os.Bundle):87:89 -> d1
+    11:11:void onViewCreated(android.view.View,android.os.Bundle):91:91 -> d1
+    12:12:void onViewCreated(android.view.View,android.os.Bundle):96:96 -> d1
+    13:13:void onViewCreated(android.view.View,android.os.Bundle):104:104 -> d1
+    14:14:void onViewCreated(android.view.View,android.os.Bundle):91:91 -> d1
+    15:15:void onViewCreated(android.view.View,android.os.Bundle):88:88 -> d1
     1:1:ninja.cricks.utils.CustomProgressDialog2 access$getCustomeProgressDialog$p(ninja.cricks.ui.contest.MyTeamFragment):36:36 -> d2
     1:1:ninja.cricks.databinding.FragmentMyTeamBinding access$getMBinding$p(ninja.cricks.ui.contest.MyTeamFragment):36:36 -> e2
     1:1:void access$getMyteamApiCall(ninja.cricks.ui.contest.MyTeamFragment):36:36 -> f2
@@ -119951,19 +119965,19 @@ ninja.cricks.ui.contest.MyTeamFragment$getPoints$1 -> ninja.cricks.ui.b.e$e:
     37:37:void onResponse(retrofit2.Call,retrofit2.Response):211:211 -> y
     38:40:void onResponse(retrofit2.Call,retrofit2.Response):214:216 -> y
     41:41:void onResponse(retrofit2.Call,retrofit2.Response):218:218 -> y
-ninja.cricks.ui.contest.MyTeamFragment$onCreate$1 -> ninja.cricks.ui.b.e$f:
+ninja.cricks.ui.contest.MyTeamFragment$onViewCreated$1 -> ninja.cricks.ui.b.e$f:
     ninja.cricks.ui.contest.MyTeamFragment this$0 -> a
-    1:2:void onFragmentResult(java.lang.String,android.os.Bundle):65:66 -> a
-ninja.cricks.ui.contest.MyTeamFragment$onViewCreated$1 -> ninja.cricks.ui.b.e$g:
+    1:2:void onFragmentResult(java.lang.String,android.os.Bundle):80:81 -> a
+ninja.cricks.ui.contest.MyTeamFragment$onViewCreated$2 -> ninja.cricks.ui.b.e$g:
     ninja.cricks.ui.contest.MyTeamFragment this$0 -> g
     1:1:java.lang.Object invoke(java.lang.Object):36:36 -> O
     1:2:void invoke(ninja.cricks.models.MyTeamModels):92:93 -> a
-ninja.cricks.ui.contest.MyTeamFragment$onViewCreated$2 -> ninja.cricks.ui.b.e$h:
+ninja.cricks.ui.contest.MyTeamFragment$onViewCreated$3 -> ninja.cricks.ui.b.e$h:
     ninja.cricks.ui.contest.MyTeamFragment this$0 -> g
     1:3:void onClick(android.view.View):97:99 -> onClick
     4:4:void onClick(android.view.View):101:101 -> onClick
     5:5:void onClick(android.view.View):99:99 -> onClick
-ninja.cricks.ui.contest.MyTeamFragment$onViewCreated$3 -> ninja.cricks.ui.b.e$i:
+ninja.cricks.ui.contest.MyTeamFragment$onViewCreated$4 -> ninja.cricks.ui.b.e$i:
     ninja.cricks.ui.contest.MyTeamFragment this$0 -> g
     1:1:void onRefresh():105:105 -> v
 ninja.cricks.ui.contest.PlayerStatsFragment -> ninja.cricks.ui.b.f:

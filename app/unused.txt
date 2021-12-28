@@ -2500,6 +2500,7 @@ androidx.navigation.fragment.R$layout
 androidx.browser.customtabs.CustomTabsClient$2$4
 kotlin.collections.ArraysKt___ArraysKt$asSequence$$inlined$Sequence$3
 ninja.cricks.requestmodels.RequestCreateTeamModel:
+    public static synthetic ninja.cricks.requestmodels.RequestCreateTeamModel copy$default(ninja.cricks.requestmodels.RequestCreateTeamModel,java.lang.String,java.lang.String,java.lang.String,int,int,int,int,java.util.ArrayList,java.util.ArrayList,java.lang.String,int,java.lang.Object)
     public final java.lang.String getUser_id()
     public final java.lang.String getToken()
     public final void setToken(java.lang.String)
@@ -2511,6 +2512,17 @@ ninja.cricks.requestmodels.RequestCreateTeamModel:
     public final java.util.ArrayList getTeams()
     public final java.util.ArrayList getTeam_id()
     public final java.lang.String getSystem_token()
+    public final java.lang.String component1()
+    public final java.lang.String component2()
+    public final java.lang.String component3()
+    public final int component4()
+    public final int component5()
+    public final int component6()
+    public final int component7()
+    public final java.util.ArrayList component8()
+    public final java.util.ArrayList component9()
+    public final java.lang.String component10()
+    public final ninja.cricks.requestmodels.RequestCreateTeamModel copy(java.lang.String,java.lang.String,java.lang.String,int,int,int,int,java.util.ArrayList,java.util.ArrayList,java.lang.String)
 androidx.core.app.AppOpsManagerCompat:
     private void <init>()
     public static int noteOp(android.content.Context,java.lang.String,int,java.lang.String)
@@ -27870,17 +27882,6 @@ androidx.appcompat.widget.ActivityChooserView$ActivityChooserViewAdapter:
 kotlin.jvm.internal.markers.KMutableList
 androidx.core.view.ViewPropertyAnimatorCompat$2:
     final synthetic androidx.core.view.ViewPropertyAnimatorCompat this$0
-ninja.cricks.requestmodels.RequestCreateTeamModel:
-    private java.lang.String user_id
-    private java.lang.String token
-    private java.lang.String match_id
-    private int create_team_id
-    private int trump
-    private int captain
-    private int vice_captain
-    private java.util.ArrayList teams
-    private java.util.ArrayList team_id
-    private java.lang.String system_token
 com.google.android.gms.common.api.internal.ListenerHolder$ListenerKey:
     void <init>(java.lang.Object,java.lang.String)
 androidx.constraintlayout.solver.widgets.VirtualLayout:

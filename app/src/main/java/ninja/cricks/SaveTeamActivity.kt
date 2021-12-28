@@ -5,6 +5,7 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -43,6 +44,7 @@ import kotlin.collections.HashMap
 
 class SaveTeamActivity : BaseActivity(), OnRolesSelected {
 
+    private var TAG: String = SaveTeamActivity::class.java.simpleName
     private var mCreateTeamRequest: RequestCreateTeamModel? = null
     var myTeamModel: MyTeamModels? = null
     private var isTrumpSelected: Boolean = false
@@ -63,14 +65,10 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
     }
 
     override fun onBitmapSelected(bitmap: Bitmap) {
-
-
     }
 
     override fun onUploadedImageUrl(url: String) {
-        TODO("Not yet implemented")
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -152,7 +150,6 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
             }
 
         })
-
     }
 
     override fun onResume() {
@@ -400,7 +397,6 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
         onReady()
     }
 
-
     override fun onReady() {
 
         if (isCaptainSelected && isViceCaptainSelected) {
@@ -421,6 +417,9 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
             return
         }
         request.system_token = MyPreferences.getSystemToken(this)!!
+
+        Log.e(TAG, "create team request =======> ${request.toString()}")
+
 
         customeProgressDialog.show()
         WebServiceClient(this).client.create(IApiMethod::class.java).createTeam(request)

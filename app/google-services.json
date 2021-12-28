@@ -129,6 +129,14 @@
           }
         },
         {
+          "client_id": "701940049916-fji6q2qmg8boi2oc0j83123cobhfji87.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ninja.cricks",
+            "certificate_hash": "f1b976f3394c4e4d3bc57f68c5f52a7fb879da4d"
+          }
+        },
+        {
           "client_id": "701940049916-fqapide5elk50imbcir5hsvvkdmkd8pa.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

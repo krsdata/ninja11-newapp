@@ -145,7 +145,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
                 if (isCopyTeam) {
                     myTeamModel!!.teamId!!.teamId = 0
                 }
-                intent.putExtra(MyTeamFragment.SERIALIZABLE_EDIT_TEAM, myTeamModel)
+                intent.putExtra(SERIALIZABLE_EDIT_TEAM, myTeamModel)
             }
             startActivityForResult(intent, CREATETEAM_REQUESTCODE)
         })
@@ -1177,7 +1177,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
     private fun parseEditTeamModel(
         realList: java.util.ArrayList<PlayersInfoModel>,
         position: Int
-    ): java.util.ArrayList<PlayersInfoModel> {
+    ): ArrayList<PlayersInfoModel> {
         return realList
     }
 
