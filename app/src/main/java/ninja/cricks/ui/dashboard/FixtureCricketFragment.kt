@@ -134,7 +134,7 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
 
     private fun getAllMatches() {
         val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(requireContext(), (Constant.getAllMatcesDatabaseId))
-        if (lastTimeApiCall!!+Constant.delayApiSeconds < System.currentTimeMillis()) {
+        if (lastTimeApiCall!!+Constant.delayMessageApiSeconds < System.currentTimeMillis()) {
             allContestsApiCall()
         }
         else {

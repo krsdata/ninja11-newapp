@@ -506,13 +506,7 @@ class MainActivity : BaseActivity(), /*BottomNavigationView.OnNavigationItemSele
             val intent = Intent(mContext, InviteFriendsActivity::class.java)
             val options = ActivityOptions.makeSceneTransitionAnimation(this@MainActivity)
             startActivity(intent, options.toBundle())
-        }/* else if (position == 3) {
-            val intent = Intent(mContext, WebActivity::class.java)
-            intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_FANTASY_POINTS)
-            intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_FANTASY_POINTS)
-            val options = ActivityOptions.makeSceneTransitionAnimation(this@MainActivity)
-            startActivity(intent, options.toBundle())
-        }*/ else if (position == 3) {
+        } else if (position == 3) {
             val intent = Intent(mContext, WebActivity::class.java)
             intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_FANTASY_POINTS)
             intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_FANTASY_POINTS)
@@ -521,7 +515,7 @@ class MainActivity : BaseActivity(), /*BottomNavigationView.OnNavigationItemSele
         } else if (position == 4) {
        //     mBinding!!.navigation.selectedItemId = R.id.navigation_notifications
             mBinding!!.navigation.show(ID_NOTIFICATIONS,true)
-            fragment = FixtureCricketFragment()
+            fragment = MoreOptionsFragment()
             loadFragment()
         } else if (position == 5) {
             logoutApp("Are you sure you want to logout", true)

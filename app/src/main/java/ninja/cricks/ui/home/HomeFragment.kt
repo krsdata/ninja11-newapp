@@ -94,7 +94,7 @@ class HomeFragment : Fragment() {
         val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(requireContext(),
             (Constant.getMessagesDatabaseId)
         )
-        if (lastTimeApiCall!!+ Constant.delayApiSeconds < System.currentTimeMillis()) {
+        if (lastTimeApiCall!!+ Constant.delayMessageApiSeconds < System.currentTimeMillis()) {
             // if (activity != null && isAdded) {
             getMessageApiCall()
             //   }
