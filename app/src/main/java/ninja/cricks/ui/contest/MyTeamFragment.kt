@@ -3,6 +3,7 @@ package ninja.cricks.ui.contest
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -75,10 +76,13 @@ class MyTeamFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         customeProgressDialog = CustomProgressDialog2(activity)
         getMyTeam()
-        parentFragmentManager.setFragmentResultListener(CreateTeamActivity.CREATETEAM_REQUESTCODE.toString(),this,
+        parentFragmentManager.setFragmentResultListener(CreateTeamActivity.CREATETEAM_REQUESTCODE.toString(),
+            this,
             { s: String, bundle: Bundle ->
                 if (bundle.get(ContestActivity.SERIALIZABLE_KEY_CREATE_TEAM) == "result_ok") {
-                    getMyteamApiCall()
+//                    Handler().postDelayed({
+//                        getMyteamApiCall()
+//                    }, 100)
                 }
             })
         mBinding!!.recyclerMyTeam.layoutManager =
@@ -93,7 +97,7 @@ class MyTeamFragment : Fragment() {
             getPoints(objects.teamId!!.teamId)
 
         }
-        mBinding!!.btnCreateTeam.setOnClickListener{
+        mBinding!!.btnCreateTeam.setOnClickListener {
             val intent = Intent(activity, CreateTeamActivity::class.java)
             intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
             requireActivity().startActivityForResult(
@@ -114,8 +118,7 @@ class MyTeamFragment : Fragment() {
             myTeamArrayList.addAll((activity as ContestActivity).responseMyTeamList)
             adapter.notifyDataSetChanged()
             mListener.onMyTeam(myTeamArrayList)
-        }
-        else if (mBinding != null) {
+        } else if (mBinding != null) {
             mBinding!!.linearEmptyContest.visibility = View.VISIBLE
         }
     }
@@ -141,7 +144,7 @@ class MyTeamFragment : Fragment() {
             .getPoints(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                        customeProgressDialog.dismiss()
+                    customeProgressDialog.dismiss()
                 }
 
                 override fun onResponse(
@@ -235,18 +238,19 @@ class MyTeamFragment : Fragment() {
     }
 
     fun getMyTeam() {
-        val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(requireContext(),
-            (Constant.myTeamFragmentDatabaseId+matchObject!!.matchId)
+        val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(
+            requireContext(),
+            (Constant.myTeamFragmentDatabaseId + matchObject!!.matchId)
         )
-        if (lastTimeApiCall!!+ Constant.delayApiSeconds < System.currentTimeMillis()) {
+        if (lastTimeApiCall!! + Constant.delayApiSeconds < System.currentTimeMillis()) {
             getMyteamApiCall()
-        }
-        else {
+        } else {
             CoroutineScope(Dispatchers.IO).launch {
-                val value = ResponseDatabase.getInstance(requireContext()).responseDao().getResponse((Constant.myTeamFragmentDatabaseId+ matchObject!!.matchId).toLong())
+                val value = ResponseDatabase.getInstance(requireContext()).responseDao()
+                    .getResponse((Constant.myTeamFragmentDatabaseId + matchObject!!.matchId).toLong())
 
-                if (value != null && value.type == (Constant.myTeamFragmentDatabaseId + matchObject!!.matchId)){
-                    withContext(Dispatchers.Main){allTeam(value.res)}
+                if (value != null && value.type == (Constant.myTeamFragmentDatabaseId + matchObject!!.matchId)) {
+                    withContext(Dispatchers.Main) { allTeam(value.res) }
                 }
             }
         }
@@ -257,7 +261,6 @@ class MyTeamFragment : Fragment() {
         val responseModel = res.responseObject
         if (responseModel != null) {
             if (responseModel.myTeamList != null && responseModel.myTeamList!!.isNotEmpty()) {
-                mBinding!!.linearEmptyContest.visibility = View.GONE
                 myTeamArrayList.clear()
                 (activity as ContestActivity).responseMyTeamList.clear()
                 (activity as ContestActivity).responseMyTeamList.addAll(responseModel.myTeamList!!)
@@ -274,7 +277,7 @@ class MyTeamFragment : Fragment() {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-        if(mBinding != null) {
+        if (mBinding != null) {
             mBinding!!.linearEmptyContest.visibility = View.GONE
         }
         ///mBinding!!.progressMyteam.visibility = View.VISIBLE
@@ -306,7 +309,7 @@ class MyTeamFragment : Fragment() {
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    if(mBinding != null) {
+                    if (mBinding != null) {
                         mBinding!!.myteamRefresh.isRefreshing = false
                     }
                     //mBinding!!.progressMyteam.visibility = View.GONE
@@ -316,12 +319,23 @@ class MyTeamFragment : Fragment() {
                         if (res.status) {
                             val responseModel = res.responseObject
                             if (responseModel != null) {
+
                                 viewLifecycleOwner.lifecycleScope.launch {
-                                    withContext(Dispatchers.Main){ allTeam(res) }
-                                    withContext(Dispatchers.IO){
-                                        MyPreferences.saveLastTimeForApiCall(context!!,Constant.myTeamFragmentDatabaseId + matchObject!!.matchId, System.currentTimeMillis())
-                                        ResponseDatabase.getInstance(context!!).responseDao().saveResponse(ninja.cricks.roomDatabase.Response(
-                                            (Constant.myTeamFragmentDatabaseId + matchObject!!.matchId),System.currentTimeMillis(),res))
+                                    withContext(Dispatchers.Main) { allTeam(res) }
+                                    withContext(Dispatchers.IO) {
+                                        MyPreferences.saveLastTimeForApiCall(
+                                            context!!,
+                                            Constant.myTeamFragmentDatabaseId + matchObject!!.matchId,
+                                            System.currentTimeMillis()
+                                        )
+                                        ResponseDatabase.getInstance(context!!).responseDao()
+                                            .saveResponse(
+                                                ninja.cricks.roomDatabase.Response(
+                                                    (Constant.myTeamFragmentDatabaseId + matchObject!!.matchId),
+                                                    System.currentTimeMillis(),
+                                                    res
+                                                )
+                                            )
                                     }
                                 }
                             }
@@ -336,7 +350,8 @@ class MyTeamFragment : Fragment() {
                     }
                     updateEmptyViews()
                 }
-            })    }
+            })
+    }
 
     fun updateEmptyViews() {
         if (myTeamArrayList.size == 0) {
@@ -435,7 +450,10 @@ class MyTeamFragment : Fragment() {
 
             val jsonRequest = JsonObject()
             jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
-            jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
+            jsonRequest.addProperty(
+                "system_token",
+                MyPreferences.getSystemToken(requireActivity())!!
+            )
             jsonRequest.addProperty("team_id", teamid!!.teamId)
 
             WebServiceClient(activity!!).client.create(IApiMethod::class.java).copyTeam(jsonRequest)
@@ -446,7 +464,7 @@ class MyTeamFragment : Fragment() {
                                 mBinding!!.myteamRefresh.isRefreshing = false
                             }
                             MyUtils.showToast(activity!! as AppCompatActivity, t!!.localizedMessage)
-                           // mBinding!!.progressMyteam.visibility = View.GONE
+                            // mBinding!!.progressMyteam.visibility = View.GONE
                             customeProgressDialog.dismiss()
                             updateEmptyViews()
                         }
