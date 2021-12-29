@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/matches_view_left_margin_consolidated"
         android:layout_marginEnd="@dimen/matches_view_right_margin"
+        android:layout_marginBottom="@dimen/_5sdp"
         android:fontFamily="@font/open_sans_semibold"
         android:textStyle="bold"
         android:text="UPCOMING MATCHES"

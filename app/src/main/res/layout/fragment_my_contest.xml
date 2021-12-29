@@ -43,7 +43,6 @@
                 android:layout_height="@dimen/_120sdp"
                 android:layout_marginTop="20dp"
                 android:scaleType="fitXY"
-                android:background="@color/colorPrimary"
                 android:src="@mipmap/ic_launcher_round" />
 
             <TextView

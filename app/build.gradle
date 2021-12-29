@@ -14,8 +14,8 @@ android {
         applicationId "ninja.cricks"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 3303
-        versionName "3.3"
+        versionCode 3304
+        versionName "3.4"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         setProperty("archivesBaseName", "Ninja11-$versionName")

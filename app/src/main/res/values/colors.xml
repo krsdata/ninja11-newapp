@@ -2,14 +2,14 @@
 <resources>
 
     <!-- Primary theme colors -->
-    <color name="colorPrimary">#CB0016</color>
+    <color name="colorPrimary">#BD0016</color>
     <color name="colorPrimaryDark">#24292f</color>
-    <color name="colorAccent">#CB0016</color>
+    <color name="colorAccent">#BD0016</color>
 
     <!-- Secondry theme colors -->
-    <color name="colorSecond">#CB0016</color>
-    <color name="colorSecondDark">#CB0016</color>
-    <color name="colorSecondAccent">#CB0016</color>
+    <color name="colorSecond">#BD0016</color>
+    <color name="colorSecondDark">#BD0016</color>
+    <color name="colorSecondAccent">#BD0016</color>
 
 
     <color name="colorAccent2">#0172AC</color>
@@ -19,7 +19,7 @@
     <color name="theme_color_hdr">#24292f</color>
 
 
-    <color name="notification">#c61d24</color>
+    <color name="notification">#BD0016</color>
 
     <!-- 0172AC Here you can add color of your choice  -->
     <color name="ucrop_color_toolbar">@color/colorPrimary</color>

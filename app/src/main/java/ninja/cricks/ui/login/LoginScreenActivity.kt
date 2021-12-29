@@ -67,7 +67,7 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
         firebaseAuth = FirebaseAuth.getInstance()
-        window.statusBarColor = resources.getColor(R.color.blue)
+        window.statusBarColor = resources.getColor(R.color.colorSecond)
 
         if (intent.hasExtra(RegisterScreenActivity.ISACTIVITYRESULT)) {
             isActivityRequiredResult =

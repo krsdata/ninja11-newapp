@@ -46,6 +46,9 @@ import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
 
 class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
@@ -104,8 +107,12 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
             allmatchesArrayList.addAll(upcomingmatchlist)
         }*/
         adapter = MatchesAdapter(requireActivity(), allmatchesArrayList)
-        mBinding!!.allGameViewRecycler.adapter = adapter
         getAllMatches()
+        mBinding!!.allGameViewRecycler.adapter = adapter
+
+        requireActivity().runOnUiThread {
+            getAllMatches()
+        }
     }
 
     private fun isValidRequest(): Boolean {
@@ -177,8 +184,7 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
         jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
 
         WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
-            .getAllMatches(jsonRequest)
-            .enqueue(object : Callback<UsersPostDBResponse?> {
+            .getAllMatches(jsonRequest).enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     mBinding!!.swipeRefresh.isRefreshing = false
                 }
@@ -227,7 +233,8 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
                         }
                     updateEmptyViews()
                 }
-            })    }
+            })
+    }
 
     private fun allContests(resObje: UsersPostDBResponse) {
         val responseObject = resObje.responseObject
@@ -241,7 +248,6 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
         if (offerImage != "" && offerImage.contains("http")) {
             showAlert(offerImage)
         }
-
     }
 
     private fun addAllList(userPostData: java.util.ArrayList<MatchesModels>) {
@@ -292,11 +298,11 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
             }
         }).into(offerImageView)
 
-        sdialog.setOnKeyListener(DialogInterface.OnKeyListener { dialog, keyCode, keyEvent ->
+        sdialog.setOnKeyListener { dialog, keyCode, keyEvent ->
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 dialog.dismiss()
             }
             true
-        })
+        }
     }
 }

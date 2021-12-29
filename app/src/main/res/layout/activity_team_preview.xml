@@ -13,7 +13,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/ground_test"
+        android:background="@drawable/new_ground"
         android:fitsSystemWindows="true">
 
         <TextView

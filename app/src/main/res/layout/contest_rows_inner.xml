@@ -5,12 +5,11 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/matches_view_left_margin_consolidated"
-        android:layout_marginTop="@dimen/matches_view_top_margin"
-        android:layout_marginRight="@dimen/matches_view_left_margin_consolidated"
-        android:layout_marginBottom="5dp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_11sdp"
         app:cardCornerRadius="6dp"
-        app:cardElevation="12dp">
+        app:cardElevation="@dimen/_4sdp">
 
         <LinearLayout
             android:id="@+id/linear_trades_status"
@@ -38,9 +37,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="start|center"
+                        android:layout_marginStart="@dimen/_5sdp"
                         android:fontFamily="open_sans"
                         android:gravity="start|center"
-                        android:layout_marginStart="@dimen/_5sdp"
                         android:text="Prize Pool"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11sdp"
@@ -53,25 +52,25 @@
                         android:layout_alignParentStart="true"
                         android:background="@drawable/contest_title_rectacgle"
                         android:fontFamily="open_sans"
-                        android:paddingStart="5dp"
                         android:gravity="center"
+                        android:paddingStart="5dp"
                         android:paddingEnd="5dp"
+                        android:shadowColor="@android:color/transparent"
                         android:shadowDx="1"
                         android:shadowDy="1"
                         android:shadowRadius="20"
-                        android:shadowColor="@android:color/transparent"
                         android:text="Prize Pool"
-                        android:visibility="visible"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_10sdp" />
+                        android:textSize="@dimen/_10sdp"
+                        android:visibility="visible" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="end|center"
-                    android:layout_weight="1"
                     android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_weight="1"
                     android:gravity="end|center">
 
                     <TextView
@@ -310,8 +309,8 @@
                     android:layout_height="6dp"
                     android:indeterminateDrawable="@android:drawable/progress_indeterminate_horizontal"
                     android:indeterminateOnly="false"
-                    android:max="10"
                     android:indeterminateTint="@color/theme_color_hdr"
+                    android:max="10"
                     android:progress="4"
                     android:progressDrawable="@drawable/progressbar_inderminate" />
 

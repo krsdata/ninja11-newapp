@@ -56,6 +56,7 @@
             app:tabIndicatorHeight="0dp"
             app:tabMode="fixed"
             app:tabRippleColor="@null"
+            android:visibility="gone"
             app:tabSelectedTextColor="@color/white"
             app:tabTextAppearance="@style/TabTextAppearance"
             app:tabTextColor="@color/black" />
@@ -75,7 +76,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/tabs"
-            android:layout_marginTop="@dimen/_5sdp"
             android:elevation="@dimen/_10sdp" />
 
     </RelativeLayout>

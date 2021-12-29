@@ -65,6 +65,7 @@ class SplashScreenActivity : BaseActivity() {
             this,
             R.layout.activity_splash
         )
+        window.statusBarColor = resources.getColor(R.color.colorSecond)
 
         MainActivity.CHECK_APK_UPDATE_API = false
         MainActivity.CHECK_WALLET_ONCE = false

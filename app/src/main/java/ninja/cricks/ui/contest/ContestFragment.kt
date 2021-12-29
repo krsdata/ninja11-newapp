@@ -609,13 +609,12 @@ class ContestFragment : Fragment() {
                 val categoryModel: ContestCategoryModel = arrayList[position]
                 holder.contestTitle.text = categoryModel.name
                 if (categoryModel.isStatus) {
-                    holder.filterLayout.background =
-                        mContext.resources.getDrawable(R.drawable.new_filter_color_back)
-                    holder.contestTitle.setTextColor(mContext.resources.getColor(R.color.white))
+//                    holder.filterLayout.background = mContext.resources.getDrawable(R.drawable.new_filter_color_back)
+         //           holder.contestTitle.setTextColor(mContext.resources.getColor(R.color.white))
+                    holder.contestTitle.setTextColor(mContext.resources.getColor(R.color.green))
                 } else {
                     holder.contestTitle.setTextColor(mContext.resources.getColor(R.color.crop__selector_focused))
-                    holder.filterLayout.background =
-                        mContext.resources.getDrawable(R.drawable.new_filter_back)
+//                    holder.filterLayout.background = mContext.resources.getDrawable(R.drawable.new_filter_back)
                 }
                 holder.filterLayout.setOnClickListener(ClickView(position))
             } catch (e: Exception) {

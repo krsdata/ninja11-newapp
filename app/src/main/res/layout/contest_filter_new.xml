@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/filter_layout"
     android:layout_width="wrap_content"
-    android:layout_height="@dimen/_25sdp"
+    android:layout_height="@dimen/_30sdp"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -12,9 +12,14 @@
         android:layout_height="match_parent"
         android:fontFamily="@font/open_sans"
         android:textStyle="bold"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:text="Mega Contest"
-        android:padding="@dimen/_5sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:paddingStart="@dimen/_7sdp"
+        android:paddingEnd="@dimen/_7sdp"
         android:textColor="@color/black"
-        android:textSize="@dimen/header_size" />
+        android:textSize="@dimen/_12sdp" />
 
 </LinearLayout>
