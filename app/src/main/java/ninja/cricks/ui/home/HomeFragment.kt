@@ -143,7 +143,7 @@ class HomeFragment : Fragment() {
                         lifecycleScope.launch {
                             withContext(Dispatchers.Main){ getMessage2(response.body()!!) }
                             withContext(Dispatchers.IO){
-                                MyPreferences.saveLastTimeForApiCall(requireContext(),Constant.getMessagesDatabaseId, System.currentTimeMillis())
+                                if (isAdded)MyPreferences.saveLastTimeForApiCall(requireContext(),Constant.getMessagesDatabaseId, System.currentTimeMillis())
                                 ResponseDatabase.getInstance(requireContext()).responseDao().saveResponseJsonObject(ninja.cricks.roomDatabase.ResponseJsonObject(
                                     (Constant.getMessagesDatabaseId),System.currentTimeMillis(),
                                     response.body()!!

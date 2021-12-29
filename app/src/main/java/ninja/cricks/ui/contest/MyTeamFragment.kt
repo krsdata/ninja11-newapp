@@ -58,6 +58,14 @@ class MyTeamFragment : Fragment() {
         super.onCreate(savedInstanceState)
         matchObject =
             requireArguments().get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
+        customeProgressDialog = CustomProgressDialog2(activity)
+        getMyTeam()
+        parentFragmentManager.setFragmentResultListener(CreateTeamActivity.CREATETEAM_REQUESTCODE.toString(),this,
+            { s: String, bundle: Bundle ->
+                if (bundle.get(ContestActivity.SERIALIZABLE_KEY_CREATE_TEAM) == "result_ok") {
+                    getMyteamApiCall()
+                }
+            })
     }
 
     override fun onCreateView(
@@ -73,14 +81,6 @@ class MyTeamFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        customeProgressDialog = CustomProgressDialog2(activity)
-        getMyTeam()
-        parentFragmentManager.setFragmentResultListener(CreateTeamActivity.CREATETEAM_REQUESTCODE.toString(),this,
-            { s: String, bundle: Bundle ->
-                if (bundle.get(ContestActivity.SERIALIZABLE_KEY_CREATE_TEAM) == "result_ok") {
-                    getMyteamApiCall()
-                }
-            })
         mBinding!!.recyclerMyTeam.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
 
