@@ -210,7 +210,7 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
                     R.string.contest_type_contests
                 ))
         }
-        adapter.addFragment(MyContestFragment.newInstance(bundle), getString(
+        adapter.addFragment(MyContestFragment.newInstance(bundle),getString(
                 R.string.contest_type_mycontest
             ))
         adapter.addFragment(MyTeamFragment.newInstance(bundle), getString(
