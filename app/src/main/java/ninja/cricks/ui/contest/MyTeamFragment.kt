@@ -76,15 +76,6 @@ class MyTeamFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         customeProgressDialog = CustomProgressDialog2(activity)
         getMyTeam()
-        parentFragmentManager.setFragmentResultListener(CreateTeamActivity.CREATETEAM_REQUESTCODE.toString(),
-            this,
-            { s: String, bundle: Bundle ->
-                if (bundle.get(ContestActivity.SERIALIZABLE_KEY_CREATE_TEAM) == "result_ok") {
-//                    Handler().postDelayed({
-//                        getMyteamApiCall()
-//                    }, 100)
-                }
-            })
         mBinding!!.recyclerMyTeam.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
 
@@ -100,7 +91,7 @@ class MyTeamFragment : Fragment() {
         mBinding!!.btnCreateTeam.setOnClickListener {
             val intent = Intent(activity, CreateTeamActivity::class.java)
             intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
-            requireActivity().startActivityForResult(
+            startActivityForResult(
                 intent,
                 CreateTeamActivity.CREATETEAM_REQUESTCODE
             )
@@ -519,6 +510,19 @@ class MyTeamFragment : Fragment() {
             val linearPointViews = itemView.findViewById<LinearLayout>(R.id.linear_point_views)
             val linearTeamCountViews =
                 itemView.findViewById<LinearLayout>(R.id.linear_team_count_view)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == AppCompatActivity.RESULT_OK) {
+            if (data != null) {
+              //  MyUtils.showToast(requireActivity(), data.getStringExtra("keyName")!!)
+            }
+            if (requestCode == CreateTeamActivity.CREATETEAM_REQUESTCODE && resultCode == AppCompatActivity.RESULT_OK) {
+                val bundle1 = Bundle()
+                getMyteamApiCall()
+            }
         }
     }
 }

@@ -73,12 +73,6 @@ class ContestFragment : Fragment() {
             requireArguments().get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
         matchObject = objectMatches
         getAllContest(true)
-        parentFragmentManager.setFragmentResultListener(CreateTeamActivity.CREATETEAM_REQUESTCODE.toString(),this,
-            { s: String, bundle: Bundle ->
-                if (bundle.get(ContestActivity.SERIALIZABLE_KEY_CREATE_TEAM) == "result_ok") {
-                    allContestsApiCall(true)
-                }
-            })
         parentFragmentManager.setFragmentResultListener("filter", this, {
                 s: String, bundle: Bundle ->
             (activity as ContestActivity).filterContestList()
@@ -142,7 +136,7 @@ class ContestFragment : Fragment() {
         mBinding!!.btnCreateTeam.setOnClickListener(View.OnClickListener {
             val intent = Intent(activity, CreateTeamActivity::class.java)
             intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
-            requireActivity().startActivityForResult(
+            startActivityForResult(
                 intent,
                 CreateTeamActivity.CREATETEAM_REQUESTCODE
             )
@@ -790,5 +784,12 @@ class ContestFragment : Fragment() {
                         }
                 }
             })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CreateTeamActivity.CREATETEAM_REQUESTCODE && resultCode == AppCompatActivity.RESULT_OK) {
+            allContestsApiCall(true)
+        }
     }
 }
