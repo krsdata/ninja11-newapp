@@ -532,6 +532,7 @@ class ContestFragment : Fragment() {
             )
             (activity as ContestActivity).filterContestList()
             allContest((activity as ContestActivity).filteredAllContestListData)
+
             mListener.onMyTeam(responseModel.myjoinedTeams!!)
             mListener.onMyContest(responseModel.joinedContestDetails!!)
         }
@@ -788,6 +789,11 @@ class ContestFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        /*if (resultCode == AppCompatActivity.RESULT_OK) {
+            if (data != null && data.getStringExtra("keyName")!! != null) {
+                allContestsApiCall(true)
+            }
+        }*/
         if (requestCode == CreateTeamActivity.CREATETEAM_REQUESTCODE && resultCode == AppCompatActivity.RESULT_OK) {
             allContestsApiCall(true)
         }

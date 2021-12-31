@@ -241,8 +241,8 @@ androidx.core.database.CursorWindowCompat
 com.github.ybq.android.spinkit.sprite.RingSprite:
     public android.animation.ValueAnimator onCreateAnimation()
 ninja.cricks.utils.HardwareInfoManager:
-    public final int getRows$Ninja11_3_3_release()
-    public final void setRows$Ninja11_3_3_release(int)
+    public final int getRows$Ninja11_3_4_release()
+    public final void setRows$Ninja11_3_4_release(int)
     public final int getOs()
     public final java.lang.String getDataDiaryVersion()
     public final java.lang.String getProductInfo()
@@ -250,8 +250,8 @@ ninja.cricks.utils.HardwareInfoManager:
     public final java.lang.String getOsVersion()
     public final java.lang.String getTimeZone()
     public final java.lang.String getDefaultCarrierName()
-    public final android.content.Context getHardwareContext$Ninja11_3_3_release()
-    public final void setHardwareContext$Ninja11_3_3_release(android.content.Context)
+    public final android.content.Context getHardwareContext$Ninja11_3_4_release()
+    public final void setHardwareContext$Ninja11_3_4_release(android.content.Context)
     private int rows
 kotlinx.coroutines.flow.FlowKt__MergeKt$map$$inlined$unsafeTransform$1$2$1
 androidx.databinding.ObservableParcelable
@@ -28715,8 +28715,6 @@ com.andrognito.flashbar.anim.FlashAnim:
     public static synthetic void start$flashbar_release$default(com.andrognito.flashbar.anim.FlashAnim,com.andrognito.flashbar.anim.FlashAnim$InternalAnimListener,int,java.lang.Object)
 io.branch.referral.ServerRequest:
     boolean skipOnTimeOut
-ninja.cricks.ContestActivity$ViewPagerAdapter:
-    final synthetic ninja.cricks.ContestActivity this$0
 ninja.cricks.databinding.ActivityContestBinding:
     public final android.widget.LinearLayout linearTopBar
 kotlin.KotlinVersion:

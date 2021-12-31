@@ -104,7 +104,7 @@ class MainActivity : BaseActivity(), /*BottomNavigationView.OnNavigationItemSele
             startActivity(intent)
         }
 
-      //  getWalletBalances()
+        getWalletBalances()
         setProfileData()
         updateCheckApk()
 

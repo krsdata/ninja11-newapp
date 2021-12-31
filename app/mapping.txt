@@ -1,11 +1,11 @@
 # compiler: R8
 # compiler_version: 2.1.86
 # min_api: 21
-# pg_map_id: 9d2dff1
+# pg_map_id: 60fc8cd
 # common_typos_disable
 $$ServiceLoaderMethods -> a:
-    java.util.Iterator $load$44414() -> a
-    java.util.Iterator $load$44937() -> b
+    java.util.Iterator $load$44432() -> a
+    java.util.Iterator $load$44955() -> b
 $r8$backportedMethods$utility$Boolean$1$hashCode -> b:
     int hashCode(boolean) -> a
 $r8$backportedMethods$utility$Double$1$hashCode -> c:
@@ -111378,24 +111378,25 @@ ninja.cricks.ChangePasswordActivity$updateProfile$1 -> ninja.cricks.ChangePasswo
     7:8:void onResponse(retrofit2.Call,retrofit2.Response):122:123 -> y
     9:9:void onResponse(retrofit2.Call,retrofit2.Response):125:125 -> y
 ninja.cricks.ContestActivity -> ninja.cricks.ContestActivity:
-    java.lang.String SERIALIZABLE_KEY_CREATE_TEAM1 -> e0
-    java.lang.String SERIALIZABLE_KEY_CREATE_TEAM -> d0
+    java.lang.String SERIALIZABLE_KEY_CREATE_TEAM1 -> f0
+    java.lang.String SERIALIZABLE_KEY_CREATE_TEAM -> e0
+    java.lang.String SERIALIZABLE_KEY_CONTEST_OBJECT -> d0
     boolean isTimeUp -> K
-    java.lang.String SERIALIZABLE_KEY_CONTEST_OBJECT -> c0
-    java.lang.String SERIALIZABLE_KEY_MATCH_OBJECT -> b0
+    java.lang.String SERIALIZABLE_KEY_MATCH_OBJECT -> c0
+    java.lang.String SERIALIZABLE_KEY_JOINED_CONTEST -> b0
     boolean filter_text_2 -> U
-    java.lang.String SERIALIZABLE_KEY_JOINED_CONTEST -> a0
+    java.lang.String SERIALIZABLE_KEY_UPCOMING_MATCHES -> a0
     boolean filter_text_3 -> V
     boolean filter_text_11 -> W
     ninja.cricks.databinding.ActivityContestBinding mBinding -> M
     boolean filter_text_101 -> X
     boolean filter2selected -> T
-    ninja.cricks.ContestActivity$Companion Companion -> f0
     java.util.ArrayList responseMyTeamList -> O
+    ninja.cricks.ContestActivity$Companion Companion -> g0
     java.util.ArrayList responseMyJoinedContest -> N
+    androidx.fragment.app.Fragment fragment -> Z
     java.util.ArrayList joinedTeamList -> L
     boolean filter_text_1001 -> Y
-    java.lang.String SERIALIZABLE_KEY_UPCOMING_MATCHES -> Z
     ninja.cricks.models.UpcomingMatchesModel matchObject -> J
     java.util.ArrayList filterTitleArray -> S
     java.util.ArrayList filteredAllContestListData -> R
@@ -111404,18 +111405,20 @@ ninja.cricks.ContestActivity -> ninja.cricks.ContestActivity:
     1:1:java.lang.String access$getSERIALIZABLE_KEY_CREATE_TEAM1$cp():37:37 -> <init>
     1:1:void <init>():37 -> <init>
     2:7:void <init>():46:51 -> <init>
-    1:5:void setupViewPager(androidx.viewpager.widget.ViewPager):205:209 -> A1
-    6:6:void setupViewPager(androidx.viewpager.widget.ViewPager):213:213 -> A1
-    7:7:void setupViewPager(androidx.viewpager.widget.ViewPager):216:216 -> A1
-    8:10:void setupViewPager(androidx.viewpager.widget.ViewPager):220:222 -> A1
-    11:11:void setupViewPager(androidx.viewpager.widget.ViewPager):225:225 -> A1
-    12:13:void setupViewPager(androidx.viewpager.widget.ViewPager):227:228 -> A1
-    14:14:void setupViewPager(androidx.viewpager.widget.ViewPager):230:230 -> A1
-    1:1:void startCountDown():120:120 -> B1
-    2:2:void startCountDown():122:122 -> B1
-    1:5:void updateScores():398:402 -> C1
-    6:7:void updateScores():404:405 -> C1
-    1:3:void updateTimerHeader():143:145 -> D1
+    1:1:void setFragment(androidx.fragment.app.Fragment):58:58 -> A1
+    1:1:void setTimeUp(boolean):42:42 -> B1
+    1:5:void setupViewPager(androidx.viewpager.widget.ViewPager):208:212 -> C1
+    6:6:void setupViewPager(androidx.viewpager.widget.ViewPager):216:216 -> C1
+    7:7:void setupViewPager(androidx.viewpager.widget.ViewPager):219:219 -> C1
+    8:10:void setupViewPager(androidx.viewpager.widget.ViewPager):223:225 -> C1
+    11:11:void setupViewPager(androidx.viewpager.widget.ViewPager):228:228 -> C1
+    12:13:void setupViewPager(androidx.viewpager.widget.ViewPager):230:231 -> C1
+    14:14:void setupViewPager(androidx.viewpager.widget.ViewPager):233:233 -> C1
+    1:1:void startCountDown():122:122 -> D1
+    2:2:void startCountDown():124:124 -> D1
+    1:5:void updateScores():402:406 -> E1
+    6:7:void updateScores():408:409 -> E1
+    1:3:void updateTimerHeader():145:147 -> F1
     void onBitmapSelected(android.graphics.Bitmap) -> H0
     void onUploadedImageUrl(java.lang.String) -> I0
     1:1:java.lang.String access$getSERIALIZABLE_KEY_CREATE_TEAM1$cp():37:37 -> T0
@@ -111432,54 +111435,54 @@ ninja.cricks.ContestActivity -> ninja.cricks.ContestActivity:
     1:1:java.lang.String access$getSERIALIZABLE_KEY_UPCOMING_MATCHES$cp():37 -> Y0
     1:1:java.lang.String access$getSERIALIZABLE_KEY_CREATE_TEAM1$cp():37:37 -> Z0
     1:1:void access$updateTimerHeader(ninja.cricks.ContestActivity):37 -> Z0
-    1:1:void changeTabsPositions(int):158:158 -> a1
-    1:2:void onContestJoinning(ninja.cricks.models.ContestModelLists,int):280:281 -> b
-    3:3:void onContestJoinning(ninja.cricks.models.ContestModelLists,int):284:284 -> b
-    4:8:void onContestJoinning(ninja.cricks.models.ContestModelLists,int):286:290 -> b
-    9:11:void onContestJoinning(ninja.cricks.models.ContestModelLists,int):292:294 -> b
-    1:10:void filterContestList():449:458 -> b1
-    11:11:void filterContestList():460:460 -> b1
-    12:14:void filterContestList():462:464 -> b1
-    15:20:void filterContestList():467:472 -> b1
+    1:1:void changeTabsPositions(int):160:160 -> a1
+    1:2:void onContestJoinning(ninja.cricks.models.ContestModelLists,int):284:285 -> b
+    3:3:void onContestJoinning(ninja.cricks.models.ContestModelLists,int):288:288 -> b
+    4:8:void onContestJoinning(ninja.cricks.models.ContestModelLists,int):290:294 -> b
+    9:11:void onContestJoinning(ninja.cricks.models.ContestModelLists,int):296:298 -> b
+    1:10:void filterContestList():454:463 -> b1
+    11:11:void filterContestList():465:465 -> b1
+    12:14:void filterContestList():467:469 -> b1
+    15:20:void filterContestList():472:477 -> b1
     21:21:java.util.List kotlin.collections.CollectionsKt___CollectionsKt.filter(java.lang.Iterable,kotlin.jvm.functions.Function1):764:764 -> b1
-    21:21:void filterContestList():522 -> b1
+    21:21:void filterContestList():527 -> b1
     22:22:java.util.Collection kotlin.collections.CollectionsKt___CollectionsKt.filterTo(java.lang.Iterable,java.util.Collection,kotlin.jvm.functions.Function1):855:855 -> b1
-    22:22:void filterContestList():523 -> b1
-    23:24:void filterContestList():473:474 -> b1
-    25:26:void filterContestList():477:478 -> b1
-    27:29:void filterContestList():481:483 -> b1
-    30:31:void filterContestList():485:486 -> b1
+    22:22:void filterContestList():528 -> b1
+    23:24:void filterContestList():478:479 -> b1
+    25:26:void filterContestList():482:483 -> b1
+    27:29:void filterContestList():486:488 -> b1
+    30:31:void filterContestList():490:491 -> b1
     32:32:java.util.List kotlin.collections.CollectionsKt___CollectionsKt.filter(java.lang.Iterable,kotlin.jvm.functions.Function1):764:764 -> b1
-    32:32:void filterContestList():525 -> b1
+    32:32:void filterContestList():530 -> b1
     33:33:java.util.Collection kotlin.collections.CollectionsKt___CollectionsKt.filterTo(java.lang.Iterable,java.util.Collection,kotlin.jvm.functions.Function1):855:855 -> b1
-    33:33:void filterContestList():526 -> b1
-    34:35:void filterContestList():487:488 -> b1
-    36:36:void filterContestList():490:490 -> b1
+    33:33:void filterContestList():531 -> b1
+    34:35:void filterContestList():492:493 -> b1
+    36:36:void filterContestList():495:495 -> b1
     37:37:java.util.List kotlin.collections.CollectionsKt___CollectionsKt.filter(java.lang.Iterable,kotlin.jvm.functions.Function1):764:764 -> b1
-    37:37:void filterContestList():528 -> b1
+    37:37:void filterContestList():533 -> b1
     38:38:java.util.Collection kotlin.collections.CollectionsKt___CollectionsKt.filterTo(java.lang.Iterable,java.util.Collection,kotlin.jvm.functions.Function1):855:855 -> b1
-    38:38:void filterContestList():529 -> b1
-    39:40:void filterContestList():491:492 -> b1
-    41:41:void filterContestList():494:494 -> b1
+    38:38:void filterContestList():534 -> b1
+    39:40:void filterContestList():496:497 -> b1
+    41:41:void filterContestList():499:499 -> b1
     42:42:java.util.List kotlin.collections.CollectionsKt___CollectionsKt.filter(java.lang.Iterable,kotlin.jvm.functions.Function1):764:764 -> b1
-    42:42:void filterContestList():531 -> b1
+    42:42:void filterContestList():536 -> b1
     43:43:java.util.Collection kotlin.collections.CollectionsKt___CollectionsKt.filterTo(java.lang.Iterable,java.util.Collection,kotlin.jvm.functions.Function1):855:855 -> b1
-    43:43:void filterContestList():532 -> b1
-    44:45:void filterContestList():495:496 -> b1
-    46:46:void filterContestList():498:498 -> b1
+    43:43:void filterContestList():537 -> b1
+    44:45:void filterContestList():500:501 -> b1
+    46:46:void filterContestList():503:503 -> b1
     47:47:java.util.List kotlin.collections.CollectionsKt___CollectionsKt.filter(java.lang.Iterable,kotlin.jvm.functions.Function1):764:764 -> b1
-    47:47:void filterContestList():534 -> b1
+    47:47:void filterContestList():539 -> b1
     48:48:java.util.Collection kotlin.collections.CollectionsKt___CollectionsKt.filterTo(java.lang.Iterable,java.util.Collection,kotlin.jvm.functions.Function1):855:855 -> b1
-    48:48:void filterContestList():535 -> b1
-    49:50:void filterContestList():499:500 -> b1
-    51:51:void filterContestList():502:502 -> b1
+    48:48:void filterContestList():540 -> b1
+    49:50:void filterContestList():504:505 -> b1
+    51:51:void filterContestList():507:507 -> b1
     52:52:java.util.List kotlin.collections.CollectionsKt___CollectionsKt.filter(java.lang.Iterable,kotlin.jvm.functions.Function1):764:764 -> b1
-    52:52:void filterContestList():537 -> b1
+    52:52:void filterContestList():542 -> b1
     53:53:java.util.Collection kotlin.collections.CollectionsKt___CollectionsKt.filterTo(java.lang.Iterable,java.util.Collection,kotlin.jvm.functions.Function1):855:855 -> b1
-    53:53:void filterContestList():538 -> b1
-    54:55:void filterContestList():503:504 -> b1
-    56:57:void filterContestList():506:507 -> b1
-    58:59:void filterContestList():513:514 -> b1
+    53:53:void filterContestList():543 -> b1
+    54:55:void filterContestList():508:509 -> b1
+    56:57:void filterContestList():511:512 -> b1
+    58:59:void filterContestList():518:519 -> b1
     1:1:void <init>():49:49 -> c1
     1:1:java.util.ArrayList getAllContestListData():49 -> c1
     1:1:void setFilter2selected(boolean):52:52 -> d1
@@ -111492,131 +111495,133 @@ ninja.cricks.ContestActivity -> ninja.cricks.ContestActivity:
     1:1:boolean getFilter_text_101():56 -> g1
     1:1:void setFilter_text_11(boolean):55:55 -> h1
     1:1:boolean getFilter_text_11():55 -> h1
-    1:4:void onMyTeam(java.util.ArrayList):269:272 -> i
-    5:6:void onMyTeam(java.util.ArrayList):274:275 -> i
+    1:4:void onMyTeam(java.util.ArrayList):273:276 -> i
+    5:6:void onMyTeam(java.util.ArrayList):278:279 -> i
     1:1:void setFilter_text_2(boolean):53:53 -> i1
     1:1:boolean getFilter_text_2():53 -> i1
     1:1:void setFilter_text_3(boolean):54:54 -> j1
     1:1:boolean getFilter_text_3():54 -> j1
     1:1:void <init>():50:50 -> k1
     1:1:java.util.ArrayList getFilteredAllContestListData():50 -> k1
-    1:1:void setMatchObject(ninja.cricks.models.UpcomingMatchesModel):41:41 -> l1
-    1:1:ninja.cricks.models.UpcomingMatchesModel getMatchObject():41 -> l1
-    1:1:void <init>():48:48 -> m1
-    1:1:java.util.ArrayList getResPlayerStatsList():48 -> m1
-    1:1:void <init>():46:46 -> n1
-    1:1:java.util.ArrayList getResponseMyJoinedContest():46 -> n1
-    1:1:void <init>():47:47 -> o1
-    1:1:java.util.ArrayList getResponseMyTeamList():47 -> o1
-    1:1:void onActivityResult(int,int,android.content.Intent):162:162 -> onActivityResult
-    2:2:void onActivityResult(int,int,android.content.Intent):165:165 -> onActivityResult
-    3:7:void onActivityResult(int,int,android.content.Intent):167:171 -> onActivityResult
-    8:8:void onActivityResult(int,int,android.content.Intent):170:170 -> onActivityResult
-    9:12:void onActivityResult(int,int,android.content.Intent):174:177 -> onActivityResult
-    13:13:void onActivityResult(int,int,android.content.Intent):176:176 -> onActivityResult
-    14:14:void onActivityResult(int,int,android.content.Intent):183:183 -> onActivityResult
-    1:1:void onBackPressed():195:195 -> onBackPressed
-    1:2:void onCreate(android.os.Bundle):68:69 -> onCreate
-    3:3:void onCreate(android.os.Bundle):71:71 -> onCreate
-    4:4:void onCreate(android.os.Bundle):73:73 -> onCreate
-    5:5:void onCreate(android.os.Bundle):75:75 -> onCreate
-    6:15:void onCreate(android.os.Bundle):77:86 -> onCreate
-    16:17:void onCreate(android.os.Bundle):88:89 -> onCreate
-    18:18:void onCreate(android.os.Bundle):92:92 -> onCreate
-    19:19:void onCreate(android.os.Bundle):96:96 -> onCreate
-    20:21:void onCreate(android.os.Bundle):100:101 -> onCreate
-    1:2:void onPause():153:154 -> onPause
-    1:4:void onResume():110:113 -> onResume
-    5:5:void onResume():115:115 -> onResume
-    1:4:void initScoreCard():370:373 -> p1
-    5:8:void initScoreCard():375:378 -> p1
-    9:11:void initScoreCard():380:382 -> p1
-    12:13:void initScoreCard():384:385 -> p1
-    14:15:void initScoreCard():387:388 -> p1
-    16:17:void initScoreCard():390:391 -> p1
-    18:18:void initScoreCard():393:393 -> p1
-    1:2:void initViewUpcomingMatches():105:106 -> q1
-    1:1:void setTimeUp(boolean):42:42 -> r1
-    1:1:boolean isTimeUp():42 -> r1
-    1:1:void pauseCountDown():149:149 -> s1
-    1:1:void setFilter2selected(boolean):52:52 -> t1
-    1:1:void setFilter_text_1001(boolean):57:57 -> u1
-    1:1:void setFilter_text_101(boolean):56:56 -> v1
-    1:1:void setFilter_text_11(boolean):55:55 -> w1
-    1:3:void onMyContest(java.util.ArrayList):259:261 -> x
-    4:5:void onMyContest(java.util.ArrayList):263:264 -> x
-    1:1:void setFilter_text_2(boolean):53:53 -> x1
-    1:1:void setFilter_text_3(boolean):54:54 -> y1
-    1:1:void setTimeUp(boolean):42:42 -> z1
+    1:1:void setFragment(androidx.fragment.app.Fragment):58:58 -> l1
+    1:1:androidx.fragment.app.Fragment getFragment():58 -> l1
+    1:1:void setMatchObject(ninja.cricks.models.UpcomingMatchesModel):41:41 -> m1
+    1:1:ninja.cricks.models.UpcomingMatchesModel getMatchObject():41 -> m1
+    1:1:void <init>():48:48 -> n1
+    1:1:java.util.ArrayList getResPlayerStatsList():48 -> n1
+    1:1:void <init>():46:46 -> o1
+    1:1:java.util.ArrayList getResponseMyJoinedContest():46 -> o1
+    1:1:void onActivityResult(int,int,android.content.Intent):164:164 -> onActivityResult
+    2:2:void onActivityResult(int,int,android.content.Intent):168:168 -> onActivityResult
+    3:7:void onActivityResult(int,int,android.content.Intent):170:174 -> onActivityResult
+    8:8:void onActivityResult(int,int,android.content.Intent):173:173 -> onActivityResult
+    9:12:void onActivityResult(int,int,android.content.Intent):177:180 -> onActivityResult
+    13:13:void onActivityResult(int,int,android.content.Intent):179:179 -> onActivityResult
+    14:14:void onActivityResult(int,int,android.content.Intent):186:186 -> onActivityResult
+    1:1:void onBackPressed():198:198 -> onBackPressed
+    1:2:void onCreate(android.os.Bundle):70:71 -> onCreate
+    3:3:void onCreate(android.os.Bundle):73:73 -> onCreate
+    4:4:void onCreate(android.os.Bundle):75:75 -> onCreate
+    5:5:void onCreate(android.os.Bundle):77:77 -> onCreate
+    6:15:void onCreate(android.os.Bundle):79:88 -> onCreate
+    16:17:void onCreate(android.os.Bundle):90:91 -> onCreate
+    18:18:void onCreate(android.os.Bundle):94:94 -> onCreate
+    19:19:void onCreate(android.os.Bundle):98:98 -> onCreate
+    20:21:void onCreate(android.os.Bundle):102:103 -> onCreate
+    1:2:void onPause():155:156 -> onPause
+    1:4:void onResume():112:115 -> onResume
+    5:5:void onResume():117:117 -> onResume
+    1:1:void <init>():47:47 -> p1
+    1:1:java.util.ArrayList getResponseMyTeamList():47 -> p1
+    1:4:void initScoreCard():374:377 -> q1
+    5:8:void initScoreCard():379:382 -> q1
+    9:11:void initScoreCard():384:386 -> q1
+    12:13:void initScoreCard():388:389 -> q1
+    14:15:void initScoreCard():391:392 -> q1
+    16:17:void initScoreCard():394:395 -> q1
+    18:18:void initScoreCard():397:397 -> q1
+    1:2:void initViewUpcomingMatches():107:108 -> r1
+    1:1:void setTimeUp(boolean):42:42 -> s1
+    1:1:boolean isTimeUp():42 -> s1
+    1:1:void pauseCountDown():151:151 -> t1
+    1:1:void setFilter2selected(boolean):52:52 -> u1
+    1:1:void setFilter_text_1001(boolean):57:57 -> v1
+    1:1:void setFilter_text_101(boolean):56:56 -> w1
+    1:3:void onMyContest(java.util.ArrayList):263:265 -> x
+    4:5:void onMyContest(java.util.ArrayList):267:268 -> x
+    1:1:void setFilter_text_11(boolean):55:55 -> x1
+    1:1:void setFilter_text_2(boolean):53:53 -> y1
+    1:1:void setFilter_text_3(boolean):54:54 -> z1
 ninja.cricks.ContestActivity$Companion -> ninja.cricks.ContestActivity$a:
-    1:1:void <init>():58:58 -> <init>
-    2:2:void <init>(kotlin.jvm.internal.DefaultConstructorMarker):58:58 -> <init>
-    1:1:java.lang.String getSERIALIZABLE_KEY_CONTEST_OBJECT():62:62 -> a
-    1:1:java.lang.String getSERIALIZABLE_KEY_CREATE_TEAM():63:63 -> b
-    1:1:java.lang.String getSERIALIZABLE_KEY_JOINED_CONTEST():60:60 -> c
-    1:1:java.lang.String getSERIALIZABLE_KEY_MATCH_OBJECT():61:61 -> d
-    1:1:java.lang.String getSERIALIZABLE_KEY_UPCOMING_MATCHES():59:59 -> e
+    1:1:void <init>():60:60 -> <init>
+    2:2:void <init>(kotlin.jvm.internal.DefaultConstructorMarker):60:60 -> <init>
+    1:1:java.lang.String getSERIALIZABLE_KEY_CONTEST_OBJECT():64:64 -> a
+    1:1:java.lang.String getSERIALIZABLE_KEY_CREATE_TEAM():65:65 -> b
+    1:1:java.lang.String getSERIALIZABLE_KEY_JOINED_CONTEST():62:62 -> c
+    1:1:java.lang.String getSERIALIZABLE_KEY_MATCH_OBJECT():63:63 -> d
+    1:1:java.lang.String getSERIALIZABLE_KEY_UPCOMING_MATCHES():61:61 -> e
 ninja.cricks.ContestActivity$ViewPagerAdapter -> ninja.cricks.ContestActivity$b:
     java.util.ArrayList mFragmentTitleList -> i
     java.util.ArrayList mFragmentList -> h
-    1:3:void <init>(ninja.cricks.ContestActivity,androidx.fragment.app.FragmentManager):235:237 -> <init>
-    1:1:int getCount():244:244 -> e
-    1:1:java.lang.CharSequence getPageTitle(int):253:253 -> g
-    1:1:androidx.fragment.app.Fragment getItem(int):240:240 -> v
-    1:2:void addFragment(androidx.fragment.app.Fragment,java.lang.String):248:249 -> y
+    ninja.cricks.ContestActivity this$0 -> j
+    1:4:void <init>(ninja.cricks.ContestActivity,androidx.fragment.app.FragmentManager):237:240 -> <init>
+    1:1:int getCount():248:248 -> e
+    1:1:java.lang.CharSequence getPageTitle(int):257:257 -> g
+    1:2:androidx.fragment.app.Fragment getItem(int):243:244 -> v
+    1:2:void addFragment(androidx.fragment.app.Fragment,java.lang.String):252:253 -> y
 ninja.cricks.ContestActivity$onContestJoinning$1 -> ninja.cricks.ContestActivity$c:
     ninja.cricks.ContestActivity this$0 -> g
     ninja.cricks.models.ContestModelLists $objects -> h
-    1:1:void <init>(ninja.cricks.ContestActivity,ninja.cricks.models.ContestModelLists):294:294 -> <init>
-    1:1:void onFailure(retrofit2.Call,java.lang.Throwable):296:296 -> D
-    1:2:void onResponse(retrofit2.Call,retrofit2.Response):303:304 -> y
-    3:10:void onResponse(retrofit2.Call,retrofit2.Response):306:313 -> y
-    11:11:void onResponse(retrofit2.Call,retrofit2.Response):311:311 -> y
-    12:15:void onResponse(retrofit2.Call,retrofit2.Response):316:316 -> y
-    16:16:void onResponse(retrofit2.Call,retrofit2.Response):322:322 -> y
-    17:17:void onResponse(retrofit2.Call,retrofit2.Response):324:324 -> y
-    18:19:void onResponse(retrofit2.Call,retrofit2.Response):326:327 -> y
-    20:20:void onResponse(retrofit2.Call,retrofit2.Response):325:325 -> y
-    21:21:void onResponse(retrofit2.Call,retrofit2.Response):329:329 -> y
-    22:22:void onResponse(retrofit2.Call,retrofit2.Response):331:331 -> y
-    23:23:void onResponse(retrofit2.Call,retrofit2.Response):329:329 -> y
-    24:24:void onResponse(retrofit2.Call,retrofit2.Response):333:333 -> y
-    25:25:void onResponse(retrofit2.Call,retrofit2.Response):335:335 -> y
-    26:27:void onResponse(retrofit2.Call,retrofit2.Response):337:338 -> y
-    28:28:void onResponse(retrofit2.Call,retrofit2.Response):336:336 -> y
-    29:30:void onResponse(retrofit2.Call,retrofit2.Response):341:342 -> y
-    31:31:void onResponse(retrofit2.Call,retrofit2.Response):340:340 -> y
-    32:33:void onResponse(retrofit2.Call,retrofit2.Response):345:346 -> y
-    34:34:void onResponse(retrofit2.Call,retrofit2.Response):344:344 -> y
-    35:35:void onResponse(retrofit2.Call,retrofit2.Response):348:348 -> y
-    36:36:void onResponse(retrofit2.Call,retrofit2.Response):350:350 -> y
-    37:37:void onResponse(retrofit2.Call,retrofit2.Response):348:348 -> y
-    38:39:void onResponse(retrofit2.Call,retrofit2.Response):353:354 -> y
+    1:1:void <init>(ninja.cricks.ContestActivity,ninja.cricks.models.ContestModelLists):298:298 -> <init>
+    1:1:void onFailure(retrofit2.Call,java.lang.Throwable):300:300 -> D
+    1:2:void onResponse(retrofit2.Call,retrofit2.Response):307:308 -> y
+    3:10:void onResponse(retrofit2.Call,retrofit2.Response):310:317 -> y
+    11:11:void onResponse(retrofit2.Call,retrofit2.Response):315:315 -> y
+    12:15:void onResponse(retrofit2.Call,retrofit2.Response):320:320 -> y
+    16:16:void onResponse(retrofit2.Call,retrofit2.Response):326:326 -> y
+    17:17:void onResponse(retrofit2.Call,retrofit2.Response):328:328 -> y
+    18:19:void onResponse(retrofit2.Call,retrofit2.Response):330:331 -> y
+    20:20:void onResponse(retrofit2.Call,retrofit2.Response):329:329 -> y
+    21:21:void onResponse(retrofit2.Call,retrofit2.Response):333:333 -> y
+    22:22:void onResponse(retrofit2.Call,retrofit2.Response):335:335 -> y
+    23:23:void onResponse(retrofit2.Call,retrofit2.Response):333:333 -> y
+    24:24:void onResponse(retrofit2.Call,retrofit2.Response):337:337 -> y
+    25:25:void onResponse(retrofit2.Call,retrofit2.Response):339:339 -> y
+    26:27:void onResponse(retrofit2.Call,retrofit2.Response):341:342 -> y
+    28:28:void onResponse(retrofit2.Call,retrofit2.Response):340:340 -> y
+    29:30:void onResponse(retrofit2.Call,retrofit2.Response):345:346 -> y
+    31:31:void onResponse(retrofit2.Call,retrofit2.Response):344:344 -> y
+    32:33:void onResponse(retrofit2.Call,retrofit2.Response):349:350 -> y
+    34:34:void onResponse(retrofit2.Call,retrofit2.Response):348:348 -> y
+    35:35:void onResponse(retrofit2.Call,retrofit2.Response):352:352 -> y
+    36:36:void onResponse(retrofit2.Call,retrofit2.Response):354:354 -> y
+    37:37:void onResponse(retrofit2.Call,retrofit2.Response):352:352 -> y
+    38:39:void onResponse(retrofit2.Call,retrofit2.Response):357:358 -> y
 ninja.cricks.ContestActivity$onCreate$1 -> ninja.cricks.ContestActivity$d:
     ninja.cricks.ContestActivity this$0 -> g
-    1:1:void onClick(android.view.View):93:93 -> onClick
+    1:1:void onClick(android.view.View):95:95 -> onClick
 ninja.cricks.ContestActivity$onCreate$2 -> ninja.cricks.ContestActivity$e:
     ninja.cricks.ContestActivity this$0 -> g
-    1:2:void onClick(android.view.View):97:98 -> onClick
+    1:2:void onClick(android.view.View):99:100 -> onClick
 ninja.cricks.ContestActivity$startCountDown$1 -> ninja.cricks.ContestActivity$f:
     ninja.cricks.ContestActivity this$0 -> a
-    1:1:void <init>(ninja.cricks.ContestActivity):122:122 -> <init>
-    1:4:void onTicks(java.lang.String):134:137 -> a
-    1:5:void onTimeFinished():124:128 -> b
+    1:1:void <init>(ninja.cricks.ContestActivity):124:124 -> <init>
+    1:4:void onTicks(java.lang.String):136:139 -> a
+    1:5:void onTimeFinished():126:130 -> b
 ninja.cricks.ContestActivity$updateScores$1 -> ninja.cricks.ContestActivity$g:
     ninja.cricks.ContestActivity this$0 -> g
-    1:1:void <init>(ninja.cricks.ContestActivity):405:405 -> <init>
-    1:1:void onFailure(retrofit2.Call,java.lang.Throwable):407:407 -> D
-    1:2:void onResponse(retrofit2.Call,retrofit2.Response):414:415 -> y
-    3:5:void onResponse(retrofit2.Call,retrofit2.Response):417:419 -> y
-    6:7:void onResponse(retrofit2.Call,retrofit2.Response):422:423 -> y
-    8:8:void onResponse(retrofit2.Call,retrofit2.Response):425:425 -> y
-    9:9:void onResponse(retrofit2.Call,retrofit2.Response):427:427 -> y
-    10:10:void onResponse(retrofit2.Call,retrofit2.Response):430:430 -> y
-    11:11:void onResponse(retrofit2.Call,retrofit2.Response):432:432 -> y
-    12:12:void onResponse(retrofit2.Call,retrofit2.Response):435:435 -> y
-    13:13:void onResponse(retrofit2.Call,retrofit2.Response):439:439 -> y
-    14:14:void onResponse(retrofit2.Call,retrofit2.Response):441:441 -> y
+    1:1:void <init>(ninja.cricks.ContestActivity):409:409 -> <init>
+    1:1:void onFailure(retrofit2.Call,java.lang.Throwable):411:411 -> D
+    1:2:void onResponse(retrofit2.Call,retrofit2.Response):418:419 -> y
+    3:5:void onResponse(retrofit2.Call,retrofit2.Response):421:423 -> y
+    6:7:void onResponse(retrofit2.Call,retrofit2.Response):426:427 -> y
+    8:8:void onResponse(retrofit2.Call,retrofit2.Response):429:429 -> y
+    9:9:void onResponse(retrofit2.Call,retrofit2.Response):431:431 -> y
+    10:10:void onResponse(retrofit2.Call,retrofit2.Response):434:434 -> y
+    11:11:void onResponse(retrofit2.Call,retrofit2.Response):436:436 -> y
+    12:12:void onResponse(retrofit2.Call,retrofit2.Response):439:439 -> y
+    13:13:void onResponse(retrofit2.Call,retrofit2.Response):443:443 -> y
+    14:14:void onResponse(retrofit2.Call,retrofit2.Response):445:445 -> y
 ninja.cricks.ContestLeaderBoardActivity -> ninja.cricks.ContestLeaderBoardActivity:
     ninja.cricks.ContestLeaderBoardActivity$FilterAdapter filterAdapter -> A
     android.view.MenuItem infoMenu -> E
@@ -112962,14 +112967,14 @@ ninja.cricks.MainActivity -> ninja.cricks.MainActivity:
     10:10:void onCreate(android.os.Bundle):93:93 -> onCreate
     11:11:void onCreate(android.os.Bundle):97:97 -> onCreate
     12:12:void onCreate(android.os.Bundle):102:102 -> onCreate
-    13:14:void onCreate(android.os.Bundle):108:109 -> onCreate
-    15:16:void onCreate(android.os.Bundle):113:114 -> onCreate
-    17:18:void onCreate(android.os.Bundle):117:118 -> onCreate
-    19:20:void onCreate(android.os.Bundle):120:121 -> onCreate
-    21:21:void onCreate(android.os.Bundle):118:118 -> onCreate
-    22:22:void onCreate(android.os.Bundle):123:123 -> onCreate
-    23:23:void onCreate(android.os.Bundle):125:125 -> onCreate
-    24:24:void onCreate(android.os.Bundle):129:129 -> onCreate
+    13:15:void onCreate(android.os.Bundle):107:109 -> onCreate
+    16:17:void onCreate(android.os.Bundle):113:114 -> onCreate
+    18:19:void onCreate(android.os.Bundle):117:118 -> onCreate
+    20:21:void onCreate(android.os.Bundle):120:121 -> onCreate
+    22:22:void onCreate(android.os.Bundle):118:118 -> onCreate
+    23:23:void onCreate(android.os.Bundle):123:123 -> onCreate
+    24:24:void onCreate(android.os.Bundle):125:125 -> onCreate
+    25:25:void onCreate(android.os.Bundle):129:129 -> onCreate
     1:1:boolean onOptionsItemSelected(android.view.MenuItem):360:360 -> onOptionsItemSelected
     2:2:boolean onOptionsItemSelected(android.view.MenuItem):363:363 -> onOptionsItemSelected
     1:7:void onResume():243:249 -> onResume
@@ -114343,37 +114348,38 @@ ninja.cricks.SplashScreenActivity -> ninja.cricks.SplashScreenActivity:
     1:4:void loginRequired():53:53 -> W0
     5:6:void loginRequired():57:58 -> W0
     1:3:void onCreate(android.os.Bundle):62:64 -> onCreate
-    4:6:void onCreate(android.os.Bundle):69:71 -> onCreate
-    7:7:void onCreate(android.os.Bundle):73:73 -> onCreate
-    8:14:void onCreate(android.os.Bundle):75:81 -> onCreate
-    15:15:void onCreate(android.os.Bundle):78:78 -> onCreate
-    16:20:void onCreate(android.os.Bundle):83:83 -> onCreate
-    21:24:void onCreate(android.os.Bundle):89:92 -> onCreate
-    25:26:void onCreate(android.os.Bundle):95:96 -> onCreate
-    27:28:void onCreate(android.os.Bundle):98:99 -> onCreate
-    29:29:void onCreate(android.os.Bundle):101:101 -> onCreate
-    30:30:void onCreate(android.os.Bundle):113:113 -> onCreate
-    31:31:void onCreate(android.os.Bundle):101:101 -> onCreate
-    32:32:void onCreate(android.os.Bundle):98:98 -> onCreate
-    33:33:void onCreate(android.os.Bundle):89:89 -> onCreate
-    34:34:void onCreate(android.os.Bundle):73:73 -> onCreate
-    1:2:void onNewIntent(android.content.Intent):136:137 -> onNewIntent
-    3:3:void onNewIntent(android.content.Intent):140:140 -> onNewIntent
-    4:4:void onNewIntent(android.content.Intent):138:138 -> onNewIntent
-    1:5:void onStart():126:130 -> onStart
-    6:6:void onStart():132:132 -> onStart
-    7:7:void onStart():130:130 -> onStart
+    4:4:void onCreate(android.os.Bundle):68:68 -> onCreate
+    5:7:void onCreate(android.os.Bundle):70:72 -> onCreate
+    8:8:void onCreate(android.os.Bundle):74:74 -> onCreate
+    9:15:void onCreate(android.os.Bundle):76:82 -> onCreate
+    16:16:void onCreate(android.os.Bundle):79:79 -> onCreate
+    17:21:void onCreate(android.os.Bundle):84:84 -> onCreate
+    22:25:void onCreate(android.os.Bundle):90:93 -> onCreate
+    26:27:void onCreate(android.os.Bundle):96:97 -> onCreate
+    28:29:void onCreate(android.os.Bundle):99:100 -> onCreate
+    30:30:void onCreate(android.os.Bundle):102:102 -> onCreate
+    31:31:void onCreate(android.os.Bundle):114:114 -> onCreate
+    32:32:void onCreate(android.os.Bundle):102:102 -> onCreate
+    33:33:void onCreate(android.os.Bundle):99:99 -> onCreate
+    34:34:void onCreate(android.os.Bundle):90:90 -> onCreate
+    35:35:void onCreate(android.os.Bundle):74:74 -> onCreate
+    1:2:void onNewIntent(android.content.Intent):137:138 -> onNewIntent
+    3:3:void onNewIntent(android.content.Intent):141:141 -> onNewIntent
+    4:4:void onNewIntent(android.content.Intent):139:139 -> onNewIntent
+    1:5:void onStart():127:131 -> onStart
+    6:6:void onStart():133:133 -> onStart
+    7:7:void onStart():131:131 -> onStart
 ninja.cricks.SplashScreenActivity$mRunnable$1 -> ninja.cricks.SplashScreenActivity$a:
     ninja.cricks.SplashScreenActivity this$0 -> g
     1:2:void run():34:35 -> run
 ninja.cricks.SplashScreenActivity$onCreate$1 -> ninja.cricks.SplashScreenActivity$b:
     ninja.cricks.SplashScreenActivity this$0 -> a
-    1:4:void onInitFinished(org.json.JSONObject,io.branch.referral.BranchError):106:109 -> a
-    5:5:void onInitFinished(org.json.JSONObject,io.branch.referral.BranchError):107:107 -> a
+    1:4:void onInitFinished(org.json.JSONObject,io.branch.referral.BranchError):107:110 -> a
+    5:5:void onInitFinished(org.json.JSONObject,io.branch.referral.BranchError):108:108 -> a
 ninja.cricks.SplashScreenActivity$onNewIntent$1 -> ninja.cricks.SplashScreenActivity$c:
     ninja.cricks.SplashScreenActivity this$0 -> a
-    1:4:void onInitFinished(org.json.JSONObject,io.branch.referral.BranchError):145:148 -> a
-    5:5:void onInitFinished(org.json.JSONObject,io.branch.referral.BranchError):146:146 -> a
+    1:4:void onInitFinished(org.json.JSONObject,io.branch.referral.BranchError):146:149 -> a
+    5:5:void onInitFinished(org.json.JSONObject,io.branch.referral.BranchError):147:147 -> a
 ninja.cricks.SplashScreenActivity$onStart$1 -> ninja.cricks.SplashScreenActivity$d:
     ninja.cricks.SplashScreenActivity$onStart$1 INSTANCE -> a
     void onInitFinished(io.branch.indexing.BranchUniversalObject,io.branch.referral.util.LinkProperties,io.branch.referral.BranchError) -> a
@@ -118984,68 +118990,66 @@ ninja.cricks.ui.contest.ContestFragment -> ninja.cricks.ui.b.a:
     2:3:void <init>():53:54 -> <init>
     1:1:void setMatchObject(ninja.cricks.models.UpcomingMatchesModel):47:47 -> A2
     1:1:ninja.cricks.models.UpcomingMatchesModel getMatchObject():47 -> A2
-    1:3:void onAttach(android.content.Context):404:406 -> B0
-    4:5:void onAttach(android.content.Context):413:414 -> B0
-    6:8:void onAttach(android.content.Context):416:416 -> B0
-    9:11:void onAttach(android.content.Context):408:408 -> B0
-    1:1:void registerSpotSizeSelection():172:172 -> B2
-    2:2:void registerSpotSizeSelection():193:193 -> B2
-    3:3:void registerSpotSizeSelection():214:214 -> B2
-    4:4:void registerSpotSizeSelection():235:235 -> B2
-    5:5:void registerSpotSizeSelection():257:257 -> B2
-    1:1:void selectAllContest():263:263 -> C2
-    2:4:void selectAllContest():265:267 -> C2
-    5:6:void selectAllContest():269:270 -> C2
-    7:8:void selectAllContest():272:273 -> C2
-    9:10:void selectAllContest():275:276 -> C2
-    11:12:void selectAllContest():278:279 -> C2
-    1:2:void showAllContestRecycler():284:285 -> D2
-    3:8:void showAllContestRecycler():290:295 -> D2
-    9:14:void showAllContestRecycler():298:303 -> D2
+    1:3:void onAttach(android.content.Context):398:400 -> B0
+    4:5:void onAttach(android.content.Context):407:408 -> B0
+    6:8:void onAttach(android.content.Context):410:410 -> B0
+    9:11:void onAttach(android.content.Context):402:402 -> B0
+    1:1:void registerSpotSizeSelection():166:166 -> B2
+    2:2:void registerSpotSizeSelection():187:187 -> B2
+    3:3:void registerSpotSizeSelection():208:208 -> B2
+    4:4:void registerSpotSizeSelection():229:229 -> B2
+    5:5:void registerSpotSizeSelection():251:251 -> B2
+    1:1:void selectAllContest():257:257 -> C2
+    2:4:void selectAllContest():259:261 -> C2
+    5:6:void selectAllContest():263:264 -> C2
+    7:8:void selectAllContest():266:267 -> C2
+    9:10:void selectAllContest():269:270 -> C2
+    11:12:void selectAllContest():272:273 -> C2
+    1:2:void showAllContestRecycler():278:279 -> D2
+    3:8:void showAllContestRecycler():284:289 -> D2
+    9:14:void showAllContestRecycler():292:297 -> D2
     1:2:void onCreate(android.os.Bundle):70:71 -> E0
-    3:7:void onCreate(android.os.Bundle):73:77 -> E0
-    8:8:void onCreate(android.os.Bundle):76:76 -> E0
-    9:9:void onCreate(android.os.Bundle):82:82 -> E0
-    1:5:void showFilteredContestRecycler():308:312 -> E2
-    1:10:void showRecyclerListBySpotSize(int,java.util.ArrayList):353:362 -> F2
-    11:12:void showRecyclerListBySpotSize(int,java.util.ArrayList):364:365 -> F2
-    13:15:void showRecyclerListBySpotSize(int,java.util.ArrayList):372:372 -> F2
-    1:2:void updateContestData(int,java.util.ArrayList):650:651 -> G2
-    3:3:void updateContestData(int,java.util.ArrayList):653:653 -> G2
-    4:4:void updateContestData(int,java.util.ArrayList):655:655 -> G2
-    5:5:void updateContestData(int,java.util.ArrayList):658:658 -> G2
-    6:7:void updateContestData(int,java.util.ArrayList):663:664 -> G2
-    8:8:void updateContestData(int,java.util.ArrayList):666:666 -> G2
-    9:9:void updateContestData(int,java.util.ArrayList):668:668 -> G2
-    10:10:void updateContestData(int,java.util.ArrayList):670:670 -> G2
-    11:14:void updateContestData(int,java.util.ArrayList):674:677 -> G2
-    15:16:void updateContestData(int,java.util.ArrayList):681:682 -> G2
-    17:17:void updateContestData(int,java.util.ArrayList):674:674 -> G2
-    1:2:void updateEmptyViews():582:583 -> H2
-    3:3:void updateEmptyViews():585:585 -> H2
-    1:1:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):100:100 -> I0
-    2:7:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):105:110 -> I0
-    8:8:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):106:106 -> I0
-    9:9:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):112:112 -> I0
-    10:10:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):114:114 -> I0
-    11:16:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):116:116 -> I0
-    17:18:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):123:124 -> I0
-    19:22:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):126:129 -> I0
-    23:23:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):124:124 -> I0
-    24:24:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):123:123 -> I0
-    25:25:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):112:112 -> I0
-    1:1:void setUserVisibleHint(boolean):399:399 -> X1
-    1:4:void onResume():377:380 -> Z0
-    5:6:void onResume():383:384 -> Z0
-    7:7:void onResume():390:390 -> Z0
+    3:6:void onCreate(android.os.Bundle):73:76 -> E0
+    1:5:void showFilteredContestRecycler():302:306 -> E2
+    1:10:void showRecyclerListBySpotSize(int,java.util.ArrayList):347:356 -> F2
+    11:12:void showRecyclerListBySpotSize(int,java.util.ArrayList):358:359 -> F2
+    13:15:void showRecyclerListBySpotSize(int,java.util.ArrayList):366:366 -> F2
+    1:2:void updateContestData(int,java.util.ArrayList):644:645 -> G2
+    3:3:void updateContestData(int,java.util.ArrayList):647:647 -> G2
+    4:4:void updateContestData(int,java.util.ArrayList):649:649 -> G2
+    5:5:void updateContestData(int,java.util.ArrayList):652:652 -> G2
+    6:7:void updateContestData(int,java.util.ArrayList):657:658 -> G2
+    8:8:void updateContestData(int,java.util.ArrayList):660:660 -> G2
+    9:9:void updateContestData(int,java.util.ArrayList):662:662 -> G2
+    10:10:void updateContestData(int,java.util.ArrayList):664:664 -> G2
+    11:14:void updateContestData(int,java.util.ArrayList):668:671 -> G2
+    15:16:void updateContestData(int,java.util.ArrayList):675:676 -> G2
+    17:17:void updateContestData(int,java.util.ArrayList):668:668 -> G2
+    1:2:void updateEmptyViews():577:578 -> H2
+    3:3:void updateEmptyViews():580:580 -> H2
+    1:1:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):94:94 -> I0
+    2:7:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):99:104 -> I0
+    8:8:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):100:100 -> I0
+    9:9:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):106:106 -> I0
+    10:10:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):108:108 -> I0
+    11:16:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):110:110 -> I0
+    17:18:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):117:118 -> I0
+    19:22:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):120:123 -> I0
+    23:23:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):118:118 -> I0
+    24:24:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):117:117 -> I0
+    25:25:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):106:106 -> I0
+    1:1:void setUserVisibleHint(boolean):393:393 -> X1
+    1:4:void onResume():371:374 -> Z0
+    5:6:void onResume():377:378 -> Z0
+    7:7:void onResume():384:384 -> Z0
     1:1:void access$setMListener$p(ninja.cricks.ui.contest.ContestFragment,com.edify.atrist.listener.OnContestLoadedListener):43:43 -> c2
     1:1:void access$allContest(ninja.cricks.ui.contest.ContestFragment,java.util.ArrayList):43 -> c2
-    1:5:void onViewCreated(android.view.View,android.os.Bundle):133:137 -> d1
-    6:6:void onViewCreated(android.view.View,android.os.Bundle):142:142 -> d1
-    7:7:void onViewCreated(android.view.View,android.os.Bundle):151:151 -> d1
-    8:9:void onViewCreated(android.view.View,android.os.Bundle):158:159 -> d1
-    10:10:void onViewCreated(android.view.View,android.os.Bundle):161:161 -> d1
-    11:11:void onViewCreated(android.view.View,android.os.Bundle):165:165 -> d1
+    1:5:void onViewCreated(android.view.View,android.os.Bundle):127:131 -> d1
+    6:6:void onViewCreated(android.view.View,android.os.Bundle):136:136 -> d1
+    7:7:void onViewCreated(android.view.View,android.os.Bundle):145:145 -> d1
+    8:9:void onViewCreated(android.view.View,android.os.Bundle):152:153 -> d1
+    10:10:void onViewCreated(android.view.View,android.os.Bundle):155:155 -> d1
+    11:11:void onViewCreated(android.view.View,android.os.Bundle):159:159 -> d1
     1:1:void access$setMListener$p(ninja.cricks.ui.contest.ContestFragment,com.edify.atrist.listener.OnContestLoadedListener):43:43 -> d2
     1:1:void access$allContests(ninja.cricks.ui.contest.ContestFragment,ninja.cricks.models.UsersPostDBResponse):43 -> d2
     1:1:void access$setMListener$p(ninja.cricks.ui.contest.ContestFragment,com.edify.atrist.listener.OnContestLoadedListener):43:43 -> e2
@@ -119076,67 +119080,69 @@ ninja.cricks.ui.contest.ContestFragment -> ninja.cricks.ui.b.a:
     1:1:void access$showRecyclerListBySpotSize(ninja.cricks.ui.contest.ContestFragment,int,java.util.ArrayList):43 -> q2
     1:1:void access$setMListener$p(ninja.cricks.ui.contest.ContestFragment,com.edify.atrist.listener.OnContestLoadedListener):43:43 -> r2
     1:1:void access$updateContestData(ninja.cricks.ui.contest.ContestFragment,int,java.util.ArrayList):43 -> r2
-    1:4:void allContest(java.util.ArrayList):553:556 -> s2
-    5:7:void allContest(java.util.ArrayList):558:560 -> s2
-    8:8:void allContest(java.util.ArrayList):559:559 -> s2
-    9:11:void allContest(java.util.ArrayList):563:565 -> s2
-    12:12:void allContest(java.util.ArrayList):570:570 -> s2
-    13:15:void allContest(java.util.ArrayList):577:577 -> s2
-    1:3:void allContests(ninja.cricks.models.UsersPostDBResponse):527:529 -> t2
-    4:5:void allContests(ninja.cricks.models.UsersPostDBResponse):531:532 -> t2
-    6:9:void allContests(ninja.cricks.models.UsersPostDBResponse):534:537 -> t2
-    10:10:void allContests(ninja.cricks.models.UsersPostDBResponse):536:536 -> t2
-    11:14:void allContests(ninja.cricks.models.UsersPostDBResponse):539:542 -> t2
-    15:15:void allContests(ninja.cricks.models.UsersPostDBResponse):541:541 -> t2
-    16:18:void allContests(ninja.cricks.models.UsersPostDBResponse):545:545 -> t2
-    1:2:void allContestsApiCall(boolean):445:446 -> u2
-    3:3:void allContestsApiCall(boolean):451:451 -> u2
-    4:7:void allContestsApiCall(boolean):454:457 -> u2
-    8:8:void allContestsApiCall(boolean):459:459 -> u2
-    9:11:void allContestsApiCall(boolean):461:461 -> u2
-    12:12:void allContestsApiCall(boolean):460:460 -> u2
-    13:14:void allContestsApiCall(boolean):465:466 -> u2
-    15:17:void allContestsApiCall(boolean):468:470 -> u2
-    1:1:void filterByEntryPrize(java.util.ArrayList):317:317 -> v2
-    2:2:void filterByEntryPrize(java.util.ArrayList):319:319 -> v2
-    3:3:void filterByEntryPrize(java.util.ArrayList):321:321 -> v2
-    4:10:void filterByEntryPrize(java.util.ArrayList):323:329 -> v2
-    11:11:void filterByEntryPrize(java.util.ArrayList):331:331 -> v2
+    1:4:void allContest(java.util.ArrayList):548:551 -> s2
+    5:7:void allContest(java.util.ArrayList):553:555 -> s2
+    8:8:void allContest(java.util.ArrayList):554:554 -> s2
+    9:11:void allContest(java.util.ArrayList):558:560 -> s2
+    12:12:void allContest(java.util.ArrayList):565:565 -> s2
+    13:15:void allContest(java.util.ArrayList):572:572 -> s2
+    1:3:void allContests(ninja.cricks.models.UsersPostDBResponse):521:523 -> t2
+    4:5:void allContests(ninja.cricks.models.UsersPostDBResponse):525:526 -> t2
+    6:9:void allContests(ninja.cricks.models.UsersPostDBResponse):528:531 -> t2
+    10:10:void allContests(ninja.cricks.models.UsersPostDBResponse):530:530 -> t2
+    11:12:void allContests(ninja.cricks.models.UsersPostDBResponse):533:534 -> t2
+    13:15:void allContests(ninja.cricks.models.UsersPostDBResponse):536:536 -> t2
+    16:18:void allContests(ninja.cricks.models.UsersPostDBResponse):540:540 -> t2
+    1:2:void allContestsApiCall(boolean):439:440 -> u2
+    3:3:void allContestsApiCall(boolean):445:445 -> u2
+    4:7:void allContestsApiCall(boolean):448:451 -> u2
+    8:8:void allContestsApiCall(boolean):453:453 -> u2
+    9:11:void allContestsApiCall(boolean):455:455 -> u2
+    12:12:void allContestsApiCall(boolean):454:454 -> u2
+    13:14:void allContestsApiCall(boolean):459:460 -> u2
+    15:17:void allContestsApiCall(boolean):462:464 -> u2
+    1:1:void filterByEntryPrize(java.util.ArrayList):311:311 -> v2
+    2:2:void filterByEntryPrize(java.util.ArrayList):313:313 -> v2
+    3:3:void filterByEntryPrize(java.util.ArrayList):315:315 -> v2
+    4:10:void filterByEntryPrize(java.util.ArrayList):317:323 -> v2
+    11:11:void filterByEntryPrize(java.util.ArrayList):325:325 -> v2
     12:12:java.util.List kotlin.collections.CollectionsKt___CollectionsKt.sortedBy(java.lang.Iterable,kotlin.jvm.functions.Function1):1043:1043 -> v2
-    12:12:void filterByEntryPrize(java.util.ArrayList):796 -> v2
+    12:12:void filterByEntryPrize(java.util.ArrayList):802 -> v2
     13:13:void kotlin.collections.CollectionsKt___CollectionsKt.forEach(java.lang.Iterable,kotlin.jvm.functions.Function1):1849:1849 -> v2
-    13:13:void filterByEntryPrize(java.util.ArrayList):797 -> v2
-    14:14:void filterByEntryPrize(java.util.ArrayList):333:333 -> v2
+    13:13:void filterByEntryPrize(java.util.ArrayList):803 -> v2
+    14:14:void filterByEntryPrize(java.util.ArrayList):327:327 -> v2
     15:15:java.util.List kotlin.collections.CollectionsKt___CollectionsKt.sortedByDescending(java.lang.Iterable,kotlin.jvm.functions.Function1):1052:1052 -> v2
-    15:15:void filterByEntryPrize(java.util.ArrayList):799 -> v2
+    15:15:void filterByEntryPrize(java.util.ArrayList):805 -> v2
     16:16:void kotlin.collections.CollectionsKt___CollectionsKt.forEach(java.lang.Iterable,kotlin.jvm.functions.Function1):1849:1849 -> v2
-    16:16:void filterByEntryPrize(java.util.ArrayList):800 -> v2
-    17:17:void filterByEntryPrize(java.util.ArrayList):336:336 -> v2
-    18:18:void filterByEntryPrize(java.util.ArrayList):341:341 -> v2
+    16:16:void filterByEntryPrize(java.util.ArrayList):806 -> v2
+    17:17:void filterByEntryPrize(java.util.ArrayList):330:330 -> v2
+    18:18:void filterByEntryPrize(java.util.ArrayList):335:335 -> v2
     19:19:java.util.List kotlin.collections.CollectionsKt___CollectionsKt.sortedBy(java.lang.Iterable,kotlin.jvm.functions.Function1):1043:1043 -> v2
-    19:19:void filterByEntryPrize(java.util.ArrayList):802 -> v2
+    19:19:void filterByEntryPrize(java.util.ArrayList):808 -> v2
     20:20:void kotlin.collections.CollectionsKt___CollectionsKt.forEach(java.lang.Iterable,kotlin.jvm.functions.Function1):1849:1849 -> v2
-    20:20:void filterByEntryPrize(java.util.ArrayList):803 -> v2
-    21:21:void filterByEntryPrize(java.util.ArrayList):343:343 -> v2
+    20:20:void filterByEntryPrize(java.util.ArrayList):809 -> v2
+    21:21:void filterByEntryPrize(java.util.ArrayList):337:337 -> v2
     22:22:java.util.List kotlin.collections.CollectionsKt___CollectionsKt.sortedByDescending(java.lang.Iterable,kotlin.jvm.functions.Function1):1052:1052 -> v2
-    22:22:void filterByEntryPrize(java.util.ArrayList):805 -> v2
+    22:22:void filterByEntryPrize(java.util.ArrayList):811 -> v2
     23:23:void kotlin.collections.CollectionsKt___CollectionsKt.forEach(java.lang.Iterable,kotlin.jvm.functions.Function1):1849:1849 -> v2
-    23:23:void filterByEntryPrize(java.util.ArrayList):806 -> v2
-    24:24:void filterByEntryPrize(java.util.ArrayList):346:346 -> v2
-    25:27:void filterByEntryPrize(java.util.ArrayList):348:348 -> v2
-    1:3:void getAllContest(boolean):423:423 -> w2
-    4:5:void getAllContest(boolean):426:427 -> w2
-    6:6:void getAllContest(boolean):430:430 -> w2
+    23:23:void filterByEntryPrize(java.util.ArrayList):812 -> v2
+    24:24:void filterByEntryPrize(java.util.ArrayList):340:340 -> v2
+    25:27:void filterByEntryPrize(java.util.ArrayList):342:342 -> v2
+    1:3:void getAllContest(boolean):417:417 -> w2
+    4:5:void getAllContest(boolean):420:421 -> w2
+    6:6:void getAllContest(boolean):424:424 -> w2
     1:1:void <init>():54:54 -> x2
     1:1:java.util.ArrayList getFilterArrayList():54 -> x2
     1:1:void <init>():53:53 -> y2
     1:1:java.util.ArrayList getFilterSpotsListData():53 -> y2
-    1:4:void getFilteredContest():689:692 -> z2
-    5:5:void getFilteredContest():694:694 -> z2
-    6:8:void getFilteredContest():696:696 -> z2
-    9:9:void getFilteredContest():695:695 -> z2
-    10:11:void getFilteredContest():700:701 -> z2
-    12:14:void getFilteredContest():703:705 -> z2
+    1:1:void onActivityResult(int,int,android.content.Intent):791:791 -> z0
+    2:3:void onActivityResult(int,int,android.content.Intent):797:798 -> z0
+    1:4:void getFilteredContest():683:686 -> z2
+    5:5:void getFilteredContest():688:688 -> z2
+    6:8:void getFilteredContest():690:690 -> z2
+    9:9:void getFilteredContest():689:689 -> z2
+    10:11:void getFilteredContest():694:695 -> z2
+    12:14:void getFilteredContest():697:699 -> z2
 ninja.cricks.ui.contest.ContestFragment$Companion -> ninja.cricks.ui.b.a$a:
     1:1:void <init>():60:60 -> <init>
     2:2:void <init>(kotlin.jvm.internal.DefaultConstructorMarker):60:60 -> <init>
@@ -119145,88 +119151,87 @@ ninja.cricks.ui.contest.ContestFragment$FilterAdapter -> ninja.cricks.ui.b.a$b:
     ninja.cricks.ui.contest.ContestFragment this$0 -> e
     java.util.ArrayList arrayList -> d
     android.app.Activity mContext -> c
-    1:1:void <init>(ninja.cricks.ui.contest.ContestFragment,android.app.Activity,java.util.ArrayList):589:589 -> <init>
-    2:2:void <init>(ninja.cricks.ui.contest.ContestFragment,android.app.Activity,java.util.ArrayList):593:593 -> <init>
-    1:1:int getItemCount():635:635 -> c
-    1:1:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):589:589 -> i
-    1:1:androidx.recyclerview.widget.RecyclerView$ViewHolder onCreateViewHolder(android.view.ViewGroup,int):589:589 -> k
-    1:3:void onBindViewHolder(ninja.cricks.ui.contest.ContestFragment$FilterAdapter$ViewHolderJoinedContest,int):609:611 -> s
-    4:5:void onBindViewHolder(ninja.cricks.ui.contest.ContestFragment$FilterAdapter$ViewHolderJoinedContest,int):613:614 -> s
-    6:6:void onBindViewHolder(ninja.cricks.ui.contest.ContestFragment$FilterAdapter$ViewHolderJoinedContest,int):616:616 -> s
-    7:7:void onBindViewHolder(ninja.cricks.ui.contest.ContestFragment$FilterAdapter$ViewHolderJoinedContest,int):618:618 -> s
-    8:8:void onBindViewHolder(ninja.cricks.ui.contest.ContestFragment$FilterAdapter$ViewHolderJoinedContest,int):620:620 -> s
-    9:9:void onBindViewHolder(ninja.cricks.ui.contest.ContestFragment$FilterAdapter$ViewHolderJoinedContest,int):622:622 -> s
-    1:3:ninja.cricks.ui.contest.ContestFragment$FilterAdapter$ViewHolderJoinedContest onCreateViewHolder(android.view.ViewGroup,int):599:601 -> t
-    1:2:void updateRecord(java.util.ArrayList):639:640 -> u
+    1:1:void <init>(ninja.cricks.ui.contest.ContestFragment,android.app.Activity,java.util.ArrayList):584:584 -> <init>
+    2:2:void <init>(ninja.cricks.ui.contest.ContestFragment,android.app.Activity,java.util.ArrayList):588:588 -> <init>
+    1:1:int getItemCount():629:629 -> c
+    1:1:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):584:584 -> i
+    1:1:androidx.recyclerview.widget.RecyclerView$ViewHolder onCreateViewHolder(android.view.ViewGroup,int):584:584 -> k
+    1:3:void onBindViewHolder(ninja.cricks.ui.contest.ContestFragment$FilterAdapter$ViewHolderJoinedContest,int):604:606 -> s
+    4:4:void onBindViewHolder(ninja.cricks.ui.contest.ContestFragment$FilterAdapter$ViewHolderJoinedContest,int):609:609 -> s
+    5:5:void onBindViewHolder(ninja.cricks.ui.contest.ContestFragment$FilterAdapter$ViewHolderJoinedContest,int):611:611 -> s
+    6:6:void onBindViewHolder(ninja.cricks.ui.contest.ContestFragment$FilterAdapter$ViewHolderJoinedContest,int):614:614 -> s
+    7:7:void onBindViewHolder(ninja.cricks.ui.contest.ContestFragment$FilterAdapter$ViewHolderJoinedContest,int):616:616 -> s
+    1:3:ninja.cricks.ui.contest.ContestFragment$FilterAdapter$ViewHolderJoinedContest onCreateViewHolder(android.view.ViewGroup,int):594:596 -> t
+    1:2:void updateRecord(java.util.ArrayList):633:634 -> u
 ninja.cricks.ui.contest.ContestFragment$FilterAdapter$ClickView -> ninja.cricks.ui.b.a$b$a:
     ninja.cricks.ui.contest.ContestFragment$FilterAdapter this$0 -> h
     int pos -> g
-    1:2:void <init>(ninja.cricks.ui.contest.ContestFragment$FilterAdapter,int):626:627 -> <init>
-    1:1:void onClick(android.view.View):630:630 -> onClick
+    1:2:void <init>(ninja.cricks.ui.contest.ContestFragment$FilterAdapter,int):620:621 -> <init>
+    1:1:void onClick(android.view.View):624:624 -> onClick
 ninja.cricks.ui.contest.ContestFragment$FilterAdapter$ViewHolderJoinedContest -> ninja.cricks.ui.b.a$b$b:
     android.widget.TextView contestTitle -> t
     android.widget.LinearLayout filterLayout -> u
-    1:3:void <init>(ninja.cricks.ui.contest.ContestFragment$FilterAdapter,android.view.View):643:645 -> <init>
-    1:1:android.widget.TextView getContestTitle():644:644 -> L
-    1:1:android.widget.LinearLayout getFilterLayout():645:645 -> M
+    1:3:void <init>(ninja.cricks.ui.contest.ContestFragment$FilterAdapter,android.view.View):637:639 -> <init>
+    1:1:android.widget.TextView getContestTitle():638:638 -> L
+    1:1:android.widget.LinearLayout getFilterLayout():639:639 -> M
 ninja.cricks.ui.contest.ContestFragment$allContestsApiCall$1 -> ninja.cricks.ui.b.a$c:
     ninja.cricks.ui.contest.ContestFragment this$0 -> g
-    1:1:void <init>(ninja.cricks.ui.contest.ContestFragment):470:470 -> <init>
-    1:3:void onFailure(retrofit2.Call,java.lang.Throwable):472:474 -> D
-    4:4:void onFailure(retrofit2.Call,java.lang.Throwable):476:476 -> D
-    1:1:void onResponse(retrofit2.Call,retrofit2.Response):484:484 -> y
-    2:3:void onResponse(retrofit2.Call,retrofit2.Response):487:488 -> y
-    4:7:void onResponse(retrofit2.Call,retrofit2.Response):491:494 -> y
-    8:10:void onResponse(retrofit2.Call,retrofit2.Response):496:498 -> y
-    11:12:void onResponse(retrofit2.Call,retrofit2.Response):501:502 -> y
-    13:15:void onResponse(retrofit2.Call,retrofit2.Response):512:514 -> y
-    16:16:void onResponse(retrofit2.Call,retrofit2.Response):516:516 -> y
-    17:17:void onResponse(retrofit2.Call,retrofit2.Response):521:521 -> y
+    1:1:void <init>(ninja.cricks.ui.contest.ContestFragment):464:464 -> <init>
+    1:3:void onFailure(retrofit2.Call,java.lang.Throwable):466:468 -> D
+    4:4:void onFailure(retrofit2.Call,java.lang.Throwable):470:470 -> D
+    1:1:void onResponse(retrofit2.Call,retrofit2.Response):478:478 -> y
+    2:3:void onResponse(retrofit2.Call,retrofit2.Response):481:482 -> y
+    4:7:void onResponse(retrofit2.Call,retrofit2.Response):485:488 -> y
+    8:10:void onResponse(retrofit2.Call,retrofit2.Response):490:492 -> y
+    11:12:void onResponse(retrofit2.Call,retrofit2.Response):495:496 -> y
+    13:15:void onResponse(retrofit2.Call,retrofit2.Response):506:508 -> y
+    16:16:void onResponse(retrofit2.Call,retrofit2.Response):510:510 -> y
+    17:17:void onResponse(retrofit2.Call,retrofit2.Response):515:515 -> y
 ninja.cricks.ui.contest.ContestFragment$allContestsApiCall$1$onResponse$1 -> ninja.cricks.ui.b.a$c$a:
     ninja.cricks.ui.contest.ContestFragment$allContestsApiCall$1 this$0 -> l
     int label -> k
     ninja.cricks.models.UsersPostDBResponse $res -> m
     java.lang.Object invoke(java.lang.Object,java.lang.Object) -> I
     kotlin.coroutines.Continuation create(java.lang.Object,kotlin.coroutines.Continuation) -> c
-    1:1:java.lang.Object invokeSuspend(java.lang.Object):502:502 -> g
-    2:2:java.lang.Object invokeSuspend(java.lang.Object):509:509 -> g
-    3:5:java.lang.Object invokeSuspend(java.lang.Object):502:504 -> g
-    6:6:java.lang.Object invokeSuspend(java.lang.Object):509:509 -> g
+    1:1:java.lang.Object invokeSuspend(java.lang.Object):496:496 -> g
+    2:2:java.lang.Object invokeSuspend(java.lang.Object):503:503 -> g
+    3:5:java.lang.Object invokeSuspend(java.lang.Object):496:498 -> g
+    6:6:java.lang.Object invokeSuspend(java.lang.Object):503:503 -> g
 ninja.cricks.ui.contest.ContestFragment$allContestsApiCall$1$onResponse$1$1 -> ninja.cricks.ui.b.a$c$a$a:
     int label -> k
     ninja.cricks.ui.contest.ContestFragment$allContestsApiCall$1$onResponse$1 this$0 -> l
     java.lang.Object invoke(java.lang.Object,java.lang.Object) -> I
     kotlin.coroutines.Continuation create(java.lang.Object,kotlin.coroutines.Continuation) -> c
-    1:1:java.lang.Object invokeSuspend(java.lang.Object):503:503 -> g
+    1:1:java.lang.Object invokeSuspend(java.lang.Object):497:497 -> g
 ninja.cricks.ui.contest.ContestFragment$allContestsApiCall$1$onResponse$1$2 -> ninja.cricks.ui.b.a$c$a$b:
     int label -> k
     ninja.cricks.ui.contest.ContestFragment$allContestsApiCall$1$onResponse$1 this$0 -> l
     java.lang.Object invoke(java.lang.Object,java.lang.Object) -> I
     kotlin.coroutines.Continuation create(java.lang.Object,kotlin.coroutines.Continuation) -> c
-    1:1:java.lang.Object invokeSuspend(java.lang.Object):504:504 -> g
-    2:2:java.lang.Object invokeSuspend(java.lang.Object):508:508 -> g
-    3:6:java.lang.Object invokeSuspend(java.lang.Object):504:507 -> g
-    7:7:java.lang.Object invokeSuspend(java.lang.Object):506:506 -> g
-    8:8:java.lang.Object invokeSuspend(java.lang.Object):508:508 -> g
+    1:1:java.lang.Object invokeSuspend(java.lang.Object):498:498 -> g
+    2:2:java.lang.Object invokeSuspend(java.lang.Object):502:502 -> g
+    3:6:java.lang.Object invokeSuspend(java.lang.Object):498:501 -> g
+    7:7:java.lang.Object invokeSuspend(java.lang.Object):500:500 -> g
+    8:8:java.lang.Object invokeSuspend(java.lang.Object):502:502 -> g
 ninja.cricks.ui.contest.ContestFragment$filterByEntryPrize$$inlined$sortedBy$1 -> ninja.cricks.ui.b.a$d:
     1:1:int kotlin.comparisons.ComparisonsKt__ComparisonsKt$compareBy$2.compare(java.lang.Object,java.lang.Object):102:102 -> compare
     1:1:int compare(java.lang.Object,java.lang.Object):102 -> compare
-    2:2:void ninja.cricks.ui.contest.ContestFragment.filterByEntryPrize(java.util.ArrayList):332:332 -> compare
+    2:2:void ninja.cricks.ui.contest.ContestFragment.filterByEntryPrize(java.util.ArrayList):326:326 -> compare
     2:2:int compare(java.lang.Object,java.lang.Object):321 -> compare
 ninja.cricks.ui.contest.ContestFragment$filterByEntryPrize$$inlined$sortedBy$2 -> ninja.cricks.ui.b.a$e:
     1:1:int kotlin.comparisons.ComparisonsKt__ComparisonsKt$compareBy$2.compare(java.lang.Object,java.lang.Object):102:102 -> compare
     1:1:int compare(java.lang.Object,java.lang.Object):102 -> compare
-    2:2:void ninja.cricks.ui.contest.ContestFragment.filterByEntryPrize(java.util.ArrayList):342:342 -> compare
+    2:2:void ninja.cricks.ui.contest.ContestFragment.filterByEntryPrize(java.util.ArrayList):336:336 -> compare
     2:2:int compare(java.lang.Object,java.lang.Object):321 -> compare
 ninja.cricks.ui.contest.ContestFragment$filterByEntryPrize$$inlined$sortedByDescending$1 -> ninja.cricks.ui.b.a$f:
     1:1:int kotlin.comparisons.ComparisonsKt__ComparisonsKt$compareByDescending$1.compare(java.lang.Object,java.lang.Object):121:121 -> compare
     1:1:int compare(java.lang.Object,java.lang.Object):121 -> compare
-    2:2:void ninja.cricks.ui.contest.ContestFragment.filterByEntryPrize(java.util.ArrayList):335:335 -> compare
+    2:2:void ninja.cricks.ui.contest.ContestFragment.filterByEntryPrize(java.util.ArrayList):329:329 -> compare
     2:2:int compare(java.lang.Object,java.lang.Object):321 -> compare
 ninja.cricks.ui.contest.ContestFragment$filterByEntryPrize$$inlined$sortedByDescending$2 -> ninja.cricks.ui.b.a$g:
     1:1:int kotlin.comparisons.ComparisonsKt__ComparisonsKt$compareByDescending$1.compare(java.lang.Object,java.lang.Object):121:121 -> compare
     1:1:int compare(java.lang.Object,java.lang.Object):121 -> compare
-    2:2:void ninja.cricks.ui.contest.ContestFragment.filterByEntryPrize(java.util.ArrayList):345:345 -> compare
+    2:2:void ninja.cricks.ui.contest.ContestFragment.filterByEntryPrize(java.util.ArrayList):339:339 -> compare
     2:2:int compare(java.lang.Object,java.lang.Object):321 -> compare
 ninja.cricks.ui.contest.ContestFragment$getAllContest$1 -> ninja.cricks.ui.b.a$h:
     boolean $isLoading -> m
@@ -119234,110 +119239,107 @@ ninja.cricks.ui.contest.ContestFragment$getAllContest$1 -> ninja.cricks.ui.b.a$h
     ninja.cricks.ui.contest.ContestFragment this$0 -> l
     java.lang.Object invoke(java.lang.Object,java.lang.Object) -> I
     kotlin.coroutines.Continuation create(java.lang.Object,kotlin.coroutines.Continuation) -> c
-    1:1:java.lang.Object invokeSuspend(java.lang.Object):430:430 -> g
-    2:2:java.lang.Object invokeSuspend(java.lang.Object):439:439 -> g
-    3:4:java.lang.Object invokeSuspend(java.lang.Object):430:431 -> g
-    5:6:java.lang.Object invokeSuspend(java.lang.Object):433:434 -> g
-    7:7:java.lang.Object invokeSuspend(java.lang.Object):437:437 -> g
-    8:8:java.lang.Object invokeSuspend(java.lang.Object):439:439 -> g
+    1:1:java.lang.Object invokeSuspend(java.lang.Object):424:424 -> g
+    2:2:java.lang.Object invokeSuspend(java.lang.Object):433:433 -> g
+    3:4:java.lang.Object invokeSuspend(java.lang.Object):424:425 -> g
+    5:6:java.lang.Object invokeSuspend(java.lang.Object):427:428 -> g
+    7:7:java.lang.Object invokeSuspend(java.lang.Object):431:431 -> g
+    8:8:java.lang.Object invokeSuspend(java.lang.Object):433:433 -> g
 ninja.cricks.ui.contest.ContestFragment$getAllContest$1$1 -> ninja.cricks.ui.b.a$h$a:
     ninja.cricks.ui.contest.ContestFragment$getAllContest$1 this$0 -> l
     int label -> k
     ninja.cricks.roomDatabase.Response $value -> m
     java.lang.Object invoke(java.lang.Object,java.lang.Object) -> I
     kotlin.coroutines.Continuation create(java.lang.Object,kotlin.coroutines.Continuation) -> c
-    1:1:java.lang.Object invokeSuspend(java.lang.Object):434:434 -> g
+    1:1:java.lang.Object invokeSuspend(java.lang.Object):428:428 -> g
 ninja.cricks.ui.contest.ContestFragment$getAllContest$1$2 -> ninja.cricks.ui.b.a$h$b:
     ninja.cricks.ui.contest.ContestFragment$getAllContest$1 this$0 -> l
     int label -> k
     java.lang.Object invoke(java.lang.Object,java.lang.Object) -> I
     kotlin.coroutines.Continuation create(java.lang.Object,kotlin.coroutines.Continuation) -> c
-    1:1:java.lang.Object invokeSuspend(java.lang.Object):437:437 -> g
+    1:1:java.lang.Object invokeSuspend(java.lang.Object):431:431 -> g
 ninja.cricks.ui.contest.ContestFragment$getFilteredContest$1 -> ninja.cricks.ui.b.a$i:
     ninja.cricks.ui.contest.ContestFragment this$0 -> g
-    1:1:void <init>(ninja.cricks.ui.contest.ContestFragment):705:705 -> <init>
-    1:3:void onFailure(retrofit2.Call,java.lang.Throwable):707:709 -> D
-    1:1:void onResponse(retrofit2.Call,retrofit2.Response):717:717 -> y
-    2:5:void onResponse(retrofit2.Call,retrofit2.Response):720:723 -> y
-    6:8:void onResponse(retrofit2.Call,retrofit2.Response):725:727 -> y
-    9:15:void onResponse(retrofit2.Call,retrofit2.Response):730:736 -> y
-    16:17:void onResponse(retrofit2.Call,retrofit2.Response):738:739 -> y
-    18:18:void onResponse(retrofit2.Call,retrofit2.Response):741:741 -> y
-    19:19:void onResponse(retrofit2.Call,retrofit2.Response):743:743 -> y
-    20:22:void onResponse(retrofit2.Call,retrofit2.Response):745:745 -> y
-    23:23:void onResponse(retrofit2.Call,retrofit2.Response):749:749 -> y
-    24:26:void onResponse(retrofit2.Call,retrofit2.Response):751:751 -> y
-    27:27:void onResponse(retrofit2.Call,retrofit2.Response):755:755 -> y
-    28:28:void onResponse(retrofit2.Call,retrofit2.Response):759:759 -> y
-    29:30:void onResponse(retrofit2.Call,retrofit2.Response):762:763 -> y
-    31:31:void onResponse(retrofit2.Call,retrofit2.Response):765:765 -> y
-    32:32:void onResponse(retrofit2.Call,retrofit2.Response):767:767 -> y
-    33:33:void onResponse(retrofit2.Call,retrofit2.Response):769:769 -> y
-    34:34:void onResponse(retrofit2.Call,retrofit2.Response):773:773 -> y
-    35:36:void onResponse(retrofit2.Call,retrofit2.Response):775:776 -> y
-    37:40:void onResponse(retrofit2.Call,retrofit2.Response):778:778 -> y
-    41:43:void onResponse(retrofit2.Call,retrofit2.Response):784:786 -> y
-    44:44:void onResponse(retrofit2.Call,retrofit2.Response):788:788 -> y
+    1:1:void <init>(ninja.cricks.ui.contest.ContestFragment):699:699 -> <init>
+    1:3:void onFailure(retrofit2.Call,java.lang.Throwable):701:703 -> D
+    1:1:void onResponse(retrofit2.Call,retrofit2.Response):711:711 -> y
+    2:5:void onResponse(retrofit2.Call,retrofit2.Response):714:717 -> y
+    6:8:void onResponse(retrofit2.Call,retrofit2.Response):719:721 -> y
+    9:15:void onResponse(retrofit2.Call,retrofit2.Response):724:730 -> y
+    16:17:void onResponse(retrofit2.Call,retrofit2.Response):732:733 -> y
+    18:18:void onResponse(retrofit2.Call,retrofit2.Response):735:735 -> y
+    19:19:void onResponse(retrofit2.Call,retrofit2.Response):737:737 -> y
+    20:22:void onResponse(retrofit2.Call,retrofit2.Response):739:739 -> y
+    23:23:void onResponse(retrofit2.Call,retrofit2.Response):743:743 -> y
+    24:26:void onResponse(retrofit2.Call,retrofit2.Response):745:745 -> y
+    27:27:void onResponse(retrofit2.Call,retrofit2.Response):749:749 -> y
+    28:28:void onResponse(retrofit2.Call,retrofit2.Response):753:753 -> y
+    29:30:void onResponse(retrofit2.Call,retrofit2.Response):756:757 -> y
+    31:31:void onResponse(retrofit2.Call,retrofit2.Response):759:759 -> y
+    32:32:void onResponse(retrofit2.Call,retrofit2.Response):761:761 -> y
+    33:33:void onResponse(retrofit2.Call,retrofit2.Response):763:763 -> y
+    34:34:void onResponse(retrofit2.Call,retrofit2.Response):767:767 -> y
+    35:36:void onResponse(retrofit2.Call,retrofit2.Response):769:770 -> y
+    37:40:void onResponse(retrofit2.Call,retrofit2.Response):772:772 -> y
+    41:43:void onResponse(retrofit2.Call,retrofit2.Response):778:780 -> y
+    44:44:void onResponse(retrofit2.Call,retrofit2.Response):782:782 -> y
 ninja.cricks.ui.contest.ContestFragment$onCreate$1 -> ninja.cricks.ui.b.a$j:
     ninja.cricks.ui.contest.ContestFragment this$0 -> a
-    1:2:void onFragmentResult(java.lang.String,android.os.Bundle):78:79 -> a
-ninja.cricks.ui.contest.ContestFragment$onCreate$2 -> ninja.cricks.ui.b.a$k:
-    ninja.cricks.ui.contest.ContestFragment this$0 -> a
-    1:4:void onFragmentResult(java.lang.String,android.os.Bundle):84:87 -> a
-    5:6:void onFragmentResult(java.lang.String,android.os.Bundle):89:90 -> a
-ninja.cricks.ui.contest.ContestFragment$onViewCreated$1 -> ninja.cricks.ui.b.a$l:
+    1:4:void onFragmentResult(java.lang.String,android.os.Bundle):78:81 -> a
+    5:6:void onFragmentResult(java.lang.String,android.os.Bundle):83:84 -> a
+ninja.cricks.ui.contest.ContestFragment$onViewCreated$1 -> ninja.cricks.ui.b.a$k:
     ninja.cricks.ui.contest.ContestFragment this$0 -> g
-    1:2:void onClick(android.view.View):138:139 -> onClick
-ninja.cricks.ui.contest.ContestFragment$onViewCreated$2 -> ninja.cricks.ui.b.a$m:
+    1:2:void onClick(android.view.View):132:133 -> onClick
+ninja.cricks.ui.contest.ContestFragment$onViewCreated$2 -> ninja.cricks.ui.b.a$l:
     ninja.cricks.ui.contest.ContestFragment this$0 -> g
-    1:3:void onClick(android.view.View):143:145 -> onClick
-    4:4:void onClick(android.view.View):147:147 -> onClick
-    5:5:void onClick(android.view.View):145:145 -> onClick
-ninja.cricks.ui.contest.ContestFragment$onViewCreated$3 -> ninja.cricks.ui.b.a$n:
+    1:3:void onClick(android.view.View):137:139 -> onClick
+    4:4:void onClick(android.view.View):141:141 -> onClick
+    5:5:void onClick(android.view.View):139:139 -> onClick
+ninja.cricks.ui.contest.ContestFragment$onViewCreated$3 -> ninja.cricks.ui.b.a$m:
     ninja.cricks.ui.contest.ContestFragment this$0 -> g
-    1:4:void onClick(android.view.View):152:155 -> onClick
-ninja.cricks.ui.contest.ContestFragment$onViewCreated$4 -> ninja.cricks.ui.b.a$o:
+    1:4:void onClick(android.view.View):146:149 -> onClick
+ninja.cricks.ui.contest.ContestFragment$onViewCreated$4 -> ninja.cricks.ui.b.a$n:
     ninja.cricks.ui.contest.ContestFragment this$0 -> g
-    1:1:void onRefresh():162:162 -> v
-ninja.cricks.ui.contest.ContestFragment$onViewCreated$5 -> ninja.cricks.ui.b.a$p:
+    1:1:void onRefresh():156:156 -> v
+ninja.cricks.ui.contest.ContestFragment$onViewCreated$5 -> ninja.cricks.ui.b.a$o:
     ninja.cricks.ui.contest.ContestFragment this$0 -> g
-    1:1:void onRefresh():166:166 -> v
-ninja.cricks.ui.contest.ContestFragment$registerSpotSizeSelection$1 -> ninja.cricks.ui.b.a$q:
+    1:1:void onRefresh():160:160 -> v
+ninja.cricks.ui.contest.ContestFragment$registerSpotSizeSelection$1 -> ninja.cricks.ui.b.a$p:
     ninja.cricks.ui.contest.ContestFragment this$0 -> g
-    1:2:void onClick(android.view.View):174:175 -> onClick
-    3:4:void onClick(android.view.View):177:178 -> onClick
-    5:6:void onClick(android.view.View):180:181 -> onClick
-    7:8:void onClick(android.view.View):183:184 -> onClick
-    9:11:void onClick(android.view.View):186:188 -> onClick
-    12:12:void onClick(android.view.View):190:190 -> onClick
-ninja.cricks.ui.contest.ContestFragment$registerSpotSizeSelection$2 -> ninja.cricks.ui.b.a$r:
+    1:2:void onClick(android.view.View):168:169 -> onClick
+    3:4:void onClick(android.view.View):171:172 -> onClick
+    5:6:void onClick(android.view.View):174:175 -> onClick
+    7:8:void onClick(android.view.View):177:178 -> onClick
+    9:11:void onClick(android.view.View):180:182 -> onClick
+    12:12:void onClick(android.view.View):184:184 -> onClick
+ninja.cricks.ui.contest.ContestFragment$registerSpotSizeSelection$2 -> ninja.cricks.ui.b.a$q:
     ninja.cricks.ui.contest.ContestFragment this$0 -> g
-    1:2:void onClick(android.view.View):195:196 -> onClick
-    3:4:void onClick(android.view.View):198:199 -> onClick
-    5:6:void onClick(android.view.View):201:202 -> onClick
-    7:8:void onClick(android.view.View):204:205 -> onClick
-    9:11:void onClick(android.view.View):207:209 -> onClick
-    12:12:void onClick(android.view.View):211:211 -> onClick
-ninja.cricks.ui.contest.ContestFragment$registerSpotSizeSelection$3 -> ninja.cricks.ui.b.a$s:
+    1:2:void onClick(android.view.View):189:190 -> onClick
+    3:4:void onClick(android.view.View):192:193 -> onClick
+    5:6:void onClick(android.view.View):195:196 -> onClick
+    7:8:void onClick(android.view.View):198:199 -> onClick
+    9:11:void onClick(android.view.View):201:203 -> onClick
+    12:12:void onClick(android.view.View):205:205 -> onClick
+ninja.cricks.ui.contest.ContestFragment$registerSpotSizeSelection$3 -> ninja.cricks.ui.b.a$r:
     ninja.cricks.ui.contest.ContestFragment this$0 -> g
-    1:2:void onClick(android.view.View):216:217 -> onClick
-    3:4:void onClick(android.view.View):219:220 -> onClick
-    5:6:void onClick(android.view.View):222:223 -> onClick
-    7:8:void onClick(android.view.View):225:226 -> onClick
-    9:11:void onClick(android.view.View):228:230 -> onClick
-    12:12:void onClick(android.view.View):232:232 -> onClick
-ninja.cricks.ui.contest.ContestFragment$registerSpotSizeSelection$4 -> ninja.cricks.ui.b.a$t:
+    1:2:void onClick(android.view.View):210:211 -> onClick
+    3:4:void onClick(android.view.View):213:214 -> onClick
+    5:6:void onClick(android.view.View):216:217 -> onClick
+    7:8:void onClick(android.view.View):219:220 -> onClick
+    9:11:void onClick(android.view.View):222:224 -> onClick
+    12:12:void onClick(android.view.View):226:226 -> onClick
+ninja.cricks.ui.contest.ContestFragment$registerSpotSizeSelection$4 -> ninja.cricks.ui.b.a$s:
     ninja.cricks.ui.contest.ContestFragment this$0 -> g
-    1:2:void onClick(android.view.View):237:238 -> onClick
-    3:4:void onClick(android.view.View):240:241 -> onClick
-    5:6:void onClick(android.view.View):243:244 -> onClick
-    7:8:void onClick(android.view.View):246:247 -> onClick
-    9:10:void onClick(android.view.View):249:250 -> onClick
-    11:11:void onClick(android.view.View):252:252 -> onClick
-    12:12:void onClick(android.view.View):254:254 -> onClick
-ninja.cricks.ui.contest.ContestFragment$registerSpotSizeSelection$5 -> ninja.cricks.ui.b.a$u:
+    1:2:void onClick(android.view.View):231:232 -> onClick
+    3:4:void onClick(android.view.View):234:235 -> onClick
+    5:6:void onClick(android.view.View):237:238 -> onClick
+    7:8:void onClick(android.view.View):240:241 -> onClick
+    9:10:void onClick(android.view.View):243:244 -> onClick
+    11:11:void onClick(android.view.View):246:246 -> onClick
+    12:12:void onClick(android.view.View):248:248 -> onClick
+ninja.cricks.ui.contest.ContestFragment$registerSpotSizeSelection$5 -> ninja.cricks.ui.b.a$t:
     ninja.cricks.ui.contest.ContestFragment this$0 -> g
-    1:1:void onClick(android.view.View):258:258 -> onClick
+    1:1:void onClick(android.view.View):252:252 -> onClick
 ninja.cricks.ui.contest.FilterFragment -> ninja.cricks.ui.b.b:
     ninja.cricks.databinding.DialogFilterBinding mBinding -> u0
     java.util.ArrayList filterGroup2ItemList -> A0
@@ -119740,83 +119742,84 @@ ninja.cricks.ui.contest.MyTeamFragment -> ninja.cricks.ui.b.e:
     com.edify.atrist.listener.OnContestLoadedListener mListener -> g0
     ninja.cricks.ui.contest.MyTeamFragment$Companion Companion -> l0
     ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter adapter -> j0
-    1:1:void <init>():36:36 -> <init>
-    2:2:void <init>():38:38 -> <init>
-    3:3:void <init>():43:43 -> <init>
-    1:3:void onAttach(android.content.Context):227:229 -> B0
-    4:6:void onAttach(android.content.Context):231:231 -> B0
-    1:1:void onCreate(android.os.Bundle):58:58 -> E0
-    2:2:void onCreate(android.os.Bundle):60:60 -> E0
-    1:1:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):67:67 -> I0
-    2:2:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):71:71 -> I0
-    1:1:void setUserVisibleHint(boolean):124:124 -> X1
-    1:1:void onResume():110:110 -> Z0
-    2:6:void onResume():112:116 -> Z0
-    7:7:void onResume():115:115 -> Z0
-    8:9:void onResume():118:119 -> Z0
-    1:1:void access$allTeam(ninja.cricks.ui.contest.MyTeamFragment,ninja.cricks.models.UsersPostDBResponse):36:36 -> c2
-    1:5:void onViewCreated(android.view.View,android.os.Bundle):75:79 -> d1
-    6:6:void onViewCreated(android.view.View,android.os.Bundle):78:78 -> d1
-    7:7:void onViewCreated(android.view.View,android.os.Bundle):85:85 -> d1
-    8:10:void onViewCreated(android.view.View,android.os.Bundle):87:89 -> d1
-    11:11:void onViewCreated(android.view.View,android.os.Bundle):91:91 -> d1
-    12:12:void onViewCreated(android.view.View,android.os.Bundle):96:96 -> d1
-    13:13:void onViewCreated(android.view.View,android.os.Bundle):104:104 -> d1
-    14:14:void onViewCreated(android.view.View,android.os.Bundle):91:91 -> d1
-    15:15:void onViewCreated(android.view.View,android.os.Bundle):88:88 -> d1
-    1:1:ninja.cricks.utils.CustomProgressDialog2 access$getCustomeProgressDialog$p(ninja.cricks.ui.contest.MyTeamFragment):36:36 -> d2
-    1:1:ninja.cricks.databinding.FragmentMyTeamBinding access$getMBinding$p(ninja.cricks.ui.contest.MyTeamFragment):36:36 -> e2
-    1:1:void access$getMyteamApiCall(ninja.cricks.ui.contest.MyTeamFragment):36:36 -> f2
-    1:1:void access$getPoints(ninja.cricks.ui.contest.MyTeamFragment,int):36:36 -> g2
-    1:1:java.lang.String access$getTeamName$p(ninja.cricks.ui.contest.MyTeamFragment):36:36 -> h2
-    1:1:void access$setTeamName$p(ninja.cricks.ui.contest.MyTeamFragment,java.lang.String):36:36 -> i2
-    1:1:void allTeam(ninja.cricks.models.UsersPostDBResponse):257:257 -> j2
-    2:10:void allTeam(ninja.cricks.models.UsersPostDBResponse):259:267 -> j2
-    11:11:void allTeam(ninja.cricks.models.UsersPostDBResponse):266:266 -> j2
-    1:1:ninja.cricks.models.UpcomingMatchesModel getMatchObject():37:37 -> k2
-    1:3:void getMyTeam():238:238 -> l2
-    4:5:void getMyTeam():241:242 -> l2
-    6:6:void getMyTeam():245:245 -> l2
-    1:2:void getMyteamApiCall():273:274 -> m2
-    3:4:void getMyteamApiCall():277:278 -> m2
-    5:5:void getMyteamApiCall():281:281 -> m2
-    6:9:void getMyteamApiCall():287:290 -> m2
-    10:12:void getMyteamApiCall():292:294 -> m2
-    13:13:void getMyteamApiCall():281:281 -> m2
-    1:2:void getPoints(int):129:130 -> n2
-    3:3:void getPoints(int):133:133 -> n2
-    4:7:void getPoints(int):135:138 -> n2
-    8:10:void getPoints(int):140:142 -> n2
-    11:11:void getPoints(int):133:133 -> n2
-    1:2:void updateEmptyViews():342:343 -> o2
-    3:3:void updateEmptyViews():345:345 -> o2
+    1:1:void <init>():37:37 -> <init>
+    2:2:void <init>():39:39 -> <init>
+    3:3:void <init>():44:44 -> <init>
+    1:3:void onAttach(android.content.Context):221:223 -> B0
+    4:6:void onAttach(android.content.Context):225:225 -> B0
+    1:1:void onCreate(android.os.Bundle):59:59 -> E0
+    2:2:void onCreate(android.os.Bundle):61:61 -> E0
+    1:1:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):68:68 -> I0
+    2:2:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):72:72 -> I0
+    1:1:void setUserVisibleHint(boolean):118:118 -> X1
+    1:1:void onResume():105:105 -> Z0
+    2:6:void onResume():107:111 -> Z0
+    7:7:void onResume():110:110 -> Z0
+    8:9:void onResume():112:113 -> Z0
+    1:1:void access$allTeam(ninja.cricks.ui.contest.MyTeamFragment,ninja.cricks.models.UsersPostDBResponse):37:37 -> c2
+    1:3:void onViewCreated(android.view.View,android.os.Bundle):76:78 -> d1
+    4:4:void onViewCreated(android.view.View,android.os.Bundle):80:80 -> d1
+    5:7:void onViewCreated(android.view.View,android.os.Bundle):82:84 -> d1
+    8:8:void onViewCreated(android.view.View,android.os.Bundle):86:86 -> d1
+    9:9:void onViewCreated(android.view.View,android.os.Bundle):91:91 -> d1
+    10:10:void onViewCreated(android.view.View,android.os.Bundle):99:99 -> d1
+    11:11:void onViewCreated(android.view.View,android.os.Bundle):86:86 -> d1
+    12:12:void onViewCreated(android.view.View,android.os.Bundle):83:83 -> d1
+    1:1:ninja.cricks.utils.CustomProgressDialog2 access$getCustomeProgressDialog$p(ninja.cricks.ui.contest.MyTeamFragment):37:37 -> d2
+    1:1:ninja.cricks.databinding.FragmentMyTeamBinding access$getMBinding$p(ninja.cricks.ui.contest.MyTeamFragment):37:37 -> e2
+    1:1:void access$getMyteamApiCall(ninja.cricks.ui.contest.MyTeamFragment):37:37 -> f2
+    1:1:void access$getPoints(ninja.cricks.ui.contest.MyTeamFragment,int):37:37 -> g2
+    1:1:java.lang.String access$getTeamName$p(ninja.cricks.ui.contest.MyTeamFragment):37:37 -> h2
+    1:1:void access$setTeamName$p(ninja.cricks.ui.contest.MyTeamFragment,java.lang.String):37:37 -> i2
+    1:1:void allTeam(ninja.cricks.models.UsersPostDBResponse):252:252 -> j2
+    2:9:void allTeam(ninja.cricks.models.UsersPostDBResponse):254:261 -> j2
+    10:10:void allTeam(ninja.cricks.models.UsersPostDBResponse):260:260 -> j2
+    1:1:ninja.cricks.models.UpcomingMatchesModel getMatchObject():38:38 -> k2
+    1:4:void getMyTeam():232:232 -> l2
+    5:6:void getMyTeam():236:237 -> l2
+    7:7:void getMyTeam():239:239 -> l2
+    1:2:void getMyteamApiCall():267:268 -> m2
+    3:4:void getMyteamApiCall():271:272 -> m2
+    5:5:void getMyteamApiCall():275:275 -> m2
+    6:9:void getMyteamApiCall():281:284 -> m2
+    10:12:void getMyteamApiCall():286:288 -> m2
+    13:13:void getMyteamApiCall():275:275 -> m2
+    1:2:void getPoints(int):123:124 -> n2
+    3:3:void getPoints(int):127:127 -> n2
+    4:7:void getPoints(int):129:132 -> n2
+    8:10:void getPoints(int):134:136 -> n2
+    11:11:void getPoints(int):127:127 -> n2
+    1:2:void updateEmptyViews():348:349 -> o2
+    3:3:void updateEmptyViews():351:351 -> o2
+    1:1:void onActivityResult(int,int,android.content.Intent):517:517 -> z0
+    2:4:void onActivityResult(int,int,android.content.Intent):522:524 -> z0
 ninja.cricks.ui.contest.MyTeamFragment$Companion -> ninja.cricks.ui.b.e$a:
-    1:1:void <init>():46:46 -> <init>
-    2:2:void <init>(kotlin.jvm.internal.DefaultConstructorMarker):46:46 -> <init>
-    1:2:ninja.cricks.ui.contest.MyTeamFragment newInstance(android.os.Bundle):51:52 -> a
+    1:1:void <init>():47:47 -> <init>
+    2:2:void <init>(kotlin.jvm.internal.DefaultConstructorMarker):47:47 -> <init>
+    1:2:ninja.cricks.ui.contest.MyTeamFragment newInstance(android.os.Bundle):52:53 -> a
 ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter -> ninja.cricks.ui.b.e$b:
     java.util.ArrayList matchesListObject -> d
     android.content.Context context -> e
     ninja.cricks.ui.contest.MyTeamFragment this$0 -> f
     kotlin.jvm.functions.Function1 onItemClick -> c
-    1:2:void <init>(ninja.cricks.ui.contest.MyTeamFragment,android.content.Context,java.util.ArrayList):349:350 -> <init>
-    3:3:void <init>(ninja.cricks.ui.contest.MyTeamFragment,android.content.Context,java.util.ArrayList):352:352 -> <init>
-    1:1:int getItemCount():468:468 -> c
-    1:5:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):361:365 -> i
-    6:7:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):367:368 -> i
-    8:9:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):370:371 -> i
-    10:10:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):373:373 -> i
-    11:11:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):375:375 -> i
-    12:14:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):377:379 -> i
-    15:18:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):382:385 -> i
-    19:22:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):387:390 -> i
-    23:28:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):393:398 -> i
-    29:29:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):408:408 -> i
-    30:34:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):421:425 -> i
-    1:3:androidx.recyclerview.widget.RecyclerView$ViewHolder onCreateViewHolder(android.view.ViewGroup,int):355:357 -> k
-    1:1:java.util.ArrayList access$getMatchesListObject$p(ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter):349:349 -> s
-    1:1:kotlin.jvm.functions.Function1 getOnItemClick():351:351 -> t
-    1:1:void setOnItemClick(kotlin.jvm.functions.Function1):351:351 -> u
+    1:2:void <init>(ninja.cricks.ui.contest.MyTeamFragment,android.content.Context,java.util.ArrayList):355:356 -> <init>
+    3:3:void <init>(ninja.cricks.ui.contest.MyTeamFragment,android.content.Context,java.util.ArrayList):358:358 -> <init>
+    1:1:int getItemCount():477:477 -> c
+    1:5:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):367:371 -> i
+    6:7:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):373:374 -> i
+    8:9:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):376:377 -> i
+    10:10:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):379:379 -> i
+    11:11:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):381:381 -> i
+    12:14:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):383:385 -> i
+    15:18:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):388:391 -> i
+    19:22:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):393:396 -> i
+    23:28:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):399:404 -> i
+    29:29:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):414:414 -> i
+    30:34:void onBindViewHolder(androidx.recyclerview.widget.RecyclerView$ViewHolder,int):427:431 -> i
+    1:3:androidx.recyclerview.widget.RecyclerView$ViewHolder onCreateViewHolder(android.view.ViewGroup,int):361:363 -> k
+    1:1:java.util.ArrayList access$getMatchesListObject$p(ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter):355:355 -> s
+    1:1:kotlin.jvm.functions.Function1 getOnItemClick():357:357 -> t
+    1:1:void setOnItemClick(kotlin.jvm.functions.Function1):357:357 -> u
 ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter$MyMatchViewHolder -> ninja.cricks.ui.b.e$b$a:
     android.widget.ImageView teamCopy -> v
     android.widget.TextView userTeamName -> t
@@ -119837,149 +119840,149 @@ ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter$MyMatchViewHolder -> ninja.
     android.widget.TextView myteamPoints -> I
     android.widget.TextView countBowler -> H
     android.widget.ImageView teamEdit -> u
-    1:1:void <init>(ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter,android.view.View):471:471 -> <init>
-    2:2:void <init>(ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter,android.view.View):473:473 -> <init>
-    3:6:void <init>(ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter,android.view.View):478:481 -> <init>
-    7:10:void <init>(ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter,android.view.View):483:486 -> <init>
-    11:12:void <init>(ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter,android.view.View):489:490 -> <init>
-    13:14:void <init>(ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter,android.view.View):492:493 -> <init>
-    15:18:void <init>(ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter,android.view.View):495:498 -> <init>
-    19:20:void <init>(ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter,android.view.View):500:501 -> <init>
-    21:21:void <init>(ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter,android.view.View):503:503 -> <init>
-    1:1:android.widget.ImageView getCaptainImageView():489:489 -> L
-    1:1:android.widget.TextView getCaptainPlayerName():490:490 -> M
-    1:1:android.widget.TextView getCountAllRounder():497:497 -> N
-    1:1:android.widget.TextView getCountBatsman():496:496 -> O
-    1:1:android.widget.TextView getCountBowler():498:498 -> P
-    1:1:android.widget.TextView getCountWicketkeeper():495:495 -> Q
-    1:1:android.widget.LinearLayout getLinearPointViews():501:501 -> R
-    1:1:android.widget.LinearLayout getLinearTeamCountViews():502:502 -> S
-    1:1:android.widget.TextView getMyteamPoints():500:500 -> T
-    1:1:android.widget.ImageView getTeamCopy():480:480 -> U
-    1:1:android.widget.ImageView getTeamEdit():479:479 -> V
-    1:1:android.widget.TextView getTeamaCount():484:484 -> W
-    1:1:android.widget.TextView getTeamaName():483:483 -> X
-    1:1:android.widget.TextView getTeambCount():486:486 -> Y
-    1:1:android.widget.TextView getTeambName():485:485 -> Z
-    1:1:android.widget.TextView getUserTeamName():478:478 -> a0
-    1:1:android.widget.ImageView getVcImageView():492:492 -> b0
-    1:1:android.widget.TextView getVcPlayerName():493:493 -> c0
+    1:1:void <init>(ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter,android.view.View):480:480 -> <init>
+    2:2:void <init>(ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter,android.view.View):482:482 -> <init>
+    3:6:void <init>(ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter,android.view.View):487:490 -> <init>
+    7:10:void <init>(ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter,android.view.View):492:495 -> <init>
+    11:12:void <init>(ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter,android.view.View):498:499 -> <init>
+    13:14:void <init>(ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter,android.view.View):501:502 -> <init>
+    15:18:void <init>(ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter,android.view.View):504:507 -> <init>
+    19:20:void <init>(ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter,android.view.View):509:510 -> <init>
+    21:21:void <init>(ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter,android.view.View):512:512 -> <init>
+    1:1:android.widget.ImageView getCaptainImageView():498:498 -> L
+    1:1:android.widget.TextView getCaptainPlayerName():499:499 -> M
+    1:1:android.widget.TextView getCountAllRounder():506:506 -> N
+    1:1:android.widget.TextView getCountBatsman():505:505 -> O
+    1:1:android.widget.TextView getCountBowler():507:507 -> P
+    1:1:android.widget.TextView getCountWicketkeeper():504:504 -> Q
+    1:1:android.widget.LinearLayout getLinearPointViews():510:510 -> R
+    1:1:android.widget.LinearLayout getLinearTeamCountViews():511:511 -> S
+    1:1:android.widget.TextView getMyteamPoints():509:509 -> T
+    1:1:android.widget.ImageView getTeamCopy():489:489 -> U
+    1:1:android.widget.ImageView getTeamEdit():488:488 -> V
+    1:1:android.widget.TextView getTeamaCount():493:493 -> W
+    1:1:android.widget.TextView getTeamaName():492:492 -> X
+    1:1:android.widget.TextView getTeambCount():495:495 -> Y
+    1:1:android.widget.TextView getTeambName():494:494 -> Z
+    1:1:android.widget.TextView getUserTeamName():487:487 -> a0
+    1:1:android.widget.ImageView getVcImageView():501:501 -> b0
+    1:1:android.widget.TextView getVcPlayerName():502:502 -> c0
 ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter$MyMatchViewHolder$1 -> ninja.cricks.ui.b.e$b$a$a:
     ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter$MyMatchViewHolder this$0 -> g
-    1:1:void onClick(android.view.View):474:474 -> onClick
+    1:1:void onClick(android.view.View):483:483 -> onClick
 ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter$onBindViewHolder$1 -> ninja.cricks.ui.b.e$b$b:
     ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter this$0 -> g
     ninja.cricks.models.MyTeamModels $objectVal -> h
-    1:4:void onClick(android.view.View):399:402 -> onClick
-    5:5:void onClick(android.view.View):404:404 -> onClick
-    6:6:void onClick(android.view.View):402:402 -> onClick
+    1:4:void onClick(android.view.View):405:408 -> onClick
+    5:5:void onClick(android.view.View):410:410 -> onClick
+    6:6:void onClick(android.view.View):408:408 -> onClick
 ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter$onBindViewHolder$2 -> ninja.cricks.ui.b.e$b$c:
     ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter this$0 -> g
     ninja.cricks.models.MyTeamModels $objectVal -> h
-    1:1:void <init>(ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter,ninja.cricks.models.MyTeamModels):408:408 -> <init>
-    1:5:void onClick(android.view.View):410:414 -> onClick
-    6:6:void onClick(android.view.View):416:416 -> onClick
-    7:7:void onClick(android.view.View):414:414 -> onClick
+    1:1:void <init>(ninja.cricks.ui.contest.MyTeamFragment$MyTeamAdapter,ninja.cricks.models.MyTeamModels):414:414 -> <init>
+    1:5:void onClick(android.view.View):416:420 -> onClick
+    6:6:void onClick(android.view.View):422:422 -> onClick
+    7:7:void onClick(android.view.View):420:420 -> onClick
 ninja.cricks.ui.contest.MyTeamFragment$getMyTeam$1 -> ninja.cricks.ui.b.e$c:
     int label -> k
     ninja.cricks.ui.contest.MyTeamFragment this$0 -> l
     java.lang.Object invoke(java.lang.Object,java.lang.Object) -> I
     kotlin.coroutines.Continuation create(java.lang.Object,kotlin.coroutines.Continuation) -> c
-    1:1:java.lang.Object invokeSuspend(java.lang.Object):245:245 -> g
-    2:2:java.lang.Object invokeSuspend(java.lang.Object):251:251 -> g
-    3:4:java.lang.Object invokeSuspend(java.lang.Object):245:246 -> g
-    5:6:java.lang.Object invokeSuspend(java.lang.Object):248:249 -> g
-    7:7:java.lang.Object invokeSuspend(java.lang.Object):251:251 -> g
+    1:1:java.lang.Object invokeSuspend(java.lang.Object):239:239 -> g
+    2:2:java.lang.Object invokeSuspend(java.lang.Object):246:246 -> g
+    3:5:java.lang.Object invokeSuspend(java.lang.Object):239:241 -> g
+    6:7:java.lang.Object invokeSuspend(java.lang.Object):243:244 -> g
+    8:8:java.lang.Object invokeSuspend(java.lang.Object):246:246 -> g
 ninja.cricks.ui.contest.MyTeamFragment$getMyTeam$1$1 -> ninja.cricks.ui.b.e$c$a:
     int label -> k
     ninja.cricks.ui.contest.MyTeamFragment$getMyTeam$1 this$0 -> l
     ninja.cricks.roomDatabase.Response $value -> m
     java.lang.Object invoke(java.lang.Object,java.lang.Object) -> I
     kotlin.coroutines.Continuation create(java.lang.Object,kotlin.coroutines.Continuation) -> c
-    1:1:java.lang.Object invokeSuspend(java.lang.Object):249:249 -> g
+    1:1:java.lang.Object invokeSuspend(java.lang.Object):244:244 -> g
 ninja.cricks.ui.contest.MyTeamFragment$getMyteamApiCall$1 -> ninja.cricks.ui.b.e$d:
     ninja.cricks.ui.contest.MyTeamFragment this$0 -> g
-    1:1:void <init>(ninja.cricks.ui.contest.MyTeamFragment):294:294 -> <init>
-    1:2:void onFailure(retrofit2.Call,java.lang.Throwable):296:297 -> D
-    3:3:void onFailure(retrofit2.Call,java.lang.Throwable):299:299 -> D
-    4:5:void onFailure(retrofit2.Call,java.lang.Throwable):301:302 -> D
-    1:2:void onResponse(retrofit2.Call,retrofit2.Response):309:310 -> y
-    3:4:void onResponse(retrofit2.Call,retrofit2.Response):313:314 -> y
-    5:6:void onResponse(retrofit2.Call,retrofit2.Response):316:317 -> y
-    7:7:void onResponse(retrofit2.Call,retrofit2.Response):319:319 -> y
-    8:10:void onResponse(retrofit2.Call,retrofit2.Response):329:331 -> y
-    11:11:void onResponse(retrofit2.Call,retrofit2.Response):333:333 -> y
-    12:12:void onResponse(retrofit2.Call,retrofit2.Response):337:337 -> y
+    1:1:void <init>(ninja.cricks.ui.contest.MyTeamFragment):288:288 -> <init>
+    1:2:void onFailure(retrofit2.Call,java.lang.Throwable):290:291 -> D
+    3:3:void onFailure(retrofit2.Call,java.lang.Throwable):293:293 -> D
+    4:5:void onFailure(retrofit2.Call,java.lang.Throwable):295:296 -> D
+    1:2:void onResponse(retrofit2.Call,retrofit2.Response):303:304 -> y
+    3:4:void onResponse(retrofit2.Call,retrofit2.Response):307:308 -> y
+    5:6:void onResponse(retrofit2.Call,retrofit2.Response):310:311 -> y
+    7:7:void onResponse(retrofit2.Call,retrofit2.Response):314:314 -> y
+    8:10:void onResponse(retrofit2.Call,retrofit2.Response):334:336 -> y
+    11:11:void onResponse(retrofit2.Call,retrofit2.Response):338:338 -> y
+    12:12:void onResponse(retrofit2.Call,retrofit2.Response):342:342 -> y
 ninja.cricks.ui.contest.MyTeamFragment$getMyteamApiCall$1$onResponse$1 -> ninja.cricks.ui.b.e$d$a:
     ninja.cricks.ui.contest.MyTeamFragment$getMyteamApiCall$1 this$0 -> l
     int label -> k
     ninja.cricks.models.UsersPostDBResponse $res -> m
     java.lang.Object invoke(java.lang.Object,java.lang.Object) -> I
     kotlin.coroutines.Continuation create(java.lang.Object,kotlin.coroutines.Continuation) -> c
-    1:1:java.lang.Object invokeSuspend(java.lang.Object):319:319 -> g
-    2:2:java.lang.Object invokeSuspend(java.lang.Object):326:326 -> g
-    3:5:java.lang.Object invokeSuspend(java.lang.Object):319:321 -> g
-    6:6:java.lang.Object invokeSuspend(java.lang.Object):326:326 -> g
+    1:1:java.lang.Object invokeSuspend(java.lang.Object):314:314 -> g
+    2:2:java.lang.Object invokeSuspend(java.lang.Object):331:331 -> g
+    3:5:java.lang.Object invokeSuspend(java.lang.Object):314:316 -> g
+    6:6:java.lang.Object invokeSuspend(java.lang.Object):331:331 -> g
 ninja.cricks.ui.contest.MyTeamFragment$getMyteamApiCall$1$onResponse$1$1 -> ninja.cricks.ui.b.e$d$a$a:
     ninja.cricks.ui.contest.MyTeamFragment$getMyteamApiCall$1$onResponse$1 this$0 -> l
     int label -> k
     java.lang.Object invoke(java.lang.Object,java.lang.Object) -> I
     kotlin.coroutines.Continuation create(java.lang.Object,kotlin.coroutines.Continuation) -> c
-    1:1:java.lang.Object invokeSuspend(java.lang.Object):320:320 -> g
+    1:1:java.lang.Object invokeSuspend(java.lang.Object):315:315 -> g
 ninja.cricks.ui.contest.MyTeamFragment$getMyteamApiCall$1$onResponse$1$2 -> ninja.cricks.ui.b.e$d$a$b:
     ninja.cricks.ui.contest.MyTeamFragment$getMyteamApiCall$1$onResponse$1 this$0 -> l
     int label -> k
     java.lang.Object invoke(java.lang.Object,java.lang.Object) -> I
     kotlin.coroutines.Continuation create(java.lang.Object,kotlin.coroutines.Continuation) -> c
-    1:1:java.lang.Object invokeSuspend(java.lang.Object):321:321 -> g
-    2:2:java.lang.Object invokeSuspend(java.lang.Object):325:325 -> g
-    3:6:java.lang.Object invokeSuspend(java.lang.Object):321:324 -> g
-    7:7:java.lang.Object invokeSuspend(java.lang.Object):323:323 -> g
-    8:8:java.lang.Object invokeSuspend(java.lang.Object):325:325 -> g
+    1:1:java.lang.Object invokeSuspend(java.lang.Object):316:316 -> g
+    2:2:java.lang.Object invokeSuspend(java.lang.Object):330:330 -> g
+    3:7:java.lang.Object invokeSuspend(java.lang.Object):316:320 -> g
+    8:8:java.lang.Object invokeSuspend(java.lang.Object):317:317 -> g
+    9:9:java.lang.Object invokeSuspend(java.lang.Object):322:322 -> g
+    10:14:java.lang.Object invokeSuspend(java.lang.Object):324:324 -> g
+    15:15:java.lang.Object invokeSuspend(java.lang.Object):323:323 -> g
+    16:16:java.lang.Object invokeSuspend(java.lang.Object):330:330 -> g
 ninja.cricks.ui.contest.MyTeamFragment$getPoints$1 -> ninja.cricks.ui.b.e$e:
     int $teamId -> h
     ninja.cricks.ui.contest.MyTeamFragment this$0 -> g
-    1:1:void <init>(ninja.cricks.ui.contest.MyTeamFragment,int):142:142 -> <init>
-    1:1:void onFailure(retrofit2.Call,java.lang.Throwable):144:144 -> D
-    1:2:void onResponse(retrofit2.Call,retrofit2.Response):151:152 -> y
-    3:5:void onResponse(retrofit2.Call,retrofit2.Response):154:156 -> y
-    6:6:void onResponse(retrofit2.Call,retrofit2.Response):158:158 -> y
-    7:7:void onResponse(retrofit2.Call,retrofit2.Response):160:160 -> y
-    8:8:void onResponse(retrofit2.Call,retrofit2.Response):163:163 -> y
-    9:9:void onResponse(retrofit2.Call,retrofit2.Response):165:165 -> y
-    10:10:void onResponse(retrofit2.Call,retrofit2.Response):167:167 -> y
-    11:11:void onResponse(retrofit2.Call,retrofit2.Response):169:169 -> y
-    12:21:void onResponse(retrofit2.Call,retrofit2.Response):171:180 -> y
-    22:22:void onResponse(retrofit2.Call,retrofit2.Response):184:184 -> y
-    23:23:void onResponse(retrofit2.Call,retrofit2.Response):183:183 -> y
-    24:24:void onResponse(retrofit2.Call,retrofit2.Response):188:188 -> y
-    25:25:void onResponse(retrofit2.Call,retrofit2.Response):187:187 -> y
-    26:26:void onResponse(retrofit2.Call,retrofit2.Response):192:192 -> y
-    27:27:void onResponse(retrofit2.Call,retrofit2.Response):191:191 -> y
-    28:28:void onResponse(retrofit2.Call,retrofit2.Response):196:196 -> y
-    29:29:void onResponse(retrofit2.Call,retrofit2.Response):195:195 -> y
-    30:32:void onResponse(retrofit2.Call,retrofit2.Response):200:202 -> y
-    33:34:void onResponse(retrofit2.Call,retrofit2.Response):204:205 -> y
-    35:35:void onResponse(retrofit2.Call,retrofit2.Response):203:203 -> y
-    36:36:void onResponse(retrofit2.Call,retrofit2.Response):207:207 -> y
-    37:37:void onResponse(retrofit2.Call,retrofit2.Response):211:211 -> y
-    38:40:void onResponse(retrofit2.Call,retrofit2.Response):214:216 -> y
-    41:41:void onResponse(retrofit2.Call,retrofit2.Response):218:218 -> y
+    1:1:void <init>(ninja.cricks.ui.contest.MyTeamFragment,int):136:136 -> <init>
+    1:1:void onFailure(retrofit2.Call,java.lang.Throwable):138:138 -> D
+    1:2:void onResponse(retrofit2.Call,retrofit2.Response):145:146 -> y
+    3:5:void onResponse(retrofit2.Call,retrofit2.Response):148:150 -> y
+    6:6:void onResponse(retrofit2.Call,retrofit2.Response):152:152 -> y
+    7:7:void onResponse(retrofit2.Call,retrofit2.Response):154:154 -> y
+    8:8:void onResponse(retrofit2.Call,retrofit2.Response):157:157 -> y
+    9:9:void onResponse(retrofit2.Call,retrofit2.Response):159:159 -> y
+    10:10:void onResponse(retrofit2.Call,retrofit2.Response):161:161 -> y
+    11:11:void onResponse(retrofit2.Call,retrofit2.Response):163:163 -> y
+    12:21:void onResponse(retrofit2.Call,retrofit2.Response):165:174 -> y
+    22:22:void onResponse(retrofit2.Call,retrofit2.Response):178:178 -> y
+    23:23:void onResponse(retrofit2.Call,retrofit2.Response):177:177 -> y
+    24:24:void onResponse(retrofit2.Call,retrofit2.Response):182:182 -> y
+    25:25:void onResponse(retrofit2.Call,retrofit2.Response):181:181 -> y
+    26:26:void onResponse(retrofit2.Call,retrofit2.Response):186:186 -> y
+    27:27:void onResponse(retrofit2.Call,retrofit2.Response):185:185 -> y
+    28:28:void onResponse(retrofit2.Call,retrofit2.Response):190:190 -> y
+    29:29:void onResponse(retrofit2.Call,retrofit2.Response):189:189 -> y
+    30:32:void onResponse(retrofit2.Call,retrofit2.Response):194:196 -> y
+    33:34:void onResponse(retrofit2.Call,retrofit2.Response):198:199 -> y
+    35:35:void onResponse(retrofit2.Call,retrofit2.Response):197:197 -> y
+    36:36:void onResponse(retrofit2.Call,retrofit2.Response):201:201 -> y
+    37:37:void onResponse(retrofit2.Call,retrofit2.Response):205:205 -> y
+    38:40:void onResponse(retrofit2.Call,retrofit2.Response):208:210 -> y
+    41:41:void onResponse(retrofit2.Call,retrofit2.Response):212:212 -> y
 ninja.cricks.ui.contest.MyTeamFragment$onViewCreated$1 -> ninja.cricks.ui.b.e$f:
-    ninja.cricks.ui.contest.MyTeamFragment this$0 -> a
-    1:2:void onFragmentResult(java.lang.String,android.os.Bundle):80:81 -> a
+    ninja.cricks.ui.contest.MyTeamFragment this$0 -> g
+    1:1:java.lang.Object invoke(java.lang.Object):37:37 -> O
+    1:2:void invoke(ninja.cricks.models.MyTeamModels):87:88 -> a
 ninja.cricks.ui.contest.MyTeamFragment$onViewCreated$2 -> ninja.cricks.ui.b.e$g:
     ninja.cricks.ui.contest.MyTeamFragment this$0 -> g
-    1:1:java.lang.Object invoke(java.lang.Object):36:36 -> O
-    1:2:void invoke(ninja.cricks.models.MyTeamModels):92:93 -> a
+    1:3:void onClick(android.view.View):92:94 -> onClick
+    4:4:void onClick(android.view.View):96:96 -> onClick
+    5:5:void onClick(android.view.View):94:94 -> onClick
 ninja.cricks.ui.contest.MyTeamFragment$onViewCreated$3 -> ninja.cricks.ui.b.e$h:
     ninja.cricks.ui.contest.MyTeamFragment this$0 -> g
-    1:3:void onClick(android.view.View):97:99 -> onClick
-    4:4:void onClick(android.view.View):101:101 -> onClick
-    5:5:void onClick(android.view.View):99:99 -> onClick
-ninja.cricks.ui.contest.MyTeamFragment$onViewCreated$4 -> ninja.cricks.ui.b.e$i:
-    ninja.cricks.ui.contest.MyTeamFragment this$0 -> g
-    1:1:void onRefresh():105:105 -> v
+    1:1:void onRefresh():100:100 -> v
 ninja.cricks.ui.contest.PlayerStatsFragment -> ninja.cricks.ui.b.f:
     ninja.cricks.ui.contest.PlayerStatsFragment$Companion Companion -> l0
     ninja.cricks.models.UpcomingMatchesModel objectMatches -> f0
@@ -120935,139 +120938,143 @@ ninja.cricks.ui.dashboard.FixtureCricketFragment -> ninja.cricks.ui.dashboard.Fi
     android.content.Context mContext -> j0
     ninja.cricks.databinding.FragmentAllGamesBinding mBinding -> f0
     android.app.Dialog sdialog -> i0
-    1:1:void <clinit>():53:53 -> <clinit>
-    2:2:void <clinit>():55:55 -> <clinit>
-    1:1:void <init>():50:50 -> <init>
-    2:2:void <init>():60:60 -> <init>
-    1:2:void onCreate(android.os.Bundle):66:67 -> E0
-    1:1:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):74:74 -> I0
-    2:2:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):78:78 -> I0
-    1:1:void onViewCreated(android.view.View,android.os.Bundle):82:82 -> d1
-    2:3:void onViewCreated(android.view.View,android.os.Bundle):84:85 -> d1
-    4:4:void onViewCreated(android.view.View,android.os.Bundle):87:87 -> d1
-    5:5:void onViewCreated(android.view.View,android.os.Bundle):91:91 -> d1
-    6:7:void onViewCreated(android.view.View,android.os.Bundle):93:94 -> d1
-    8:8:void onViewCreated(android.view.View,android.os.Bundle):98:98 -> d1
-    9:11:void onViewCreated(android.view.View,android.os.Bundle):106:108 -> d1
-    12:12:void onViewCreated(android.view.View,android.os.Bundle):107:107 -> d1
-    1:1:void access$allContests(ninja.cricks.ui.dashboard.FixtureCricketFragment,ninja.cricks.models.UsersPostDBResponse):50:50 -> f2
-    1:1:void access$allContestsApiCall(ninja.cricks.ui.dashboard.FixtureCricketFragment):50:50 -> g2
-    1:1:void access$getAllMatches(ninja.cricks.ui.dashboard.FixtureCricketFragment):50:50 -> h2
-    1:1:ninja.cricks.databinding.FragmentAllGamesBinding access$getMBinding$p(ninja.cricks.ui.dashboard.FixtureCricketFragment):50:50 -> i2
-    1:3:void addAllList(java.util.ArrayList):248:250 -> j2
-    1:1:void allContests(ninja.cricks.models.UsersPostDBResponse):233:233 -> k2
-    2:5:void allContests(ninja.cricks.models.UsersPostDBResponse):235:238 -> k2
-    6:8:void allContests(ninja.cricks.models.UsersPostDBResponse):240:242 -> k2
-    1:3:void allContestsApiCall():160:162 -> l2
-    4:4:void allContestsApiCall():164:164 -> l2
-    5:5:void allContestsApiCall():163:163 -> l2
-    6:6:void allContestsApiCall():167:167 -> l2
-    7:7:void allContestsApiCall():170:170 -> l2
-    8:8:void allContestsApiCall():173:173 -> l2
-    9:11:void allContestsApiCall():175:177 -> l2
-    12:14:void allContestsApiCall():179:181 -> l2
-    1:1:void getAllContestFromDatabase():146:146 -> m2
-    1:3:void getAllMatches():136:138 -> n2
-    4:4:void getAllMatches():141:141 -> n2
-    1:1:android.app.Dialog getSdialog():62:62 -> o2
-    1:2:boolean isValidRequest():113:114 -> p2
-    1:9:void showAlert(java.lang.String):259:267 -> q2
-    10:10:void showAlert(java.lang.String):269:269 -> q2
-    11:11:void showAlert(java.lang.String):273:273 -> q2
-    12:12:void showAlert(java.lang.String):293:293 -> q2
-    13:13:void showAlert(java.lang.String):295:295 -> q2
-    14:14:void showAlert(java.lang.String):267:267 -> q2
-    15:15:void showAlert(java.lang.String):266:266 -> q2
-    16:16:void showAlert(java.lang.String):265:265 -> q2
-    17:17:void showAlert(java.lang.String):264:264 -> q2
-    18:18:void showAlert(java.lang.String):263:263 -> q2
-    19:19:void showAlert(java.lang.String):262:262 -> q2
-    20:20:void showAlert(java.lang.String):261:261 -> q2
-    21:21:void showAlert(java.lang.String):260:260 -> q2
-    1:3:void updateEmptyViews():122:124 -> r2
-    4:4:void updateEmptyViews():131:131 -> r2
-    1:1:void onRefresh():255:255 -> v
+    1:1:void <clinit>():56:56 -> <clinit>
+    2:2:void <clinit>():58:58 -> <clinit>
+    1:1:void <init>():53:53 -> <init>
+    2:2:void <init>():63:63 -> <init>
+    1:2:void onCreate(android.os.Bundle):69:70 -> E0
+    1:1:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):77:77 -> I0
+    2:2:android.view.View onCreateView(android.view.LayoutInflater,android.view.ViewGroup,android.os.Bundle):81:81 -> I0
+    1:1:void onViewCreated(android.view.View,android.os.Bundle):85:85 -> d1
+    2:3:void onViewCreated(android.view.View,android.os.Bundle):87:88 -> d1
+    4:4:void onViewCreated(android.view.View,android.os.Bundle):90:90 -> d1
+    5:5:void onViewCreated(android.view.View,android.os.Bundle):94:94 -> d1
+    6:7:void onViewCreated(android.view.View,android.os.Bundle):96:97 -> d1
+    8:8:void onViewCreated(android.view.View,android.os.Bundle):101:101 -> d1
+    9:11:void onViewCreated(android.view.View,android.os.Bundle):109:111 -> d1
+    12:12:void onViewCreated(android.view.View,android.os.Bundle):113:113 -> d1
+    13:13:void onViewCreated(android.view.View,android.os.Bundle):111:111 -> d1
+    1:1:void access$allContests(ninja.cricks.ui.dashboard.FixtureCricketFragment,ninja.cricks.models.UsersPostDBResponse):53:53 -> f2
+    1:1:void access$allContestsApiCall(ninja.cricks.ui.dashboard.FixtureCricketFragment):53:53 -> g2
+    1:1:void access$getAllMatches(ninja.cricks.ui.dashboard.FixtureCricketFragment):53:53 -> h2
+    1:1:ninja.cricks.databinding.FragmentAllGamesBinding access$getMBinding$p(ninja.cricks.ui.dashboard.FixtureCricketFragment):53:53 -> i2
+    1:3:void addAllList(java.util.ArrayList):254:256 -> j2
+    1:1:void allContests(ninja.cricks.models.UsersPostDBResponse):240:240 -> k2
+    2:5:void allContests(ninja.cricks.models.UsersPostDBResponse):242:245 -> k2
+    6:8:void allContests(ninja.cricks.models.UsersPostDBResponse):247:249 -> k2
+    1:3:void allContestsApiCall():167:169 -> l2
+    4:4:void allContestsApiCall():171:171 -> l2
+    5:5:void allContestsApiCall():170:170 -> l2
+    6:6:void allContestsApiCall():174:174 -> l2
+    7:7:void allContestsApiCall():177:177 -> l2
+    8:8:void allContestsApiCall():180:180 -> l2
+    9:11:void allContestsApiCall():182:184 -> l2
+    12:13:void allContestsApiCall():186:187 -> l2
+    1:1:void getAllContestFromDatabase():153:153 -> m2
+    1:3:void getAllMatches():143:145 -> n2
+    4:4:void getAllMatches():148:148 -> n2
+    1:1:android.app.Dialog getSdialog():65:65 -> o2
+    1:2:boolean isValidRequest():120:121 -> p2
+    1:9:void showAlert(java.lang.String):265:273 -> q2
+    10:10:void showAlert(java.lang.String):275:275 -> q2
+    11:11:void showAlert(java.lang.String):279:279 -> q2
+    12:12:void showAlert(java.lang.String):299:299 -> q2
+    13:13:void showAlert(java.lang.String):301:301 -> q2
+    14:14:void showAlert(java.lang.String):273:273 -> q2
+    15:15:void showAlert(java.lang.String):272:272 -> q2
+    16:16:void showAlert(java.lang.String):271:271 -> q2
+    17:17:void showAlert(java.lang.String):270:270 -> q2
+    18:18:void showAlert(java.lang.String):269:269 -> q2
+    19:19:void showAlert(java.lang.String):268:268 -> q2
+    20:20:void showAlert(java.lang.String):267:267 -> q2
+    21:21:void showAlert(java.lang.String):266:266 -> q2
+    1:3:void updateEmptyViews():129:131 -> r2
+    4:4:void updateEmptyViews():138:138 -> r2
+    1:1:void onRefresh():261:261 -> v
 ninja.cricks.ui.dashboard.FixtureCricketFragment$allContestsApiCall$1 -> ninja.cricks.ui.dashboard.FixtureCricketFragment$a:
     ninja.cricks.ui.dashboard.FixtureCricketFragment this$0 -> g
-    1:1:void onClick(android.view.View):169:169 -> onClick
+    1:1:void onClick(android.view.View):176:176 -> onClick
 ninja.cricks.ui.dashboard.FixtureCricketFragment$allContestsApiCall$2 -> ninja.cricks.ui.dashboard.FixtureCricketFragment$b:
     ninja.cricks.ui.dashboard.FixtureCricketFragment this$0 -> g
-    1:1:void <init>(ninja.cricks.ui.dashboard.FixtureCricketFragment):181:181 -> <init>
-    1:1:void onFailure(retrofit2.Call,java.lang.Throwable):183:183 -> D
-    1:1:void onResponse(retrofit2.Call,retrofit2.Response):190:190 -> y
-    2:3:void onResponse(retrofit2.Call,retrofit2.Response):193:194 -> y
-    4:5:void onResponse(retrofit2.Call,retrofit2.Response):196:197 -> y
-    6:8:void onResponse(retrofit2.Call,retrofit2.Response):199:201 -> y
-    9:11:void onResponse(retrofit2.Call,retrofit2.Response):204:206 -> y
-    12:13:void onResponse(retrofit2.Call,retrofit2.Response):208:209 -> y
-    14:16:void onResponse(retrofit2.Call,retrofit2.Response):220:222 -> y
-    17:17:void onResponse(retrofit2.Call,retrofit2.Response):224:224 -> y
-    18:18:void onResponse(retrofit2.Call,retrofit2.Response):228:228 -> y
+    1:1:void <init>(ninja.cricks.ui.dashboard.FixtureCricketFragment):187:187 -> <init>
+    1:1:void onFailure(retrofit2.Call,java.lang.Throwable):189:189 -> D
+    1:1:void onResponse(retrofit2.Call,retrofit2.Response):196:196 -> y
+    2:3:void onResponse(retrofit2.Call,retrofit2.Response):199:200 -> y
+    4:5:void onResponse(retrofit2.Call,retrofit2.Response):202:203 -> y
+    6:8:void onResponse(retrofit2.Call,retrofit2.Response):205:207 -> y
+    9:11:void onResponse(retrofit2.Call,retrofit2.Response):210:212 -> y
+    12:13:void onResponse(retrofit2.Call,retrofit2.Response):214:215 -> y
+    14:16:void onResponse(retrofit2.Call,retrofit2.Response):226:228 -> y
+    17:17:void onResponse(retrofit2.Call,retrofit2.Response):230:230 -> y
+    18:18:void onResponse(retrofit2.Call,retrofit2.Response):234:234 -> y
 ninja.cricks.ui.dashboard.FixtureCricketFragment$allContestsApiCall$2$onResponse$1 -> ninja.cricks.ui.dashboard.FixtureCricketFragment$b$a:
     int label -> k
     ninja.cricks.models.UsersPostDBResponse $resObje -> m
     ninja.cricks.ui.dashboard.FixtureCricketFragment$allContestsApiCall$2 this$0 -> l
     java.lang.Object invoke(java.lang.Object,java.lang.Object) -> I
     kotlin.coroutines.Continuation create(java.lang.Object,kotlin.coroutines.Continuation) -> c
-    1:1:java.lang.Object invokeSuspend(java.lang.Object):209:209 -> g
-    2:2:java.lang.Object invokeSuspend(java.lang.Object):216:216 -> g
-    3:5:java.lang.Object invokeSuspend(java.lang.Object):209:211 -> g
-    6:6:java.lang.Object invokeSuspend(java.lang.Object):216:216 -> g
+    1:1:java.lang.Object invokeSuspend(java.lang.Object):215:215 -> g
+    2:2:java.lang.Object invokeSuspend(java.lang.Object):222:222 -> g
+    3:5:java.lang.Object invokeSuspend(java.lang.Object):215:217 -> g
+    6:6:java.lang.Object invokeSuspend(java.lang.Object):222:222 -> g
 ninja.cricks.ui.dashboard.FixtureCricketFragment$allContestsApiCall$2$onResponse$1$1 -> ninja.cricks.ui.dashboard.FixtureCricketFragment$b$a$a:
     ninja.cricks.ui.dashboard.FixtureCricketFragment$allContestsApiCall$2$onResponse$1 this$0 -> l
     int label -> k
     java.lang.Object invoke(java.lang.Object,java.lang.Object) -> I
     kotlin.coroutines.Continuation create(java.lang.Object,kotlin.coroutines.Continuation) -> c
-    1:1:java.lang.Object invokeSuspend(java.lang.Object):210:210 -> g
+    1:1:java.lang.Object invokeSuspend(java.lang.Object):216:216 -> g
 ninja.cricks.ui.dashboard.FixtureCricketFragment$allContestsApiCall$2$onResponse$1$2 -> ninja.cricks.ui.dashboard.FixtureCricketFragment$b$a$b:
     ninja.cricks.ui.dashboard.FixtureCricketFragment$allContestsApiCall$2$onResponse$1 this$0 -> l
     int label -> k
     java.lang.Object invoke(java.lang.Object,java.lang.Object) -> I
     kotlin.coroutines.Continuation create(java.lang.Object,kotlin.coroutines.Continuation) -> c
-    1:1:java.lang.Object invokeSuspend(java.lang.Object):211:211 -> g
-    2:2:java.lang.Object invokeSuspend(java.lang.Object):215:215 -> g
-    3:6:java.lang.Object invokeSuspend(java.lang.Object):211:214 -> g
-    7:7:java.lang.Object invokeSuspend(java.lang.Object):213:213 -> g
-    8:8:java.lang.Object invokeSuspend(java.lang.Object):215:215 -> g
+    1:1:java.lang.Object invokeSuspend(java.lang.Object):217:217 -> g
+    2:2:java.lang.Object invokeSuspend(java.lang.Object):221:221 -> g
+    3:6:java.lang.Object invokeSuspend(java.lang.Object):217:220 -> g
+    7:7:java.lang.Object invokeSuspend(java.lang.Object):219:219 -> g
+    8:8:java.lang.Object invokeSuspend(java.lang.Object):221:221 -> g
 ninja.cricks.ui.dashboard.FixtureCricketFragment$getAllContestFromDatabase$1 -> ninja.cricks.ui.dashboard.FixtureCricketFragment$c:
     int label -> k
     ninja.cricks.ui.dashboard.FixtureCricketFragment this$0 -> l
     java.lang.Object invoke(java.lang.Object,java.lang.Object) -> I
     kotlin.coroutines.Continuation create(java.lang.Object,kotlin.coroutines.Continuation) -> c
-    1:1:java.lang.Object invokeSuspend(java.lang.Object):146:146 -> g
-    2:2:java.lang.Object invokeSuspend(java.lang.Object):155:155 -> g
-    3:4:java.lang.Object invokeSuspend(java.lang.Object):146:147 -> g
-    5:6:java.lang.Object invokeSuspend(java.lang.Object):149:150 -> g
-    7:7:java.lang.Object invokeSuspend(java.lang.Object):153:153 -> g
-    8:8:java.lang.Object invokeSuspend(java.lang.Object):155:155 -> g
+    1:1:java.lang.Object invokeSuspend(java.lang.Object):153:153 -> g
+    2:2:java.lang.Object invokeSuspend(java.lang.Object):162:162 -> g
+    3:4:java.lang.Object invokeSuspend(java.lang.Object):153:154 -> g
+    5:6:java.lang.Object invokeSuspend(java.lang.Object):156:157 -> g
+    7:7:java.lang.Object invokeSuspend(java.lang.Object):160:160 -> g
+    8:8:java.lang.Object invokeSuspend(java.lang.Object):162:162 -> g
 ninja.cricks.ui.dashboard.FixtureCricketFragment$getAllContestFromDatabase$1$1 -> ninja.cricks.ui.dashboard.FixtureCricketFragment$c$a:
     int label -> k
     ninja.cricks.roomDatabase.Response $value -> m
     ninja.cricks.ui.dashboard.FixtureCricketFragment$getAllContestFromDatabase$1 this$0 -> l
     java.lang.Object invoke(java.lang.Object,java.lang.Object) -> I
     kotlin.coroutines.Continuation create(java.lang.Object,kotlin.coroutines.Continuation) -> c
-    1:1:java.lang.Object invokeSuspend(java.lang.Object):150:150 -> g
+    1:1:java.lang.Object invokeSuspend(java.lang.Object):157:157 -> g
 ninja.cricks.ui.dashboard.FixtureCricketFragment$getAllContestFromDatabase$1$2 -> ninja.cricks.ui.dashboard.FixtureCricketFragment$c$b:
     int label -> k
     ninja.cricks.ui.dashboard.FixtureCricketFragment$getAllContestFromDatabase$1 this$0 -> l
     java.lang.Object invoke(java.lang.Object,java.lang.Object) -> I
     kotlin.coroutines.Continuation create(java.lang.Object,kotlin.coroutines.Continuation) -> c
-    1:1:java.lang.Object invokeSuspend(java.lang.Object):153:153 -> g
-ninja.cricks.ui.dashboard.FixtureCricketFragment$showAlert$1 -> ninja.cricks.ui.dashboard.FixtureCricketFragment$d:
+    1:1:java.lang.Object invokeSuspend(java.lang.Object):160:160 -> g
+ninja.cricks.ui.dashboard.FixtureCricketFragment$onViewCreated$1 -> ninja.cricks.ui.dashboard.FixtureCricketFragment$d:
     ninja.cricks.ui.dashboard.FixtureCricketFragment this$0 -> g
-    1:1:void onClick(android.view.View):270:270 -> onClick
-ninja.cricks.ui.dashboard.FixtureCricketFragment$showAlert$2 -> ninja.cricks.ui.dashboard.FixtureCricketFragment$e:
+    1:1:void run():114:114 -> run
+ninja.cricks.ui.dashboard.FixtureCricketFragment$showAlert$1 -> ninja.cricks.ui.dashboard.FixtureCricketFragment$e:
+    ninja.cricks.ui.dashboard.FixtureCricketFragment this$0 -> g
+    1:1:void onClick(android.view.View):276:276 -> onClick
+ninja.cricks.ui.dashboard.FixtureCricketFragment$showAlert$2 -> ninja.cricks.ui.dashboard.FixtureCricketFragment$f:
     android.widget.ProgressBar $progressBar -> a
-    1:1:void <init>(android.widget.ProgressBar):273:273 -> <init>
-    1:1:boolean onResourceReady(java.lang.Object,java.lang.Object,com.bumptech.glide.request.target.Target,com.bumptech.glide.load.DataSource,boolean):273:273 -> a
+    1:1:void <init>(android.widget.ProgressBar):279:279 -> <init>
+    1:1:boolean onResourceReady(java.lang.Object,java.lang.Object,com.bumptech.glide.request.target.Target,com.bumptech.glide.load.DataSource,boolean):279:279 -> a
     boolean onLoadFailed(com.bumptech.glide.load.engine.GlideException,java.lang.Object,com.bumptech.glide.request.target.Target,boolean) -> b
-    1:1:boolean onResourceReady(android.graphics.drawable.Drawable,java.lang.Object,com.bumptech.glide.request.target.Target,com.bumptech.glide.load.DataSource,boolean):290:290 -> c
-ninja.cricks.ui.dashboard.FixtureCricketFragment$showAlert$3 -> ninja.cricks.ui.dashboard.FixtureCricketFragment$f:
+    1:1:boolean onResourceReady(android.graphics.drawable.Drawable,java.lang.Object,com.bumptech.glide.request.target.Target,com.bumptech.glide.load.DataSource,boolean):296:296 -> c
+ninja.cricks.ui.dashboard.FixtureCricketFragment$showAlert$3 -> ninja.cricks.ui.dashboard.FixtureCricketFragment$g:
     ninja.cricks.ui.dashboard.FixtureCricketFragment$showAlert$3 INSTANCE -> g
-    1:1:boolean onKey(android.content.DialogInterface,int,android.view.KeyEvent):297:297 -> onKey
-ninja.cricks.ui.dashboard.FixtureCricketFragment$updateEmptyViews$1 -> ninja.cricks.ui.dashboard.FixtureCricketFragment$g:
+    1:1:boolean onKey(android.content.DialogInterface,int,android.view.KeyEvent):303:303 -> onKey
+ninja.cricks.ui.dashboard.FixtureCricketFragment$updateEmptyViews$1 -> ninja.cricks.ui.dashboard.FixtureCricketFragment$h:
     ninja.cricks.ui.dashboard.FixtureCricketFragment this$0 -> g
-    1:3:void onClick(android.view.View):125:127 -> onClick
+    1:3:void onClick(android.view.View):132:134 -> onClick
 ninja.cricks.ui.dashboard.FragmentDrawer -> ninja.cricks.ui.dashboard.FragmentDrawer:
     int[] list_image -> m0
     java.util.List data -> l0

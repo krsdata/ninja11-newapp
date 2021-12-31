@@ -54,7 +54,9 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
     var filter_text_3 = false
     var filter_text_11 = false
     var filter_text_101 = false
-    var filter_text_1001 =false
+    var filter_text_1001 = false
+    var fragment: Fragment? = null
+
     companion object {
         val SERIALIZABLE_KEY_UPCOMING_MATCHES: String = "contest"
         val SERIALIZABLE_KEY_JOINED_CONTEST: String = "joinedcontest"
@@ -160,6 +162,7 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        //fragment!!.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             if (data != null) {
                 MyUtils.showToast(this@ContestActivity, data.getStringExtra("keyName")!!)
@@ -237,7 +240,8 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
         private val mFragmentTitleList = ArrayList<String>()
 
         override fun getItem(position: Int): Fragment {
-            return mFragmentList[position]
+            fragment = mFragmentList[position]
+            return fragment!!
         }
 
         override fun getCount(): Int {
@@ -445,6 +449,7 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
                 }
             })
     }
+
     public fun filterContestList() {
         var tempContestList = ArrayList<ContestsParentModels>()
         for (i in allContestListData.indices) {
