@@ -1,9 +1,10 @@
 package ninja.cricks.requestmodels
 
+import androidx.annotation.Keep
 import java.io.Serializable
 import java.util.*
 
-
+@Keep
 data class RequestCreateTeamModel(var user_id: String = "",
                                   var token: String = "",
                                   var match_id: String = "",

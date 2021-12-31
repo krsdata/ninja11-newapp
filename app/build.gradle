@@ -29,17 +29,17 @@ android {
         debug {
             buildConfigField "boolean", "MLOG", "true"
             debuggable true
-            useProguard false
-            shrinkResources false
-            minifyEnabled false
+            useProguard true
+            shrinkResources true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         release {
             buildConfigField "boolean", "MLOG", "false"
-            useProguard false
-            shrinkResources false
-            minifyEnabled false
+            useProguard true
+            shrinkResources true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

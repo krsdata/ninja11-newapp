@@ -1,10 +1,11 @@
 package ninja.cricks.requestmodels
 
+import androidx.annotation.Keep
 import ninja.cricks.models.UserInfo
 import ninja.cricks.utils.HardwareInfo
 import java.util.*
 
-
+@Keep
 class RequestModel {
 
 

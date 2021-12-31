@@ -250,6 +250,10 @@ class MyTeamFragment : Fragment() {
 
     private fun allTeam(res: UsersPostDBResponse) {
         val responseModel = res.responseObject
+        if (mBinding != null && mBinding!!.myteamRefresh.isRefreshing) {
+            mBinding!!.myteamRefresh.isRefreshing = false
+        }
+        customeProgressDialog.dismiss()
         if (responseModel != null) {
             if (responseModel.myTeamList != null && responseModel.myTeamList!!.isNotEmpty()) {
                 myTeamArrayList.clear()
@@ -311,6 +315,7 @@ class MyTeamFragment : Fragment() {
                             val responseModel = res.responseObject
                             if (responseModel != null) {
 
+                                if (isAdded)
                                 viewLifecycleOwner.lifecycleScope.launch {
                                     withContext(Dispatchers.Main) { allTeam(res) }
                                     withContext(Dispatchers.IO) {
@@ -405,7 +410,7 @@ class MyTeamFragment : Fragment() {
                     val intent = Intent(activity, CreateTeamActivity::class.java)
                     intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
                     intent.putExtra(SERIALIZABLE_EDIT_TEAM, objectVal)
-                    activity!!.startActivityForResult(
+                    startActivityForResult(
                         intent,
                         CreateTeamActivity.CREATETEAM_REQUESTCODE
                     )
@@ -417,7 +422,7 @@ class MyTeamFragment : Fragment() {
                         intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
                         intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
                         intent.putExtra(SERIALIZABLE_COPY_TEAM, objectVal)
-                        activity!!.startActivityForResult(
+                        startActivityForResult(
                             intent,
                             CreateTeamActivity.CREATETEAM_REQUESTCODE
                         )
@@ -516,11 +521,7 @@ class MyTeamFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == AppCompatActivity.RESULT_OK) {
-            if (data != null) {
-              //  MyUtils.showToast(requireActivity(), data.getStringExtra("keyName")!!)
-            }
             if (requestCode == CreateTeamActivity.CREATETEAM_REQUESTCODE && resultCode == AppCompatActivity.RESULT_OK) {
-                val bundle1 = Bundle()
                 getMyteamApiCall()
             }
         }

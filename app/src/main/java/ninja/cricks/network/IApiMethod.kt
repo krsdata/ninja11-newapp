@@ -1,5 +1,6 @@
 package ninja.cricks.network
 
+import androidx.annotation.Keep
 import com.google.gson.JsonObject
 import ninja.cricks.models.DocumentsModel
 import ninja.cricks.models.ResponseModel
@@ -11,6 +12,7 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
+@Keep
 interface IApiMethod {
 
     @Headers("Content-Type: application/json")
