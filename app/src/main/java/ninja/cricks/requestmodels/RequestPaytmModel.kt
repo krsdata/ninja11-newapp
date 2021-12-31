@@ -1,5 +1,8 @@
 package ninja.cricks.requestmodels
 
+import androidx.annotation.Keep
+
+@Keep
 data class RequestPaytmModel(
     internal var ORDER_ID: String,
     internal var CUST_ID: String,

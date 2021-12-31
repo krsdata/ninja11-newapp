@@ -1,9 +1,10 @@
 package ninja.cricks.requestmodels
 
+import androidx.annotation.Keep
 import ninja.cricks.models.UserInfo
 import ninja.cricks.utils.HardwareInfo
 
-
+@Keep
 class RequestEvent {
 
     var user_info: UserInfo? = null

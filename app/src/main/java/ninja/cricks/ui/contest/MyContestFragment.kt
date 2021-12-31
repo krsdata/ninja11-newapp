@@ -247,6 +247,10 @@ class MyContestFragment : Fragment() {
     }
 
     private fun allContests(res: UsersPostDBResponse) {
+        if (mBinding != null && mBinding!!.mycontestRefresh .isRefreshing) {
+            mBinding!!.mycontestRefresh.isRefreshing = false
+        }
+        customProgressDialog.dismiss()
         if (res.status) {
             val responseModel = res.responseObject
             if (responseModel!!.myJoinedContest != null && responseModel.myJoinedContest!!.size > 0) {
@@ -255,10 +259,10 @@ class MyContestFragment : Fragment() {
                 (activity as ContestActivity).responseMyJoinedContest.addAll(responseModel.myJoinedContest!!)
                 checkinArrayList.addAll((activity as ContestActivity).responseMyJoinedContest)
                 mListener.onMyContest(checkinArrayList)
-                updateEmptyViews()
                 adapter.notifyDataSetChanged()
             }
         }
+        updateEmptyViews()
     }
 
     fun updateEmptyViews() {
