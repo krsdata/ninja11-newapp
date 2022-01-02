@@ -98,11 +98,11 @@ class InviteFriendsActivity : AppCompatActivity() {
         shareSheetStyle = ShareSheetStyle(
             mContext!!, "Ninja11",
             "Welcome to Ninja11. Register on Ninja11 application with this link.\n\nUse my referral code \"" + userInfo!!.referalCode +
-                    "\" and get extra Rs. 100 Bonus on Joining.".trimIndent()
+                    "\" and get Joining Bonus ₹25. ".trimIndent()
         )
             .setAsFullWidthStyle(false)
             .setDefaultURL(url)
-            .setSharingTitle("Refer and Earn Rs 100")
+            .setSharingTitle("Refer and Earn ₹25")
 
         mBinding!!.inviteFriends.setOnClickListener {
             shareReferCode()
@@ -126,7 +126,7 @@ class InviteFriendsActivity : AppCompatActivity() {
 
         val msg: String =
             "Welcome to Ninja11.\n\nRegister on Ninja11 application with this link.\n\nUse my referral code \"" + userInfo!!.referalCode +
-                    "\" and get extra Rs. 100 Bonus on Joining.\n\n $url".trimIndent()
+                    "\" and get ₹25 Bonus on Joining.\n\n $url".trimIndent()
         FirebaseCrashlytics.getInstance().log("share message =========> $msg")
 
         val sendIntent = Intent()

@@ -241,8 +241,8 @@ androidx.core.database.CursorWindowCompat
 com.github.ybq.android.spinkit.sprite.RingSprite:
     public android.animation.ValueAnimator onCreateAnimation()
 ninja.cricks.utils.HardwareInfoManager:
-    public final int getRows$Ninja11_3_4_release()
-    public final void setRows$Ninja11_3_4_release(int)
+    public final int getRows$Ninja11_3_5_release()
+    public final void setRows$Ninja11_3_5_release(int)
     public final int getOs()
     public final java.lang.String getDataDiaryVersion()
     public final java.lang.String getProductInfo()
@@ -250,8 +250,8 @@ ninja.cricks.utils.HardwareInfoManager:
     public final java.lang.String getOsVersion()
     public final java.lang.String getTimeZone()
     public final java.lang.String getDefaultCarrierName()
-    public final android.content.Context getHardwareContext$Ninja11_3_4_release()
-    public final void setHardwareContext$Ninja11_3_4_release(android.content.Context)
+    public final android.content.Context getHardwareContext$Ninja11_3_5_release()
+    public final void setHardwareContext$Ninja11_3_5_release(android.content.Context)
     private int rows
 kotlinx.coroutines.flow.FlowKt__MergeKt$map$$inlined$unsafeTransform$1$2$1
 androidx.databinding.ObservableParcelable
@@ -2499,30 +2499,6 @@ kotlinx.coroutines.SelectJoinOnCompletion
 androidx.navigation.fragment.R$layout
 androidx.browser.customtabs.CustomTabsClient$2$4
 kotlin.collections.ArraysKt___ArraysKt$asSequence$$inlined$Sequence$3
-ninja.cricks.requestmodels.RequestCreateTeamModel:
-    public static synthetic ninja.cricks.requestmodels.RequestCreateTeamModel copy$default(ninja.cricks.requestmodels.RequestCreateTeamModel,java.lang.String,java.lang.String,java.lang.String,int,int,int,int,java.util.ArrayList,java.util.ArrayList,java.lang.String,int,java.lang.Object)
-    public final java.lang.String getUser_id()
-    public final java.lang.String getToken()
-    public final void setToken(java.lang.String)
-    public final java.lang.String getMatch_id()
-    public final int getCreate_team_id()
-    public final int getTrump()
-    public final int getCaptain()
-    public final int getVice_captain()
-    public final java.util.ArrayList getTeams()
-    public final java.util.ArrayList getTeam_id()
-    public final java.lang.String getSystem_token()
-    public final java.lang.String component1()
-    public final java.lang.String component2()
-    public final java.lang.String component3()
-    public final int component4()
-    public final int component5()
-    public final int component6()
-    public final int component7()
-    public final java.util.ArrayList component8()
-    public final java.util.ArrayList component9()
-    public final java.lang.String component10()
-    public final ninja.cricks.requestmodels.RequestCreateTeamModel copy(java.lang.String,java.lang.String,java.lang.String,int,int,int,int,java.util.ArrayList,java.util.ArrayList,java.lang.String)
 androidx.core.app.AppOpsManagerCompat:
     private void <init>()
     public static int noteOp(android.content.Context,java.lang.String,int,java.lang.String)
@@ -7167,7 +7143,6 @@ net.gotev.uploadservice.UploadService:
     protected static final java.lang.String PARAM_TASK_CLASS
     private static final java.lang.String BROADCAST_ACTION_SUFFIX
     protected static final java.lang.String PARAM_BROADCAST_DATA
-ninja.cricks.requestmodels.RequestPaytmModel
 com.google.android.gms.maps.internal.IProjectionDelegate
 kotlin.collections.builders.MapBuilderEntries
 com.google.firebase.auth.EmailAuthCredential:
@@ -7775,7 +7750,93 @@ androidx.recyclerview.widget.RecyclerView$AdapterDataObserver:
 androidx.databinding.library.baseAdapters.R$string
 com.google.android.gms.maps.internal.zzm
 kotlin.sequences.FlatteningSequence
-ninja.cricks.models.DocumentsModel
+ninja.cricks.models.DocumentsModel:
+    public void <init>(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,ninja.cricks.utils.HardwareInfo,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
+    public synthetic void <init>(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,ninja.cricks.utils.HardwareInfo,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,int,kotlin.jvm.internal.DefaultConstructorMarker)
+    public void <init>()
+    public static synthetic ninja.cricks.models.DocumentsModel copy$default(ninja.cricks.models.DocumentsModel,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,ninja.cricks.utils.HardwareInfo,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,int,java.lang.Object)
+    public ninja.cricks.models.DocumentsModel clone()
+    public synthetic bridge java.lang.Object clone()
+    public final java.lang.String getUser_id()
+    public final void setUser_id(java.lang.String)
+    public final java.lang.String getDocumentType()
+    public final void setDocumentType(java.lang.String)
+    public final java.lang.String getPanCardName()
+    public final void setPanCardName(java.lang.String)
+    public final java.lang.String getPanCardNumber()
+    public final void setPanCardNumber(java.lang.String)
+    public final java.lang.String getPancardDocumentUrl()
+    public final void setPancardDocumentUrl(java.lang.String)
+    public final ninja.cricks.utils.HardwareInfo getDeviceDetails()
+    public final void setDeviceDetails(ninja.cricks.utils.HardwareInfo)
+    public final java.lang.String getAadharCardName()
+    public final void setAadharCardName(java.lang.String)
+    public final java.lang.String getAadharCardNumber()
+    public final void setAadharCardNumber(java.lang.String)
+    public final java.lang.String getAadharCardDocumentUrlFront()
+    public final void setAadharCardDocumentUrlFront(java.lang.String)
+    public final java.lang.String getAadharCardDocumentUrlBack()
+    public final void setAadharCardDocumentUrlBack(java.lang.String)
+    public final java.lang.String getBankName()
+    public final void setBankName(java.lang.String)
+    public final java.lang.String getAccountHolderName()
+    public final void setAccountHolderName(java.lang.String)
+    public final java.lang.String getAccountNumber()
+    public final void setAccountNumber(java.lang.String)
+    public final java.lang.String getIfscCode()
+    public final void setIfscCode(java.lang.String)
+    public final java.lang.String getAccountType()
+    public final void setAccountType(java.lang.String)
+    public final java.lang.String getBankPassbookUrl()
+    public final void setBankPassbookUrl(java.lang.String)
+    public final java.lang.String getPaytmNumber()
+    public final void setPaytmNumber(java.lang.String)
+    public final java.lang.String getUpi_id()
+    public final void setUpi_id(java.lang.String)
+    public final java.lang.String getSystem_token()
+    public final void setSystem_token(java.lang.String)
+    public final java.lang.String component1()
+    public final java.lang.String component2()
+    public final java.lang.String component3()
+    public final java.lang.String component4()
+    public final java.lang.String component5()
+    public final ninja.cricks.utils.HardwareInfo component6()
+    public final java.lang.String component7()
+    public final java.lang.String component8()
+    public final java.lang.String component9()
+    public final java.lang.String component10()
+    public final java.lang.String component11()
+    public final java.lang.String component12()
+    public final java.lang.String component13()
+    public final java.lang.String component14()
+    public final java.lang.String component15()
+    public final java.lang.String component16()
+    public final java.lang.String component17()
+    public final java.lang.String component18()
+    public final java.lang.String component19()
+    public final ninja.cricks.models.DocumentsModel copy(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,ninja.cricks.utils.HardwareInfo,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
+    public java.lang.String toString()
+    public int hashCode()
+    public boolean equals(java.lang.Object)
+    private java.lang.String user_id
+    private java.lang.String documentType
+    private java.lang.String panCardName
+    private java.lang.String panCardNumber
+    private java.lang.String pancardDocumentUrl
+    private ninja.cricks.utils.HardwareInfo deviceDetails
+    private java.lang.String aadharCardName
+    private java.lang.String aadharCardNumber
+    private java.lang.String aadharCardDocumentUrlFront
+    private java.lang.String aadharCardDocumentUrlBack
+    private java.lang.String bankName
+    private java.lang.String accountHolderName
+    private java.lang.String accountNumber
+    private java.lang.String ifscCode
+    private java.lang.String accountType
+    private java.lang.String bankPassbookUrl
+    private java.lang.String paytmNumber
+    private java.lang.String upi_id
+    private java.lang.String system_token
 kotlin.concurrent.TimersKt
 ninja.cricks.databinding.FragmentMoreoptionsBindingImpl:
     public boolean setVariable(int,java.lang.Object)
@@ -7801,7 +7862,6 @@ androidx.core.location.LocationManagerCompat$3
 androidx.collection.LongSparseArrayKt$keyIterator$1
 android.support.v4.media.session.PlaybackStateCompat$ShuffleMode
 com.bumptech.glide.annotation.GlideModule
-ninja.cricks.requestmodels.RequestEvent
 com.airbnb.lottie.R$layout
 com.google.firebase.dynamicloading.ComponentLoader:
     public abstract void discoverComponents()
@@ -18145,14 +18205,6 @@ kotlin.time.FormatToDecimalsKt
 kotlinx.coroutines.flow.FlowKt__DistinctKt$distinctUntilChangedBy$$inlined$unsafeFlow$1$lambda$1$1
 kotlinx.coroutines.flow.FlowKt__TransformKt$unsafeTransform$$inlined$unsafeFlow$7$lambda$1$1
 androidx.appcompat.widget.ShareActionProvider$OnShareTargetSelectedListener
-ninja.cricks.network.IApiMethod:
-    public abstract retrofit2.Call forgotPassword(com.google.gson.JsonObject)
-    public abstract retrofit2.Call getPaytmChecksum(ninja.cricks.requestmodels.RequestPaytmModel)
-    public abstract retrofit2.Call copyTeam(com.google.gson.JsonObject)
-    public abstract retrofit2.Call saveBankDetails(ninja.cricks.models.DocumentsModel)
-    public abstract retrofit2.Call verification(ninja.cricks.models.DocumentsModel)
-    public abstract retrofit2.Call getDocumentsList(com.google.gson.JsonObject)
-    public abstract retrofit2.Call withdrawAmount(com.google.gson.JsonObject)
 ninja.cricks.adaptors.NavigationDrawerAdapter:
     public void delete(int)
 ninja.cricks.databinding.FragmentAllContestBinding:
@@ -23391,100 +23443,6 @@ com.google.android.gms.common.util.Clock$$CC
 com.google.android.gms.tasks.zzl:
     public final void zza()
 androidx.core.view.InputDeviceCompat
-ninja.cricks.requestmodels.RequestModel:
-    public final ninja.cricks.models.UserInfo getUser_info()
-    public final void setUser_info(ninja.cricks.models.UserInfo)
-    public final java.lang.String getEvent_name()
-    public final void setEvent_name(java.lang.String)
-    public final int getAmount()
-    public final void setAmount(int)
-    public final java.lang.String getAction_type()
-    public final void setAction_type(java.lang.String)
-    public final int getTeam_id()
-    public final void setTeam_id(int)
-    public final java.lang.String getDevice_id()
-    public final void setDevice_id(java.lang.String)
-    public final java.lang.String getUsername()
-    public final void setUsername(java.lang.String)
-    public final java.lang.String getPassword()
-    public final void setPassword(java.lang.String)
-    public final ninja.cricks.utils.HardwareInfo getDeviceDetails()
-    public final void setDeviceDetails(ninja.cricks.utils.HardwareInfo)
-    public final int getVersion_code()
-    public final void setVersion_code(int)
-    public final java.lang.String getUser_id()
-    public final java.lang.String getDocuments_type()
-    public final void setDocuments_type(java.lang.String)
-    public final java.lang.String getToken()
-    public final java.lang.String getWithdraw_amount()
-    public final void setWithdraw_amount(java.lang.String)
-    public final java.lang.String getMatch_id()
-    public final void setMatch_id(java.lang.String)
-    public final java.lang.String getContest_id()
-    public final void setContest_id(java.lang.String)
-    public final java.lang.String getEmail()
-    public final void setEmail(java.lang.String)
-    public final int getRole_type()
-    public final void setRole_type(int)
-    public final java.lang.String getUser_type()
-    public final void setUser_type(java.lang.String)
-    public final java.lang.String getProvider_id()
-    public final void setProvider_id(java.lang.String)
-    public final java.lang.String getName()
-    public final void setName(java.lang.String)
-    public final java.lang.String getImage_url()
-    public final void setImage_url(java.lang.String)
-    public final java.lang.String getReferral_code()
-    public final void setReferral_code(java.lang.String)
-    public final java.lang.String getTeam_name()
-    public final void setTeam_name(java.lang.String)
-    public final java.lang.String getMobile_number()
-    public final void setMobile_number(java.lang.String)
-    public final java.lang.String getOtp()
-    public final void setOtp(java.lang.String)
-    public final java.util.ArrayList getCreated_team_id()
-    public final void setCreated_team_id(java.util.ArrayList)
-    public final java.lang.String getDeposit_amount()
-    public final void setDeposit_amount(java.lang.String)
-    public final java.lang.String getTransaction_id()
-    public final void setTransaction_id(java.lang.String)
-    public final java.lang.String getOrder_id()
-    public final void setOrder_id(java.lang.String)
-    public final java.lang.String getPayment_mode()
-    public final void setPayment_mode(java.lang.String)
-    public final java.lang.String getPayment_status()
-    public final void setPayment_status(java.lang.String)
-    public final java.lang.String getCity()
-    public final void setCity(java.lang.String)
-    public final java.lang.String getGender()
-    public final void setGender(java.lang.String)
-    public final java.lang.String getDateOfBirth()
-    public final void setDateOfBirth(java.lang.String)
-    public final java.lang.String getPinCode()
-    public final void setPinCode(java.lang.String)
-    public final java.lang.String getState()
-    public final void setState(java.lang.String)
-    public final java.lang.String getCurrent_password()
-    public final void setCurrent_password(java.lang.String)
-    public final java.lang.String getNew_password()
-    public final void setNew_password(java.lang.String)
-    public final java.lang.String getDiscountOnBonusAmount()
-    public final void setDiscountOnBonusAmount(java.lang.String)
-    public final java.lang.String getTotalPaidAmount()
-    public final void setTotalPaidAmount(java.lang.String)
-    public final java.lang.String getEntryFees()
-    public final void setEntryFees(java.lang.String)
-    public final java.lang.String getPayment_taken_in()
-    public final void setPayment_taken_in(java.lang.String)
-    public final java.lang.String getUpi_id()
-    public final void setUpi_id(java.lang.String)
-    private ninja.cricks.models.UserInfo user_info
-    private int amount
-    private int team_id
-    private ninja.cricks.utils.HardwareInfo deviceDetails
-    private int version_code
-    private int role_type
-    private java.util.ArrayList created_team_id
 androidx.core.view.accessibility.AccessibilityNodeInfoCompat$TouchDelegateInfoCompat
 androidx.browser.R$xml
 androidx.core.provider.FontRequest:
@@ -29466,44 +29424,6 @@ com.google.android.datatransport.runtime.dagger.internal.DoubleCheck:
     static final synthetic boolean $assertionsDisabled
 com.github.ybq.android.spinkit.style.WanderingCubes$Cube:
     final synthetic com.github.ybq.android.spinkit.style.WanderingCubes this$0
-ninja.cricks.requestmodels.RequestModel:
-    private java.lang.String event_name
-    private java.lang.String action_type
-    private java.lang.String device_id
-    private java.lang.String username
-    private java.lang.String password
-    private java.lang.String user_id
-    private java.lang.String documents_type
-    private java.lang.String token
-    private java.lang.String withdraw_amount
-    private java.lang.String match_id
-    private java.lang.String contest_id
-    private java.lang.String email
-    private java.lang.String user_type
-    private java.lang.String provider_id
-    private java.lang.String name
-    private java.lang.String image_url
-    private java.lang.String referral_code
-    private java.lang.String team_name
-    private java.lang.String mobile_number
-    private java.lang.String otp
-    private java.lang.String deposit_amount
-    private java.lang.String transaction_id
-    private java.lang.String order_id
-    private java.lang.String payment_mode
-    private java.lang.String payment_status
-    private java.lang.String city
-    private java.lang.String gender
-    private java.lang.String dateOfBirth
-    private java.lang.String pinCode
-    private java.lang.String state
-    private java.lang.String current_password
-    private java.lang.String new_password
-    private java.lang.String discountOnBonusAmount
-    private java.lang.String totalPaidAmount
-    private java.lang.String entryFees
-    private java.lang.String payment_taken_in
-    private java.lang.String upi_id
 androidx.recyclerview.widget.StaggeredGridLayoutManager$Span:
     public int findLastVisibleItemPosition()
     int findOneVisibleChild(int,int,boolean)
