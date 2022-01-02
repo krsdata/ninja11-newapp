@@ -129,6 +129,22 @@
           }
         },
         {
+          "client_id": "701940049916-563c4n983lm7t7m4ugp7bli2vath9pgg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ninja.cricks",
+            "certificate_hash": "67179638aa7d90c38f09236ee31e909560a6b1be"
+          }
+        },
+        {
+          "client_id": "701940049916-8u56ef600qiuevfp5rshrq7ioiokrc8s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ninja.cricks",
+            "certificate_hash": "0235e40c1a3f04465425257d49150da775ef31ea"
+          }
+        },
+        {
           "client_id": "701940049916-fji6q2qmg8boi2oc0j83123cobhfji87.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -142,6 +158,14 @@
           "android_info": {
             "package_name": "ninja.cricks",
             "certificate_hash": "9e1310278674f0bb7cdd54a7b9c7ef7afab95c2c"
+          }
+        },
+        {
+          "client_id": "701940049916-te3a1k84f2h892a9q7pbtdeoj9euubti.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ninja.cricks",
+            "certificate_hash": "6e693ec01f0f84104ab54e36d4746367e4f2a536"
           }
         },
         {

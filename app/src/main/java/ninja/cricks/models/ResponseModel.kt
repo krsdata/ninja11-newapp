@@ -21,6 +21,7 @@ data class ResponseModel(
     @SerializedName("is_account_verified")
     val isAccountVerified: Int = 0,
 
+    @SerializedName("image_url")
     val image_url: String = "",
 
     @SerializedName("token")
