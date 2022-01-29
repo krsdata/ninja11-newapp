@@ -9,7 +9,7 @@
     <solid android:color="@android:color/transparent"
 
         />
-    <solid android:color="@color/playerlistselection" />
+    <solid android:color="@color/greybackround" />
     <padding
         android:left="3dp"
         android:right="3dp"

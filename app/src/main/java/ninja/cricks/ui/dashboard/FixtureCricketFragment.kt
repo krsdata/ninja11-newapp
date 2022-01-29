@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -62,7 +63,7 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
     lateinit var adapter: MatchesAdapter
     var allmatchesArrayList = ArrayList<MatchesModels>()
     var scrollListener: RecyclerViewLoadMoreScroll? = null
-    lateinit var sdialog: Dialog
+    var sdialog: Dialog? = null
     var mContext: Context? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -153,7 +154,7 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
         CoroutineScope(Dispatchers.IO).launch {
             val value = ResponseDatabase.getInstance(requireContext()).responseDao().getResponse(Constant.getAllMatcesDatabaseId)
 
-            if (value != null && value.type == Constant.getAllMatcesDatabaseId){
+            if (value != null && value.type == Constant.getAllMatcesDatabaseId) {
                 withContext(Dispatchers.Main){allContests(value.res)}
             }
             else {
@@ -262,47 +263,53 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
     }
 
     private fun showAlert(offerImage: String) {
-        sdialog = Dialog(mContext!!, R.style.MyDialog)
-        sdialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        sdialog.window!!.attributes.windowAnimations = R.style.PauseDialogAnimation
-        sdialog.setContentView(R.layout.dialog_offer_image)
-        sdialog.setCancelable(false)
-        sdialog.show()
-        val close: ImageView = sdialog.findViewById(R.id.dialog_close)
-        val offerImageView: ImageView = sdialog.findViewById(R.id.dialog_offer_image)
-        val progressBar: ProgressBar = sdialog.findViewById(R.id.progress_bar)
+        if(sdialog == null) {
+            Log.e(TAG, "showAlert created")
+            sdialog = Dialog(mContext!!, R.style.MyDialog)
+            sdialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            sdialog!!.window!!.attributes.windowAnimations = R.style.PauseDialogAnimation
+            sdialog!!.setContentView(R.layout.dialog_offer_image)
+            sdialog!!.setCancelable(false)
+            sdialog!!.show()
+            val close: ImageView = sdialog!!.findViewById(R.id.dialog_close)
+            val offerImageView: ImageView = sdialog!!.findViewById(R.id.dialog_offer_image)
+            val progressBar: ProgressBar = sdialog!!.findViewById(R.id.progress_bar)
 
-        close.setOnClickListener {
-            sdialog.dismiss()
-        }
-
-        Glide.with(mContext!!).load(offerImage).listener(object : RequestListener<Drawable?> {
-            override fun onLoadFailed(
-                e: GlideException?,
-                model: Any,
-                target: Target<Drawable?>,
-                isFirstResource: Boolean
-            ): Boolean {
-                return false
+            close.setOnClickListener {
+                Log.e(TAG, "setOnClickListener dialog showing ${sdialog!!.isShowing}")
+                Log.e(TAG, "setOnClickListener close clickable ${close.isClickable}")
+                Log.e(TAG, "setOnClickListener close enabled ${close.isEnabled}")
+                sdialog!!.dismiss()
             }
 
-            override fun onResourceReady(
-                resource: Drawable?,
-                model: Any,
-                target: Target<Drawable?>,
-                dataSource: DataSource,
-                isFirstResource: Boolean
-            ): Boolean {
-                progressBar.visibility = View.GONE
-                return false
-            }
-        }).into(offerImageView)
+            Glide.with(mContext!!).load(offerImage).listener(object : RequestListener<Drawable?> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any,
+                    target: Target<Drawable?>,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    return false
+                }
 
-        sdialog.setOnKeyListener { dialog, keyCode, keyEvent ->
-            if (keyCode == KeyEvent.KEYCODE_BACK) {
-                dialog.dismiss()
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any,
+                    target: Target<Drawable?>,
+                    dataSource: DataSource,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    progressBar.visibility = View.GONE
+                    return false
+                }
+            }).into(offerImageView)
+
+            sdialog!!.setOnKeyListener { dialog, keyCode, keyEvent ->
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    dialog.dismiss()
+                }
+                true
             }
-            true
         }
     }
 }

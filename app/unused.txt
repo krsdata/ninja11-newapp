@@ -241,8 +241,8 @@ androidx.core.database.CursorWindowCompat
 com.github.ybq.android.spinkit.sprite.RingSprite:
     public android.animation.ValueAnimator onCreateAnimation()
 ninja.cricks.utils.HardwareInfoManager:
-    public final int getRows$Ninja11_3_5_debug()
-    public final void setRows$Ninja11_3_5_debug(int)
+    public final int getRows$Ninja11_3_8_release()
+    public final void setRows$Ninja11_3_8_release(int)
     public final int getOs()
     public final java.lang.String getDataDiaryVersion()
     public final java.lang.String getProductInfo()
@@ -250,8 +250,8 @@ ninja.cricks.utils.HardwareInfoManager:
     public final java.lang.String getOsVersion()
     public final java.lang.String getTimeZone()
     public final java.lang.String getDefaultCarrierName()
-    public final android.content.Context getHardwareContext$Ninja11_3_5_debug()
-    public final void setHardwareContext$Ninja11_3_5_debug(android.content.Context)
+    public final android.content.Context getHardwareContext$Ninja11_3_8_release()
+    public final void setHardwareContext$Ninja11_3_8_release(android.content.Context)
     private int rows
 kotlinx.coroutines.flow.FlowKt__MergeKt$map$$inlined$unsafeTransform$1$2$1
 androidx.databinding.ObservableParcelable
@@ -1586,13 +1586,7 @@ com.google.android.gms.auth.api.credentials.CredentialsApi:
     public static final int ACTIVITY_RESULT_OTHER_ACCOUNT
     public static final int ACTIVITY_RESULT_NO_HINTS_AVAILABLE
     public static final int CREDENTIAL_PICKER_REQUEST_CODE
-ninja.cricks.BuildConfig:
-    public void <init>()
-    public static final java.lang.String APPLICATION_ID
-    public static final java.lang.String BUILD_TYPE
-    public static final int VERSION_CODE
-    public static final java.lang.String VERSION_NAME
-    public static final boolean MLOG
+ninja.cricks.BuildConfig
 androidx.room.RoomDatabaseKt$acquireTransactionThread$$inlined$suspendCancellableCoroutine$lambda$1
 android.support.v4.media.MediaDescriptionCompatApi23$Builder:
     private void <init>()
@@ -2374,7 +2368,6 @@ androidx.core.graphics.PaintCompat:
     private static final java.lang.String EM_STRING
 ninja.cricks.ui.dashboard.FixtureCricketFragment:
     public static final synthetic void access$setMBinding$p(ninja.cricks.ui.dashboard.FixtureCricketFragment,ninja.cricks.databinding.FragmentAllGamesBinding)
-    public static final synthetic java.lang.String access$getTAG$cp()
     public static final synthetic int access$getPageNo$cp()
     public static final synthetic void access$setPageNo$cp(int)
     public final ninja.cricks.adaptors.MatchesAdapter getAdapter()
@@ -3069,7 +3062,6 @@ androidx.activity.R$attr
 com.yalantis.ucrop.util.RotationGestureDetector$SimpleOnRotationGestureListener:
     public boolean onRotation(com.yalantis.ucrop.util.RotationGestureDetector)
 ninja.cricks.ui.dashboard.FixtureCricketFragment$Companion:
-    public final java.lang.String getTAG()
     public final ninja.cricks.ui.dashboard.FixtureCricketFragment newInstance()
     public final int getPageNo()
     public final void setPageNo(int)
@@ -3981,6 +3973,7 @@ com.google.android.gms.common.data.DataHolder$zaa:
     public void <init>(java.lang.String)
 com.google.android.gms.common.internal.zzt:
     public static java.lang.String zza(android.content.Context)
+ninja.cricks.network.WebServiceClient$client$1
 androidx.cardview.R$color:
     private void <init>()
 okhttp3.internal.tls.OkHostnameVerifier:
@@ -21638,6 +21631,7 @@ androidx.appcompat.graphics.drawable.DrawableContainer:
     private static final boolean DEBUG
     private static final java.lang.String TAG
     private static final boolean DEFAULT_DITHER
+ninja.cricks.network.RetrofitClient$client$1
 com.google.android.gms.maps.StreetViewPanoramaOptions:
     public void <init>()
     public final com.google.android.gms.maps.StreetViewPanoramaOptions panoramaCamera(com.google.android.gms.maps.model.StreetViewPanoramaCamera)
@@ -27654,6 +27648,7 @@ ninja.cricks.MaintainanceActivity:
     private ninja.cricks.databinding.ActivityMaintenanceActivityBinding mBinding
 androidx.media.MediaBrowserServiceCompat$2:
     final synthetic androidx.media.MediaBrowserServiceCompat this$0
+ninja.cricks.utils.HardwareInfoManager$Companion
 easypay.actions.NetBankingHelper$12:
     final synthetic easypay.actions.NetBankingHelper this$0
 com.google.gson.internal.ConstructorConstructor$14:
@@ -27733,6 +27728,8 @@ okhttp3.internal.http2.Http2Connection$pushHeadersLater$$inlined$execute$1:
     final synthetic java.lang.String $name
     final synthetic boolean $cancelable
 androidx.constraintlayout.motion.widget.MotionPaths:
+    private static final float xRotate(float,float,float,float,float,float)
+    private static final float yRotate(float,float,float,float,float,float)
     float mProgress
 com.google.android.gms.measurement.internal.zzee:
     private java.lang.String zze
@@ -27744,6 +27741,7 @@ androidx.appcompat.widget.AppCompatSpinner$DropdownPopup$1:
     final synthetic androidx.appcompat.widget.AppCompatSpinner val$this$0
 easypay.actions.OtpHelper$4$1$1:
     final synthetic easypay.actions.OtpHelper$4$1 this$2
+ninja.cricks.PaytmWithdrawActivity$Companion
 androidx.core.os.LocaleListCompatWrapper:
     private final java.lang.String mStringRepresentation
     private static final java.util.Locale LOCALE_EN_XA
@@ -27775,6 +27773,7 @@ com.google.gson.Gson$2:
 okhttp3.internal.http2.Http2Connection$pushDataLater$$inlined$execute$1:
     final synthetic java.lang.String $name
     final synthetic boolean $cancelable
+ninja.cricks.ui.myaccounts.TransactionFragment$Companion
 com.airbnb.lottie.model.content.GradientFill:
     private final com.airbnb.lottie.model.animatable.AnimatableFloatValue highlightLength
     private final com.airbnb.lottie.model.animatable.AnimatableFloatValue highlightAngle
@@ -27796,23 +27795,26 @@ androidx.core.view.ViewPropertyAnimatorCompat$1:
 easypay.actions.RadioHelper:
     java.lang.String radio_one
     java.lang.String radio_two
+com.google.android.gms.signin.SignInOptions$zaa
 kotlin.internal.PlatformImplementations$ReflectThrowable:
+    private void <init>()
     public static final java.lang.reflect.Method getSuppressed
     public static final kotlin.internal.PlatformImplementations$ReflectThrowable INSTANCE
 com.airbnb.lottie.model.FontCharacter:
     private final double size
 ninja.cricks.ContestLeaderBoardActivity$FilterAdapter$ViewHolder:
     final synthetic ninja.cricks.ContestLeaderBoardActivity$FilterAdapter this$0
+ninja.cricks.OfferActivity$Companion
 com.andrognito.flashbar.anim.FlashAnimIconBuilder:
     public final com.andrognito.flashbar.anim.FlashAnim build$flashbar_release()
+ninja.cricks.WebActivity$Companion
 com.google.android.gms.tasks.zzv:
     private static final com.google.android.gms.tasks.zzw zza
 easypay.actions.NetBankingHelper$15:
     final synthetic easypay.actions.NetBankingHelper this$0
+okhttp3.internal.cache.DiskLruCache$Companion
 ninja.cricks.ui.dashboard.FixtureCricketFragment:
     private ninja.cricks.listener.RecyclerViewLoadMoreScroll scrollListener
-    private static final java.lang.String TAG
-    public static final ninja.cricks.ui.dashboard.FixtureCricketFragment$Companion Companion
 com.google.firebase.crashlytics.internal.settings.model.SettingsData:
     public final int settingsVersion
     public final int cacheDuration
@@ -27822,6 +27824,7 @@ easypay.actions.RadioHelper$3$1:
     final synthetic easypay.actions.RadioHelper$3 this$1
 androidx.appcompat.widget.AppCompatTextHelper$2:
     final synthetic androidx.appcompat.widget.AppCompatTextHelper this$0
+com.github.dhaval2404.imagepicker.provider.CropProvider$Companion
 androidx.constraintlayout.widget.StateSet$State:
     boolean mIsLayout
 androidx.appcompat.widget.ActivityChooserView$ActivityChooserViewAdapter:
@@ -27833,6 +27836,8 @@ androidx.appcompat.widget.ActivityChooserView$ActivityChooserViewAdapter:
 kotlin.jvm.internal.markers.KMutableList
 androidx.core.view.ViewPropertyAnimatorCompat$2:
     final synthetic androidx.core.view.ViewPropertyAnimatorCompat this$0
+com.google.android.gms.common.api.internal.ListenerHolder$ListenerKey:
+    void <init>(java.lang.Object,java.lang.String)
 androidx.constraintlayout.solver.widgets.VirtualLayout:
     private int mPaddingLeft
     private int mPaddingRight
@@ -27859,6 +27864,7 @@ androidx.appcompat.view.menu.MenuItemWrapperICS$ActionProviderWrapperJB:
     final synthetic androidx.appcompat.view.menu.MenuItemWrapperICS this$0
 com.google.android.datatransport.runtime.dagger.internal.InstanceFactory:
     private static final com.google.android.datatransport.runtime.dagger.internal.InstanceFactory NULL_INSTANCE_FACTORY
+com.google.android.gms.auth.api.signin.internal.zbd
 com.google.firebase.installations.FirebaseInstallationsException:
     private final com.google.firebase.installations.FirebaseInstallationsException$Status status
 com.bumptech.glide.load.model.ModelCache$1:
@@ -27904,6 +27910,8 @@ ninja.cricks.databinding.ActivityEditProfileBinding:
     public final com.google.android.material.textfield.TextInputLayout inputLayoutMobile
 com.google.firebase.crashlytics.internal.analytics.BlockingAnalyticsEventLogger:
     private boolean callbackReceived
+ninja.cricks.ui.myaccounts.PlayingHistoryFragment$Companion
+com.github.dhaval2404.imagepicker.provider.CompressionProvider$Companion
 ninja.cricks.ui.mymatches.MyCompletedMatchesFragment$MyMatchesAdapter:
     final synthetic ninja.cricks.ui.mymatches.MyCompletedMatchesFragment this$0
 com.github.ybq.android.spinkit.style.Circle$Dot:
@@ -27954,6 +27962,7 @@ com.google.gson.Gson$1:
     final synthetic com.google.gson.Gson this$0
 kotlinx.coroutines.internal.MainDispatcherLoader:
     public static final kotlinx.coroutines.internal.MainDispatcherLoader INSTANCE
+ninja.cricks.ui.home.HomeFragment$Companion
 ninja.cricks.databinding.FragmentPlayerStatsBinding:
     public final android.widget.TextView playerName
     public final android.widget.TextView playerPoint
@@ -27978,6 +27987,7 @@ ninja.cricks.databinding.ActivityPlayerInfoBinding:
     public final android.widget.RelativeLayout topLayout
 ninja.cricks.ui.createteam.adaptors.PlayersSelectedAdapter$ViewLabelsHolders:
     final synthetic ninja.cricks.ui.createteam.adaptors.PlayersSelectedAdapter this$0
+com.github.dhaval2404.imagepicker.provider.CameraProvider$Companion
 com.paytm.pgsdk.AioMatchUserActivity:
     private final int userCompareRequestCode
     private final int userLoggedInRequestCode
@@ -27985,6 +27995,7 @@ androidx.core.view.ActionProvider:
     private final android.content.Context mContext
 ninja.cricks.CreateTeamActivity$ViewPagerAdapter:
     final synthetic ninja.cricks.CreateTeamActivity this$0
+ninja.cricks.customviews.ScreenshotDetectionDelegate$Companion
 androidx.core.app.NotificationManagerCompat:
     private static final java.lang.Object sEnabledNotificationListenersLock
     private static java.util.Set sEnabledNotificationListenerPackages
@@ -28005,6 +28016,7 @@ ninja.cricks.LeadersBoardActivity:
     private static final java.lang.String TAG
 easypay.actions.ProceedHelper$2:
     final synthetic easypay.actions.ProceedHelper this$0
+okhttp3.internal.http2.Http2Stream$Companion
 com.google.android.gms.common.util.CrashUtils:
     private static final java.lang.String[] zza
     private static android.os.DropBoxManager zzb
@@ -28014,6 +28026,7 @@ com.google.android.gms.common.util.CrashUtils:
     private static int zzf
 ninja.cricks.databinding.FragmentMyTeamBinding:
     public final android.widget.ProgressBar progressMyteam
+ninja.cricks.fcm.MyFirebaseMessagingService$Companion
 androidx.loader.content.Loader:
     android.content.Context mContext
 com.google.android.gms.auth.api.signin.GoogleSignInOptions:
@@ -28030,6 +28043,7 @@ com.google.android.gms.maps.model.StreetViewPanoramaCamera:
 ninja.cricks.ui.home.HomeFragment:
     private static final java.lang.String TAG
     public static final ninja.cricks.ui.home.HomeFragment$Companion Companion
+ninja.cricks.ViewUserDetailActivity$Companion
 com.bumptech.glide.load.resource.bitmap.Downsampler:
     public static final com.bumptech.glide.load.Option DOWNSAMPLE_STRATEGY
 com.google.android.gms.auth.api.proxy.ProxyRequest:
@@ -28042,8 +28056,7 @@ com.google.android.gms.auth.api.proxy.ProxyRequest:
     public static final int HTTP_METHOD_TRACE
     public static final int HTTP_METHOD_PATCH
     public static final int LAST_CODE
-easypay.actions.NetBankingHelper$3:
-    final synthetic easypay.actions.NetBankingHelper this$0
+easypay.actions.NetBankingHelper$3
 com.github.ybq.android.spinkit.style.ChasingDots$Dot:
     final synthetic com.github.ybq.android.spinkit.style.ChasingDots this$0
 easypay.actions.RadioHelper$2:
@@ -28061,6 +28074,7 @@ androidx.constraintlayout.solver.LinearSystem$ValuesRow:
 ninja.cricks.OfferActivity:
     private static final java.lang.String TAG
     public static final ninja.cricks.OfferActivity$Companion Companion
+ninja.cricks.listener.RecyclerViewLoadMoreScroll
 androidx.exifinterface.media.ExifInterface$ExifAttribute:
     public final long bytesOffset
 androidx.lifecycle.SavedStateHandleController$1:
@@ -28092,8 +28106,9 @@ androidx.transition.FragmentTransitionSupport$1:
     final synthetic androidx.transition.FragmentTransitionSupport this$0
 androidx.navigation.NavDeepLink:
     private final java.lang.String mUri
-ninja.cricks.FullScreenImageViewActivity$1:
-    final synthetic ninja.cricks.FullScreenImageViewActivity this$0
+ninja.cricks.ui.mymatches.MyLiveMatchesFragment$Companion
+ninja.cricks.FullScreenImageViewActivity$1
+androidx.room.MultiInstanceInvalidationClient$5
 com.github.ybq.android.spinkit.style.FadingCircle$Dot:
     final synthetic com.github.ybq.android.spinkit.style.FadingCircle this$0
 androidx.transition.FragmentTransitionSupport$2:
@@ -28122,8 +28137,10 @@ ninja.cricks.bottom_nav.TopEdgeTreatment:
 com.google.android.gms.safetynet.SafetyNet:
     public static final com.google.android.gms.safetynet.SafetyNetApi SafetyNetApi
     private static final com.google.android.gms.safetynet.zzo zzu
+ninja.cricks.ui.mymatches.MyUpcomingMatchesFragment$Companion
 androidx.fragment.app.DefaultSpecialEffectsController$4:
     final synthetic androidx.fragment.app.DefaultSpecialEffectsController this$0
+com.bumptech.glide.load.model.Headers$1
 androidx.constraintlayout.motion.widget.MotionLayout$StateCache:
     final java.lang.String KeyProgress
     final java.lang.String KeyVelocity
@@ -28151,6 +28168,7 @@ androidx.constraintlayout.solver.widgets.analyzer.RunGroup:
     int direction
 androidx.appcompat.app.ActionBarDrawerToggle:
     private android.graphics.drawable.Drawable mHomeAsUpIndicator
+ninja.cricks.EditProfileActivity$Companion
 com.google.android.gms.common.util.zza:
     private static java.util.regex.Pattern zza
 ninja.cricks.databinding.ActivitySelectTeamBinding:
@@ -28195,6 +28213,7 @@ androidx.fragment.app.FragmentTransaction:
     private final java.lang.ClassLoader mClassLoader
 androidx.media.MediaBrowserServiceCompat$ServiceCallbacksCompat:
     public void onConnect(java.lang.String,android.support.v4.media.session.MediaSessionCompat$Token,android.os.Bundle)
+okio.Segment$Companion
 com.google.android.gms.signin.SignInOptions:
     private final boolean zab
     private final boolean zac
@@ -28211,13 +28230,17 @@ retrofit2.CompletableFutureCallAdapterFactory$ResponseCallAdapter$ResponseCallba
     final synthetic retrofit2.CompletableFutureCallAdapterFactory$ResponseCallAdapter this$0
 ninja.cricks.ViewUserDetailActivity$UserDataAdapter:
     private final android.content.Context mContext
+okhttp3.internal.connection.RealConnectionPool$Companion
 retrofit2.Response:
     private final okhttp3.ResponseBody errorBody
 com.google.android.gms.safetynet.SafetyNetApi
+androidx.recyclerview.widget.StaggeredGridLayoutManager:
+    public int[] findLastVisibleItemPositions(int[])
 androidx.appcompat.widget.ActivityChooserModel:
     public int getActivityIndex(android.content.pm.ResolveInfo)
     public int getHistorySize()
 kotlin.KotlinVersionCurrentValue:
+    private void <init>()
     public static final kotlin.KotlinVersionCurrentValue INSTANCE
 ninja.cricks.databinding.FragmentGlobalLeaderBoardBinding:
     public final androidx.swiperefreshlayout.widget.SwipeRefreshLayout contestFilterRefresh
@@ -28362,6 +28385,7 @@ com.google.android.gms.maps.MapView$zzb:
     private final android.content.Context zzbk
     private final com.google.android.gms.maps.GoogleMapOptions zzbl
     private final java.util.List zzbf
+okhttp3.internal.http2.Http2Connection$Listener$Companion
 androidx.arch.core.executor.DefaultTaskExecutor$1:
     final synthetic androidx.arch.core.executor.DefaultTaskExecutor this$0
 pl.droidsonroids.relinker.ReLinkerInstance$2:
@@ -28372,8 +28396,10 @@ ninja.cricks.OtpVerifyActivity$RequestBackKeyPressEvent:
     private final android.view.View view
 androidx.transition.ChangeBounds$7:
     final synthetic androidx.transition.ChangeBounds this$0
+ninja.cricks.ui.createteam.adaptors.PlayersSelectedAdapter$Companion
 io.branch.referral.ServerRequestCreateUrl:
     private boolean isReqStartedFromBranchShareSheet_
+ninja.cricks.ContestLeaderBoardActivity$Companion
 androidx.sqlite.db.framework.FrameworkSQLiteDatabase:
     private static final java.lang.String[] CONFLICT_VALUES
 com.google.android.gms.stats.GCoreWakefulBroadcastReceiver:
@@ -28432,12 +28458,16 @@ androidx.emoji.widget.EmojiExtractTextLayout:
     private androidx.emoji.widget.ExtractButtonCompat mExtractAction
     private android.view.ViewGroup mExtractAccessories
 kotlinx.coroutines.Dispatchers:
+    private void <init>()
     private static final kotlinx.coroutines.CoroutineDispatcher Unconfined
     public static final kotlinx.coroutines.Dispatchers INSTANCE
 com.yalantis.ucrop.view.OverlayView:
     protected float[] mCropGridCenter
+com.google.firebase.auth.internal.zzbf:
+    private void <init>()
 androidx.transition.ChangeBounds$8:
     final synthetic androidx.transition.ChangeBounds this$0
+okhttp3.internal.http2.Settings$Companion
 ninja.cricks.ContestActivity:
     private java.util.ArrayList contestObjects
 ninja.cricks.databinding.DialogFilterBinding:
@@ -28447,6 +28477,7 @@ ninja.cricks.databinding.DialogFilterBinding:
     public final android.view.View line2
     public final android.widget.TextView txtContestType
     public final android.widget.TextView txtNumberOfTeam
+com.mikhaellopez.circularimageview.CircularImageView$Companion
 com.google.android.gms.maps.model.Cap:
     private static final java.lang.String TAG
 androidx.constraintlayout.widget.ConstraintLayout:
@@ -28574,6 +28605,8 @@ ninja.cricks.databinding.ContestRowsIplFinalBinding:
     public final android.widget.TextView totalSpotLeft
     public final android.widget.LinearLayout upcomingLinearContestView
     public final android.widget.TextView winningPercentage
+androidx.recyclerview.widget.RecyclerView$LayoutManager:
+    public int getItemCount()
 pl.droidsonroids.relinker.elf.Elf$Header:
     public int type
     public int shnum
@@ -28619,6 +28652,7 @@ io.branch.referral.util.ShareSheetStyle:
     private android.view.View sharingTitleView_
     private java.util.List includeInShareSheet
     private java.util.List excludeFromShareSheet
+ninja.cricks.PlayerStatsInfoActivity$Companion
 androidx.core.view.ViewCompat:
     private static final java.util.concurrent.atomic.AtomicInteger sNextGeneratedId
     private static final int[] ACCESSIBILITY_ACTIONS_RESOURCE_IDS
@@ -28653,6 +28687,7 @@ androidx.media.MediaBrowserServiceCompat$MediaBrowserServiceImplApi28:
 com.google.android.gms.common.api.internal.ListenerHolder:
     private final com.google.android.gms.common.api.internal.ListenerHolder$zaa zaa
     private volatile com.google.android.gms.common.api.internal.ListenerHolder$ListenerKey zac
+com.bumptech.glide.load.engine.executor.GlideExecutor$UncaughtThrowableStrategy$3
 ninja.cricks.WebActivity:
     private static java.lang.String TAG
     public static final ninja.cricks.WebActivity$Companion Companion
@@ -28704,20 +28739,23 @@ com.github.ybq.android.spinkit.style.DoubleBounce$Bounce:
     final synthetic com.github.ybq.android.spinkit.style.DoubleBounce this$0
 ninja.cricks.adaptors.BannerSliderAdapter:
     private final java.lang.String TAG
+kotlin.KotlinVersion$Companion
 androidx.transition.Slide:
     private int mSlideEdge
 com.google.android.gms.common.api.Api$Client:
     public abstract boolean requiresAccount()
     public abstract android.os.IBinder getServiceBrokerBinder()
     public abstract com.google.android.gms.common.Feature[] getRequiredFeatures()
+com.bumptech.glide.load.engine.DiskCacheStrategy$4
 com.google.gson.internal.LinkedTreeMap$KeySet$1:
     final synthetic com.google.gson.internal.LinkedTreeMap$KeySet this$1
+com.google.android.gms.ads.identifier.zzc
 easypay.actions.NetBankingHelper$4$1:
     final synthetic easypay.actions.NetBankingHelper$4 this$1
+ninja.cricks.MoreContestActivity$Companion
 ninja.cricks.ui.contest.ContestFragment$FilterAdapter$ViewHolderJoinedContest:
     final synthetic ninja.cricks.ui.contest.ContestFragment$FilterAdapter this$0
-com.airbnb.lottie.PerformanceTracker$1:
-    final synthetic com.airbnb.lottie.PerformanceTracker this$0
+com.airbnb.lottie.PerformanceTracker$1
 ninja.cricks.adaptors.SelectedTeamAdapter:
     public static final ninja.cricks.adaptors.SelectedTeamAdapter$Companion Companion
 com.etebarian.meowbottomnavigation.MeowBottomNavigationCell$animateProgress$$inlined$apply$lambda$1:
@@ -28727,6 +28765,7 @@ com.google.android.material.transformation.FabTransformationBehavior$3:
     final synthetic com.google.android.material.transformation.FabTransformationBehavior this$0
 com.google.firebase.crashlytics.internal.log.QueueFileLogStore$1:
     final synthetic com.google.firebase.crashlytics.internal.log.QueueFileLogStore this$0
+okhttp3.logging.HttpLoggingInterceptor$Logger$Companion
 ninja.cricks.ui.mymatches.MyUpcomingMatchesFragment$MyMatchesAdapter:
     final synthetic ninja.cricks.ui.mymatches.MyUpcomingMatchesFragment this$0
 ninja.cricks.utils.HardwareInfo:
@@ -28753,12 +28792,14 @@ okhttp3.internal.http2.Http2Connection$ReaderRunnable$ping$$inlined$execute$1:
     final synthetic boolean $cancelable
 androidx.browser.customtabs.CustomTabsSessionToken:
     private final androidx.browser.customtabs.CustomTabsCallback mCallback
+okhttp3.internal.io.FileSystem$Companion
 com.google.android.gms.common.api.internal.NonGmsServiceBrokerClient:
     public final boolean requiresAccount()
     public final android.os.IBinder getServiceBrokerBinder()
     public final com.google.android.gms.common.Feature[] getRequiredFeatures()
     private java.lang.String zal
     private static final java.lang.String zaa
+ninja.cricks.utils.DownloadController$Companion
 ninja.cricks.databinding.ActivityMoreContestBinding:
     public final android.widget.RelativeLayout linearTeams
     public final android.widget.LinearLayout linearTopBar
@@ -28767,6 +28808,7 @@ com.google.android.gms.common.internal.zzj:
     private static final android.net.Uri zzb
 com.github.dhaval2404.imagepicker.provider.CropProvider:
     public static final com.github.dhaval2404.imagepicker.provider.CropProvider$Companion Companion
+com.edify.atrist.listener.OnLoadMoreListener
 androidx.appcompat.widget.ActivityChooserView$3:
     final synthetic androidx.appcompat.widget.ActivityChooserView this$0
 android.support.v4.media.MediaBrowserCompat$MediaBrowserImplApi21:
@@ -28780,13 +28822,13 @@ com.bumptech.glide.load.engine.cache.SafeKeyGenerator$1:
     final synthetic com.bumptech.glide.load.engine.cache.SafeKeyGenerator this$0
 com.razorpay.l_$w$$12:
     private synthetic com.razorpay.l_$w$ a_$P$
+ninja.cricks.ui.JoinContestActivity$Companion
 okhttp3.internal.concurrent.TaskQueue$execute$1:
     final synthetic java.lang.String $name
     final synthetic boolean $cancelable
 androidx.transition.ChangeBounds$9:
     final synthetic androidx.transition.ChangeBounds this$0
-com.google.android.gms.dynamic.zaa:
-    private final synthetic com.google.android.gms.dynamic.DeferredLifecycleHelper zaa
+com.google.android.gms.dynamic.zaa
 ninja.cricks.OfferActivity$OfferAdapter$DataViewHolder:
     private android.widget.TextView offerLabel
     final synthetic ninja.cricks.OfferActivity$OfferAdapter this$0
@@ -28800,6 +28842,7 @@ com.google.android.gms.maps.MapView:
     private final com.google.android.gms.maps.MapView$zzb zzbg
 androidx.media.AudioAttributesCompat:
     private static final int[] SDK_USAGES
+com.github.dhaval2404.imagepicker.provider.GalleryProvider$Companion
 com.bumptech.glide.load.engine.GlideException:
     private java.lang.Exception exception
 ninja.cricks.ui.contest.adaptors.ContestAdapter$ViewHolderJoinedContest:
@@ -28833,6 +28876,7 @@ com.airbnb.lottie.value.LottieFrameInfo:
     private float linearKeyframeProgress
     private float interpolatedKeyframeProgress
     private float overallProgress
+okhttp3.internal.http2.PushObserver$Companion
 com.google.firebase.crashlytics.internal.common.CrashlyticsController:
     private final com.google.firebase.crashlytics.internal.common.UserMetadata userMetadata
     final java.util.concurrent.atomic.AtomicBoolean checkForUnsentReportsCalled
@@ -28842,8 +28886,7 @@ retrofit2.HttpException:
     private final transient retrofit2.Response response
 okhttp3.internal.io.FileSystem:
     public static final okhttp3.internal.io.FileSystem$Companion Companion
-androidx.browser.customtabs.CustomTabsSessionToken$1:
-    final synthetic androidx.browser.customtabs.CustomTabsSessionToken this$0
+androidx.browser.customtabs.CustomTabsSessionToken$1
 androidx.fragment.app.FragmentTransitionCompat21$4:
     final synthetic androidx.fragment.app.FragmentTransitionCompat21 this$0
 okhttp3.internal.ws.RealWebSocket$writeOneFrame$$inlined$synchronized$lambda$1:
@@ -28865,6 +28908,7 @@ ninja.cricks.NotificationListActivity:
 com.bumptech.glide.RequestBuilder:
     private final com.bumptech.glide.Glide glide
     protected static final com.bumptech.glide.request.RequestOptions DOWNLOAD_ONLY_OPTIONS
+com.bumptech.glide.load.resource.bitmap.DownsampleStrategy$AtMost
 com.google.android.material.shadow.ShadowDrawableWrapper:
     float maxShadowSize
 ninja.cricks.ui.createteam.adaptors.PlayersSelectedAdapter:
@@ -28882,8 +28926,10 @@ androidx.fragment.app.Fragment$3:
     final synthetic androidx.fragment.app.Fragment this$0
 easypay.actions.EasypayBrowserFragment$13:
     final synthetic easypay.actions.EasypayBrowserFragment this$0
+androidx.browser.customtabs.CustomTabsCallback
 com.google.android.gms.common.GoogleApiAvailability:
     public static final int GOOGLE_PLAY_SERVICES_VERSION_CODE
+androidx.recyclerview.widget.RecyclerView$1
 androidx.core.graphics.TypefaceCompatBaseImpl$2:
     final synthetic androidx.core.graphics.TypefaceCompatBaseImpl this$0
 io.branch.referral.DeviceInfo$SystemObserverInstance:
@@ -28956,6 +29002,8 @@ androidx.sqlite.db.framework.FrameworkSQLiteDatabase$1:
     final synthetic androidx.sqlite.db.framework.FrameworkSQLiteDatabase this$0
 com.bumptech.glide.load.engine.ActiveResources:
     private final java.util.concurrent.Executor monitorClearedResourcesExecutor
+okhttp3.internal.http2.Header$Companion
+androidx.databinding.CallbackRegistry$NotifierCallback
 io.branch.referral.GooglePlayStoreAttribution$2:
     final synthetic io.branch.referral.GooglePlayStoreAttribution this$0
 ninja.cricks.ui.dashboard.MoreOptionsFragment$MoreOptionsAdaptor:
@@ -28973,6 +29021,8 @@ okhttp3.internal.http2.Http2Connection$ReaderRunnable$settings$$inlined$execute$
 com.google.firebase.crashlytics.internal.common.ExecutorUtils$1$1:
     final synthetic com.google.firebase.crashlytics.internal.common.ExecutorUtils$1 this$0
 com.google.android.gms.wallet.zzaa
+okhttp3.internal.http.RetryAndFollowUpInterceptor$Companion
+okhttp3.internal.http1.Http1ExchangeCodec$Companion
 ninja.cricks.adaptors.NavigationDrawerAdapter:
     private android.content.Context context
 ninja.cricks.databinding.FragmentAllContestBinding:
@@ -29049,16 +29099,20 @@ androidx.fragment.app.FragmentTransitionImpl$2:
     final synthetic androidx.fragment.app.FragmentTransitionImpl this$0
 androidx.media.MediaBrowserServiceCompat$ServiceCallbacks:
     public abstract void onConnect(java.lang.String,android.support.v4.media.session.MediaSessionCompat$Token,android.os.Bundle)
+com.andrognito.flashbar.Flashbar$Companion
 com.google.android.gms.common.util.ProcessUtils:
     private static long zzc
 ninja.cricks.QuizContestActivity$QuizContestListAdapter:
     private ninja.cricks.models.UpcomingMatchesModel matchObject
     private final android.app.Activity context
+androidx.fragment.app.Fragment$1
+okhttp3.internal.ws.RealWebSocket$Companion
 com.google.android.gms.common.api.internal.ApiKey:
     private final boolean zaa
 com.google.firebase.auth.internal.zzn:
     private final com.google.firebase.auth.MultiFactorInfo zza
 androidx.constraintlayout.motion.widget.MotionLayout$DevModeDraw:
+    private void drawTranslation(android.graphics.Canvas,float,float,float,float)
     final int RED_COLOR
     final int KEYFRAME_COLOR
     final int GRAPH_COLOR
@@ -29075,6 +29129,7 @@ androidx.navigation.fragment.DialogFragmentNavigator$1:
     final synthetic androidx.navigation.fragment.DialogFragmentNavigator this$0
 ninja.cricks.utils.DownloadController:
     public static final ninja.cricks.utils.DownloadController$Companion Companion
+com.google.android.gms.auth.api.signin.zba
 ninja.cricks.adaptors.MatchesAdapter$ViewHolderJoinedMatches:
     final synthetic ninja.cricks.adaptors.MatchesAdapter this$0
 okhttp3.internal.http.RetryAndFollowUpInterceptor:
@@ -29095,6 +29150,7 @@ com.google.android.gms.measurement.internal.zzkn:
 ninja.cricks.NotificationListActivity$NotificationListAdaptor:
     private final android.content.Context context
     final synthetic ninja.cricks.NotificationListActivity this$0
+com.google.android.gms.stats.zza
 com.google.firebase.encoders.Encoder
 com.google.android.gms.common.data.DataHolder:
     private int zah
@@ -29111,10 +29167,13 @@ com.google.android.gms.common.util.Strings:
 com.google.android.gms.common.api.Status:
     private static final com.google.android.gms.common.api.Status zza
     public static final com.google.android.gms.common.api.Status RESULT_DEAD_CLIENT
+ninja.cricks.TeamPreviewActivity$Companion
 okhttp3.internal.http1.HeadersReader:
     public static final okhttp3.internal.http1.HeadersReader$Companion Companion
+ninja.cricks.ui.myaccounts.MyAccountBalanceFragment$Companion
 ninja.cricks.ui.dashboard.MoreOptionsFragment:
     public static final ninja.cricks.ui.dashboard.MoreOptionsFragment$Companion Companion
+com.google.android.gms.auth.api.signin.zbb
 androidx.constraintlayout.motion.utils.LinearCurveFit:
     private double mTotalLength
 ninja.cricks.ui.leadersboard.PrizeBreakupFragment$PrizeBreakUpAdapter:
@@ -29157,6 +29216,8 @@ com.github.ybq.android.spinkit.style.ThreeBounce$Bounce:
     final synthetic com.github.ybq.android.spinkit.style.ThreeBounce this$0
 pl.droidsonroids.relinker.elf.ElfParser:
     private final int MAGIC
+ninja.cricks.adaptors.MatchesAdapter$Companion
+androidx.appcompat.widget.ListPopupWindow$2
 okhttp3.internal.cache.DiskLruCache$Editor$newSink$$inlined$synchronized$lambda$1:
     final synthetic int $index$inlined
 com.google.android.gms.common.stats.ConnectionTracker:
@@ -29201,8 +29262,10 @@ ninja.cricks.MyTransactionHistoryActivity:
     private ninja.cricks.utils.CustomeProgressDialog customeProgressDialog
 ninja.cricks.ui.home.HomeFragment$MyAdapter:
     final synthetic ninja.cricks.ui.home.HomeFragment this$0
+androidx.databinding.ViewDataBinding$4
 com.google.gson.internal.ConstructorConstructor$4:
     final synthetic com.google.gson.internal.ConstructorConstructor this$0
+androidx.databinding.ViewDataBinding$5
 okhttp3.internal.http2.Http2Connection$Listener:
     public static final okhttp3.internal.http2.Http2Connection$Listener$Companion Companion
 okhttp3.internal.http.ExchangeCodec:
@@ -29213,6 +29276,7 @@ ninja.cricks.databinding.ActivityViewUserDetailBinding:
     public final androidx.cardview.widget.CardView userInfoCard
 kotlin.jvm.internal.PackageReference:
     private final java.lang.String moduleName
+com.etebarian.meowbottomnavigation.MeowBottomNavigationCell$Companion
 com.google.gson.internal.bind.JsonTreeReader:
     private static final java.io.Reader UNREADABLE_READER
 com.github.ybq.android.spinkit.animation.SpriteAnimatorBuilder$IntFrameData:
@@ -29230,6 +29294,7 @@ ninja.cricks.RefferalFriendsListActivity$RefferalsListAdaptors:
 kotlin.jvm.internal.ClassReference:
     private static final java.util.Map simpleNames
     public static final kotlin.jvm.internal.ClassReference$Companion Companion
+com.bumptech.glide.load.resource.bitmap.DownsampleStrategy$AtLeast
 androidx.core.view.accessibility.AccessibilityViewCommand$CommandArguments:
     android.os.Bundle mBundle
 easypay.actions.NewOtpHelper$6:
@@ -29248,6 +29313,7 @@ com.google.gson.internal.ConstructorConstructor$3:
     final synthetic com.google.gson.internal.ConstructorConstructor this$0
 androidx.navigation.NavDestination:
     private static final java.util.HashMap sClasses
+kotlinx.coroutines.scheduling.CoroutineScheduler$Companion
 com.bumptech.glide.load.engine.executor.GlideExecutor$UncaughtThrowableStrategy:
     public static final com.bumptech.glide.load.engine.executor.GlideExecutor$UncaughtThrowableStrategy IGNORE
     public static final com.bumptech.glide.load.engine.executor.GlideExecutor$UncaughtThrowableStrategy THROW
@@ -29265,6 +29331,7 @@ com.paytm.pgsdk.PaytmWebView$1:
 androidx.constraintlayout.motion.utils.Oscillator:
     private boolean mNormalized
     public static java.lang.String TAG
+androidx.arch.core.executor.ArchTaskExecutor$1
 ninja.cricks.databinding.ActivityPhoneLoginBinding:
     public final android.widget.ImageView imageView2
     public final android.widget.TextView textView2
@@ -29320,6 +29387,7 @@ androidx.transition.FragmentTransitionSupport$5:
     final synthetic androidx.transition.FragmentTransitionSupport this$0
 androidx.appcompat.widget.ActionMenuPresenter$OverflowMenuButton$1:
     final synthetic androidx.appcompat.widget.ActionMenuPresenter val$this$0
+com.google.android.gms.dynamite.zzj
 androidx.media.MediaBrowserServiceCompatApi21$BrowserRoot:
     void <init>(java.lang.String,android.os.Bundle)
 com.paytm.pgsdk.PaytmPGActivity:
@@ -29351,6 +29419,9 @@ com.google.android.datatransport.runtime.dagger.internal.DoubleCheck:
     static final synthetic boolean $assertionsDisabled
 com.github.ybq.android.spinkit.style.WanderingCubes$Cube:
     final synthetic com.github.ybq.android.spinkit.style.WanderingCubes this$0
+androidx.recyclerview.widget.StaggeredGridLayoutManager$Span:
+    public int findLastVisibleItemPosition()
+    int findOneVisibleChild(int,int,boolean)
 ninja.cricks.ui.BaseActivity:
     private static java.lang.String DOCUMENT_TYPE_ADHARCARD
     private static java.lang.String DOCUMENT_TYPE_PAYTM
@@ -29358,8 +29429,10 @@ ninja.cricks.ui.BaseActivity:
     private static final int PERMISSION_CODE
 androidx.constraintlayout.widget.ConstraintLayout$LayoutParams:
     float dimensionRatioValue
+okhttp3.internal.http2.Http2Writer$Companion
 kotlin.sequences.DropSequence$iterator$1:
     final synthetic kotlin.sequences.DropSequence this$0
+ninja.cricks.PreviewTeamLeaderActivity$Companion
 com.google.firebase.auth.ActionCodeInfo:
     protected java.lang.String email
 com.andrognito.flashbar.Flashbar:
@@ -29385,6 +29458,8 @@ easypay.actions.EasypayBrowserFragment$5:
 ninja.cricks.databinding.ActivityMainBinding:
     public final android.widget.FrameLayout containerBody
     public final android.widget.RelativeLayout headerLayout
+okhttp3.internal.tls.BasicCertificateChainCleaner$Companion
+com.andrognito.flashbar.view.FbProgress$WheelSavedState$Companion
 ninja.cricks.MyTransactionHistoryActivity$MoreOptionsAdaptor:
     final synthetic ninja.cricks.MyTransactionHistoryActivity this$0
 com.google.android.gms.safetynet.SafeBrowsingData:
@@ -29457,8 +29532,10 @@ com.github.dhaval2404.imagepicker.provider.GalleryProvider:
     public static final com.github.dhaval2404.imagepicker.provider.GalleryProvider$Companion Companion
 androidx.lifecycle.MethodCallsLogger:
     private java.util.Map mCalledMethods
+androidx.databinding.ViewDataBinding$1
 com.google.firebase.heartbeatinfo.HeartBeatInfoStorage:
     private final android.content.SharedPreferences heartBeatSharedPreferences
+okhttp3.internal.connection.RealConnection$Companion
 ninja.cricks.ContestLeaderBoardActivity:
     private int position
     private static java.lang.String TAG
@@ -29471,10 +29548,13 @@ androidx.media.MediaBrowserServiceCompat$ConnectionRecord:
 ninja.cricks.adaptors.OpenTeamsAdapter:
     private android.view.View$OnClickListener onClickListener
     private final ninja.cricks.utils.CustomeProgressDialog customeProgressDialog
+com.google.android.gms.dynamite.zzd
 ninja.cricks.adaptors.MatchesAdapter$UpcomingMatchesViewHolder:
     final synthetic ninja.cricks.adaptors.MatchesAdapter this$0
 com.google.gson.internal.ConstructorConstructor$11:
     final synthetic com.google.gson.internal.ConstructorConstructor this$0
+kotlin.text.Regex$Companion
+ninja.cricks.adaptors.SelectedTeamAdapter$Companion
 ninja.cricks.ui.login.PhoneLoginActivity:
     private java.lang.String name
 easypay.actions.NetBankingHelper$2$1:
@@ -29502,6 +29582,7 @@ ninja.cricks.databinding.FragmentPrizeBreakupBinding:
     public final android.widget.TextView notes
 androidx.constraintlayout.motion.widget.KeyCycleOscillator$1:
     final synthetic androidx.constraintlayout.motion.widget.KeyCycleOscillator this$0
+ninja.cricks.ui.dashboard.MoreOptionsFragment$Companion
 com.google.firebase.messaging.SyncTask:
     java.util.concurrent.ExecutorService processorExecutor
 okio.-Base64:
@@ -29534,12 +29615,17 @@ androidx.appcompat.app.AlertController$4:
     final synthetic androidx.appcompat.app.AlertController this$0
 com.bumptech.glide.disklrucache.Util:
     static final java.nio.charset.Charset UTF_8
+androidx.databinding.ViewDataBinding$2
 ninja.cricks.adaptors.SelectedTeamAdapter$ViewHolderJoinedMatches:
     final synthetic ninja.cricks.adaptors.SelectedTeamAdapter this$0
+ninja.cricks.PlayerInfoActivity$Companion
 androidx.fragment.app.FragmentStateManager$1:
     final synthetic androidx.fragment.app.FragmentStateManager this$0
+com.google.android.gms.dynamite.zze
 com.google.gson.internal.ConstructorConstructor$12:
     final synthetic com.google.gson.internal.ConstructorConstructor this$0
+com.google.android.gms.dynamite.zzf
+com.bumptech.glide.load.engine.executor.GlideExecutor$UncaughtThrowableStrategy$1
 easypay.actions.NewOtpHelper$8:
     final synthetic easypay.actions.NewOtpHelper this$0
 androidx.recyclerview.widget.RecyclerView:
@@ -29577,6 +29663,7 @@ com.google.android.gms.common.GooglePlayServicesNotAvailableException:
     public final int errorCode
 easypay.actions.EasypayBrowserFragment$6:
     final synthetic easypay.actions.EasypayBrowserFragment this$0
+okhttp3.internal.http1.HeadersReader$Companion
 androidx.loader.content.ModernAsyncTask:
     private static volatile java.util.concurrent.Executor sDefaultExecutor
 com.google.gson.internal.ConstructorConstructor$13:
@@ -29586,6 +29673,7 @@ ninja.cricks.databinding.ActivityUpdateApplicationBinding:
     public final android.widget.RelativeLayout topLinearBalance
 ninja.cricks.ui.leadersboard.LeadersBoardFragment:
     private ninja.cricks.models.UserInfo userInfo
+kotlin.jvm.internal.ClassReference$Companion
 com.bumptech.glide.load.engine.ActiveResources$1$1:
     final synthetic com.bumptech.glide.load.engine.ActiveResources$1 this$1
 easypay.widget.OtpEditText:
@@ -29599,6 +29687,7 @@ androidx.constraintlayout.motion.widget.KeyCycleOscillator$CycleOscillator:
     public java.util.HashMap mCustomConstraints
 androidx.constraintlayout.solver.widgets.analyzer.DependencyGraph:
     private java.util.ArrayList runGroups
+androidx.databinding.ViewDataBinding$3
 ninja.cricks.ui.contest.MyContestFragment$MyContestJoinedTeamAdapter:
     private final android.app.Activity context
 android.support.v4.media.session.MediaControllerCompat:
@@ -29606,6 +29695,7 @@ android.support.v4.media.session.MediaControllerCompat:
     private final java.util.HashSet mRegisteredCallbacks
 com.google.android.gms.measurement.internal.zzja:
     final synthetic com.google.android.gms.measurement.internal.zzaa zzd
+com.google.android.gms.dynamite.zzg
 com.google.gson.internal.ConstructorConstructor$5:
     final synthetic com.google.gson.internal.ConstructorConstructor this$0
 com.google.firebase.auth.FirebaseAuthMultiFactorException:
@@ -29624,6 +29714,7 @@ androidx.core.os.LocaleListCompat:
     private static final androidx.core.os.LocaleListCompat sEmptyLocaleList
 androidx.fragment.app.FragmentManager$8:
     final synthetic androidx.fragment.app.FragmentManager this$0
+ninja.cricks.utils.HardwareInfo$Companion
 androidx.constraintlayout.motion.widget.MotionConstrainedPoint:
     private boolean applyElevation
     private androidx.constraintlayout.motion.utils.Easing mKeyFrameEasing

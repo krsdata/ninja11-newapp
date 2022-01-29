@@ -112,7 +112,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="bottom"
                 app:mbn_backgroundBottomColor="@color/colorSecond"
-                app:mbn_circleColor="@color/player_bg_dark_yellow"
+                app:mbn_circleColor="@color/colorSecond"
                 app:mbn_countBackgroundColor="@color/white"
                 app:mbn_countTextColor="@color/white"
                 app:mbn_defaultIconColor="@color/white"

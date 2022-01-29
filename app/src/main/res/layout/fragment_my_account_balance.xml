@@ -79,26 +79,30 @@
                             android:orientation="horizontal"
                             android:weightSum="2">
 
-                            <Button
+                            <TextView
                                 android:id="@+id/btn_edit_profile"
                                 android:layout_width="0dp"
                                 android:layout_height="@dimen/_35sdp"
                                 android:layout_marginEnd="@dimen/_5sdp"
                                 android:layout_weight="1"
+                                android:layout_gravity="center"
+                                android:gravity="center"
                                 android:background="@drawable/btn_selector_not_verified"
-                                android:fontFamily="@font/open_sans"
+                                android:fontFamily="@font/open_sans_semibold"
                                 android:src="@drawable/ic_profile"
-                                android:text="EDIT PROFILE"
+                                android:text="Edit Profile"
                                 android:textSize="@dimen/_10sdp" />
 
-                            <Button
+                            <TextView
                                 android:id="@+id/btn_verify_account"
                                 android:layout_width="0dp"
                                 android:layout_height="@dimen/_35sdp"
                                 android:layout_marginStart="@dimen/_5sdp"
                                 android:layout_weight="1"
+                                android:layout_gravity="center"
+                                android:gravity="center"
                                 android:background="@drawable/btn_selector_verified"
-                                android:fontFamily="@font/roboto"
+                                android:fontFamily="@font/open_sans_semibold"
                                 android:src="@drawable/ic_profile"
                                 android:text="Verify Accounts"
                                 android:textSize="@dimen/_10sdp" />

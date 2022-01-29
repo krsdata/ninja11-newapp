@@ -14,8 +14,8 @@ android {
         applicationId "ninja.cricks"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 3305
-        versionName "3.5"
+        versionCode 3308
+        versionName "3.8"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         setProperty("archivesBaseName", "Ninja11-$versionName")
@@ -29,9 +29,9 @@ android {
         debug {
             buildConfigField "boolean", "MLOG", "true"
             debuggable true
-            useProguard true
-            shrinkResources true
-            minifyEnabled true
+            useProguard false
+            shrinkResources false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 

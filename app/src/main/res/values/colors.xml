@@ -2,14 +2,14 @@
 <resources>
 
     <!-- Primary theme colors -->
-    <color name="colorPrimary">#BD0016</color>
+    <color name="colorPrimary">#CA0016</color>
     <color name="colorPrimaryDark">#24292f</color>
-    <color name="colorAccent">#BD0016</color>
+    <color name="colorAccent">#CA0016</color>
 
     <!-- Secondry theme colors -->
-    <color name="colorSecond">#BD0016</color>
-    <color name="colorSecondDark">#BD0016</color>
-    <color name="colorSecondAccent">#BD0016</color>
+    <color name="colorSecond">#CA0016</color>
+    <color name="colorSecondDark">#CA0016</color>
+    <color name="colorSecondAccent">#CA0016</color>
 
 
     <color name="colorAccent2">#0172AC</color>
@@ -119,7 +119,7 @@
     <color name="foreground_material_light">@android:color/black</color>
     <color name="forgot_pass">#ff0bb4de</color>
     <color name="get_ready">#ff7d7d7d</color>
-    <color name="grand_league">#c61d24</color>
+    <color name="grand_league">@color/black_grey</color>
 
 
     <color name="grey">#ff343434</color>

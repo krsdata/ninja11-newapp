@@ -202,19 +202,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_5sdp"
+                    android:fontFamily="@font/montserrat_medium"
                     android:gravity="start"
                     android:text="C = Confirmed"
                     android:textColor="@color/grand_league"
-                    android:textSize="@dimen/_12sdp" />
+                    android:textSize="@dimen/_10sdp" />
 
                 <TextView
                     android:id="@+id/multi_join"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
+                    android:fontFamily="@font/montserrat_medium"
                     android:text="M = Multiple Team"
-                    android:textColor="@color/red"
-                    android:textSize="@dimen/_12sdp" />
+                    android:textColor="@color/grand_league"
+                    android:textSize="@dimen/_10sdp" />
             </LinearLayout>
 
             <LinearLayout
@@ -230,17 +232,19 @@
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:gravity="start"
                     android:text="B = Bonus"
+                    android:fontFamily="@font/montserrat_medium"
                     android:textColor="@color/grand_league"
-                    android:textSize="@dimen/_12sdp" />
+                    android:textSize="@dimen/_10sdp" />
 
                 <TextView
                     android:id="@+id/extra_cash"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
+                    android:fontFamily="@font/montserrat_medium"
                     android:text="EC = Extra Cash"
                     android:textColor="@color/grand_league"
-                    android:textSize="@dimen/_12sdp"
+                    android:textSize="@dimen/_10sdp"
                     android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>

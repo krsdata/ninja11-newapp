@@ -61,6 +61,7 @@ class MainActivity : BaseActivity(), /*BottomNavigationView.OnNavigationItemSele
     var resCompletedMatchesCheckinArraylist = ArrayList<JoinedMatchModel>()
 
     companion object {
+        val TAG: String = MainActivity::class.java.simpleName
         var menuArrayList = ArrayList<JSONObject>()
         var showScore: Boolean = false
         var CHECK_WALLET_ONCE: Boolean? = false
@@ -237,7 +238,6 @@ class MainActivity : BaseActivity(), /*BottomNavigationView.OnNavigationItemSele
         }
 
     }
-
 
     override fun onResume() {
         super.onResume()
@@ -424,6 +424,7 @@ class MainActivity : BaseActivity(), /*BottomNavigationView.OnNavigationItemSele
                     response: Response<JsonObject?>?
                 ) {
                     if (!isFinishing) {
+                        Log.e(TAG, "onResponse")
                         if (response!!.body() != null) {
                             val res = JSONObject(response.body().toString())
                             showScore = res.getBoolean("show_scoreboard")

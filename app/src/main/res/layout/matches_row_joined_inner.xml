@@ -28,7 +28,7 @@
                 android:id="@+id/completed_match_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="open_sans"
+                android:fontFamily="@font/open_sans_semibold"
                 android:text="South Africa vs England ODI"
                 android:textColor="@color/text"
                 android:textSize="@dimen/small_info_size" />

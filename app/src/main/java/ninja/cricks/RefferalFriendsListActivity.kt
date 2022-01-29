@@ -54,7 +54,7 @@ class RefferalFriendsListActivity : BaseActivity() {
             val msgText: String = ("" +
                     getString(R.string.label_register_on_sf) +
                     "*"+ userInfo!!.referalCode+"*"+
-                    " and get Rs.25 Bonus on Joining.\n" +
+                    " and get Rs.100 Bonus on Joining.\n" +
                     " Click on " +
                     BindingUtils.BILTY_APK_LINK)
             val shareIntent = Intent()
