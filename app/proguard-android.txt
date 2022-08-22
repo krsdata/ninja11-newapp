@@ -84,8 +84,8 @@
   @com.google.gson.annotations.SerializedName <fields>;
 }
 
--keepclasseswithmembers class ninja.cricks.customviews$** { *; }
--dontwarn ninja.cricks.customviews.**
+-keepclasseswithmembers class fancode.cricks.customviews$** { *; }
+-dontwarn fancode.cricks.customviews.**
 -keepattributes Exceptions, Signature, InnerClasses
 
 ##---------------Begin: proguard configuration common for all Android apps ----------

@@ -5,7 +5,7 @@
 
         <variable
             name="viewmodel"
-            type="ninja.cricks.ui.JoinContestDialogFragment" />
+            type="fancode.cricks.ui.JoinContestDialogFragment" />
     </data>
 
     <RelativeLayout

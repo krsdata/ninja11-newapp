@@ -6,7 +6,7 @@ xmlns:tools="http://schemas.android.com/tools">
 
     <variable
         name="contentviews"
-        type="ninja.cricks.ui.login.PhoneNumberActivity" />
+        type="fancode.cricks.ui.login.PhoneNumberActivity" />
 </data>
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"

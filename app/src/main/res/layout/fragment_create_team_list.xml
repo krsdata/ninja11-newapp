@@ -5,7 +5,7 @@
 
         <variable
             name="viewmodel"
-            type="ninja.cricks.ui.dashboard.FixtureCricketFragment" />
+            type="fancode.cricks.ui.dashboard.FixtureCricketFragment" />
     </data>
 
     <LinearLayout

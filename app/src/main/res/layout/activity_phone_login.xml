@@ -6,7 +6,7 @@
 
         <variable
             name="contentviews"
-            type="ninja.cricks.ui.login.PhoneLoginActivity" />
+            type="fancode.cricks.ui.login.PhoneLoginActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

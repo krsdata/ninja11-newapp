@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="ninja.cricks"
+    package="fancode.cricks"
     tools:ignore="LockedOrientationActivity">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -19,7 +19,7 @@
         android:required="true" />
 
     <application
-        android:name="ninja.cricks.NinjaApplication"
+        android:name="fancode.cricks.NinjaApplication"
         android:allowBackup="false"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
@@ -36,10 +36,10 @@
             android:name="com.google.android.actions"
             android:resource="@xml/teamname_border" />
 
-        <activity android:name=".ui.login.PhoneLoginActivity"></activity>
-        <activity android:name=".ui.login.PhoneNumberActivity" />
+        <activity android:name="fancode.cricks.ui.login.PhoneLoginActivity"></activity>
+        <activity android:name="fancode.cricks.ui.login.PhoneNumberActivity" />
         <activity
-            android:name="ninja.cricks.SplashScreenActivity"
+            android:name="fancode.cricks.SplashScreenActivity"
             android:configChanges="uiMode"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -52,7 +52,7 @@
             <intent-filter>
                 <data
                     android:host="open"
-                    android:scheme="ninja11" />
+                    android:scheme="fancode11" />
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -67,7 +67,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="ninja11.app.link"
+                    android:host="fancode11.app.link"
                     android:scheme="https" />
             </intent-filter>
 
@@ -79,188 +79,189 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="ninja11-alternate.app.link"
+                    android:host="fancode11-alternate.app.link"
                     android:scheme="https" />
             </intent-filter>
         </activity>
 
         <activity
-            android:name="ninja.cricks.ui.login.LoginScreenActivity"
+            android:name="fancode.cricks.ui.login.LoginScreenActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/screen_name_login"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.ui.login.RegisterScreenActivity"
+            android:name="fancode.cricks.ui.login.RegisterScreenActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/screen_name_register"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.MainActivity"
+            android:name="fancode.cricks.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/dashboard_theme" />
 
         <activity
-            android:name="ninja.cricks.ContestActivity"
+            android:name="fancode.cricks.ContestActivity"
             android:label="@string/activity_type_contest"
             android:screenOrientation="portrait" />
         <activity
-            android:name="ninja.cricks.MaintainanceActivity"
-            android:label="@string/activity_type_contest"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="ninja.cricks.QuizContestActivity"
+            android:name="fancode.cricks.MaintainanceActivity"
             android:label="@string/activity_type_contest"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.CreateTeamActivity"
+            android:name="fancode.cricks.QuizContestActivity"
+            android:label="@string/activity_type_contest"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="fancode.cricks.CreateTeamActivity"
             android:label="@string/activity_type_create_team"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.TeamPreviewActivity"
+            android:name="fancode.cricks.TeamPreviewActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.NotificationListActivity"
+            android:name="fancode.cricks.NotificationListActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.SaveTeamActivity"
+            android:name="fancode.cricks.SaveTeamActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.SelectTeamActivity"
+            android:name="fancode.cricks.SelectTeamActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.MyBalanceActivity"
+            android:name="fancode.cricks.MyBalanceActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.AddMoneyActivity"
+            android:name="fancode.cricks.AddMoneyActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.UpdateApplicationActivity"
+            android:name="fancode.cricks.UpdateApplicationActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/Translucent" />
 
         <activity
-            android:name="ninja.cricks.WebActivity"
+            android:name="fancode.cricks.WebActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.LeadersBoardActivity"
+            android:name="fancode.cricks.LeadersBoardActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.MoreContestActivity"
+            android:name="fancode.cricks.MoreContestActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.InviteFriendsActivity"
+            android:name="fancode.cricks.InviteFriendsActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.SupportActivity"
+            android:name="fancode.cricks.SupportActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.FullScreenImageViewActivity"
+            android:name="fancode.cricks.FullScreenImageViewActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.VerifyDocumentsActivity"
+            android:name="fancode.cricks.VerifyDocumentsActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.WithdrawAmountsActivity"
+            android:name="fancode.cricks.WithdrawAmountsActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.DocumentsListActivity"
+            android:name="fancode.cricks.DocumentsListActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.MyTransactionHistoryActivity"
+            android:name="fancode.cricks.MyTransactionHistoryActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.EditProfileActivity"
+            android:name="fancode.cricks.EditProfileActivity"
             android:label="Update Profile"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.ChangePasswordActivity"
+            android:name="fancode.cricks.ChangePasswordActivity"
             android:label="Change Password"
             android:screenOrientation="portrait" />
         <activity
-            android:name="ninja.cricks.RefferalFriendsListActivity"
+            android:name="fancode.cricks.RefferalFriendsListActivity"
             android:label="Update Profile"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.OtpVerifyActivity"
+            android:name="fancode.cricks.OtpVerifyActivity"
             android:label="Update Profile"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.ui.JoinContestActivity"
+            android:name="fancode.cricks.ui.JoinContestActivity"
             android:label="Join Contest"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.OfferActivity"
+            android:name="fancode.cricks.OfferActivity"
             android:label="Latest Offers"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.ContestLeaderBoardActivity"
+            android:name="fancode.cricks.ContestLeaderBoardActivity"
             android:label="Contest LeaderBoard"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.ViewUserDetailActivity"
+            android:name="fancode.cricks.ViewUserDetailActivity"
             android:label="User Info"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PreviewTeamLeaderActivity"
+            android:name="fancode.cricks.PreviewTeamLeaderActivity"
             android:label=""
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PlayerInfoActivity"
+            android:name="fancode.cricks.PlayerInfoActivity"
             android:label=""
             android:screenOrientation="portrait" />
         <activity
-            android:name=".PaytmWithdrawActivity"
+            android:name="fancode.cricks.PaytmWithdrawActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="ninja.cricks.PlayerInfoActivity"
+            android:name="fancode.cricks.PlayerStatsInfoActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -273,7 +274,7 @@
         </provider>
 
         <service
-            android:name="ninja.cricks.fcm.MyFirebaseMessagingService"
+            android:name="fancode.cricks.fcm.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

@@ -3,7 +3,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="ninja.cricks.ui.UpdateAppDialogFragment" />
+            type="fancode.cricks.ui.UpdateAppDialogFragment" />
     </data>
 
     <RelativeLayout

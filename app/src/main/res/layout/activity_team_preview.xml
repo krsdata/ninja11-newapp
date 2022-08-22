@@ -6,7 +6,7 @@
 
         <variable
             name="contentviews"
-            type="ninja.cricks.TeamPreviewActivity" />
+            type="fancode.cricks.TeamPreviewActivity" />
     </data>
 
     <RelativeLayout

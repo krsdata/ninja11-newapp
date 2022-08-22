@@ -7,7 +7,7 @@
 
         <variable
             name="contentviews"
-            type="ninja.cricks.UpdateApplicationActivity" />
+            type="fancode.cricks.UpdateApplicationActivity" />
     </data>
 
     <LinearLayout

@@ -7,7 +7,7 @@
 
         <variable
             name="contentviews"
-            type="ninja.cricks.MainActivity" />
+            type="fancode.cricks.MainActivity" />
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout
@@ -123,7 +123,7 @@
 
         <fragment
             android:id="@+id/fragment_navigation_drawer"
-            android:name="ninja.cricks.ui.dashboard.FragmentDrawer"
+            android:name="fancode.cricks.ui.dashboard.FragmentDrawer"
             android:layout_width="@dimen/_240sdp"
             android:layout_height="match_parent"
             android:layout_gravity="start"

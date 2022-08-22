@@ -4,7 +4,7 @@
 	<data>
 		<variable
 			name="contentviews"
-			type="ninja.cricks.OtpVerifyActivity" />
+			type="fancode.cricks.OtpVerifyActivity" />
 	</data>
 <RelativeLayout
 	android:orientation="vertical"

@@ -6,7 +6,7 @@
 
         <variable
             name="contentviews"
-            type="ninja.cricks.DocumentsListActivity" />
+            type="fancode.cricks.DocumentsListActivity" />
     </data>
 
     <RelativeLayout
@@ -16,7 +16,7 @@
         android:background="@color/white"
         android:fitsSystemWindows="true"
         android:orientation="vertical"
-        tools:context="ninja.cricks.DocumentsListActivity">
+        tools:context="fancode.cricks.DocumentsListActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
