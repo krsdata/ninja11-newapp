@@ -237,8 +237,12 @@ class MyLiveMatchesFragment : Fragment() {
             viewHolder.matchTitle.visibility = View.GONE
             viewHolder.tournamentTitle.visibility = View.VISIBLE
             viewHolder.tournamentTitle.text = objectVal.matchTitle
-            viewHolder.opponent1.text = objectVal.teamAInfo!!.teamShortName
-            viewHolder.opponent2.text = objectVal.teamBInfo!!.teamShortName
+            if(objectVal.teamAInfo != null) {
+                viewHolder.opponent1.text = objectVal.teamAInfo!!.teamShortName
+            }
+            if(objectVal.teamBInfo != null) {
+                viewHolder.opponent2.text = objectVal.teamBInfo!!.teamShortName
+            }
             viewHolder.freeView.visibility = View.GONE
             viewHolder.matchTime.visibility = View.VISIBLE
 

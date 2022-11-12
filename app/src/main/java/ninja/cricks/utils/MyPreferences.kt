@@ -741,7 +741,7 @@ object MyPreferences {
         setStringPrefrence(context, id.toString(), time.toString())
     }
 
-    fun getLastTimeForApiCall(context: Context, id: Long): Long? {
+    fun getLastTimeForApiCall(context: Context, id: Long): Long {
         if(getStringPrefrence(context, id.toString()).isNullOrEmpty()) {
             return 0L
         }

@@ -7,15 +7,14 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 31
 
     defaultConfig {
         applicationId "ninja.cricks"
         minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 3308
-        versionName "3.8"
+        targetSdkVersion 31
+        versionCode 4001
+        versionName "4.1"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         setProperty("archivesBaseName", "Ninja11-$versionName")

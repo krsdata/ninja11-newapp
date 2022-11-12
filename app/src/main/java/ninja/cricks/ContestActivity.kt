@@ -3,6 +3,7 @@ package ninja.cricks
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.widget.Toast
@@ -36,7 +37,7 @@ import kotlin.collections.ArrayList
 
 class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents {
 
-    //private var isMatchLive: Boolean = false
+    val TAG: String = ContestActivity::class.java.simpleName
 
     var matchObject: UpcomingMatchesModel? = null
     var isTimeUp: Boolean = false
@@ -411,6 +412,8 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
         WebServiceClient(this).client.create(IApiMethod::class.java).getScore(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
+                    if(t?.message != null)
+                    Log.e(TAG, "error in get score response ======> ${t.message}")
                     customeProgressDialog.dismiss()
                 }
 
@@ -420,6 +423,7 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
                 ) {
                     customeProgressDialog.dismiss()
                     val res = response!!.body()
+                    Log.e(TAG, "get score response =======>$res")
                     if (res != null) {
                         if (res.scoresModel != null) {
                             if (res.sessionExpired) {
@@ -453,7 +457,7 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
             })
     }
 
-    public fun filterContestList() {
+    fun filterContestList() {
         var tempContestList = ArrayList<ContestsParentModels>()
         for (i in allContestListData.indices) {
             val tt = ContestsParentModels()
@@ -524,5 +528,3 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
 
     }
 }
-
-

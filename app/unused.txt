@@ -241,8 +241,8 @@ androidx.core.database.CursorWindowCompat
 com.github.ybq.android.spinkit.sprite.RingSprite:
     public android.animation.ValueAnimator onCreateAnimation()
 ninja.cricks.utils.HardwareInfoManager:
-    public final int getRows$Ninja11_3_8_release()
-    public final void setRows$Ninja11_3_8_release(int)
+    public final int getRows$Ninja11_4_1_release()
+    public final void setRows$Ninja11_4_1_release(int)
     public final int getOs()
     public final java.lang.String getDataDiaryVersion()
     public final java.lang.String getProductInfo()
@@ -250,8 +250,8 @@ ninja.cricks.utils.HardwareInfoManager:
     public final java.lang.String getOsVersion()
     public final java.lang.String getTimeZone()
     public final java.lang.String getDefaultCarrierName()
-    public final android.content.Context getHardwareContext$Ninja11_3_8_release()
-    public final void setHardwareContext$Ninja11_3_8_release(android.content.Context)
+    public final android.content.Context getHardwareContext$Ninja11_4_1_release()
+    public final void setHardwareContext$Ninja11_4_1_release(android.content.Context)
     private int rows
 kotlinx.coroutines.flow.FlowKt__MergeKt$map$$inlined$unsafeTransform$1$2$1
 androidx.databinding.ObservableParcelable
@@ -5088,9 +5088,7 @@ ninja.cricks.Constant
 ninja.cricks.ui.home.HomeFragment:
     public static final synthetic void access$setMBinding$p(ninja.cricks.ui.home.HomeFragment,ninja.cricks.databinding.FragmentHomeBinding)
     public static final synthetic java.lang.String access$getTAG$cp()
-    public final android.content.Context getMContext()
     public final void setMContext(android.content.Context)
-    private android.content.Context mContext
 androidx.navigation.Navigation:
     private void <init>()
     public static androidx.navigation.NavController findNavController(android.app.Activity,int)

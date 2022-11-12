@@ -43,7 +43,6 @@ import retrofit2.Response
 import java.util.*
 import kotlin.collections.ArrayList
 
-
 class PlayerStatsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     companion object {
@@ -164,7 +163,6 @@ class PlayerStatsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                     binding.refreshLayout.isRefreshing = false
                 }
             })
-
     }
 
     private fun playerstats(responseBody: JsonObject?) {

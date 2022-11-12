@@ -29,6 +29,7 @@ import ninja.cricks.databinding.FragmentHomeBinding
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.roomDatabase.ResponseDatabase
+import ninja.cricks.roomDatabase.ResponseJsonObject
 import ninja.cricks.ui.dashboard.FixtureCricketFragment
 import ninja.cricks.ui.mymatches.MyCompletedMatchesFragment
 import ninja.cricks.ui.mymatches.MyLiveMatchesFragment
@@ -46,6 +47,11 @@ class HomeFragment : Fragment() {
 
     companion object {
         val TAG: String = HomeFragment::class.java.simpleName
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mContext = requireContext()
     }
 
     override fun onCreateView(
@@ -88,7 +94,6 @@ class HomeFragment : Fragment() {
         val tab = mBinding.tabs.getTabAt(0)
         tab!!.select()
     }
-
 
     private fun getMessage() {
         val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(requireContext(),
@@ -140,11 +145,11 @@ class HomeFragment : Fragment() {
                     val resObje = response!!.body().toString()
                     val jsonObject = JSONObject(resObje)
                     if (jsonObject.optBoolean("status")) {
+                        MyPreferences.saveLastTimeForApiCall(mContext!!,Constant.getMessagesDatabaseId, System.currentTimeMillis())
                         lifecycleScope.launch {
                             withContext(Dispatchers.Main){ getMessage2(response.body()!!) }
                             withContext(Dispatchers.IO){
-                                MyPreferences.saveLastTimeForApiCall(requireContext(),Constant.getMessagesDatabaseId, System.currentTimeMillis())
-                                ResponseDatabase.getInstance(requireContext()).responseDao().saveResponseJsonObject(ninja.cricks.roomDatabase.ResponseJsonObject(
+                                ResponseDatabase.getInstance(mContext!!).responseDao().saveResponseJsonObject(ResponseJsonObject(
                                     (Constant.getMessagesDatabaseId),System.currentTimeMillis(),
                                     response.body()!!
                                 ))

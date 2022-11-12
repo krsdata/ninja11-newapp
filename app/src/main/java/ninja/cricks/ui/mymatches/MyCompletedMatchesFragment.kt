@@ -195,7 +195,8 @@ class MyCompletedMatchesFragment : Fragment() {
                     }
                     updateEmptyViews()
                 }
-            })    }
+            })
+    }
 
     private fun getMatchHistory2(res: UsersPostDBResponse) {
         customeProgressDialog.dismiss()
