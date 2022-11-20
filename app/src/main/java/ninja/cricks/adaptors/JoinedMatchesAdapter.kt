@@ -94,11 +94,17 @@ class JoinedMatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<
         return matchesListObject.size
     }
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/adaptors/JoinedMatchesAdapter.kt
     fun getRandomColor(): Int {
         val rnd = Random()
         val color: Int = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
 
         return color
+=======
+    private fun getRandomColor(): Int {
+        val rnd = Random()
+        return Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/adaptors/JoinedMatchesAdapter.kt
     }
 
     inner class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

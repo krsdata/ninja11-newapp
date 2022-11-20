@@ -98,11 +98,19 @@ class InviteFriendsActivity : AppCompatActivity() {
         shareSheetStyle = ShareSheetStyle(
             mContext!!, "Ninja11",
             "Welcome to Ninja11. Register on Ninja11 application with this link.\n\nUse my referral code \"" + userInfo!!.referalCode +
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/InviteFriendsActivity.kt
                     "\" and get extra Rs. 100 Bonus on Joining.".trimIndent()
         )
             .setAsFullWidthStyle(false)
             .setDefaultURL(url)
             .setSharingTitle("Refer and Earn Rs 100")
+=======
+                    "\" and get Joining Bonus ₹100. ".trimIndent()
+        )
+            .setAsFullWidthStyle(false)
+            .setDefaultURL(url)
+            .setSharingTitle("Refer and Earn ₹25")
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/InviteFriendsActivity.kt
 
         mBinding!!.inviteFriends.setOnClickListener {
             shareReferCode()
@@ -126,7 +134,11 @@ class InviteFriendsActivity : AppCompatActivity() {
 
         val msg: String =
             "Welcome to Ninja11.\n\nRegister on Ninja11 application with this link.\n\nUse my referral code \"" + userInfo!!.referalCode +
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/InviteFriendsActivity.kt
                     "\" and get extra Rs. 100 Bonus on Joining.\n\n $url".trimIndent()
+=======
+                    "\" and get ₹100 Bonus on Joining.\n\n $url".trimIndent()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/InviteFriendsActivity.kt
         FirebaseCrashlytics.getInstance().log("share message =========> $msg")
 
         val sendIntent = Intent()

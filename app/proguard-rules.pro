@@ -1,3 +1,23 @@
+<<<<<<< Updated upstream
+=======
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
+}
+
+-keepattributes JavascriptInterface
+-keepattributes *Annotation*
+
+-dontwarn com.razorpay.**
+-keep class com.razorpay.** {*;}
+
+-optimizations !method/inlining/*
+
+-keepclasseswithmembers class * {
+  public void onPayment*(...);
+}
+
+
+>>>>>>> Stashed changes
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keep class * extends com.bumptech.glide.module.AppGlideModule {
  <init>(...);

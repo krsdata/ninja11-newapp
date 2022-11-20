@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< Updated upstream
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+=======
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+>>>>>>> Stashed changes
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+<<<<<<< Updated upstream
     app:cardElevation="12dp">
 
     <ImageView
@@ -21,11 +26,18 @@
         android:background="@color/colorAccent_light"
         android:visibility="gone" />
 
+=======
+    android:visibility="visible"
+    android:paddingTop="@dimen/_5sdp"
+    app:cardElevation="12dp">
+
+>>>>>>> Stashed changes
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/matches_view_left_margin_consolidated"
+<<<<<<< Updated upstream
         android:fontFamily="@font/montserrat_bold"
         android:text="MY MATCHES"
         android:textColor="@color/black"
@@ -34,6 +46,15 @@
         app:layout_constraintStart_toStartOf="@+id/imageView4"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.05" />
+=======
+        android:text="MY MATCHES"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:textColor="@color/black"
+        android:fontFamily="@font/open_sans_semibold"
+        android:textStyle="bold"
+        android:textSize="@dimen/header_size" />
+>>>>>>> Stashed changes
 
     <TextView
         android:id="@+id/txtViewAll"
@@ -42,18 +63,31 @@
         android:layout_marginEnd="@dimen/matches_view_left_margin_consolidated"
         android:fontFamily="@font/montserrat_bold"
         android:text="View All"
+<<<<<<< Updated upstream
         android:textColor="@color/black"
         android:textSize="@dimen/header_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.05" />
+=======
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:textColor="@color/background_floating_material_dark"
+        android:textStyle="bold"
+        android:textSize="@dimen/header_size" />
+>>>>>>> Stashed changes
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_joined_matches"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< Updated upstream
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+=======
+        android:layout_below="@+id/textView"/>
+</RelativeLayout>
+>>>>>>> Stashed changes

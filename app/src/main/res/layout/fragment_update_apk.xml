@@ -33,7 +33,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                             android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                             android:text="WHATS NEW"
                             android:textColor="@color/black"
                             android:textSize="@dimen/_15sdp" />
@@ -60,7 +64,11 @@
                     android:id="@+id/wallet_total_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                     android:text="Amount Added + Winning =$188"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
@@ -75,7 +83,11 @@
                         android:id="@+id/release_note"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                         android:text="1. Improved user interface\n\n2. Earn more with new updates"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14sdp" />
@@ -89,7 +101,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                         android:text="Usable Cash Bonus"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp"
@@ -100,7 +116,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                         android:text="₹39"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14sdp"
@@ -120,7 +140,11 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="40dp"
                     android:background="@drawable/default_rounded_button_sportsfight"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                     android:gravity="center"
                     android:text="UPDATE NOW"
                     android:textColor="@color/white"

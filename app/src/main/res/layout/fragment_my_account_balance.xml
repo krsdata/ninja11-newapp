@@ -54,7 +54,11 @@
                                     android:layout_height="0dp"
                                     android:layout_marginStart="@dimen/_5sdp"
                                     android:layout_weight="1"
+<<<<<<< Updated upstream
                                     android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                                     android:text=""
                                     android:textColor="@color/colorPrimary"
                                     android:textSize="@dimen/_10sdp" />
@@ -65,7 +69,11 @@
                                     android:layout_height="0dp"
                                     android:layout_marginStart="@dimen/_5sdp"
                                     android:layout_weight="1"
+<<<<<<< Updated upstream
                                     android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                                     android:text=""
                                     android:textColor="@color/colorPrimary"
                                     android:textSize="@dimen/_10sdp" />
@@ -79,12 +87,17 @@
                             android:orientation="horizontal"
                             android:weightSum="2">
 
+<<<<<<< Updated upstream
                             <Button
+=======
+                            <TextView
+>>>>>>> Stashed changes
                                 android:id="@+id/btn_edit_profile"
                                 android:layout_width="0dp"
                                 android:layout_height="@dimen/_35sdp"
                                 android:layout_marginEnd="@dimen/_5sdp"
                                 android:layout_weight="1"
+<<<<<<< Updated upstream
                                 android:background="@drawable/btn_selector_not_verified"
                                 android:fontFamily="@font/roboto"
                                 android:src="@drawable/ic_profile"
@@ -92,13 +105,31 @@
                                 android:textSize="@dimen/_10sdp" />
 
                             <Button
+=======
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:background="@drawable/btn_selector_not_verified"
+                                android:fontFamily="@font/open_sans_semibold"
+                                android:src="@drawable/ic_profile"
+                                android:text="Edit Profile"
+                                android:textSize="@dimen/_10sdp" />
+
+                            <TextView
+>>>>>>> Stashed changes
                                 android:id="@+id/btn_verify_account"
                                 android:layout_width="0dp"
                                 android:layout_height="@dimen/_35sdp"
                                 android:layout_marginStart="@dimen/_5sdp"
                                 android:layout_weight="1"
+<<<<<<< Updated upstream
                                 android:background="@drawable/btn_selector_verified"
                                 android:fontFamily="@font/roboto"
+=======
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:background="@drawable/btn_selector_verified"
+                                android:fontFamily="@font/open_sans_semibold"
+>>>>>>> Stashed changes
                                 android:src="@drawable/ic_profile"
                                 android:text="Verify Accounts"
                                 android:textSize="@dimen/_10sdp" />
@@ -140,7 +171,11 @@
                                 android:id="@+id/total_balance"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                                 android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                                 android:maxLines="1"
                                 android:singleLine="true"
                                 android:text="₹ 0.0"
@@ -150,7 +185,11 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                                 android:fontFamily="@font/open_sans_light"
+=======
+
+>>>>>>> Stashed changes
                                 android:text="Total Balance"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_10sdp" />
@@ -169,6 +208,10 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+<<<<<<< Updated upstream
+=======
+                        android:visibility="gone"
+>>>>>>> Stashed changes
                         android:padding="@dimen/_10sdp">
 
                         <ImageView
@@ -190,7 +233,11 @@
                                 android:id="@+id/earned_points"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                                 android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                                 android:text="0"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
@@ -199,7 +246,11 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_5sdp"
+<<<<<<< Updated upstream
                                 android:fontFamily="@font/open_sans_light"
+=======
+
+>>>>>>> Stashed changes
                                 android:text="Reward points are automatically redeemed after 2000 points."
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_10sdp" />
@@ -207,7 +258,11 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                                 android:fontFamily="@font/open_sans_light"
+=======
+
+>>>>>>> Stashed changes
                                 android:text="@string/my_reward_points"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_10sdp" />
@@ -248,7 +303,11 @@
                                 android:id="@+id/added_amount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                                 android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                                 android:text="₹0.0"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
@@ -256,7 +315,11 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                                 android:fontFamily="@font/open_sans_light"
+=======
+
+>>>>>>> Stashed changes
                                 android:text="My Deposit"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_10sdp" />
@@ -308,7 +371,12 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_15sdp"
+<<<<<<< Updated upstream
                             android:layout_toStartOf="@+id/btn_withdraw"
+=======
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/btn_group_layout"
+>>>>>>> Stashed changes
                             android:layout_toEndOf="@+id/trophy_icon"
                             android:orientation="vertical">
 
@@ -316,7 +384,11 @@
                                 android:id="@+id/winning_amount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                                 android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                                 android:text="₹0.0"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
@@ -324,7 +396,11 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                                 android:fontFamily="@font/open_sans_light"
+=======
+
+>>>>>>> Stashed changes
                                 android:text="My Winnings"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_10sdp" />
@@ -332,11 +408,26 @@
                         </LinearLayout>
 
                         <LinearLayout
+<<<<<<< Updated upstream
                             android:id="@+id/btn_withdraw"
                             android:layout_width="80dp"
                             android:layout_height="32dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
+=======
+                            android:id="@+id/btn_group_layout"
+                            android:layout_width="80dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/btn_withdraw"
+                            android:layout_width="80dp"
+                            android:layout_height="32dp"
+>>>>>>> Stashed changes
                             android:background="@drawable/add_cash_button"
                             android:gravity="center_vertical">
 
@@ -348,6 +439,27 @@
                                 android:textColor="@color/colorAccent"
                                 android:textSize="12sp" />
                         </LinearLayout>
+<<<<<<< Updated upstream
+=======
+
+                        <LinearLayout
+                            android:id="@+id/btn_paytm_withdraw"
+                            android:layout_width="80dp"
+                            android:layout_height="32dp"
+                            android:visibility="gone"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@drawable/btn_selector_verified">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="Paytm Withdraw"
+                                android:textColor="@color/green"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                        </LinearLayout>
+>>>>>>> Stashed changes
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -385,7 +497,11 @@
                                 android:id="@+id/cash_bonus"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                                 android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                                 android:maxLines="1"
                                 android:singleLine="true"
                                 android:text="₹ 0.0"
@@ -395,7 +511,11 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                                 android:fontFamily="@font/open_sans_light"
+=======
+
+>>>>>>> Stashed changes
                                 android:text="Cash Bonus"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_10sdp" />
@@ -437,7 +557,11 @@
                                 android:id="@+id/extra_cash_bonus"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                                 android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                                 android:maxLines="1"
                                 android:singleLine="true"
                                 android:text="₹ 0.0"
@@ -447,7 +571,11 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                                 android:fontFamily="@font/open_sans_light"
+=======
+
+>>>>>>> Stashed changes
                                 android:text="Extra Cash"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_10sdp" />
@@ -496,7 +624,11 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                                     android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                                     android:text="You have referred"
                                     android:textColor="@color/black"
                                     android:textSize="14sp" />
@@ -512,7 +644,11 @@
                                         android:id="@+id/friends_counts"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                                         android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                                         android:text="0"
                                         android:textColor="@color/black"
                                         android:textSize="@dimen/_13sdp" />
@@ -520,7 +656,11 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                                         android:fontFamily="@font/open_sans"
+=======
+
+>>>>>>> Stashed changes
                                         android:text=" Friends"
                                         android:textColor="@color/black"
                                         android:textSize="@dimen/_11sdp" />
@@ -536,7 +676,11 @@
                                         android:id="@+id/earning_refferal"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                                         android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                                         android:text="0"
                                         android:textColor="@color/black"
                                         android:textSize="22sp" />
@@ -544,7 +688,11 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                                         android:fontFamily="@font/open_sans"
+=======
+
+>>>>>>> Stashed changes
                                         android:text=" Earned"
                                         android:textColor="@color/black"
                                         android:textSize="14sp" />
@@ -553,7 +701,11 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                                     android:fontFamily="@font/open_sans_light"
+=======
+
+>>>>>>> Stashed changes
                                     android:text="Earn and Play Matches"
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/_10sdp"
@@ -577,6 +729,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+<<<<<<< Updated upstream
+=======
+            android:indeterminateTint="@color/theme_color_hdr"
+>>>>>>> Stashed changes
             android:indeterminate="true" />
     </RelativeLayout>
 </layout>

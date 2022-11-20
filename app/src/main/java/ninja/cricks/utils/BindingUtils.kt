@@ -2,15 +2,24 @@ package ninja.cricks.utils
 
 import android.content.Context
 import android.os.CountDownTimer
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/utils/BindingUtils.kt
 import android.util.Log
+=======
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/utils/BindingUtils.kt
 import com.edify.atrist.listener.OnMatchTimerStarted
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import ninja.cricks.BuildConfig
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/utils/BindingUtils.kt
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.models.UsersPostDBResponse
+=======
+import ninja.cricks.models.UsersPostDBResponse
+import ninja.cricks.network.IApiMethod
+import ninja.cricks.network.WebServiceClient
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/utils/BindingUtils.kt
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,6 +35,10 @@ class BindingUtils {
         const val REUEST_STATUS_CODE_FRAUD: Int = 420
         const val MATCH_STATUS_UPCOMING: Int = 1
         const val MATCH_STATUS_LIVE: Int = 3
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/utils/BindingUtils.kt
+=======
+        const val MATCH_STATUS_COMPLETED: Int = 2
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/utils/BindingUtils.kt
 
         const val BANK_DOCUMENTS_STATUS_REJECTED: Int = 3
         const val BANK_DOCUMENTS_STATUS_VERIFIED: Int = 2
@@ -35,6 +48,7 @@ class BindingUtils {
         const val BANNERS_KEY_SUPPORT: String = "support"
         const val BANNERS_KEY_BROWSERS: String = "browser"
         const val EMAIL: String = "support@ninja11.in"
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/utils/BindingUtils.kt
         const val PHONE_NUMBER: String = "=+918103194076"
         const val GOOGLE_TEZ_PACKAGE_NAME = "com.google.android.apps.nbu.paisa.user"
         const val PAYMENT_GOOGLEPAY_UPI = "9340301139@okbizaxis"
@@ -42,6 +56,15 @@ class BindingUtils {
         const val BASE_URL_MAIN = "https://ninja.fancode11.com/"
         const val BASE_URL_API = "https://rest.fancode11.com/"
         const val BASE_URL_MAIN_API = "https://rest.fancode11.com/api/v3/"
+=======
+        const val PHONE_NUMBER: String = "=+917387048076"
+        const val GOOGLE_TEZ_PACKAGE_NAME = "com.google.android.apps.nbu.paisa.user"
+        const val PAYMENT_GOOGLEPAY_UPI = "7974343960@okbizaxis"
+        const val PAYMENT_RAZOR_PAY_KEY = "rzp_live_SiMilNQfyJNzJe"
+        const val BASE_URL_MAIN = "https://ninja.ninja11.in/"
+        const val BASE_URL_API = "https://rest.ninja11.in/"
+        const val BASE_URL_MAIN_API = "https://rest.ninja11.in/api/v3/"
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/utils/BindingUtils.kt
         const val WEBVIEW_FANTASY_POINTS = BASE_URL_MAIN + "fantasy-points-system/index.html"
         const val WEBVIEW_FANTASY_HOW_TO_PLAY = BASE_URL_MAIN + "how-to-play?request=mobile"
         const val WEBVIEW_TNC = BASE_URL_MAIN + "terms-and-conditions?request=mobile"
@@ -66,10 +89,20 @@ class BindingUtils {
         const val WEB_TITLE_MY_AFFILIATE: String = "My-Affiliate"
         const val EXTRA_DATA_GET_WALLET: String = "EXTRA_DATA_GET_WALLET"
         var currentTimeStamp: Long = 0
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/utils/BindingUtils.kt
 
         fun logD(tag: String, message: String) {
             if (BuildConfig.MLOG) {
                 Log.e("MX:$tag", message)
+=======
+        const val playerStatsList = "playerStatsList"
+        const val position = "position"
+        const val TELEGRAM_LINK = "https://t.me/ninja11official/"
+
+        fun logD(tag: String, message: String) {
+            if (BuildConfig.MLOG) {
+                //Log.e("MX:$tag", message)
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/utils/BindingUtils.kt
             }
         }
 
@@ -222,7 +255,17 @@ class BindingUtils {
 
             val gson = Gson()
             val userInfoString: String = gson.toJson(userInfo).toString()
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/utils/BindingUtils.kt
             val deviceDetailsString: String = gson.toJson(HardwareInfoManager(context).collectData(MyPreferences.getDeviceToken(context)!!)).toString()
+=======
+            val deviceDetailsString: String = gson.toJson(
+                HardwareInfoManager(context).collectData(
+                    MyPreferences.getDeviceToken(
+                        context
+                    )!!
+                )
+            ).toString()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/utils/BindingUtils.kt
             val userInfoJson: JsonObject = JsonParser().parse(userInfoString).asJsonObject
             val deviceDetailsJson: JsonObject = JsonParser().parse(deviceDetailsString).asJsonObject
 
@@ -245,4 +288,13 @@ class BindingUtils {
                 })
         }
     }
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/utils/BindingUtils.kt
+=======
+
+    object PAYTM {
+        const val host = "https://securegw.paytm.in/"
+        const val callBackUrl = host + "theia/paytmCallback?ORDER_ID="
+        const val PaymentUrl = host + "theia/api/v1/showPaymentPage"
+    }
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/utils/BindingUtils.kt
 }

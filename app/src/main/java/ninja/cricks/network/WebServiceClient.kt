@@ -1,6 +1,10 @@
 package ninja.cricks.network
 
 import android.content.Context
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/network/WebServiceClient.kt
+=======
+import android.widget.Toast
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/network/WebServiceClient.kt
 import ninja.cricks.BuildConfig
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
@@ -91,11 +95,19 @@ class WebServiceClient(val context: Context) {
             }
             if (retrofit == null) {
                 retrofit = Retrofit.Builder()
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/network/WebServiceClient.kt
 //                    .baseUrl("https://rest.fancode11.com/api/v3/")
+=======
+//                    .baseUrl("https://rest.ninja11.in/api/v3/")
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/network/WebServiceClient.kt
                     .baseUrl(BindingUtils.BASE_URL_MAIN_API)
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(okHttpClient)
                     .build()
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/network/WebServiceClient.kt
+=======
+                //Toast.makeText(context,"api call", Toast.LENGTH_SHORT).show()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/network/WebServiceClient.kt
             }
             return retrofit!!
         }

@@ -8,6 +8,10 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.ConnectivityManager
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/utils/MyUtils.kt
+=======
+import android.net.NetworkInfo
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/utils/MyUtils.kt
 import android.net.Uri
 import android.os.Handler
 import android.provider.Settings
@@ -39,6 +43,23 @@ class MyUtils {
         const val INTENT_FILTER_LOCAL_BROADCAST = "com.deliverdas.vendor.notitification"
         const val KEY_DATA_RECEIVED = "com.deliverdas.vendor.notitification"
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/utils/MyUtils.kt
+=======
+        fun isNetworkConnected(context: Context): Boolean {
+            val connectivity =
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            if (connectivity != null) {
+                val info = connectivity.allNetworkInfo
+                if (info != null) {
+                    for (networkInfo in info) if (networkInfo.state == NetworkInfo.State.CONNECTED) {
+                        return true
+                    }
+                }
+            }
+            return false
+        }
+
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/utils/MyUtils.kt
         fun logoutApp(mActivity: Activity) {
             MyPreferences.clear(mActivity)
             val intent = Intent(mActivity, SplashScreenActivity::class.java)
@@ -134,17 +155,28 @@ class MyUtils {
             return androidId
         }
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/utils/MyUtils.kt
         fun showToast(activity: AppCompatActivity, message: String) {
 
             if (activity != null && !activity.isFinishing) {
                 val flashbar = Flashbar.Builder(activity)
+=======
+        fun showToast(activity: Activity, message: String) {
+            if (activity != null && !activity.isFinishing) {
+                val flashBar = Flashbar.Builder(activity)
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/utils/MyUtils.kt
                     .gravity(Flashbar.Gravity.TOP)
                     //.title(activity.resources.getString(R.string.app_name))
                     .message(message)
                     .backgroundDrawable(R.color.green)
                     .build()
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/utils/MyUtils.kt
                 flashbar.show()
                 Handler().postDelayed(Runnable { flashbar.dismiss() }, 2000L)
+=======
+                flashBar.show()
+                Handler().postDelayed(Runnable { flashBar.dismiss() }, 2000L)
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/utils/MyUtils.kt
             }
         }
 

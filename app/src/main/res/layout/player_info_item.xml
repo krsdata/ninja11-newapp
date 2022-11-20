@@ -22,7 +22,11 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1.4"
+<<<<<<< Updated upstream
             android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
             android:gravity="center|start"
             android:maxLines="1"
             android:singleLine="true"
@@ -36,7 +40,11 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="0.8"
+<<<<<<< Updated upstream
             android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
             android:gravity="center"
             android:maxLines="1"
             android:singleLine="true"
@@ -50,7 +58,11 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="0.8"
+<<<<<<< Updated upstream
             android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
             android:gravity="center|end"
             android:maxLines="1"
             android:singleLine="true"
@@ -67,7 +79,11 @@
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_2sdp"
+<<<<<<< Updated upstream
         android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
         android:gravity="center|start"
         android:maxLines="1"
         android:singleLine="true"

@@ -21,7 +21,11 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+<<<<<<< Updated upstream
             android:background="@color/colorPrimaryDark"
+=======
+            android:background="@drawable/header_gradient"
+>>>>>>> Stashed changes
             android:orientation="vertical"
             />
         <RelativeLayout
@@ -42,6 +46,10 @@
                  android:id="@+id/progress_bar"
                  android:layout_width="30dp"
                  android:layout_height="30dp"
+<<<<<<< Updated upstream
+=======
+                 android:indeterminateTint="@color/theme_color_hdr"
+>>>>>>> Stashed changes
                  android:layout_centerInParent="true"/>
 
              <TextView

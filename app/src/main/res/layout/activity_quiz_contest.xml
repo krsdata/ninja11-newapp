@@ -57,7 +57,11 @@
                      android:layout_centerVertical="true"
                      android:textSize="@dimen/_18sdp"
                      android:textStyle="bold"
+<<<<<<< Updated upstream
                      android:fontFamily="@font/montserrat_regular"/>
+=======
+                     />
+>>>>>>> Stashed changes
                 <ImageView
                     android:layout_width="@dimen/header_icon_size"
                     android:layout_height="@dimen/header_icon_size"

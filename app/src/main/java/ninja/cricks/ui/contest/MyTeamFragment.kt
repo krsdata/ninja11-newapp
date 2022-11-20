@@ -3,6 +3,10 @@ package ninja.cricks.ui.contest
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
+=======
+import android.os.Handler
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +16,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -22,14 +27,32 @@ import ninja.cricks.ContestActivity
 import ninja.cricks.CreateTeamActivity
 import ninja.cricks.R
 import ninja.cricks.TeamPreviewActivity
+=======
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.edify.atrist.listener.OnContestLoadedListener
+import com.google.gson.JsonObject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import ninja.cricks.*
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
 import ninja.cricks.databinding.FragmentMyTeamBinding
 import ninja.cricks.models.*
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
+=======
+import ninja.cricks.roomDatabase.ResponseDatabase
+import ninja.cricks.utils.*
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,15 +61,24 @@ class MyTeamFragment : Fragment() {
     var matchObject: UpcomingMatchesModel? = null
     private var teamName: String? = ""
     private lateinit var mListener: OnContestLoadedListener
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
     private lateinit var customeProgressDialog: CustomeProgressDialog
+=======
+    private lateinit var customeProgressDialog: CustomProgressDialog2
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
     private var mBinding: FragmentMyTeamBinding? = null
     lateinit var adapter: MyTeamAdapter
     var myTeamArrayList = ArrayList<MyTeamModels>()
     private var isVisibleToUser: Boolean = false
 
     companion object {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
         val SERIALIZABLE_EDIT_TEAM: String = "editteam"
         val SERIALIZABLE_COPY_TEAM: String = "copyteam"
+=======
+        const val SERIALIZABLE_EDIT_TEAM: String = "editteam"
+        const val SERIALIZABLE_COPY_TEAM: String = "copyteam"
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
 
         fun newInstance(bundle: Bundle): MyTeamFragment {
             val fragment = MyTeamFragment()
@@ -59,13 +91,20 @@ class MyTeamFragment : Fragment() {
         super.onCreate(savedInstanceState)
         matchObject =
             requireArguments().get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
 
+=======
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
     ): View? {
+=======
+    ): View {
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
         mBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_my_team, container, false
@@ -75,7 +114,12 @@ class MyTeamFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
         customeProgressDialog = CustomeProgressDialog(activity)
+=======
+        customeProgressDialog = CustomProgressDialog2(activity)
+        getMyTeam()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
         mBinding!!.recyclerMyTeam.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
 
@@ -88,6 +132,7 @@ class MyTeamFragment : Fragment() {
             getPoints(objects.teamId!!.teamId)
 
         }
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
         mBinding!!.btnCreateTeam.setOnClickListener(View.OnClickListener {
             val intent = Intent(activity, CreateTeamActivity::class.java)
             intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
@@ -98,13 +143,37 @@ class MyTeamFragment : Fragment() {
         })
 
 
+=======
+        mBinding!!.btnCreateTeam.setOnClickListener {
+            val intent = Intent(activity, CreateTeamActivity::class.java)
+            intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
+            startActivityForResult(
+                intent,
+                CreateTeamActivity.CREATETEAM_REQUESTCODE
+            )
+        }
+        mBinding!!.myteamRefresh.setOnRefreshListener {
+            getMyteamApiCall()
+        }
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
     }
 
     override fun onResume() {
         super.onResume()
         //if (isVisibleToUser) {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
         getMyTeam()
         //}
+=======
+        if ((activity as ContestActivity).responseMyTeamList.isNotEmpty()) {
+            myTeamArrayList.clear()
+            myTeamArrayList.addAll((activity as ContestActivity).responseMyTeamList)
+            adapter.notifyDataSetChanged()
+            mListener.onMyTeam(myTeamArrayList)
+        } else if (mBinding != null) {
+            mBinding!!.linearEmptyContest.visibility = View.VISIBLE
+        }
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -112,7 +181,11 @@ class MyTeamFragment : Fragment() {
         this.isVisibleToUser = isVisibleToUser
     }
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
     fun getPoints(teamId: Int) {
+=======
+    private fun getPoints(teamId: Int) {
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
@@ -128,7 +201,11 @@ class MyTeamFragment : Fragment() {
             .getPoints(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
                         customeProgressDialog.dismiss()
+=======
+                    customeProgressDialog.dismiss()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
                 }
 
                 override fun onResponse(
@@ -222,12 +299,62 @@ class MyTeamFragment : Fragment() {
     }
 
     fun getMyTeam() {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
+=======
+        val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(
+            requireContext(),
+            (Constant.myTeamFragmentDatabaseId + matchObject!!.matchId)
+        )
+        if (lastTimeApiCall!! + Constant.delayApiSeconds < System.currentTimeMillis()) {
+            getMyteamApiCall()
+        } else {
+            CoroutineScope(Dispatchers.IO).launch {
+                val value = ResponseDatabase.getInstance(requireContext()).responseDao()
+                    .getResponse((Constant.myTeamFragmentDatabaseId + matchObject!!.matchId).toLong())
+
+                if (value != null && value.type == (Constant.myTeamFragmentDatabaseId + matchObject!!.matchId)) {
+                    withContext(Dispatchers.Main) { allTeam(value.res) }
+                }
+            }
+        }
+
+    }
+
+    private fun allTeam(res: UsersPostDBResponse) {
+        val responseModel = res.responseObject
+        if (mBinding != null && mBinding!!.myteamRefresh.isRefreshing) {
+            mBinding!!.myteamRefresh.isRefreshing = false
+        }
+        customeProgressDialog.dismiss()
+        if (responseModel != null) {
+            if (responseModel.myTeamList != null && responseModel.myTeamList!!.isNotEmpty()) {
+                myTeamArrayList.clear()
+                (activity as ContestActivity).responseMyTeamList.clear()
+                (activity as ContestActivity).responseMyTeamList.addAll(responseModel.myTeamList!!)
+                myTeamArrayList.addAll(responseModel.myTeamList!!)
+                updateEmptyViews()
+                adapter.notifyDataSetChanged()
+                mListener.onMyTeam(myTeamArrayList)
+            }
+        }
+    }
+
+    private fun getMyteamApiCall() {
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
         mBinding!!.linearEmptyContest.visibility = View.GONE
         mBinding!!.progressMyteam.visibility = View.VISIBLE
+=======
+        if (mBinding != null) {
+            mBinding!!.linearEmptyContest.visibility = View.GONE
+        }
+        ///mBinding!!.progressMyteam.visibility = View.VISIBLE
+        customeProgressDialog.show()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
         /*val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         models.token = MyPreferences.getToken(requireActivity())!!
@@ -242,9 +369,18 @@ class MyTeamFragment : Fragment() {
             .getMyTeam(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
                     mBinding!!.myteamRefresh.isRefreshing = false
                     MyUtils.showToast(activity!! as AppCompatActivity, t!!.localizedMessage!!)
                     mBinding!!.progressMyteam.visibility = View.GONE
+=======
+                    if (mBinding != null) {
+                        mBinding!!.myteamRefresh.isRefreshing = false
+                    }
+                    MyUtils.showToast(activity!! as AppCompatActivity, t!!.localizedMessage!!)
+                    //mBinding!!.progressMyteam.visibility = View.GONE
+                    customeProgressDialog.dismiss()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
                     updateEmptyViews()
                 }
 
@@ -252,18 +388,48 @@ class MyTeamFragment : Fragment() {
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
                     mBinding!!.myteamRefresh.isRefreshing = false
                     mBinding!!.progressMyteam.visibility = View.GONE
+=======
+                    if (mBinding != null) {
+                        mBinding!!.myteamRefresh.isRefreshing = false
+                    }
+                    //mBinding!!.progressMyteam.visibility = View.GONE
+                    customeProgressDialog.dismiss()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
                     val res = response!!.body()
                     if (res != null) {
                         if (res.status) {
                             val responseModel = res.responseObject
                             if (responseModel != null) {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
                                 if (responseModel.myTeamList != null && responseModel.myTeamList!!.size > 0) {
                                     myTeamArrayList.clear()
                                     myTeamArrayList.addAll(responseModel.myTeamList!!)
                                     adapter.notifyDataSetChanged()
                                     mListener.onMyTeam(myTeamArrayList)
+=======
+
+                                if (isAdded)
+                                viewLifecycleOwner.lifecycleScope.launch {
+                                    withContext(Dispatchers.Main) { allTeam(res) }
+                                    withContext(Dispatchers.IO) {
+                                        MyPreferences.saveLastTimeForApiCall(
+                                            context!!,
+                                            Constant.myTeamFragmentDatabaseId + matchObject!!.matchId,
+                                            System.currentTimeMillis()
+                                        )
+                                        ResponseDatabase.getInstance(context!!).responseDao()
+                                            .saveResponse(
+                                                ninja.cricks.roomDatabase.Response(
+                                                    (Constant.myTeamFragmentDatabaseId + matchObject!!.matchId),
+                                                    System.currentTimeMillis(),
+                                                    res
+                                                )
+                                            )
+                                    }
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
                                 }
                             }
                         } else {
@@ -303,11 +469,19 @@ class MyTeamFragment : Fragment() {
             val objectVal = matchesListObject[viewType]
             val viewHolder: MyMatchViewHolder = parent as MyMatchViewHolder
             viewHolder.userTeamName.text = objectVal.teamName
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
             viewHolder.teamaName.text = objectVal.teamsInfo!!.get(0).teamName
             viewHolder.teambName.text = objectVal.teamsInfo!!.get(1).teamName
 
             viewHolder.teamaCount.text = "" + objectVal.teamsInfo!!.get(0).count
             viewHolder.teambCount.text = "" + objectVal.teamsInfo!!.get(1).count
+=======
+            viewHolder.teamaName.text = objectVal.teamsInfo!![0].teamName
+            viewHolder.teambName.text = objectVal.teamsInfo!![1].teamName
+
+            viewHolder.teamaCount.text = "" + objectVal.teamsInfo!![0].count
+            viewHolder.teambCount.text = "" + objectVal.teamsInfo!![1].count
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
 
             viewHolder.captainPlayerName.text = objectVal.captain!!.playerName
             viewHolder.vcPlayerName.text = objectVal.viceCaptain!!.playerName
@@ -331,6 +505,10 @@ class MyTeamFragment : Fragment() {
                 .placeholder(R.drawable.player_blue)
                 .into(viewHolder.vcImageView)
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
+=======
+
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
             if (matchObject!!.status == BindingUtils.MATCH_STATUS_UPCOMING) {
                 viewHolder.linearTeamCountViews.visibility = View.VISIBLE
                 viewHolder.linearPointViews.visibility = View.GONE
@@ -340,7 +518,11 @@ class MyTeamFragment : Fragment() {
                     val intent = Intent(activity, CreateTeamActivity::class.java)
                     intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
                     intent.putExtra(SERIALIZABLE_EDIT_TEAM, objectVal)
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
                     activity!!.startActivityForResult(
+=======
+                    startActivityForResult(
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
                         intent,
                         CreateTeamActivity.CREATETEAM_REQUESTCODE
                     )
@@ -352,7 +534,11 @@ class MyTeamFragment : Fragment() {
                         intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
                         intent.putExtra(CreateTeamActivity.SERIALIZABLE_MATCH_KEY, matchObject)
                         intent.putExtra(SERIALIZABLE_COPY_TEAM, objectVal)
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
                         activity!!.startActivityForResult(
+=======
+                        startActivityForResult(
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
                             intent,
                             CreateTeamActivity.CREATETEAM_REQUESTCODE
                         )
@@ -376,16 +562,32 @@ class MyTeamFragment : Fragment() {
 
             val jsonRequest = JsonObject()
             jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
             jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
+=======
+            jsonRequest.addProperty(
+                "system_token",
+                MyPreferences.getSystemToken(requireActivity())!!
+            )
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
             jsonRequest.addProperty("team_id", teamid!!.teamId)
 
             WebServiceClient(activity!!).client.create(IApiMethod::class.java).copyTeam(jsonRequest)
                 .enqueue(object : Callback<UsersPostDBResponse?> {
                     override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                         if (isVisible) {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
                             mBinding!!.myteamRefresh.isRefreshing = false
                             MyUtils.showToast(activity!! as AppCompatActivity, t!!.localizedMessage)
                             mBinding!!.progressMyteam.visibility = View.GONE
+=======
+                            if (mBinding != null) {
+                                mBinding!!.myteamRefresh.isRefreshing = false
+                            }
+                            MyUtils.showToast(activity!! as AppCompatActivity, t!!.localizedMessage)
+                            // mBinding!!.progressMyteam.visibility = View.GONE
+                            customeProgressDialog.dismiss()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
                             updateEmptyViews()
                         }
                     }
@@ -441,4 +643,16 @@ class MyTeamFragment : Fragment() {
                 itemView.findViewById<LinearLayout>(R.id.linear_team_count_view)
         }
     }
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyTeamFragment.kt
+=======
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == AppCompatActivity.RESULT_OK) {
+            if (requestCode == CreateTeamActivity.CREATETEAM_REQUESTCODE && resultCode == AppCompatActivity.RESULT_OK) {
+                getMyteamApiCall()
+            }
+        }
+    }
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyTeamFragment.kt
 }

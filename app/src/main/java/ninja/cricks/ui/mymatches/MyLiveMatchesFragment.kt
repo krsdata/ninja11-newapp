@@ -14,18 +14,38 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/mymatches/MyLiveMatchesFragment.kt
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.gson.JsonObject
+=======
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import kotlinx.coroutines.*
+import ninja.cricks.Constant
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/mymatches/MyLiveMatchesFragment.kt
 import ninja.cricks.ContestActivity
 import ninja.cricks.MainActivity
 import ninja.cricks.R
 import ninja.cricks.databinding.FragmentMyLiveBinding
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/mymatches/MyLiveMatchesFragment.kt
+=======
+import ninja.cricks.models.ContestPreferenceModel
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/mymatches/MyLiveMatchesFragment.kt
 import ninja.cricks.models.JoinedMatchModel
 import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/mymatches/MyLiveMatchesFragment.kt
+=======
+import ninja.cricks.roomDatabase.ResponseDatabase
+import ninja.cricks.utils.CustomProgressDialog2
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/mymatches/MyLiveMatchesFragment.kt
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import retrofit2.Call
@@ -40,12 +60,25 @@ class MyLiveMatchesFragment : Fragment() {
     private var mBinding: FragmentMyLiveBinding? = null
     lateinit var adapter: MyMatchesAdapter
     var checkInArrayList = ArrayList<JoinedMatchModel>()
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/mymatches/MyLiveMatchesFragment.kt
+=======
+    lateinit var customeProgressDialog: CustomProgressDialog2
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        customeProgressDialog = CustomProgressDialog2(activity)
+        val activity = activity
+            getMatchHistory()
+    }
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/mymatches/MyLiveMatchesFragment.kt
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/mymatches/MyLiveMatchesFragment.kt
 
+=======
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/mymatches/MyLiveMatchesFragment.kt
         mBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_my_live, container, false
@@ -78,6 +111,7 @@ class MyLiveMatchesFragment : Fragment() {
             return
         }
         Log.e(TAG, "onResume")
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/mymatches/MyLiveMatchesFragment.kt
         getMatchHistory()
     }
 
@@ -89,6 +123,51 @@ class MyLiveMatchesFragment : Fragment() {
         mBinding!!.progressBar.visibility = View.VISIBLE
         mBinding!!.linearEmptyContest.visibility = View.GONE
 
+=======
+        if ((activity as MainActivity).resLiveCheckinArraylist.isNotEmpty()) {
+            checkInArrayList.clear()
+            checkInArrayList.addAll((activity as MainActivity).resLiveCheckinArraylist)
+            adapter.notifyDataSetChanged()
+            updateEmptyViews()
+        } else if (mBinding != null) {
+            mBinding!!.linearEmptyContest.visibility = View.VISIBLE
+        }
+    }
+
+    private fun getMatchHistory() {
+        val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(requireContext(),
+            (Constant.myLiveMatchesFragmentDatabaseId)
+        )
+        if (lastTimeApiCall!!+ Constant.delayApiSeconds < System.currentTimeMillis()) {
+            if (activity != null && isAdded)getMatchHistoryApiCall()
+        }
+        else {
+            CoroutineScope(Dispatchers.IO).launch {
+                val value = ResponseDatabase.getInstance(requireContext()).responseDao().getResponse(
+                    (Constant.myLiveMatchesFragmentDatabaseId)
+                )
+
+                if (value != null && value.type == (Constant.myLiveMatchesFragmentDatabaseId)){
+                    withContext(Dispatchers.Main){if (activity != null && isAdded)getMatchHistory2(value.res)}
+                }
+                else {
+                    withContext(Dispatchers.Main){if (activity != null && isAdded)getMatchHistoryApiCall()}
+                }
+            }
+        }
+    }
+
+    private fun getMatchHistoryApiCall() {
+        if (activity != null && !MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
+            MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
+            return
+        }
+        //mBinding!!.progressBar.visibility = View.VISIBLE
+       // customeProgressDialog.show()
+        if (mBinding != null) {
+            mBinding!!.linearEmptyContest.visibility = View.GONE
+        }
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/mymatches/MyLiveMatchesFragment.kt
         val jsonRequest = JsonObject()
         jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
         jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
@@ -98,9 +177,18 @@ class MyLiveMatchesFragment : Fragment() {
             .getMatchHistory(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/mymatches/MyLiveMatchesFragment.kt
                     if (mBinding!!.progressBar.visibility == View.VISIBLE) {
                         mBinding!!.progressBar.visibility = View.GONE
                     }
+=======
+/*
+                    if (mBinding!!.progressBar.visibility == View.VISIBLE) {
+                        mBinding!!.progressBar.visibility = View.GONE
+                    }
+*/
+                    customeProgressDialog.dismiss()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/mymatches/MyLiveMatchesFragment.kt
                     updateEmptyViews()
                 }
 
@@ -111,16 +199,31 @@ class MyLiveMatchesFragment : Fragment() {
                     if (!isVisible){
                         return
                     }
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/mymatches/MyLiveMatchesFragment.kt
                     mBinding!!.progressBar.visibility = View.GONE
+=======
+                    // mBinding!!.progressBar.visibility = View.GONE
+                    customeProgressDialog.dismiss()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/mymatches/MyLiveMatchesFragment.kt
                     val res = response!!.body()
                     if (res != null) {
                         if (res.status) {
                             val responseModel = res.responseObject
                             if (responseModel != null) {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/mymatches/MyLiveMatchesFragment.kt
                                 if (responseModel.matchdatalist != null && responseModel.matchdatalist!!.isNotEmpty()) {
                                     checkInArrayList.clear()
                                     checkInArrayList.addAll(responseModel.matchdatalist!![0].liveMatchHistory!!)
                                     adapter.notifyDataSetChanged()
+=======
+                                viewLifecycleOwner.lifecycleScope.launch {
+                                    withContext(Dispatchers.Main){ getMatchHistory2(res) }
+                                    withContext(Dispatchers.IO){
+                                        MyPreferences.saveLastTimeForApiCall(context!!,Constant.myLiveMatchesFragmentDatabaseId, System.currentTimeMillis())
+                                        ResponseDatabase.getInstance(context!!).responseDao().saveResponse(ninja.cricks.roomDatabase.Response(
+                                            Constant.myLiveMatchesFragmentDatabaseId, System.currentTimeMillis(), res))
+                                    }
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/mymatches/MyLiveMatchesFragment.kt
                                 }
                             }
                         } else {
@@ -137,6 +240,24 @@ class MyLiveMatchesFragment : Fragment() {
             })
     }
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/mymatches/MyLiveMatchesFragment.kt
+=======
+    private fun getMatchHistory2(res: UsersPostDBResponse) {
+        customeProgressDialog.dismiss()
+        val responseModel = res.responseObject
+        if (responseModel?.matchdatalist != null && responseModel.matchdatalist!!.isNotEmpty()) {
+            checkInArrayList.clear()
+            if (activity != null && isAdded) {
+                (requireActivity() as MainActivity).resLiveCheckinArraylist.clear()
+                checkInArrayList.addAll(responseModel.matchdatalist!![0].liveMatchHistory!!)
+                (activity as MainActivity).resLiveCheckinArraylist.addAll(responseModel.matchdatalist!![0].liveMatchHistory!!)
+                updateEmptyViews()
+                adapter.notifyDataSetChanged()
+            }
+        }
+    }
+
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/mymatches/MyLiveMatchesFragment.kt
     private fun updateEmptyViews() {
         if (checkInArrayList.size > 0) {
             mBinding!!.linearEmptyContest.visibility = View.GONE
@@ -155,7 +276,11 @@ class MyLiveMatchesFragment : Fragment() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             val view = LayoutInflater.from(parent.context)
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/mymatches/MyLiveMatchesFragment.kt
                 .inflate(R.layout.matches_row_upcoming_inner, parent, false)
+=======
+                .inflate(R.layout.my_matches_row, parent, false)
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/mymatches/MyLiveMatchesFragment.kt
             return DataViewHolder(view)
         }
 
@@ -170,8 +295,17 @@ class MyLiveMatchesFragment : Fragment() {
             viewHolder.matchTitle.visibility = View.GONE
             viewHolder.tournamentTitle.visibility = View.VISIBLE
             viewHolder.tournamentTitle.text = objectVal.matchTitle
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/mymatches/MyLiveMatchesFragment.kt
             viewHolder.opponent1.text = objectVal.teamAInfo!!.teamShortName
             viewHolder.opponent2.text = objectVal.teamBInfo!!.teamShortName
+=======
+            if(objectVal.teamAInfo != null) {
+                viewHolder.opponent1.text = objectVal.teamAInfo!!.teamShortName
+            }
+            if(objectVal.teamBInfo != null) {
+                viewHolder.opponent2.text = objectVal.teamBInfo!!.teamShortName
+            }
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/mymatches/MyLiveMatchesFragment.kt
             viewHolder.freeView.visibility = View.GONE
             viewHolder.matchTime.visibility = View.VISIBLE
 

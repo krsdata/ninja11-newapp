@@ -12,20 +12,45 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/mymatches/MyCompletedMatchesFragment.kt
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.gson.JsonObject
+=======
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import ninja.cricks.Constant
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/mymatches/MyCompletedMatchesFragment.kt
 import ninja.cricks.ContestActivity
 import ninja.cricks.MainActivity
 import ninja.cricks.R
 import ninja.cricks.databinding.FragmentMyCompletedBinding
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/mymatches/MyCompletedMatchesFragment.kt
+=======
+import ninja.cricks.models.ContestPreferenceModel
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/mymatches/MyCompletedMatchesFragment.kt
 import ninja.cricks.models.JoinedMatchModel
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.models.UsersPostDBResponse
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/mymatches/MyCompletedMatchesFragment.kt
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
+=======
+import ninja.cricks.roomDatabase.ResponseDatabase
+import ninja.cricks.utils.MyPreferences
+import ninja.cricks.utils.MyUtils
+import ninja.cricks.utils.CustomProgressDialog2
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/mymatches/MyCompletedMatchesFragment.kt
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,6 +63,16 @@ class MyCompletedMatchesFragment : Fragment() {
     private var mBinding: FragmentMyCompletedBinding? = null
     lateinit var adapter: MyMatchesAdapter
     var checkinArrayList = ArrayList<JoinedMatchModel>()
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/mymatches/MyCompletedMatchesFragment.kt
+=======
+    lateinit var customeProgressDialog: CustomProgressDialog2
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        customeProgressDialog = CustomProgressDialog2(activity)
+        getMatchHistory()
+    }
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/mymatches/MyCompletedMatchesFragment.kt
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -70,29 +105,82 @@ class MyCompletedMatchesFragment : Fragment() {
         return mBinding!!.root
     }
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/mymatches/MyCompletedMatchesFragment.kt
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
     }
 
+=======
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/mymatches/MyCompletedMatchesFragment.kt
     override fun onResume() {
         super.onResume()
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/mymatches/MyCompletedMatchesFragment.kt
         getMatchHistory()
     }
 
     private fun getMatchHistory() {
+=======
+        if ((activity as MainActivity).resCompletedMatchesCheckinArraylist.isNotEmpty()) {
+            checkinArrayList.clear()
+            checkinArrayList.addAll((activity as MainActivity).resCompletedMatchesCheckinArraylist)
+            adapter.notifyDataSetChanged()
+        }
+        else {
+            if (mBinding != null) {
+                mBinding!!.linearEmptyContest.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun getMatchHistory() {
+        val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(requireContext(),
+            (Constant.myCompletedMatchesFragmentDatabaseId)
+        )
+        if (lastTimeApiCall!!+ Constant.delayApiSeconds < System.currentTimeMillis()) {
+            getMatchHistoryApiCall()
+        }
+        else {
+            CoroutineScope(Dispatchers.IO).launch {
+                val value = ResponseDatabase.getInstance(requireContext()).responseDao().getResponse(
+                    (Constant.myCompletedMatchesFragmentDatabaseId)
+                )
+
+                if (value != null && value.type == (Constant.myCompletedMatchesFragmentDatabaseId)){
+                    withContext(Dispatchers.Main){getMatchHistory2(value.res)}
+                }
+                else {
+                    withContext(Dispatchers.Main){getMatchHistoryApiCall()}
+                }
+            }
+        }
+
+    }
+
+    private fun getMatchHistoryApiCall() {
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/mymatches/MyCompletedMatchesFragment.kt
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/mymatches/MyCompletedMatchesFragment.kt
         if (checkinArrayList.size == 0) {
             mBinding!!.progressBar.visibility = View.VISIBLE
         }
         mBinding!!.linearEmptyContest.visibility = View.GONE
+=======
+        /*if (checkinArrayList.size == 0) {
+            mBinding!!.progressBar.visibility = View.VISIBLE
+        }*/
+        customeProgressDialog.show()
+        if (mBinding != null) {
+            mBinding!!.linearEmptyContest.visibility = View.GONE
+        }
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/mymatches/MyCompletedMatchesFragment.kt
 
         /*val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
@@ -106,9 +194,16 @@ class MyCompletedMatchesFragment : Fragment() {
         WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getMatchHistory(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/mymatches/MyCompletedMatchesFragment.kt
                     if(mBinding!!.progressBar.visibility == View.VISIBLE){
                         mBinding!!.progressBar.visibility = View.GONE
                     }
+=======
+                    /*if(mBinding!!.progressBar.visibility == View.VISIBLE){
+                        mBinding!!.progressBar.visibility = View.GONE
+                    }*/
+                    customeProgressDialog.dismiss()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/mymatches/MyCompletedMatchesFragment.kt
                     updateEmptyViews()
                 }
 
@@ -119,16 +214,31 @@ class MyCompletedMatchesFragment : Fragment() {
                     if (!isVisible){
                         return
                     }
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/mymatches/MyCompletedMatchesFragment.kt
                     mBinding!!.progressBar.visibility = View.GONE
+=======
+                    //mBinding!!.progressBar.visibility = View.GONE
+                    customeProgressDialog.dismiss()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/mymatches/MyCompletedMatchesFragment.kt
                     val res = response!!.body()
                     if (res != null) {
                         if (res.status) {
                             val responseModel = res.responseObject
                             if (responseModel != null) {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/mymatches/MyCompletedMatchesFragment.kt
                                 if (responseModel.matchdatalist != null && responseModel.matchdatalist!!.size > 0) {
                                     checkinArrayList.clear()
                                     checkinArrayList.addAll(responseModel.matchdatalist!!.get(0).completedMatchHistory!!)
                                     adapter.notifyDataSetChanged()
+=======
+                                viewLifecycleOwner.lifecycleScope.launch {
+                                    withContext(Dispatchers.Main){getMatchHistory2(res)}
+                                    withContext(Dispatchers.IO){
+                                        MyPreferences.saveLastTimeForApiCall(context!!,Constant.myCompletedMatchesFragmentDatabaseId, System.currentTimeMillis())
+                                        ResponseDatabase.getInstance(context!!).responseDao().saveResponse(ninja.cricks.roomDatabase.Response(
+                                            Constant.myCompletedMatchesFragmentDatabaseId, System.currentTimeMillis(), res))
+                                    }
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/mymatches/MyCompletedMatchesFragment.kt
                                 }
                             }
                         } else {
@@ -145,6 +255,22 @@ class MyCompletedMatchesFragment : Fragment() {
             })
     }
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/mymatches/MyCompletedMatchesFragment.kt
+=======
+    private fun getMatchHistory2(res: UsersPostDBResponse) {
+        customeProgressDialog.dismiss()
+        val responseModel = res.responseObject
+        if (responseModel!!.matchdatalist != null && responseModel.matchdatalist!!.size > 0) {
+            checkinArrayList.clear()
+            (activity as MainActivity).resCompletedMatchesCheckinArraylist.clear()
+            checkinArrayList.addAll(responseModel.matchdatalist!!.get(0).completedMatchHistory!!)
+            (activity as MainActivity).resCompletedMatchesCheckinArraylist.addAll(responseModel.matchdatalist!!.get(0).completedMatchHistory!!)
+            updateEmptyViews()
+            adapter.notifyDataSetChanged()
+        }
+    }
+
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/mymatches/MyCompletedMatchesFragment.kt
     private fun updateEmptyViews() {
         if (checkinArrayList.size > 0) {
             mBinding!!.linearEmptyContest.visibility = View.GONE

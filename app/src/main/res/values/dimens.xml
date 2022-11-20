@@ -21,7 +21,11 @@
     <dimen name="country_code_size">12sp</dimen>
     <dimen name="small_info_size">12sp</dimen>
 
+<<<<<<< Updated upstream
     <dimen name="create_team_text_size_normal">12sp</dimen>
+=======
+    <dimen name="create_team_text_size_normal">14sp</dimen>
+>>>>>>> Stashed changes
     <dimen name="create_team_flag_size">40dp</dimen>
 
     <dimen name="login_text_size_16sp">16sp</dimen>
@@ -31,4 +35,9 @@
     <dimen name="save_team_text_size_small">10sp</dimen>
     <dimen name="header_icon_size">@dimen/_20sdp</dimen>
     <dimen name="save_match_circle">30dp</dimen>
+<<<<<<< Updated upstream
+=======
+    <dimen name="dimen_16sp">16sp</dimen>
+    <dimen name="dimen_17sp">17sp</dimen>
+>>>>>>> Stashed changes
 </resources>

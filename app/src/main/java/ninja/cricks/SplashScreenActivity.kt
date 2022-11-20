@@ -65,7 +65,11 @@ class SplashScreenActivity : BaseActivity() {
             this,
             R.layout.activity_splash
         )
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/SplashScreenActivity.kt
         updateCheckApk()
+=======
+        window.statusBarColor = resources.getColor(R.color.colorSecond)
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/SplashScreenActivity.kt
 
         MainActivity.CHECK_APK_UPDATE_API = false
         MainActivity.CHECK_WALLET_ONCE = false
@@ -78,18 +82,31 @@ class SplashScreenActivity : BaseActivity() {
             if (splashScreen.contains(".gif")) {
                 Glide.with(mContext).asGif()
                     .load(splashScreen)
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/SplashScreenActivity.kt
                     .placeholder(R.drawable.splash_ninja_red_new)
+=======
+                    .placeholder(R.drawable.splash)
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/SplashScreenActivity.kt
                     .into(mBinding!!.splashView)
             } else {
                 Glide.with(mContext)
                     .load(splashScreen)
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/SplashScreenActivity.kt
                     .placeholder(R.drawable.splash_ninja_red_new)
+=======
+                    .placeholder(R.drawable.splash)
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/SplashScreenActivity.kt
                     .into(mBinding!!.splashView)
             }
         } else {
             Glide.with(mContext)
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/SplashScreenActivity.kt
                 .load(R.drawable.splash_ninja_red_new)
                 .placeholder(R.drawable.splash_ninja_red_new)
+=======
+                .load(R.drawable.splash)
+                .placeholder(R.drawable.splash)
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/SplashScreenActivity.kt
                 .into(mBinding!!.splashView)
         }
 
@@ -122,6 +139,7 @@ class SplashScreenActivity : BaseActivity() {
 
     }
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/SplashScreenActivity.kt
     private fun updateCheckApk() {
         val jsonRequest = JsonObject()
         jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
@@ -159,6 +177,8 @@ class SplashScreenActivity : BaseActivity() {
                 }
             })
     }
+=======
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/SplashScreenActivity.kt
 
     override fun onStart() {
         super.onStart()

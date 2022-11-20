@@ -63,10 +63,13 @@ class OfferActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener 
         mBinding!!.recyclerView.visibility = View.VISIBLE
 
         mBinding!!.progressBar.visibility = View.GONE
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/OfferActivity.kt
     }
 
     override fun onResume() {
         super.onResume()
+=======
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/OfferActivity.kt
         getAllOffers(true)
     }
 
@@ -86,8 +89,12 @@ class OfferActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener 
         jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
         jsonRequest.addProperty("version_code", BuildConfig.VERSION_CODE)
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/OfferActivity.kt
         WebServiceClient(mContext!!).client.create(IApiMethod::class.java)
             .getMessages(jsonRequest)
+=======
+        WebServiceClient(mContext!!).client.create(IApiMethod::class.java).getMessages(jsonRequest)
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/OfferActivity.kt
             .enqueue(object : Callback<JsonObject?> {
                 override fun onFailure(call: Call<JsonObject?>?, t: Throwable?) {
                     mBinding!!.progressBar.visibility = View.GONE

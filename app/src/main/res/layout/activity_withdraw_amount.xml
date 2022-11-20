@@ -22,7 +22,11 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+<<<<<<< Updated upstream
             android:background="@color/colorPrimaryDark"
+=======
+            android:background="@drawable/header_gradient"
+>>>>>>> Stashed changes
             android:orientation="vertical" />
 
         <androidx.core.widget.NestedScrollView
@@ -46,7 +50,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="@dimen/_10sdp"
@@ -58,7 +66,11 @@
                         android:id="@+id/winning_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="@dimen/_10sdp"
@@ -87,7 +99,11 @@
                             android:layout_height="@dimen/_30sdp"
                             android:layout_gravity="center_horizontal"
                             android:checked="false"
+<<<<<<< Updated upstream
                             android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:text="Paytm"
@@ -97,7 +113,11 @@
                             android:id="@+id/bank_btn"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_30sdp"
+<<<<<<< Updated upstream
                             android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                             android:layout_gravity="center_horizontal"
                             android:checked="false"
                             android:paddingStart="@dimen/_10sdp"
@@ -109,7 +129,11 @@
                             android:id="@+id/upi_btn"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_30sdp"
+<<<<<<< Updated upstream
                             android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                             android:layout_gravity="center_horizontal"
                             android:checked="false"
                             android:paddingStart="@dimen/_10sdp"
@@ -123,7 +147,11 @@
                             android:paddingStart="@dimen/_10sdp"
                             android:paddingEnd="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_5sdp"
+<<<<<<< Updated upstream
                             android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                             android:visibility="gone"
                             android:text="UPI/Paytm Instant payment will be charge ₹10"
                             android:textColor="@color/red2"
@@ -155,7 +183,11 @@
                             android:text="UPI id"
                             android:layout_marginBottom="@dimen/_2sdp"
                             android:textColor="@color/black"
+<<<<<<< Updated upstream
                             android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                             android:textSize="@dimen/_14sdp"/>
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -166,7 +198,11 @@
                             android:hint="Your UPI Id"
                             android:inputType="text"
                             android:layout_marginBottom="@dimen/_5sdp"
+<<<<<<< Updated upstream
                             android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                             android:paddingStart="@dimen/_15sdp"
                             android:paddingEnd="@dimen/_15sdp"
                             android:singleLine="true"
@@ -175,11 +211,46 @@
                             android:textSize="@dimen/_14sdp" />
 
                         <TextView
+<<<<<<< Updated upstream
+=======
+                            android:id="@+id/paytm_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Paytm number"
+                            android:visibility="gone"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:textColor="@color/black"
+
+                            android:textSize="@dimen/_14sdp"/>
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/paytm_edit_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_35sdp"
+                            android:background="@drawable/et_style"
+                            android:hint="Your Paytm Number"
+                            android:inputType="text"
+                            android:layout_marginBottom="@dimen/_5sdp"
+
+                            android:paddingStart="@dimen/_15sdp"
+                            android:paddingEnd="@dimen/_15sdp"
+                            android:singleLine="true"
+                            android:visibility="gone"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/greyish"
+                            android:textSize="@dimen/_14sdp" />
+
+                        <TextView
+>>>>>>> Stashed changes
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Amount"
                             android:layout_marginBottom="@dimen/_2sdp"
+<<<<<<< Updated upstream
                             android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                             android:textColor="@color/black"
                             android:textSize="@dimen/_14sdp"/>
 
@@ -190,7 +261,11 @@
                             android:background="@drawable/et_style"
                             android:inputType="number"
                             android:paddingStart="@dimen/_15sdp"
+<<<<<<< Updated upstream
                             android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                             android:paddingEnd="@dimen/_15sdp"
                             android:singleLine="true"
                             android:textColor="@color/black"
@@ -205,7 +280,11 @@
                             android:layout_marginTop="@dimen/_15sdp"
                             android:layout_marginBottom="@dimen/_10sdp"
                             android:background="@drawable/default_rounded_button_sportsfight"
+<<<<<<< Updated upstream
                             android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                             android:gravity="center"
                             android:padding="8dp"
                             android:text="WITHDRAW NOW"
@@ -249,7 +328,11 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_30sdp"
                     android:background="@drawable/default_rounded_button_sportsfight_red"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                     android:gravity="center"
                     android:visibility="gone"
                     android:text="Contact us"
@@ -264,7 +347,11 @@
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginRight="@dimen/_20sdp"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                     android:gravity="center|start"
                     android:textColor="@color/colorAccent"
                     android:textSize="16sp"

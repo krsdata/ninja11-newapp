@@ -18,7 +18,11 @@
           android:id="@+id/team_name"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+<<<<<<< Updated upstream
           android:fontFamily="@font/open_sans_light"
+=======
+
+>>>>>>> Stashed changes
           android:text="EXODUSX1(T1)"
           android:textColor="@color/black"
           android:textSize="16sp" />
@@ -29,7 +33,11 @@
           android:layout_height="wrap_content"
           android:text="You Won $35"
           android:textColor="@color/green"
+<<<<<<< Updated upstream
           android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
           android:textSize="14sp"/>
    </LinearLayout>
 
@@ -47,7 +55,11 @@
           android:text="804"
           android:gravity="center"
           android:textColor="@color/black"
+<<<<<<< Updated upstream
           android:fontFamily="@font/open_sans_light"
+=======
+
+>>>>>>> Stashed changes
           android:textSize="16sp"/>
 
       <TextView
@@ -58,7 +70,11 @@
           android:layout_height="wrap_content"
           android:text="#1"
           android:textColor="@color/black"
+<<<<<<< Updated upstream
           android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
           android:textSize="14sp"/>
    </LinearLayout>
 

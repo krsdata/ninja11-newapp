@@ -152,7 +152,11 @@ class MoreOptionsFragment : BaseFragment() {
 
         val upcomingModel9 = MoreOptionsModel()
         upcomingModel9.viewType = TYPE_LOCAL
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/dashboard/MoreOptionsFragment.kt
         upcomingModel9.drawable = R.drawable.ic_action_logout_icon
+=======
+        upcomingModel9.drawable = R.drawable.ic_baseline_logout_24
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/dashboard/MoreOptionsFragment.kt
         upcomingModel9.id = 9
         val userId = MyPreferences.getUserID(requireActivity())!!
         if (!TextUtils.isEmpty(userId)) {
@@ -306,6 +310,10 @@ class MoreOptionsFragment : BaseFragment() {
                             startActivity(intent, options.toBundle())
                         }
                         9 -> {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/dashboard/MoreOptionsFragment.kt
+=======
+                            NinjaApplication.lastApiCallForMatch = 0L
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/dashboard/MoreOptionsFragment.kt
                             logoutApp("Are you sure you want to logout", true)
                         }
                         10 -> {
@@ -337,6 +345,7 @@ class MoreOptionsFragment : BaseFragment() {
             mBinding!!.recyclerMoreoptions.adapter = adapter
         }
     }
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/dashboard/MoreOptionsFragment.kt
 
     /*inner class BackgroundLoading : AsyncTask<Unit, Unit, String>() {
 
@@ -463,4 +472,6 @@ class MoreOptionsFragment : BaseFragment() {
             }
         }
     }*/
+=======
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/dashboard/MoreOptionsFragment.kt
 }

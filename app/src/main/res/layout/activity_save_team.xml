@@ -22,13 +22,21 @@
             android:id="@+id/linear_top_bar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+<<<<<<< Updated upstream
             android:background="@color/colorPrimaryDark"
+=======
+            android:background="@drawable/header_gradient"
+>>>>>>> Stashed changes
             android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+<<<<<<< Updated upstream
                 android:background="@color/colorPrimaryDark"
+=======
+                android:background="@drawable/header_gradient"
+>>>>>>> Stashed changes
                 android:orientation="horizontal">
 
                 <ImageView
@@ -48,7 +56,11 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                     android:gravity="center"
                     android:text="10h 21m left"
                     android:textColor="@color/white"
@@ -63,8 +75,13 @@
                     android:layout_marginLeft="8dip"
                     android:layout_marginRight="5dp"
                     android:layout_toLeftOf="@+id/img_wallet"
+<<<<<<< Updated upstream
                     android:visibility="invisible"
                     android:src="@drawable/ic_live_help_black_24dp"
+=======
+                    android:src="@drawable/ic_live_help_black_24dp"
+                    android:visibility="invisible"
+>>>>>>> Stashed changes
                     app:tint="@color/white" />
 
                 <ImageView
@@ -75,13 +92,20 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="8dip"
+<<<<<<< Updated upstream
                     android:visibility="invisible"
                     android:layout_marginRight="10dp"
                     android:src="@drawable/ic_account_balance_wallet_black_24dp"
+=======
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_account_balance_wallet_black_24dp"
+                    android:visibility="invisible"
+>>>>>>> Stashed changes
                     app:tint="@color/white" />
             </RelativeLayout>
         </LinearLayout>
 
+<<<<<<< Updated upstream
         <LinearLayout
             android:id="@+id/linear_indicator"
             android:layout_width="match_parent"
@@ -119,6 +143,70 @@
 
 
         </LinearLayout>
+=======
+        <RelativeLayout
+            android:id="@+id/linear_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_below="@+id/linear_top_bar"
+            android:background="@color/light_grey_bg"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/teama_logo"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:src="@drawable/placeholder_player_teama" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toStartOf="@+id/teamb_logo"
+                android:layout_toEndOf="@+id/teama_logo"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+
+                    android:gravity="center"
+                    android:text="Choose your Captain &amp; Vice Captain"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/create_team_text_size_normal" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+
+                    android:gravity="center"
+                    android:text="C gets 2x points, VC gets 1.5x points"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/create_team_text_size_normal" />
+            </LinearLayout>
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/teamb_logo"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:src="@drawable/placeholder_player_teama" />
+        </RelativeLayout>
+>>>>>>> Stashed changes
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -151,7 +239,11 @@
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:layout_weight="1"
                 android:background="@drawable/button_selector_white"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserratsemibold"
+=======
+
+>>>>>>> Stashed changes
                 android:gravity="center"
                 android:text="TEAM PREVIEW"
                 android:textColor="@color/colorAccent"
@@ -165,7 +257,11 @@
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_weight="1"
                 android:background="@drawable/default_rounded_button_sportsfight"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserratsemibold"
+=======
+
+>>>>>>> Stashed changes
                 android:gravity="center"
                 android:text="SAVE TEAM"
                 android:textColor="@color/white"

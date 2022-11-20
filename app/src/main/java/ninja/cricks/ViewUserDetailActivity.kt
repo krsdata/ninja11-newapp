@@ -18,7 +18,10 @@ import ninja.cricks.databinding.ActivityViewUserDetailBinding
 import ninja.cricks.models.*
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ViewUserDetailActivity.kt
 import ninja.cricks.utils.BindingUtils
+=======
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ViewUserDetailActivity.kt
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import org.json.JSONObject

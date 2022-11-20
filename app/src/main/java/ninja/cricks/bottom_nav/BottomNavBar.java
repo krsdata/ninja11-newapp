@@ -18,6 +18,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.LabelVisibilityMode;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/bottom_nav/BottomNavBar.java
+=======
+import com.google.android.material.navigation.NavigationBarView;
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/bottom_nav/BottomNavBar.java
 
 import java.util.logging.Handler;
 
@@ -61,10 +65,17 @@ public class BottomNavBar extends CoordinatorLayout {
         String bnFabSize = styleAttrs.getString(R.styleable.BottomNavBar_bn_fab_size);
         if (bnFabSize == null || bnFabSize.equalsIgnoreCase("normal")) {
             // set fab param to default fab parameters
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/bottom_nav/BottomNavBar.java
             fabDiameter = getResources().getDimension(R.dimen._56sdp);
             fabSize = FloatingActionButton.SIZE_NORMAL;
         } else if (bnFabSize.equalsIgnoreCase("mini")) {
             fabDiameter = getResources().getDimension(R.dimen._40sdp);
+=======
+            fabDiameter = getResources().getDimension(com.intuit.sdp.R.dimen._56sdp);
+            fabSize = FloatingActionButton.SIZE_NORMAL;
+        } else if (bnFabSize.equalsIgnoreCase("mini")) {
+            fabDiameter = getResources().getDimension(com.intuit.sdp.R.dimen._40sdp);
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/bottom_nav/BottomNavBar.java
             fabSize = FloatingActionButton.SIZE_MINI;
         } else {
             Log.e(TAG, "bnFabSize should be either 'mini' or 'normal'");
@@ -79,7 +90,11 @@ public class BottomNavBar extends CoordinatorLayout {
 
         // add the menu to the bottom-nav
         bottomNavigationView.inflateMenu(menuResID);
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/bottom_nav/BottomNavBar.java
         bottomNavigationView.setLabelVisibilityMode(LabelVisibilityMode.LABEL_VISIBILITY_LABELED);
+=======
+        bottomNavigationView.setLabelVisibilityMode(NavigationBarView.LABEL_VISIBILITY_LABELED);
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/bottom_nav/BottomNavBar.java
         bottomNavigationView.setItemIconTintList(menuItemColorState);
         bottomNavigationView.setItemTextColor(menuItemColorState);
         // set listener on the bottomNavigationView

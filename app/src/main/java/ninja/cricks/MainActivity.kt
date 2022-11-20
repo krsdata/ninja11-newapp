@@ -1,6 +1,7 @@
 package ninja.cricks
 
 import android.app.ActivityManager
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/MainActivity.kt
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -12,21 +13,54 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.JsonObject
 import ninja.cricks.databinding.ActivityMainBinding
+=======
+import android.app.ActivityOptions
+import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Bundle
+import android.util.Log
+import android.view.Gravity
+import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
+import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.gson.JsonObject
+import ninja.cricks.customviews.CircleImageView
+import ninja.cricks.databinding.ActivityMainBinding
+import ninja.cricks.models.JoinedMatchModel
+import ninja.cricks.models.UpcomingMatchesModel
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/MainActivity.kt
 import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.RetrofitClient
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.BaseActivity
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/MainActivity.kt
 import ninja.cricks.ui.dashboard.FixtureCricketFragment
 import ninja.cricks.ui.dashboard.MoreOptionsFragment
 import ninja.cricks.ui.dashboard.MyAccountFragment
 import ninja.cricks.ui.dashboard.MyMatchesFragment
+=======
+import ninja.cricks.ui.dashboard.FragmentDrawer
+import ninja.cricks.ui.dashboard.MoreOptionsFragment
+import ninja.cricks.ui.dashboard.MyAccountFragment
+import ninja.cricks.ui.dashboard.MyMatchesFragment
+import ninja.cricks.ui.home.HomeFragment
+import ninja.cricks.utils.BindingUtils
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/MainActivity.kt
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/MainActivity.kt
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -37,6 +71,23 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     private lateinit var mContext: Context
 
     companion object {
+=======
+
+class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
+    FragmentDrawer.FragmentDrawerListener {
+
+    var resGetMessage = MutableLiveData<JsonObject>()
+    var fragment: Fragment? = null
+    private var mBinding: ActivityMainBinding? = null
+    private lateinit var mContext: Context
+    private var drawerFragment: FragmentDrawer? = null
+    var resCheckinArrayList = ArrayList<UpcomingMatchesModel>()
+    var resLiveCheckinArraylist = ArrayList<JoinedMatchModel>()
+    var resCompletedMatchesCheckinArraylist = ArrayList<JoinedMatchModel>()
+
+    companion object {
+        val TAG: String = MainActivity::class.java.simpleName
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/MainActivity.kt
         var menuArrayList = ArrayList<JSONObject>()
         var showScore: Boolean = false
         var CHECK_WALLET_ONCE: Boolean? = false
@@ -44,10 +95,23 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         var releaseNote: String = ""
         var CHECK_APK_UPDATE_API: Boolean = false
         var CHECK_FORCE_UPDATE: Boolean = true
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/MainActivity.kt
+=======
+
+        const val ID_HOME = 1
+        const val ID_DASHBOARD = 2
+        const val ID_PREDICT_WIN = 3
+        const val ID_MY_ACCOUNT = 4
+        const val ID_NOTIFICATIONS = 5
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/MainActivity.kt
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/MainActivity.kt
+=======
+        setTheme(R.style.SecondryTheme)
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/MainActivity.kt
         mBinding = DataBindingUtil.setContentView(
             this,
             R.layout.activity_main
@@ -55,6 +119,12 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         mContext = this
         userInfo = (application as NinjaApplication).userInformations
         setSupportActionBar(mBinding!!.toolbar)
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/MainActivity.kt
+=======
+        supportActionBar!!.setDisplayShowHomeEnabled(true)
+        supportActionBar!!.setDisplayShowTitleEnabled(false)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/MainActivity.kt
 
         mBinding!!.imgWalletAmount.setOnClickListener {
             val intent = Intent(mContext, MyBalanceActivity::class.java)
@@ -65,6 +135,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             startActivityForResult(intent, MyBalanceActivity.REQUEST_CODE_ADD_MONEY)
         }
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/MainActivity.kt
         getWalletBalances()
 
         Glide.with(this).load(userInfo!!.profileImage)
@@ -80,11 +151,110 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
         fragment = FixtureCricketFragment()
         loadFragment()
+=======
+        mBinding!!.telegramPage.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(BindingUtils.TELEGRAM_LINK))
+            startActivity(intent)
+        }
+
+        getWalletBalances()
+        setProfileData()
+        updateCheckApk()
+
+        mBinding!!.navigation.setOnNavigationItemSelectedListener(this)
+
+        fragment = HomeFragment()
+        loadFragment()
+
+        drawerFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment_navigation_drawer) as FragmentDrawer?
+        drawerFragment!!.setUp(
+            R.id.fragment_navigation_drawer,
+            mBinding!!.drawerLayout,
+            mBinding!!.toolbar
+        )
+        drawerFragment!!.setDrawerListener(this)
+
+        mBinding!!.profileImage.setOnClickListener {
+            mBinding!!.drawerLayout.visibility = View.VISIBLE
+            mBinding!!.drawerLayout.openDrawer(Gravity.LEFT)
+        }
+        initBottomNavigation()
+    }
+
+    private fun initBottomNavigation() {
+//        mBinding?.navigation?.apply {
+//
+//            add(
+//                MeowBottomNavigation.Model(
+//                    ID_HOME,
+//                    R.drawable.ic_home_black_24dp,
+//                )
+//            )
+//
+//            add(
+//                MeowBottomNavigation.Model(
+//                    ID_DASHBOARD,
+//                    R.drawable.ic_dashboard_black_24dp
+//                )
+//            )
+//            add(
+//                MeowBottomNavigation.Model(
+//                    ID_MY_ACCOUNT,
+//                    R.drawable.ic_wallet_new
+//                )
+//            )
+//            add(
+//                MeowBottomNavigation.Model(
+//                    ID_NOTIFICATIONS,
+//                    R.drawable.ic_more_horiz_black_24dp
+//                )
+//            )
+//
+//            setOnClickMenuListener {
+//                val name = when (it.id) {
+//                    ID_HOME -> {
+//                        "HOME"
+//                        fragment = HomeFragment()
+//                        loadFragment()
+//                    }
+//                    ID_DASHBOARD -> {
+//                        "EXPLORE"
+//                        fragment = MyMatchesFragment()
+//                        loadFragment()
+//                    }
+//                    ID_PREDICT_WIN -> "MESSAGE"
+//                    ID_NOTIFICATIONS -> {
+//                        "NOTIFICATION"
+//                        fragment = MoreOptionsFragment()
+//                        loadFragment()
+//                    }
+//                    ID_MY_ACCOUNT -> {
+//                        "ACCOUNT"
+//                        fragment = MyAccountFragment()
+//                        loadFragment()
+//                    }
+//                    else -> ""
+//                }
+//            }
+//
+//            setOnReselectListener {
+//                //  Toast.makeText(this@MainActivity, "item ${it.id} is reselected.", Toast.LENGTH_LONG).show()
+//            }
+//
+//            show(ID_HOME)
+//
+//        }
+
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/MainActivity.kt
     }
 
     override fun onResume() {
         super.onResume()
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/MainActivity.kt
         updateCheckApk()
+=======
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/MainActivity.kt
         userInfo = (application as NinjaApplication).userInformations
         if (userInfo != null) {
             Glide.with(this)
@@ -96,10 +266,23 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
     fun viewUpcomingMatches() {
         mBinding!!.navigation.selectedItemId = R.id.navigation_home
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/MainActivity.kt
     }
 
     fun viewAllMatches() {
         mBinding!!.navigation.selectedItemId = R.id.navigation_home
+=======
+//        mBinding!!.navigation.show(ID_HOME, true)
+//        fragment = FixtureCricketFragment()
+//        loadFragment()
+    }
+
+    fun viewAllMatches() {
+        mBinding!!.navigation.selectedItemId = R.id.navigation_dashboard
+//        mBinding!!.navigation.show(ID_DASHBOARD, true)
+//        fragment = MyMatchesFragment()
+//        loadFragment()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/MainActivity.kt
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -120,11 +303,14 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         super.onStart()
         if (CHECK_APK_UPDATE_API) {
             CHECK_APK_UPDATE_API = false
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/MainActivity.kt
             /*val fm = supportFragmentManager
             val pioneersFragment =
                 UpdateAppDialogFragment(updatedApkUrl, releaseNote)
             pioneersFragment.isCancelable = false
             pioneersFragment.show(fm, "updateapp_tag")*/
+=======
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/MainActivity.kt
 
             val intent = Intent(this@MainActivity, UpdateApplicationActivity::class.java)
             intent.putExtra(UpdateApplicationActivity.REQUEST_CODE_APK_UPDATE, updatedApkUrl)
@@ -177,6 +363,14 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                                     res.minWithdrawal
                                 )
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/MainActivity.kt
+=======
+                                MyPreferences.setPaytmWithdrawBtn(
+                                    this@MainActivity,
+                                    res.paytm_withdrawal_btn
+                                )
+
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/MainActivity.kt
                                 (application as NinjaApplication).saveWalletInformation(
                                     responseModel
                                 )
@@ -204,7 +398,11 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
             R.id.navigation_home -> {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/MainActivity.kt
                 fragment = FixtureCricketFragment()
+=======
+                fragment = HomeFragment()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/MainActivity.kt
                 loadFragment()
                 return true
             }
@@ -253,6 +451,10 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                     response: Response<JsonObject?>?
                 ) {
                     if (!isFinishing) {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/MainActivity.kt
+=======
+                        Log.e(TAG, "onResponse")
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/MainActivity.kt
                         if (response!!.body() != null) {
                             val res = JSONObject(response.body().toString())
                             showScore = res.getBoolean("show_scoreboard")
@@ -283,6 +485,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                                     pioneersFragment.isCancelable = false
                                     pioneersFragment.show(fm, "updateapp_tag")*/
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/MainActivity.kt
                                     if(!isActivityRunning(UpdateApplicationActivity::class.java)){
 
                                     val intent = Intent(
@@ -298,6 +501,23 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                                         releaseNote
                                     )
                                     startActivity(intent)
+=======
+                                    if (!isActivityRunning(UpdateApplicationActivity::class.java)) {
+
+                                        val intent = Intent(
+                                            this@MainActivity,
+                                            UpdateApplicationActivity::class.java
+                                        )
+                                        intent.putExtra(
+                                            UpdateApplicationActivity.REQUEST_CODE_APK_UPDATE,
+                                            updatedApkUrl
+                                        )
+                                        intent.putExtra(
+                                            UpdateApplicationActivity.REQUEST_RELEASE_NOTE,
+                                            releaseNote
+                                        )
+                                        startActivity(intent)
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/MainActivity.kt
                                     }
                                 }
                             }
@@ -318,4 +538,51 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             false
         }
     }
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/MainActivity.kt
+=======
+
+    override fun onDrawerItemSelected(view: View?, position: Int) {
+        displayView(position)
+    }
+
+    private fun displayView(position: Int) {
+        if (position == 0) {
+            val intent = Intent(mContext, EditProfileActivity::class.java)
+            intent.putExtra(FullScreenImageViewActivity.KEY_IMAGE_URL, userInfo!!.profileImage)
+            startActivity(intent)
+        } else if (position == 1) {
+            val intent = Intent(mContext, MyBalanceActivity::class.java)
+            startActivityForResult(intent, MyBalanceActivity.REQUEST_CODE_ADD_MONEY)
+        } else if (position == 2) {
+            val intent = Intent(mContext, InviteFriendsActivity::class.java)
+            val options = ActivityOptions.makeSceneTransitionAnimation(this@MainActivity)
+            startActivity(intent, options.toBundle())
+        } else if (position == 3) {
+            val intent = Intent(mContext, WebActivity::class.java)
+            intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_FANTASY_POINTS)
+            intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_FANTASY_POINTS)
+            val options = ActivityOptions.makeSceneTransitionAnimation(this@MainActivity)
+            startActivity(intent, options.toBundle())
+        } else if (position == 4) {
+            mBinding!!.navigation.selectedItemId = R.id.navigation_notifications
+//            mBinding!!.navigation.show(ID_NOTIFICATIONS, true)
+//            fragment = MoreOptionsFragment()
+//            loadFragment()
+        } else if (position == 5) {
+            logoutApp("Are you sure you want to logout", true)
+        }
+    }
+
+    private fun setProfileData() {
+        Glide.with(this).load(userInfo!!.profileImage)
+            .placeholder(R.drawable.player_blue).into(mBinding!!.profileImage)
+
+        Glide.with(this).load(userInfo!!.profileImage)
+            .placeholder(R.drawable.player_blue)
+            .into(findViewById<CircleImageView>(R.id.profile_image_drawer))
+
+        findViewById<TextView>(R.id.name).text = userInfo!!.fullName
+        findViewById<TextView>(R.id.mobile).text = String.format("@%s", userInfo!!.teamName)
+    }
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/MainActivity.kt
 }

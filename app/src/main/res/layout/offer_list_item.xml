@@ -20,17 +20,28 @@
                 android:id="@+id/offer_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_bold"
                 android:textColor="@color/colorPrimary"
                 android:visibility="gone"
                 android:padding="@dimen/_5sdp"
+=======
+
+                android:textColor="@color/colorPrimary"
+                android:visibility="gone"
+                android:padding="@dimen/_6sdp"
+>>>>>>> Stashed changes
                 android:textSize="@dimen/_15sdp" />
 
             <TextView
                 android:id="@+id/offer_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                 android:textColor="@color/black"
                 android:paddingStart="@dimen/_5sdp"
                 android:paddingEnd="@dimen/_5sdp"

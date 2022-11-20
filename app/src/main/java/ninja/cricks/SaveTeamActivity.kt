@@ -5,11 +5,19 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/SaveTeamActivity.kt
+=======
+import android.util.Log
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/SaveTeamActivity.kt
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/SaveTeamActivity.kt
+=======
+import com.bumptech.glide.Glide
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/SaveTeamActivity.kt
 import com.edify.atrist.listener.OnMatchTimerStarted
 import com.edify.atrist.listener.OnRolesSelected
 import ninja.cricks.CreateTeamActivity.Companion.CREATE_TEAM_ALLROUNDER
@@ -42,6 +50,10 @@ import kotlin.collections.HashMap
 
 class SaveTeamActivity : BaseActivity(), OnRolesSelected {
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/SaveTeamActivity.kt
+=======
+    private var TAG: String = SaveTeamActivity::class.java.simpleName
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/SaveTeamActivity.kt
     private var mCreateTeamRequest: RequestCreateTeamModel? = null
     var myTeamModel: MyTeamModels? = null
     private var isTrumpSelected: Boolean = false
@@ -62,6 +74,7 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
     }
 
     override fun onBitmapSelected(bitmap: Bitmap) {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/SaveTeamActivity.kt
 
 
     }
@@ -71,6 +84,13 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
     }
 
 
+=======
+    }
+
+    override fun onUploadedImageUrl(url: String) {
+    }
+
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/SaveTeamActivity.kt
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(
@@ -83,6 +103,21 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
         hasmapPlayers =
             intent.getSerializableExtra(TeamPreviewActivity.SERIALIZABLE_TEAM_PREVIEW_KEY) as HashMap<String, ArrayList<PlayersInfoModel>>
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/SaveTeamActivity.kt
+=======
+        Glide.with(this)
+            .load(matchObject.teamAInfo!!.logoUrl)
+            .placeholder(R.drawable.placeholder_player_teama)
+            .into(mBinding!!.teamaLogo)
+
+
+        Glide.with(this)
+            .load(matchObject.teamBInfo!!.logoUrl)
+            .placeholder(R.drawable.placeholder_player_teama)
+            .into(mBinding!!.teambLogo)
+
+
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/SaveTeamActivity.kt
         if (intent.hasExtra(MyTeamFragment.SERIALIZABLE_EDIT_TEAM)) {
             CreateTeamActivity.isEditMode = true
             myTeamModel =
@@ -139,7 +174,10 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
             }
 
         })
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/SaveTeamActivity.kt
 
+=======
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/SaveTeamActivity.kt
     }
 
     override fun onResume() {
@@ -387,7 +425,10 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
         onReady()
     }
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/SaveTeamActivity.kt
 
+=======
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/SaveTeamActivity.kt
     override fun onReady() {
 
         if (isCaptainSelected && isViceCaptainSelected) {
@@ -409,6 +450,12 @@ class SaveTeamActivity : BaseActivity(), OnRolesSelected {
         }
         request.system_token = MyPreferences.getSystemToken(this)!!
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/SaveTeamActivity.kt
+=======
+        Log.e(TAG, "create team request =======> ${request.toString()}")
+
+
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/SaveTeamActivity.kt
         customeProgressDialog.show()
         WebServiceClient(this).client.create(IApiMethod::class.java).createTeam(request)
             .enqueue(object : Callback<UsersPostDBResponse?> {

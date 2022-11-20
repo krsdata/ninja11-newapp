@@ -21,13 +21,21 @@
             android:id="@+id/linear_top_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+<<<<<<< Updated upstream
             android:background="@color/colorPrimaryDark"
+=======
+            android:background="@drawable/header_gradient"
+>>>>>>> Stashed changes
             android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+<<<<<<< Updated upstream
                 android:background="@color/colorPrimaryDark"
+=======
+                android:background="@drawable/header_gradient"
+>>>>>>> Stashed changes
                 android:orientation="horizontal">
 
                 <ImageView
@@ -45,7 +53,11 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/image_back"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                     android:text="Contest"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_16sdp" />
@@ -99,7 +111,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dip"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                         android:text="AU-W"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
@@ -116,7 +132,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dip"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                         android:text="AU-W"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
@@ -144,7 +164,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right|center_vertical"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                         android:gravity="right"
                         android:text="progress"
                         android:textColor="@color/red"

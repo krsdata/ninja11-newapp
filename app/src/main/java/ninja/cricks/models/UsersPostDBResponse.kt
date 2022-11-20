@@ -128,7 +128,15 @@ data class UsersPostDBResponse(
 
     @SerializedName("min_withdrawal")
     @Expose
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/models/UsersPostDBResponse.kt
     var minWithdrawal: Int = 0
 
+=======
+    var minWithdrawal: Int = 0,
+
+    @SerializedName("paytm_withdrawal_btn")
+    @Expose
+    var paytm_withdrawal_btn: Boolean = false
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/models/UsersPostDBResponse.kt
 
 ) : Serializable, Cloneable

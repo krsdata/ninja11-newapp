@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/_55sdp"
+<<<<<<< Updated upstream
     android:layout_height="@dimen/_59sdp"
+=======
+    android:layout_height="@dimen/_63sdp"
+>>>>>>> Stashed changes
     android:orientation="vertical">
 
     <ImageView
@@ -16,6 +20,7 @@
     <TextView
         android:id="@+id/player_name"
         android:layout_width="match_parent"
+<<<<<<< Updated upstream
         android:layout_height="wrap_content"
         android:layout_below="@+id/imageView"
         android:background="@drawable/ract_black_background"
@@ -25,6 +30,18 @@
         android:paddingStart="@dimen/_5sdp"
         android:paddingTop="1.5dp"
         android:paddingBottom="1.5dp"
+=======
+        android:layout_height="@dimen/_16sdp"
+        android:layout_below="@+id/imageView"
+        android:background="@drawable/preview_name_black"
+
+        android:maxLines="1"
+        android:paddingEnd="@dimen/_3sdp"
+        android:gravity="center"
+        android:paddingStart="@dimen/_3sdp"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
+>>>>>>> Stashed changes
         android:singleLine="true"
         android:text="Virat Kohli"
         android:textAlignment="center"

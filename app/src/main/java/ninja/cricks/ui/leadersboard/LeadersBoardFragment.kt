@@ -116,6 +116,13 @@ class LeadersBoardFragment : Fragment() {
             getLeadersBoards()
         }
         setTotalTeamCounts("0")
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/leadersboard/LeadersBoardFragment.kt
+=======
+    }
+
+    override fun onResume() {
+        super.onResume()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/leadersboard/LeadersBoardFragment.kt
         getLeadersBoards()
     }
 

@@ -54,7 +54,11 @@
             android:textSize="10sp"
             android:padding="10dp"
             android:layout_marginTop="20dp"
+<<<<<<< Updated upstream
             android:fontFamily="@font/montserratsemibold"
+=======
+
+>>>>>>> Stashed changes
             android:background="@drawable/default_rounded_button_sportsfight"
             android:textColor="@color/white"
             />
@@ -63,7 +67,13 @@
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< Updated upstream
         android:layout_gravity="center"/>
+=======
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/theme_color_hdr"
+        android:visibility="gone"/>
+>>>>>>> Stashed changes
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

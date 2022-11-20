@@ -67,7 +67,11 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
+<<<<<<< Updated upstream
             android:layout_marginStart="@dimen/_2sdp"
+=======
+            android:layout_marginStart="@dimen/_4sdp"
+>>>>>>> Stashed changes
             android:layout_weight="2"
             android:orientation="vertical">
 
@@ -75,7 +79,11 @@
                 android:id="@+id/player_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                 android:maxLines="1"
                 android:padding="@dimen/_2sdp"
                 android:singleLine="true"
@@ -87,7 +95,11 @@
                 android:id="@+id/player_selection_percentage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                 android:maxLines="1"
                 android:visibility="visible"
                 android:padding="@dimen/_2sdp"
@@ -96,15 +108,42 @@
                 android:textColor="@color/black"
                 android:textSize="@dimen/_8sdp" />
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
             <TextView
                 android:id="@+id/selected_player_country"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                 android:background="@color/white"
                 android:text="AU-W"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_9sdp"
                 android:textStyle="bold"/>
+=======
+                android:background="@drawable/kandy"
+                android:text="AU-W"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_8sdp"
+                android:textStyle="bold" />
+        <!--    <TextView
+                android:id="@+id/player_role_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/kandy"
+                android:text="WK"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_8sdp"
+                android:layout_marginLeft="@dimen/_30sdp"
+                android:layout_marginTop="-15dp"-->
+
+                android:textStyle="bold" />
+
+
+
+>>>>>>> Stashed changes
         </LinearLayout>
 
         <LinearLayout
@@ -149,7 +188,11 @@
                     android:layout_width="@dimen/save_match_circle"
                     android:layout_height="@dimen/save_match_circle"
                     android:background="@drawable/circle_save_match"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                     android:gravity="center"
                     android:padding="3dp"
                     android:text="T"
@@ -160,7 +203,11 @@
                     android:id="@+id/selected_trump_percentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                     android:padding="3dp"
                     android:text="6.08%"
                     android:textColor="@color/black"
@@ -179,7 +226,11 @@
                     android:layout_width="@dimen/_27sdp"
                     android:layout_height="@dimen/_27sdp"
                     android:background="@drawable/circle_save_match"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                     android:gravity="center"
                     android:text="C"
                     android:textColor="@color/black"
@@ -189,7 +240,11 @@
                     android:id="@+id/selected_captain_percentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                     android:padding="3dp"
                     android:text="0.8%"
                     android:textColor="@color/black"
@@ -208,7 +263,11 @@
                     android:layout_width="@dimen/_27sdp"
                     android:layout_height="@dimen/_27sdp"
                     android:background="@drawable/circle_save_match"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                     android:gravity="center"
                     android:text="VC"
                     android:textColor="@color/black"
@@ -218,7 +277,11 @@
                     android:id="@+id/selected_vc_percentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                     android:padding="3dp"
                     android:text="3%"
                     android:textColor="@color/black"

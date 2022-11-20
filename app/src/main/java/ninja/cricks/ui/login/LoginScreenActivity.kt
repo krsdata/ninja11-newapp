@@ -67,6 +67,10 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
         firebaseAuth = FirebaseAuth.getInstance()
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/login/LoginScreenActivity.kt
+=======
+        window.statusBarColor = resources.getColor(R.color.colorSecond)
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/login/LoginScreenActivity.kt
 
         if (intent.hasExtra(RegisterScreenActivity.ISACTIVITYRESULT)) {
             isActivityRequiredResult =
@@ -86,15 +90,32 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
     }
 
     private fun initClicks() {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/login/LoginScreenActivity.kt
+=======
+/*
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/login/LoginScreenActivity.kt
         binding!!.signInButton.getChildAt(0)?.let {
             val smaller = Math.min(it.paddingLeft, it.paddingRight)
             it.setPadding(smaller, it.paddingTop, smaller, it.paddingBottom)
         }
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/login/LoginScreenActivity.kt
+=======
+*/
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/login/LoginScreenActivity.kt
         binding!!.signInButton.setOnClickListener(View.OnClickListener {
             signIn()
         })
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/login/LoginScreenActivity.kt
         binding!!.termsCondition.setOnClickListener(View.OnClickListener {
+=======
+        binding!!.signInWithPhoneButton.setOnClickListener {
+            val intent = Intent(this@LoginScreenActivity, PhoneNumberActivity::class.java)
+            startActivity(intent)
+        }
+
+      /*  binding!!.termsCondition.setOnClickListener(View.OnClickListener {
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/login/LoginScreenActivity.kt
             val intent = Intent(this@LoginScreenActivity, WebActivity::class.java)
             intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_TERMS_CONDITION)
             intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_TNC)
@@ -106,7 +127,11 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
             intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_PRIVACY_POLICY)
             intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_PRIVACY)
             startActivity(intent)
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/login/LoginScreenActivity.kt
         })
+=======
+        })*/
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/login/LoginScreenActivity.kt
     }
 
     private fun configureGoogleSignIn() {
@@ -250,10 +275,17 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
                         MyPreferences.setOtpAuthRequired(this, responseb.isOTPRequired)
                         MyPreferences.setToken(this, responseb.token)
                         MyPreferences.setUserID(this, "" + responseb.infomodel!!.userId)
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/login/LoginScreenActivity.kt
                         MyPreferences.setPaytmMid(this, responseb.paytmMid)
                         MyPreferences.setPaytmCallback(this, responseb.callbackurrl)
                         MyPreferences.setGooglePayId(this, responseb.gpayid)
                         MyPreferences.setRazorPayId(this, responseb.razorPay)
+=======
+                        /*MyPreferences.setPaytmMid(this, responseb.paytmMid)
+                        MyPreferences.setPaytmCallback(this, responseb.callbackurrl)
+                        MyPreferences.setGooglePayId(this, responseb.gpayid)
+                        MyPreferences.setRazorPayId(this, responseb.razorPay)*/
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/login/LoginScreenActivity.kt
 
                         if (responseb.baseUrl != null && responseb.baseUrl != "") {
                             MyPreferences.setBaseUrl(this, responseb.baseUrl)

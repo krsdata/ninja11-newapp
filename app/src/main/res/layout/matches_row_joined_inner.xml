@@ -28,7 +28,11 @@
                 android:id="@+id/completed_match_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_medium"
+=======
+                android:fontFamily="@font/open_sans_semibold"
+>>>>>>> Stashed changes
                 android:text="South Africa vs England ODI"
                 android:textColor="@color/text"
                 android:textSize="@dimen/small_info_size" />
@@ -38,7 +42,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                 android:text="Live"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_8sdp" />
@@ -61,13 +69,19 @@
 
                     <View
                         android:id="@+id/countrycolorview"
+<<<<<<< Updated upstream
                         android:layout_width="45dp"
                         android:layout_height="35dp"
+=======
+                        android:layout_width="25dp"
+                        android:layout_height="20dp"
+>>>>>>> Stashed changes
                         android:layout_centerVertical="true"
                         android:background="@color/red" />
 
                     <com.mikhaellopez.circularimageview.CircularImageView
                         android:id="@+id/teama_logo"
+<<<<<<< Updated upstream
                         android:layout_width="45dp"
                         android:layout_height="45dp"
                         android:layout_marginStart="30dp"
@@ -76,6 +90,16 @@
                         app:civ_border="true"
                         app:civ_border_color="@color/white"
                         app:civ_border_width="3dp" />
+=======
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:scaleType="fitCenter"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:src="@drawable/placeholder_player_teama"
+                        app:civ_border="true"
+                        app:civ_border_color="@color/white"
+                        app:civ_border_width="0dp" />
+>>>>>>> Stashed changes
                 </RelativeLayout>
 
                 <TextView
@@ -84,7 +108,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="5dip"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                     android:maxLines="1"
                     android:singleLine="true"
                     android:text="IND"
@@ -106,7 +134,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                     android:maxLines="1"
                     android:singleLine="true"
                     android:text="NZ"
@@ -120,22 +152,37 @@
 
                     <View
                         android:id="@+id/countrybcolorview"
+<<<<<<< Updated upstream
                         android:layout_width="@dimen/_45sdp"
                         android:layout_height="35dp"
+=======
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="20dp"
+>>>>>>> Stashed changes
                         android:layout_centerVertical="true"
                         android:layout_marginStart="15dp"
                         android:background="@color/red" />
 
                     <com.mikhaellopez.circularimageview.CircularImageView
                         android:id="@+id/teamb_logo"
+<<<<<<< Updated upstream
                         android:layout_width="45dp"
                         android:layout_height="45dp"
+=======
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_marginLeft="@dimen/_5sdp"
+>>>>>>> Stashed changes
                         android:layout_alignParentStart="true"
                         android:scaleType="fitCenter"
                         android:src="@drawable/placeholder_player_teama"
                         app:civ_border="true"
                         app:civ_border_color="@color/white"
+<<<<<<< Updated upstream
                         app:civ_border_width="3dp" />
+=======
+                        app:civ_border_width="0dp" />
+>>>>>>> Stashed changes
                 </RelativeLayout>
             </LinearLayout>
             <LinearLayout
@@ -151,7 +198,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dip"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                     android:maxLines="1"
                     android:singleLine="true"
                     android:text="10-11-1985 4PM"
@@ -177,7 +228,11 @@
                     android:id="@+id/total_team_created"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                     android:text="0"
                     android:textColor="@color/black"
                     android:textSize="@dimen/small_info_size" />
@@ -186,7 +241,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dip"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                     android:text="Team"
                     android:textColor="@color/black"
                     android:textSize="@dimen/small_info_size" />
@@ -196,7 +255,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dip"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                     android:text="0"
                     android:textColor="@color/black"
                     android:textSize="@dimen/small_info_size"
@@ -206,7 +269,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dip"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                     android:text="Contest"
                     android:textColor="@color/black"
                     android:textSize="@dimen/small_info_size" />
@@ -220,7 +287,11 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="2dip"
                 android:layout_marginEnd="10dp"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                 android:text="You Won $35"
                 android:textColor="@color/green"
                 android:textSize="@dimen/small_info_size" />
@@ -256,7 +327,11 @@
                 android:id="@+id/completed_match_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                 android:text="South Africa vs England ODI"
                 android:textColor="@color/black"
                 android:textSize="@dimen/small_info_size" />
@@ -266,7 +341,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                 android:text="Live"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_8sdp" />
@@ -311,7 +390,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dip"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                     android:maxLines="1"
                     android:singleLine="true"
                     android:text="IND"
@@ -332,7 +415,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                     android:maxLines="1"
                     android:singleLine="true"
                     android:text="NZ"
@@ -379,7 +466,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dip"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                     android:maxLines="1"
                     android:singleLine="true"
                     android:text="asdsadsadasadaaaasdasasdasasdsda kasdkjsadkasdkj"
@@ -405,7 +496,11 @@
                     android:id="@+id/total_team_created"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                     android:text="0"
                     android:textColor="@color/black"
                     android:textSize="@dimen/small_info_size" />
@@ -414,7 +509,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2dip"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                     android:text="Team"
                     android:textColor="@color/black"
                     android:textSize="@dimen/small_info_size" />
@@ -424,7 +523,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dip"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                     android:text="0"
                     android:textColor="@color/black"
                     android:textSize="@dimen/small_info_size"
@@ -435,7 +538,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="2dip"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                     android:text="Contest"
                     android:textColor="@color/black"
                     android:textSize="@dimen/small_info_size" />
@@ -449,7 +556,11 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="2dip"
                 android:layout_marginRight="10dp"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                 android:text="You Won $35"
                 android:textColor="@color/green"
                 android:textSize="@dimen/small_info_size" />

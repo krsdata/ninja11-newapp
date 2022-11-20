@@ -54,7 +54,11 @@ class RefferalFriendsListActivity : BaseActivity() {
             val msgText: String = ("" +
                     getString(R.string.label_register_on_sf) +
                     "*"+ userInfo!!.referalCode+"*"+
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/RefferalFriendsListActivity.kt
                     " and get Rs 100 Bonus on Joining.\n" +
+=======
+                    " and get Rs.100 Bonus on Joining.\n" +
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/RefferalFriendsListActivity.kt
                     " Click on " +
                     BindingUtils.BILTY_APK_LINK)
             val shareIntent = Intent()
@@ -63,7 +67,11 @@ class RefferalFriendsListActivity : BaseActivity() {
             shareIntent.type = "text/plain"
 
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/RefferalFriendsListActivity.kt
             startActivity(Intent.createChooser(shareIntent,"Refer and Earn Rs 100"))
+=======
+            startActivity(Intent.createChooser(shareIntent,"Refer and Earn Rs 25"))
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/RefferalFriendsListActivity.kt
         })
         customeProgressDialog = CustomeProgressDialog(this)
 

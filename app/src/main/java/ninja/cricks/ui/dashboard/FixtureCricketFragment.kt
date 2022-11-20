@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/dashboard/FixtureCricketFragment.kt
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -15,6 +16,17 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+=======
+import android.os.Bundle
+import android.util.Log
+import android.view.*
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/dashboard/FixtureCricketFragment.kt
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -25,9 +37,18 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.JsonObject
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/dashboard/FixtureCricketFragment.kt
 import ninja.cricks.BuildConfig
 import ninja.cricks.MaintainanceActivity
 import ninja.cricks.NinjaApplication
+=======
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import ninja.cricks.Constant
+import ninja.cricks.MaintainanceActivity
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/dashboard/FixtureCricketFragment.kt
 import ninja.cricks.R
 import ninja.cricks.adaptors.MatchesAdapter
 import ninja.cricks.databinding.FragmentAllGamesBinding
@@ -36,14 +57,27 @@ import ninja.cricks.models.MatchesModels
 import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/dashboard/FixtureCricketFragment.kt
+=======
+import ninja.cricks.roomDatabase.ResponseDatabase
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/dashboard/FixtureCricketFragment.kt
 import ninja.cricks.ui.BaseFragment
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/dashboard/FixtureCricketFragment.kt
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+=======
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.*
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/dashboard/FixtureCricketFragment.kt
 
 class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
@@ -57,7 +91,11 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
     lateinit var adapter: MatchesAdapter
     var allmatchesArrayList = ArrayList<MatchesModels>()
     var scrollListener: RecyclerViewLoadMoreScroll? = null
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/dashboard/FixtureCricketFragment.kt
     lateinit var sdialog: Dialog
+=======
+    var sdialog: Dialog? = null
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/dashboard/FixtureCricketFragment.kt
     var mContext: Context? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,6 +133,7 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
 
         mBinding!!.allGameViewRecycler.layoutManager = linearLayoutManager
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/dashboard/FixtureCricketFragment.kt
         val upcomingmatchlist =
             (requireActivity().applicationContext as NinjaApplication).getUpcomingMatches
         if (upcomingmatchlist != null && upcomingmatchlist.size > 0) {
@@ -105,6 +144,21 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
         mBinding!!.allGameViewRecycler.adapter = adapter
         getAllMatches()
         getMessage()
+=======
+        /*val upcomingmatchlist =
+            (requireActivity().applicationContext as NinjaApplication).getUpcomingMatches
+        if (upcomingmatchlist.size > 0) {
+            allmatchesArrayList.clear()
+            allmatchesArrayList.addAll(upcomingmatchlist)
+        }*/
+        adapter = MatchesAdapter(requireActivity(), allmatchesArrayList)
+        getAllMatches()
+        mBinding!!.allGameViewRecycler.adapter = adapter
+
+        requireActivity().runOnUiThread {
+            getAllMatches()
+        }
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/dashboard/FixtureCricketFragment.kt
     }
 
     private fun isValidRequest(): Boolean {
@@ -132,9 +186,39 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
     }
 
     private fun getAllMatches() {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/dashboard/FixtureCricketFragment.kt
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             mBinding!!.swipeRefresh.isRefreshing = false
 
+=======
+        val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(requireContext(), (Constant.getAllMatcesDatabaseId))
+        if (lastTimeApiCall!!+Constant.delayMessageApiSeconds < System.currentTimeMillis()) {
+            allContestsApiCall()
+        }
+        else {
+            getAllContestFromDatabase()
+        }
+    }
+
+    private fun getAllContestFromDatabase() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val value = ResponseDatabase.getInstance(requireContext()).responseDao().getResponse(Constant.getAllMatcesDatabaseId)
+
+            if (value != null && value.type == Constant.getAllMatcesDatabaseId) {
+                withContext(Dispatchers.Main){allContests(value.res)}
+            }
+            else {
+                withContext(Dispatchers.Main){allContestsApiCall()}
+            }
+        }
+
+    }
+
+    private fun allContestsApiCall() {
+        if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
+            mBinding!!.swipeRefresh.isRefreshing = false
+            getAllContestFromDatabase()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/dashboard/FixtureCricketFragment.kt
             Snackbar.make(
                 requireActivity().findViewById(android.R.id.content),
                 "NO Internet Connection found!!",
@@ -152,8 +236,12 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
         jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(requireActivity())!!)
 
         WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/dashboard/FixtureCricketFragment.kt
             .getAllMatches(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
+=======
+            .getAllMatches(jsonRequest).enqueue(object : Callback<UsersPostDBResponse?> {
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/dashboard/FixtureCricketFragment.kt
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     mBinding!!.swipeRefresh.isRefreshing = false
                 }
@@ -181,6 +269,7 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
                                     logoutApp("Session Expired Please login again!!", false)
                                 } else {
                                     BindingUtils.currentTimeStamp = resObje.systemTime
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/dashboard/FixtureCricketFragment.kt
                                     val responseObject = resObje.responseObject
                                     val listofData =
                                         responseObject!!.matchdatalist as ArrayList<MatchesModels>?
@@ -195,6 +284,17 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
                                     if (offerImage != "" && offerImage.contains("http")) {
                                         showAlert(offerImage)
                                     }
+=======
+                                    viewLifecycleOwner.lifecycleScope.launch {
+                                        withContext(Dispatchers.Main){allContests(resObje)}
+                                        withContext(Dispatchers.IO){
+                                            MyPreferences.saveLastTimeForApiCall(context!!,Constant.getAllMatcesDatabaseId, System.currentTimeMillis())
+                                            ResponseDatabase.getInstance(context!!).responseDao().saveResponse(ninja.cricks.roomDatabase.Response(
+                                                (Constant.getAllMatcesDatabaseId),System.currentTimeMillis(),resObje))
+                                        }
+                                    }
+
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/dashboard/FixtureCricketFragment.kt
                                 }
                             } else {
                                 if (resObje.code == 1001) {
@@ -210,6 +310,23 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
             })
     }
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/dashboard/FixtureCricketFragment.kt
+=======
+    private fun allContests(resObje: UsersPostDBResponse) {
+        val responseObject = resObje.responseObject
+        val listofData =
+            responseObject!!.matchdatalist as ArrayList<MatchesModels>?
+        if (listofData!!.size > 0) {
+            addAllList(listofData)
+            adapter.setMatchesList(allmatchesArrayList)
+        }
+        val offerImage = resObje.offerImage
+        if (offerImage != "" && offerImage.contains("http")) {
+            showAlert(offerImage)
+        }
+    }
+
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/dashboard/FixtureCricketFragment.kt
     private fun addAllList(userPostData: java.util.ArrayList<MatchesModels>) {
         if (isValidRequest()) {
             allmatchesArrayList.clear()
@@ -218,6 +335,7 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
     }
 
     override fun onRefresh() {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/dashboard/FixtureCricketFragment.kt
         getAllMatches()
         getMessage()
     }
@@ -323,5 +441,59 @@ class FixtureCricketFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListe
             }
             true
         })
+=======
+        allContestsApiCall()
+    }
+
+    private fun showAlert(offerImage: String) {
+        if(sdialog == null) {
+            Log.e(TAG, "showAlert created")
+            sdialog = Dialog(mContext!!, R.style.MyDialog)
+            sdialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            sdialog!!.window!!.attributes.windowAnimations = R.style.PauseDialogAnimation
+            sdialog!!.setContentView(R.layout.dialog_offer_image)
+            sdialog!!.setCancelable(false)
+            sdialog!!.show()
+            val close: ImageView = sdialog!!.findViewById(R.id.dialog_close)
+            val offerImageView: ImageView = sdialog!!.findViewById(R.id.dialog_offer_image)
+            val progressBar: ProgressBar = sdialog!!.findViewById(R.id.progress_bar)
+
+            close.setOnClickListener {
+                Log.e(TAG, "setOnClickListener dialog showing ${sdialog!!.isShowing}")
+                Log.e(TAG, "setOnClickListener close clickable ${close.isClickable}")
+                Log.e(TAG, "setOnClickListener close enabled ${close.isEnabled}")
+                sdialog!!.dismiss()
+            }
+
+            Glide.with(mContext!!).load(offerImage).listener(object : RequestListener<Drawable?> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any,
+                    target: Target<Drawable?>,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any,
+                    target: Target<Drawable?>,
+                    dataSource: DataSource,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    progressBar.visibility = View.GONE
+                    return false
+                }
+            }).into(offerImageView)
+
+            sdialog!!.setOnKeyListener { dialog, keyCode, keyEvent ->
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    dialog.dismiss()
+                }
+                true
+            }
+        }
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/dashboard/FixtureCricketFragment.kt
     }
 }

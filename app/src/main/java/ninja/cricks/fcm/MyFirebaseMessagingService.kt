@@ -12,7 +12,11 @@ import android.os.PowerManager
 import android.text.TextUtils
 import android.util.Log
 import androidx.core.app.NotificationCompat
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/fcm/MyFirebaseMessagingService.kt
 import com.google.firebase.iid.FirebaseInstanceId
+=======
+import com.google.firebase.messaging.FirebaseMessaging
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/fcm/MyFirebaseMessagingService.kt
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
@@ -40,12 +44,19 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         super.onNewToken(token)
         Log.e(TAG, token)
         val userId = MyPreferences.getUserID(applicationContext)!!
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/fcm/MyFirebaseMessagingService.kt
         val notid = FirebaseInstanceId.getInstance()
             .getToken(getString(R.string.gcm_default_sender_id), "FCM")
 
         MyPreferences.setDeviceToken(this, token)
 
         if (!TextUtils.isEmpty(notid) && !TextUtils.isEmpty(userId)) {
+=======
+
+        MyPreferences.setDeviceToken(this, token)
+
+        if (!TextUtils.isEmpty(token) && !TextUtils.isEmpty(userId)) {
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/fcm/MyFirebaseMessagingService.kt
 
             val jsonRequest = JsonObject()
             jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)

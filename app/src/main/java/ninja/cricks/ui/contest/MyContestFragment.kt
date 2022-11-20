@@ -16,12 +16,23 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyContestFragment.kt
+=======
+import androidx.lifecycle.lifecycleScope
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyContestFragment.kt
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.edify.atrist.listener.OnContestEvents
 import com.edify.atrist.listener.OnContestLoadedListener
 import com.google.gson.JsonObject
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyContestFragment.kt
+=======
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyContestFragment.kt
 import ninja.cricks.*
 import ninja.cricks.databinding.FragmentMyContestBinding
 import ninja.cricks.models.MyTeamModels
@@ -31,6 +42,7 @@ import ninja.cricks.network.WebServiceClient
 import ninja.cricks.models.ContestModelLists
 import ninja.cricks.models.PlayersInfoModel
 import ninja.cricks.models.UsersPostDBResponse
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyContestFragment.kt
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
@@ -38,12 +50,24 @@ import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+=======
+import ninja.cricks.roomDatabase.ResponseDatabase
+import ninja.cricks.utils.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.*
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyContestFragment.kt
 
 
 class MyContestFragment : Fragment() {
     //private var isMatchStarted: Boolean= false
     var objectMatches: UpcomingMatchesModel? = null
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyContestFragment.kt
     private lateinit var customeProgressDialog: CustomeProgressDialog
+=======
+    private lateinit var customProgressDialog: CustomProgressDialog2
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyContestFragment.kt
     private lateinit var mListener: OnContestLoadedListener
     var mContestListeners: OnContestEvents? = null
     private var mBinding: FragmentMyContestBinding? = null
@@ -64,6 +88,18 @@ class MyContestFragment : Fragment() {
         super.onCreate(savedInstanceState)
         objectMatches =
             arguments?.get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyContestFragment.kt
+=======
+        customProgressDialog = CustomProgressDialog2(activity)
+        parentFragmentManager.setFragmentResultListener(CreateTeamActivity.CREATETEAM_REQUESTCODE.toString(),this,
+            { s: String, bundle: Bundle ->
+                if (bundle.get(ContestActivity.SERIALIZABLE_KEY_CREATE_TEAM) == "result_ok") {
+                    allContestsApiCall()
+                }
+            })
+
+        getMyJoinedContest()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyContestFragment.kt
 
     }
 
@@ -80,7 +116,10 @@ class MyContestFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyContestFragment.kt
         customeProgressDialog = CustomeProgressDialog(activity)
+=======
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyContestFragment.kt
 
         mBinding!!.recyclerMyContest.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
@@ -104,13 +143,29 @@ class MyContestFragment : Fragment() {
         }
 
         mBinding!!.mycontestRefresh.setOnRefreshListener {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyContestFragment.kt
             getMyJoinedContest()
+=======
+            allContestsApiCall()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyContestFragment.kt
         }
     }
 
     override fun onResume() {
         super.onResume()
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyContestFragment.kt
         getMyJoinedContest()
+=======
+        if ((activity as ContestActivity).responseMyJoinedContest.isNotEmpty() ) {
+            checkinArrayList.clear()
+            checkinArrayList.addAll((activity as ContestActivity).responseMyJoinedContest)
+            mListener.onMyContest(checkinArrayList)
+            adapter.notifyDataSetChanged()
+        }
+        else if (mBinding != null) {
+            mBinding!!.linearEmptyContest.visibility = View.VISIBLE
+        }
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyContestFragment.kt
     }
 
     override fun onAttach(context: Context) {
@@ -133,13 +188,50 @@ class MyContestFragment : Fragment() {
     }
 
     private fun getMyJoinedContest() {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyContestFragment.kt
+=======
+
+        val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(requireContext(),
+            (Constant.myContestFragmentDatabaseId+objectMatches!!.matchId)
+        )
+        if (lastTimeApiCall!!+Constant.delayApiSeconds < System.currentTimeMillis()) {
+            allContestsApiCall()
+        }
+        else {
+            CoroutineScope(Dispatchers.IO).launch {
+                val value = ResponseDatabase.getInstance(requireContext()).responseDao().getResponse(
+                    (Constant.myContestFragmentDatabaseId+ objectMatches!!.matchId)
+                )
+
+                if (value != null && value.type == (Constant.myContestFragmentDatabaseId + objectMatches!!.matchId)) {
+                    withContext(Dispatchers.Main){allContests(value.res)}
+                }
+                else {
+                    withContext(Dispatchers.Main){allContestsApiCall()}
+                }
+            }
+        }
+
+    }
+
+    private fun allContestsApiCall() {
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyContestFragment.kt
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyContestFragment.kt
         mBinding!!.linearEmptyContest.visibility = View.GONE
         mBinding!!.progressContest.visibility = View.VISIBLE
 
+=======
+        if (mBinding != null) {
+            mBinding!!.linearEmptyContest.visibility = View.GONE
+        }
+
+        //mBinding!!.progressContest.visibility = View.VISIBLE
+        customProgressDialog.show()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyContestFragment.kt
         /*val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         models.token = MyPreferences.getToken(requireActivity())!!
@@ -153,27 +245,55 @@ class MyContestFragment : Fragment() {
         WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getMyContest(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyContestFragment.kt
                     mBinding!!.mycontestRefresh.isRefreshing = false
                     mBinding!!.progressContest.visibility = View.GONE
+=======
+                    if (mBinding != null) {
+                        mBinding!!.mycontestRefresh.isRefreshing = false
+                    }
+                    //mBinding!!.progressContest.visibility = View.GONE
+                    customProgressDialog.dismiss()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyContestFragment.kt
                 }
 
                 override fun onResponse(
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyContestFragment.kt
                     mBinding!!.mycontestRefresh.isRefreshing = false
                     mBinding!!.progressContest.visibility = View.GONE
+=======
+                    if (mBinding != null) {
+                        mBinding!!.mycontestRefresh.isRefreshing = false
+                    }
+                    //mBinding!!.progressContest.visibility = View.GONE
+                    customProgressDialog.dismiss()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyContestFragment.kt
                     val res = response!!.body()
                     if (res != null) {
                         if (res.status) {
                             val responseModel = res.responseObject
                             if (responseModel != null) {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyContestFragment.kt
                                 if (responseModel.myJoinedContest != null && responseModel.myJoinedContest!!.size > 0) {
                                     checkinArrayList.clear()
                                     checkinArrayList.addAll(responseModel.myJoinedContest!!)
                                     mListener.onMyContest(checkinArrayList)
                                     adapter.notifyDataSetChanged()
                                 }
+=======
+                                viewLifecycleOwner.lifecycleScope.launch {
+                                    withContext(Dispatchers.Main){  allContests(res)}
+                                    withContext(Dispatchers.IO){
+                                        MyPreferences.saveLastTimeForApiCall(context!!,Constant.myContestFragmentDatabaseId + objectMatches!!.matchId, System.currentTimeMillis())
+                                        ResponseDatabase.getInstance(context!!).responseDao().saveResponse(ninja.cricks.roomDatabase.Response(
+                                            (Constant.myContestFragmentDatabaseId + objectMatches!!.matchId),System.currentTimeMillis(),res))
+                                    }
+                                }
+
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyContestFragment.kt
                             }
                         } else {
                             if (res.code == 1001) {
@@ -189,6 +309,28 @@ class MyContestFragment : Fragment() {
             })
     }
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyContestFragment.kt
+=======
+    private fun allContests(res: UsersPostDBResponse) {
+        if (mBinding != null && mBinding!!.mycontestRefresh .isRefreshing) {
+            mBinding!!.mycontestRefresh.isRefreshing = false
+        }
+        customProgressDialog.dismiss()
+        if (res.status) {
+            val responseModel = res.responseObject
+            if (responseModel!!.myJoinedContest != null && responseModel.myJoinedContest!!.size > 0) {
+                (activity as ContestActivity).responseMyJoinedContest.clear()
+                checkinArrayList.clear()
+                (activity as ContestActivity).responseMyJoinedContest.addAll(responseModel.myJoinedContest!!)
+                checkinArrayList.addAll((activity as ContestActivity).responseMyJoinedContest)
+                mListener.onMyContest(checkinArrayList)
+                adapter.notifyDataSetChanged()
+            }
+        }
+        updateEmptyViews()
+    }
+
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyContestFragment.kt
     fun updateEmptyViews() {
         if (checkinArrayList.size == 0) {
             mBinding!!.linearEmptyContest.visibility = View.VISIBLE
@@ -216,7 +358,11 @@ class MyContestFragment : Fragment() {
             val objectVal = matchesListObject[position]
             val viewHolder: MyMatchViewHolder = parent as MyMatchViewHolder
             viewHolder.contestPrizePool.text = String.format("₹%s", objectVal.totalWinningPrize)
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyContestFragment.kt
             viewHolder.contestEntryPrize.text = String.format("%s", objectVal.entryFees)
+=======
+            viewHolder.contestEntryPrize.text = String.format("₹%s",objectVal.entryFees)
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyContestFragment.kt
             if (objectVal.isContestCancelled) {
                 viewHolder.contestInfo.text = "Cancelled"
                 viewHolder.contestInfo.textSize = 18.0f
@@ -378,7 +524,11 @@ class MyContestFragment : Fragment() {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyContestFragment.kt
         customeProgressDialog.show()
+=======
+        customProgressDialog.show()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyContestFragment.kt
         /*val models = RequestModel()
         models.user_id = MyPreferences.getUserID(requireActivity())!!
         models.token =MyPreferences.getToken(activity!!)!!
@@ -392,14 +542,22 @@ class MyContestFragment : Fragment() {
         WebServiceClient(requireActivity()).client.create(IApiMethod::class.java).getPoints(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyContestFragment.kt
                     customeProgressDialog.dismiss()
+=======
+                    customProgressDialog.dismiss()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyContestFragment.kt
                 }
 
                 override fun onResponse(
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/MyContestFragment.kt
                     customeProgressDialog.dismiss()
+=======
+                    customProgressDialog.dismiss()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/MyContestFragment.kt
                     val res = response!!.body()
                     if (res != null) {
                         if (res.status) {

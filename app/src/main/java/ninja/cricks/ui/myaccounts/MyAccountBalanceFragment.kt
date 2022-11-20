@@ -187,10 +187,28 @@ class MyAccountBalanceFragment : BaseFragment() {
             responseModel.depositAmount + responseModel.prizeAmount + responseModel.bonusAmount
         mBinding!!.totalBalance.text = String.format("₹%.2f", totalBalance)
         mBinding!!.friendsCounts.text = String.format("%d", responseModel.refferalCounts)
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/myaccounts/MyAccountBalanceFragment.kt
+=======
+
+        if (MyPreferences.getPaytmWithdrawBtn(requireActivity())) {
+            mBinding!!.btnPaytmWithdraw.visibility = View.VISIBLE
+        } else {
+            mBinding!!.btnPaytmWithdraw.visibility = View.GONE
+        }
+
+        mBinding!!.btnPaytmWithdraw.setOnClickListener {
+            val intent = Intent(requireContext(), PaytmWithdrawActivity::class.java)
+            startActivity(intent)
+        }
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/myaccounts/MyAccountBalanceFragment.kt
     }
 
     override fun onResume() {
         super.onResume()
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/myaccounts/MyAccountBalanceFragment.kt
+=======
+        if (isVisible)
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/myaccounts/MyAccountBalanceFragment.kt
         getWalletBalances()
     }
 
@@ -255,6 +273,14 @@ class MyAccountBalanceFragment : BaseFragment() {
                                         res.minWithdrawal
                                     )
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/myaccounts/MyAccountBalanceFragment.kt
+=======
+                                    MyPreferences.setPaytmWithdrawBtn(
+                                        requireActivity(),
+                                        res.paytm_withdrawal_btn
+                                    )
+
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/myaccounts/MyAccountBalanceFragment.kt
                                     (activity!!.applicationContext as NinjaApplication).saveWalletInformation(
                                         responseModel
                                     )

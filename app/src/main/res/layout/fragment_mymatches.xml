@@ -3,21 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< Updated upstream
+=======
+    android:background="@color/design_fab_stroke_end_inner_color"
+>>>>>>> Stashed changes
     android:fitsSystemWindows="true">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
+<<<<<<< Updated upstream
         android:layout_height="wrap_content"
         app:tabGravity="fill"
         app:tabMode="fixed"
         app:tabSelectedTextColor="@color/colorPrimary"
+=======
+        android:layout_height="36dp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:background="@drawable/tab_layout_background"
+        android:elevation="@dimen/_15sdp"
+        app:tabBackground="@drawable/tab_layout_selector"
+        app:tabIndicatorHeight="0dp"
+        app:tabMode="fixed"
+        app:tabPaddingEnd="16dp"
+        app:tabPaddingStart="16dp"
+        app:tabRippleColor="@null"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextAppearance="@style/TabTextAppearance"
+>>>>>>> Stashed changes
         app:tabTextColor="@color/black" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+<<<<<<< Updated upstream
+=======
+        android:layout_marginTop="@dimen/_10sdp"
+>>>>>>> Stashed changes
         android:layout_below="@+id/tabs"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 </RelativeLayout>

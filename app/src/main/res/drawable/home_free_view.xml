@@ -3,8 +3,13 @@
     android:shape="rectangle">
 
     <solid
+<<<<<<< Updated upstream
         android:color="@color/home_free_view"/>
 
+=======
+        android:color="@color/back_net_banking"/>
+    <solid android:color="@color/lightblue" />
+>>>>>>> Stashed changes
     <corners
         android:bottomRightRadius="@dimen/_2sdp"
         android:topRightRadius="@dimen/_2sdp"
@@ -12,6 +17,11 @@
         android:bottomLeftRadius="@dimen/_2sdp"/>
 
     <stroke
+<<<<<<< Updated upstream
         android:color="@color/green"
         android:width="0.5dp"/>
+=======
+        android:color="@color/accent_material_light"
+        android:width="0dp"/>
+>>>>>>> Stashed changes
 </shape>

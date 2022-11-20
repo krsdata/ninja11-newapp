@@ -48,7 +48,11 @@ data class Response(
 
     @SerializedName("myteam")
     @Expose
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/models/Response.kt
     var myTeamList: List<MyTeamModels>? = null,
+=======
+        var myTeamList: List<MyTeamModels>? = null,
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/models/Response.kt
 
     @SerializedName("my_joined_contest")
     @Expose
@@ -116,6 +120,22 @@ data class Response(
 
     @SerializedName("total_my_withdrawal")
     @Expose
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/models/Response.kt
     var totalMyWithdrawal: String = "0.0"
 
+=======
+    var totalMyWithdrawal: String = "0.0",
+
+    @SerializedName("upcomingmatches")
+    @Expose
+    var upComingMatches: ArrayList<UpcomingMatchesModel>? = null,
+
+    @SerializedName("joinedmatches")
+    @Expose
+    var joinedMatchModel: ArrayList<JoinedMatchModel>? = null,
+
+    @SerializedName("banners")
+    @Expose
+    var matchBanners: ArrayList<MatchBannersModel>? = null
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/models/Response.kt
 ) : Serializable

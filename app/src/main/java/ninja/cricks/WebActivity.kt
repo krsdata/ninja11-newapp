@@ -6,6 +6,10 @@ import android.transition.Slide
 import android.view.Gravity
 import android.view.View
 import android.view.animation.DecelerateInterpolator
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/WebActivity.kt
+=======
+import android.webkit.WebSettings
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/WebActivity.kt
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
@@ -78,6 +82,11 @@ class WebActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
     private fun loadURL() {
         mBinding!!.webBody.webViewClient = MyWebViewClient()
         mBinding!!.webBody.settings.javaScriptEnabled = true
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/WebActivity.kt
+=======
+        mBinding!!.webBody.settings.cacheMode = WebSettings.LOAD_NO_CACHE
+        mBinding!!.webBody.clearCache(true)
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/WebActivity.kt
         if (userId != null && !userId.equals("")) {
             mBinding!!.webBody.loadUrl(URL + userId)
         } else {

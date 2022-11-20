@@ -18,7 +18,11 @@
             android:text="BONUS ON SIGNUP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+<<<<<<< Updated upstream
             android:fontFamily="@font/montserrat_bold"/>
+=======
+            />
+>>>>>>> Stashed changes
 
         <TextView
             android:id="@+id/transaction_id"
@@ -27,7 +31,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="#12344TRANSACTION ID"
+<<<<<<< Updated upstream
             android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
             android:layout_marginTop="4dp" />
 
         <TextView
@@ -37,7 +45,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="10-11-1985"
+<<<<<<< Updated upstream
             android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
             android:layout_marginTop="4dp" />
     </LinearLayout>
 
@@ -50,6 +62,10 @@
         android:text="-$12"
         android:textColor="#282828"
         android:layout_alignParentRight="true"
+<<<<<<< Updated upstream
         android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
         android:layout_centerVertical="true" />
 </RelativeLayout>

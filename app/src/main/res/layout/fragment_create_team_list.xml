@@ -24,7 +24,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_10sdp"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                 android:gravity="center_vertical"
                 android:text="Select 1 - 4 Wicket - Keepers"
                 android:textColor="@color/black"
@@ -73,7 +77,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/open_sans_light"
+=======
+
+>>>>>>> Stashed changes
                     android:text="SELECTED BY"
                     android:textColor="@color/black"
                     android:textSize="12sp" />

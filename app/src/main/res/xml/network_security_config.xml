@@ -6,6 +6,10 @@
         </trust-anchors>
     </base-config>
     <domain-config cleartextTrafficPermitted="true">
+<<<<<<< Updated upstream
         <domain includeSubdomains="true">rest.fancode11.com</domain>
+=======
+        <domain includeSubdomains="true">rest.ninja11.in</domain>
+>>>>>>> Stashed changes
     </domain-config>
 </network-security-config>

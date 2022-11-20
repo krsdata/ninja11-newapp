@@ -21,6 +21,10 @@ data class ResponseModel(
     @SerializedName("is_account_verified")
     val isAccountVerified: Int = 0,
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/models/ResponseModel.kt
+=======
+    @SerializedName("image_url")
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/models/ResponseModel.kt
     val image_url: String = "",
 
     @SerializedName("token")
@@ -59,7 +63,15 @@ data class ResponseModel(
 
     @SerializedName("system_token")
     @Expose
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/models/ResponseModel.kt
     var systemToken: String = ""
+=======
+    var systemToken: String = "",
+
+    @SerializedName("pass_code")
+    @Expose
+    var passcode: Boolean
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/models/ResponseModel.kt
 
 
 ) : Serializable

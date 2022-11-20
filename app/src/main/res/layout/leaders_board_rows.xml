@@ -33,7 +33,11 @@
                 android:id="@+id/team_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/open_sans_light"
+=======
+
+>>>>>>> Stashed changes
                 android:maxLines="1"
                 android:singleLine="true"
                 android:text="EXODUSX1(T1)"
@@ -44,7 +48,11 @@
                 android:id="@+id/team_won_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                 android:maxLines="1"
                 android:singleLine="true"
                 android:text="You Won $35"
@@ -82,7 +90,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                 android:text="#"
                 android:textColor="@color/greyish"
                 android:textSize="@dimen/_14sdp" />
@@ -92,7 +104,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                 android:text="4368"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_10sdp" />

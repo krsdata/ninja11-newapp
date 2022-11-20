@@ -38,15 +38,27 @@ object MyPreferences {
     private val KEY_PREF_BANK_WITHDRAW = "bank_withdrawal"
     private val KEY_PREF_UPI_WITHDRAW = "upi_withdrawal"
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/utils/MyPreferences.kt
     private val KEY_DEVICE_TOKEN ="deviceToken"
+=======
+    private val KEY_DEVICE_TOKEN = "deviceToken"
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/utils/MyPreferences.kt
     private val KEY_TEMP_REFER_CODE = "refer_code"
     private const val KEY_INVITE_URL = "invite_url"
     private const val KEY_BASE_URL = "base_url"
     private const val KEY_SYSTEM_TOKEN = "system_token"
     private const val KEY_MIN_WITHDRAWAL = "min_withdrawal"
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/utils/MyPreferences.kt
 
     val KEY_UPCOMING_MATCHES = "upcoming_matches_list"
+=======
+    private const val KEY_PAYTM_WITHDRAW_BTN = "paytm_withdraw_btn"
+
+
+    val KEY_UPCOMING_MATCHES = "upcoming_matches_list"
+    val KEY_NEW_UPCOMING_MATCHES = "new_upcoming_matches_list"
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/utils/MyPreferences.kt
     val KEY_TRANSACTION_HISTORY = "transaction_history"
 
     private fun getPreferences(context: Context?): SharedPreferences? {
@@ -684,4 +696,70 @@ object MyPreferences {
             KEY_MIN_WITHDRAWAL
         )
     }
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/utils/MyPreferences.kt
+=======
+
+    fun setPaytmWithdrawBtn(context: Context, value: Boolean) {
+        putBoolean(
+            context,
+            KEY_PAYTM_WITHDRAW_BTN,
+            value
+        )
+    }
+
+    fun getPaytmWithdrawBtn(context: Context): Boolean {
+        val isShow = getBoolean(
+            context,
+            KEY_PAYTM_WITHDRAW_BTN,
+            false
+        )
+        return isShow
+    }
+
+    fun saveContest(context: Context, contest: String, matchId: String) {
+        setStringPrefrence(context,matchId, contest)
+    }
+
+    fun getContest(context: Context, matchId: String): String? {
+       return getStringPrefrence(context, matchId)
+    }
+
+    fun saveUpcomingMatchesHistory(context: Context, matchHistory: String) {
+        setStringPrefrence(context, "upcoming_matches_history", matchHistory)
+    }
+
+    fun getUpcomingMatchesHistory(context: Context): String?{
+        return getStringPrefrence(context, "upcoming_matches_history")
+    }
+
+    fun saveMyLiveMatchesHistory(context: Context, matchHistory: String) {
+        setStringPrefrence(context, "my_live_matches_history", matchHistory)
+    }
+
+    fun getMyLiveMatchesHistory(context: Context): String?{
+        return getStringPrefrence(context, "my_live_matches_history")
+    }
+
+    fun saveMyCompletedMatches(context: Context, matchHistory: String) {
+        setStringPrefrence(context, "my_completed_matches", matchHistory)
+    }
+
+    fun getMyCompletedMatches(context: Context): String?{
+        return getStringPrefrence(context, "my_completed_matches")
+    }
+
+    fun saveLastTimeForApiCall(context: Context, id: Long, time: Long) {
+        setStringPrefrence(context, id.toString(), time.toString())
+    }
+
+    fun getLastTimeForApiCall(context: Context, id: Long): Long {
+        if(getStringPrefrence(context, id.toString()).isNullOrEmpty()) {
+            return 0L
+        }
+        else
+        {
+            return getStringPrefrence(context, id.toString())!!.toLong()
+        }
+    }
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/utils/MyPreferences.kt
 }

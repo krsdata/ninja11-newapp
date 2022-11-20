@@ -89,6 +89,18 @@ data class ContestModelLists(
 
     @SerializedName("offer_end_at")
     @Expose
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/models/ContestModelLists.kt
     var offer_end_at: String = ""
+=======
+    var offer_end_at: String = "",
+
+    @SerializedName("usable_extra_cash")
+    @Expose
+    var usableExtraCashPercent: Int = 0,
+
+    @SerializedName("title")
+    @Expose
+    var title: String = ""
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/models/ContestModelLists.kt
 
 ) : Serializable, Cloneable

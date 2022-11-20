@@ -17,7 +17,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/_30sdp"
+<<<<<<< Updated upstream
             android:background="@color/white"
+=======
+            android:background="@color/greybackround"
+>>>>>>> Stashed changes
             android:baselineAligned="false"
             android:orientation="horizontal"
             android:paddingStart="10dp"
@@ -35,7 +39,11 @@
                     android:id="@+id/total_team_counts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                     android:text="ALL TEAMS (6689)"
                     android:textColor="@color/greyish"
                     android:textSize="@dimen/_10sdp" />
@@ -55,7 +63,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                     android:text="Points"
                     android:textColor="@color/greyish"
                     android:textSize="@dimen/_10sdp" />
@@ -72,7 +84,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                         android:gravity="right"
                         android:text="RANK"
                         android:textColor="@color/greyish"
@@ -107,6 +123,10 @@
                 android:id="@+id/progressBar"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
+<<<<<<< Updated upstream
+=======
+                android:indeterminateTint="@color/theme_color_hdr"
+>>>>>>> Stashed changes
                 android:layout_centerInParent="true" />
         </RelativeLayout>
     </LinearLayout>

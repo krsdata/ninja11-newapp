@@ -88,6 +88,14 @@ class MyBalanceActivity : AppCompatActivity() {
             val intent = Intent(mContext!!, MyTransactionHistoryActivity::class.java)
             startActivityForResult(intent, REQUEST_CODE_ADD_MONEY)
         }
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/MyBalanceActivity.kt
+=======
+
+        mBinding!!.btnPaytmWithdraw.setOnClickListener {
+            val intent = Intent(mContext!!, PaytmWithdrawActivity::class.java)
+            startActivity(intent)
+        }
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/MyBalanceActivity.kt
     }
 
     private fun updateAccountVerification(accountStatus: AccountDocumentStatus?) {
@@ -163,6 +171,15 @@ class MyBalanceActivity : AppCompatActivity() {
                 startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
             }
         }
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/MyBalanceActivity.kt
+=======
+
+        if (MyPreferences.getPaytmWithdrawBtn(mContext!!)) {
+            mBinding!!.btnPaytmWithdraw.visibility = View.VISIBLE
+        } else {
+            mBinding!!.btnPaytmWithdraw.visibility = View.GONE
+        }
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/MyBalanceActivity.kt
     }
 
     private fun getWalletBalances() {
@@ -193,6 +210,10 @@ class MyBalanceActivity : AppCompatActivity() {
                     if (res != null) {
                         val responseModel = res.walletObjects
                         if (responseModel != null) {
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/MyBalanceActivity.kt
+=======
+
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/MyBalanceActivity.kt
                             if (res.status) {
                                 MyPreferences.setRazorPayId(mContext!!, res.razorPay)
                                 MyPreferences.setShowPaytm(mContext!!, res.paytm_show)
@@ -213,6 +234,14 @@ class MyBalanceActivity : AppCompatActivity() {
                                 )
                                 MyPreferences.setMinWithdrawal(mContext!!, res.minWithdrawal)
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/MyBalanceActivity.kt
+=======
+                                MyPreferences.setPaytmWithdrawBtn(
+                                    mContext!!,
+                                    res.paytm_withdrawal_btn
+                                )
+
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/MyBalanceActivity.kt
                                 (application as NinjaApplication).saveWalletInformation(
                                     responseModel
                                 )

@@ -25,7 +25,11 @@
             android:text="BONUS ON SIGNUP"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+<<<<<<< Updated upstream
             android:fontFamily="@font/montserrat_bold"/>
+=======
+            />
+>>>>>>> Stashed changes
 
 
         <TextView
@@ -35,7 +39,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="6 days ago"
+<<<<<<< Updated upstream
             android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
             android:layout_marginTop="4dp" />
     </LinearLayout>
 

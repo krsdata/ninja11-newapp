@@ -47,6 +47,10 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var customeProgressDialog: CustomeProgressDialog
     private lateinit var mContext: Context
     private var mImageFile: File? = null
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/EditProfileActivity.kt
+=======
+    private var isPasscode: Boolean? =false
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/EditProfileActivity.kt
 
     companion object {
         private var TAG: String = EditProfileActivity::class.java.simpleName
@@ -145,6 +149,13 @@ class EditProfileActivity : AppCompatActivity() {
         if (!TextUtils.isEmpty(userInfo.city)) {
             mBinding!!.editCity.setText(userInfo.city)
         }
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/EditProfileActivity.kt
+=======
+
+        {
+
+        }
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/EditProfileActivity.kt
     }
 
     private fun selectImage() {
@@ -255,6 +266,10 @@ class EditProfileActivity : AppCompatActivity() {
         val mobileNumber = mBinding!!.updateEditMobile.text.toString()
         val emailAddress = mBinding!!.updateEmail.text.toString()
         val cityName = mBinding!!.editCity.text.toString()
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/EditProfileActivity.kt
+=======
+        val passcode = mBinding!!.editPasscode.text.toString()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/EditProfileActivity.kt
         var gender = "male"
         if (!mBinding!!.genderMale.isChecked) {
             gender = "female"
@@ -279,9 +294,19 @@ class EditProfileActivity : AppCompatActivity() {
         } else if (TextUtils.isEmpty(dateOfBirth)) {
             MyUtils.showToast(this@EditProfileActivity, "Please enter your Date of Birth")
             return
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/EditProfileActivity.kt
         }
 
         mBinding!!.progressBar.visibility = View.VISIBLE
+=======
+        }else if (TextUtils.isEmpty(passcode) && passcode.length != 6 && !isPasscode!!) {
+            MyUtils.showToast(this@EditProfileActivity, "Please enter new passcode")
+            return
+        }
+
+
+            mBinding!!.progressBar.visibility = View.VISIBLE
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/EditProfileActivity.kt
 
         val jsonRequest = JsonObject()
         jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
@@ -294,6 +319,10 @@ class EditProfileActivity : AppCompatActivity() {
         jsonRequest.addProperty("city", cityName)
         jsonRequest.addProperty("gender", gender)
         jsonRequest.addProperty("dateOfBirth", dateOfBirth)
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/EditProfileActivity.kt
+=======
+        jsonRequest.addProperty("pass_code", passcode)
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/EditProfileActivity.kt
 
         WebServiceClient(this).client.create(IApiMethod::class.java).updateProfile(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
@@ -360,8 +389,16 @@ class EditProfileActivity : AppCompatActivity() {
                             if (infoModels != null) {
                                 (application as NinjaApplication).saveUserInformations(infoModels)
                                 userInfo = (application as NinjaApplication).userInformations
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/EditProfileActivity.kt
                                 initProfile()
                                 updateUserOtherInfo()
+=======
+                                if (res.passcode != null){
+                                    isPasscode = res.passcode
+                                }
+                                    initProfile()
+                                    updateUserOtherInfo()
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/EditProfileActivity.kt
                             } else {
                                 MyUtils.showToast(
                                     this@EditProfileActivity,

@@ -1,5 +1,11 @@
 package ninja.cricks.requestmodels
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/requestmodels/RequestPaytmModel.kt
+=======
+import androidx.annotation.Keep
+
+@Keep
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/requestmodels/RequestPaytmModel.kt
 data class RequestPaytmModel(
     internal var ORDER_ID: String,
     internal var CUST_ID: String,

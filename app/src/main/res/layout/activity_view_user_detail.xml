@@ -17,7 +17,11 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+<<<<<<< Updated upstream
             android:background="?attr/colorPrimary"
+=======
+            android:background="@drawable/header_gradient"
+>>>>>>> Stashed changes
             android:fitsSystemWindows="true"
             app:theme="@style/ToolbarTheme" />
 
@@ -51,7 +55,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                         android:text="League Name:"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11sdp" />
@@ -61,7 +69,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.2"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                         android:text=""
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/_11sdp" />
@@ -84,7 +96,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                         android:text="League Duration:"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11sdp" />
@@ -94,7 +110,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.2"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                         android:text=""
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/_11sdp" />
@@ -117,7 +137,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                         android:text="Name:"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11sdp" />
@@ -127,7 +151,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.2"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                         android:text=""
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/_11sdp" />
@@ -150,7 +178,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                         android:text="Team Name:"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11sdp" />
@@ -160,7 +192,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.2"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                         android:text=""
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/_11sdp" />
@@ -183,7 +219,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                         android:text="Total Points:"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11sdp" />
@@ -193,7 +233,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.2"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                         android:text=""
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/_11sdp" />
@@ -216,7 +260,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                         android:text="Current Rank:"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11sdp" />
@@ -226,7 +274,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.2"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/open_sans_semibold"
+=======
+
+>>>>>>> Stashed changes
                         android:text=""
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/_11sdp" />
@@ -259,7 +311,11 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center|start"
                 android:layout_weight="2.4"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                 android:gravity="center|start"
                 android:text="Match Played"
                 android:textColor="@color/material_grey_800"
@@ -270,7 +326,11 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1.3"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                 android:gravity="center"
                 android:text="Points"
                 android:textColor="@color/material_grey_800"
@@ -281,7 +341,11 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1.3"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                 android:gravity="center"
                 android:text="Team"
                 android:textColor="@color/material_grey_800"
@@ -317,6 +381,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+<<<<<<< Updated upstream
+=======
+            android:indeterminateTint="@color/theme_color_hdr"
+>>>>>>> Stashed changes
             android:layout_gravity="center" />
     </RelativeLayout>
 </layout>

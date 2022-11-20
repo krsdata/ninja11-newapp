@@ -123,6 +123,14 @@ class MyAccountFragment : BaseFragment() {
 
                                     MyPreferences.setMinWithdrawal(requireActivity(), res.minWithdrawal)
 
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/dashboard/MyAccountFragment.kt
+=======
+                                    MyPreferences.setPaytmWithdrawBtn(
+                                        requireActivity(),
+                                        res.paytm_withdrawal_btn
+                                    )
+
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/dashboard/MyAccountFragment.kt
                                     (activity!!.applicationContext as NinjaApplication).saveWalletInformation(
                                         responseModel
                                     )

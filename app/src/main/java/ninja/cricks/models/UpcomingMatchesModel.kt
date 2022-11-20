@@ -89,7 +89,15 @@ data class UpcomingMatchesModel(
 
     @SerializedName("dyanamic_message")
     @Expose
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/models/UpcomingMatchesModel.kt
     var dyanamic_message: String = ""
 
+=======
+    var dyanamic_message: String = "",
+
+    @SerializedName("notification")
+    @Expose
+    var notification: String = "",
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/models/UpcomingMatchesModel.kt
 
 ) : Serializable, Cloneable

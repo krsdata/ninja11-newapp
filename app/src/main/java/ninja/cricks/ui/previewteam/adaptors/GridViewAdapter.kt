@@ -67,7 +67,11 @@ class GridViewAdapter(
             viewHolder.playerName.background =
                 ResourcesCompat.getDrawable(
                     context.resources,
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/previewteam/adaptors/GridViewAdapter.kt
                     R.drawable.ract_white_background,
+=======
+                    R.drawable.preview_name_white,
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/previewteam/adaptors/GridViewAdapter.kt
                     null
                 )
             //context.resources.getDrawable(R.drawable.ract_white_background)
@@ -76,11 +80,20 @@ class GridViewAdapter(
             viewHolder.playerName.background =
                 ResourcesCompat.getDrawable(
                     context.resources,
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/previewteam/adaptors/GridViewAdapter.kt
                     R.drawable.ract_black_background,
+=======
+                    R.drawable.preview_name_black,
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/previewteam/adaptors/GridViewAdapter.kt
                     null
                 )
             //context.resources.getDrawable(R.drawable.ract_black_background)
             viewHolder.playerName.setTextColor(context.resources.getColor(R.color.white))
+<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/previewteam/adaptors/GridViewAdapter.kt
+=======
+        //    val typeface = context.resources.getFont(R.font.droidserif)
+         //   viewHolder.playerName.setTypeface(typeface)
+>>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/previewteam/adaptors/GridViewAdapter.kt
         }
 
         if (objects.isPlaying11) {

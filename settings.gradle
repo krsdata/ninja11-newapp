@@ -1,2 +1,33 @@
+<<<<<<< Updated upstream
 include ':app'
 rootProject.name = "Ninja11"
+=======
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+        jcenter()
+        maven {
+            url "https://artifactory.paytm.in/libs-release-local"
+        }
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+        jcenter()
+        maven {
+            url "https://artifactory.paytm.in/libs-release-local"
+        }
+    }
+}
+rootProject.name = "Ninja11-User"
+include ':app'
+include ':ultraviewpager'
+include ':flashbar'
+>>>>>>> Stashed changes

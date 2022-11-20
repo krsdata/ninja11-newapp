@@ -11,9 +11,15 @@
 
     <string name="screen_name_login">Login</string>
     <string name="screen_name_register">Register</string>
+<<<<<<< Updated upstream
     <string name="privacy_policies">By loggin in, you accept you are 18+ and agree to our </string>
     <string name="tnc_text"><u> T&amp;C </u></string>
     <string name="and">&amp; </string>
+=======
+    <string name="privacy_policies">By loggin in, you accept you are 18+ and agree to our</string>
+    <string name="tnc_text"><u> T&amp;C </u></string>
+    <string name="and">&amp;</string>
+>>>>>>> Stashed changes
     <string name="privacypolicy_text"> <u>Privacy Policy </u></string>
     <string name="state_warnings"> We do not allow players from Telangana, Orissa, Sikkim, Nagaland and Assam to play cash games. You  ust be 18+ years to play real money skill games</string>
     <string name="activity_type_contest">Contest</string>
@@ -30,6 +36,10 @@
     <string name="contest_type_contests">Contests</string>
     <string name="contest_type_mycontest">My Contest(0)</string>
     <string name="contest_type_myteam">My Team(0)</string>
+<<<<<<< Updated upstream
+=======
+    <string name="contest_type_playerstats">Stats</string>
+>>>>>>> Stashed changes
 
     <string name="createteam_type_wk">WK(0)</string>
     <string name="createteam_type_bat">BAT(0)</string>
@@ -125,7 +135,67 @@
     <string name="label_update">Ninja11 Update</string>
     <string name="verify_communication">Verify Communication</string>
     <string name="my_reward_points">(100 points = ₹1.00)</string>
+<<<<<<< Updated upstream
     <string name="share_this_code_with_your_friends">Share this code with your friends and after they Signup, both of you will get ₹100 Bonus.</string>
     <string name="arrow_image">arrow image</string>
     <string name="lineup_feature">Lineup feature is for your convenience. Please do due research before create team.</string>
+=======
+    <string name="share_this_code_with_your_friends">Share this code with your friends and after SignUp, You will get ₹100 Bonus. Terms Apply</string>
+    <string name="arrow_image">arrow image</string>
+    <string name="lineup_feature">Lineup feature is for your convenience. Please do due research before create team.</string>
+    <string name="internetconnection">Please check your Internet connection</string>
+
+    <string name="profile">Profile</string>
+    <string name="wallet">Wallet</string>
+    <string name="refer">Refer Friends</string>
+    <string name="live_score">Live Score</string>
+    <string name="point_system">Point System</string>
+    <string name="more">More</string>
+    <string name="logout">Logout</string>
+
+    <string-array name="nav_drawer_labels_new">
+        <item>@string/profile</item>
+        <item>@string/wallet</item>
+        <item>@string/refer</item>
+        <!--<item>@string/live_score</item>-->
+        <item>@string/point_system</item>
+        <item>@string/more</item>
+        <item>@string/logout</item>
+    </string-array>
+
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="login_with_mobile_number">Login With Mobile</string>
+    <string name="continue_with_phone">Continue with Phone</string>
+    <string name="enter_your_phone_number">" your mobile number"</string>
+    <string name="enter_phone_number_here">Enter mobile number here</string>
+    <string name="continue_amp_verify"><![CDATA[Continue & Verify]]></string>
+    <string name="verify_and_wait">Verify and Proceed</string>
+    <string name="confirm_otp">Confirm OTP</string>
+    <string name="enter_otp_we_just_sent_to_your_phone_number">" OTP We just Sent to your Phone Number"</string>
+    <string name="verify_amp_next"><![CDATA[Verify & Next]]></string>
+    <string name="resend">Resend</string>
+    <string name="time_remaining_2_00s">Time Remaining 2:00s</string>
+    <string name="or">or</string>
+    <string name="by_logging_in_you_accept_you_are_18_amp_agree_to_our"><![CDATA[By logging in, You accept you are 18+ & Agree to our]]></string>
+    <string name="t_c"><![CDATA[T&C]]></string>
+    <string name="aand"> <![CDATA[&]]> </string>
+    <string name="privacy"> Privacy</string>
+    <string name="need_help">Need Help</string>
+    <string name="india_s_biggest_fantasy_sports_platform">INDIA\'S BIGGEST FANTASY SPORTS PLATFORM</string>
+    <string name="please_enter_passcode">Please Enter Passcode</string>
+    <string name="clear">clear</string>
+    <string name="filter">Filter</string>
+    <string name="_1_001_above"><![CDATA[1,001 & above]]></string>
+    <string name="number_of_teams">Number of teams</string>
+    <string name="single_entry">Single Entry</string>
+    <string name="multi_entry">Multi Entry</string>
+    <string name="single_winner">Single Winner</string>
+    <string name="multi_winner">Multi Winner</string>
+    <string name="guaranteed">Guaranteed</string>
+    <string name="apply">Apply</string>
+>>>>>>> Stashed changes
 </resources>

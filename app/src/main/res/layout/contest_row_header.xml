@@ -9,9 +9,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+<<<<<<< Updated upstream
         android:layout_marginStart="@dimen/_14sdp"
         android:layout_marginTop="@dimen/_8sdp"
         android:layout_marginEnd="@dimen/_14sdp"
+=======
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_14sdp"
+        android:elevation="@dimen/_5sdp"
+>>>>>>> Stashed changes
         android:gravity="center"
         android:minHeight="@dimen/_40sdp"
         android:orientation="horizontal">
@@ -24,7 +31,11 @@
                 android:id="@+id/contest_icon_text"
                 android:layout_width="@dimen/_35sdp"
                 android:layout_height="match_parent"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_25sdp" />
@@ -50,17 +61,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_bold"
+<<<<<<< Updated upstream
                 android:text="Mega Contest"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12sdp" />
+=======
+                android:elevation="@dimen/_5sdp"
+                android:text="Mega Contest"
+                android:textColor="@color/theme_color_hdr"
+                android:textSize= "@dimen/_13sdp" />
+>>>>>>> Stashed changes
 
             <TextView
                 android:id="@+id/contest_sub_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/open_sans_light"
                 android:text="Get ready for mega winning!!"
                 android:textColor="@color/black"
+=======
+                android:fontFamily="@font/open_sans"
+                android:text="Get ready for mega winning!!"
+                android:textColor="@color/greyish"
+>>>>>>> Stashed changes
                 android:textSize="@dimen/small_info_size" />
         </LinearLayout>
     </LinearLayout>
@@ -85,7 +109,11 @@
             android:layout_gravity="end"
             android:layout_marginEnd="@dimen/_20sdp"
             android:layout_toStartOf="@+id/image_more"
+<<<<<<< Updated upstream
             android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
             android:gravity="center"
             android:paddingStart="@dimen/_10sdp"
             android:paddingEnd="@dimen/_10sdp"

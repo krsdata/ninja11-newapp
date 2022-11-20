@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:background="@color/light_grey_bg">
 
+<<<<<<< Updated upstream
         <androidx.cardview.widget.CardView
             android:id="@+id/message_card"
             android:layout_width="match_parent"
@@ -46,12 +47,18 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+=======
+>>>>>>> Stashed changes
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+<<<<<<< Updated upstream
             android:layout_below="@+id/message_card"
             android:fitsSystemWindows="true">
+=======
+            android:fitsSystemWindows="false">
+>>>>>>> Stashed changes
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/all_game_view_recycler"
@@ -92,7 +99,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/default_rounded_button_sportsfight"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserratsemibold"
+=======
+
+>>>>>>> Stashed changes
                 android:padding="10dp"
                 android:text="@string/label_policy"
                 android:textColor="@color/white"

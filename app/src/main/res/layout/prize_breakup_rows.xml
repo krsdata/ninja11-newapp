@@ -19,7 +19,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+<<<<<<< Updated upstream
             android:fontFamily="@font/montserrat_bold"
+=======
+            android:fontFamily="montserrat_medium"
+>>>>>>> Stashed changes
             android:text="#"
             android:textColor="@color/greyish"
             android:textSize="@dimen/_13sdp" />
@@ -29,7 +33,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
+<<<<<<< Updated upstream
             android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
             android:text="1"
             android:textColor="@color/black"
             android:textSize="@dimen/_13sdp" />
@@ -57,7 +65,11 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/_5sdp"
             android:layout_toStartOf="@+id/winner_rpize"
+<<<<<<< Updated upstream
             android:fontFamily="@font/montserrat_bold"
+=======
+            android:fontFamily="montserrat_medium"
+>>>>>>> Stashed changes
             android:gravity="center"
             android:text="+"
             android:textColor="@color/black"
@@ -69,7 +81,11 @@
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="5dp"
+<<<<<<< Updated upstream
             android:fontFamily="@font/montserrat_bold"
+=======
+            android:fontFamily="montserrat_medium"
+>>>>>>> Stashed changes
             android:gravity="center|end"
             android:text="₹10 Lakhs"
             android:textColor="@color/black"

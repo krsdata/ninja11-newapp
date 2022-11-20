@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+<<<<<<< Updated upstream
     <data>
+=======
+
+    <data>
+
+>>>>>>> Stashed changes
         <variable
             name="contentviews"
             type="ninja.cricks.AddMoneyActivity" />
@@ -24,7 +30,11 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+<<<<<<< Updated upstream
                 android:background="@color/colorPrimaryDark"
+=======
+                android:background="@drawable/header_gradient"
+>>>>>>> Stashed changes
                 android:orientation="vertical" />
 
             <LinearLayout
@@ -43,7 +53,11 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                         android:text="Deposit"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/_12sdp" />
@@ -53,7 +67,11 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                         android:text="Cash"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/_12sdp" />
@@ -64,7 +82,11 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                         android:text="Bonus Cash"
                         android:textColor="@color/grey"
                         android:textSize="@dimen/_12sdp" />
@@ -86,7 +108,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                     android:text="Current Balance"
                     android:textColor="@color/grey"
                     android:textSize="@dimen/_12sdp" />
@@ -97,7 +123,11 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_gravity="center"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                     android:text="₹188"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
@@ -116,7 +146,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                     android:text="Amount to Add"
                     android:textColor="@color/grey"
                     android:textSize="@dimen/_12sdp" />
@@ -133,7 +167,11 @@
                     android:maxLength="5"
                     android:maxLines="1"
                     android:singleLine="true"
+<<<<<<< Updated upstream
                     android:text="500"
+=======
+                    android:text="100"
+>>>>>>> Stashed changes
                     android:textSize="@dimen/_18sdp" />
 
                 <LinearLayout
@@ -147,7 +185,11 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/button_selector_black"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                         android:gravity="center"
                         android:padding="8dp"
                         android:text="100"
@@ -161,7 +203,11 @@
                         android:layout_marginStart="8dp"
                         android:layout_weight="1"
                         android:background="@drawable/button_selector_black"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                         android:gravity="center"
                         android:padding="8dp"
                         android:text="200"
@@ -175,7 +221,11 @@
                         android:layout_marginStart="8dp"
                         android:layout_weight="1"
                         android:background="@drawable/button_selector_black"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                         android:gravity="center"
                         android:padding="8dp"
                         android:text="300"
@@ -189,7 +239,11 @@
                         android:layout_marginStart="8dp"
                         android:layout_weight="1"
                         android:background="@drawable/default_rounded_button_sportsfight"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                         android:gravity="center"
                         android:padding="8dp"
                         android:text="500"
@@ -212,7 +266,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                     android:text="Wallet Payments"
                     android:textColor="@color/greyish"
                     android:textSize="@dimen/_12sdp" />
@@ -230,7 +288,11 @@
                         android:checked="true"
                         android:drawableStart="@drawable/icon_paytm"
                         android:drawablePadding="10dp"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                         android:text="Paytm"
                         android:textSize="@dimen/_12sdp"
                         android:visibility="visible" />
@@ -240,8 +302,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="0.8dp"
                         android:layout_marginTop="5dp"
+<<<<<<< Updated upstream
                         android:visibility="gone"
                         android:background="@color/greyish" />
+=======
+                        android:background="@color/greyish"
+                        android:visibility="gone" />
+>>>>>>> Stashed changes
 
                     <RadioButton
                         android:id="@+id/use_wallet_gpay"
@@ -251,7 +318,11 @@
                         android:layout_marginRight="4dp"
                         android:drawableStart="@drawable/icon_google"
                         android:drawablePadding="10dp"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                         android:text="Gpay"
                         android:textSize="@dimen/_12sdp"
                         android:visibility="visible" />
@@ -261,8 +332,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="0.8dp"
                         android:layout_marginTop="5dp"
+<<<<<<< Updated upstream
                         android:visibility="gone"
                         android:background="@color/greyish" />
+=======
+                        android:background="@color/greyish"
+                        android:visibility="gone" />
+>>>>>>> Stashed changes
 
                     <RadioButton
                         android:id="@+id/use_wallet_phonepay"
@@ -273,7 +349,11 @@
                         android:checked="false"
                         android:drawableStart="@drawable/icon_phonepay"
                         android:drawablePadding="10dp"
+<<<<<<< Updated upstream
                         android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                         android:text="Credit Card/ Debit Card/ Netbanking/ Wallets"
                         android:textSize="@dimen/_12sdp"
                         android:visibility="visible" />
@@ -287,6 +367,7 @@
                 </RadioGroup>
             </LinearLayout>
 
+<<<<<<< Updated upstream
             <RelativeLayout
                 android:id="@+id/rel_payment"
                 android:layout_width="match_parent"
@@ -294,14 +375,99 @@
                 android:layout_below="@+id/lineapayment"
                 android:layout_margin="10dp"
                 android:background="@drawable/default_rounded_button_sportsfight"
+=======
+            <LinearLayout
+                android:id="@+id/coupon_code_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lineapayment"
+                android:layout_margin="10dp"
+                android:background="@drawable/rounded_corner_white"
+>>>>>>> Stashed changes
                 android:orientation="vertical"
                 android:padding="10dip">
+
+                <TextView
+<<<<<<< Updated upstream
+                    android:id="@+id/add_Cash"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/montserrat_bold"
+=======
+                    android:id="@+id/ask_coupon_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="Do you have Coupon Code?"
+                    android:textColor="@color/wallet_link_text_light"
+                    android:textSize="@dimen/_12sdp" />
+
+                <LinearLayout
+                    android:id="@+id/code_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <EditText
+                        android:id="@+id/edit_coupon"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginEnd="@dimen/_5sdp"
+                        android:layout_weight="2"
+                        android:background="@drawable/button_selector_verify"
+
+                        android:hint="Coupon code add here"
+                        android:inputType="textCapCharacters"
+                        android:maxLines="1"
+                        android:paddingStart="@dimen/_10sdp"
+                        android:paddingEnd="@dimen/_10sdp"
+                        android:singleLine="true"
+                        android:textSize="@dimen/_14sdp" />
+
+                    <RelativeLayout
+                        android:id="@+id/coupo_code_apply"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android:background="@drawable/default_rounded_button_sportsfight"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+
+                            android:gravity="center"
+                            android:text="Apply"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_12sdp" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rel_payment"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_below="@+id/coupon_code_layout"
+                android:layout_margin="35dp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:background="@drawable/default_rounded_button_sportsfight"
+                android:orientation="vertical"
+
+                android:padding="5dip">
 
                 <TextView
                     android:id="@+id/add_Cash"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:fontFamily="@font/montserrat_bold"
+
+>>>>>>> Stashed changes
                     android:gravity="center"
                     android:text="ADD CASH"
                     android:textColor="@color/white"
@@ -312,7 +478,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rel_payment"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_regular"
+=======
+                android:fontFamily="@font/open_sans"
+>>>>>>> Stashed changes
                 android:gravity="center"
                 android:padding="8dp"
                 android:text="@string/state_warnings"

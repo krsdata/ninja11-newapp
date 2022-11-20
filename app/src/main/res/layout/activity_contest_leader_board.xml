@@ -17,7 +17,11 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+<<<<<<< Updated upstream
             android:background="?attr/colorPrimary"
+=======
+            android:background="@drawable/header_gradient"
+>>>>>>> Stashed changes
             android:fitsSystemWindows="true"
             app:theme="@style/ToolbarTheme" />
 
@@ -27,7 +31,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar"
             android:layout_margin="@dimen/_10sdp"
+<<<<<<< Updated upstream
             app:cardBackgroundColor="@color/colorAccent_light"
+=======
+            android:paddingTop="@dimen/_30sdp"
+            app:cardBackgroundColor="@color/white"
+>>>>>>> Stashed changes
             app:cardCornerRadius="@dimen/_30sdp"
             app:cardElevation="@dimen/_5sdp">
 
@@ -43,6 +52,10 @@
                     android:clipToPadding="false"
                     android:layoutAnimation="@anim/layout_animation"
                     android:paddingStart="@dimen/_7sdp"
+<<<<<<< Updated upstream
+=======
+                    android:paddingTop="@dimen/_7sdp"
+>>>>>>> Stashed changes
                     android:paddingEnd="@dimen/_7sdp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -65,7 +78,11 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center|start"
                 android:layout_weight="2.4"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_medium"
+=======
+                android:fontFamily="montserrat_medium"
+>>>>>>> Stashed changes
                 android:gravity="center|start"
                 android:text="TOP USERS"
                 android:textColor="@color/material_grey_800"
@@ -76,7 +93,11 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1.3"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_medium"
+=======
+                android:fontFamily="montserrat_medium"
+>>>>>>> Stashed changes
                 android:gravity="center"
                 android:text="Points"
                 android:textColor="@color/material_grey_800"
@@ -87,7 +108,11 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1.3"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_medium"
+=======
+                android:fontFamily="montserrat_medium"
+>>>>>>> Stashed changes
                 android:gravity="center"
                 android:text="RANK"
                 android:textColor="@color/material_grey_800"
@@ -118,6 +143,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+<<<<<<< Updated upstream
+=======
+            android:indeterminateTint="@color/theme_color_hdr"
+>>>>>>> Stashed changes
             android:layout_gravity="center"
             android:visibility="gone" />
     </RelativeLayout>

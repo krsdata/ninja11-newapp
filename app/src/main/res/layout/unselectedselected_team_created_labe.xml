@@ -23,7 +23,11 @@
           android:textColor="@color/black"
           android:layout_gravity="center"
           android:textSize="12sp"
+<<<<<<< Updated upstream
           android:fontFamily="@font/montserrat_bold"/>
+=======
+          />
+>>>>>>> Stashed changes
 
       <CheckBox
           android:id="@+id/checkbox_selected_team"

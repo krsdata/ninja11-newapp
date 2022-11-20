@@ -28,7 +28,11 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+<<<<<<< Updated upstream
                 android:background="@color/colorPrimaryDark"
+=======
+                android:background="@drawable/header_gradient"
+>>>>>>> Stashed changes
                 android:orientation="horizontal">
 
                 <ImageView
@@ -48,18 +52,31 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@+id/image_back"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_bold"
                     android:text="Contests"
                     android:visibility="gone"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
+=======
+
+                    android:text="Contests"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:visibility="gone" />
+>>>>>>> Stashed changes
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerInParent="true"
+<<<<<<< Updated upstream
                     android:layout_toEndOf="@+id/image_back"
                     android:layout_toStartOf="@+id/img_fantasy_points"
+=======
+                    android:layout_toStartOf="@+id/img_fantasy_points"
+                    android:layout_toEndOf="@+id/image_back"
+>>>>>>> Stashed changes
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:weightSum="2">
@@ -76,7 +93,11 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_marginStart="@dimen/_3sdp"
+<<<<<<< Updated upstream
                             android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                             android:gravity="center"
                             android:text="AU-W"
                             android:textColor="@color/white"
@@ -87,7 +108,11 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_marginStart="@dimen/_3sdp"
+<<<<<<< Updated upstream
                             android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                             android:gravity="center"
                             android:text="vs"
                             android:textColor="@color/white" />
@@ -98,7 +123,11 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_marginStart="@dimen/_3sdp"
+<<<<<<< Updated upstream
                             android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                             android:gravity="center"
                             android:text="AU-W"
                             android:textColor="@color/white"
@@ -108,8 +137,13 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+<<<<<<< Updated upstream
                         android:layout_weight="1"
                         android:layout_gravity="center|end"
+=======
+                        android:layout_gravity="center|end"
+                        android:layout_weight="1"
+>>>>>>> Stashed changes
                         android:gravity="center|end"
                         android:orientation="horizontal">
 
@@ -118,8 +152,13 @@
                             android:layout_width="22dp"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="5dp"
+<<<<<<< Updated upstream
                             android:visibility="gone"
                             android:src="@drawable/ic_av_timer_black_24dp"
+=======
+                            android:src="@drawable/ic_av_timer_black_24dp"
+                            android:visibility="gone"
+>>>>>>> Stashed changes
                             app:tint="@color/white" />
 
                         <TextView
@@ -127,6 +166,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center|end"
+<<<<<<< Updated upstream
                             android:fontFamily="@font/montserrat_bold"
                             android:gravity="center|end"
                             android:paddingTop="@dimen/_4sdp"
@@ -134,6 +174,15 @@
                             android:paddingStart="@dimen/_7sdp"
                             android:paddingBottom="@dimen/_4sdp"
                             android:background="@drawable/rounded_timer_back"
+=======
+                            android:background="@drawable/rounded_timer_back"
+
+                            android:gravity="center|end"
+                            android:paddingStart="@dimen/_7sdp"
+                            android:paddingTop="@dimen/_4sdp"
+                            android:paddingEnd="@dimen/_7sdp"
+                            android:paddingBottom="@dimen/_4sdp"
+>>>>>>> Stashed changes
                             android:text=""
                             android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/_10sdp" />
@@ -165,7 +214,12 @@
                 android:id="@+id/include_contest_row"
                 layout="@layout/contest_rows_inner"
                 android:layout_width="match_parent"
+<<<<<<< Updated upstream
                 android:layout_height="wrap_content" />
+=======
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_8sdp"/>
+>>>>>>> Stashed changes
 
             <include
                 android:id="@+id/include_live_match_row"
@@ -173,14 +227,102 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
+<<<<<<< Updated upstream
 
         </RelativeLayout>
 
+=======
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/view_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/contest_views"
+            android:layout_marginStart="@dimen/_7sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:padding="@dimen/_5sdp"
+            android:background="@color/greybackround"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/confirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:gravity="start"
+                    android:text="C = Confirmed"
+                    android:textColor="@color/grand_league"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:id="@+id/multi_join"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="M = Multiple Team"
+                    android:textColor="@color/grand_league"
+                    android:textSize="@dimen/_10sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/bonus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:gravity="start"
+                    android:text="B = Bonus"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:textColor="@color/grand_league"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:id="@+id/extra_cash"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:fontFamily="@font/montserrat_medium"
+                    android:text="EC = Extra Cash"
+                    android:textColor="@color/grand_league"
+                    android:textSize="@dimen/_10sdp"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/black_transparent"
+            android:layout_below="@+id/view_layout"/>
+
+>>>>>>> Stashed changes
         <RelativeLayout
             android:id="@+id/relative_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+<<<<<<< Updated upstream
             android:layout_below="@+id/contest_views">
+=======
+            android:layout_below="@+id/view_layout">
+>>>>>>> Stashed changes
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs"

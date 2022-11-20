@@ -25,7 +25,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                 android:text="Share this contest with your friends"
                 android:textColor="@color/black"
                 android:textSize="@dimen/small_info_size" />
@@ -47,7 +51,11 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                 android:text="Prize Pool"
                 android:textColor="@color/black"
                 android:textSize="@dimen/small_info_size" />
@@ -57,7 +65,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+<<<<<<< Updated upstream
                 android:fontFamily="@font/montserrat_regular"
+=======
+
+>>>>>>> Stashed changes
                 android:text="Entry"
                 android:textColor="@color/black" />
         </RelativeLayout>
@@ -82,7 +94,11 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="5dip"
 
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                     android:text="Rs 50 LAKHS"
                     android:textColor="@color/black"
                     android:textSize="@dimen/header_size"
@@ -98,6 +114,7 @@
                 android:gravity="right"
                 android:orientation="horizontal">
 
+<<<<<<< Updated upstream
                 <TextView
                     android:id="@+id/contest_entry_prize"
                     android:layout_width="75dp"
@@ -108,6 +125,18 @@
                     android:gravity="center"
                     android:padding="6dp"
                     android:text="Rs39"
+=======
+
+                <TextView
+                    android:id="@+id/contest_entry_prize"
+                    android:layout_width="75dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/default_rounded_button_sportsfight"
+                    android:backgroundTint="@color/green"
+                    android:gravity="center"
+                    android:padding="6dp"
+                    android:text="₹39"
+>>>>>>> Stashed changes
                     android:textColor="@color/white"
                     android:textSize="@dimen/header_size"
                     android:textStyle="bold" />
@@ -131,6 +160,10 @@
                 android:id="@+id/contest_progress"
                 android:layout_width="match_parent"
                 android:layout_height="6dp"
+<<<<<<< Updated upstream
+=======
+                android:indeterminateTint="@color/theme_color_hdr"
+>>>>>>> Stashed changes
                 android:indeterminateDrawable="@android:drawable/progress_indeterminate_horizontal"
                 android:indeterminateOnly="false"
                 android:progressDrawable="@drawable/progressbar_inderminate" />
@@ -145,7 +178,11 @@
                     android:id="@+id/total_spot_left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                     android:text="1,979 spots left"
                     android:textColor="@color/error_color_material_dark"
                     android:textSize="13dp"
@@ -157,7 +194,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_medium"
+=======
+
+>>>>>>> Stashed changes
                     android:text="50,000 spots"
                     android:textColor="@color/error_color_material_dark"
                     android:textSize="13dp" />
@@ -182,12 +223,20 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical|left"
+<<<<<<< Updated upstream
+=======
+                android:background="@drawable/kandy"
+>>>>>>> Stashed changes
                 android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="18dp"
                     android:layout_height="18dp"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                     android:gravity="center"
                     android:scaleType="centerInside"
                     android:src="@drawable/trophy_first_pos" />
@@ -197,7 +246,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_3sdp"
+<<<<<<< Updated upstream
                     android:fontFamily="@font/montserrat_bold"
+=======
+
+>>>>>>> Stashed changes
                     android:gravity="center"
                     android:text="₹5 Lakh"
                     android:textSize="@dimen/_8sdp" />
