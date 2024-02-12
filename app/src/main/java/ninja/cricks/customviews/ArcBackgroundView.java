@@ -69,18 +69,6 @@ public class ArcBackgroundView extends View {
         super.onDraw(canvas);
         mPath.reset();
         mPath.moveTo(0, 0);
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/customviews/ArcBackgroundView.java
-        mPath.quadTo(mWidth/2, mArcImageViewTopHeight * 2,mWidth, 0);
-        mPath.lineTo(mWidth,mHeight);
-        mPath.lineTo(0,mHeight);
-        mPath.close();
-        if (mPathShape == null) {
-            mPathShape = new PathShape(mPath, mWidth,mHeight);
-            mLinearGradient = new LinearGradient(0, 0, 0, mHeight, mColors, null, Shader.TileMode.CLAMP);
-        }
-        mShapeDrawable.setShape(mPathShape);
-        mShapeDrawable.setBounds(0,0,mWidth,mHeight);
-=======
         mPath.quadTo(mWidth / 2, mArcImageViewTopHeight * 2, mWidth, 0);
         mPath.lineTo(mWidth, mHeight);
         mPath.lineTo(0, mHeight);
@@ -91,7 +79,6 @@ public class ArcBackgroundView extends View {
         }
         mShapeDrawable.setShape(mPathShape);
         mShapeDrawable.setBounds(0, 0, mWidth, mHeight);
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/customviews/ArcBackgroundView.java
         mShapeDrawable.getPaint().setShader(mLinearGradient);
         mShapeDrawable.draw(canvas);
     }

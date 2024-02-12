@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
-
+            android:fontFamily="open_sans"
             android:text="@string/number_of_teams"
             android:textAllCaps="false"
             android:textColor="@color/black"
@@ -126,7 +126,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
-
+            android:fontFamily="open_sans"
             android:text="Contest Type"
             android:textAllCaps="false"
             android:textColor="@color/black"

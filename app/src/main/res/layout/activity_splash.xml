@@ -11,21 +11,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-<<<<<<< Updated upstream
-        android:background="@color/colorAccent">
-=======
         android:background="@drawable/header_gradient">
->>>>>>> Stashed changes
 
         <ImageView
             android:id="@+id/splash_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-<<<<<<< Updated upstream
-            android:src="@drawable/splash_ninja_red_new" />
-=======
             android:src="@drawable/splash" />
->>>>>>> Stashed changes
     </RelativeLayout>
 </layout>

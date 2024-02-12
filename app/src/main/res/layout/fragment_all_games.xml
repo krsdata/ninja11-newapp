@@ -12,53 +12,11 @@
         android:layout_height="match_parent"
         android:background="@color/light_grey_bg">
 
-<<<<<<< Updated upstream
-        <androidx.cardview.widget.CardView
-            android:id="@+id/message_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="@dimen/_20sdp"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="@dimen/_5sdp">
-
-                <ImageView
-                    android:layout_width="@dimen/_15sdp"
-                    android:layout_height="@dimen/_15sdp"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/label_message"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center|start"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:gravity="center|start"
-                    android:maxLines="1"
-                    android:text=""
-                    android:textColor="@color/color_website"
-                    android:textColorLink="@color/colorPrimary"
-                    android:textSize="@dimen/_10sdp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-=======
->>>>>>> Stashed changes
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-<<<<<<< Updated upstream
-            android:layout_below="@+id/message_card"
-            android:fitsSystemWindows="true">
-=======
             android:fitsSystemWindows="false">
->>>>>>> Stashed changes
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/all_game_view_recycler"
@@ -99,11 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/default_rounded_button_sportsfight"
-<<<<<<< Updated upstream
-                android:fontFamily="@font/montserratsemibold"
-=======
-
->>>>>>> Stashed changes
+                android:fontFamily="open_sans"
                 android:padding="10dp"
                 android:text="@string/label_policy"
                 android:textColor="@color/white"

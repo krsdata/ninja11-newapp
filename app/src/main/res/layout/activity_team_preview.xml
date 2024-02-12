@@ -24,11 +24,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="5dp"
             android:layout_marginTop="@dimen/_3sdp"
-<<<<<<< Updated upstream
-            android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+            android:fontFamily="open_sans"
             android:text="MAN001"
             android:textAllCaps="true"
             android:textColor="@color/white"
@@ -202,11 +198,7 @@
                     android:layout_width="@dimen/_18sdp"
                     android:layout_height="@dimen/_18sdp"
                     android:background="@drawable/team_circle_white"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:text=""
                     android:textColor="@color/black"
@@ -263,11 +255,7 @@
                     android:layout_width="@dimen/_18sdp"
                     android:layout_height="@dimen/_18sdp"
                     android:background="@drawable/team_circle_black"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:text=""
                     android:textColor="@color/white"

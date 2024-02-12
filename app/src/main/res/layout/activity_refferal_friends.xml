@@ -21,11 +21,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-<<<<<<< Updated upstream
-            android:background="@color/colorPrimaryDark"
-=======
             android:background="@drawable/header_gradient"
->>>>>>> Stashed changes
             android:orientation="vertical"
             />
         <RelativeLayout
@@ -46,10 +42,7 @@
                  android:id="@+id/progress_bar"
                  android:layout_width="30dp"
                  android:layout_height="30dp"
-<<<<<<< Updated upstream
-=======
                  android:indeterminateTint="@color/theme_color_hdr"
->>>>>>> Stashed changes
                  android:layout_centerInParent="true"/>
 
             <RelativeLayout
@@ -70,11 +63,7 @@
                     android:layout_marginTop="20dp"
                     android:text="YOU HAVE NOT REFFERED WITH ANY FRIENDS"
                     android:textColor="@color/black"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/montserrat_bold"/>
-=======
-                    />
->>>>>>> Stashed changes
+                    android:fontFamily="open_sans"/>
 
                 <Button
                     android:id="@+id/reffer_now_button"

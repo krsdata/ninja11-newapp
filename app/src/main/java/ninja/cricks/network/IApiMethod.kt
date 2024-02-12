@@ -1,9 +1,6 @@
 package ninja.cricks.network
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/network/IApiMethod.kt
-=======
 import androidx.annotation.Keep
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/network/IApiMethod.kt
 import com.google.gson.JsonObject
 import ninja.cricks.models.DocumentsModel
 import ninja.cricks.models.ResponseModel
@@ -15,10 +12,7 @@ import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/network/IApiMethod.kt
-=======
 @Keep
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/network/IApiMethod.kt
 interface IApiMethod {
 
     @Headers("Content-Type: application/json")
@@ -26,13 +20,10 @@ interface IApiMethod {
     fun customerLogin(@Body request: JsonObject): Call<ResponseModel>
 
     @Headers("Content-Type: application/json")
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/network/IApiMethod.kt
-=======
     @POST("api/v3/mobileLogin")
     fun phoneLogin(@Body request: JsonObject): Call<ResponseModel>
 
     @Headers("Content-Type: application/json")
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/network/IApiMethod.kt
     @POST("member/logout")
     fun logout(@Body request: JsonObject): Call<UsersPostDBResponse>
 
@@ -224,8 +215,6 @@ interface IApiMethod {
     @Headers("Content-Type: application/json")
     @POST("playerDetails")
     fun getPlayerDetails(@Body request: JsonObject): Call<JsonObject>
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/network/IApiMethod.kt
-=======
 
     @Headers("Content-Type: application/json")
     @POST("initiateTransaction")
@@ -239,6 +228,12 @@ interface IApiMethod {
     @POST("playerStat")
     fun getPlayerStat(@Body request: JsonObject): Call<JsonObject>
 
+    @Headers("Content-Type: application/json")
+    @POST("initiateUPIPayment")
+    fun initiateUPIPayment(@Body request: JsonObject): Call<JsonObject>
 
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/network/IApiMethod.kt
+    @Headers("Content-Type: application/json")
+    @POST("phonePeInitiate")
+    fun phonePeInitiate(@Body request: JsonObject): Call<JsonObject>
+
 }

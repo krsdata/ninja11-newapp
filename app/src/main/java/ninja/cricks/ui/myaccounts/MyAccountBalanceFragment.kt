@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
@@ -128,12 +129,9 @@ class MyAccountBalanceFragment : BaseFragment() {
                     mBinding!!.btnVerifyAccount.setBackgroundResource(R.drawable.button_selector_red)
                     mBinding!!.btnVerifyAccount.setTextColor(Color.WHITE)
                     mBinding!!.btnVerifyAccount.setOnClickListener {
-                        val intent =
-                            Intent(requireActivity(), VerifyDocumentsActivity::class.java)
-                        startActivityForResult(
-                            intent,
-                            VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC
-                        )
+                        // nned to show message
+//                        val intent = Intent(requireActivity(), VerifyDocumentsActivity::class.java)
+//                        startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
                     }
                 } else if (walletInfo.bankAccountVerified == BindingUtils.BANK_DOCUMENTS_STATUS_VERIFIED) {
                     mBinding!!.btnVerifyAccount.text = "Account Verified"
@@ -150,19 +148,20 @@ class MyAccountBalanceFragment : BaseFragment() {
                     }
                 } else {
                     mBinding!!.btnVerifyAccount.setOnClickListener {
-                        val intent =
-                            Intent(requireActivity(), VerifyDocumentsActivity::class.java)
-                        startActivityForResult(
-                            intent,
-                            VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC
-                        )
+                        // need to show message
+                        Toast.makeText(requireContext(), "Coming soon", Toast.LENGTH_LONG).show()
+
+//                        val intent = Intent(requireActivity(), VerifyDocumentsActivity::class.java)
+//                        startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
                     }
                 }
             }
         } else {
             mBinding!!.btnVerifyAccount.setOnClickListener {
-                val intent = Intent(requireActivity(), VerifyDocumentsActivity::class.java)
-                startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
+                // need to show message
+                Toast.makeText(requireContext(), "Coming soon", Toast.LENGTH_LONG).show()
+//                val intent = Intent(requireActivity(), VerifyDocumentsActivity::class.java)
+//                startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
             }
         }
     }
@@ -187,8 +186,6 @@ class MyAccountBalanceFragment : BaseFragment() {
             responseModel.depositAmount + responseModel.prizeAmount + responseModel.bonusAmount
         mBinding!!.totalBalance.text = String.format("₹%.2f", totalBalance)
         mBinding!!.friendsCounts.text = String.format("%d", responseModel.refferalCounts)
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/myaccounts/MyAccountBalanceFragment.kt
-=======
 
         if (MyPreferences.getPaytmWithdrawBtn(requireActivity())) {
             mBinding!!.btnPaytmWithdraw.visibility = View.VISIBLE
@@ -200,15 +197,11 @@ class MyAccountBalanceFragment : BaseFragment() {
             val intent = Intent(requireContext(), PaytmWithdrawActivity::class.java)
             startActivity(intent)
         }
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/myaccounts/MyAccountBalanceFragment.kt
     }
 
     override fun onResume() {
         super.onResume()
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/myaccounts/MyAccountBalanceFragment.kt
-=======
         if (isVisible)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/myaccounts/MyAccountBalanceFragment.kt
         getWalletBalances()
     }
 
@@ -273,14 +266,11 @@ class MyAccountBalanceFragment : BaseFragment() {
                                         res.minWithdrawal
                                     )
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/myaccounts/MyAccountBalanceFragment.kt
-=======
                                     MyPreferences.setPaytmWithdrawBtn(
                                         requireActivity(),
                                         res.paytm_withdrawal_btn
                                     )
 
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/myaccounts/MyAccountBalanceFragment.kt
                                     (activity!!.applicationContext as NinjaApplication).saveWalletInformation(
                                         responseModel
                                     )

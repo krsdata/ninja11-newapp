@@ -13,13 +13,6 @@
         android:icon="@drawable/ic_dashboard_black_24dp"
         android:title="@string/title_mymatches" />
 
-<<<<<<< Updated upstream
-    <item
-        android:id="@+id/navigation_myaccount"
-        android:iconTint="@color/white"
-        android:icon="@drawable/ic_person_black_24dp"
-        android:title="@string/title_account" />
-=======
     <!--<item
         android:id="@+id/navigation_leader"
         android:iconTint="@color/white"
@@ -31,7 +24,6 @@
         android:iconTint="@color/white"
         android:icon="@drawable/ic_wallet_new"
         android:title="@string/option_wallet" />
->>>>>>> Stashed changes
 
     <item
         android:id="@+id/navigation_notifications"

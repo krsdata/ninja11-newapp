@@ -5,20 +5,11 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-        android:layout_marginLeft="@dimen/matches_view_left_margin_consolidated"
-        android:layout_marginTop="@dimen/matches_view_top_margin"
-        android:layout_marginRight="@dimen/matches_view_left_margin_consolidated"
-        android:layout_marginBottom="5dp"
-        app:cardCornerRadius="6dp"
-        app:cardElevation="12dp">
-=======
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginEnd="@dimen/_8sdp"
         android:layout_marginBottom="@dimen/_11sdp"
         app:cardCornerRadius="6dp"
         app:cardElevation="@dimen/_4sdp">
->>>>>>> Stashed changes
 
         <LinearLayout
             android:id="@+id/linear_trades_status"
@@ -29,33 +20,16 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_20sdp"
-<<<<<<< Updated upstream
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_5sdp"
-=======
                 android:baselineAligned="false"
->>>>>>> Stashed changes
                 android:orientation="horizontal"
                 android:visibility="visible"
                 android:weightSum="2">
 
-<<<<<<< Updated upstream
-                <TextView
-=======
                 <RelativeLayout
->>>>>>> Stashed changes
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="start|center"
                     android:layout_weight="1"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/montserrat_medium"
-                    android:gravity="start|center"
-                    android:text="Prize Pool"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/small_info_size"
-                    android:visibility="visible" />
-=======
                     android:gravity="start|center">
 
                     <TextView
@@ -64,7 +38,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="start|center"
                         android:layout_marginStart="@dimen/_5sdp"
-
+                        android:fontFamily="open_sans"
                         android:gravity="start|center"
                         android:text="Prize Pool"
                         android:textColor="@color/black"
@@ -77,7 +51,7 @@
                         android:layout_height="20dp"
                         android:layout_alignParentStart="true"
                         android:background="@drawable/contest_title_rectacgle"
-
+                        android:fontFamily="open_sans"
                         android:gravity="center"
                         android:paddingStart="5dp"
                         android:paddingEnd="5dp"
@@ -90,16 +64,12 @@
                         android:textSize="@dimen/_10sdp"
                         android:visibility="visible" />
                 </RelativeLayout>
->>>>>>> Stashed changes
 
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="end|center"
-<<<<<<< Updated upstream
-=======
                     android:layout_marginEnd="@dimen/_5sdp"
->>>>>>> Stashed changes
                     android:layout_weight="1"
                     android:gravity="end|center">
 
@@ -109,11 +79,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginEnd="@dimen/_5sdp"
                         android:layout_toStartOf="@+id/entryLabel"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:gravity="center"
                         android:text=""
                         android:textColor="@color/black" />
@@ -125,11 +91,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:gravity="center"
                         android:text="Entry"
                         android:textColor="@color/black" />
@@ -159,19 +121,11 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_1sdp"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_bold"
-                        android:gravity="center"
-                        android:text="₹50000"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_13sdp"
-=======
-
+                        android:fontFamily="open_sans"
                         android:gravity="center"
                         android:text="₹50000"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_15sdp"
->>>>>>> Stashed changes
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -198,11 +152,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_1sdp"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:gravity="center"
                         android:text="₹50000"
                         android:textColor="@color/black"
@@ -228,11 +178,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="0.9"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:gravity="center"
                                 android:scaleType="centerInside"
                                 android:text="B"
@@ -248,24 +194,14 @@
                                 android:layout_marginBottom="2dp"
                                 android:layout_weight="1.1"
                                 android:background="@drawable/bonus_value_back"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_regular"
-                                android:gravity="center"
-                                android:scaleType="centerInside"
-                                android:text="100%"
-=======
-
+                                android:fontFamily="open_sans"
                                 android:gravity="center"
                                 android:scaleType="centerInside"
                                 android:text=""
->>>>>>> Stashed changes
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_9sdp" />
                         </LinearLayout>
 
-<<<<<<< Updated upstream
-                        <TextView
-=======
                         <LinearLayout
                             android:id="@+id/linear_ec"
                             android:layout_width="@dimen/_50sdp"
@@ -278,7 +214,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="0.9"
-
+                                android:fontFamily="open_sans"
                                 android:gravity="center"
                                 android:scaleType="centerInside"
                                 android:text="EC"
@@ -294,7 +230,7 @@
                                 android:layout_marginBottom="2dp"
                                 android:layout_weight="1.1"
                                 android:background="@drawable/bonus_value_back"
-
+                                android:fontFamily="open_sans"
                                 android:gravity="center"
                                 android:scaleType="centerInside"
                                 android:text=""
@@ -303,27 +239,18 @@
                         </LinearLayout>
 
                         <!--<TextView
->>>>>>> Stashed changes
                             android:id="@+id/contest_cancellation"
                             android:layout_width="@dimen/_18sdp"
                             android:layout_height="@dimen/_18sdp"
                             android:layout_marginStart="@dimen/_5sdp"
                             android:background="@drawable/circle_green"
                             android:backgroundTint="@color/colorPrimary"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:gravity="center"
                             android:scaleType="centerInside"
                             android:text="C"
                             android:textColor="@color/white"
-<<<<<<< Updated upstream
-                            android:textSize="@dimen/_11sdp" />
-=======
                             android:textSize="@dimen/_11sdp" />-->
->>>>>>> Stashed changes
 
                         <TextView
                             android:id="@+id/contest_leader_board_label"
@@ -332,11 +259,7 @@
                             android:layout_marginStart="@dimen/_5sdp"
                             android:background="@drawable/circle_green"
                             android:backgroundTint="@color/colorPrimary"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:gravity="center"
                             android:scaleType="centerInside"
                             android:text="LB"
@@ -362,11 +285,7 @@
                         android:layout_gravity="center"
                         android:background="@drawable/default_rounded_button_sportsfight"
                         android:backgroundTint="@color/green"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:gravity="center"
                         android:text="JOIN"
                         android:textColor="@color/white"
@@ -390,10 +309,7 @@
                     android:layout_height="6dp"
                     android:indeterminateDrawable="@android:drawable/progress_indeterminate_horizontal"
                     android:indeterminateOnly="false"
-<<<<<<< Updated upstream
-=======
                     android:indeterminateTint="@color/theme_color_hdr"
->>>>>>> Stashed changes
                     android:max="10"
                     android:progress="4"
                     android:progressDrawable="@drawable/progressbar_inderminate" />
@@ -411,11 +327,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:gravity="center|start"
                         android:text="Contest Full"
                         android:textColor="@color/colorPrimary"
@@ -426,32 +338,13 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-<<<<<<< Updated upstream
-                        android:visibility="invisible"
-                        android:orientation="vertical">
-=======
                         android:orientation="vertical"
                         android:visibility="invisible">
->>>>>>> Stashed changes
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_bold"
-                            android:gravity="center"
-                            android:text="Offer End in"
-                            android:textColor="@color/green"
-                            android:visibility="visible"
-                            android:textSize="@dimen/_9sdp" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/discountTimer"
-                            android:fontFamily="@font/montserrat_bold"
-=======
-
+                            android:fontFamily="open_sans"
                             android:gravity="center"
                             android:text="Offer End in"
                             android:textColor="@color/green"
@@ -462,8 +355,7 @@
                             android:id="@+id/discountTimer"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:gravity="center"
                             android:text=""
                             android:textColor="@color/red"
@@ -475,11 +367,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:gravity="center|end"
                         android:text="50,000 spots"
                         android:textColor="@color/error_color_material_dark"
@@ -490,12 +378,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_22sdp"
-<<<<<<< Updated upstream
-                android:background="@color/grey_lighter_dense"
-=======
                 android:background="@drawable/kandy"
 
->>>>>>> Stashed changes
                 android:baselineAligned="false"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -513,11 +397,7 @@
                     <ImageView
                         android:layout_width="@dimen/_16sdp"
                         android:layout_height="@dimen/_16sdp"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:gravity="center"
                         android:scaleType="centerInside"
                         android:src="@drawable/trophy_first_pos" />
@@ -527,11 +407,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_3sdp"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:gravity="center"
                         android:text="₹5 Lakh"
                         android:textColor="@color/black"
@@ -551,11 +427,7 @@
                         android:id="@+id/winning_percentage"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:gravity="center"
                         android:text=""
                         android:textColor="@color/black"
@@ -566,11 +438,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginStart="@dimen/_5sdp"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:gravity="center"
                         android:text="Winner"
                         android:textColor="@color/black"
@@ -586,53 +454,18 @@
                     android:orientation="horizontal">
 
                     <TextView
-<<<<<<< Updated upstream
-                        android:id="@+id/contest_cancellation_old"
-                        android:layout_width="@dimen/_16sdp"
-                        android:layout_height="@dimen/_16sdp"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:background="@drawable/circle_green"
-                        android:backgroundTint="@color/colorPrimary"
-                        android:fontFamily="@font/montserrat_regular"
-=======
                         android:id="@+id/contest_cancellation"
                         android:layout_width="@dimen/_18sdp"
                         android:layout_height="@dimen/_18sdp"
                         android:layout_marginStart="@dimen/_5sdp"
                         android:background="@drawable/circle_green"
                         android:backgroundTint="@color/green"
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:gravity="center"
                         android:scaleType="centerInside"
                         android:text="C"
                         android:textColor="@color/white"
-<<<<<<< Updated upstream
-                        android:textSize="@dimen/_10sdp"
-                        android:visibility="gone" />
-
-                    <!--<LinearLayout
-                        android:id="@+id/linear_Multi"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_16sdp"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/allowedTeamType"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/montserrat_regular"
-                            android:gravity="center"
-                            android:text=""
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/_10sdp"
-                            android:textStyle="bold" />
-                    </LinearLayout>-->
-=======
                         android:textSize="@dimen/_11sdp" />
->>>>>>> Stashed changes
 
                     <LinearLayout
                         android:id="@+id/linear_Multi"
@@ -649,16 +482,9 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="0.9"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_bold"
+                            android:fontFamily="open_sans"
                             android:gravity="center"
                             android:scaleType="centerInside"
-                            android:text="M"
-=======
-
-                            android:gravity="center"
-                            android:scaleType="centerInside"
->>>>>>> Stashed changes
                             android:textColor="@color/white"
                             android:textSize="@dimen/_11sdp" />
 
@@ -671,16 +497,9 @@
                             android:layout_marginBottom="2dp"
                             android:layout_weight="1.1"
                             android:background="@drawable/bonus_value_back"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_regular"
+                            android:fontFamily="open_sans"
                             android:gravity="center"
                             android:scaleType="centerInside"
-                            android:text="11"
-=======
-
-                            android:gravity="center"
-                            android:scaleType="centerInside"
->>>>>>> Stashed changes
                             android:textColor="@color/black"
                             android:textSize="@dimen/_9sdp" />
                     </LinearLayout>
@@ -713,11 +532,7 @@
                             android:layout_marginBottom="2dp"
                             android:layout_weight="1.1"
                             android:background="@color/white"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:gravity="center"
                             android:scaleType="centerInside"
                             android:text="100%"

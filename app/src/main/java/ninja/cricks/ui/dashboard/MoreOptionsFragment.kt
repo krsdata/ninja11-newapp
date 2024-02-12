@@ -55,10 +55,8 @@ class MoreOptionsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mBinding!!.appVersion.text =
-            String.format("App Version: %s", MyUtils.getAppVersionName(requireActivity()))
-        mBinding!!.recyclerMoreoptions.layoutManager =
-            LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        mBinding!!.appVersion.text = String.format("App Version: %s", MyUtils.getAppVersionName(requireActivity()))
+        mBinding!!.recyclerMoreoptions.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
     }
 
     override fun onResume() {
@@ -152,11 +150,7 @@ class MoreOptionsFragment : BaseFragment() {
 
         val upcomingModel9 = MoreOptionsModel()
         upcomingModel9.viewType = TYPE_LOCAL
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/dashboard/MoreOptionsFragment.kt
-        upcomingModel9.drawable = R.drawable.ic_action_logout_icon
-=======
         upcomingModel9.drawable = R.drawable.ic_baseline_logout_24
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/dashboard/MoreOptionsFragment.kt
         upcomingModel9.id = 9
         val userId = MyPreferences.getUserID(requireActivity())!!
         if (!TextUtils.isEmpty(userId)) {
@@ -168,14 +162,19 @@ class MoreOptionsFragment : BaseFragment() {
 
         Log.e(TAG, "allOptionsList =======> ${allOptionsList.size}")
         mBinding!!.progressBar.visibility = View.VISIBLE
-        BackgroundLoading().execute()
+        mBinding!!.progressBar.visibility = View.INVISIBLE
+
+        val itemDecoration = DividerItemDecoration(requireActivity(), VERTICAL)
+        mBinding!!.recyclerMoreoptions.addItemDecoration(itemDecoration)
+        adapter = MoreOptionsAdaptor(requireActivity(), allOptionsList)
+        mBinding!!.recyclerMoreoptions.adapter = adapter
+
     }
 
     inner class MoreOptionsAdaptor(
         val context: Context,
         val tradeinfoModels: ArrayList<MoreOptionsModel>
-    ) :
-        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         var onItemClick: ((MoreOptionsModel) -> Unit)? = null
         private var optionListObject = tradeinfoModels
 
@@ -310,10 +309,7 @@ class MoreOptionsFragment : BaseFragment() {
                             startActivity(intent, options.toBundle())
                         }
                         9 -> {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/dashboard/MoreOptionsFragment.kt
-=======
                             NinjaApplication.lastApiCallForMatch = 0L
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/dashboard/MoreOptionsFragment.kt
                             logoutApp("Are you sure you want to logout", true)
                         }
                         10 -> {
@@ -328,150 +324,4 @@ class MoreOptionsFragment : BaseFragment() {
             }
         }
     }
-
-    inner class BackgroundLoading : AsyncTask<Unit, Unit, String>() {
-
-        override fun doInBackground(vararg params: Unit): String {
-            Thread.sleep(200)
-            return ""
-        }
-
-        override fun onPostExecute(result: String) {
-            mBinding!!.progressBar.visibility = View.INVISIBLE
-
-            val itemDecoration = DividerItemDecoration(requireActivity(), VERTICAL)
-            mBinding!!.recyclerMoreoptions.addItemDecoration(itemDecoration)
-            adapter = MoreOptionsAdaptor(requireActivity(), allOptionsList)
-            mBinding!!.recyclerMoreoptions.adapter = adapter
-        }
-    }
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/dashboard/MoreOptionsFragment.kt
-
-    /*inner class BackgroundLoading : AsyncTask<Unit, Unit, String>() {
-
-        override fun doInBackground(vararg params: Unit): String {
-            Thread.sleep(200)
-            return ""
-        }
-
-        override fun onPostExecute(result: String) {
-            mBinding!!.progressBar.visibility = View.INVISIBLE
-
-            val itemDecoration = DividerItemDecoration(requireActivity(), VERTICAL)
-            mBinding!!.recyclerMoreoptions.addItemDecoration(itemDecoration)
-            adapter = MoreOptionsAdaptor(requireActivity(), allOptionsList)
-            mBinding!!.recyclerMoreoptions.adapter = adapter
-            adapter.onItemClick = { objects ->
-
-                when (objects.id) {
-                    0 -> {
-                        val intent = Intent(requireActivity(), InviteFriendsActivity::class.java)
-                        val options =
-                            ActivityOptions.makeSceneTransitionAnimation(activity)
-                        startActivity(intent, options.toBundle())
-                    }
-                    1 -> {
-                        val intent = Intent(requireActivity(), WebActivity::class.java)
-                        intent.putExtra(
-                            WebActivity.KEY_TITLE,
-                            BindingUtils.WEB_TITLE_FANTASY_POINTS
-                        )
-                        intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_FANTASY_POINTS)
-                        val options =
-                            ActivityOptions.makeSceneTransitionAnimation(activity)
-                        startActivity(intent, options.toBundle())
-                    }
-                    2 -> {
-                        val intent = Intent(requireActivity(), WebActivity::class.java)
-                        intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_HOW_TO_PLAY)
-                        intent.putExtra(
-                            WebActivity.KEY_URL,
-                            BindingUtils.WEBVIEW_FANTASY_HOW_TO_PLAY
-                        )
-                        val options =
-                            ActivityOptions.makeSceneTransitionAnimation(activity)
-                        startActivity(intent, options.toBundle())
-                    }
-                    3 -> {
-                        val intent = Intent(requireActivity(), WebActivity::class.java)
-                        intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_ABOUT_US)
-                        intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_ABOUT_US)
-                        val options =
-                            ActivityOptions.makeSceneTransitionAnimation(activity)
-                        startActivity(intent, options.toBundle())
-                    }
-                    4 -> {
-                        val intent = Intent(requireActivity(), WebActivity::class.java)
-                        intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_LEGALITY)
-                        intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_LEGALITY)
-                        val options =
-                            ActivityOptions.makeSceneTransitionAnimation(activity)
-                        startActivity(intent, options.toBundle())
-                    }
-                    5 -> {
-                        val intent = Intent(requireActivity(), WebActivity::class.java)
-                        intent.putExtra(
-                            WebActivity.KEY_TITLE,
-                            BindingUtils.WEB_TITLE_TERMS_CONDITION
-                        )
-                        intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_TNC)
-                        val options =
-                            ActivityOptions.makeSceneTransitionAnimation(activity)
-                        startActivity(intent, options.toBundle())
-                    }
-
-                    6 -> {
-                        val intent = Intent(requireActivity(), SupportActivity::class.java)
-                        val options =
-                            ActivityOptions.makeSceneTransitionAnimation(activity)
-                        startActivity(intent, options.toBundle())
-                    }
-
-                    8 -> {
-                        logoutApp("Are you sure you want to logout", true)
-                    }
-
-                    9 -> {
-                        val intent = Intent(requireActivity(), WebActivity::class.java)
-                        intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_FAQ)
-                        intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_FAQ)
-                        val options =
-                            ActivityOptions.makeSceneTransitionAnimation(activity)
-                        startActivity(intent, options.toBundle())
-                    }
-
-                    10 -> {
-                        val intent = Intent(requireActivity(), OfferActivity::class.java)
-                        val options =
-                            ActivityOptions.makeSceneTransitionAnimation(activity)
-                        startActivity(intent, options.toBundle())
-                    }
-
-                    11 -> {
-                        val intent = Intent(requireActivity(), WebActivity::class.java)
-                        intent.putExtra(
-                            WebActivity.KEY_TITLE,
-                            BindingUtils.WEB_TITLE_TOP_REFERRAL_USER
-                        )
-                        intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_TOP_REFERRAL_USER)
-                        val options =
-                            ActivityOptions.makeSceneTransitionAnimation(activity)
-                        startActivity(intent, options.toBundle())
-                    }
-
-                    12 -> {
-                        val intent = Intent(requireActivity(), WebActivity::class.java)
-                        intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_MY_AFFILIATE)
-                        intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_MY_AFFILIATE)
-                        intent.putExtra(WebActivity.USER_ID, MyPreferences.getUserID(requireActivity())!!)
-                        val options =
-                            ActivityOptions.makeSceneTransitionAnimation(activity)
-                        startActivity(intent, options.toBundle())
-                    }
-                }
-            }
-        }
-    }*/
-=======
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/dashboard/MoreOptionsFragment.kt
 }

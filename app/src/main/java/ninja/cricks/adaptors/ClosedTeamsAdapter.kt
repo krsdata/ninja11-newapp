@@ -34,21 +34,13 @@ class ClosedTeamsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/adaptors/ClosedTeamsAdapter.kt
-        var view = LayoutInflater.from(parent.context)
-=======
         val view = LayoutInflater.from(parent.context)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/adaptors/ClosedTeamsAdapter.kt
             .inflate(R.layout.myteam_rows, parent, false)
         return MyMatchViewHolder(view)
     }
 
     override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/adaptors/ClosedTeamsAdapter.kt
-        var objectVal = matchesListObject[viewType]
-=======
         val objectVal = matchesListObject[viewType]
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/adaptors/ClosedTeamsAdapter.kt
         val viewHolder: MyMatchViewHolder =
             parent as MyMatchViewHolder
         viewHolder.userTeamName.text = objectVal.teamName

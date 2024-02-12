@@ -5,13 +5,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-        android:background="@color/light_grey_bg">
-
-        <androidx.core.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-=======
         android:background="#f0eff4">
 
         <LinearLayout
@@ -20,44 +13,24 @@
             android:orientation="vertical"
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
->>>>>>> Stashed changes
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                android:orientation="vertical"
-                android:paddingTop="@dimen/_20sdp">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    app:cardCornerRadius="@dimen/_5sdp">
-=======
                 android:layout_marginTop="15dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:layout_toRightOf="@+id/ic_match_played"
-                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/match_title_history"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
+                        android:fontFamily="open_sans"
                         android:lineSpacingExtra="6sp"
                         android:text="My Playing History"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
-                </LinearLayout>
-
             </LinearLayout>
 
             <LinearLayout
@@ -70,8 +43,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="#ffffff">
->>>>>>> Stashed changes
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/_5sdp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -82,23 +55,10 @@
                             android:id="@+id/ic_match_played"
                             android:layout_width="@dimen/_25sdp"
                             android:layout_height="@dimen/_25sdp"
-<<<<<<< Updated upstream
-                            android:layout_alignParentStart="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_match_played"
-                            app:tint="@color/colorAccent" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="@dimen/_20sdp"
-                            android:layout_toEndOf="@+id/ic_match_played"
-=======
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_match_played"
-                            android:tint="@color/colorAccent" />
+                            app:tint="@color/colorAccent" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -106,49 +66,22 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="20dp"
                             android:layout_toRightOf="@+id/ic_match_played"
->>>>>>> Stashed changes
                             android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/txt_match_played"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/open_sans_semibold"
-                                android:lineSpacingExtra="6sp"
-                                android:text="0"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_13sdp" />
-=======
-
+                                android:fontFamily="open_sans"
                                 android:lineSpacingExtra="6sp"
                                 android:text="0"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
->>>>>>> Stashed changes
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/open_sans_light"
-                                android:lineSpacingExtra="7sp"
-                                android:text="Total Match Played"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_10sdp" />
-                        </LinearLayout>
-                    </RelativeLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    app:cardCornerRadius="@dimen/_5sdp">
-=======
-
+                                android:fontFamily="open_sans"
                                 android:lineSpacingExtra="7sp"
                                 android:text="Match Played"
                                 android:textColor="@color/black"
@@ -159,16 +92,13 @@
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
 
-
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="#ffffff"
-
-                    >
->>>>>>> Stashed changes
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/_5sdp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -179,23 +109,10 @@
                             android:id="@+id/ic_contest_played"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                            android:layout_alignParentStart="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_contest_played"
-                            app:tint="@color/colorAccent" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="@dimen/_20sdp"
-                            android:layout_toEndOf="@+id/ic_contest_played"
-=======
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_contest_played"
-                            android:tint="@color/colorAccent" />
+                            app:tint="@color/colorAccent" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -203,46 +120,21 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="20dp"
                             android:layout_toRightOf="@+id/ic_contest_played"
->>>>>>> Stashed changes
                             android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/txt_contest_played"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/open_sans_semibold"
-                                android:text="0"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_13sdp" />
-=======
-
+                                android:fontFamily="open_sans"
                                 android:text="0"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
->>>>>>> Stashed changes
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/open_sans_light"
-                                android:text="Total Contest Played"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_10sdp" />
-                        </LinearLayout>
-                    </RelativeLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    app:cardCornerRadius="@dimen/_5sdp">
-=======
-
+                                android:fontFamily="open_sans"
                                 android:text="Contest Played"
                                 android:textColor="@color/black"
                                 android:textSize="10sp" />
@@ -251,9 +143,7 @@
 
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
-
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -265,8 +155,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="#ffffff">
->>>>>>> Stashed changes
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/_5sdp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -277,23 +167,10 @@
                             android:id="@+id/ic_contest_win"
                             android:layout_width="@dimen/_25sdp"
                             android:layout_height="@dimen/_25sdp"
-<<<<<<< Updated upstream
-                            android:layout_alignParentStart="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_contest_win"
-                            app:tint="@color/colorAccent" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="@dimen/_20sdp"
-                            android:layout_toEndOf="@+id/ic_contest_win"
-=======
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_contest_win"
-                            android:tint="@color/colorAccent" />
+                            app:tint="@color/colorAccent" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -301,49 +178,22 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="20dp"
                             android:layout_toRightOf="@+id/ic_contest_win"
->>>>>>> Stashed changes
                             android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/txt_contest_win"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/open_sans_semibold"
-                                android:lineSpacingExtra="6sp"
-                                android:text="0"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_13sdp" />
-=======
-
+                                android:fontFamily="open_sans"
                                 android:lineSpacingExtra="6sp"
                                 android:text="0"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
->>>>>>> Stashed changes
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/open_sans_light"
-                                android:lineSpacingExtra="7sp"
-                                android:text="Total Contest Win"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_10sdp" />
-                        </LinearLayout>
-                    </RelativeLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    app:cardCornerRadius="@dimen/_5sdp">
-=======
-
+                                android:fontFamily="open_sans"
                                 android:lineSpacingExtra="7sp"
                                 android:text="Contest Win"
                                 android:textColor="@color/black"
@@ -354,16 +204,13 @@
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
 
-
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="#ffffff"
-
-                    >
->>>>>>> Stashed changes
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/_5sdp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -374,23 +221,10 @@
                             android:id="@+id/ic_total_wining"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                            android:layout_alignParentStart="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_total_wining"
-                            app:tint="@color/colorAccent" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="@dimen/_20sdp"
-                            android:layout_toEndOf="@+id/ic_total_wining"
-=======
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_total_wining"
-                            android:tint="@color/colorAccent" />
+                            app:tint="@color/colorAccent" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -398,56 +232,27 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="20dp"
                             android:layout_toRightOf="@+id/ic_total_wining"
->>>>>>> Stashed changes
                             android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/total_balance"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/open_sans_semibold"
-                                android:text="0.0"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_13sdp" />
-=======
-
+                                android:fontFamily="open_sans"
                                 android:text="0.0"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
->>>>>>> Stashed changes
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/open_sans_light"
-                                android:text="My Total Winning"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_10sdp" />
-                        </LinearLayout>
-                    </RelativeLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    app:cardCornerRadius="@dimen/_5sdp">
-=======
-
+                                android:fontFamily="open_sans"
                                 android:text="Total Winning"
                                 android:textColor="@color/black"
                                 android:textSize="10sp" />
-
                         </LinearLayout>
-
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
-
-
             </LinearLayout>
 
             <LinearLayout
@@ -460,8 +265,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="#ffffff">
->>>>>>> Stashed changes
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/_5sdp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -478,80 +283,43 @@
                             app:tint="@color/colorAccent" />
 
                         <LinearLayout
-<<<<<<< Updated upstream
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="@dimen/_20sdp"
-                            android:layout_toEndOf="@+id/ic_total_deposit"
-=======
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="20dp"
                             android:layout_toRightOf="@+id/ic_total_deposit"
->>>>>>> Stashed changes
                             android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/total_deposit"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/open_sans_semibold"
-                                android:text="0.0"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_13sdp" />
-=======
-
+                                android:fontFamily="open_sans"
                                 android:lineSpacingExtra="6sp"
                                 android:text="0"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
->>>>>>> Stashed changes
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/open_sans_light"
-                                android:text="My Total Deposit"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_10sdp" />
-                        </LinearLayout>
-                    </RelativeLayout>
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginRight="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    app:cardCornerRadius="@dimen/_5sdp">
-=======
-
+                                android:fontFamily="open_sans"
                                 android:lineSpacingExtra="7sp"
                                 android:text="My Total Deposit"
                                 android:textColor="@color/black"
                                 android:textSize="10sp" />
 
                         </LinearLayout>
-
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
-
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
-                    app:cardBackgroundColor="#ffffff"
-
-                    >
->>>>>>> Stashed changes
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/_5sdp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -560,27 +328,12 @@
 
                         <ImageView
                             android:id="@+id/ic_total_withdraw"
-<<<<<<< Updated upstream
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_25sdp"
-                            android:layout_alignParentStart="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_my_account_cash_bonous"
-                            app:tint="@color/colorAccent" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="@dimen/_20sdp"
-                            android:layout_toEndOf="@+id/ic_total_withdraw"
-=======
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
                             android:src="@drawable/ic_my_account_cash_bonous"
-                            android:tint="@color/colorAccent" />
+                            app:tint="@color/colorAccent" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -588,33 +341,13 @@
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="20dp"
                             android:layout_toRightOf="@+id/ic_total_withdraw"
->>>>>>> Stashed changes
                             android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/total_withdraw"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/open_sans_semibold"
-                                android:text="0.0"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_13sdp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/open_sans_light"
-                                android:text="My Total Withdraw"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_10sdp" />
-                        </LinearLayout>
-                    </RelativeLayout>
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
-=======
-
+                                android:fontFamily="open_sans"
                                 android:text="0.0"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
@@ -624,37 +357,30 @@
                                 android:text="Total Withdraw"
                                 android:textSize="10sp"
                                 android:textColor="@color/black"
-
+                                android:fontFamily="open_sans"
                                 />-->
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-
+                                android:fontFamily="open_sans"
                                 android:text="Total Withdraw"
                                 android:textColor="@color/black"
                                 android:textSize="10sp" />
 
-
                         </LinearLayout>
-
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
         </LinearLayout>
->>>>>>> Stashed changes
 
         <ProgressBar
             android:id="@+id/progress_bar_matches"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-<<<<<<< Updated upstream
-            android:indeterminate="true" />
-=======
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:indeterminate="true"
             android:indeterminateTint="@color/theme_color_hdr" />
->>>>>>> Stashed changes
     </RelativeLayout>
 </layout>

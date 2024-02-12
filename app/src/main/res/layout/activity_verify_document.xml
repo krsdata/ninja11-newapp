@@ -23,11 +23,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-<<<<<<< Updated upstream
-            android:background="@color/colorPrimaryDark"
-=======
             android:background="@drawable/header_gradient"
->>>>>>> Stashed changes
             android:orientation="vertical" />
 
         <androidx.core.widget.NestedScrollView
@@ -58,11 +54,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:text="@string/verify_communication"
                         android:textColor="@color/greyish"
                         android:textSize="@dimen/_12sdp" />
@@ -93,11 +85,7 @@
                                 android:id="@+id/verify_mobile_message"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:text="Your mobile number not verified"
                                 android:textColor="@color/black" />
 
@@ -106,11 +94,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/open_sans_semibold"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:text="8767572614"
                                 android:textColor="@color/red" />
                         </LinearLayout>
@@ -143,11 +127,7 @@
                                 android:id="@+id/verify_email_message"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:text="Your Email Address verified"
                                 android:textColor="@color/black" />
 
@@ -156,11 +136,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/open_sans_semibold"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:text=""
                                 android:textColor="@color/green" />
                         </LinearLayout>
@@ -176,11 +152,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:text="Max File Size 2MB"
                             android:textColor="@color/red"
                             android:textSize="@dimen/_12sdp" />
@@ -189,11 +161,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:text="Upload Documents"
                             android:textColor="@color/greyish"
                             android:textSize="@dimen/_12sdp"
@@ -203,11 +171,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:text="Pan Card Details"
                             android:textColor="@color/greyish"
                             android:textSize="@dimen/_12sdp" />
@@ -224,11 +188,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:background="@drawable/default_flat_button_sportsfight"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:gravity="center"
                                 android:padding="8dp"
                                 android:text="PAN"
@@ -239,11 +199,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:gravity="center"
                                 android:padding="8dp"
                                 android:text="OR"
@@ -257,11 +213,7 @@
                                 android:layout_marginStart="8dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/button_selector_black"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:gravity="center"
                                 android:padding="8dp"
                                 android:text="AADHAR"
@@ -282,11 +234,7 @@
                                 android:id="@+id/edit_pancard_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:hint="Name as per PAN Card"
                                 android:imeOptions="actionNext"
                                 android:inputType="textCapCharacters"
@@ -308,11 +256,7 @@
                                 android:id="@+id/edit_pancard_number"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:hint="PAN Card Number"
                                 android:imeOptions="actionNext"
                                 android:inputType="textCapCharacters"
@@ -332,11 +276,7 @@
                                 android:id="@+id/edit_pancard_confirm_number"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:hint="Confirm PAN Card Number"
                                 android:imeOptions="actionNext"
                                 android:inputType="textCapCharacters"
@@ -348,11 +288,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_10sdp"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:text="Upload Pan Card"
                             android:textColor="@color/greyish"
                             android:textSize="@dimen/_12sdp" />
@@ -383,11 +319,7 @@
                                 android:id="@+id/edit_adharcard_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:hint="Enter Name"
                                 android:inputType="textCapCharacters"
                                 android:maxLines="1"
@@ -405,11 +337,7 @@
                                 android:id="@+id/edit_adhar_number"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:hint="ADHARCARD NUMBER"
                                 android:inputType="textCapCharacters"
                                 android:textColor="@color/black"
@@ -424,11 +352,7 @@
                                 android:id="@+id/edit_adhar_confirm_number"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:hint="Confirm ADHARCARD NUMBER"
                                 android:inputType="textCapCharacters"
                                 android:textColor="@color/black"
@@ -439,11 +363,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:text="Upload Adharcard Front"
                             android:textColor="@color/greyish"
                             android:textSize="@dimen/_12sdp" />
@@ -459,11 +379,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:text="Upload Adharcard Back"
                             android:textColor="@color/greyish"
                             android:textSize="@dimen/_12sdp" />
@@ -481,11 +397,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:text="Bank Account Details"
                         android:textColor="@color/greyish"
                         android:textSize="@dimen/_12sdp" />
@@ -502,11 +414,7 @@
                             android:id="@+id/edit_bank_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:hint="Bank Name"
                             android:imeOptions="actionNext"
                             android:inputType="textCapCharacters"
@@ -528,11 +436,7 @@
                             android:id="@+id/edit_account_holder_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:hint="Account holder name"
                             android:imeOptions="actionNext"
                             android:inputType="textCapCharacters"
@@ -552,11 +456,7 @@
                             android:id="@+id/edit_account_number"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:hint="Account number"
                             android:imeOptions="actionNext"
                             android:inputType="textCapCharacters"
@@ -576,11 +476,7 @@
                             android:id="@+id/edit_account_number_confirm"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:hint="Confirm account number"
                             android:imeOptions="actionNext"
                             android:inputType="textCapCharacters"
@@ -600,11 +496,7 @@
                             android:id="@+id/edit_account_ifsc_code"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:imeOptions="actionNext"
                             android:hint="IFSC code"
                             android:inputType="textCapCharacters"
@@ -624,11 +516,7 @@
                             android:id="@+id/edit_accout_type"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:hint="Account type (saving / current)"
                             android:imeOptions="actionNext"
                             android:inputType="textCapCharacters"
@@ -640,11 +528,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:text="Upload Cheque / Passbook"
                         android:textColor="@color/greyish"
                         android:textSize="@dimen/_12sdp" />
@@ -669,11 +553,7 @@
                             android:id="@+id/edit_paytm_number"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:hint="ENTER PAYTM NUMBER"
                             android:inputType="number"
                             android:maxLength="10"
@@ -695,11 +575,7 @@
                             android:id="@+id/edit_upi_id"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:hint="ENTER UPI ID"
                             android:imeOptions="actionDone"
                             android:maxLines="1"
@@ -718,11 +594,7 @@
                         android:layout_marginRight="@dimen/_15sdp"
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/default_rounded_button_sportsfight"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:gravity="center"
                         android:padding="8dp"
                         android:text="SUBMIT FOR VERIFICATION"

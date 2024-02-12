@@ -51,11 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/default_rounded_button_sportsfight"
-<<<<<<< Updated upstream
-                android:fontFamily="@font/montserratsemibold"
-=======
-
->>>>>>> Stashed changes
+                android:fontFamily="open_sans"
                 android:padding="10dp"
                 android:text="VIEW UPCOMING MATCHES"
                 android:textColor="@color/white"
@@ -66,13 +62,9 @@
             android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-            android:layout_gravity="center" />
-=======
             android:layout_gravity="center"
             android:indeterminateTint="@color/theme_color_hdr"
             android:visibility="gone"/>
->>>>>>> Stashed changes
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -1,44 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< Updated upstream
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    >
-
-    <data>
-=======
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
->>>>>>> Stashed changes
         <variable
             name="viewmodel"
             type="ninja.cricks.ui.dashboard.FixtureCricketFragment" />
     </data>
 
-<<<<<<< Updated upstream
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-=======
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
->>>>>>> Stashed changes
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/mycontest_refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-<<<<<<< Updated upstream
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_my_contest"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="50dp"
-            android:clipToPadding="false"/>
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-=======
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_my_contest"
@@ -48,28 +25,10 @@
                 android:paddingBottom="50dp" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
->>>>>>> Stashed changes
         <LinearLayout
             android:id="@+id/linear_empty_contest"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-<<<<<<< Updated upstream
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="You haven't joined a contest yet!!"
-                />
-            <ImageView
-                android:layout_width="@dimen/_120sdp"
-                android:layout_height="@dimen/_120sdp"
-                android:scaleType="fitXY"
-                android:layout_marginTop="20dp"
-                android:src="@mipmap/ic_launcher"/>
-=======
             android:layout_marginTop="@dimen/_20sdp"
             android:gravity="center_horizontal"
             android:orientation="vertical">
@@ -85,32 +44,14 @@
                 android:layout_marginTop="20dp"
                 android:scaleType="fitXY"
                 android:src="@mipmap/ic_launcher_round" />
->>>>>>> Stashed changes
 
             <TextView
                 android:id="@+id/btn_join_contest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                android:text="JOIN A CONTEST"
-                android:textSize="10sp"
-                android:padding="10dp"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/montserratsemibold"
-                android:background="@drawable/default_rounded_button_sportsfight"
-                android:textColor="@color/white"
-                />
-        </LinearLayout>
-        <ProgressBar
-            android:id="@+id/progress_contest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-=======
                 android:layout_marginTop="20dp"
                 android:background="@drawable/default_rounded_button_sportsfight"
-
+                android:fontFamily="open_sans"
                 android:padding="10dp"
                 android:text="JOIN A CONTEST"
                 android:textColor="@color/white"
@@ -125,5 +66,4 @@
             android:indeterminateTint="@color/theme_color_hdr"
             android:layout_gravity="center" />-->
     </RelativeLayout>
->>>>>>> Stashed changes
 </layout>

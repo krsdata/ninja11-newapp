@@ -12,10 +12,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/adaptors/ContestListAdapter.kt
-=======
 import com.bumptech.glide.load.engine.DiskCacheStrategy
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/adaptors/ContestListAdapter.kt
 import com.edify.atrist.listener.OnContestEvents
 import com.edify.atrist.listener.OnMatchTimerStarted
 import ninja.cricks.LeadersBoardActivity
@@ -181,8 +178,6 @@ class ContestListAdapter(
             } else {
                 viewHolder.contestLeaderBoardLabel.visibility = View.GONE
             }
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/adaptors/ContestListAdapter.kt
-=======
 
             if (objectVal.extra_cash_usable == "1") {
                 viewHolder.linearEC.visibility = View.VISIBLE
@@ -201,7 +196,6 @@ class ContestListAdapter(
                 viewHolder.pricePool.visibility = View.VISIBLE
             }
 
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/adaptors/ContestListAdapter.kt
         } else {
             val viewHolder: ImageViewHolder = parent as ImageViewHolder
             viewHolder.contestPrizePool.text =
@@ -236,17 +230,10 @@ class ContestListAdapter(
                 viewHolder.contestBonus.text = String.format("%s%s", objectVal.usableBonus, "%")
             }
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/adaptors/ContestListAdapter.kt
-
-            Glide.with(context)
-                .load(objectVal.giftUrl)
-                .placeholder(R.drawable.phone_image)
-=======
             Glide.with(context)
                 .load(objectVal.giftUrl)
                 //.placeholder(R.drawable.phone_image)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/adaptors/ContestListAdapter.kt
                 .into(viewHolder.giftImage)
 
             if (objectVal.totalSpots == 0) {
@@ -290,8 +277,6 @@ class ContestListAdapter(
             } else {
                 viewHolder.contestLeaderBoardLabel.visibility = View.GONE
             }
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/adaptors/ContestListAdapter.kt
-=======
 
             if (objectVal.extra_cash_usable == "1") {
                 viewHolder.linearEC.visibility = View.VISIBLE
@@ -300,7 +285,6 @@ class ContestListAdapter(
             } else {
                 viewHolder.linearEC.visibility = View.GONE
             }
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/adaptors/ContestListAdapter.kt
         }
     }
 
@@ -338,15 +322,12 @@ class ContestListAdapter(
         val discountTimer: TextView = itemView.findViewById(R.id.discountTimer)
         val discountedPrice: TextView = itemView.findViewById(R.id.discountedPrice)
         val timerLayout: LinearLayout = itemView.findViewById(R.id.timerLayout)
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/adaptors/ContestListAdapter.kt
-=======
 
         val linearEC: LinearLayout = itemView.findViewById(R.id.linear_ec)
         val contestExtraCash: TextView = itemView.findViewById(R.id.contest_extra_cash)
 
         val titleView: TextView = itemView.findViewById(R.id.free_view)
         val pricePool: TextView = itemView.findViewById(R.id.pricePool)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/adaptors/ContestListAdapter.kt
     }
 
     inner class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -376,11 +357,8 @@ class ContestListAdapter(
         val contestLeaderBoardLabel: TextView =
             itemView.findViewById(R.id.contest_leader_board_label)
         val contestMultiPlayer: TextView = itemView.findViewById(R.id.contest_multiplayer)
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/adaptors/ContestListAdapter.kt
-=======
 
         val linearEC: LinearLayout = itemView.findViewById(R.id.linear_ec)
         val contestExtraCash: TextView = itemView.findViewById(R.id.contest_extra_cash)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/adaptors/ContestListAdapter.kt
     }
 }

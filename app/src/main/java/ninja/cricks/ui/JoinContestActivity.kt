@@ -45,10 +45,7 @@ class JoinContestActivity : AppCompatActivity() {
     companion object {
         val TAG: String = JoinContestActivity::class.java.simpleName
         var DISCOUNT_ON_BONUS: Int = 0
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/JoinContestActivity.kt
-=======
         var DISCOUNT_ON_EXTRA_CASH: Int = 0
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/JoinContestActivity.kt
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,34 +65,21 @@ class JoinContestActivity : AppCompatActivity() {
 
         customeProgressDialog = CustomeProgressDialog(mContext)
         mBinding!!.imgClose.setOnClickListener(View.OnClickListener {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/JoinContestActivity.kt
-            setResult(RESULT_OK)
-            finish()
-=======
             onBackPressed()
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/JoinContestActivity.kt
         })
         initWalletInfo()
     }
 
     override fun onBackPressed() {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/JoinContestActivity.kt
-        setResult(RESULT_OK)
-=======
         setResult(RESULT_CANCELED)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/JoinContestActivity.kt
         finish()
     }
 
     private fun initWalletInfo() {
         val walletInfo = (applicationContext as NinjaApplication).walletInfo
         userInfo = (applicationContext as NinjaApplication).userInformations
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/JoinContestActivity.kt
-        JoinContestDialogFragment.DISCOUNT_ON_BONUS = contestModel!!.usableBonus.toInt()
-=======
         DISCOUNT_ON_BONUS = contestModel!!.usableBonus.toInt()
         DISCOUNT_ON_EXTRA_CASH = contestModel!!.usableExtraCashPercent
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/JoinContestActivity.kt
         walletAmount = walletInfo.walletAmount
         bonusAmount = walletInfo.bonusAmount
         extraCashAmount = walletInfo.extraCash
@@ -103,10 +87,7 @@ class JoinContestActivity : AppCompatActivity() {
         var totalEntryFees = 0.0
         var discountFromBonusAmount = 0.0
         var totalPayable = 0.0
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/JoinContestActivity.kt
-=======
         var extraCashPercent = 0.0
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/JoinContestActivity.kt
         if (contestModel!!.isBonusContest) {
             mBinding!!.walletTotalAmount.text = String.format("Bonus Amount =₹%.2f", bonusAmount)
         } else {
@@ -130,12 +111,7 @@ class JoinContestActivity : AppCompatActivity() {
             mBinding!!.usableCashbonus.text = String.format("₹%.2f", actualPayable)
         } else {
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/JoinContestActivity.kt
-            discountFromBonusAmount =
-                ((totalEntryFees * JoinContestDialogFragment.DISCOUNT_ON_BONUS)) / 100
-=======
             discountFromBonusAmount = ((totalEntryFees * DISCOUNT_ON_BONUS)) / 100
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/JoinContestActivity.kt
 
             if (bonusAmount >= discountFromBonusAmount) {
                 totalPayable = totalEntryFees - discountFromBonusAmount
@@ -152,9 +128,6 @@ class JoinContestActivity : AppCompatActivity() {
 
         if (contestModel!!.extra_cash_usable == "1") {
             mBinding!!.extraLayout.visibility = View.VISIBLE
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/JoinContestActivity.kt
-            if (extraCashAmount >= totalEntryFees) {
-=======
 
             extraCashPercent = ((totalEntryFees * DISCOUNT_ON_EXTRA_CASH)) / 100
 
@@ -170,17 +143,12 @@ class JoinContestActivity : AppCompatActivity() {
 
             // old code changed on 23-05-21
             /*if (extraCashAmount >= totalEntryFees) {
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/JoinContestActivity.kt
                 mBinding!!.usableExtraCash.text = String.format("₹%.2f", totalEntryFees)
                 actualPayable = 0.0
             } else if(totalEntryFees >= extraCashAmount) {
                 mBinding!!.usableExtraCash.text = String.format("₹%.2f", extraCashAmount)
                 actualPayable -= extraCashAmount
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/JoinContestActivity.kt
-            }
-=======
             }*/
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/JoinContestActivity.kt
         } else {
             mBinding!!.extraLayout.visibility = View.GONE
         }
@@ -196,11 +164,7 @@ class JoinContestActivity : AppCompatActivity() {
 
             if (actualPayable > walletAmount && !contestModel!!.isBonusContest) {
                 val intent = Intent(mContext, AddMoneyActivity::class.java)
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/JoinContestActivity.kt
-                intent.putExtra(AddMoneyActivity.ADD_EXTRA_AMOUNT, Math.abs(actualPayable))
-=======
                 intent.putExtra(AddMoneyActivity.ADD_EXTRA_AMOUNT, abs(actualPayable))
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/JoinContestActivity.kt
                 startActivityForResult(intent, MyBalanceActivity.REQUEST_CODE_ADD_MONEY)
                 finish()
             } else {
@@ -208,22 +172,14 @@ class JoinContestActivity : AppCompatActivity() {
             }
         }
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/JoinContestActivity.kt
-        mBinding!!.termsCondition.setOnClickListener(View.OnClickListener {
-=======
         mBinding!!.termsCondition.setOnClickListener {
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/JoinContestActivity.kt
             val intent = Intent(mContext, WebActivity::class.java)
             intent.putExtra(WebActivity.KEY_TITLE, BindingUtils.WEB_TITLE_TERMS_CONDITION)
             intent.putExtra(WebActivity.KEY_URL, BindingUtils.WEBVIEW_TNC)
             val options =
                 ActivityOptions.makeSceneTransitionAnimation(this@JoinContestActivity)
             startActivity(intent, options.toBundle())
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/JoinContestActivity.kt
-        })
-=======
         }
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/JoinContestActivity.kt
     }
 
     private fun placeOrders(
@@ -270,12 +226,6 @@ class JoinContestActivity : AppCompatActivity() {
                             if (res.sessionExpired) {
                                 logoutApp("Session Expired Please login again!!", false)
                             } else {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/JoinContestActivity.kt
-                                MyUtils.showMessage(mContext!!, res.message)
-                                val intent1 = Intent(BindingUtils.EXTRA_DATA_GET_WALLET)
-                                LocalBroadcastManager.getInstance(mContext!!).sendBroadcast(intent1)
-                                setResult(RESULT_OK)
-=======
                                 //MyUtils.showMessage(mContext!!, res.message)
                                 //MyUtils.showToast(this@JoinContestActivity, res.message)
                                 val intent1 = Intent(BindingUtils.EXTRA_DATA_GET_WALLET)
@@ -283,7 +233,6 @@ class JoinContestActivity : AppCompatActivity() {
                                 val intent = Intent()
                                 intent.putExtra("keyName", res.message)
                                 setResult(RESULT_OK, intent)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/JoinContestActivity.kt
                                 finish()
                             }
                         } else {

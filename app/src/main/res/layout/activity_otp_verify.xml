@@ -76,11 +76,7 @@
 				android:id="@+id/timer_otp_detect"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-				android:fontFamily="@font/open_sans"
-=======
-
->>>>>>> Stashed changes
+				android:fontFamily="open_sans"
 				android:text="00:43"
 				android:gravity="center"
 				android:textAllCaps="false"
@@ -169,10 +165,7 @@
 			android:background="@drawable/rounded_corner_filled_blue"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-=======
 			android:padding="@dimen/_10sdp"
->>>>>>> Stashed changes
 			android:layout_marginTop="16dp"
 			android:text="Continue"
 			android:textAllCaps="false" />
@@ -183,10 +176,7 @@
 		android:layout_height="wrap_content"
 		android:layout_marginLeft="16dp"
 		android:layout_marginRight="16dp"
-<<<<<<< Updated upstream
-=======
 		android:indeterminateTint="@color/theme_color_hdr"
->>>>>>> Stashed changes
 		android:indeterminate="true"
 		android:visibility="gone"
 		android:layout_centerInParent="true" />

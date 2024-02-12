@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<<<<<<< Updated upstream
-    <color name="colorPrimary">#c61d24</color>
-    <color name="colorPrimaryDark">#c61d24</color>
-    <color name="colorAccent">#c61d24</color>
-
-    <!-- Here you can add color of your choice  -->
-=======
     <!-- Primary theme colors -->
     <color name="colorPrimary">#CA0016</color>
     <color name="colorPrimaryDark">#24292f</color>
@@ -29,26 +22,18 @@
     <color name="notification">#BD0016</color>
 
     <!-- 0172AC Here you can add color of your choice  -->
->>>>>>> Stashed changes
     <color name="ucrop_color_toolbar">@color/colorPrimary</color>
     <color name="ucrop_color_statusbar">@color/colorPrimary</color>
     <color name="ucrop_color_widget_active">@color/colorPrimary</color>
 
     <color name="colorAccent_light">#bcdde6</color>
-<<<<<<< Updated upstream
-=======
     <color name="colorAccent_light_red">#FFA8B3</color>
->>>>>>> Stashed changes
     <color name="secondery_color">#ED1C24</color>
     <color name="greenish_color">#03989E</color>
 
     <color name="player_bg_dark_red">#D84728</color>
     <color name="player_bg_dark_yellow">#00203A</color>
-<<<<<<< Updated upstream
-    <color name="player_seelction_color_shade">@color/player_bg_dark_yellow</color>
-=======
     <color name="player_seelction_color_shade">#008000</color>
->>>>>>> Stashed changes
     <color name="color_website">#00203A</color>
     <color name="button_material_light">#ffd6d7d7</color>
     <color name="light_grey_bg">#F7F4F4</color>
@@ -134,11 +119,7 @@
     <color name="foreground_material_light">@android:color/black</color>
     <color name="forgot_pass">#ff0bb4de</color>
     <color name="get_ready">#ff7d7d7d</color>
-<<<<<<< Updated upstream
-    <color name="grand_league">#ff323232</color>
-=======
     <color name="grand_league">@color/black_grey</color>
->>>>>>> Stashed changes
 
 
     <color name="grey">#ff343434</color>
@@ -248,9 +229,6 @@
 
     <color name="selected_orange_lite">#FFE4BA</color>
     <color name="home_free_view">#8080CBC4</color>
-<<<<<<< Updated upstream
-=======
     <color name="hyperlink">#0bb4de</color>
     <color name="wallet_link_text_light">#707070</color>
->>>>>>> Stashed changes
 </resources>

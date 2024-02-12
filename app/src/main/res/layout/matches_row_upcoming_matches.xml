@@ -12,17 +12,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/matches_view_left_margin_consolidated"
         android:layout_marginEnd="@dimen/matches_view_right_margin"
-<<<<<<< Updated upstream
-        android:fontFamily="@font/montserrat_bold"
-        android:text="UPCOMING MATCHES"
-        android:textColor="@color/black"
-=======
         android:layout_marginBottom="@dimen/_5sdp"
         android:fontFamily="@font/montserrat_bold"
         android:textStyle="bold"
         android:text="UPCOMING MATCHES"
         android:textColor="@color/black_grey"
->>>>>>> Stashed changes
         android:textSize="@dimen/header_size" />
 
     <RelativeLayout
@@ -47,11 +41,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+                android:fontFamily="open_sans"
                 android:text="@string/msg_no_matches"
                 android:textColor="@color/black" />
 

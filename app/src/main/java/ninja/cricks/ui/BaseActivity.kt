@@ -15,31 +15,17 @@ import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/BaseActivity.kt
-import android.os.Environment
 import android.os.Handler
 import android.provider.MediaStore
 import android.text.TextUtils
-import android.util.Base64
-=======
-import android.os.Handler
-import android.provider.MediaStore
-import android.text.TextUtils
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/BaseActivity.kt
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/BaseActivity.kt
-import androidx.core.content.FileProvider
-import com.andrognito.flashbar.Flashbar
-import com.google.firebase.iid.FirebaseInstanceId
-=======
 import com.andrognito.flashbar.Flashbar
 import com.google.firebase.messaging.FirebaseMessaging
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/BaseActivity.kt
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -99,6 +85,8 @@ abstract class BaseActivity : AppCompatActivity() {
         customeProgressDialog = CustomeProgressDialog(this)
         context = this
         userInfo = (application as NinjaApplication).userInformations
+
+        getFirebaseToken()
     }
 
     fun showDeadLineAlert(message: String) {
@@ -114,10 +102,7 @@ abstract class BaseActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/BaseActivity.kt
-=======
 
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/BaseActivity.kt
     fun showMatchTimeUpDialog() {
         val flashBar = Flashbar.Builder(this)
             .gravity(Flashbar.Gravity.BOTTOM)
@@ -423,62 +408,21 @@ abstract class BaseActivity : AppCompatActivity() {
         startActivityForResult(intent, PICK_IMAGE_REQUEST_GALLERY)
     }
 
-    fun updateFireBase() {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/BaseActivity.kt
-        FirebaseInstanceId.getInstance().instanceId
-            .addOnSuccessListener { instanceIdResult ->
-                val deviceToken = instanceIdResult.token
-                if (!TextUtils.isEmpty(deviceToken)) {
-                    notificationToken = deviceToken
-                    MyPreferences.setDeviceToken(this@BaseActivity, deviceToken)
-                }
-//                    var notid =  FirebaseInstanceId.getInstance()
-//                        .getToken(getString(R.string.gcm_default_sender_id), "FCM")
-                val userId = MyPreferences.getUserID(this@BaseActivity)!!
-                if (!TextUtils.isEmpty(deviceToken) && !TextUtils.isEmpty(userId)) {
-                    /*val request = RequestModel()
-                    request.user_id = userId
-                    request.device_id = deviceToken
-                    request.token = MyPreferences.getToken(this@BaseActivity)!!
-                    request.deviceDetails = HardwareInfoManager(this@BaseActivity).collectData(deviceToken)*/
-
-                    val jsonRequest = JsonObject()
-                    jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
-                    jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
-                    jsonRequest.addProperty("device_id", deviceToken)
-
-                    val gson = Gson()
-                    val jsonString: String = gson.toJson(
-                        HardwareInfoManager(this).collectData(
-                            MyPreferences.getDeviceToken(
-                                this
-                            )!!
-                        )
-                    )
-                    val deviceDetails: JsonObject = JsonParser().parse(jsonString).asJsonObject
-                    jsonRequest.add("deviceDetails", deviceDetails)
-
-                    WebServiceClient(this@BaseActivity).client.create(IApiMethod::class.java)
-                        .deviceNotification(jsonRequest)
-                        .enqueue(object : Callback<UsersPostDBResponse?> {
-                            override fun onFailure(
-                                call: Call<UsersPostDBResponse?>?,
-                                t: Throwable?
-                            ) {
-                            }
-
-                            override fun onResponse(
-                                call: Call<UsersPostDBResponse?>?,
-                                response: Response<UsersPostDBResponse?>?
-                            ) {
-                                MyUtils.logd("deviceId", "Posted successfully")
-                            }
-                        })
-                }
-            }
-=======
+    private fun getFirebaseToken() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener {
             val deviceToken = it.result
+            Log.e(TAG, "notification Token ============> $deviceToken")
+            if (!TextUtils.isEmpty(deviceToken)) {
+                notificationToken = deviceToken
+                MyPreferences.setDeviceToken(this@BaseActivity, deviceToken)
+            }
+        }
+    }
+
+    fun updateFireBase() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener {
+            val deviceToken = it.result
+            Log.e(TAG, "notification Token ============> $deviceToken")
             if (!TextUtils.isEmpty(deviceToken)) {
                 notificationToken = deviceToken
                 MyPreferences.setDeviceToken(this@BaseActivity, deviceToken)
@@ -519,7 +463,6 @@ abstract class BaseActivity : AppCompatActivity() {
                     })
             }
         }
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/BaseActivity.kt
     }
 
     fun logoutApp(message: String, boolean: Boolean) {
@@ -532,13 +475,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     private fun genericAlertDialog(message: String, boolean: Boolean) {
         val builder = AlertDialog.Builder(this@BaseActivity)
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/BaseActivity.kt
-        //set title for alert dialog
-        // builder.setTitle("Warning")
-        //set message for alert dialog
-
-=======
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/BaseActivity.kt
         builder.setMessage(message)
         builder.setIcon(android.R.drawable.ic_dialog_alert)
 
@@ -557,14 +493,8 @@ abstract class BaseActivity : AppCompatActivity() {
             jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
             jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/BaseActivity.kt
-            WebServiceClient(this@BaseActivity).client.create(IApiMethod::class.java).logout(
-                jsonRequest
-            )
-=======
             WebServiceClient(this@BaseActivity).client.create(IApiMethod::class.java)
                 .logout(jsonRequest)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/BaseActivity.kt
                 .enqueue(object : Callback<UsersPostDBResponse?> {
                     override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
 

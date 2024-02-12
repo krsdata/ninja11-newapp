@@ -20,11 +20,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-<<<<<<< Updated upstream
-            android:background="@color/colorPrimaryDark"
-=======
             android:background="@drawable/header_gradient"
->>>>>>> Stashed changes
             android:orientation="vertical" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -45,11 +41,7 @@
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-            android:layout_centerInParent="true" />
-=======
             android:layout_centerInParent="true"
             android:indeterminateTint="@color/theme_color_hdr" />
->>>>>>> Stashed changes
     </RelativeLayout>
 </layout>

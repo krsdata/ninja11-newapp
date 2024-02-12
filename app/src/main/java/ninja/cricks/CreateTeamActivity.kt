@@ -39,21 +39,6 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/CreateTeamActivity.kt
-
-class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
-
-    private var playersList: PlayerModels? = null
-
-    // private var isMatchLive: Boolean = false
-    var myTeamModel: MyTeamModels? = null
-
-    // private var playersList: PlayerModels? = null
-    private lateinit var viewPagerAdapter: ViewPagerAdapter
-    var matchObject: UpcomingMatchesModel? = null
-    var crateTeamHashMap: HashMap<String, ArrayList<PlayersInfoModel>> =
-        HashMap<String, ArrayList<PlayersInfoModel>>()
-=======
 // "selected_by_me": true/false
 // "vc_selection":
 // "c_selection":
@@ -66,16 +51,12 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
     private lateinit var viewPagerAdapter: ViewPagerAdapter
     var matchObject: UpcomingMatchesModel? = null
     var crateTeamHashMap: HashMap<String, ArrayList<PlayersInfoModel>> = HashMap()
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/CreateTeamActivity.kt
     private var mBinding: ActivityCreateTeamBinding? = null
 
     companion object {
 
         var CREATETEAM_REQUESTCODE: Int = 2001
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/CreateTeamActivity.kt
-=======
         var CREATETEAM_REQUESTCODE1: Int = 20011
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/CreateTeamActivity.kt
         val SERIALIZABLE_MATCH_KEY: String = "matchObject"
         val SERIALIZABLE_CONTEST_KEY: String = "contest"
         val SERIALIZABLE_SELECTED_TEAMS: String = "selected_teams"
@@ -88,15 +69,9 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         var isEditMode: Boolean = false
         var isCopyTeam: Boolean = false
         val MAX_WICKET_KEEPER: IntArray = intArrayOf(1, 4)
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/CreateTeamActivity.kt
-        val MAX_BATSMAN: IntArray = intArrayOf(1, 6)
-        val MAX_ALL_ROUNDER: IntArray = intArrayOf(1, 6)
-        val MAX_BOWLER: IntArray = intArrayOf(1, 6)
-=======
         val MAX_BATSMAN: IntArray = intArrayOf(3, 6)
         val MAX_ALL_ROUNDER: IntArray = intArrayOf(1, 4)
         val MAX_BOWLER: IntArray = intArrayOf(3, 6)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/CreateTeamActivity.kt
         val MAX_PLAYERS_CRICKET: Int = 11
         val MAX_PLAYERS_FROM_TEAM: Int = 7
 
@@ -170,11 +145,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
                 if (isCopyTeam) {
                     myTeamModel!!.teamId!!.teamId = 0
                 }
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/CreateTeamActivity.kt
-                intent.putExtra(MyTeamFragment.SERIALIZABLE_EDIT_TEAM, myTeamModel)
-=======
                 intent.putExtra(SERIALIZABLE_EDIT_TEAM, myTeamModel)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/CreateTeamActivity.kt
             }
             startActivityForResult(intent, CREATETEAM_REQUESTCODE)
         })
@@ -1206,11 +1177,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
     private fun parseEditTeamModel(
         realList: java.util.ArrayList<PlayersInfoModel>,
         position: Int
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/CreateTeamActivity.kt
-    ): java.util.ArrayList<PlayersInfoModel> {
-=======
     ): ArrayList<PlayersInfoModel> {
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/CreateTeamActivity.kt
         return realList
     }
 

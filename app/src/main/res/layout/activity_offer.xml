@@ -19,11 +19,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-<<<<<<< Updated upstream
-            android:background="@color/colorPrimary"
-=======
             android:background="@drawable/header_gradient"
->>>>>>> Stashed changes
             android:elevation="@dimen/_10sdp"
             android:orientation="vertical" />
 
@@ -49,10 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-<<<<<<< Updated upstream
-=======
             android:indeterminateTint="@color/theme_color_hdr"
->>>>>>> Stashed changes
             android:layout_gravity="center" />
     </RelativeLayout>
 </layout>

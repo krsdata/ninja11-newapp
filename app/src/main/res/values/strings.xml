@@ -11,15 +11,9 @@
 
     <string name="screen_name_login">Login</string>
     <string name="screen_name_register">Register</string>
-<<<<<<< Updated upstream
-    <string name="privacy_policies">By loggin in, you accept you are 18+ and agree to our </string>
-    <string name="tnc_text"><u> T&amp;C </u></string>
-    <string name="and">&amp; </string>
-=======
     <string name="privacy_policies">By loggin in, you accept you are 18+ and agree to our</string>
     <string name="tnc_text"><u> T&amp;C </u></string>
     <string name="and">&amp;</string>
->>>>>>> Stashed changes
     <string name="privacypolicy_text"> <u>Privacy Policy </u></string>
     <string name="state_warnings"> We do not allow players from Telangana, Orissa, Sikkim, Nagaland and Assam to play cash games. You  ust be 18+ years to play real money skill games</string>
     <string name="activity_type_contest">Contest</string>
@@ -36,10 +30,7 @@
     <string name="contest_type_contests">Contests</string>
     <string name="contest_type_mycontest">My Contest(0)</string>
     <string name="contest_type_myteam">My Team(0)</string>
-<<<<<<< Updated upstream
-=======
     <string name="contest_type_playerstats">Stats</string>
->>>>>>> Stashed changes
 
     <string name="createteam_type_wk">WK(0)</string>
     <string name="createteam_type_bat">BAT(0)</string>
@@ -135,11 +126,6 @@
     <string name="label_update">Ninja11 Update</string>
     <string name="verify_communication">Verify Communication</string>
     <string name="my_reward_points">(100 points = ₹1.00)</string>
-<<<<<<< Updated upstream
-    <string name="share_this_code_with_your_friends">Share this code with your friends and after they Signup, both of you will get ₹100 Bonus.</string>
-    <string name="arrow_image">arrow image</string>
-    <string name="lineup_feature">Lineup feature is for your convenience. Please do due research before create team.</string>
-=======
     <string name="share_this_code_with_your_friends">Share this code with your friends and after SignUp, You will get ₹100 Bonus. Terms Apply</string>
     <string name="arrow_image">arrow image</string>
     <string name="lineup_feature">Lineup feature is for your convenience. Please do due research before create team.</string>
@@ -173,7 +159,7 @@
     <string name="enter_your_phone_number">" your mobile number"</string>
     <string name="enter_phone_number_here">Enter mobile number here</string>
     <string name="continue_amp_verify"><![CDATA[Continue & Verify]]></string>
-    <string name="verify_and_wait">Verify and Proceed</string>
+    <string name="verify_and_wait">Verify Your Passcode</string>
     <string name="confirm_otp">Confirm OTP</string>
     <string name="enter_otp_we_just_sent_to_your_phone_number">" OTP We just Sent to your Phone Number"</string>
     <string name="verify_amp_next"><![CDATA[Verify & Next]]></string>
@@ -197,5 +183,4 @@
     <string name="multi_winner">Multi Winner</string>
     <string name="guaranteed">Guaranteed</string>
     <string name="apply">Apply</string>
->>>>>>> Stashed changes
 </resources>

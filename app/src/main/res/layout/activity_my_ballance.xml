@@ -23,11 +23,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-<<<<<<< Updated upstream
-            android:background="@color/colorPrimaryDark"
-=======
             android:background="@drawable/header_gradient"
->>>>>>> Stashed changes
             android:orientation="vertical" />
 
         <ScrollView
@@ -62,11 +58,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:text="TOTAL BALANCE"
                             android:textColor="@color/grey"
                             android:textSize="@dimen/_12sdp" />
@@ -77,11 +69,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="10dip"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:text="₹0"
                             android:textColor="@color/colorPrimaryDark"
                             android:textSize="@dimen/_12sdp" />
@@ -93,11 +81,7 @@
                             android:layout_gravity="center"
                             android:layout_marginTop="10dip"
                             android:background="@drawable/default_rounded_button_sportsfight"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:gravity="center"
                             android:padding="10dp"
                             android:text="ADD CASH"
@@ -128,11 +112,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:text="Winning Amount"
                             android:textColor="@color/grey"
                             android:textSize="@dimen/_12sdp" />
@@ -147,11 +127,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dip"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:text="₹0"
                                 android:textColor="@color/colorPrimaryDark"
                                 android:textSize="@dimen/_12sdp" />
@@ -164,11 +140,7 @@
                                 android:layout_marginTop="@dimen/_5sdp"
                                 android:layout_marginEnd="@dimen/_5sdp"
                                 android:layout_toStartOf="@+id/verify_account"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:text="Verify your account to be eligible to withdraw."
                                 android:textColor="@color/primary_dark_material_light"
                                 android:textSize="@dimen/_7sdp" />
@@ -181,11 +153,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dip"
                                 android:background="@drawable/button_selector_verify"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="VERIFY NOW"
@@ -201,18 +169,12 @@
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dip"
                                 android:background="@drawable/button_selector_verify"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="Withdraw"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_12sdp" />
-<<<<<<< Updated upstream
-=======
 
                             <TextView
                                 android:id="@+id/btn_paytm_withdraw"
@@ -223,13 +185,12 @@
                                 android:layout_gravity="center"
                                 android:layout_marginTop="10dip"
                                 android:background="@drawable/button_selector_verify"
-
+                                android:fontFamily="open_sans"
                                 android:gravity="center"
                                 android:padding="10dp"
                                 android:text="Paytm Withdraw"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_12sdp" />
->>>>>>> Stashed changes
                         </RelativeLayout>
 
                         <View
@@ -247,11 +208,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:text="Deposit Amount"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_12sdp" />
@@ -261,11 +218,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dip"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:text="₹0"
                                 android:textColor="@color/colorPrimaryDark"
                                 android:textSize="@dimen/_12sdp" />
@@ -287,11 +240,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:text="Bonus Amount"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_12sdp" />
@@ -301,11 +250,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dip"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:text="₹0"
                                 android:textColor="@color/colorPrimaryDark"
                                 android:textSize="@dimen/_12sdp" />
@@ -327,13 +272,8 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_regular"
-                                android:text="Extra Cash"
-=======
-
+                                android:fontFamily="open_sans"
                                 android:text="Extra Cash Amount"
->>>>>>> Stashed changes
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_12sdp" />
 
@@ -342,11 +282,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dip"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:text="₹0"
                                 android:textColor="@color/colorPrimaryDark"
                                 android:textSize="@dimen/_12sdp" />
@@ -355,16 +291,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_5sdp"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_regular"
-                                android:text="This amount will be used in Mega Contest only."
-                                android:textColor="@color/black"
-=======
-
+                                android:fontFamily="open_sans"
                                 android:text="This amount will be used in Mega Contest only."
                                 android:textColor="@color/black"
                                 android:visibility="gone"
->>>>>>> Stashed changes
                                 android:textSize="@dimen/_10sdp" />
 
                         </LinearLayout>
@@ -390,11 +320,7 @@
                             android:id="@+id/txt_recent_transaction"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:gravity="center|start"
                             android:text="My Recent Transactions"
                             android:textColor="@color/black"
@@ -415,10 +341,7 @@
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-=======
             android:indeterminateTint="@color/theme_color_hdr"
->>>>>>> Stashed changes
             android:layout_centerInParent="true" />
 
     </RelativeLayout>

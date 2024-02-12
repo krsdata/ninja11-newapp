@@ -69,15 +69,11 @@ data class PlayersInfoModel(
 
     @SerializedName("analytics")
     @Expose
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/models/PlayersInfoModel.kt
-    var analyticsModel: AnalyticsModel? = null
-=======
     var analyticsModel: AnalyticsModel? = null,
 
     @SerializedName("played_last_match")
     @Expose
     var playedLastMatch: String? = null
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/models/PlayersInfoModel.kt
 
 ) : Serializable, Cloneable {
 

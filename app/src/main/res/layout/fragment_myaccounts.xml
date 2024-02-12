@@ -15,15 +15,6 @@
         android:background="@color/white"
         android:fitsSystemWindows="true">
 
-<<<<<<< Updated upstream
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/account_tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabGravity="fill"
-            app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/colorPrimary"
-=======
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/account_tabs"
@@ -41,7 +32,6 @@
             app:tabRippleColor="@null"
             app:tabSelectedTextColor="@color/white"
             app:tabTextAppearance="@style/TabTextAppearance"
->>>>>>> Stashed changes
             app:tabTextColor="@color/black" />
 
         <androidx.viewpager.widget.ViewPager

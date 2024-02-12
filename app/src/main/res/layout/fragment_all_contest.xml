@@ -43,11 +43,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:layout_weight="1"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                    android:fontFamily="open_sans"
                     android:gravity="start"
                     android:text="ENTRY FEES"
                     android:textColor="@color/black"
@@ -57,11 +53,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                    android:fontFamily="open_sans"
                     android:gravity="center|end"
                     android:text="SEARCH BY SPOT SIZE"
                     android:textColor="@color/black"
@@ -80,11 +72,7 @@
                     android:layout_height="@dimen/contest_filter_size"
                     android:layout_marginStart="8dp"
                     android:background="@drawable/circle_green"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:text="ALL"
                     android:textColor="@color/white"
@@ -108,11 +96,7 @@
                             android:id="@+id/rupees"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserratsemibold"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:gravity="center"
                             android:text="₹"
                             android:textColor="@color/black"
@@ -139,11 +123,7 @@
                         android:layout_height="@dimen/contest_filter_size"
                         android:layout_marginStart="8dp"
                         android:background="@drawable/circle_grey"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:gravity="center"
                         android:text="2"
                         android:textColor="@color/black"
@@ -155,11 +135,7 @@
                         android:layout_height="@dimen/contest_filter_size"
                         android:layout_marginStart="8dp"
                         android:background="@drawable/circle_grey"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:gravity="center"
                         android:text="3"
                         android:textColor="@color/black"
@@ -171,11 +147,7 @@
                         android:layout_height="@dimen/contest_filter_size"
                         android:layout_marginStart="8dp"
                         android:background="@drawable/circle_grey"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:gravity="center"
                         android:text="4"
                         android:textColor="@color/black"
@@ -184,15 +156,6 @@
             </LinearLayout>
         </LinearLayout>
 
-<<<<<<< Updated upstream
-        <LinearLayout
-            android:id="@+id/top_new_filter"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:background="@color/greybackround"
-            android:orientation="horizontal">
-
-=======
         <RelativeLayout
             android:id="@+id/top_new_filter"
             android:layout_width="match_parent"
@@ -211,24 +174,15 @@
                 android:src="@drawable/ic_filter_list"
                 app:tint="@color/hyperlink" />
 
->>>>>>> Stashed changes
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/filter_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-<<<<<<< Updated upstream
-                android:clipToPadding="false"
-                android:layoutAnimation="@anim/layout_animation"
-                android:paddingBottom="80dp"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-        </LinearLayout>
-=======
                 android:layout_toLeftOf="@id/img_filter"
                 android:clipToPadding="false"
                 android:layoutAnimation="@anim/layout_animation"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         </RelativeLayout>
->>>>>>> Stashed changes
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/contest_refresh"
@@ -250,13 +204,9 @@
             android:id="@+id/contest_filter_refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-<<<<<<< Updated upstream
-            android:layout_below="@+id/top_new_filter">
-=======
             android:layout_above="@+id/bottom_layout"
             android:layout_below="@+id/top_new_filter"
             android:layout_marginTop="@dimen/_5sdp">
->>>>>>> Stashed changes
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_by_spotsize"
@@ -266,10 +216,6 @@
                 android:layout_below="@+id/top_new_filter"
                 android:clipToPadding="false"
                 android:layoutAnimation="@anim/layout_animation"
-<<<<<<< Updated upstream
-                android:paddingBottom="80dp"
-=======
->>>>>>> Stashed changes
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -278,41 +224,23 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_50sdp"
             android:layout_alignParentBottom="true"
-<<<<<<< Updated upstream
-            android:layout_centerHorizontal="true"
-            android:background="@color/greybackround">
-=======
             android:background="@android:color/transparent"
             android:layout_centerHorizontal="true">
->>>>>>> Stashed changes
 
             <TextView
                 android:id="@+id/btn_create_team"
                 android:layout_width="match_parent"
-<<<<<<< Updated upstream
-                android:layout_height="@dimen/_40sdp"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_5sdp"
-                android:layout_gravity="center"
-                android:background="@drawable/default_rounded_button_sportsfight"
-                android:fontFamily="@font/montserratsemibold"
-                android:gravity="center"
-                android:text="CREATE TEAM"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
-=======
                 android:layout_height="@dimen/_30sdp"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_90sdp"
                 android:layout_marginEnd="@dimen/_90sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:background="@drawable/create_team"
-
+                android:fontFamily="open_sans"
                 android:gravity="center"
                 android:text="CREATE TEAM"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_10sdp"
->>>>>>> Stashed changes
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -350,25 +278,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/default_rounded_button_sportsfight"
-<<<<<<< Updated upstream
-                android:fontFamily="@font/montserratsemibold"
-=======
-
->>>>>>> Stashed changes
+                android:fontFamily="open_sans"
                 android:padding="10dp"
                 android:text="@string/label_policy"
                 android:textColor="@color/white"
                 android:textSize="10sp" />
         </LinearLayout>
-<<<<<<< Updated upstream
-
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center" />
-=======
->>>>>>> Stashed changes
     </RelativeLayout>
 </layout>

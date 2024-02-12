@@ -18,11 +18,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-<<<<<<< Updated upstream
-            android:background="@color/colorPrimaryDark"
-=======
             android:background="@drawable/header_gradient"
->>>>>>> Stashed changes
             android:elevation="@dimen/_5sdp"
             app:theme="@style/ToolbarColoredBackArrow"
             app:titleTextAppearance="@style/TextAppearance.MyApp.Widget.ActionBar.Title" />
@@ -39,11 +35,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="sans-serif"
                 android:gravity="center"
-<<<<<<< Updated upstream
-                android:text="Refer your friend and Earn ₹100 Bonus."
-=======
                 android:text="Refer your friend and Earn ₹100 Bonus"
->>>>>>> Stashed changes
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/_20sdp"
                 android:textStyle="bold" />

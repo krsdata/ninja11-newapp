@@ -11,10 +11,6 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayout.TabLayoutOnPageChangeListener
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/dashboard/MyMatchesFragment.kt
-import ninja.cricks.MainActivity
-=======
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/dashboard/MyMatchesFragment.kt
 import ninja.cricks.R
 import ninja.cricks.ui.mymatches.MyCompletedMatchesFragment
 import ninja.cricks.ui.mymatches.MyLiveMatchesFragment
@@ -29,26 +25,6 @@ class MyMatchesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/dashboard/MyMatchesFragment.kt
-
-        val root = inflater.inflate(R.layout.fragment_mymatches, container, false)
-
-        //(activity as MainActivity).showToolbar()
-        viewpager= root.findViewById(R.id.viewpager)
-        tabLayout = root.findViewById(R.id.tabs)
-        setupViewPager()
-
-        // viewpager.addOnPageChangeListener(this)
-        //tabs.setupWithViewPager(viewpager)
-
-        return root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
-
-=======
         val root = inflater.inflate(R.layout.fragment_mymatches, container, false)
         viewpager = root.findViewById(R.id.viewpager)
         tabLayout = root.findViewById(R.id.tabs)
@@ -56,7 +32,6 @@ class MyMatchesFragment : Fragment() {
         return root
     }
 
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/dashboard/MyMatchesFragment.kt
     private fun setupViewPager() {
 
         tabLayout?.addTab(tabLayout!!.newTab().setText(getString(R.string.mymatch_upcoming)))
@@ -81,32 +56,6 @@ class MyMatchesFragment : Fragment() {
         tab?.select()
     }
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/dashboard/MyMatchesFragment.kt
-    internal inner class ViewPagerAdapter(manager: FragmentManager) :
-        FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-        private val mFragmentList = ArrayList<Fragment>()
-        private val mFragmentTitleList = ArrayList<String>()
-
-        override fun getItem(position: Int): Fragment {
-            return mFragmentList[position]
-        }
-
-        override fun getCount(): Int {
-            return mFragmentList.size
-        }
-
-        fun addFragment(fragment: Fragment, title: String) {
-            mFragmentList.add(fragment)
-            mFragmentTitleList.add(title)
-        }
-
-        override fun getPageTitle(position: Int): CharSequence {
-            return mFragmentTitleList[position]
-        }
-    }
-
-=======
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/dashboard/MyMatchesFragment.kt
     class MyAdapter internal constructor(fm: FragmentManager?, var totalTabs: Int) :
         FragmentPagerAdapter(fm!!, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         override fun getItem(position: Int): Fragment {

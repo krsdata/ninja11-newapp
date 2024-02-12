@@ -5,25 +5,15 @@
     "kind": "Directory"
   },
   "applicationId": "ninja.cricks",
-<<<<<<< Updated upstream
-  "variantName": "processReleaseResources",
-=======
   "variantName": "release",
->>>>>>> Stashed changes
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
-<<<<<<< Updated upstream
-      "versionCode": 3206,
-      "versionName": "2.06",
-      "outputFile": "Ninja11-2.06-release.apk"
-=======
       "attributes": [],
-      "versionCode": 4002,
-      "versionName": "4.2",
-      "outputFile": "Ninja11-4.2-release.apk"
->>>>>>> Stashed changes
+      "versionCode": 4006,
+      "versionName": "4.4",
+      "outputFile": "Ninja11-4.4-release.apk"
     }
   ],
   "elementType": "File"

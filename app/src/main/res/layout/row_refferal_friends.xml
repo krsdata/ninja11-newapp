@@ -22,11 +22,7 @@
             android:layout_gravity="center_vertical"
             android:textColor="@color/grey"
             android:layout_marginLeft="5dip"
-<<<<<<< Updated upstream
-            android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+            android:fontFamily="open_sans"
             />
         <TextView
             android:id="@+id/transaction_date"
@@ -37,11 +33,7 @@
             android:layout_gravity="center_vertical"
             android:textColor="@color/black"
             android:layout_marginLeft="15dip"
-<<<<<<< Updated upstream
-            android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+            android:fontFamily="open_sans"
             />
 
 
@@ -66,20 +58,12 @@
                 android:id="@+id/friend_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                android:text="Manoj Prasad"
-=======
                 android:text="Singup"
->>>>>>> Stashed changes
                 android:textSize="@dimen/header_size"
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/black"
                 android:layout_marginLeft="5dip"
-<<<<<<< Updated upstream
-                android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                android:fontFamily="open_sans"
                 />
         </LinearLayout>
 
@@ -99,11 +83,7 @@
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/black"
                 android:layout_marginLeft="15dip"
-<<<<<<< Updated upstream
-                android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                android:fontFamily="open_sans"
                 />
 
             <TextView
@@ -115,11 +95,7 @@
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/black"
                 android:layout_marginLeft="15dip"
-<<<<<<< Updated upstream
-                android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                android:fontFamily="open_sans"
                 />
 
 

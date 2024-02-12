@@ -5,19 +5,6 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@drawable/rounded_corner_white"
-<<<<<<< Updated upstream
-    android:orientation="vertical"
-    android:padding="@dimen/_25sdp">
-
-    <!--    android:background="@drawable/rounded_corner_white" -->
-
-    <ProgressBar
-        android:layout_width="@dimen/_45sdp"
-        android:layout_height="@dimen/_45sdp"
-        android:layout_gravity="center_horizontal"
-        android:indeterminate="true"
-        android:indeterminateBehavior="cycle" />
-=======
     android:orientation="horizontal"
     android:padding="@dimen/_10sdp"
     android:paddingEnd="@dimen/_25sdp">
@@ -29,20 +16,12 @@
         android:layout_height="wrap_content"
         android:indeterminateTint="@color/theme_color_hdr"
         android:layout_gravity="center_vertical" />
->>>>>>> Stashed changes
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-        android:layout_gravity="center_horizontal"
-        android:text="Please wait..."
-        android:textColor="@color/black"
-        android:visibility="gone" />
-=======
         android:layout_gravity="center_vertical"
         android:layout_marginStart="@dimen/_10sdp"
         android:text="Please wait..." />
 
->>>>>>> Stashed changes
 </LinearLayout>

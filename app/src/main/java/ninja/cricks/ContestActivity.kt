@@ -3,10 +3,7 @@ package ninja.cricks
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ContestActivity.kt
-=======
 import android.util.Log
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ContestActivity.kt
 import android.view.Menu
 import android.view.View
 import android.widget.Toast
@@ -15,10 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ContestActivity.kt
-=======
 import com.bumptech.glide.Glide
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ContestActivity.kt
 import com.edify.atrist.listener.OnContestEvents
 import com.edify.atrist.listener.OnContestLoadedListener
 import com.edify.atrist.listener.OnMatchTimerStarted
@@ -31,10 +25,7 @@ import ninja.cricks.ui.BaseActivity
 import ninja.cricks.ui.contest.ContestFragment
 import ninja.cricks.ui.contest.MyContestFragment
 import ninja.cricks.ui.contest.MyTeamFragment
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ContestActivity.kt
-=======
 import ninja.cricks.ui.contest.PlayerStatsFragment
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ContestActivity.kt
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
@@ -46,19 +37,13 @@ import kotlin.collections.ArrayList
 
 class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents {
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ContestActivity.kt
-    //private var isMatchLive: Boolean = false
-=======
     val TAG: String = ContestActivity::class.java.simpleName
 
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ContestActivity.kt
     var matchObject: UpcomingMatchesModel? = null
     var isTimeUp: Boolean = false
     var joinedTeamList: java.util.ArrayList<MyTeamModels>? = null
     var contestObjects: ArrayList<ContestModelLists>? = null
     private var mBinding: ActivityContestBinding? = null
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ContestActivity.kt
-=======
     var responseMyJoinedContest: ArrayList<ContestModelLists> = ArrayList()
     var responseMyTeamList: ArrayList<MyTeamModels> = ArrayList()
     var resPlayerStatsList = ArrayList<PlayerStatsInfoModel>()
@@ -72,18 +57,14 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
     var filter_text_101 = false
     var filter_text_1001 = false
     var fragment: Fragment? = null
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ContestActivity.kt
 
     companion object {
         val SERIALIZABLE_KEY_UPCOMING_MATCHES: String = "contest"
         val SERIALIZABLE_KEY_JOINED_CONTEST: String = "joinedcontest"
         val SERIALIZABLE_KEY_MATCH_OBJECT: String = "matchobject"
         val SERIALIZABLE_KEY_CONTEST_OBJECT: String = "contestmodel"
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ContestActivity.kt
-=======
         val SERIALIZABLE_KEY_CREATE_TEAM: String = "create_team"
         val SERIALIZABLE_KEY_CREATE_TEAM1: String = "create_team1"
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ContestActivity.kt
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -111,16 +92,6 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
             initViewUpcomingMatches()
         }
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ContestActivity.kt
-        mBinding!!.imageBack.setOnClickListener(View.OnClickListener {
-            finish()
-        })
-
-        mBinding!!.imgWallet.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this@ContestActivity, MyBalanceActivity::class.java)
-            startActivity(intent)
-        })
-=======
         mBinding!!.imageBack.setOnClickListener {
             finish()
         }
@@ -129,7 +100,6 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
             val intent = Intent(this@ContestActivity, MyBalanceActivity::class.java)
             startActivity(intent)
         }
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ContestActivity.kt
         setupViewPager(mBinding!!.viewpagerContest)
         mBinding!!.tabs.setupWithViewPager(mBinding!!.viewpagerContest)
     }
@@ -193,8 +163,6 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ContestActivity.kt
-=======
 
         for (fragment in supportFragmentManager.fragments) {
             fragment.onActivityResult(requestCode, resultCode, data)
@@ -219,7 +187,6 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
 
             }
         }
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ContestActivity.kt
         mBinding!!.viewpagerContest.currentItem = 0
     }
 
@@ -246,25 +213,6 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
         bundle.putSerializable(SERIALIZABLE_KEY_MATCH_OBJECT, matchObject)
         val adapter = ViewPagerAdapter(supportFragmentManager)
         if (matchObject!!.status == BindingUtils.MATCH_STATUS_UPCOMING) {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ContestActivity.kt
-            adapter.addFragment(
-                ContestFragment.newInstance(bundle), getString(
-                    R.string.contest_type_contests
-                )
-            )
-        }
-        adapter.addFragment(
-            MyContestFragment.newInstance(bundle), getString(
-                R.string.contest_type_mycontest
-            )
-        )
-        adapter.addFragment(
-            MyTeamFragment.newInstance(bundle), getString(
-                R.string.contest_type_myteam
-            )
-        )
-        viewPager.adapter = adapter
-=======
             adapter.addFragment(ContestFragment.newInstance(bundle), getString(
                     R.string.contest_type_contests
                 ))
@@ -288,7 +236,6 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
         } else {
             mBinding!!.includeMatchRow.liveMatchesRow.visibility = View.GONE
         }
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ContestActivity.kt
     }
 
     internal inner class ViewPagerAdapter(manager: FragmentManager) :
@@ -297,12 +244,8 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
         private val mFragmentTitleList = ArrayList<String>()
 
         override fun getItem(position: Int): Fragment {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ContestActivity.kt
-            return mFragmentList[position]
-=======
             fragment = mFragmentList[position]
             return fragment!!
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ContestActivity.kt
         }
 
         override fun getCount(): Int {
@@ -427,8 +370,6 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
     override fun onShareContest(objects: ContestModelLists) {
 
     }
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ContestActivity.kt
-=======
 
     private fun initScoreCard() {
 
@@ -586,5 +527,4 @@ class ContestActivity : BaseActivity(), OnContestLoadedListener, OnContestEvents
         }
 
     }
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ContestActivity.kt
 }

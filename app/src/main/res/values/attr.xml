@@ -20,8 +20,6 @@
         <attr name="bn_fab_icon_color" format="color"/>
 
     </declare-styleable>
-<<<<<<< Updated upstream
-=======
 
     <declare-styleable name="RoundedCornerLayoutView">
         <attr name="backgroundColor" format="color" />
@@ -39,5 +37,4 @@
         <attr name="border_color" format="color" />
         <attr name="border_overlay" format="boolean" />
     </declare-styleable>
->>>>>>> Stashed changes
 </resources>

@@ -12,22 +12,13 @@
         android:id="@+id/player_role_label"
         android:layout_width="@dimen/_110sdp"
         android:layout_height="24dp"
-<<<<<<< Updated upstream
-=======
         android:layout_gravity="center"
->>>>>>> Stashed changes
         android:layout_marginLeft="3dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="3dp"
         android:layout_marginBottom="5dp"
-<<<<<<< Updated upstream
-        android:layout_gravity="center"
         android:background="@drawable/rectangle_curve"
-        android:fontFamily="@font/montserrat_bold"
-=======
-        android:background="@drawable/rectangle_curve"
-
->>>>>>> Stashed changes
+        android:fontFamily="open_sans"
         android:gravity="center"
         android:text="Wicket"
         android:textColor="@color/white"
@@ -40,11 +31,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginRight="3dp"
         android:layout_marginBottom="5dp"
-<<<<<<< Updated upstream
-        android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+        android:fontFamily="open_sans"
         android:gravity="center"
         android:visibility="gone"
         android:text="Points"

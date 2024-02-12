@@ -23,11 +23,7 @@
             android:id="@+id/match_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-            android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+            android:fontFamily="open_sans"
             android:maxLines="1"
             android:singleLine="true"
             android:text=""
@@ -38,11 +34,7 @@
             android:id="@+id/match_start_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-            android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+            android:fontFamily="open_sans"
             android:maxLines="1"
             android:singleLine="true"
             android:text=""
@@ -56,11 +48,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_weight="1.3"
-<<<<<<< Updated upstream
-        android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+        android:fontFamily="open_sans"
         android:gravity="center"
         android:text="4368"
         android:textColor="@color/black"
@@ -72,11 +60,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_weight="1.3"
-<<<<<<< Updated upstream
-        android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+        android:fontFamily="open_sans"
         android:gravity="center"
         android:text="4368"
         android:textColor="@color/black"

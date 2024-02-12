@@ -12,11 +12,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-<<<<<<< Updated upstream
-        android:background="@color/colorAccent"
-=======
         android:background="@drawable/header_gradient"
->>>>>>> Stashed changes
         android:fitsSystemWindows="true">
 
         <LinearLayout
@@ -33,11 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-<<<<<<< Updated upstream
-                android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                android:fontFamily="open_sans"
                 android:gravity="center"
                 android:text="@string/label_login_agree"
                 android:textColor="@color/white"
@@ -53,22 +45,14 @@
                     android:id="@+id/txt_tnc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                    android:fontFamily="open_sans"
                     android:text="Condition of Use"
                     android:textColor="@color/white" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/open_sans_semibold"
-=======
-
->>>>>>> Stashed changes
+                    android:fontFamily="open_sans"
                     android:text=" and "
                     android:textColor="@color/white" />
 
@@ -76,11 +60,7 @@
                     android:id="@+id/txt_privacy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                    android:fontFamily="open_sans"
                     android:text="Privacy Policy"
                     android:textColor="@color/white" />
             </LinearLayout>
@@ -100,11 +80,7 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-<<<<<<< Updated upstream
-                    android:background="?attr/colorPrimary"
-=======
                     android:background="@drawable/header_gradient"
->>>>>>> Stashed changes
                     android:fitsSystemWindows="true"
                     app:theme="@style/ToolbarTheme" />
 
@@ -131,11 +107,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/open_sans"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:text="Your Nick Name, People will know you by this name"
                                 android:textColor="@color/red"
                                 android:textSize="@dimen/_8sdp" />
@@ -152,21 +124,13 @@
                                     android:id="@+id/edit_team_name"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                    android:fontFamily="@font/open_sans_semibold"
-=======
-
->>>>>>> Stashed changes
+                                    android:fontFamily="open_sans"
                                     android:hint="Team Name (Nick Name)"
                                     android:maxLength="8"
                                     android:maxLines="1"
                                     android:singleLine="true"
                                     android:textColor="@color/text_view_color"
-<<<<<<< Updated upstream
-                                    android:textSize="@dimen/_14sdp">
-=======
                                     android:textSize="@dimen/_13sdp">
->>>>>>> Stashed changes
 
                                     <requestFocus />
                                 </com.google.android.material.textfield.TextInputEditText>
@@ -184,20 +148,12 @@
                                     android:id="@+id/edit_name"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                    android:fontFamily="@font/open_sans_semibold"
-=======
-
->>>>>>> Stashed changes
+                                    android:fontFamily="open_sans"
                                     android:hint="Name"
                                     android:maxLines="1"
                                     android:singleLine="true"
                                     android:textColor="@color/text_view_color"
-<<<<<<< Updated upstream
-                                    android:textSize="@dimen/_14sdp" />
-=======
                                     android:textSize="@dimen/_13sdp" />
->>>>>>> Stashed changes
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
@@ -213,22 +169,14 @@
                                     android:id="@+id/edit_mobile"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                    android:fontFamily="@font/open_sans_semibold"
-=======
-
->>>>>>> Stashed changes
+                                    android:fontFamily="open_sans"
                                     android:hint="Mobile no"
                                     android:inputType="number"
                                     android:maxLength="10"
                                     android:maxLines="1"
                                     android:singleLine="true"
                                     android:textColor="@color/text_view_color"
-<<<<<<< Updated upstream
-                                    android:textSize="@dimen/_14sdp" />
-=======
                                     android:textSize="@dimen/_13sdp" />
->>>>>>> Stashed changes
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <TextView
@@ -250,19 +198,11 @@
                                     android:id="@+id/edit_email"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                    android:fontFamily="@font/open_sans_semibold"
-                                    android:hint="Email"
-                                    android:inputType="textEmailAddress"
-                                    android:textColor="@color/text_view_color"
-                                    android:textSize="@dimen/_14sdp" />
-=======
-
+                                    android:fontFamily="open_sans"
                                     android:hint="Email"
                                     android:inputType="textEmailAddress"
                                     android:textColor="@color/text_view_color"
                                     android:textSize="@dimen/_13sdp" />
->>>>>>> Stashed changes
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
@@ -277,20 +217,12 @@
                                     android:id="@+id/edit_state"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                    android:fontFamily="@font/open_sans_semibold"
-=======
-
->>>>>>> Stashed changes
+                                    android:fontFamily="open_sans"
                                     android:hint="City/State"
                                     android:inputType="textCapCharacters"
                                     android:maxLength="24"
                                     android:textColor="@color/text_view_color"
-<<<<<<< Updated upstream
-                                    android:textSize="@dimen/_14sdp" />
-=======
                                     android:textSize="@dimen/_13sdp" />
->>>>>>> Stashed changes
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
@@ -305,20 +237,12 @@
                                     android:id="@+id/edit_invitecode"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                                    android:fontFamily="@font/open_sans_semibold"
-=======
-
->>>>>>> Stashed changes
+                                    android:fontFamily="open_sans"
                                     android:hint="REFERRAL CODE"
                                     android:inputType="textCapCharacters"
                                     android:maxLength="24"
                                     android:textColor="@color/text_view_color"
-<<<<<<< Updated upstream
-                                    android:textSize="@dimen/_14sdp" />
-=======
                                     android:textSize="@dimen/_13sdp" />
->>>>>>> Stashed changes
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <Button
@@ -328,15 +252,9 @@
                                 android:layout_gravity="center"
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:background="@drawable/default_rounded_button_sportsfight"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/open_sans_semibold"
-                                android:paddingStart="@dimen/_10sdp"
-                                android:paddingEnd="@dimen/_10sdp"
-=======
-
+                                android:fontFamily="open_sans"
                                 android:paddingStart="@dimen/_15sdp"
                                 android:paddingEnd="@dimen/_15sdp"
->>>>>>> Stashed changes
                                 android:text="Register"
                                 android:textAllCaps="false"
                                 android:textColor="@color/white"

@@ -16,24 +16,12 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import io.branch.referral.Branch
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/NinjaApplication.kt
-import ninja.cricks.models.MatchesModels
-import ninja.cricks.models.TransactionModel
-import ninja.cricks.models.UserInfo
-import ninja.cricks.models.WalletInfo
-import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.WebServiceClient
-import ninja.cricks.models.UsersPostDBResponse
-import ninja.cricks.utils.BindingUtils
-import ninja.cricks.utils.MyPreferences
-=======
 import ninja.cricks.models.*
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyPreferences.KEY_NEW_UPCOMING_MATCHES
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/NinjaApplication.kt
 import ninja.cricks.utils.MyPreferences.KEY_TRANSACTION_HISTORY
 import ninja.cricks.utils.MyPreferences.KEY_UPCOMING_MATCHES
 import ninja.cricks.utils.MyUtils
@@ -43,13 +31,10 @@ import retrofit2.Response
 
 class NinjaApplication : MultiDexApplication() {
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/NinjaApplication.kt
-=======
     companion object{
         public var lastApiCallForMatch: Long = 0
     }
 
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/NinjaApplication.kt
     private var mGetWallet: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             getWalletBalances()
@@ -123,11 +108,7 @@ class NinjaApplication : MultiDexApplication() {
             return mStoreListModels ?: WalletInfo()
         }
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/NinjaApplication.kt
-    fun saveUpcomingMatches(value: ArrayList<MatchesModels>?) {
-=======
     /*fun saveUpcomingMatches(value: ArrayList<MatchesModels>?) {
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/NinjaApplication.kt
         if (value != null) {
             val gson = Gson()
             val data = gson.toJson(value)
@@ -147,11 +128,7 @@ class NinjaApplication : MultiDexApplication() {
                 mStoreListModels = gson.fromJson<ArrayList<MatchesModels>>(gsonObject, type)
             }
             return mStoreListModels ?: ArrayList()
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/NinjaApplication.kt
-        }
-=======
         }*/
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/NinjaApplication.kt
 
     fun saveTransactionHistory(value: ArrayList<TransactionModel>?) {
         if (value != null) {
@@ -217,14 +194,11 @@ class NinjaApplication : MultiDexApplication() {
                                 res.upi_withdrawal
                             )
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/NinjaApplication.kt
-=======
                             MyPreferences.setPaytmWithdrawBtn(
                                 this@NinjaApplication,
                                 res.paytm_withdrawal_btn
                             )
 
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/NinjaApplication.kt
                             MyPreferences.setMinWithdrawal(this@NinjaApplication, res.minWithdrawal)
 
                             saveWalletInformation(responseModel)
@@ -233,8 +207,6 @@ class NinjaApplication : MultiDexApplication() {
                 }
             })
     }
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/NinjaApplication.kt
-=======
 
     fun saveNewUpcomingMatches(value: ArrayList<UpcomingMatchesModel>?) {
         if (value != null) {
@@ -257,5 +229,4 @@ class NinjaApplication : MultiDexApplication() {
             }
             return mStoreListModels ?: ArrayList()
         }
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/NinjaApplication.kt
 }

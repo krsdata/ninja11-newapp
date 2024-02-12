@@ -8,21 +8,11 @@
             type="ninja.cricks.ui.mymatches.MyCompletedMatchesFragment" />
     </data>
 
-<<<<<<< Updated upstream
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-=======
     <RelativeLayout
->>>>>>> Stashed changes
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/light_grey_bg">
 
-<<<<<<< Updated upstream
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_my_upcoming"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-=======
         <include
             android:id="@+id/include_live_match_row"
             layout="@layout/score_board_layout"
@@ -35,17 +25,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/include_live_match_row" />
->>>>>>> Stashed changes
 
         <LinearLayout
             android:id="@+id/linear_empty_contest"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
-<<<<<<< Updated upstream
-=======
             android:layout_below="@+id/include_live_match_row"
->>>>>>> Stashed changes
             android:gravity="center"
             android:orientation="vertical">
 
@@ -74,11 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/default_rounded_button_sportsfight"
-<<<<<<< Updated upstream
-                android:fontFamily="@font/montserratsemibold"
-=======
-
->>>>>>> Stashed changes
+                android:fontFamily="open_sans"
                 android:padding="10dp"
                 android:text="VIEW UPCOMING MATCHES"
                 android:textColor="@color/white"
@@ -89,15 +71,9 @@
             android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-            android:layout_gravity="center" />
-
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-=======
             android:layout_centerInParent="true"
             android:indeterminateTint="@color/theme_color_hdr"
             android:layout_gravity="center"
             android:visibility="gone"/>
     </RelativeLayout>
->>>>>>> Stashed changes
 </layout>

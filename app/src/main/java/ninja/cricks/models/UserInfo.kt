@@ -60,13 +60,9 @@ data class UserInfo(
 
     @SerializedName("apk_url")
     @Expose
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/models/UserInfo.kt
-    var apkUrl: String = ""
-=======
     var apkUrl: String = "",
     @SerializedName("call_url")
     @Expose
     val callbackurrl: String = ""
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/models/UserInfo.kt
 
 ) : Serializable, Cloneable

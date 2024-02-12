@@ -178,8 +178,6 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
                 intent.getStringExtra(OtpVerifyActivity.EXTRA_KEY_ID_TOKEN)
             )
         }
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/login/RegisterScreenActivity.kt
-=======
 
         if (intent.hasExtra("passcode")) {
             jsonRequest.addProperty(
@@ -187,7 +185,6 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
                 intent.getStringExtra("passcode")
             )
         }
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/login/RegisterScreenActivity.kt
         jsonRequest.addProperty("referral_code", binding!!.editInvitecode.text.toString())
         jsonRequest.addProperty("team_name", binding!!.editTeamName.text.toString())
         jsonRequest.addProperty("state", binding!!.editState.text.toString())
@@ -199,11 +196,6 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
         val deviceDetails: JsonObject = JsonParser().parse(jsonString).asJsonObject
         jsonRequest.add("deviceDetails", deviceDetails)
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/login/RegisterScreenActivity.kt
-
-        RetrofitClient(this).client.create(IApiMethod::class.java).customerLogin(jsonRequest)
-            .enqueue(this)
-=======
         if (intent.hasExtra("isFromPhoneVerification") && intent.getBooleanExtra("isFromPhoneVerification",false)) {
             RetrofitClient(this).client.create(IApiMethod::class.java).phoneLogin(jsonRequest)
                 .enqueue(this)
@@ -213,7 +205,6 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
                 .enqueue(this)
         }
 
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/login/RegisterScreenActivity.kt
     }
 
     override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
@@ -232,17 +223,10 @@ class RegisterScreenActivity : BaseActivity(), Callback<ResponseModel> {
                         MyPreferences.setOtpAuthRequired(this, responseb.isOTPRequired)
                         MyPreferences.setToken(this, responseb.token)
                         MyPreferences.setUserID(this, "" + responseb.infomodel!!.userId)
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/login/RegisterScreenActivity.kt
-                        MyPreferences.setPaytmMid(this, responseb.paytmMid)
-                        MyPreferences.setPaytmCallback(this, responseb.callbackurrl)
-                        MyPreferences.setGooglePayId(this, responseb.gpayid)
-                        MyPreferences.setRazorPayId(this, responseb.razorPay)
-=======
                        /* MyPreferences.setPaytmMid(this, responseb.paytmMid)
                         MyPreferences.setPaytmCallback(this, responseb.callbackurrl)
                         MyPreferences.setGooglePayId(this, responseb.gpayid)
                         MyPreferences.setRazorPayId(this, responseb.razorPay)*/
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/login/RegisterScreenActivity.kt
 
                         if (responseb.baseUrl != null && responseb.baseUrl != "") {
                             MyPreferences.setBaseUrl(this, responseb.baseUrl)

@@ -289,14 +289,11 @@ class JoinContestDialogFragment(
                                             res.upi_withdrawal
                                         )
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/JoinContestDialogFragment.kt
-=======
                                         MyPreferences.setPaytmWithdrawBtn(
                                             requireActivity(),
                                             res.paytm_withdrawal_btn
                                         )
 
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/JoinContestDialogFragment.kt
                                         MyPreferences.setMinWithdrawal(requireActivity(), res.minWithdrawal)
 
                                         (activity!!.applicationContext as NinjaApplication).saveWalletInformation(

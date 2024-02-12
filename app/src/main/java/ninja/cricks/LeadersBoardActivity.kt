@@ -149,11 +149,8 @@ class LeadersBoardActivity : BaseActivity() {
     }
 
     private fun initScoreCard() {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/LeadersBoardActivity.kt
-=======
         mBinding!!.viewLayout.visibility = View.GONE
 
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/LeadersBoardActivity.kt
         mBinding!!.teamsa.text = matchObject!!.teamAInfo!!.teamShortName
         mBinding!!.teamsb.text = matchObject!!.teamBInfo!!.teamShortName
         Glide.with(this)
@@ -252,12 +249,9 @@ class LeadersBoardActivity : BaseActivity() {
     }
 
     private fun initUpcomingMatchData() {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/LeadersBoardActivity.kt
-=======
         mBinding!!.viewLayout.visibility = View.VISIBLE
         mBinding!!.includeContestRow.freeView.visibility = View.GONE
 
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/LeadersBoardActivity.kt
         mBinding!!.teamsa.text = matchObject!!.teamAInfo!!.teamShortName
         mBinding!!.teamsb.text = matchObject!!.teamBInfo!!.teamShortName
         val totalSpots = contestObject!!.totalSpots
@@ -297,15 +291,10 @@ class LeadersBoardActivity : BaseActivity() {
 
         if (contestObject!!.usableBonus.toInt() == 0) {
             mBinding!!.includeContestRow.linearBonues.visibility = View.GONE
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/LeadersBoardActivity.kt
-        } else {
-            mBinding!!.includeContestRow.linearBonues.visibility = View.VISIBLE
-=======
             mBinding!!.bonus.visibility =  View.GONE
         } else {
             mBinding!!.includeContestRow.linearBonues.visibility = View.VISIBLE
             mBinding!!.bonus.visibility =  View.VISIBLE
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/LeadersBoardActivity.kt
             mBinding!!.includeContestRow.contestBonus.text =
                 String.format("%s%s", contestObject!!.usableBonus, "%")
         }
@@ -317,18 +306,6 @@ class LeadersBoardActivity : BaseActivity() {
 
         if (contestObject!!.cancellation) {
             mBinding!!.includeContestRow.contestCancellation.visibility = View.INVISIBLE
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/LeadersBoardActivity.kt
-        } else {
-            mBinding!!.includeContestRow.contestCancellation.visibility = View.VISIBLE
-        }
-        if (contestObject!!.maxAllowedTeam > 1) {
-            mBinding!!.includeContestRow.allowedTeamType.text = "Multiple Entry"
-        } else {
-            mBinding!!.includeContestRow.allowedTeamType.text = "Single Entry"
-        }
-        mBinding!!.includeContestRow.contestBonus.text =
-            String.format("%s%s", contestObject!!.usableBonus, "%")
-=======
             mBinding!!.confirm.visibility = View.GONE
         } else {
             mBinding!!.includeContestRow.contestCancellation.visibility = View.VISIBLE
@@ -354,7 +331,6 @@ class LeadersBoardActivity : BaseActivity() {
         }
 
         mBinding!!.includeContestRow.contestMultiplayer.text = String.format("%d",contestObject!!.maxAllowedTeam)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/LeadersBoardActivity.kt
 
         mBinding!!.includeContestRow.contestEntryPrize.setOnClickListener(View.OnClickListener {
             if (!MyUtils.isConnectedWithInternet(this)) {
@@ -462,13 +438,7 @@ class LeadersBoardActivity : BaseActivity() {
     override fun onUploadedImageUrl(url: String) {
     }
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/LeadersBoardActivity.kt
-    private fun setupViewPager(
-        viewPager: ViewPager
-    ) {
-=======
     private fun setupViewPager(viewPager: ViewPager) {
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/LeadersBoardActivity.kt
         this.playersList = playersList
 
         viewPagerAdapter = ViewPagerAdapter(supportFragmentManager)

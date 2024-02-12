@@ -38,27 +38,18 @@ object MyPreferences {
     private val KEY_PREF_BANK_WITHDRAW = "bank_withdrawal"
     private val KEY_PREF_UPI_WITHDRAW = "upi_withdrawal"
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/utils/MyPreferences.kt
-    private val KEY_DEVICE_TOKEN ="deviceToken"
-=======
     private val KEY_DEVICE_TOKEN = "deviceToken"
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/utils/MyPreferences.kt
     private val KEY_TEMP_REFER_CODE = "refer_code"
     private const val KEY_INVITE_URL = "invite_url"
     private const val KEY_BASE_URL = "base_url"
     private const val KEY_SYSTEM_TOKEN = "system_token"
     private const val KEY_MIN_WITHDRAWAL = "min_withdrawal"
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/utils/MyPreferences.kt
-
-    val KEY_UPCOMING_MATCHES = "upcoming_matches_list"
-=======
     private const val KEY_PAYTM_WITHDRAW_BTN = "paytm_withdraw_btn"
 
 
     val KEY_UPCOMING_MATCHES = "upcoming_matches_list"
     val KEY_NEW_UPCOMING_MATCHES = "new_upcoming_matches_list"
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/utils/MyPreferences.kt
     val KEY_TRANSACTION_HISTORY = "transaction_history"
 
     private fun getPreferences(context: Context?): SharedPreferences? {
@@ -696,8 +687,6 @@ object MyPreferences {
             KEY_MIN_WITHDRAWAL
         )
     }
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/utils/MyPreferences.kt
-=======
 
     fun setPaytmWithdrawBtn(context: Context, value: Boolean) {
         putBoolean(
@@ -761,5 +750,4 @@ object MyPreferences {
             return getStringPrefrence(context, id.toString())!!.toLong()
         }
     }
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/utils/MyPreferences.kt
 }

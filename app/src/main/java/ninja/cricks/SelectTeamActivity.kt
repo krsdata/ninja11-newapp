@@ -10,21 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.JsonObject
 import ninja.cricks.adaptors.SelectedTeamAdapter
 import ninja.cricks.databinding.ActivitySelectTeamBinding
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/SelectTeamActivity.kt
-import ninja.cricks.models.MyTeamModels
-import ninja.cricks.models.SelectedTeamModels
-import ninja.cricks.models.UpcomingMatchesModel
-import ninja.cricks.network.IApiMethod
-import ninja.cricks.network.WebServiceClient
-import ninja.cricks.ui.JoinContestActivity
-import ninja.cricks.models.ContestModelLists
-import ninja.cricks.models.UsersPostDBResponse
-=======
 import ninja.cricks.models.*
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
 import ninja.cricks.ui.JoinContestActivity
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/SelectTeamActivity.kt
 import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
@@ -32,10 +21,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/SelectTeamActivity.kt
-
-=======
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/SelectTeamActivity.kt
 class SelectTeamActivity : AppCompatActivity() {
 
     private var customeProgressDialog: CustomeProgressDialog? = null
@@ -43,11 +28,7 @@ class SelectTeamActivity : AppCompatActivity() {
     private lateinit var matchObject: UpcomingMatchesModel
     private var mBinding: ActivitySelectTeamBinding? = null
     lateinit var adapter: SelectedTeamAdapter
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/SelectTeamActivity.kt
-    var selectedTeamList: ArrayList<SelectedTeamModels> = ArrayList<SelectedTeamModels>()
-=======
     var selectedTeamList: ArrayList<SelectedTeamModels> = ArrayList()
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/SelectTeamActivity.kt
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -173,12 +154,8 @@ class SelectTeamActivity : AppCompatActivity() {
         jsonRequest.addProperty("match_id", matchObject.matchId)
         jsonRequest.addProperty("contest_id", contestModel.id)
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/SelectTeamActivity.kt
-        WebServiceClient(this).client.create(IApiMethod::class.java).joinNewContestStatus(jsonRequest)
-=======
         WebServiceClient(this).client.create(IApiMethod::class.java)
             .joinNewContestStatus(jsonRequest)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/SelectTeamActivity.kt
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     customeProgressDialog!!.dismiss()
@@ -224,9 +201,6 @@ class SelectTeamActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/SelectTeamActivity.kt
-            setResult(RESULT_OK)
-=======
             if (data != null) {
                 val intent = Intent()
                 intent.putExtra("keyName", data.getStringExtra("keyName"))
@@ -240,7 +214,6 @@ class SelectTeamActivity : AppCompatActivity() {
         } else if (resultCode == RESULT_CANCELED) {
             val intent = Intent()
             setResult(RESULT_CANCELED, intent)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/SelectTeamActivity.kt
             finish()
         }
     }

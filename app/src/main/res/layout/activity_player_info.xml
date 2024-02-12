@@ -20,11 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentTop="true"
-<<<<<<< Updated upstream
-            android:background="@color/colorPrimaryDark"
-=======
             android:background="@drawable/header_gradient"
->>>>>>> Stashed changes
             android:orientation="vertical" />
 
         <LinearLayout
@@ -42,15 +38,9 @@
                     android:id="@+id/top_layout"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_90sdp"
-<<<<<<< Updated upstream
-                    android:background="#545454">
-
-                    <ImageView
-=======
                     android:background="@color/bottom_nav_color">
 
                    <ImageView
->>>>>>> Stashed changes
                         android:id="@+id/player_in_lineup"
                         android:layout_width="@dimen/_7sdp"
                         android:layout_height="@dimen/_7sdp"
@@ -92,11 +82,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_alignParentTop="true"
-<<<<<<< Updated upstream
-                        android:background="#545454"
-=======
                         android:background="@color/downwhite"
->>>>>>> Stashed changes
                         android:gravity="center"
                         android:orientation="vertical">
 
@@ -107,19 +93,11 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginEnd="@dimen/_10sdp"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_medium"
-                            android:ellipsize="end"
-                            android:gravity="center"
-                            android:text=""
-                            android:textColor="@color/white"
-=======
-
+                            android:fontFamily="open_sans"
                             android:ellipsize="end"
                             android:gravity="center"
                             android:text="MSD"
                             android:textColor="@color/black"
->>>>>>> Stashed changes
                             android:textSize="@dimen/_16sdp"/>
                     </LinearLayout>
 
@@ -151,11 +129,7 @@
                                 android:layout_gravity="center"
                                 android:ellipsize="end"
                                 android:gravity="center"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:text="Credits"
                                 android:textColor="@color/grey"
                                 android:textSize="@dimen/_13sdp"/>
@@ -167,11 +141,7 @@
                                 android:layout_gravity="center"
                                 android:ellipsize="end"
                                 android:gravity="center"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:text=""
                                 android:textColor="@color/grey"
                                 android:textSize="@dimen/_13sdp" />
@@ -197,11 +167,7 @@
                                 android:layout_gravity="center"
                                 android:ellipsize="end"
                                 android:gravity="center"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:text="Total Points"
                                 android:textColor="@color/grey"
                                 android:textSize="@dimen/_13sdp" />
@@ -213,11 +179,7 @@
                                 android:layout_gravity="center"
                                 android:ellipsize="end"
                                 android:gravity="center"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:text=""
                                 android:textColor="@color/grey"
                                 android:textSize="@dimen/_13sdp" />
@@ -255,11 +217,7 @@
                             android:layout_gravity="center"
                             android:ellipsize="end"
                             android:gravity="center|start"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:text="Role"
                             android:textColor="@color/grand_league"
                             android:textSize="@dimen/_13sdp"/>
@@ -270,11 +228,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:ellipsize="end"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:gravity="center"
                             android:minHeight="@dimen/_25sdp"
                             android:text=""
@@ -298,11 +252,7 @@
                             android:layout_height="@dimen/_25sdp"
                             android:layout_gravity="center"
                             android:ellipsize="end"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:gravity="center"
                             android:text="Team Name"
                             android:textColor="@color/grand_league"
@@ -314,11 +264,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:ellipsize="end"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:gravity="center"
                             android:minHeight="@dimen/_25sdp"
                             android:text=""
@@ -340,11 +286,7 @@
                 android:layout_height="@dimen/_30sdp"
                 android:layout_gravity="center"
                 android:ellipsize="end"
-<<<<<<< Updated upstream
-                android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+                android:fontFamily="open_sans"
                 android:gravity="center"
                 android:background="@color/button_material_light"
                 android:text="Matchwise Fantasy Stats"
@@ -369,11 +311,7 @@
                     android:ellipsize="end"
                     android:gravity="center|start"
                     android:text="Match"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/open_sans_light"
-=======
-
->>>>>>> Stashed changes
+                    android:fontFamily="open_sans"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
@@ -385,11 +323,7 @@
                     android:ellipsize="end"
                     android:gravity="center|end"
                     android:text="Selection %"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/open_sans_light"
-=======
-
->>>>>>> Stashed changes
+                    android:fontFamily="open_sans"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
 
@@ -402,11 +336,7 @@
                     android:ellipsize="end"
                     android:gravity="center|end"
                     android:text="Points"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/open_sans_light"
-=======
-
->>>>>>> Stashed changes
+                    android:fontFamily="open_sans"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
             </LinearLayout>

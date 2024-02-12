@@ -22,21 +22,13 @@
             android:id="@+id/linear_top_bar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-<<<<<<< Updated upstream
-            android:background="@color/colorPrimaryDark"
-=======
             android:background="@drawable/header_gradient"
->>>>>>> Stashed changes
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-<<<<<<< Updated upstream
-                android:background="@color/colorPrimaryDark"
-=======
                 android:background="@drawable/header_gradient"
->>>>>>> Stashed changes
                 android:orientation="horizontal">
 
                 <ImageView
@@ -91,19 +83,11 @@
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_weight="1"
                 android:background="@drawable/default_rounded_button_sportsfight"
-<<<<<<< Updated upstream
-                android:fontFamily="@font/montserratsemibold"
-=======
-
->>>>>>> Stashed changes
+                android:fontFamily="open_sans"
                 android:gravity="center"
                 android:text="CREATE TEAM"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_11sdp" />
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
             <TextView
                 android:id="@+id/team_continue"
                 android:layout_width="0dp"
@@ -112,20 +96,13 @@
                 android:layout_marginEnd="@dimen/_20sdp"
                 android:layout_weight="1"
                 android:background="@drawable/default_rounded_button_sportsfight"
-<<<<<<< Updated upstream
-                android:fontFamily="@font/montserratsemibold"
-=======
-
->>>>>>> Stashed changes
+                android:fontFamily="open_sans"
                 android:gravity="center"
                 android:text="JOIN CONTEST"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_11sdp" />
-<<<<<<< Updated upstream
-=======
 
 
->>>>>>> Stashed changes
         </LinearLayout>
     </RelativeLayout>
 </layout>

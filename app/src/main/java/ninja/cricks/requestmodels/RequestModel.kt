@@ -1,18 +1,11 @@
 package ninja.cricks.requestmodels
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/requestmodels/RequestModel.kt
-=======
 import androidx.annotation.Keep
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/requestmodels/RequestModel.kt
 import ninja.cricks.models.UserInfo
 import ninja.cricks.utils.HardwareInfo
 import java.util.*
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/requestmodels/RequestModel.kt
-
-=======
 @Keep
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/requestmodels/RequestModel.kt
 class RequestModel {
 
 

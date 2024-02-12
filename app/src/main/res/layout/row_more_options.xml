@@ -29,11 +29,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/_5sdp"
-<<<<<<< Updated upstream
-            android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+            android:fontFamily="open_sans"
             android:gravity="center|start"
             android:text="Rs50 LAKHS"
             android:textColor="@color/black"

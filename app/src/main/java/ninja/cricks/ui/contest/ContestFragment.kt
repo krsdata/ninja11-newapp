@@ -4,10 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-=======
 import android.util.Log
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,10 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-=======
 import androidx.lifecycle.lifecycleScope
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -28,32 +22,15 @@ import com.edify.atrist.listener.OnContestLoadedListener
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-=======
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
 import ninja.cricks.*
 import ninja.cricks.databinding.FragmentAllContestBinding
 import ninja.cricks.models.*
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-import ninja.cricks.ui.contest.adaptors.ContestAdapter
-import ninja.cricks.ui.contest.adaptors.ContestListAdapter
-import ninja.cricks.utils.BindingUtils
-import ninja.cricks.utils.HardwareInfoManager
-import ninja.cricks.utils.MyPreferences
-import ninja.cricks.utils.MyUtils
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-
-class ContestFragment : Fragment() {
-
-=======
 import ninja.cricks.roomDatabase.ResponseDatabase
 import ninja.cricks.ui.contest.adaptors.ContestAdapter
 import ninja.cricks.ui.contest.adaptors.ContestListAdapter
@@ -66,7 +43,6 @@ import java.util.*
 class ContestFragment : Fragment() {
 
     private var customProgressDialog2: CustomProgressDialog2? = null
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
     private var objectMatches: UpcomingMatchesModel? = null
     var matchObject: UpcomingMatchesModel? = null
     var mListenerContestEvents: OnContestEvents? = null
@@ -74,26 +50,15 @@ class ContestFragment : Fragment() {
     private var mBinding: FragmentAllContestBinding? = null
     lateinit var adapter: ContestAdapter
     private lateinit var spotSizeFilterAdaptor: ContestListAdapter
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-    var allContestListData = ArrayList<ContestsParentModels>()
-=======
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
     var filterSpotsListData = ArrayList<ContestModelLists>()
     var filterArrayList = ArrayList<ContestCategoryModel>()
     var isEntryAscending = false
     private var isVisibleToUser: Boolean = false
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-    private lateinit var filterAdapter: FilterAdapter
-    private var pos = 0
-
-    companion object {
-=======
     private var filterAdapter: FilterAdapter? = null
     private var pos = 0
 
     companion object {
         private val TAG: String = ContestFragment::class.java.simpleName
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
         fun newInstance(bundle: Bundle): ContestFragment {
             val fragment = ContestFragment()
             fragment.arguments = bundle
@@ -103,10 +68,6 @@ class ContestFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-        objectMatches =
-            requireArguments().get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
-=======
         customProgressDialog2 = CustomProgressDialog2(context)
         objectMatches =
             requireArguments().get(ContestActivity.SERIALIZABLE_KEY_MATCH_OBJECT) as UpcomingMatchesModel
@@ -130,7 +91,6 @@ class ContestFragment : Fragment() {
             }
 
         })
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
     }
 
     override fun onCreateView(
@@ -141,36 +101,15 @@ class ContestFragment : Fragment() {
             inflater,
             R.layout.fragment_all_contest, container, false
         )
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-        return mBinding!!.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        matchObject = objectMatches
-=======
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
         mBinding!!.contestViewRecycler.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         adapter = ContestAdapter(
             requireActivity(),
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-            allContestListData,
-            matchObject,
-            mListenerContestEvents!!
-        )
-        mBinding!!.linearEmptyContest.visibility = View.GONE
-        mBinding!!.contestViewRecycler.adapter = adapter
-
-        registerSpotSizeSelection()
-
-=======
             (activity as ContestActivity).filteredAllContestListData,
             matchObject,
             mListenerContestEvents!!
         )
         mBinding!!.contestViewRecycler.adapter = adapter
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
         mBinding!!.recyclerBySpotsize.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
 
@@ -182,17 +121,6 @@ class ContestFragment : Fragment() {
             0
         )
         mBinding!!.recyclerBySpotsize.adapter = spotSizeFilterAdaptor
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-
-        mBinding!!.linearEmptyContest.visibility = View.GONE
-        mBinding!!.contestViewRecycler.adapter = adapter
-
-        mBinding!!.filterRecyclerView.layoutManager =
-            LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
-        filterAdapter = FilterAdapter(requireActivity(), filterArrayList)
-
-        mBinding!!.filterRecyclerView.adapter = filterAdapter
-=======
         mBinding!!.contestViewRecycler.adapter = adapter
         mBinding!!.filterRecyclerView.layoutManager =
             LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
@@ -210,7 +138,6 @@ class ContestFragment : Fragment() {
           var filterFragment = FilterFragment()
             filterFragment.show(parentFragmentManager,"filter")
         }
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
 
         mBinding!!.btnCreateTeam.setOnClickListener(View.OnClickListener {
             val intent = Intent(activity, CreateTeamActivity::class.java)
@@ -232,11 +159,7 @@ class ContestFragment : Fragment() {
         mBinding!!.contestRefresh.setColorSchemeResources(R.color.colorPrimary)
 
         mBinding!!.contestRefresh.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-            getAllContest(false)
-=======
             allContestsApiCall(true)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
         })
 
         mBinding!!.contestFilterRefresh.setOnRefreshListener {
@@ -264,11 +187,7 @@ class ContestFragment : Fragment() {
             mBinding!!.prizeArrow.visibility = View.GONE
             mBinding!!.rupees.setTextColor(resources.getColor(R.color.black))
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-            showRecyclerListBySpotSize(2)
-=======
             showRecyclerListBySpotSize(2, (activity as ContestActivity).filteredAllContestListData)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
         }
 
         mBinding!!.sortBy3spots.setOnClickListener {
@@ -289,11 +208,7 @@ class ContestFragment : Fragment() {
             mBinding!!.prizeArrow.visibility = View.GONE
             mBinding!!.rupees.setTextColor(resources.getColor(R.color.black))
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-            showRecyclerListBySpotSize(3)
-=======
             showRecyclerListBySpotSize(3,(activity as ContestActivity).filteredAllContestListData)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
         }
 
         mBinding!!.sortBy4spots.setOnClickListener {
@@ -314,11 +229,7 @@ class ContestFragment : Fragment() {
             mBinding!!.prizeArrow.visibility = View.GONE
             mBinding!!.rupees.setTextColor(resources.getColor(R.color.black))
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-            showRecyclerListBySpotSize(4)
-=======
             showRecyclerListBySpotSize(4, (activity as ContestActivity).filteredAllContestListData)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
         }
 
         mBinding!!.linearEntryPrizeSort.setOnClickListener {
@@ -340,11 +251,7 @@ class ContestFragment : Fragment() {
 
             mBinding!!.rupees.setTextColor(resources.getColor(R.color.white))
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-            filterByEntryPrize()
-=======
             filterByEntryPrize((activity as ContestActivity).filteredAllContestListData)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
         }
 
         mBinding!!.filterByAll.setOnClickListener {
@@ -373,15 +280,6 @@ class ContestFragment : Fragment() {
     }
 
     private fun showAllContestRecycler() {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-        mBinding!!.contestViewRecycler.visibility = View.VISIBLE
-        mBinding!!.contestRefresh.visibility = View.VISIBLE
-        mBinding!!.contestFilterRefresh.visibility = View.GONE
-        mBinding!!.recyclerBySpotsize.visibility = View.GONE
-    }
-
-    private fun showFilteredContestRecycler() {
-=======
         var isAllContestListEmpty = true
         for (i in (activity as ContestActivity).filteredAllContestListData) {
             if (i.allContestsRunning!!.isNotEmpty()) {
@@ -408,18 +306,13 @@ class ContestFragment : Fragment() {
 
     private fun showFilteredContestRecycler() {
         mBinding!!.btnCreateTeam.visibility = View.VISIBLE
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
         mBinding!!.contestViewRecycler.visibility = View.GONE
         mBinding!!.contestRefresh.visibility = View.GONE
         mBinding!!.contestFilterRefresh.visibility = View.VISIBLE
         mBinding!!.recyclerBySpotsize.visibility = View.VISIBLE
     }
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-    private fun filterByEntryPrize() {
-=======
     private fun filterByEntryPrize(allContestListData: ArrayList<ContestsParentModels>) {
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
 
         isEntryAscending = !isEntryAscending
         if (isEntryAscending) {
@@ -456,11 +349,7 @@ class ContestFragment : Fragment() {
         mBinding!!.recyclerBySpotsize.scheduleLayoutAnimation()
     }
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-    private fun showRecyclerListBySpotSize(spotSize: Int) {
-=======
     private fun showRecyclerListBySpotSize(spotSize: Int, allContestListData: ArrayList<ContestsParentModels>) {
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
         mBinding!!.contestViewRecycler.visibility = View.GONE
         mBinding!!.recyclerBySpotsize.visibility = View.VISIBLE
         filterSpotsListData.clear()
@@ -486,20 +375,6 @@ class ContestFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-        pos = 0
-        for (i in filterArrayList.indices) {
-            filterArrayList[i].isStatus = pos == i
-        }
-
-        filterAdapter.updateRecord(filterArrayList)
-
-        if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
-            MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
-            return
-        }
-        getAllContest(true)
-=======
         if (!MyUtils.isConnectedWithInternet(activity as AppCompatActivity)) {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             customProgressDialog2?.dismiss()
@@ -518,7 +393,6 @@ class ContestFragment : Fragment() {
 //        }
 //
 //        filterAdapter.updateRecord(filterArrayList)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -546,21 +420,6 @@ class ContestFragment : Fragment() {
     }
 
     private fun getAllContest(isLoading: Boolean) {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-        //var userInfo = (activity as PlugSportsApplication).userInformations
-        selectAllContest()
-        mBinding!!.contestRefresh.isRefreshing = false
-        //mBinding!!.filterBar.visibility = View.GONE
-        if (isLoading)
-            mBinding!!.progressBar.visibility = View.VISIBLE
-
-        /*val models = RequestModel()
-        models.user_id = MyPreferences.getUserID(requireActivity())!!
-        models.match_id = "" + matchObject!!.matchId
-        models.token = MyPreferences.getToken(requireActivity())!!
-        val deviceToken: String? = MyPreferences.getDeviceToken(requireActivity())
-        models.deviceDetails = HardwareInfoManager(activity).collectData(deviceToken!!)*/
-=======
             val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(requireContext(),
                 (Constant.contestFragmentDatabaseId+matchObject!!.matchId)
             )
@@ -591,7 +450,6 @@ class ContestFragment : Fragment() {
         //  mBinding!!.progressBar.visibility = View.VISIBLE
             customProgressDialog2!!.show()
 
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
 
         val jsonRequest = JsonObject()
         jsonRequest.addProperty("user_id", MyPreferences.getUserID(requireActivity())!!)
@@ -613,14 +471,9 @@ class ContestFragment : Fragment() {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
                     if (isVisible) {
                         MyUtils.showToast(activity!! as AppCompatActivity, "Something went wrong!!")
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-                        mBinding!!.contestRefresh.isRefreshing = false
-                        mBinding!!.progressBar.visibility = View.GONE
-=======
                         if (mBinding != null)  mBinding!!.contestRefresh.isRefreshing = false
                         //     mBinding!!.progressBar.visibility = View.GONE
                         customProgressDialog2!!.dismiss()
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
                     }
                 }
 
@@ -631,16 +484,11 @@ class ContestFragment : Fragment() {
                     if (!isVisible) {
                         return
                     }
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-                    mBinding!!.contestRefresh.isRefreshing = false
-                    mBinding!!.progressBar.visibility = View.GONE
-=======
                     if (mBinding != null) {
                         mBinding!!.contestRefresh.isRefreshing = false
                         //mBinding!!.progressBar.visibility = View.GONE
                     }
                     customProgressDialog2!!.dismiss()
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
                     val res = response!!.body()
                     if (res != null && res.appMaintainance) {
                         val intent = Intent(activity, MaintainanceActivity::class.java)
@@ -651,38 +499,6 @@ class ContestFragment : Fragment() {
                     } else {
                         if (res != null) {
                             if (res.status) {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-                                BindingUtils.currentTimeStamp = res.systemTime
-                                val responseModel = res.responseObject
-                                if (responseModel!!.matchContestlist != null && responseModel.matchContestlist!!.size > 0) {
-                                    allContestListData.clear()
-                                    allContestListData.addAll(responseModel.matchContestlist!!)
-
-                                    filterArrayList.clear()
-
-                                    val model = ContestCategoryModel("All", true)
-                                    filterArrayList.add(model)
-
-                                    for (i in responseModel.matchContestlist!!.indices) {
-                                        val categoryModel = ContestCategoryModel(
-                                            responseModel.matchContestlist!![i].contestTitle,
-                                            false
-                                        )
-                                        filterArrayList.add(categoryModel)
-                                    }
-
-                                    filterAdapter.updateRecord(filterArrayList)
-
-                                    adapter.setMatchesList(allContestListData)
-                                    mListener.onMyTeam(responseModel.myjoinedTeams!!)
-                                    mListener.onMyContest(responseModel.joinedContestDetails!!)
-                                } else {
-                                    MyUtils.showToast(
-                                        activity!! as AppCompatActivity,
-                                        "No Contest available for this match $res"
-                                    )
-                                }
-=======
                                 viewLifecycleOwner.lifecycleScope.launch {
                                     withContext(Dispatchers.Main){allContests(res)}
                                     withContext(Dispatchers.IO){
@@ -692,7 +508,6 @@ class ContestFragment : Fragment() {
                                     }
                                 }
 
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
                             } else {
                                 if (res.code == 1001) {
                                     MyUtils.showMessage(requireActivity(), res.message)
@@ -708,10 +523,6 @@ class ContestFragment : Fragment() {
             })
     }
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-    fun updateEmptyViews() {
-        if (allContestListData.size == 0) {
-=======
     private fun allContests(res: UsersPostDBResponse) {
         customProgressDialog2?.dismiss()
         if (mBinding != null) {
@@ -770,7 +581,6 @@ class ContestFragment : Fragment() {
 
     fun updateEmptyViews() {
         if ((activity as ContestActivity).filteredAllContestListData.size == 0) {
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
             mBinding!!.linearEmptyContest.visibility = View.VISIBLE
         } else {
             mBinding!!.linearEmptyContest.visibility = View.GONE
@@ -800,22 +610,12 @@ class ContestFragment : Fragment() {
                 val categoryModel: ContestCategoryModel = arrayList[position]
                 holder.contestTitle.text = categoryModel.name
                 if (categoryModel.isStatus) {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-                    holder.filterLayout.background =
-                        mContext.resources.getDrawable(R.drawable.new_filter_color_back)
-                    holder.contestTitle.setTextColor(mContext.resources.getColor(R.color.white))
-                } else {
-                    holder.contestTitle.setTextColor(mContext.resources.getColor(R.color.crop__selector_focused))
-                    holder.filterLayout.background =
-                        mContext.resources.getDrawable(R.drawable.new_filter_back)
-=======
 //                    holder.filterLayout.background = mContext.resources.getDrawable(R.drawable.new_filter_color_back)
          //           holder.contestTitle.setTextColor(mContext.resources.getColor(R.color.white))
                     holder.contestTitle.setTextColor(mContext.resources.getColor(R.color.green))
                 } else {
                     holder.contestTitle.setTextColor(mContext.resources.getColor(R.color.crop__selector_focused))
 //                    holder.filterLayout.background = mContext.resources.getDrawable(R.drawable.new_filter_back)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
                 }
                 holder.filterLayout.setOnClickListener(ClickView(position))
             } catch (e: Exception) {
@@ -827,11 +627,7 @@ class ContestFragment : Fragment() {
             var pos = position
 
             override fun onClick(v: View?) {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-                updateContestData(pos)
-=======
                 updateContestData(pos,(activity as ContestActivity).filteredAllContestListData)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
             }
         }
 
@@ -850,21 +646,11 @@ class ContestFragment : Fragment() {
         }
     }
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-    private fun updateContestData(pos: Int) {
-        for (i in filterArrayList.indices) {
-            filterArrayList[i].isStatus = pos == i
-        }
-
-        //filterAdapter.notifyDataSetChanged()
-        filterAdapter.updateRecord(filterArrayList)
-=======
     private fun updateContestData(pos: Int, allContestListData: ArrayList<ContestsParentModels>) {
         for (i in filterArrayList.indices) {
             filterArrayList[i].isStatus = pos == i
         }
         filterAdapter!!.updateRecord(filterArrayList)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
 
         this.pos = pos
 
@@ -886,8 +672,6 @@ class ContestFragment : Fragment() {
                 }
             }
             spotSizeFilterAdaptor.notifyDataSetChanged()
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-=======
             if (filterSpotsListData.isEmpty()) {
                 mBinding!!.linearEmptyContest.visibility = View.VISIBLE
                 mBinding!!.btnCreateTeam.visibility = View.GONE
@@ -897,7 +681,6 @@ class ContestFragment : Fragment() {
                 mBinding!!.linearEmptyContest.visibility = View.GONE
                 mBinding!!.btnCreateTeam.visibility = View.VISIBLE
             }
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
         }
     }
 
@@ -948,13 +731,8 @@ class ContestFragment : Fragment() {
                                 BindingUtils.currentTimeStamp = res.systemTime
                                 val responseModel = res.responseObject
                                 if (responseModel!!.matchContestlist != null && responseModel.matchContestlist!!.isNotEmpty()) {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-                                    allContestListData.clear()
-                                    allContestListData.addAll(responseModel.matchContestlist!!)
-=======
                                     (activity as ContestActivity).allContestListData.clear()
                                     (activity as ContestActivity).allContestListData.addAll(responseModel.matchContestlist!!)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
                                     filterArrayList.clear()
 
                                     val model = ContestCategoryModel("All", false)
@@ -978,25 +756,15 @@ class ContestFragment : Fragment() {
                                         }
                                     }
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-                                    filterAdapter.updateRecord(filterArrayList)
-=======
                                     filterAdapter?.updateRecord(filterArrayList)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
 
 
                                     showFilteredContestRecycler()
                                     filterSpotsListData.clear()
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-                                    for (i in allContestListData.indices) {
-                                        if (actualPosition == i) {
-                                            val values = allContestListData[i].allContestsRunning
-=======
                                     for (i in (activity as ContestActivity).filteredAllContestListData.indices) {
                                         if (actualPosition == i) {
                                             val values = (activity as ContestActivity).filteredAllContestListData[i].allContestsRunning
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
                                             if (values != null) {
                                                 filterSpotsListData.addAll(values)
                                             }
@@ -1024,8 +792,6 @@ class ContestFragment : Fragment() {
                 }
             })
     }
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/ContestFragment.kt
-=======
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -1038,5 +804,4 @@ class ContestFragment : Fragment() {
             allContestsApiCall(true)
         }
     }
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/ContestFragment.kt
 }

@@ -61,10 +61,6 @@ class PlayersContestAdapter(
             viewHolder.anouncedIndicatorText.text = "Playing"
             viewHolder.anouncedIndicatorText.setTextColor(context.resources.getColor(R.color.green))
         } else {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/createteam/adaptors/PlayersContestAdapter.kt
-            viewHolder.anouncedIndicatorText.text = ""
-            viewHolder.anouncedIndicatorCircle.setBackgroundResource(R.drawable.circle_red)
-=======
             if (objectVal.playedLastMatch != null && objectVal.playedLastMatch != "null"
                 && objectVal.playedLastMatch != ""
             ) {
@@ -76,7 +72,6 @@ class PlayersContestAdapter(
                 viewHolder.anouncedIndicatorText.setTextColor(context.resources.getColor(R.color.green))
                 viewHolder.anouncedIndicatorCircle.setBackgroundResource(R.drawable.circle_red)
             }
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/createteam/adaptors/PlayersContestAdapter.kt
         }
 
         Glide.with(context)
@@ -92,11 +87,7 @@ class PlayersContestAdapter(
             viewHolder.linearTradesStatus.setBackgroundColor(context.resources.getColor(R.color.white))
         }
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/createteam/adaptors/PlayersContestAdapter.kt
-        viewHolder.relPlayerImage.setOnClickListener{
-=======
         viewHolder.relPlayerImage.setOnClickListener {
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/createteam/adaptors/PlayersContestAdapter.kt
             val intent = Intent(context, PlayerInfoActivity::class.java)
             intent.putExtra("matchData", matchObject)
             intent.putExtra("playerData", objectVal)

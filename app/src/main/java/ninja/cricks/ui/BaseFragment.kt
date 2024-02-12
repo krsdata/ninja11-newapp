@@ -35,11 +35,7 @@ open class BaseFragment : Fragment() {
     }
 
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/BaseFragment.kt
-    fun genericAlertDialog(message: String, boolean: Boolean) {
-=======
     private fun genericAlertDialog(message: String, boolean: Boolean) {
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/BaseFragment.kt
         val builder = AlertDialog.Builder(requireActivity())
         builder.setMessage(message)
         builder.setIcon(android.R.drawable.ic_dialog_alert)

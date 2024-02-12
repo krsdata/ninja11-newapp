@@ -4,10 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
         <variable
             name="contentviews"
             type="ninja.cricks.ContestActivity" />
@@ -24,21 +20,13 @@
             android:id="@+id/linear_top_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-            android:background="@color/colorPrimaryDark"
-=======
             android:background="@drawable/header_gradient"
->>>>>>> Stashed changes
             android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-<<<<<<< Updated upstream
-                android:background="@color/colorPrimaryDark"
-=======
                 android:background="@drawable/header_gradient"
->>>>>>> Stashed changes
                 android:orientation="horizontal">
 
                 <ImageView
@@ -48,11 +36,7 @@
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="8dp"
-<<<<<<< Updated upstream
-                    android:src="@drawable/ic_arrow_back_black_24dp"
-=======
                     app:srcCompat="@drawable/ic_arrow_back_black_24dp"
->>>>>>> Stashed changes
                     app:tint="@color/white" />
 
                 <LinearLayout
@@ -77,11 +61,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_marginStart="@dimen/_3sdp"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:gravity="center"
                             android:text="AU-W"
                             android:textColor="@color/white"
@@ -92,11 +72,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_marginStart="@dimen/_3sdp"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:gravity="center"
                             android:text="vs"
                             android:textColor="@color/white" />
@@ -107,11 +83,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_marginStart="@dimen/_3sdp"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:gravity="center"
                             android:text="AU-W"
                             android:textColor="@color/white"
@@ -131,13 +103,8 @@
                             android:layout_width="22dp"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="5dp"
-<<<<<<< Updated upstream
-                            android:src="@drawable/ic_av_timer_black_24dp"
-                            android:visibility="gone"
-=======
                             android:visibility="gone"
                             app:srcCompat="@drawable/ic_av_timer_black_24dp"
->>>>>>> Stashed changes
                             app:tint="@color/white" />
 
                         <TextView
@@ -146,11 +113,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center|end"
                             android:background="@drawable/rounded_timer_back"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:gravity="center|end"
                             android:paddingStart="@dimen/_7sdp"
                             android:paddingTop="@dimen/_4sdp"
@@ -167,11 +130,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/image_back"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                    android:fontFamily="open_sans"
                     android:text="Contest"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_16sdp"
@@ -185,11 +144,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:layout_marginStart="@dimen/_5sdp"
-<<<<<<< Updated upstream
-                    android:src="@drawable/ic_wallet_new"
-=======
                     app:srcCompat="@drawable/ic_wallet_new"
->>>>>>> Stashed changes
                     app:tint="@color/white" />
             </RelativeLayout>
         </LinearLayout>
@@ -200,25 +155,6 @@
             android:layout_below="@+id/linear_top_bar"
             android:orientation="vertical">
 
-<<<<<<< Updated upstream
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabGravity="fill"
-                app:tabMode="fixed"
-                app:tabSelectedTextColor="@color/colorPrimary"
-                app:tabTextColor="@color/black" />
-
-            <!--<androidx.viewpager.widget.ViewPager
-                android:id="@+id/viewpager_contest"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="0dp" />-->
-            <ninja.cricks.customviews.NoSwipeViewPager
-                android:id="@+id/viewpager_contest"
-                android:layout_width="match_parent"
-=======
             <include
                 android:id="@+id/include_match_row"
                 layout="@layout/score_board_layout"
@@ -248,7 +184,6 @@
                 android:id="@+id/viewpager_contest"
                 android:layout_width="match_parent"
                 android:elevation="@dimen/_10sdp"
->>>>>>> Stashed changes
                 android:layout_height="match_parent" />
         </LinearLayout>
     </RelativeLayout>

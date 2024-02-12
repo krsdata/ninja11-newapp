@@ -40,10 +40,6 @@ class ContestAdapter(
     override fun onBindViewHolder(parent: RecyclerView.ViewHolder, viewType: Int) {
         val objectVal = matchesListObject[viewType]
         val viewJoinedMatches: ViewHolderJoinedContest = parent as ViewHolderJoinedContest
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/adaptors/ContestAdapter.kt
-
-=======
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/adaptors/ContestAdapter.kt
         viewJoinedMatches.contestTitle.text = objectVal.contestTitle
         viewJoinedMatches.contestSubTitle.text = objectVal.contestSubTitle
 
@@ -100,10 +96,6 @@ class ContestAdapter(
     }
 
     fun setMatchesList(matchesList: ArrayList<ContestsParentModels>?) {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/contest/adaptors/ContestAdapter.kt
-        this.matchesListObject = matchesList!!
-        // this.mContext = mContext
-=======
         this.matchesListObject = ArrayList()
         this.matchesListObject.clear()
         for (i in matchesList!!) {
@@ -111,7 +103,6 @@ class ContestAdapter(
                 this.matchesListObject.add(i)
             }
         }
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/contest/adaptors/ContestAdapter.kt
         notifyDataSetChanged()
     }
 

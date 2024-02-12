@@ -41,14 +41,7 @@ class WithdrawAmountsActivity : BaseActivity() {
         customeProgressDialog = CustomeProgressDialog(this)
         userInfo = (application as NinjaApplication).userInformations
         walletInfo = (application as NinjaApplication).walletInfo
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/WithdrawAmountsActivity.kt
-        mBinding = DataBindingUtil.setContentView(
-            this,
-            R.layout.activity_withdraw_amount
-        )
-=======
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_withdraw_amount)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/WithdrawAmountsActivity.kt
 
         mContext = this
 
@@ -83,10 +76,6 @@ class WithdrawAmountsActivity : BaseActivity() {
         mBinding!!.editWithdrawalAmount.hint =
             String.format("₹%s", MyPreferences.getMinWithdrawal(mContext!!))
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/WithdrawAmountsActivity.kt
-
-=======
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/WithdrawAmountsActivity.kt
         mBinding!!.radioGroup.setOnCheckedChangeListener { group, checkedId ->
             val rb = group.findViewById<RadioButton>(checkedId)
             if (rb != null) {
@@ -100,11 +89,7 @@ class WithdrawAmountsActivity : BaseActivity() {
             }
         }
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/WithdrawAmountsActivity.kt
-        mBinding!!.submitBtnWithdrawal.setOnClickListener(View.OnClickListener {
-=======
         mBinding!!.submitBtnWithdrawal.setOnClickListener {
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/WithdrawAmountsActivity.kt
             val amount = mBinding!!.editWithdrawalAmount.text.toString().trim()
             if (amount.isEmpty()) {
                 MyUtils.showMessage(mContext!!, "Withdraw amount cannot be empty")
@@ -121,9 +106,6 @@ class WithdrawAmountsActivity : BaseActivity() {
                             "You can not withdraw amount less than ₹$minWithdraw"
                         )
                     } else if (amount.toInt() <= 1000) {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/WithdrawAmountsActivity.kt
-                        showWithdrawalAlert(amount.toInt(), pageType)
-=======
                         if (mBinding!!.paytmEditText.visibility == View.VISIBLE) {
                             if (mBinding!!.paytmEditText.text.toString().length < 0) {
                                 MyUtils.showMessage(
@@ -136,7 +118,6 @@ class WithdrawAmountsActivity : BaseActivity() {
                         } else {
                             showWithdrawalAlert(amount.toInt(), pageType)
                         }
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/WithdrawAmountsActivity.kt
                     } else {
                         MyUtils.showMessage(
                             mContext!!,
@@ -188,21 +169,12 @@ class WithdrawAmountsActivity : BaseActivity() {
                     }
                 }
             }
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/WithdrawAmountsActivity.kt
-        })
-
-        mBinding!!.contactUs.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this@WithdrawAmountsActivity, SupportActivity::class.java)
-            startActivity(intent)
-        })
-=======
         }
 
         mBinding!!.contactUs.setOnClickListener {
             val intent = Intent(this@WithdrawAmountsActivity, SupportActivity::class.java)
             startActivity(intent)
         }
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/WithdrawAmountsActivity.kt
 
         getMessage()
 
@@ -255,13 +227,9 @@ class WithdrawAmountsActivity : BaseActivity() {
         if (type == "UPI") {
             jsonRequest.addProperty("upi_id", mBinding!!.upiEditText.text.toString())
         }
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/WithdrawAmountsActivity.kt
-        //WebServiceClient(this).client.create(IApiMethod::class.java).withdrawAmount(models)
-=======
         if (type == "paytm") {
             jsonRequest.addProperty("paytm_number", mBinding!!.paytmEditText.text.toString())
         }
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/WithdrawAmountsActivity.kt
         WebServiceClient(this).client.create(IApiMethod::class.java).withdrawAmountNew(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
                 override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
@@ -285,13 +253,10 @@ class WithdrawAmountsActivity : BaseActivity() {
                                 mBinding!!.upiText.visibility = View.VISIBLE
                                 mBinding!!.upiEditText.visibility = View.VISIBLE
                                 errorAlert(res.message)
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/WithdrawAmountsActivity.kt
-=======
                             } else if (res.code == 406) {
                                 mBinding!!.paytmText.visibility = View.VISIBLE
                                 mBinding!!.paytmEditText.visibility = View.VISIBLE
                                 errorAlert(res.message)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/WithdrawAmountsActivity.kt
                             } else {
                                 MyUtils.showMessage(mContext!!, res.message)
                             }

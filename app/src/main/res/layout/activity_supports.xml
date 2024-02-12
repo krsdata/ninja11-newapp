@@ -24,11 +24,7 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-<<<<<<< Updated upstream
-                android:background="@color/colorPrimaryDark"
-=======
                 android:background="@drawable/header_gradient"
->>>>>>> Stashed changes
                 android:elevation="5dp"
                 app:theme="@style/ToolbarColoredBackArrow"
                 app:titleTextAppearance="@style/TextAppearance.MyApp.Widget.ActionBar.Title"/>
@@ -52,11 +48,7 @@
                     android:layout_height="wrap_content"
                     android:text="Get In Touch"
                     android:layout_marginLeft="15dip"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/open_sans_semibold"
-=======
-
->>>>>>> Stashed changes
+                    android:fontFamily="open_sans"
                     android:textColor="@color/colorAccent"
                     android:textSize="28sp"/>
                 <View
@@ -71,11 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Our support team available on given WhatsApp, Call, Email &amp; SMS. "
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/open_sans_semibold"
-=======
-
->>>>>>> Stashed changes
+                    android:fontFamily="open_sans"
                     android:textColor="@color/black"
                     android:layout_marginTop="40dp"
                     android:layout_marginLeft="15dip"
@@ -85,11 +73,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Please feel free to contact us"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/open_sans_light"
-=======
-
->>>>>>> Stashed changes
+                    android:fontFamily="open_sans"
                     android:textColor="@color/black"
                     android:layout_marginTop="8dp"
                     android:layout_marginLeft="15dip"
@@ -102,11 +86,7 @@
                     android:text="CONNECT WITH "
                     android:textStyle="bold"
                     android:gravity="center"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/open_sans_semibold"
-=======
-
->>>>>>> Stashed changes
+                    android:fontFamily="open_sans"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:layout_marginTop="25dip"/>
@@ -145,11 +125,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Email"
                                 android:layout_gravity="center_vertical|bottom|center_horizontal"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/open_sans_light"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:textColor="@color/black"/>
 
                         </androidx.cardview.widget.CardView>
@@ -177,11 +153,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="SMS"
                                 android:layout_gravity="center_vertical|bottom|center_horizontal"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/open_sans_light"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:textColor="@color/black"/>
 
                         </androidx.cardview.widget.CardView>
@@ -217,11 +189,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="WhatsApp"
                                 android:layout_gravity="center_vertical|bottom|center_horizontal"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/open_sans_light"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:textColor="@color/black"/>
 
                         </androidx.cardview.widget.CardView>
@@ -249,11 +217,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Phone"
                                 android:layout_gravity="center_vertical|bottom|center_horizontal"
-<<<<<<< Updated upstream
-                                android:fontFamily="@font/open_sans_light"
-=======
-
->>>>>>> Stashed changes
+                                android:fontFamily="open_sans"
                                 android:textColor="@color/black"/>
 
                         </androidx.cardview.widget.CardView>

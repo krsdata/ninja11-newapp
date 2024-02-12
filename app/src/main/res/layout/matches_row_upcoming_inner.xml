@@ -28,11 +28,7 @@
                 android:id="@+id/tournament_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                android:fontFamily="@font/montserrat_medium"
-=======
                 android:fontFamily="@font/open_sans_semibold"
->>>>>>> Stashed changes
                 android:paddingStart="@dimen/_5sdp"
                 android:paddingEnd="@dimen/_5sdp"
                 android:singleLine="true"
@@ -67,39 +63,23 @@
                     <View
                         android:id="@+id/countrycolorview"
                         android:layout_width="45dp"
-<<<<<<< Updated upstream
-                        android:layout_height="35dp"
-=======
                         android:layout_height="25dp"
->>>>>>> Stashed changes
                         android:layout_centerVertical="true"
                         android:background="@color/red" />
 
                     <com.mikhaellopez.circularimageview.CircularImageView
                         android:id="@+id/teama_logo"
-<<<<<<< Updated upstream
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-=======
                         android:layout_width="40dp"
                         android:layout_height="40dp"
->>>>>>> Stashed changes
                         android:layout_marginStart="30dp"
                         android:scaleType="fitCenter"
                         android:src="@drawable/flag_indian"
                         app:civ_border="true"
                         app:civ_border_color="@color/white"
-<<<<<<< Updated upstream
-                        app:civ_circle_color_end="@color/white"
-                        app:civ_circle_color_start="@color/white"
-                        app:civ_circle_color="@color/white"
-                        app:civ_border_width="3dp" />
-=======
                         app:civ_border_width="2dp"
                         app:civ_circle_color="@color/white"
                         app:civ_circle_color_end="@color/white"
                         app:civ_circle_color_start="@color/white" />
->>>>>>> Stashed changes
                 </RelativeLayout>
 
                 <TextView
@@ -108,11 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/_3sdp"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/open_sans_semibold"
-=======
-
->>>>>>> Stashed changes
+                    android:fontFamily="open_sans"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:text="IND"
@@ -131,11 +107,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:text="LINE UP"
                     android:textColor="@color/green"
@@ -146,17 +118,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/montserrat_bold"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:fontFamily="open_sans"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:layout_marginTop="@dimen/_12sdp"
-=======
-                    android:layout_marginTop="@dimen/_12sdp"
-
-                    android:maxLines="1"
-                    android:singleLine="true"
->>>>>>> Stashed changes
                     android:text="1D:24H:30M:40S"
                     android:textColor="@color/text"
                     android:textSize="@dimen/_10sdp" />
@@ -166,17 +131,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/montserrat_medium"
+                    android:layout_marginTop="@dimen/_3sdp"
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:minWidth="@dimen/_60sdp"
-                    android:layout_marginTop="@dimen/_3sdp"
-=======
-                    android:layout_marginTop="@dimen/_3sdp"
-
-                    android:gravity="center"
-                    android:minWidth="@dimen/_60sdp"
->>>>>>> Stashed changes
                     android:paddingStart="@dimen/_7sdp"
                     android:paddingEnd="@dimen/_7sdp"
                     android:text="7:30PM"
@@ -197,20 +155,12 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="@dimen/_3sdp"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/open_sans_semibold"
-=======
-
->>>>>>> Stashed changes
+                    android:fontFamily="open_sans"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:text="NZ"
                     android:textColor="@color/black"
-<<<<<<< Updated upstream
-                    android:textSize="@dimen/_10sdp"/>
-=======
                     android:textSize="@dimen/_10sdp" />
->>>>>>> Stashed changes
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -219,40 +169,24 @@
                     <View
                         android:id="@+id/countrybcolorview"
                         android:layout_width="@dimen/_45sdp"
-<<<<<<< Updated upstream
-                        android:layout_height="35dp"
-=======
                         android:layout_height="25dp"
->>>>>>> Stashed changes
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="15dp"
                         android:background="@color/red" />
 
                     <com.mikhaellopez.circularimageview.CircularImageView
                         android:id="@+id/teamb_logo"
-<<<<<<< Updated upstream
-                        android:layout_width="45dp"
-                        android:layout_height="45dp"
-=======
                         android:layout_width="40dp"
                         android:layout_height="40dp"
->>>>>>> Stashed changes
                         android:layout_alignParentStart="true"
                         android:scaleType="fitCenter"
                         android:src="@drawable/flag_newzeland"
                         app:civ_border="true"
                         app:civ_border_color="@color/white"
-<<<<<<< Updated upstream
-                        app:civ_circle_color_end="@color/white"
-                        app:civ_circle_color_start="@color/white"
-                        app:civ_circle_color="@color/white"
-                        app:civ_border_width="3dp" />
-=======
                         app:civ_border_width="2dp"
                         app:civ_circle_color="@color/white"
                         app:civ_circle_color_end="@color/white"
                         app:civ_circle_color_start="@color/white" />
->>>>>>> Stashed changes
                 </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>
@@ -286,12 +220,8 @@
             android:layout_width="45dp"
             android:layout_height="wrap_content"
             android:background="@color/green_light"
-<<<<<<< Updated upstream
-            android:fontFamily="@font/montserrat_bold"
-=======
             android:fontFamily="@font/open_sans_semibold"
             android:textStyle="bold"
->>>>>>> Stashed changes
             android:gravity="center"
             android:padding="3dip"
             android:text="Mega"
@@ -303,11 +233,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dip"
-<<<<<<< Updated upstream
-            android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+            android:fontFamily="open_sans"
             android:text="₹1Crore"
             android:textColor="@color/black"
             android:textSize="@dimen/small_info_size" />
@@ -319,16 +245,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:background="@color/green_light"
-<<<<<<< Updated upstream
-        android:fontFamily="@font/montserrat_bold"
-        android:gravity="center"
-        android:padding="3dip"
-=======
         android:fontFamily="@font/open_sans_semibold"
         android:textStyle="bold"
         android:gravity="center"
         android:padding="1dip"
->>>>>>> Stashed changes
         android:src="@drawable/left_triangle"
         android:text="Giveaway"
         android:textColor="@color/white"

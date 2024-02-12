@@ -1,11 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-<<<<<<< Updated upstream
-    <style name="AppTheme_app" parent="@style/Theme.AppCompat.Light.NoActionBar">
-=======
     <style name="AppTheme_app" parent="@style/Theme.MaterialComponents.Light.NoActionBar">
->>>>>>> Stashed changes
         <item name="android:windowNoTitle">true</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -13,23 +9,6 @@
         <item name="windowActionBar">false</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowDisablePreview">true</item>
-<<<<<<< Updated upstream
-
-    </style>
-
-    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
-        <item name="android:background">@color/colorPrimaryDark</item>
-        <item name="colorControlNormal">@color/white</item>
-        <item name="android:navigationIcon">@drawable/ic_arrow_back_black_24dp</item>
-
-    </style>
-
-    <style name="dashboard_theme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="windowActionBar">false</item>
-=======
         <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
     </style>
 
@@ -54,7 +33,6 @@
     <style name="dashboard_theme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="windowActionBar">true</item>
->>>>>>> Stashed changes
         <item name="windowNoTitle">true</item>
     </style>
 
@@ -71,11 +49,7 @@
 
     <style name="ground_style_info">
         <item name="android:textSize">@dimen/_9sdp</item>
-<<<<<<< Updated upstream
-        <item name="android:fontFamily">@font/montserrat_regular</item>
-=======
         <item name="android:fontFamily">open_sans</item>
->>>>>>> Stashed changes
         <item name="android:textColor">@color/white</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:alpha">0.7</item>
@@ -85,11 +59,7 @@
 
     <style name="ground_style_players_info">
         <item name="android:textSize">@dimen/_9sdp</item>
-<<<<<<< Updated upstream
-        <item name="android:fontFamily">@font/montserrat_regular</item>
-=======
         <item name="android:fontFamily">open_sans</item>
->>>>>>> Stashed changes
         <item name="android:gravity">center_horizontal</item>
         <item name="android:paddingLeft">@dimen/_5sdp</item>
         <item name="android:paddingRight">@dimen/_5sdp</item>
@@ -150,8 +120,6 @@
         <item name="android:windowAnimationStyle">@android:style/Animation</item>
     </style>
 
-<<<<<<< Updated upstream
-=======
     <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/white</item>
@@ -160,5 +128,4 @@
 
 
 
->>>>>>> Stashed changes
 </resources>

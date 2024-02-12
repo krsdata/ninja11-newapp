@@ -31,11 +31,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+                    android:fontFamily="open_sans"
                     android:text="CONFIRMATION"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_15sdp" />
@@ -54,11 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
-<<<<<<< Updated upstream
-                android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                android:fontFamily="open_sans"
                 android:text=""
                 android:textColor="@color/black"
                 android:textSize="@dimen/_10sdp" />
@@ -78,11 +70,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:text="Entry"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp" />
@@ -92,11 +80,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:text="₹0.00"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14sdp" />
@@ -110,11 +94,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:text="Usable Cash Bonus"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp" />
@@ -124,11 +104,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:text="₹0.00"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14sdp" />
@@ -143,11 +119,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:text="Usable Extra Cash"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_13sdp" />
@@ -157,11 +129,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:text="₹0.00"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_14sdp" />
@@ -181,11 +149,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:text="To Pay"
                         android:textColor="@color/colorAccent"
                         android:textSize="@dimen/_14sdp" />
@@ -195,11 +159,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:text="₹0.00"
                         android:textColor="@color/colorAccent"
                         android:textSize="@dimen/_14sdp" />
@@ -220,11 +180,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:gravity="center"
                             android:text="@string/label_acceptance1"
                             android:textColor="@color/black"
@@ -235,11 +191,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginStart="@dimen/_5sdp"
-<<<<<<< Updated upstream
-                            android:fontFamily="@font/montserrat_bold"
-=======
-
->>>>>>> Stashed changes
+                            android:fontFamily="open_sans"
                             android:gravity="center"
                             android:text="T&amp;C"
                             android:textColor="@color/blue"
@@ -249,11 +201,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-<<<<<<< Updated upstream
-                        android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+                        android:fontFamily="open_sans"
                         android:gravity="start"
                         android:layout_marginTop="@dimen/_5sdp"
                         android:text="@string/label_acceptance2"
@@ -271,11 +219,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:background="@drawable/default_rounded_button_sportsfight"
-<<<<<<< Updated upstream
-                    android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:text="JOIN CONTEST"
                     android:textColor="@color/white"

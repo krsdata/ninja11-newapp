@@ -76,17 +76,9 @@ class SupportActivity : AppCompatActivity() {
             }
         })
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/SupportActivity.kt
-        mBinding!!.callWhatsapp.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                raiseIssuesOnWhatsApp()
-            }
-        })
-=======
         mBinding!!.callWhatsapp.setOnClickListener{
                 raiseIssuesOnWhatsApp()
         }
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/SupportActivity.kt
     }
 
     fun raiseIssuesOnWhatsApp() {

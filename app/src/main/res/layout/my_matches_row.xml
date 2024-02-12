@@ -92,7 +92,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/_3sdp"
                     android:layout_marginTop="@dimen/_5sdp"
-
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -112,7 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:text="LINE UP"
                     android:layout_centerVertical="true"
@@ -126,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/_12sdp"
-
+                    android:fontFamily="open_sans"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:gravity="center"
@@ -142,7 +142,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/_3sdp"
-
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:minWidth="@dimen/_60sdp"
                     android:paddingStart="@dimen/_7sdp"
@@ -197,7 +197,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/_3sdp"
                     android:layout_marginTop="@dimen/_5sdp"
-
+                    android:fontFamily="open_sans"
                     android:gravity="center"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -249,7 +249,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dip"
-
+            android:fontFamily="open_sans"
             android:text="₹1Crore"
             android:textColor="@color/black"
             android:textSize="@dimen/small_info_size" />

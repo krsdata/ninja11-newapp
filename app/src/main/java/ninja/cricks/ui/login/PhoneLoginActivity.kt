@@ -12,13 +12,17 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseException
-import com.google.firebase.auth.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.auth.PhoneAuthProvider
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import ninja.cricks.MainActivity
 import ninja.cricks.NinjaApplication
 import ninja.cricks.OtpVerifyActivity
+import ninja.cricks.R
 import ninja.cricks.databinding.ActivityPhoneLoginBinding
 import ninja.cricks.models.ResponseModel
 import ninja.cricks.models.UserInfo
@@ -33,7 +37,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.concurrent.TimeUnit
-import ninja.cricks.R
 
 
 class PhoneLoginActivity : BaseActivity(), Callback<ResponseModel> {
@@ -59,42 +62,54 @@ class PhoneLoginActivity : BaseActivity(), Callback<ResponseModel> {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_phone_login)
         val bundle = intent.extras
         phoneNo = bundle?.getString("mobileNo")
-        customeProgressDialog.show()
+//        customeProgressDialog.show()
         init()
     }
 
     private fun init() {
         auth = FirebaseAuth.getInstance()
-        binding!!.back.setOnClickListener {
-            onBackPressed()
+
+        binding!!.toolbar.title = "Verify Your Passcode"
+        binding!!.toolbar.setTitleTextColor(resources.getColor(R.color.white))
+        setSupportActionBar(binding!!.toolbar)
+        binding!!.toolbar.setNavigationOnClickListener {
+            finish()
+        }
+
+        binding!!.toolbar.setOnClickListener {
+            finish()
         }
         binding!!.btnSubmit.setOnClickListener {
             verifyCode(binding!!.otpView.text.toString())
         }
-        binding!!.resendOtp.setOnClickListener {
-            if (!canResend) {
-                MyUtils.showToast(this, "Please wait to complete timer")
-            } else {
-                customeProgressDialog.show()
-                sendOTP()
-            }
-
-        }
+//        binding!!.resendOtp.setOnClickListener {
+//            if (!canResend) {
+//                MyUtils.showToast(this, "Please wait to complete timer")
+//            } else {
+//                customeProgressDialog.show()
+//                sendOTP()
+//            }
+//
+//        }
         binding!!.btnCountinue.setOnClickListener {
             if (binding!!.editPasscode.text != null && binding!!.editPasscode.text!!.isNotEmpty() && binding!!.editPasscode.text!!.length == 6) {
-                login(verifiedEmailId, "phoneAuth",binding!!.editPasscode.text.toString())
-            }
-            else {
+                login(verifiedEmailId, "phoneAuth", binding!!.editPasscode.text.toString())
+            } else {
                 MyUtils.showToast(this, "Please Enter 6 digit passcode")
             }
 
         }
-        initTimer()
-        binding!!.otpView.setOtpCompletionListener {
-            verifyCode(it)
-        }
-        initCallback()
-        sendOTP()
+//        initTimer()
+//        binding!!.otpView.setOtpCompletionListener {
+//            verifyCode(it)
+//        }
+//        initCallback()
+//        sendOTP()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
     }
 
     private fun initCallback() {
@@ -112,10 +127,10 @@ class PhoneLoginActivity : BaseActivity(), Callback<ResponseModel> {
             override fun onVerificationFailed(p0: FirebaseException) {
                 customeProgressDialog.dismiss()
 
-                Toast.makeText(this@PhoneLoginActivity,p0.message,Toast.LENGTH_SHORT).show()
-               /* val snackbar: Snackbar = Snackbar.make(binding!!.root,p0.message!!,Snackbar.LENGTH_SHORT)
-                snackbar.view.setBackgroundColor(resources.getColor(R.color.green))
-                snackbar.show()*/
+                Toast.makeText(this@PhoneLoginActivity, p0.message, Toast.LENGTH_SHORT).show()
+                /* val snackbar: Snackbar = Snackbar.make(binding!!.root,p0.message!!,Snackbar.LENGTH_SHORT)
+                 snackbar.view.setBackgroundColor(resources.getColor(R.color.green))
+                 snackbar.show()*/
                 finish()
             }
 
@@ -171,7 +186,7 @@ class PhoneLoginActivity : BaseActivity(), Callback<ResponseModel> {
                         if (auth!!.currentUser?.photoUrl != null) {
                             photoUrl = auth!!.currentUser!!.photoUrl.toString()
                         }
-                        if (user.phoneNumber != null){
+                        if (user.phoneNumber != null) {
                             verifiedPhoneNumber = user.phoneNumber!!.substring(3)
                         }
 
@@ -205,7 +220,11 @@ class PhoneLoginActivity : BaseActivity(), Callback<ResponseModel> {
                         "firebaseAuth message ==========> ${task.exception.toString()}"
                     )
                     if (task.exception!!.message!!.contains("credential is invalid")) {
-                        val snackbar = Snackbar.make(binding!!.root,"incorrect OTP, please enter correct OTP",Snackbar.LENGTH_SHORT)
+                        val snackbar = Snackbar.make(
+                            binding!!.root,
+                            "incorrect OTP, please enter correct OTP",
+                            Snackbar.LENGTH_SHORT
+                        )
                         snackbar.view.setBackgroundColor(resources.getColor(R.color.colorPrimary))
                         snackbar.show()
                     }
@@ -235,13 +254,9 @@ class PhoneLoginActivity : BaseActivity(), Callback<ResponseModel> {
             override fun onFinish() {
                 binding!!.timerOtpDetect.text = ""
                 canResend = true
-
             }
-
         }
-
     }
-
 
     fun login(email: String, authType: String, passcode: String) {
         if (!MyUtils.isConnectedWithInternet(this@PhoneLoginActivity)) {
@@ -252,19 +267,17 @@ class PhoneLoginActivity : BaseActivity(), Callback<ResponseModel> {
 
         val jsonRequest = JsonObject()
 
-        //jsonRequest.addProperty("name", name)
         jsonRequest.addProperty("mobile_number", phoneNo)
-        jsonRequest.addProperty("pass_code",passcode)
-       /* jsonRequest.addProperty("device_id", notificationToken)
+        jsonRequest.addProperty("pass_code", passcode)
+        jsonRequest.addProperty("device_id", notificationToken)
         jsonRequest.addProperty("user_type", "login_phone")
-        jsonRequest.addProperty("provider_id", auth?.uid)
-        jsonRequest.addProperty("id_token", idToken)*/
-      //  jsonRequest.addProperty("isRegistration",false)
+//        jsonRequest.addProperty("provider_id", auth?.uid)
+//        jsonRequest.addProperty("id_token", idToken)
         val gson = Gson()
         val jsonString: String =
             gson.toJson(HardwareInfoManager(this).collectData(MyPreferences.getDeviceToken(this)!!))
         val deviceDetails: JsonObject = JsonParser().parse(jsonString).asJsonObject
-       // jsonRequest.add("deviceDetails", deviceDetails)
+        jsonRequest.add("deviceDetails", deviceDetails)
 
         RetrofitClient(this).client.create(IApiMethod::class.java).phoneLogin(jsonRequest)
             .enqueue(this)
@@ -288,45 +301,32 @@ class PhoneLoginActivity : BaseActivity(), Callback<ResponseModel> {
                         MyPreferences.setToken(this, responseBody.token)
 
                         MyPreferences.setUserID(this, "" + responseBody.infomodel!!.userId)
-                        (applicationContext as NinjaApplication).saveUserInformations(
-                            responseBody.infomodel
-                        )
+                        (applicationContext as NinjaApplication).saveUserInformations(responseBody.infomodel)
 
                         MyPreferences.setOtpAuthRequired(this, responseBody.isOTPRequired)
                         MyPreferences.setToken(this, responseBody.token)
                         MyPreferences.setUserID(this, "" + responseBody.infomodel!!.userId)
-                    /*    if (responseBody.paytmMid != null) {
-                            MyPreferences.setPaytmMid(this, responseBody.paytmMid)
-                        }
-                        MyPreferences.setPaytmCallback(this, responseBody.infomodel!!.callbackurrl)
-                        MyPreferences.setGooglePayId(this, responseBody.gpayid)
-                        MyPreferences.setRazorPayId(this, responseBody.razorPay)*/
+                        /*    if (responseBody.paytmMid != null) {
+                                MyPreferences.setPaytmMid(this, responseBody.paytmMid)
+                            }
+                            MyPreferences.setPaytmCallback(this, responseBody.infomodel!!.callbackurrl)
+                            MyPreferences.setGooglePayId(this, responseBody.gpayid)
+                            MyPreferences.setRazorPayId(this, responseBody.razorPay)*/
 
                         if (responseBody.baseUrl != "") {
                             MyPreferences.setBaseUrl(this, responseBody.baseUrl)
                         }
                         MyPreferences.setSystemToken(this, responseBody.systemToken)
 
-                        if (TextUtils.isEmpty(infoModels.mobileNumber) ||
-                            TextUtils.isEmpty(infoModels.userEmail) ||
-                            TextUtils.isEmpty(infoModels.fullName)
-                        ) {
-                            registerUsers()
-                        } else
-                            if (isOtpVerified) {
-                                MyPreferences.setLoginStatus(this@PhoneLoginActivity, true)
-                                val intent =
-                                    Intent(this@PhoneLoginActivity, MainActivity::class.java)
-                                setResult(Activity.RESULT_OK)
-                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                startActivity(intent)
-                                finish()
-                            }
+
+                        MyPreferences.setLoginStatus(this@PhoneLoginActivity, true)
+                        val intent = Intent(this@PhoneLoginActivity, MainActivity::class.java)
+                        setResult(Activity.RESULT_OK)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                        finish()
                     } else {
-                        MyUtils.showToast(
-                            this@PhoneLoginActivity,
-                            "Something went wrong, please contact admin"
-                        )
+                        MyUtils.showToast(this@PhoneLoginActivity, "Something went wrong, please contact admin")
                     }
                 } else {
                     when (responseBody.statusCode) {
@@ -381,19 +381,10 @@ class PhoneLoginActivity : BaseActivity(), Callback<ResponseModel> {
         val intent = Intent(this@PhoneLoginActivity, RegisterScreenActivity::class.java)
         intent.putExtra(OtpVerifyActivity.EXTRA_KEY_PROVIDER_ID, uid)
         intent.putExtra(OtpVerifyActivity.EXTRA_KEY_ID_TOKEN, idToken)
-        intent.putExtra("passcode",binding!!.editPasscode.text.toString())
-        intent.putExtra("isFromPhoneVerification",true)
+        intent.putExtra("passcode", binding!!.editPasscode.text.toString())
+        intent.putExtra("isFromPhoneVerification", true)
         startActivity(intent)
         finish()
-    }
-
-    override fun onBackPressed() {
-        if (canBackPress) {
-            super.onBackPressed()
-        } else {
-            Toast.makeText(this, "Please wait....", Toast.LENGTH_SHORT).show()
-            return
-        }
     }
 
     override fun onBitmapSelected(bitmap: Bitmap) {

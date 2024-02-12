@@ -79,13 +79,10 @@ class PrizeBreakupFragment : Fragment() {
             MyUtils.showToast(activity as AppCompatActivity, "No Internet connection found")
             return
         }
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/ui/leadersboard/PrizeBreakupFragment.kt
-=======
     }
 
     override fun onResume() {
         super.onResume()
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/ui/leadersboard/PrizeBreakupFragment.kt
         if (contestObject!!.winnerCounts!!.toInt() == 0) {
             mBinding!!.winnerGlory.visibility = View.VISIBLE
         } else {

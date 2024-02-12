@@ -47,10 +47,7 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var customeProgressDialog: CustomeProgressDialog
     private lateinit var mContext: Context
     private var mImageFile: File? = null
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/EditProfileActivity.kt
-=======
-    private var isPasscode: Boolean? =false
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/EditProfileActivity.kt
+    private var isPasscode: Boolean? = false
 
     companion object {
         private var TAG: String = EditProfileActivity::class.java.simpleName
@@ -73,9 +70,9 @@ class EditProfileActivity : AppCompatActivity() {
         mBinding!!.toolbar.setTitleTextColor(resources.getColor(R.color.white))
         mBinding!!.toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
         setSupportActionBar(mBinding!!.toolbar)
-        mBinding!!.toolbar.setNavigationOnClickListener(View.OnClickListener {
+        mBinding!!.toolbar.setNavigationOnClickListener {
             finish()
-        })
+        }
 
         Glide.with(this)
             .load(userInfo.profileImage)
@@ -91,7 +88,8 @@ class EditProfileActivity : AppCompatActivity() {
                 intent.putExtra(FullScreenImageViewActivity.KEY_IMAGE_URL, photoUrl)
                 startActivity(intent)
             } else {
-                selectImage()
+                Toast.makeText(this@EditProfileActivity, "Coming soon", Toast.LENGTH_LONG).show()
+//                selectImage()
             }
         }
 
@@ -99,7 +97,7 @@ class EditProfileActivity : AppCompatActivity() {
             selectImage()
         }
 
-        mBinding!!.dateOfBirth.setOnClickListener(View.OnClickListener {
+        mBinding!!.dateOfBirth.setOnClickListener {
             val c = Calendar.getInstance()
             val mYear = c[Calendar.YEAR]
             val mMonth = c[Calendar.MONTH]
@@ -127,7 +125,7 @@ class EditProfileActivity : AppCompatActivity() {
                 }, mYear, mMonth, mDay
             )
             datePickerDialog.show()
-        })
+        }
 
         mBinding!!.btnUpdateProfile.setOnClickListener {
             updateProfile()
@@ -149,18 +147,10 @@ class EditProfileActivity : AppCompatActivity() {
         if (!TextUtils.isEmpty(userInfo.city)) {
             mBinding!!.editCity.setText(userInfo.city)
         }
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/EditProfileActivity.kt
-=======
-
-        {
-
-        }
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/EditProfileActivity.kt
     }
 
     private fun selectImage() {
-        val options: Array<CharSequence> =
-            arrayOf<CharSequence>("Take Photo", "Choose from Gallery", "Cancel")
+        val options: Array<CharSequence> = arrayOf("Take Photo", "Choose from Gallery", "Cancel")
 
         val builder: AlertDialog.Builder = AlertDialog.Builder(mContext)
         builder.setTitle("Add Photo")
@@ -181,12 +171,7 @@ class EditProfileActivity : AppCompatActivity() {
             .cameraOnly() // User can only capture image from Camera
             .crop() // Crop Image(User can choose Aspect Ratio)
             .compress(2048) // Image size will be less than 1024 KB
-            .saveDir(
-                File(
-                    cacheDir,
-                    "Ninja11"
-                )
-            ) // External file path
+            .saveDir(File(cacheDir, "Ninja11")) // External file path
             .start(CAMERA_IMAGE_REQ_CODE)
     }
 
@@ -195,12 +180,7 @@ class EditProfileActivity : AppCompatActivity() {
             .galleryOnly() // User can only select image from Gallery
             .crop() // Crop Image(User can choose Aspect Ratio)
             .compress(2048) // Image size will be less than 2048 KB
-            .saveDir(
-                File(
-                    cacheDir,
-                    "Ninja11"
-                )
-            ) // External file path
+            .saveDir(File(cacheDir, "Ninja11")) // External file path
             .galleryMimeTypes(  //Exclude gif images
                 mimeTypes = arrayOf(
                     "image/png",
@@ -266,10 +246,7 @@ class EditProfileActivity : AppCompatActivity() {
         val mobileNumber = mBinding!!.updateEditMobile.text.toString()
         val emailAddress = mBinding!!.updateEmail.text.toString()
         val cityName = mBinding!!.editCity.text.toString()
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/EditProfileActivity.kt
-=======
         val passcode = mBinding!!.editPasscode.text.toString()
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/EditProfileActivity.kt
         var gender = "male"
         if (!mBinding!!.genderMale.isChecked) {
             gender = "female"
@@ -294,70 +271,65 @@ class EditProfileActivity : AppCompatActivity() {
         } else if (TextUtils.isEmpty(dateOfBirth)) {
             MyUtils.showToast(this@EditProfileActivity, "Please enter your Date of Birth")
             return
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/EditProfileActivity.kt
-        }
-
-        mBinding!!.progressBar.visibility = View.VISIBLE
-=======
-        }else if (TextUtils.isEmpty(passcode) && passcode.length != 6 && !isPasscode!!) {
-            MyUtils.showToast(this@EditProfileActivity, "Please enter new passcode")
+        } else if (TextUtils.isEmpty(passcode) && passcode.length != 6) {
+            MyUtils.showToast(this@EditProfileActivity, "Please enter new passcode and length will be 6 characters")
             return
-        }
+        } else {
 
 
             mBinding!!.progressBar.visibility = View.VISIBLE
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/EditProfileActivity.kt
 
-        val jsonRequest = JsonObject()
-        jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
-        jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
-        jsonRequest.addProperty("image_url", photoUrl)
-        jsonRequest.addProperty("team_name", mBinding!!.editTeamName.text.toString())
-        jsonRequest.addProperty("name", editName)
-        jsonRequest.addProperty("email", emailAddress)
-        jsonRequest.addProperty("mobile_number", mobileNumber)
-        jsonRequest.addProperty("city", cityName)
-        jsonRequest.addProperty("gender", gender)
-        jsonRequest.addProperty("dateOfBirth", dateOfBirth)
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/EditProfileActivity.kt
-=======
-        jsonRequest.addProperty("pass_code", passcode)
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/EditProfileActivity.kt
+            val jsonRequest = JsonObject()
+            jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+            jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+            jsonRequest.addProperty("image_url", photoUrl)
+            jsonRequest.addProperty("team_name", mBinding!!.editTeamName.text.toString())
+            jsonRequest.addProperty("name", editName)
+            jsonRequest.addProperty("email", emailAddress)
+            jsonRequest.addProperty("mobile_number", mobileNumber)
+            jsonRequest.addProperty("city", cityName)
+            jsonRequest.addProperty("gender", gender)
+            jsonRequest.addProperty("dateOfBirth", dateOfBirth)
+            jsonRequest.addProperty("pass_code", passcode)
 
-        WebServiceClient(this).client.create(IApiMethod::class.java).updateProfile(jsonRequest)
-            .enqueue(object : Callback<UsersPostDBResponse?> {
-                override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
-                    mBinding!!.progressBar.visibility = View.GONE
-                }
 
-                override fun onResponse(
-                    call: Call<UsersPostDBResponse?>?,
-                    response: Response<UsersPostDBResponse?>?
-                ) {
-                    mBinding!!.progressBar.visibility = View.GONE
-                    val res = response!!.body()
-                    if (res != null) {
-                        if (res.status) {
-                            userInfo.profileImage = photoUrl
-                            userInfo.teamName = editTeamName
-                            userInfo.fullName = editName
-                            userInfo.city = cityName
-                            userInfo.gender = gender
-                            userInfo.dateOfBirth = dateOfBirth
+            Log.e(TAG, "jsonRequest =========> $jsonRequest")
 
-                            (application as NinjaApplication).saveUserInformations(userInfo)
-                            MyUtils.showMessage(mContext, "Profile updated successfully")
-                        } else {
-                            if (res.code == 1001) {
-                                MyUtils.showMessage(this@EditProfileActivity, res.message)
-                                MyUtils.logoutApp(this@EditProfileActivity)
+            WebServiceClient(this).client.create(IApiMethod::class.java).updateProfile(jsonRequest)
+                .enqueue(object : Callback<UsersPostDBResponse?> {
+                    override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
+                        mBinding!!.progressBar.visibility = View.GONE
+                    }
+
+                    override fun onResponse(
+                        call: Call<UsersPostDBResponse?>?,
+                        response: Response<UsersPostDBResponse?>?
+                    ) {
+                        mBinding!!.progressBar.visibility = View.GONE
+                        val res = response!!.body()
+                        if (res != null) {
+                            if (res.status) {
+                                userInfo.profileImage = photoUrl
+                                userInfo.teamName = editTeamName
+                                userInfo.fullName = editName
+                                userInfo.city = cityName
+                                userInfo.gender = gender
+                                userInfo.dateOfBirth = dateOfBirth
+
+                                (application as NinjaApplication).saveUserInformations(userInfo)
+                                MyUtils.showMessage(mContext, "Profile updated successfully")
                             } else {
-                                MyUtils.showMessage(this@EditProfileActivity, res.message)
+                                if (res.code == 1001) {
+                                    MyUtils.showMessage(this@EditProfileActivity, res.message)
+                                    MyUtils.logoutApp(this@EditProfileActivity)
+                                } else {
+                                    MyUtils.showMessage(this@EditProfileActivity, res.message)
+                                }
                             }
                         }
                     }
-                }
-            })
+                })
+        }
     }
 
     private fun getProfile() {
@@ -389,16 +361,11 @@ class EditProfileActivity : AppCompatActivity() {
                             if (infoModels != null) {
                                 (application as NinjaApplication).saveUserInformations(infoModels)
                                 userInfo = (application as NinjaApplication).userInformations
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/EditProfileActivity.kt
-                                initProfile()
-                                updateUserOtherInfo()
-=======
-                                if (res.passcode != null){
+                                if (res.passcode != null) {
                                     isPasscode = res.passcode
                                 }
-                                    initProfile()
-                                    updateUserOtherInfo()
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/EditProfileActivity.kt
+                                initProfile()
+                                updateUserOtherInfo()
                             } else {
                                 MyUtils.showToast(
                                     this@EditProfileActivity,
@@ -423,7 +390,8 @@ class EditProfileActivity : AppCompatActivity() {
         var multipartImage: MultipartBody.Part? = null
         val requestPanImage: RequestBody = file
             .asRequestBody("multipart/jpg".toMediaTypeOrNull())
-        multipartImage = MultipartBody.Part.createFormData("image_bytes", file.name, requestPanImage)
+        multipartImage =
+            MultipartBody.Part.createFormData("image_bytes", file.name, requestPanImage)
 
         val userId: RequestBody = createPartFromString(MyPreferences.getUserID(mContext)!!)
         val documentType: RequestBody = createPartFromString(BaseActivity.DOCUMENTS_TYPE_PROFILES)

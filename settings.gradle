@@ -1,7 +1,3 @@
-<<<<<<< Updated upstream
-include ':app'
-rootProject.name = "Ninja11"
-=======
 pluginManagement {
     repositories {
         gradlePluginPortal()
@@ -11,6 +7,9 @@ pluginManagement {
         jcenter()
         maven {
             url "https://artifactory.paytm.in/libs-release-local"
+        }
+        maven {
+            url  "https://phonepe.mycloudrepo.io/public/repositories/phonepe-intentsdk-android"
         }
     }
 }
@@ -24,10 +23,13 @@ dependencyResolutionManagement {
         maven {
             url "https://artifactory.paytm.in/libs-release-local"
         }
+        maven {
+            url  "https://phonepe.mycloudrepo.io/public/repositories/phonepe-intentsdk-android"
+        }
     }
 }
-rootProject.name = "Ninja11-User"
+rootProject.name = "Ninja11"
 include ':app'
 include ':ultraviewpager'
 include ':flashbar'
->>>>>>> Stashed changes
+include ':autoscrollviewpager'

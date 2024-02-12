@@ -2,19 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/linear_trades_status"
     android:layout_width="match_parent"
-<<<<<<< Updated upstream
-    android:layout_height="63dp"
-    android:background="@color/white"
-    android:baselineAligned="false"
-    android:orientation="horizontal"
-    android:paddingTop="@dimen/_2sdp">
-=======
     android:layout_height="65dp"
     android:background="@color/white"
     android:baselineAligned="false"
     android:orientation="horizontal"
     android:paddingTop="0dp">
->>>>>>> Stashed changes
 
     <RelativeLayout
         android:id="@+id/rel_player_image"
@@ -40,19 +32,11 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="@dimen/_5sdp"
-<<<<<<< Updated upstream
-            android:background="@color/white"
-            android:paddingBottom="@dimen/_1sdp"
-            android:paddingTop="@dimen/_1sdp"
-            android:paddingStart="@dimen/_3sdp"
-            android:paddingEnd="@dimen/_3sdp"
-=======
             android:background="@color/back_net_banking"
             android:paddingBottom="0dp"
             android:paddingTop="0dp"
             android:paddingStart="@dimen/_5sdp"
             android:paddingEnd="@dimen/_5sdp"
->>>>>>> Stashed changes
             android:text="AU-W"
             android:textColor="@color/black"
             android:textSize="@dimen/_8sdp" />
@@ -69,11 +53,7 @@
             android:id="@+id/player_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-            android:fontFamily="@font/montserrat_medium"
-=======
-
->>>>>>> Stashed changes
+            android:fontFamily="open_sans"
             android:maxLines="1"
             android:padding="@dimen/_2sdp"
             android:singleLine="true"
@@ -85,11 +65,7 @@
             android:id="@+id/player_selection_percentage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-<<<<<<< Updated upstream
-            android:fontFamily="@font/montserrat_regular"
-=======
-
->>>>>>> Stashed changes
+            android:fontFamily="open_sans"
             android:maxLines="1"
             android:padding="@dimen/_2sdp"
             android:singleLine="true"
@@ -118,14 +94,9 @@
                 android:maxLines="1"
                 android:singleLine="true"
                 android:text="Announced"
-<<<<<<< Updated upstream
-                android:textColor="@color/green"
-                android:textSize="@dimen/_7sdp" />
-=======
-
+                android:fontFamily="open_sans"
                 android:textColor="@color/green"
                 android:textSize="@dimen/_8sdp" />
->>>>>>> Stashed changes
         </LinearLayout>
     </LinearLayout>
 

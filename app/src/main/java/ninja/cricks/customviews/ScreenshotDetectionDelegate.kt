@@ -1,10 +1,7 @@
 package ninja.cricks.customviews
 
 import android.Manifest
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/customviews/ScreenshotDetectionDelegate.kt
-=======
 import android.annotation.SuppressLint
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/customviews/ScreenshotDetectionDelegate.kt
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
@@ -58,11 +55,7 @@ class ScreenshotDetectionDelegate(
     @FlowPreview
     @ExperimentalCoroutinesApi
     fun startScreenshotDetection() {
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/customviews/ScreenshotDetectionDelegate.kt
-        job = GlobalScope.launch(Dispatchers.Main) {
-=======
         job = GlobalScope.launch(Dispatchers.IO) {
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/customviews/ScreenshotDetectionDelegate.kt
             createContentObserverFlow()
                 .debounce(500)
                 .collect { uri ->
@@ -82,11 +75,7 @@ class ScreenshotDetectionDelegate(
         val contentObserver = object : ContentObserver(Handler(Looper.getMainLooper())) {
             override fun onChange(selfChange: Boolean, uri: Uri?) {
                 uri?.let { _ ->
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/customviews/ScreenshotDetectionDelegate.kt
-                    offer(uri)
-=======
                     trySend(uri).isSuccess
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/customviews/ScreenshotDetectionDelegate.kt
                 }
             }
         }
@@ -128,10 +117,7 @@ class ScreenshotDetectionDelegate(
         return path != null && path.toLowerCase(Locale.getDefault()).contains("screenshot")
     }
 
-<<<<<<< Updated upstream:app/src/main/java/ninja/cricks/customviews/ScreenshotDetectionDelegate.kt
-=======
     @SuppressLint("Range")
->>>>>>> Stashed changes:app/src/main/java/fancode/cricks/customviews/ScreenshotDetectionDelegate.kt
     private fun getFilePathFromContentResolver(context: Context, uri: Uri): String? {
         try {
             context.contentResolver.query(
