@@ -9,7 +9,13 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.INSTALL_PACKAGES"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <!--<uses-permission android:name="android.permission.READ_SMS" />-->
 
     <uses-feature
@@ -32,7 +38,8 @@
         android:theme="@style/AppTheme_app"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning,MissingDefaultResource"
-        tools:replace="android:icon,android:theme,android:allowBackup">
+        tools:replace="android:icon,android:theme,android:allowBackup,android:hardwareAccelerated"
+        >
 
         <meta-data
             android:name="com.google.android.actions"
@@ -270,15 +277,20 @@
             android:label=""
             android:screenOrientation="portrait" />
 
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_provider_paths" />
-        </provider>
+        <activity
+            android:name=".PhonePeWebViewActivity"
+            android:label=""
+            android:screenOrientation="portrait" />
+
+<!--        <provider-->
+<!--            android:name="androidx.core.content.FileProvider"-->
+<!--            android:authorities="${applicationId}.provider"-->
+<!--            android:exported="false"-->
+<!--            android:grantUriPermissions="true">-->
+<!--            <meta-data-->
+<!--                android:name="android.support.FILE_PROVIDER_PATHS"-->
+<!--                android:resource="@xml/file_provider_paths" />-->
+<!--        </provider>-->
 
         <service
             android:name="ninja.cricks.fcm.MyFirebaseMessagingService"
@@ -323,6 +335,28 @@
         <meta-data
             android:name="io.branch.sdk.TestMode"
             android:value="false" />
+
+        <!-- Keep it true in UAT environment for both the flags-->
+        <meta-data
+            android:name="com.phonepe.android.sdk.isUAT"
+            android:value="false"/>
+        <meta-data
+            android:name="com.phonepe.android.sdk.isSimulator"
+            android:value="false"/>
+
+        <!-- The value will be the MID-->
+        <meta-data
+            android:name="com.phonepe.android.sdk.MerchantId"
+            android:value="NINJA11ONLINE"/>
+
+        <!-- For UAT, App Id is not required.
+        Make sure to add the following and you get the APP Id for Production after UAT Sign-off -->
+        <meta-data
+            android:name="com.phonepe.android.sdk.AppId"
+            android:value="c246fadd-6523-4def-be15-685fc96aa160"/>
+
+
+
     </application>
 
 </manifest>

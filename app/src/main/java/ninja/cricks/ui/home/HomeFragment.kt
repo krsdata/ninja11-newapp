@@ -54,15 +54,8 @@ class HomeFragment : Fragment() {
         mContext = requireContext()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        mBinding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_home, container, false
-        )
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         return mBinding.root
     }
 
@@ -135,14 +128,11 @@ class HomeFragment : Fragment() {
         WebServiceClient(requireContext()).client.create(IApiMethod::class.java)
             .getMessages(jsonRequest)
             .enqueue(object : Callback<JsonObject?> {
-                override fun onFailure(call: Call<JsonObject?>?, t: Throwable?) {
+                override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
                 }
 
-                override fun onResponse(
-                    call: Call<JsonObject?>?,
-                    response: Response<JsonObject?>?
-                ) {
-                    val resObje = response!!.body().toString()
+                override fun onResponse(call: Call<JsonObject?>, response: Response<JsonObject?>) {
+                    val resObje = response.body().toString()
                     val jsonObject = JSONObject(resObje)
                     if (jsonObject.optBoolean("status")) {
                         MyPreferences.saveLastTimeForApiCall(mContext!!,Constant.getMessagesDatabaseId, System.currentTimeMillis())

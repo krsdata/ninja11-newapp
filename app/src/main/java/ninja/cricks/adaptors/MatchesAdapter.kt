@@ -108,7 +108,7 @@ class MatchesAdapter(val context: Context, val tradeInfoModels: ArrayList<Matche
                     mContext!!,
                     objectVal.upcomingMatches!!
                 )
-                viewUpcomingMatches.recyclerView.setHasFixedSize(true)
+//                viewUpcomingMatches.recyclerView.setHasFixedSize(true)
                 viewUpcomingMatches.recyclerView.adapter = adapter
                 adapter.onItemClick = { objects ->
 

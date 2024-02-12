@@ -236,4 +236,8 @@ interface IApiMethod {
     @POST("phonePeInitiate")
     fun phonePeInitiate(@Body request: JsonObject): Call<JsonObject>
 
+    @POST("apis/hermes/pg/v1/pay")
+//    @POST("apis/pg-sandbox/pg/v1/pay")
+    fun phonePeVerify(@Body request: JsonObject, @HeaderMap headers: Map<String, String>): Call<JsonObject>
+
 }

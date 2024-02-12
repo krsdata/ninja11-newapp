@@ -163,15 +163,12 @@ class NinjaApplication : MultiDexApplication() {
 
         WebServiceClient(this).client.create(IApiMethod::class.java).getWallet(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
-                override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
+                override fun onFailure(call: Call<UsersPostDBResponse?>, t: Throwable) {
 
                 }
 
-                override fun onResponse(
-                    call: Call<UsersPostDBResponse?>?,
-                    response: Response<UsersPostDBResponse?>?
-                ) {
-                    val res = response!!.body()
+                override fun onResponse(call: Call<UsersPostDBResponse?>, response: Response<UsersPostDBResponse?>) {
+                    val res = response.body()
                     if (res != null && res.status) {
                         val responseModel = res.walletObjects
                         if (responseModel != null) {
@@ -180,24 +177,14 @@ class NinjaApplication : MultiDexApplication() {
                             MyPreferences.setShowPaytm(this@NinjaApplication, res.paytm_show)
                             MyPreferences.setShowGpay(this@NinjaApplication, res.gpay_show)
                             MyPreferences.setShowRazorPay(this@NinjaApplication, res.rozarpay_show)
+                            MyPreferences.setShowPhonePe(this@NinjaApplication, res.phonepe_show)
+                            MyPreferences.setShowUPI(this@NinjaApplication, res.upi_show)
 
-                            MyPreferences.setShowPaytmWithdraw(
-                                this@NinjaApplication,
-                                res.paytm_withdrawal
-                            )
-                            MyPreferences.setShowBankWithdraw(
-                                this@NinjaApplication,
-                                res.bank_withdrawal
-                            )
-                            MyPreferences.setShowUPIWithdraw(
-                                this@NinjaApplication,
-                                res.upi_withdrawal
-                            )
+                            MyPreferences.setShowPaytmWithdraw(this@NinjaApplication, res.paytm_withdrawal)
+                            MyPreferences.setShowBankWithdraw(this@NinjaApplication, res.bank_withdrawal)
+                            MyPreferences.setShowUPIWithdraw(this@NinjaApplication, res.upi_withdrawal)
 
-                            MyPreferences.setPaytmWithdrawBtn(
-                                this@NinjaApplication,
-                                res.paytm_withdrawal_btn
-                            )
+                            MyPreferences.setPaytmWithdrawBtn(this@NinjaApplication, res.paytm_withdrawal_btn)
 
                             MyPreferences.setMinWithdrawal(this@NinjaApplication, res.minWithdrawal)
 

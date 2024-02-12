@@ -103,34 +103,19 @@ class MyAccountFragment : BaseFragment() {
                                     MyPreferences.setRazorPayId(requireActivity(), res.razorPay)
                                     MyPreferences.setShowPaytm(requireActivity(), res.paytm_show)
                                     MyPreferences.setShowGpay(requireActivity(), res.gpay_show)
-                                    MyPreferences.setShowRazorPay(
-                                        requireActivity(),
-                                        res.rozarpay_show
-                                    )
+                                    MyPreferences.setShowRazorPay(requireActivity(), res.rozarpay_show)
+                                    MyPreferences.setShowPhonePe(requireActivity(), res.phonepe_show)
+                                    MyPreferences.setShowUPI(requireActivity(), res.upi_show)
 
-                                    MyPreferences.setShowPaytmWithdraw(
-                                        requireActivity(),
-                                        res.paytm_withdrawal
-                                    )
-                                    MyPreferences.setShowBankWithdraw(
-                                        requireActivity(),
-                                        res.bank_withdrawal
-                                    )
-                                    MyPreferences.setShowUPIWithdraw(
-                                        requireActivity(),
-                                        res.upi_withdrawal
-                                    )
+                                    MyPreferences.setShowPaytmWithdraw(requireActivity(), res.paytm_withdrawal)
+                                    MyPreferences.setShowBankWithdraw(requireActivity(), res.bank_withdrawal)
+                                    MyPreferences.setShowUPIWithdraw(requireActivity(), res.upi_withdrawal)
 
                                     MyPreferences.setMinWithdrawal(requireActivity(), res.minWithdrawal)
 
-                                    MyPreferences.setPaytmWithdrawBtn(
-                                        requireActivity(),
-                                        res.paytm_withdrawal_btn
-                                    )
+                                    MyPreferences.setPaytmWithdrawBtn(requireActivity(), res.paytm_withdrawal_btn)
 
-                                    (activity!!.applicationContext as NinjaApplication).saveWalletInformation(
-                                        responseModel
-                                    )
+                                    (activity!!.applicationContext as NinjaApplication).saveWalletInformation(responseModel)
                                 }
                             } else {
                                 if (res.code == 1001) {
@@ -150,11 +135,7 @@ class MyAccountFragment : BaseFragment() {
         fragment.onActivityResult(requestCode, resultCode, data)
     }
 
-    internal inner class MyAccountViewPagerAdapter(manager: FragmentManager) :
-        FragmentStatePagerAdapter(
-            manager,
-            BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
-        ) {
+    internal inner class MyAccountViewPagerAdapter(manager: FragmentManager) : FragmentStatePagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         override fun getCount(): Int {
             return mBinding!!.accountTabs.tabCount
         }

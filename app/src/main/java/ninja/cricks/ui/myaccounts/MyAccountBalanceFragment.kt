@@ -41,11 +41,7 @@ class MyAccountBalanceFragment : BaseFragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         mBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_my_account_balance,
@@ -129,9 +125,9 @@ class MyAccountBalanceFragment : BaseFragment() {
                     mBinding!!.btnVerifyAccount.setBackgroundResource(R.drawable.button_selector_red)
                     mBinding!!.btnVerifyAccount.setTextColor(Color.WHITE)
                     mBinding!!.btnVerifyAccount.setOnClickListener {
-                        // nned to show message
-//                        val intent = Intent(requireActivity(), VerifyDocumentsActivity::class.java)
-//                        startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
+                        // need to show message
+                        val intent = Intent(requireActivity(), VerifyDocumentsActivity::class.java)
+                        startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
                     }
                 } else if (walletInfo.bankAccountVerified == BindingUtils.BANK_DOCUMENTS_STATUS_VERIFIED) {
                     mBinding!!.btnVerifyAccount.text = "Account Verified"
@@ -148,20 +144,15 @@ class MyAccountBalanceFragment : BaseFragment() {
                     }
                 } else {
                     mBinding!!.btnVerifyAccount.setOnClickListener {
-                        // need to show message
-                        Toast.makeText(requireContext(), "Coming soon", Toast.LENGTH_LONG).show()
-
-//                        val intent = Intent(requireActivity(), VerifyDocumentsActivity::class.java)
-//                        startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
+                        val intent = Intent(requireActivity(), VerifyDocumentsActivity::class.java)
+                        startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
                     }
                 }
             }
         } else {
             mBinding!!.btnVerifyAccount.setOnClickListener {
-                // need to show message
-                Toast.makeText(requireContext(), "Coming soon", Toast.LENGTH_LONG).show()
-//                val intent = Intent(requireActivity(), VerifyDocumentsActivity::class.java)
-//                startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
+                val intent = Intent(requireActivity(), VerifyDocumentsActivity::class.java)
+                startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
             }
         }
     }
@@ -243,37 +234,19 @@ class MyAccountBalanceFragment : BaseFragment() {
                                     MyPreferences.setRazorPayId(requireActivity(), res.razorPay)
                                     MyPreferences.setShowPaytm(requireActivity(), res.paytm_show)
                                     MyPreferences.setShowGpay(requireActivity(), res.gpay_show)
-                                    MyPreferences.setShowRazorPay(
-                                        requireActivity(),
-                                        res.rozarpay_show
-                                    )
+                                    MyPreferences.setShowRazorPay(requireActivity(), res.rozarpay_show)
+//                                    MyPreferences.setShowPhonePe(requireActivity(), res.phonepe_show)
+//                                    MyPreferences.setShowUPI(requireActivity(), res.upi_show)
 
-                                    MyPreferences.setShowPaytmWithdraw(
-                                        requireActivity(),
-                                        res.paytm_withdrawal
-                                    )
-                                    MyPreferences.setShowBankWithdraw(
-                                        requireActivity(),
-                                        res.bank_withdrawal
-                                    )
-                                    MyPreferences.setShowUPIWithdraw(
-                                        requireActivity(),
-                                        res.upi_withdrawal
-                                    )
+                                    MyPreferences.setShowPaytmWithdraw(requireActivity(), res.paytm_withdrawal)
+                                    MyPreferences.setShowBankWithdraw(requireActivity(), res.bank_withdrawal)
+                                    MyPreferences.setShowUPIWithdraw(requireActivity(), res.upi_withdrawal)
 
-                                    MyPreferences.setMinWithdrawal(
-                                        requireActivity(),
-                                        res.minWithdrawal
-                                    )
+                                    MyPreferences.setMinWithdrawal(requireActivity(), res.minWithdrawal)
 
-                                    MyPreferences.setPaytmWithdrawBtn(
-                                        requireActivity(),
-                                        res.paytm_withdrawal_btn
-                                    )
+                                    MyPreferences.setPaytmWithdrawBtn(requireActivity(), res.paytm_withdrawal_btn)
 
-                                    (activity!!.applicationContext as NinjaApplication).saveWalletInformation(
-                                        responseModel
-                                    )
+                                    (activity!!.applicationContext as NinjaApplication).saveWalletInformation(responseModel)
                                     initViews()
                                 }
                             } else {

@@ -33,6 +33,8 @@ object MyPreferences {
     private val KEY_PREF_IS_PAYTM = "ispaytm"
     private val KEY_PREF_IS_GPAY = "isgpay"
     private val KEY_PREF_IS_RAZOR_PAY = "israzorpay"
+    private val KEY_PREF_IS_PHONE_PE = "isphonepe"
+    private val KEY_PREF_IS_UPI = "isupi"
 
     private val KEY_PREF_PAYTM_WITHDRAW = "paytm_withdrawal"
     private val KEY_PREF_BANK_WITHDRAW = "bank_withdrawal"
@@ -539,6 +541,41 @@ object MyPreferences {
         )
         return isShow
     }
+
+    fun setShowPhonePe(context: Context, value: Boolean) {
+        putBoolean(
+            context,
+            KEY_PREF_IS_PHONE_PE,
+            value
+        )
+    }
+
+    fun getShowPhonePe(context: Context): Boolean {
+        val isShow = getBoolean(
+            context,
+            KEY_PREF_IS_PHONE_PE,
+            true
+        )
+        return isShow
+    }
+
+    fun setShowUPI(context: Context, value: Boolean) {
+        putBoolean(
+            context,
+            KEY_PREF_IS_UPI,
+            value
+        )
+    }
+
+    fun getShowUPI(context: Context): Boolean {
+        val isShow = getBoolean(
+            context,
+            KEY_PREF_IS_UPI,
+            true
+        )
+        return isShow
+    }
+
 
     fun setDeviceToken(context: Context, deviceToken: String) {
         if (!TextUtils.isEmpty(deviceToken)) {

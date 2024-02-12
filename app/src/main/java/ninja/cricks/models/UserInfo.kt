@@ -6,63 +6,34 @@ import java.io.Serializable
 
 data class UserInfo(
 
-    @SerializedName("email")
-    @Expose
-    var userEmail: String = "",
+    @SerializedName("email") @Expose var userEmail: String = "",
 
-    @SerializedName("referal_code")
-    @Expose
-    var referalCode: String = "",
+    @SerializedName("referal_code") @Expose var referalCode: String = "",
 
-    @SerializedName("profile_image")
-    @Expose
-    var profileImage: String = "",
+    @SerializedName("profile_image") @Expose var profileImage: String = "",
 
-    @SerializedName("otpverified")
-    @Expose
-    var isOtpVerified: Boolean = false,
+    @SerializedName("otpverified") @Expose var isOtpVerified: Boolean = false,
 
-    @SerializedName("user_id")
-    @Expose
-    val userId: String = "",
+    @SerializedName("user_id") @Expose val userId: String = "",
 
-    @SerializedName("mobile_number")
-    @Expose
-    var mobileNumber: String = "",
+    @SerializedName("mobile_number") @Expose var mobileNumber: String = "",
 
-    @SerializedName("name")
-    @Expose
-    var fullName: String = "",
+    @SerializedName("name") @Expose var fullName: String = "",
 
-    @SerializedName("team_name")
-    @Expose
-    var teamName: String = "",
+    @SerializedName("team_name") @Expose var teamName: String = "",
 
-    @SerializedName("city")
-    @Expose
-    var city: String = "",
+    @SerializedName("city") @Expose var city: String = "",
 
-    @SerializedName("gender")
-    @Expose
-    var gender: String = "",
+    @SerializedName("gender") @Expose var gender: String = "",
 
-    @SerializedName("dateOfBirth")
-    @Expose
-    var dateOfBirth: String = "",
+    @SerializedName("dateOfBirth") @Expose var dateOfBirth: String = "",
 
-    @SerializedName("pinCode")
-    @Expose
-    var pinCode: String = "",
+    @SerializedName("pinCode") @Expose var pinCode: String = "",
 
-    @SerializedName("state")
-    @Expose
-    var state: String = "",
+    @SerializedName("state") @Expose var state: String = "",
 
-    @SerializedName("apk_url")
-    @Expose
-    var apkUrl: String = "",
-    @SerializedName("call_url")
-    @Expose
-    val callbackurrl: String = ""
+    @SerializedName("apk_url") @Expose var apkUrl: String = "",
+
+    @SerializedName("call_url") @Expose val callbackurrl: String = ""
 
 ) : Serializable, Cloneable

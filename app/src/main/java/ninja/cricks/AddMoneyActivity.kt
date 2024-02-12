@@ -15,10 +15,7 @@ import com.paytm.pgsdk.Log
 import com.paytm.pgsdk.PaytmOrder
 import com.paytm.pgsdk.PaytmPaymentTransactionCallback
 import com.paytm.pgsdk.TransactionManager
-import com.phonepe.intent.sdk.api.B2BPGRequestBuilder
 import com.phonepe.intent.sdk.api.PhonePe
-import com.phonepe.intent.sdk.api.PhonePeInitException
-import com.phonepe.intent.sdk.api.models.PhonePeEnvironment
 import ninja.cricks.databinding.ActivityAddMoneyBinding
 import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
@@ -41,7 +38,7 @@ class AddMoneyActivity : BaseActivity() {
     var paymentMode = ""
     var transactionId = ""
     var orderId = ""
-    private val TAG: String? = AddMoneyActivity::class.java.simpleName
+    private val TAG: String = AddMoneyActivity::class.java.simpleName
     private var mContext: Context? = null
     private var ActivityRequestCode = 2
     private var paytmOrderId = ""
@@ -196,6 +193,23 @@ class AddMoneyActivity : BaseActivity() {
         mBinding!!.coupoCodeApply.setOnClickListener {
             checkCouponCode()
         }
+
+        selectedValue()
+    }
+
+    private fun selectedValue() {
+        mBinding!!.editAmounts.setText("100")
+        mBinding!!.add100rs.setBackgroundResource(R.drawable.default_rounded_button_sportsfight)
+        mBinding!!.add100rs.setTextColor(resources.getColor(R.color.white))
+
+        mBinding!!.add200rs.setBackgroundResource(R.drawable.button_selector_black)
+        mBinding!!.add200rs.setTextColor(resources.getColor(R.color.black))
+
+        mBinding!!.add300rs.setBackgroundResource(R.drawable.button_selector_black)
+        mBinding!!.add300rs.setTextColor(resources.getColor(R.color.black))
+
+        mBinding!!.add500rs.setBackgroundResource(R.drawable.button_selector_black)
+        mBinding!!.add500rs.setTextColor(resources.getColor(R.color.black))
     }
 
     private fun payUsingGooglePay(amount: Double) {
@@ -248,11 +262,18 @@ class AddMoneyActivity : BaseActivity() {
         } else {
             mBinding!!.useWalletGpay.visibility = View.GONE
         }
-//        if (MyPreferences.getShowRazorPay(mContext!!)) {
-//            mBinding!!.useWalletPhonepay.visibility = View.VISIBLE
-//        } else {
-//            mBinding!!.useWalletPhonepay.visibility = View.GONE
-//        }
+
+        if (MyPreferences.getShowUPI(mContext!!)) {
+            mBinding!!.useWalletUpi.visibility = View.VISIBLE
+        } else {
+            mBinding!!.useWalletUpi.visibility = View.GONE
+        }
+
+        if (MyPreferences.getShowPhonePe(mContext!!)) {
+            mBinding!!.useWalletPhonepay.visibility = View.VISIBLE
+        } else {
+            mBinding!!.useWalletPhonepay.visibility = View.GONE
+        }
     }
 
     private fun addWalletBalance() {
@@ -312,67 +333,67 @@ class AddMoneyActivity : BaseActivity() {
 
     private fun startPaytmPayment(amt: Double) {
         if (MyUtils.isNetworkConnected(mContext!!)) {
-            customeProgressDialog.show()
-            try {
-                val jsonRequest = JsonObject()
-                jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
-                jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
-                jsonRequest.addProperty("deposit_amount", amt.toString())
 
-                WebServiceClient(this).client.create(IApiMethod::class.java)
-                    .initiateTransaction(jsonRequest)
-                    .enqueue(object : Callback<JsonObject?> {
-                        override fun onResponse(
-                            call: Call<JsonObject?>,
-                            response: Response<JsonObject?>
-                        ) {
-                            customeProgressDialog.dismiss()
-                            if (response.body() != null) {
-                                try {
-                                    val jsonObject = JSONObject(response.body().toString())
-                                    if (jsonObject.getBoolean("status")) {
-                                        paytmOrderId =
-                                            jsonObject.getJSONObject("data").getString("order_id")
-                                        orderId =
-                                            jsonObject.getJSONObject("data").getString("order_id")
-                                        val mid = jsonObject.getJSONObject("data").getString("mid")
-                                        val txnToken =
-                                            jsonObject.getJSONObject("data").getString("txnToken")
-                                        paytmNewPayment(paytmOrderId, mid, txnToken, amt.toString())
-                                    } else {
-                                        if (jsonObject.getInt("code") == 1001) {
-                                            MyUtils.showMessage(
-                                                mContext!!,
-                                                jsonObject.getString("message")
-                                            )
-                                            MyUtils.logoutApp(this@AddMoneyActivity)
-                                        } else {
-                                            MyUtils.showMessage(
-                                                mContext!!,
-                                                jsonObject.getString("message")
-                                            )
-                                        }
-                                    }
-                                } catch (e: Exception) {
-                                    e.printStackTrace()
-                                }
-                            }
-                        }
+            val url = "https://rest.ninja11.in/api/v3/initiateTransaction?user_id=${MyPreferences.getUserID(this)!!}&deposit_amount=${amt.toInt()}&mobile_no=${MyPreferences.getMobile(this)!!}"
 
-                        override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
-                            customeProgressDialog.dismiss()
-                            Log.e(TAG, "paytmDeposit t =======> ${t.localizedMessage}")
-                        }
-                    })
-            } catch (e: Exception) {
-                customeProgressDialog.dismiss()
-                e.printStackTrace()
-            }
+            val intent = Intent(mContext!!, PhonePeWebViewActivity::class.java)
+            intent.putExtra(BindingUtils.PHONE_PE_URL, url)
+            intent.putExtra(WebActivity.KEY_TITLE, "Pay Now")
+            startActivity(intent)
+            finish()
+
+//            customeProgressDialog.show()
+//            try {
+//                val jsonRequest = JsonObject()
+//                jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
+//                jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
+//                jsonRequest.addProperty("deposit_amount", amt.toString())
+//
+//                WebServiceClient(this).client.create(IApiMethod::class.java)
+//                    .initiateTransaction(jsonRequest)
+//                    .enqueue(object : Callback<JsonObject?> {
+//                        override fun onResponse(
+//                            call: Call<JsonObject?>,
+//                            response: Response<JsonObject?>
+//                        ) {
+//                            customeProgressDialog.dismiss()
+//                            if (response.body() != null) {
+//                                try {
+//                                    val jsonObject = JSONObject(response.body().toString())
+//
+//                                    Log.e(TAG, "jsonObject =====> $jsonObject")
+//
+//                                    if (jsonObject.getBoolean("status")) {
+//                                        paytmOrderId = jsonObject.getJSONObject("data").getString("order_id")
+//                                        orderId = jsonObject.getJSONObject("data").getString("order_id")
+//                                        val mid = jsonObject.getJSONObject("data").getString("mid")
+//                                        val txnToken = jsonObject.getJSONObject("data").getString("txnToken")
+//                                        paytmNewPayment(paytmOrderId, mid, txnToken, amt.toString())
+//                                    } else {
+//                                        if (jsonObject.getInt("code") == 1001) {
+//                                            MyUtils.showMessage(mContext!!, jsonObject.getString("message"))
+//                                            MyUtils.logoutApp(this@AddMoneyActivity)
+//                                        } else {
+//                                            MyUtils.showMessage(mContext!!, jsonObject.getString("message"))
+//                                        }
+//                                    }
+//                                } catch (e: Exception) {
+//                                    e.printStackTrace()
+//                                }
+//                            }
+//                        }
+//
+//                        override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
+//                            customeProgressDialog.dismiss()
+//                            Log.e(TAG, "paytmDeposit t =======> ${t.localizedMessage}")
+//                        }
+//                    })
+//            } catch (e: Exception) {
+//                customeProgressDialog.dismiss()
+//                e.printStackTrace()
+//            }
         } else {
-            MyUtils.showToast(
-                this@AddMoneyActivity,
-                resources.getString(R.string.internetconnection)
-            )
+            MyUtils.showToast(this@AddMoneyActivity, resources.getString(R.string.internetconnection))
         }
     }
 
@@ -382,87 +403,72 @@ class AddMoneyActivity : BaseActivity() {
         val callBackUrl: String = BindingUtils.PAYTM.callBackUrl + orderIdString
         Log.e(TAG, "callBackUrl =======> $callBackUrl")
 
-        val paytmOrder = PaytmOrder(
-            orderIdString,
-            midString,
-            txnTokenString,
-            txnAmountString,
-            callBackUrl
-        )
-        val transactionManager = TransactionManager(
-            paytmOrder,
-            object : PaytmPaymentTransactionCallback {
-                override fun onTransactionResponse(inResponse: Bundle?) {
-                    try {
-                        if (inResponse != null) {
-                            Log.e(TAG, "Response onTransactionResponse =====> $inResponse")
-                            val jsonObject = JSONObject()
-                            for (key in inResponse.keySet()) {
-                                Log.e(
-                                    TAG,
-                                    "Response Key ========> $key  value ========> ${inResponse[key]}"
-                                )
-                                jsonObject.put(key, inResponse[key])
-                            }
-                            transactionId = inResponse["TXNID"].toString()
-                            addWalletBalance()
-                        }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-
-                override fun networkNotAvailable() {
-                    Log.e(TAG, mContext!!.resources.getString(R.string.internetconnection))
-                }
-
-                override fun onErrorProceed(inErrorMessage: String?) {
-                    Log.e(TAG, "onErrorProceed  =======>  $inErrorMessage")
-                }
-
-                override fun clientAuthenticationFailed(inErrorMessage: String?) {
-                    Log.e(TAG, "clientAuthenticationFailed  =======>  $inErrorMessage")
-                }
-
-                override fun someUIErrorOccurred(inErrorMessage: String?) {
-                    Log.e(TAG, "someUIErrorOccurred  =======>  $inErrorMessage")
-                }
-
-                override fun onErrorLoadingWebPage(
-                    iniErrorCode: Int,
-                    inErrorMessage: String,
-                    inFailingUrl: String
-                ) {
-                    Log.e(TAG, "someUIErrorOccurred  =======>  $inErrorMessage")
-                }
-
-                override fun onBackPressedCancelTransaction() {
-                    Log.e(TAG, "onBackPressedCancelTransaction  =======>  ")
-                    try {
+        val paytmOrder = PaytmOrder(orderIdString, midString, txnTokenString, txnAmountString, callBackUrl)
+        val transactionManager = TransactionManager(paytmOrder, object : PaytmPaymentTransactionCallback {
+            override fun onTransactionResponse(inResponse: Bundle?) {
+                try {
+                    if (inResponse != null) {
+                        Log.e(TAG, "Response onTransactionResponse =====> $inResponse")
                         val jsonObject = JSONObject()
-                        jsonObject.put("STATUS", "USER_CANCELLED")
-                        //updateOrderStatus(paytmOrderId, jsonObject)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
-
-                override fun onTransactionCancel(inErrorMessage: String, inResponse: Bundle) {
-                    Log.e(TAG, "onTransactionCancel  =======>  $inErrorMessage")
-                    try {
-                        if (inResponse != null) {
-                            Log.e(TAG, "onTransactionCancel  =======>  $inResponse")
-                            val jsonObject = JSONObject()
-                            for (key in inResponse.keySet()) {
-                                jsonObject.put(key, inResponse[key])
-                            }
-                            //updateOrderStatus(paytmOrderId, jsonObject)
+                        for (key in inResponse.keySet()) {
+                            Log.e(TAG, "Response Key ========> $key  value ========> ${inResponse[key]}")
+                            jsonObject.put(key, inResponse[key])
                         }
-                    } catch (e: Exception) {
-                        e.printStackTrace()
+                        transactionId = inResponse["TXNID"].toString()
+                        addWalletBalance()
                     }
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-            })
+            }
+
+            override fun networkNotAvailable() {
+                Log.e(TAG, mContext!!.resources.getString(R.string.internetconnection))
+            }
+
+            override fun onErrorProceed(inErrorMessage: String?) {
+                Log.e(TAG, "onErrorProceed  =======>  $inErrorMessage")
+            }
+
+            override fun clientAuthenticationFailed(inErrorMessage: String?) {
+                Log.e(TAG, "clientAuthenticationFailed  =======>  $inErrorMessage")
+            }
+
+            override fun someUIErrorOccurred(inErrorMessage: String?) {
+                Log.e(TAG, "someUIErrorOccurred  =======>  $inErrorMessage")
+            }
+
+            override fun onErrorLoadingWebPage(iniErrorCode: Int, inErrorMessage: String, inFailingUrl: String) {
+                Log.e(TAG, "someUIErrorOccurred  =======>  $inErrorMessage")
+            }
+
+            override fun onBackPressedCancelTransaction() {
+                Log.e(TAG, "onBackPressedCancelTransaction  =======>  ")
+                try {
+                    val jsonObject = JSONObject()
+                    jsonObject.put("STATUS", "USER_CANCELLED")
+                    //updateOrderStatus(paytmOrderId, jsonObject)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onTransactionCancel(inErrorMessage: String, inResponse: Bundle) {
+                Log.e(TAG, "onTransactionCancel  =======>  $inErrorMessage")
+                try {
+                    if (inResponse != null) {
+                        Log.e(TAG, "onTransactionCancel  =======>  $inResponse")
+                        val jsonObject = JSONObject()
+                        for (key in inResponse.keySet()) {
+                            jsonObject.put(key, inResponse[key])
+                        }
+                        //updateOrderStatus(paytmOrderId, jsonObject)
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        })
 
         transactionManager.setShowPaymentUrl(BindingUtils.PAYTM.PaymentUrl)
         customeProgressDialog.dismiss()
@@ -473,7 +479,7 @@ class AddMoneyActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if(requestCode == B2B_PG_REQUEST_CODE) {
+        if (requestCode == B2B_PG_REQUEST_CODE) {
 
         } else if (requestCode == TEZ_REQUEST_CODE) {
             if (data != null && data.extras != null) {
@@ -585,10 +591,6 @@ class AddMoneyActivity : BaseActivity() {
                                         paymentLink = jsonObject.getJSONObject("data").getString("payment_link")
 
                                         if (paymentLink != "") {
-//                                            val intent = Intent(this@AddMoneyActivity, HaodaPaymentActivity::class.java)
-//                                            intent.putExtra(HaodaPaymentActivity.KEY_URL, paymentLink)
-//                                            startActivity(intent)
-
                                             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(paymentLink))
                                             startActivity(browserIntent)
                                             finish()
@@ -630,8 +632,8 @@ class AddMoneyActivity : BaseActivity() {
             val jsonRequest = JsonObject()
             jsonRequest.addProperty("user_id", MyPreferences.getUserID(this)!!)
             jsonRequest.addProperty("system_token", MyPreferences.getSystemToken(this)!!)
-            jsonRequest.addProperty("amount", amt.toString())
-            jsonRequest.addProperty("deposit_amount", amt.toString())
+            jsonRequest.addProperty("amount", (amt.toInt() * 100))
+            jsonRequest.addProperty("deposit_amount", (amt.toInt() * 100))
 
             WebServiceClient(this).client.create(IApiMethod::class.java).phonePeInitiate(jsonRequest)
                 .enqueue(object : Callback<JsonObject?> {
@@ -641,40 +643,42 @@ class AddMoneyActivity : BaseActivity() {
 
                     override fun onResponse(call: Call<JsonObject?>, response: Response<JsonObject?>) {
                         customeProgressDialog.dismiss()
-
                         if (response.body() != null) {
                             val res = JSONObject(response.body().toString())
                             Log.e(TAG, "res from phone pe init ========> $res")
-//                            if (res.getInt("status") == 200) {
-//                                Log.e(TAG, "res from phone pe init ========> $res")
-//                                // PhonePe.init(context, PhonePeEnvironment.UAT, ”REPLACE_WITH_YOUR_MID”, “REPLACE_WITH_YOUR_APP_ID”)
-//                                PhonePe.init(mContext!!, PhonePeEnvironment.UAT, res.getJSONObject("data").getString("merchantId"), PhonePe.getPackageSignature())
-//                                base64 = res.getString("base64")
-//                                checksum = res.getString("checksum")
-//
-//                                Log.e(TAG, "creating request for phone pe")
-//                                val b2BPGRequest = B2BPGRequestBuilder()
-//                                    .setData(base64)
-//                                    .setChecksum(checksum)
-//                                    .setUrl(apiEndPoint)
-//                                    .callbackUrl(res.getJSONObject("data").getString("callbackUrl"))
-//                                    .build()
-//                                Log.e(TAG, "created request for phone pe")
-//                                Log.e(TAG, "starting payment request for phone pe")
-//                                try {
-//                                    Log.e(TAG, "starting activity result request for phone pe")
-//                                    startActivityForResult(PhonePe.getImplicitIntent(mContext, b2BPGRequest, "")!!, B2B_PG_REQUEST_CODE)
-//                                } catch(e : PhonePeInitException) {
-//                                    Log.e(TAG, "Phone pe error from sdk, ${e.localizedMessage}")
-//                                }
-//                            } else {
-//                                if (res.getInt("code") == 1001) {
-//                                    MyUtils.showMessage(this@AddMoneyActivity, res.getString("message"))
-//                                    MyUtils.logoutApp(this@AddMoneyActivity)
+                            if (res.getInt("status") == 200) {
+                                Log.e(TAG, "res from phone pe init ========> $res")
+
+                                val phonePeResponse = res.getJSONObject("response").getJSONObject("data")
+                                    .getJSONObject("instrumentResponse").getJSONObject("redirectInfo")
+
+                                val phonePeUrl = phonePeResponse.getString("url")
+                                if (phonePeUrl != "") {
+                                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(phonePeUrl))
+                                    startActivity(browserIntent)
+                                    finish()
+                                } else {
+                                    MyUtils.showMessage(mContext!!, "There is some issue in adding payment. Please try after sometime.")
+                                }
+//                                if (phonePeUrl.isNotEmpty()) {
+//                                    val intent = Intent(mContext!!, PhonePeWebViewActivity::class.java)
+//                                    intent.putExtra(BindingUtils.PHONE_PE_URL, phonePeUrl)
+//                                    intent.putExtra(WebActivity.KEY_TITLE, "Pay Now")
+//                                    startActivity(intent)
+//                                    finish()
 //                                } else {
-//                                    MyUtils.showToast(this@AddMoneyActivity, res.getString("message"))
+//                                    MyUtils.showMessage(mContext!!, "We are unable to process your payment request at this time.")
 //                                }
-//                            }
+//                                getVerifyPhonePeData(base64, checksum)
+
+                            } else {
+                                if (res.getInt("code") == 1001) {
+                                    MyUtils.showMessage(this@AddMoneyActivity, res.getString("message"))
+                                    MyUtils.logoutApp(this@AddMoneyActivity)
+                                } else {
+                                    MyUtils.showToast(this@AddMoneyActivity, res.getString("message"))
+                                }
+                            }
                         }
                     }
                 })
@@ -682,6 +686,4 @@ class AddMoneyActivity : BaseActivity() {
             MyUtils.showToast(this@AddMoneyActivity, mContext!!.resources.getString(R.string.internetconnection))
         }
     }
-
-
 }

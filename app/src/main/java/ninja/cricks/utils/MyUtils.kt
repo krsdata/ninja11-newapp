@@ -10,7 +10,8 @@ import android.graphics.BitmapFactory
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.net.Uri
-import android.os.Handler
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
 import android.provider.Settings
 import android.telephony.SmsManager
 import android.text.TextUtils
@@ -19,19 +20,22 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import com.andrognito.flashbar.Flashbar
-import ninja.cricks.R
 import ninja.cricks.SplashScreenActivity
+import java.io.BufferedReader
+import java.io.BufferedWriter
 import java.io.IOException
 import java.io.InputStream
+import java.io.InputStreamReader
+import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
+import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
+import javax.net.ssl.HttpsURLConnection
 
 
 class MyUtils {
@@ -92,9 +96,9 @@ class MyUtils {
             val message = message
 
             if (!TextUtils.isEmpty(number) && !TextUtils.isEmpty(message)) {
-                val sent = PendingIntent.getBroadcast(mContext, 0, Intent("sent"), 0)
+                val sent = PendingIntent.getBroadcast(mContext, 0, Intent("sent"), PendingIntent.FLAG_IMMUTABLE)
                 val deliver =
-                    PendingIntent.getBroadcast(mContext, 0, Intent("delivered"), 0)
+                    PendingIntent.getBroadcast(mContext, 0, Intent("delivered"), PendingIntent.FLAG_IMMUTABLE)
                 val smsManager = SmsManager.getDefault()
                 smsManager.sendTextMessage(number, null, message, sent, deliver)
                 Toast.makeText(mContext, "Sent Message", Toast.LENGTH_SHORT).show()
@@ -250,6 +254,66 @@ class MyUtils {
                 e.printStackTrace()
             }
             return text
+        }
+
+        fun postParamsAndFindJSON(TAG: String, url: String, params: Map<String, String>, header: String): String? {
+            Log.e(TAG, "URL ========> $url params =======>$params")
+            return try {
+                val policy = ThreadPolicy.Builder().permitAll().build()
+                StrictMode.setThreadPolicy(policy)
+                val myurl = URL(url)
+                val conn = myurl.openConnection() as HttpURLConnection
+                conn.readTimeout = 15000
+                conn.connectTimeout = 15000
+                conn.requestMethod = "POST"
+                conn.doInput = true
+                conn.doOutput = true
+
+                conn.setRequestProperty("Content-Type", "application/json")
+                conn.setRequestProperty("X-VERIFY", header)
+
+
+                val os = conn.outputStream
+                val writer = BufferedWriter(OutputStreamWriter(os, "UTF-8"))
+                Log.e(TAG, "get ====> "+ url+"?"+ getParams(params))
+                writer.write(getParams(params))
+                writer.flush()
+                writer.close()
+                os.close()
+                val responseCode = conn.responseCode
+                if (responseCode == HttpsURLConnection.HTTP_OK) {
+                    val `in` = BufferedReader(InputStreamReader(conn.inputStream))
+                    val sb = StringBuffer()
+                    var line: String? = ""
+                    while (`in`.readLine().also { line = it } != null) {
+                        sb.append(line)
+                        break
+                    }
+                    `in`.close()
+                    sb.toString()
+                } else {
+                    null
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "post Params And Find JSON error =======> ${e.localizedMessage}")
+                null
+            }
+        }
+
+        @Throws(java.lang.Exception::class)
+        private fun getParams(parameter: Map<String, String>): String {
+            val bodyBuilder = StringBuilder()
+            val iterator = parameter.entries.iterator()
+            // constructs the POST body using the parameters
+            while (iterator.hasNext()) {
+                val (key, value) = iterator.next()
+                bodyBuilder.append(URLEncoder.encode(key, "UTF-8")).append('=')
+                    .append(URLEncoder.encode(value, "UTF-8"))
+                if (iterator.hasNext()) {
+                    bodyBuilder.append('&')
+                }
+            }
+            return bodyBuilder.toString()
         }
     }
 }

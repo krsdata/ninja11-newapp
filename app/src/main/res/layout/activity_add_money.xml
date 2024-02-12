@@ -275,7 +275,7 @@
                         android:drawableStart="@drawable/icon_phonepay"
                         android:drawablePadding="10dp"
                         android:fontFamily="open_sans"
-                        android:text="Credit Card/ Debit Card/ Netbanking/ Wallets"
+                        android:text="UPI/ PhonePe"
                         android:textSize="@dimen/_12sdp"
                         android:visibility="visible" />
 

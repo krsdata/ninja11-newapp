@@ -68,12 +68,12 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
         var isEditMode: Boolean = false
         var isCopyTeam: Boolean = false
-        val MAX_WICKET_KEEPER: IntArray = intArrayOf(1, 4)
-        val MAX_BATSMAN: IntArray = intArrayOf(3, 6)
-        val MAX_ALL_ROUNDER: IntArray = intArrayOf(1, 4)
-        val MAX_BOWLER: IntArray = intArrayOf(3, 6)
+        val MAX_WICKET_KEEPER: IntArray = intArrayOf(1, 8)
+        val MAX_BATSMAN: IntArray = intArrayOf(1, 8)
+        val MAX_ALL_ROUNDER: IntArray = intArrayOf(1, 8)
+        val MAX_BOWLER: IntArray = intArrayOf(1, 8)
         val MAX_PLAYERS_CRICKET: Int = 11
-        val MAX_PLAYERS_FROM_TEAM: Int = 7
+        val MAX_PLAYERS_FROM_TEAM: Int = 10
 
         var TEAMA: Int = 0
         var TEAMB: Int = 0

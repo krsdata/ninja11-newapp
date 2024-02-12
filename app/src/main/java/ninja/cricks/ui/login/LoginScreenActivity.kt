@@ -2,6 +2,7 @@ package ninja.cricks.ui.login
 
 import android.app.Activity
 import android.app.ActivityOptions
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -43,7 +44,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
+class LoginScreenActivity : BaseActivity() {
 
     private var firebaseProvider: String = ""
     var photoUrl: String = ""
@@ -56,6 +57,7 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
     var emailid = ""
     var idToken = ""
     var binding: ActivityLoginBinding? = null
+    var mContext: Context? = null
 
     companion object {
         var AUTH_TYPE_GMAIL = "googleAuth"
@@ -65,6 +67,7 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        mContext = this
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
         firebaseAuth = FirebaseAuth.getInstance()
@@ -214,84 +217,90 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
         jsonRequest.add("deviceDetails", deviceDetails)
 
         RetrofitClient(this).client.create(IApiMethod::class.java).customerLogin(jsonRequest)
-            .enqueue(this)
-    }
+            .enqueue(object: Callback<ResponseModel>{
+                override fun onResponse(call: Call<ResponseModel>, response: Response<ResponseModel>) {
+                    if (!isFinishing) {
+                        customeProgressDialog.dismiss()
 
-    override fun onResponse(call: Call<ResponseModel>?, response: Response<ResponseModel>?) {
-        if (!isFinishing) {
-            customeProgressDialog.dismiss()
+                        val responseb = response.body()
+                        if (responseb != null) {
+                            if (responseb.status) {
+                                val infoModels = responseb.infomodel
+                                if (infoModels != null) {
+                                    if (TextUtils.isEmpty(responseb.infomodel!!.profileImage)) {
+                                        //MyPreferences.setProfilePicture(this, photoUrl)
+                                        responseb.infomodel!!.profileImage = photoUrl
+                                    }
+                                    MyPreferences.setOtpAuthRequired(mContext!!, responseb.isOTPRequired)
+                                    MyPreferences.setToken(mContext!!, responseb.token)
 
-            val responseb = response!!.body()
-            if (responseb != null) {
-                if (responseb.status) {
-                    val infoModels = responseb.infomodel
-                    if (infoModels != null) {
-                        if (TextUtils.isEmpty(responseb.infomodel!!.profileImage)) {
-                            //MyPreferences.setProfilePicture(this, photoUrl)
-                            responseb.infomodel!!.profileImage = photoUrl
-                        }
-                        MyPreferences.setOtpAuthRequired(this, responseb.isOTPRequired)
-                        MyPreferences.setToken(this, responseb.token)
+                                    MyPreferences.setUserID(mContext!!, "" + responseb.infomodel!!.userId)
+                                    (applicationContext as NinjaApplication).saveUserInformations(
+                                        responseb.infomodel
+                                    )
 
-                        MyPreferences.setUserID(this, "" + responseb.infomodel!!.userId)
-                        (applicationContext as NinjaApplication).saveUserInformations(
-                            responseb.infomodel
-                        )
+                                    MyPreferences.setOtpAuthRequired(mContext!!, responseb.isOTPRequired)
+                                    MyPreferences.setToken(mContext!!, responseb.token)
+                                    MyPreferences.setUserID(mContext!!, "" + responseb.infomodel!!.userId)
+                                    /*MyPreferences.setPaytmMid(this, responseb.paytmMid)
+                                    MyPreferences.setPaytmCallback(this, responseb.callbackurrl)
+                                    MyPreferences.setGooglePayId(this, responseb.gpayid)
+                                    MyPreferences.setRazorPayId(this, responseb.razorPay)*/
 
-                        MyPreferences.setOtpAuthRequired(this, responseb.isOTPRequired)
-                        MyPreferences.setToken(this, responseb.token)
-                        MyPreferences.setUserID(this, "" + responseb.infomodel!!.userId)
-                        /*MyPreferences.setPaytmMid(this, responseb.paytmMid)
-                        MyPreferences.setPaytmCallback(this, responseb.callbackurrl)
-                        MyPreferences.setGooglePayId(this, responseb.gpayid)
-                        MyPreferences.setRazorPayId(this, responseb.razorPay)*/
+                                    if (responseb.baseUrl != null && responseb.baseUrl != "") {
+                                        MyPreferences.setBaseUrl(mContext!!, responseb.baseUrl)
+                                    }
+                                    MyPreferences.setSystemToken(mContext!!, responseb.systemToken)
 
-                        if (responseb.baseUrl != null && responseb.baseUrl != "") {
-                            MyPreferences.setBaseUrl(this, responseb.baseUrl)
-                        }
-                        MyPreferences.setSystemToken(this, responseb.systemToken)
-
-                        if (TextUtils.isEmpty(infoModels.mobileNumber) ||
-                            TextUtils.isEmpty(infoModels.userEmail) ||
-                            TextUtils.isEmpty(infoModels.fullName)
-                        ) {
-                            registerUsers()
-                        } else
-                            if (infoModels.isOtpVerified) {
-                                MyPreferences.setLoginStatus(this@LoginScreenActivity, true)
-                                val intent =
-                                    Intent(this@LoginScreenActivity, MainActivity::class.java)
-                                setResult(Activity.RESULT_OK)
-                                startActivity(intent)
-                                finish()
+                                    if (TextUtils.isEmpty(infoModels.mobileNumber) ||
+                                        TextUtils.isEmpty(infoModels.userEmail) ||
+                                        TextUtils.isEmpty(infoModels.fullName)
+                                    ) {
+                                        registerUsers()
+                                    } else
+                                        if (infoModels.isOtpVerified) {
+                                            MyPreferences.setLoginStatus(this@LoginScreenActivity, true)
+                                            val intent =
+                                                Intent(this@LoginScreenActivity, MainActivity::class.java)
+                                            setResult(Activity.RESULT_OK)
+                                            startActivity(intent)
+                                            finish()
+                                        } else {
+                                            sendOTP(firebaseAuth.uid)
+                                        }
+                                } else {
+                                    MyUtils.showToast(
+                                        this@LoginScreenActivity,
+                                        "Something went wrong, please contact admin"
+                                    )
+                                }
                             } else {
-                                sendOTP(firebaseAuth.uid)
+                                if (responseb.statusCode == BindingUtils.REUEST_STATUS_CODE_FRAUD) {
+                                    showDeadLineAlert(responseb.message)
+                                } else if (responseb.statusCode == 401) {
+                                    showDeadLineAlert(responseb.message)
+                                } else {
+                                    val infomodel = UserInfo()
+                                    infomodel.userEmail = emailid
+                                    (applicationContext as NinjaApplication).saveUserInformations(
+                                        responseb.infomodel
+                                    )
+                                    registerUsers()
+                                }
                             }
-                    } else {
-                        MyUtils.showToast(
-                            this@LoginScreenActivity,
-                            "Something went wrong, please contact admin"
-                        )
-                    }
-                } else {
-                    if (responseb.statusCode == BindingUtils.REUEST_STATUS_CODE_FRAUD) {
-                        showDeadLineAlert(responseb.message)
-                    } else if (responseb.statusCode == 401) {
-                        showDeadLineAlert(responseb.message)
-                    } else {
-                        val infomodel = UserInfo()
-                        infomodel.userEmail = emailid
-                        (applicationContext as NinjaApplication).saveUserInformations(
-                            responseb.infomodel
-                        )
-                        registerUsers()
+                        } else {
+                            MyUtils.showToast(this@LoginScreenActivity, "Invalid Email or Password")
+                        }
                     }
                 }
-            } else {
-                MyUtils.showToast(this@LoginScreenActivity, "Invalid Email or Password")
-            }
-        }
+
+                override fun onFailure(call: Call<ResponseModel>, t: Throwable) {
+
+                }
+
+            })
     }
+
 
     private fun registerUsers() {
         val intent = Intent(this@LoginScreenActivity, RegisterScreenActivity::class.java)
@@ -326,9 +335,5 @@ class LoginScreenActivity : BaseActivity(), Callback<ResponseModel> {
                 ActivityOptions.makeSceneTransitionAnimation(this@LoginScreenActivity)
             startActivity(intent, options.toBundle())
         }
-    }
-
-    override fun onFailure(call: Call<ResponseModel>?, t: Throwable?) {
-
     }
 }

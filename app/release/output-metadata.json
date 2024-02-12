@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 4006,
-      "versionName": "4.4",
-      "outputFile": "Ninja11-4.4-release.apk"
+      "versionCode": 4700,
+      "versionName": "4.7",
+      "outputFile": "Ninja11-4.7-release.apk"
     }
   ],
   "elementType": "File"

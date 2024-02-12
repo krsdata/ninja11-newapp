@@ -106,6 +106,14 @@ data class UsersPostDBResponse(
     @Expose
     var gpay_show: Boolean = false,
 
+    @SerializedName("phonepe_show")
+    @Expose
+    var phonepe_show: Boolean = false,
+
+    @SerializedName("upi_show")
+    @Expose
+    var upi_show: Boolean = false,
+
     @SerializedName("bank_withdrawal")
     @Expose
     var bank_withdrawal: Boolean = false,

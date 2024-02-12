@@ -1,19 +1,31 @@
 package ninja.cricks
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import hashim.gallerylib.model.GalleryModel
+import hashim.gallerylib.observer.OnResultCallback
+import hashim.gallerylib.util.GalleryConstants
+import hashim.gallerylib.view.galleryActivity.GalleryLib
 import ninja.cricks.databinding.ActivityVerifyDocumentBinding
 import ninja.cricks.models.ResponseModel
 import ninja.cricks.models.UserInfo
@@ -51,6 +63,12 @@ class VerifyDocumentsActivity : AppCompatActivity() {
     var pancardDocumentUrl: String = ""
     var bankPassbookUrl: String = ""
 
+    var PERMISSIONS: ArrayList<String> = ArrayList()
+
+    private var galleryModels = ArrayList<GalleryModel>()
+
+    var type: Int = 1
+
     companion object {
         private var TAG: String = VerifyDocumentsActivity::class.java.simpleName
         var REQUESTCODE_VERIFY_DOC = 1008
@@ -83,11 +101,21 @@ class VerifyDocumentsActivity : AppCompatActivity() {
         initCommunication()
 
         mBinding!!.imgPancard.setOnClickListener {
-            selectImage()
+            type = 1
+            if(createPermission()){
+                openGallery()
+            } else {
+                requestPermissions(PERMISSIONS.toTypedArray(), GalleryConstants.REQUEST_Permission_Gallery)
+            }
         }
 
         mBinding!!.imgBankPassbook.setOnClickListener {
-            selectImagePassbook()
+            type = 2
+            if(createPermission()){
+                openGallery()
+            } else {
+                requestPermissions(PERMISSIONS.toTypedArray(), GalleryConstants.REQUEST_Permission_Gallery)
+            }
         }
 
         initDocumentSubmit()
@@ -350,29 +378,29 @@ class VerifyDocumentsActivity : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            Log.e(TAG, "Path:${ImagePicker.getFilePath(data)}")
-            val file = ImagePicker.getFile(data)!! // File object will not be null for RESULT_OK
-            when (requestCode) {
-                PAN_IMAGE_REQ_CODE -> {
-                    mPanImageFile = file
-                    mBinding!!.imgPancard.setLocalImage(file, false)
-                    uploadImageToServer(file, BaseActivity.DOCUMENT_TYPE_PANCARD)
-                }
-                PASSBOOK_IMAGE_REQ_CODE -> {
-                    mPassbookImageFile = file
-                    mBinding!!.imgBankPassbook.setLocalImage(file, false)
-                    uploadImageToServer(file, BaseActivity.DOCUMENT_TYPE_BANK_PASSBOOK)
-                }
-            }
-        } else if (resultCode == ImagePicker.RESULT_ERROR) {
-            MyUtils.showToast(this, ImagePicker.getError(data))
-        } else {
-            MyUtils.showToast(this, "Task Cancelled")
-        }
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (resultCode == Activity.RESULT_OK) {
+//            Log.e(TAG, "Path:${ImagePicker.getFilePath(data)}")
+//            val file = ImagePicker.getFile(data)!! // File object will not be null for RESULT_OK
+//            when (requestCode) {
+//                PAN_IMAGE_REQ_CODE -> {
+//                    mPanImageFile = file
+//                    mBinding!!.imgPancard.setLocalImage(file, false)
+//                    uploadImageToServer(file, BaseActivity.DOCUMENT_TYPE_PANCARD)
+//                }
+//                PASSBOOK_IMAGE_REQ_CODE -> {
+//                    mPassbookImageFile = file
+//                    mBinding!!.imgBankPassbook.setLocalImage(file, false)
+//                    uploadImageToServer(file, BaseActivity.DOCUMENT_TYPE_BANK_PASSBOOK)
+//                }
+//            }
+//        } else if (resultCode == ImagePicker.RESULT_ERROR) {
+//            MyUtils.showToast(this, ImagePicker.getError(data))
+//        } else {
+//            MyUtils.showToast(this, "Task Cancelled")
+//        }
+//    }
 
     private fun uploadImageToServer(file: File, docType: String) {
 
@@ -427,5 +455,138 @@ class VerifyDocumentsActivity : AppCompatActivity() {
 
     private fun createPartFromString(param: String): RequestBody {
         return param.toRequestBody("text/plain".toMediaTypeOrNull())
+    }
+
+    private fun openGallery() {
+        GalleryLib(this).showGallery(
+            isDialog = false,
+            isOpenEdit = true,
+            selectionType = GalleryConstants.GalleryTypeImages,
+            locale = "en",
+            maxSelectionCount = 1,
+            gridColumnsCount = 4,
+            selected = galleryModels,
+            onResultCallback = object : OnResultCallback {
+                override fun onDismiss() {
+
+                }
+
+                override fun onResult(list: ArrayList<GalleryModel>) {
+                    Log.e(TAG, "galleryModels from result call back =======> ${galleryModels[0].toString()}")
+                    galleryModels = list
+                    when (type) {
+                        1 -> {
+                            mPanImageFile = File(galleryModels[0].sdcardPath)
+                            mBinding!!.imgPancard.setLocalImage(mPanImageFile!!, false)
+                            uploadImageToServer(mPanImageFile!!, BaseActivity.DOCUMENT_TYPE_PANCARD)
+                        }
+                        2 -> {
+                            mPassbookImageFile = File(galleryModels[0].sdcardPath)
+                            mBinding!!.imgBankPassbook.setLocalImage(mPassbookImageFile!!, false)
+                            uploadImageToServer(mPassbookImageFile!!, BaseActivity.DOCUMENT_TYPE_BANK_PASSBOOK)
+                        }
+                    }
+                }
+            },
+            galleryResultLauncher = galleryResultLauncher,
+        )
+    }
+
+    private val galleryResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK
+        ) {
+            //back from gallery activity
+            val dataList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                result.data?.extras?.getParcelableArrayList(
+                    GalleryConstants.selected,
+                    GalleryModel::class.java
+                ) as ArrayList<GalleryModel>
+            } else {
+                result.data?.extras?.get(GalleryConstants.selected) as ArrayList<*>
+            }
+            if (dataList.isNotEmpty()) {
+                galleryModels = dataList as ArrayList<GalleryModel>
+                Log.e(TAG, "galleryModels from activity result =======> ${galleryModels[0].toString()}")
+
+                when (type) {
+                    1 -> {
+                        mPanImageFile = File(galleryModels[0].sdcardPath)
+                        mBinding!!.imgPancard.setLocalImage(mPanImageFile!!, false)
+                        uploadImageToServer(mPanImageFile!!, BaseActivity.DOCUMENT_TYPE_PANCARD)
+                    }
+                    2 -> {
+                        mPassbookImageFile = File(galleryModels[0].sdcardPath)
+                        mBinding!!.imgBankPassbook.setLocalImage(mPassbookImageFile!!, false)
+                        uploadImageToServer(mPassbookImageFile!!, BaseActivity.DOCUMENT_TYPE_BANK_PASSBOOK)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun createPermission(): Boolean {
+        PERMISSIONS.add(Manifest.permission.CAMERA)
+        PERMISSIONS.add(Manifest.permission.RECORD_AUDIO)
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)
+            PERMISSIONS.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            PERMISSIONS.add(Manifest.permission.READ_MEDIA_IMAGES)
+            PERMISSIONS.add(Manifest.permission.READ_MEDIA_VIDEO)
+            PERMISSIONS.add(Manifest.permission.READ_MEDIA_AUDIO)
+        } else {
+            PERMISSIONS.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+
+        if (!hasPermissions(this@VerifyDocumentsActivity, PERMISSIONS.toTypedArray())) {
+            requestPermissions(PERMISSIONS.toTypedArray(), GalleryConstants.REQUEST_Permission_Gallery)
+            return false
+        }
+        return true
+    }
+
+    private fun hasPermissions(context: Context?, permissions: Array<String>): Boolean {
+        if (context != null) {
+            for (p in permissions) {
+                if (ActivityCompat.checkSelfPermission(context, p) != PackageManager.PERMISSION_GRANTED) {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            GalleryConstants.REQUEST_Permission_Gallery ->
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    openGallery()
+                } else {
+                    MaterialAlertDialogBuilder(this@VerifyDocumentsActivity)
+                        .setMessage(getString(hashim.gallerylib.R.string.you_should_allow_all_permissions_to_fetch_gallery_images))
+                        .setPositiveButton(getString(hashim.gallerylib.R.string.settings)) { dialog, which ->
+                            // Respond to positive button press
+                            val intent = Intent()
+                            intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                            val uri = Uri.fromParts(
+                                "package",
+                                this@VerifyDocumentsActivity.packageName, null
+                            )
+                            intent.data = uri
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            startActivity(intent)
+                        }
+                        .setNegativeButton(getString(hashim.gallerylib.R.string.cancel)) { dialog, which ->
+                            // Respond to positive button press
+                        }
+                        .show()
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+
+            else -> {
+            }
+        }
     }
 }

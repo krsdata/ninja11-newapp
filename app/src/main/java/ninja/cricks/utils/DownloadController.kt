@@ -7,18 +7,18 @@ import android.content.IntentFilter
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.util.Log
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import ninja.cricks.BuildConfig
 import ninja.cricks.R
 import java.io.File
 
-class DownloadController(
-    private val context: Context,
-    private val url: String,
-    val customProgressDialog: CustomeProgressDialog
-) {
+class DownloadController(private val context: Context, private val url: String, val customProgressDialog: CustomeProgressDialog) {
+
+
     companion object {
+        private val TAG: String = DownloadController::class.java.simpleName
         private const val FILE_NAME = "SampleDownloadApp.apk"
         private const val FILE_BASE_PATH = "file://"
         private const val MIME_TYPE = "application/vnd.android.package-archive"
@@ -54,6 +54,7 @@ class DownloadController(
                 context: Context,
                 intent: Intent
             ) {
+                Log.e(TAG, "file downloaded")
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     val contentUri = FileProvider.getUriForFile(
                         context,

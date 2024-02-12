@@ -9,15 +9,14 @@ plugins {
 
 android {
     namespace 'ninja.cricks'
-    compileSdk 33
-    buildToolsVersion '33.0.0'
+    compileSdk 34
 
     defaultConfig {
         applicationId "ninja.cricks"
         minSdk 23
-        targetSdk 33
-        versionCode 4006
-        versionName "4.4"
+        targetSdk 34
+        versionCode 4700
+        versionName "4.7"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         setProperty("archivesBaseName", "Ninja11-$versionName")
@@ -25,6 +24,7 @@ android {
 
     buildFeatures {
         dataBinding true
+        buildConfig true
     }
 
     buildTypes {
@@ -50,10 +50,10 @@ android {
     kotlinOptions {
         jvmTarget = '17'
     }
-
     lint {
-        baseline = file("lint-baseline.xml")
+        abortOnError false
     }
+
 }
 
 dependencies {
@@ -67,7 +67,7 @@ dependencies {
     implementation 'androidx.palette:palette-ktx:1.0.0'
     implementation 'androidx.browser:browser:1.5.0'
     implementation 'androidx.emoji:emoji:1.1.0'
-
+    implementation "androidx.activity:activity-ktx:1.7.2"
 
     implementation 'com.google.android.material:material:1.8.0'
     implementation 'com.google.android.gms:play-services-auth:20.5.0'
@@ -119,5 +119,11 @@ dependencies {
     implementation 'com.github.IntruderShanky:Sectioned-RecyclerView:2.1.1'
     // phonepe payment gateway integration
     implementation 'phonepe.intentsdk.android.release:IntentSDK:2.3.0'
+    // gif image loading library
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.17'
 
+    // image picker for android 12 & 13
+//    implementation 'com.github.mostafahashim:GalleryLibrary:1.2.7'
+    // auto scroll view pager
+    implementation project(path: ':gallerylib')
 }

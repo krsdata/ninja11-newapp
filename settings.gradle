@@ -1,8 +1,8 @@
 pluginManagement {
     repositories {
-        gradlePluginPortal()
         google()
         mavenCentral()
+        gradlePluginPortal()
         maven { url "https://jitpack.io" }
         jcenter()
         maven {
@@ -28,8 +28,10 @@ dependencyResolutionManagement {
         }
     }
 }
+
 rootProject.name = "Ninja11"
 include ':app'
 include ':ultraviewpager'
 include ':flashbar'
 include ':autoscrollviewpager'
+include ':gallerylib'

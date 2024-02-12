@@ -98,16 +98,6 @@ class MyBalanceActivity : AppCompatActivity() {
 
     private fun updateAccountVerification(accountStatus: AccountDocumentStatus?) {
         if (accountStatus != null) {
-            /*if (accountStatus.documentsVerified == BindingUtils.BANK_DOCUMENTS_STATUS_REJECTED) {
-                mBinding!!.verifyAccountMessage.visibility = View.GONE
-                mBinding!!.verifyAccount.text = "REJECTED"
-                mBinding!!.verifyAccount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.0f)
-                mBinding!!.verifyAccount.setBackgroundResource(R.drawable.button_selector_red)
-                mBinding!!.verifyAccount.setTextColor(Color.WHITE)
-                mBinding!!.verifyAccount.setOnClickListener(View.OnClickListener {
-                    gotoDocumentsListActivity()
-                })
-            } else*/
             if (accountStatus.documentsVerified == BindingUtils.BANK_DOCUMENTS_STATUS_VERIFIED) {
                 mBinding!!.verifyAccountMessage.visibility = View.GONE
                 mBinding!!.verifyAccount.text = "Account Verified"
@@ -123,15 +113,13 @@ class MyBalanceActivity : AppCompatActivity() {
                 mBinding!!.verifyAccount.setBackgroundResource(R.drawable.button_selector_white)
                 mBinding!!.verifyAccount.setTextColor(Color.BLACK)
                 mBinding!!.verifyAccount.setOnClickListener {
-                    //gotoDocumentsListActivity()
+                    gotoDocumentsListActivity()
                 }
             } else {
                 mBinding!!.verifyAccountMessage.visibility = View.VISIBLE
                 mBinding!!.verifyAccount.setOnClickListener {
-                    // need to show message
-                    Toast.makeText(this@MyBalanceActivity, "Coming soon", Toast.LENGTH_LONG).show()
-//                    val intent = Intent(mContext!!, VerifyDocumentsActivity::class.java)
-//                    startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
+                    val intent = Intent(mContext!!, VerifyDocumentsActivity::class.java)
+                    startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
                 }
             }
         }
@@ -192,17 +180,14 @@ class MyBalanceActivity : AppCompatActivity() {
 
         WebServiceClient(this).client.create(IApiMethod::class.java).getWallet(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
-                override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
+                override fun onFailure(call: Call<UsersPostDBResponse?>, t: Throwable) {
                     mBinding!!.progressBar.visibility = View.GONE
                 }
 
-                override fun onResponse(
-                    call: Call<UsersPostDBResponse?>?,
-                    response: Response<UsersPostDBResponse?>?
-                ) {
+                override fun onResponse(call: Call<UsersPostDBResponse?>, response: Response<UsersPostDBResponse?>) {
                     mBinding!!.progressBar.visibility = View.GONE
 
-                    val res = response!!.body()
+                    val res = response.body()
                     if (res != null) {
                         val responseModel = res.walletObjects
                         if (responseModel != null) {
@@ -212,29 +197,17 @@ class MyBalanceActivity : AppCompatActivity() {
                                 MyPreferences.setShowPaytm(mContext!!, res.paytm_show)
                                 MyPreferences.setShowGpay(mContext!!, res.gpay_show)
                                 MyPreferences.setShowRazorPay(mContext!!, res.rozarpay_show)
+                                MyPreferences.setShowPhonePe(mContext!!, res.phonepe_show)
+                                MyPreferences.setShowUPI(mContext!!, res.upi_show)
 
-                                MyPreferences.setShowPaytmWithdraw(
-                                    mContext!!,
-                                    res.paytm_withdrawal
-                                )
-                                MyPreferences.setShowBankWithdraw(
-                                    mContext!!,
-                                    res.bank_withdrawal
-                                )
-                                MyPreferences.setShowUPIWithdraw(
-                                    mContext!!,
-                                    res.upi_withdrawal
-                                )
+                                MyPreferences.setShowPaytmWithdraw(mContext!!, res.paytm_withdrawal)
+                                MyPreferences.setShowBankWithdraw(mContext!!, res.bank_withdrawal)
+                                MyPreferences.setShowUPIWithdraw(mContext!!, res.upi_withdrawal)
                                 MyPreferences.setMinWithdrawal(mContext!!, res.minWithdrawal)
 
-                                MyPreferences.setPaytmWithdrawBtn(
-                                    mContext!!,
-                                    res.paytm_withdrawal_btn
-                                )
+                                MyPreferences.setPaytmWithdrawBtn(mContext!!, res.paytm_withdrawal_btn)
 
-                                (application as NinjaApplication).saveWalletInformation(
-                                    responseModel
-                                )
+                                (application as NinjaApplication).saveWalletInformation(responseModel)
                                 initWalletInfo()
                             } else {
                                 if (res.code == 1001) {

@@ -1,19 +1,25 @@
 package ninja.cricks
 
+import android.Manifest
 import android.app.ActivityManager
 import android.app.ActivityOptions
 import android.app.ProgressDialog.show
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
@@ -51,7 +57,7 @@ import kotlin.collections.ArrayList
 class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
     FragmentDrawer.FragmentDrawerListener {
 
-    public var resGetMessage = MutableLiveData<JsonObject>()
+    var resGetMessage = MutableLiveData<JsonObject>()
     var fragment: Fragment? = null
     private var mBinding: ActivityMainBinding? = null
     private lateinit var mContext: Context
@@ -68,7 +74,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         var updatedApkUrl: String = ""
         var releaseNote: String = ""
         var CHECK_APK_UPDATE_API: Boolean = false
-        var CHECK_FORCE_UPDATE: Boolean = true
+        var CHECK_FORCE_UPDATE: Boolean = false
 
         const val ID_HOME = 1
         const val ID_DASHBOARD = 2
@@ -80,10 +86,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.SecondryTheme)
-        mBinding = DataBindingUtil.setContentView(
-            this,
-            R.layout.activity_main
-        )
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         mContext = this
         userInfo = (application as NinjaApplication).userInformations
         setSupportActionBar(mBinding!!.toolbar)
@@ -114,13 +117,8 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         fragment = HomeFragment()
         loadFragment()
 
-        drawerFragment =
-            supportFragmentManager.findFragmentById(R.id.fragment_navigation_drawer) as FragmentDrawer?
-        drawerFragment!!.setUp(
-            R.id.fragment_navigation_drawer,
-            mBinding!!.drawerLayout,
-            mBinding!!.toolbar
-        )
+        drawerFragment = supportFragmentManager.findFragmentById(R.id.fragment_navigation_drawer) as FragmentDrawer?
+        drawerFragment!!.setUp(R.id.fragment_navigation_drawer, mBinding!!.drawerLayout, mBinding!!.toolbar)
         drawerFragment!!.setDrawerListener(this)
 
         mBinding!!.profileImage.setOnClickListener {
@@ -128,6 +126,9 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             mBinding!!.drawerLayout.openDrawer(Gravity.LEFT)
         }
         initBottomNavigation()
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            checkStoragePermission()
+        }
     }
 
     private fun initBottomNavigation() {
@@ -273,7 +274,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     }
 
     override fun onUploadedImageUrl(url: String) {
-
     }
 
     override fun onStart() {
@@ -284,6 +284,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             val intent = Intent(this@MainActivity, UpdateApplicationActivity::class.java)
             intent.putExtra(UpdateApplicationActivity.REQUEST_CODE_APK_UPDATE, updatedApkUrl)
             intent.putExtra(UpdateApplicationActivity.REQUEST_RELEASE_NOTE, releaseNote)
+            intent.putExtra(UpdateApplicationActivity.REQUEST_TITLE, CHECK_FORCE_UPDATE)
             startActivity(intent)
         }
     }
@@ -295,16 +296,13 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
         WebServiceClient(this).client.create(IApiMethod::class.java).getWallet(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
-                override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
+                override fun onFailure(call: Call<UsersPostDBResponse?>, t: Throwable) {
                     CHECK_APK_UPDATE_API = false
                 }
 
-                override fun onResponse(
-                    call: Call<UsersPostDBResponse?>?,
-                    response: Response<UsersPostDBResponse?>?
-                ) {
+                override fun onResponse(call: Call<UsersPostDBResponse?>, response: Response<UsersPostDBResponse?>) {
                     CHECK_APK_UPDATE_API = false
-                    val res = response!!.body()
+                    val res = response.body()
                     if (res != null) {
                         if (res.status) {
                             val responseModel = res.walletObjects
@@ -313,33 +311,18 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                                 MyPreferences.setShowPaytm(this@MainActivity, res.paytm_show)
                                 MyPreferences.setShowGpay(this@MainActivity, res.gpay_show)
                                 MyPreferences.setShowRazorPay(this@MainActivity, res.rozarpay_show)
+                                MyPreferences.setShowPhonePe(this@MainActivity, res.phonepe_show)
+                                MyPreferences.setShowUPI(this@MainActivity, res.upi_show)
 
-                                MyPreferences.setShowPaytmWithdraw(
-                                    this@MainActivity,
-                                    res.paytm_withdrawal
-                                )
-                                MyPreferences.setShowBankWithdraw(
-                                    this@MainActivity,
-                                    res.bank_withdrawal
-                                )
-                                MyPreferences.setShowUPIWithdraw(
-                                    this@MainActivity,
-                                    res.upi_withdrawal
-                                )
+                                MyPreferences.setShowPaytmWithdraw(this@MainActivity, res.paytm_withdrawal)
+                                MyPreferences.setShowBankWithdraw(this@MainActivity, res.bank_withdrawal)
+                                MyPreferences.setShowUPIWithdraw(this@MainActivity, res.upi_withdrawal)
 
-                                MyPreferences.setMinWithdrawal(
-                                    this@MainActivity,
-                                    res.minWithdrawal
-                                )
+                                MyPreferences.setMinWithdrawal(this@MainActivity, res.minWithdrawal)
 
-                                MyPreferences.setPaytmWithdrawBtn(
-                                    this@MainActivity,
-                                    res.paytm_withdrawal_btn
-                                )
+                                MyPreferences.setPaytmWithdrawBtn(this@MainActivity, res.paytm_withdrawal_btn)
 
-                                (application as NinjaApplication).saveWalletInformation(
-                                    responseModel
-                                )
+                                (application as NinjaApplication).saveWalletInformation(responseModel)
                             }
                         } else {
                             if (res.code == 1001) {
@@ -360,7 +343,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         }
         return super.onOptionsItemSelected(item)
     }
-
 
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
@@ -406,17 +388,14 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
         RetrofitClient(mContext).client.create(IApiMethod::class.java).apkUpdate(jsonRequest)
             .enqueue(object : Callback<JsonObject?> {
-                override fun onFailure(call: Call<JsonObject?>?, t: Throwable?) {
+                override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
                     CHECK_APK_UPDATE_API = false
                 }
 
-                override fun onResponse(
-                    call: Call<JsonObject?>?,
-                    response: Response<JsonObject?>?
-                ) {
+                override fun onResponse(call: Call<JsonObject?>, response: Response<JsonObject?>) {
                     if (!isFinishing) {
                         Log.e(TAG, "onResponse")
-                        if (response!!.body() != null) {
+                        if (response.body() != null) {
                             val res = JSONObject(response.body().toString())
                             showScore = res.getBoolean("show_scoreboard")
                             menuArrayList.clear()
@@ -425,10 +404,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                                 menuArrayList.add(res.getJSONArray("menu").getJSONObject(i))
                             }
 
-                            MyPreferences.setSplashScreen(
-                                mContext,
-                                res.getString("splashScreen")
-                            )
+                            MyPreferences.setSplashScreen(mContext, res.getString("splashScreen"))
                             if (res.getBoolean("status")) {
                                 CHECK_APK_UPDATE_API = true
                                 CHECK_FORCE_UPDATE = res.getBoolean("force_update")
@@ -440,26 +416,12 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
                                 if (CHECK_APK_UPDATE_API) {
                                     CHECK_APK_UPDATE_API = false
-                                    /*val fm = supportFragmentManager
-                                    val pioneersFragment =
-                                        UpdateAppDialogFragment(updatedApkUrl, releaseNote)
-                                    pioneersFragment.isCancelable = false
-                                    pioneersFragment.show(fm, "updateapp_tag")*/
 
                                     if (!isActivityRunning(UpdateApplicationActivity::class.java)) {
-
-                                        val intent = Intent(
-                                            this@MainActivity,
-                                            UpdateApplicationActivity::class.java
-                                        )
-                                        intent.putExtra(
-                                            UpdateApplicationActivity.REQUEST_CODE_APK_UPDATE,
-                                            updatedApkUrl
-                                        )
-                                        intent.putExtra(
-                                            UpdateApplicationActivity.REQUEST_RELEASE_NOTE,
-                                            releaseNote
-                                        )
+                                        val intent = Intent(this@MainActivity, UpdateApplicationActivity::class.java)
+                                        intent.putExtra(UpdateApplicationActivity.REQUEST_CODE_APK_UPDATE, updatedApkUrl)
+                                        intent.putExtra(UpdateApplicationActivity.REQUEST_RELEASE_NOTE, releaseNote)
+                                        intent.putExtra(UpdateApplicationActivity.REQUEST_TITLE, CHECK_FORCE_UPDATE)
                                         startActivity(intent)
                                     }
                                 }
@@ -524,5 +486,53 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
         findViewById<TextView>(R.id.name).text = userInfo!!.fullName
         findViewById<TextView>(R.id.mobile).text = String.format("@%s", userInfo!!.teamName)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun arePermissionsGranted(): Boolean {
+        val permissions = arrayOf(
+            Manifest.permission.POST_NOTIFICATIONS,
+        )
+
+        for (permission in permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                return false
+            }
+        }
+        return true
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun requestPermissions() {
+        val permissions = arrayOf(Manifest.permission.POST_NOTIFICATIONS,)
+
+        if(shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+            ActivityCompat.requestPermissions(this, permissions, UpdateApplicationActivity.PERMISSION_REQUEST_STORAGE)
+        } else {
+            ActivityCompat.requestPermissions(this, permissions, UpdateApplicationActivity.PERMISSION_REQUEST_STORAGE)
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun checkStoragePermission() {
+        if (arePermissionsGranted()) {
+        } else {
+            requestPermissions()
+        }
+    }
+
+    private fun areAllPermissionsGranted(grantResults: IntArray): Boolean {
+        for (result in grantResults) {
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                return false
+            }
+        }
+        return true
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (areAllPermissionsGranted(grantResults)) {
+        }
     }
 }
