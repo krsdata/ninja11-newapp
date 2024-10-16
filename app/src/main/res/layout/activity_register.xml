@@ -6,7 +6,7 @@
 
         <variable
             name="contentviews"
-            type="fancode.cricks.ui.login.RegisterScreenActivity" />
+            type="ninja.cricks.ui.login.RegisterScreenActivity" />
     </data>
 
     <RelativeLayout

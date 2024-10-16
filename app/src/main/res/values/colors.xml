@@ -7,7 +7,7 @@
     <color name="colorAccent">#CA0016</color>
 
     <!-- Secondry theme colors -->
-    <color name="colorSecond">#0077C9</color>
+    <color name="colorSecond">#CA0016</color>
     <color name="colorSecondDark">#CA0016</color>
     <color name="colorSecondAccent">#CA0016</color>
 

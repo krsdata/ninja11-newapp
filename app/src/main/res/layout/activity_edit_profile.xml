@@ -6,7 +6,7 @@
 
         <variable
             name="contentviews"
-            type="fancode.cricks.ChangePasswordActivity" />
+            type="ninja.cricks.ChangePasswordActivity" />
     </data>
 
     <RelativeLayout
@@ -239,6 +239,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_1sdp"
                     app:hintAnimationEnabled="true"
+                    app:counterMaxLength="6"
+                    app:counterEnabled="true"
                     app:hintEnabled="true">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -246,7 +248,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="New Passcode"
-                        android:inputType="text"
+                        android:inputType="number"
+                        android:maxLength="6"
                         android:textColor="@color/text_view_color"
                         android:textSize="@dimen/_14sdp" />
                 </com.google.android.material.textfield.TextInputLayout>

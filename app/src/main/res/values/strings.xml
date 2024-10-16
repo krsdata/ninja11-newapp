@@ -159,7 +159,7 @@
     <string name="enter_your_phone_number">" your mobile number"</string>
     <string name="enter_phone_number_here">Enter mobile number here</string>
     <string name="continue_amp_verify"><![CDATA[Continue & Verify]]></string>
-    <string name="verify_and_wait">Verify and Proceed</string>
+    <string name="verify_and_wait">Verify Your Passcode</string>
     <string name="confirm_otp">Confirm OTP</string>
     <string name="enter_otp_we_just_sent_to_your_phone_number">" OTP We just Sent to your Phone Number"</string>
     <string name="verify_amp_next"><![CDATA[Verify & Next]]></string>

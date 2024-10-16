@@ -7,7 +7,7 @@
 
         <variable
             name="contentviews"
-            type="fancode.cricks.TeamPreviewActivity" />
+            type="ninja.cricks.TeamPreviewActivity" />
     </data>
 
     <RelativeLayout
@@ -16,7 +16,7 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:orientation="vertical"
-        tools:context="fancode.cricks.CreateTeamActivity">
+        tools:context="ninja.cricks.CreateTeamActivity">
 
         <LinearLayout
             android:id="@+id/linear_top_bar"

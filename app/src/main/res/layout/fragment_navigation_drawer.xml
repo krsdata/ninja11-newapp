@@ -43,7 +43,7 @@
                 android:textSize="@dimen/_10sdp" />
         </LinearLayout>
 
-        <fancode.cricks.customviews.CircleImageView
+        <ninja.cricks.customviews.CircleImageView
             android:id="@+id/profile_image_drawer"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"

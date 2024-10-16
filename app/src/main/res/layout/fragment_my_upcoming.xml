@@ -5,7 +5,7 @@
 
         <variable
             name="viewmodel"
-            type="fancode.cricks.ui.mymatches.MyUpcomingMatchesFragment" />
+            type="ninja.cricks.ui.mymatches.MyUpcomingMatchesFragment" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

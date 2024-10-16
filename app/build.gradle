@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
@@ -7,29 +8,29 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    namespace 'ninja.cricks'
+    compileSdk 34
 
     defaultConfig {
-        applicationId "fancode.cricks"
-        minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 1000
-        versionName "1.0"
+        applicationId "ninja.cricks"
+        minSdk 23
+        targetSdk 34
+        versionCode 4700
+        versionName "4.7"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
-        setProperty("archivesBaseName", "fancode-$versionName")
+        setProperty("archivesBaseName", "Ninja11-$versionName")
     }
 
     buildFeatures {
         dataBinding true
+        buildConfig true
     }
 
     buildTypes {
         debug {
             buildConfigField "boolean", "MLOG", "true"
             debuggable true
-            useProguard false
             shrinkResources false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -37,101 +38,92 @@ android {
 
         release {
             buildConfigField "boolean", "MLOG", "false"
-          //  useProguard true
             shrinkResources true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
-    lintOptions {
-        checkReleaseBuilds false
+    lint {
+        abortOnError false
     }
+
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.6.0'
-    implementation 'androidx.appcompat:appcompat:1.3.1'
 
     implementation 'androidx.multidex:multidex:2.0.1'
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+    implementation 'androidx.palette:palette-ktx:1.0.0'
+    implementation 'androidx.browser:browser:1.5.0'
+    implementation 'androidx.emoji:emoji:1.1.0'
+    implementation "androidx.activity:activity-ktx:1.7.2"
+
+    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'com.google.android.gms:play-services-auth:20.5.0'
+
+    // firebase dependencies
+    implementation platform('com.google.firebase:firebase-bom:30.5.0')
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+    implementation 'com.google.firebase:firebase-core'
 
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
-    implementation 'com.mikhaellopez:circularimageview:4.2.0'
+    implementation 'com.mikhaellopez:circularimageview:4.3.0'
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
-    implementation 'androidx.palette:palette-ktx:1.0.0'
-
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    implementation 'com.google.firebase:firebase-auth-ktx:21.0.1'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
-
-    implementation 'com.google.firebase:firebase-auth:21.0.1'
-    implementation 'com.google.android.gms:play-services-auth:19.2.0'
-
-    implementation 'com.google.firebase:firebase-messaging:22.0.0'
-    implementation 'com.google.firebase:firebase-core:19.0.0'
-
-    implementation 'com.google.firebase:firebase-crashlytics-ktx:18.2.1'
-    implementation 'com.google.firebase:firebase-analytics-ktx:19.0.0'
-
-    implementation 'net.gotev:uploadservice:2.1'
-    implementation 'com.andrognito.flashbar:flashbar:1.0.3'
-
-    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
-    implementation 'androidx.emoji:emoji:1.1.0'
-    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.21'
-    implementation 'androidx.browser:browser:1.3.0'
-    implementation 'com.google.android.gms:play-services-wallet:18.1.2'
-
-    implementation 'com.razorpay:checkout:1.5.16'
-
-    // old paytm payment gateway commented on 20-10-20
-   // implementation 'com.paytm.pgsdk:pgsdk:1.0.16'
-    // new paytm all in one sdk added on 20-10-20
-    //implementation 'com.paytm.appinvokesdk:appinvokesdk:1.3'
-
-    implementation 'com.github.pzienowicz:androidx-auto-scroll-view-pager:1.1.0'
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
 
     implementation 'io.branch.sdk.android:library:5.0.4'
 
     implementation 'com.github.dhaval2404:imagepicker:1.8'
 
     // paytm all in one sdk
-    implementation 'com.paytm.appinvokesdk:appinvokesdk:1.6.0'
-    // razor pay payment sdk
-    implementation 'com.razorpay:checkout:1.6.3'
+    implementation 'com.paytm.appinvokesdk:appinvokesdk:1.6.11'
 
-    implementation('com.alibaba.android:ultraviewpager:1.0.7.7@aar') {
-        transitive = true
-    }
     implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.2'
 
     //room database
-    implementation("androidx.room:room-runtime:2.2.5")
-    annotationProcessor("androidx.room:room-compiler:2.2.5")
+    implementation("androidx.room:room-runtime:2.5.1")
+    annotationProcessor("androidx.room:room-compiler:2.5.1")
     // To use Kotlin annotation processing tool (kapt)
-    kapt("androidx.room:room-compiler:2.2.5")
+    kapt("androidx.room:room-compiler:2.5.1")
     //Kotlin Extensions and Coroutines support for Room
-    implementation("androidx.room:room-ktx:2.2.5")
+    implementation("androidx.room:room-ktx:2.5.1")
 
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
-    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.2.0'
-    //bottom navigation animation
-    implementation 'com.etebarian:meow-bottom-navigation:1.2.0'
+    // view pager for player stats
+    implementation project(path: ':ultraviewpager')
+    // flash bar
+    implementation project(path: ':flashbar')
+
+    // auto scroll view pager
+    implementation project(path: ':autoscrollviewpager')
+
+    // Header list view
+    implementation 'com.github.IntruderShanky:Sectioned-RecyclerView:2.1.1'
+    // phonepe payment gateway integration
+    implementation 'phonepe.intentsdk.android.release:IntentSDK:2.4.3'
+    // gif image loading library
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.17'
+
+    // image picker for android 12 & 13
+//    implementation 'com.github.mostafahashim:GalleryLibrary:1.2.7'
+    // auto scroll view pager
+    implementation project(path: ':gallerylib')
 }

@@ -22,6 +22,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <LinearLayout
@@ -116,6 +117,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <RelativeLayout
@@ -168,6 +170,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <RelativeLayout
@@ -226,6 +229,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <RelativeLayout
@@ -282,7 +286,7 @@
                                 android:gravity="center"
                                 android:lineSpacingExtra="5sp"
                                 android:text="Add Cash"
-                                android:textColor="@color/colorAccent"
+                                android:textColor="@color/white"
                                 android:textSize="12sp" />
                         </LinearLayout>
                     </RelativeLayout>
@@ -294,6 +298,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <RelativeLayout
@@ -358,7 +363,7 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center"
                                 android:text="Withdraw"
-                                android:textColor="@color/colorAccent"
+                                android:textColor="@color/white"
                                 android:textSize="12sp" />
                         </LinearLayout>
 
@@ -368,14 +373,14 @@
                             android:layout_height="32dp"
                             android:visibility="gone"
                             android:layout_marginTop="@dimen/_10sdp"
-                            android:background="@drawable/btn_selector_verified">
+                            android:background="@drawable/btn_paytm_back">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                android:text="Paytm Withdraw"
-                                android:textColor="@color/green"
+                                android:text="Paytm/UPI Withdraw"
+                                android:textColor="@color/white"
                                 android:textSize="12sp" />
                         </LinearLayout>
                         </LinearLayout>
@@ -388,6 +393,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <RelativeLayout
@@ -440,6 +446,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <RelativeLayout
@@ -490,6 +497,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_10sdp"
+                    app:cardBackgroundColor="@color/white"
                     app:cardCornerRadius="@dimen/_5sdp">
 
                     <LinearLayout

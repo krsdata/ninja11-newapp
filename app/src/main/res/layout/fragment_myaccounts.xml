@@ -6,7 +6,7 @@
 
         <variable
             name="accountsmodel"
-            type="fancode.cricks.ui.dashboard.MyAccountFragment" />
+            type="ninja.cricks.ui.dashboard.MyAccountFragment" />
     </data>
 
     <RelativeLayout

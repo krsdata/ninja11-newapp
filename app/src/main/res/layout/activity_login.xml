@@ -7,7 +7,7 @@
 
         <variable
             name="contentviews"
-            type="fancode.cricks.ui.login.LoginScreenActivity" />
+            type="ninja.cricks.ui.login.LoginScreenActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -69,8 +69,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:visibility="gone"
-                tools:targetApi="m" />
+                android:visibility="visible" />
 
             <TextView
                 android:id="@+id/textView8"
@@ -179,8 +178,6 @@
                     android:textStyle="normal" />
 
             </LinearLayout>
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

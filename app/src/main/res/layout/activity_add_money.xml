@@ -6,7 +6,7 @@
 
         <variable
             name="contentviews"
-            type="fancode.cricks.AddMoneyActivity" />
+            type="ninja.cricks.AddMoneyActivity" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -100,7 +100,6 @@
                     android:layout_alignParentEnd="true"
                     android:layout_gravity="center"
                     android:fontFamily="open_sans"
-                    android:text="₹188"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12sdp" />
             </RelativeLayout>
@@ -229,7 +228,7 @@
                         android:layout_height="@dimen/_45sdp"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
-                        android:checked="true"
+                        android:checked="false"
                         android:drawableStart="@drawable/icon_paytm"
                         android:drawablePadding="10dp"
                         android:fontFamily="open_sans"
@@ -272,11 +271,11 @@
                         android:layout_height="@dimen/_45sdp"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="4dp"
-                        android:checked="false"
+                        android:checked="true"
                         android:drawableStart="@drawable/icon_phonepay"
                         android:drawablePadding="10dp"
                         android:fontFamily="open_sans"
-                        android:text="Credit Card/ Debit Card/ Netbanking/ Wallets"
+                        android:text="UPI/ PhonePe"
                         android:textSize="@dimen/_12sdp"
                         android:visibility="visible" />
 
@@ -284,6 +283,27 @@
                         android:layout_width="match_parent"
                         android:layout_height="0.8dp"
                         android:layout_marginTop="10dp"
+                        android:background="@color/greyish"
+                        android:visibility="gone" />
+
+                    <RadioButton
+                        android:id="@+id/use_wallet_upi"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_45sdp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="4dp"
+                        android:drawableStart="@drawable/upi_icon"
+                        android:drawablePadding="10dp"
+                        android:fontFamily="open_sans"
+                        android:text="UPI"
+                        android:textSize="@dimen/_12sdp"
+                        android:visibility="visible" />
+
+                    <View
+                        android:id="@+id/view4"
+                        android:layout_width="match_parent"
+                        android:layout_height="0.8dp"
+                        android:layout_marginTop="5dp"
                         android:background="@color/greyish"
                         android:visibility="gone" />
                 </RadioGroup>

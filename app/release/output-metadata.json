@@ -1,18 +1,20 @@
 {
-  "version": 2,
+  "version": 3,
   "artifactType": {
     "type": "APK",
     "kind": "Directory"
   },
-  "applicationId": "fancode.cricks",
-  "variantName": "processReleaseResources",
+  "applicationId": "ninja.cricks",
+  "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 1000,
-      "versionName": "1.0",
-      "outputFile": "fancode-1.0-release.apk"
+      "attributes": [],
+      "versionCode": 4700,
+      "versionName": "4.7",
+      "outputFile": "Ninja11-4.7-release.apk"
     }
-  ]
+  ],
+  "elementType": "File"
 }

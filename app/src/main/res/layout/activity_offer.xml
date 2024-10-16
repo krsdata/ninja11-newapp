@@ -6,7 +6,7 @@
 
         <variable
             name="contentviews"
-            type="fancode.cricks.OfferActivity" />
+            type="ninja.cricks.OfferActivity" />
     </data>
 
     <RelativeLayout

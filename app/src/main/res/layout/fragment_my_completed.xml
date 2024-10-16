@@ -5,7 +5,7 @@
 
         <variable
             name="viewmodel"
-            type="fancode.cricks.ui.mymatches.MyCompletedMatchesFragment" />
+            type="ninja.cricks.ui.mymatches.MyCompletedMatchesFragment" />
     </data>
 
     <RelativeLayout

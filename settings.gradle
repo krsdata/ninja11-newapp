@@ -1,2 +1,37 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url "https://jitpack.io" }
+        jcenter()
+        maven {
+            url "https://artifactory.paytm.in/libs-release-local"
+        }
+        maven {
+            url  "https://phonepe.mycloudrepo.io/public/repositories/phonepe-intentsdk-android"
+        }
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+        jcenter()
+        maven {
+            url "https://artifactory.paytm.in/libs-release-local"
+        }
+        maven {
+            url  "https://phonepe.mycloudrepo.io/public/repositories/phonepe-intentsdk-android"
+        }
+    }
+}
+
+rootProject.name = "Ninja11"
 include ':app'
-rootProject.name = "Fancode11"
+include ':ultraviewpager'
+include ':flashbar'
+include ':autoscrollviewpager'
+include ':gallerylib'

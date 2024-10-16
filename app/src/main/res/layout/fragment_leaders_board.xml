@@ -5,7 +5,7 @@
 
         <variable
             name="viewmodel"
-            type="fancode.cricks.ui.leadersboard.LeadersBoardFragment" />
+            type="ninja.cricks.ui.leadersboard.LeadersBoardFragment" />
     </data>
 
     <LinearLayout

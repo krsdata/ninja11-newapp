@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="showCounter"
+            type="Boolean" />
+
+        <variable
+            name="model"
+            type="hashim.gallerylib.model.GalleryModel" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="@dimen/padding_115"
+        android:layout_height="@dimen/padding_115"
+        android:layout_margin="@dimen/padding_1"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/padding_0"
+        app:cardElevation="@dimen/padding_1"
+        app:cardUseCompatPadding="false"
+        app:contentPadding="@dimen/padding_0"
+        app:layoutHeight="@{model.columnHeight}"
+        app:layoutWidth="@{model.columnWidth}">
+
+        <RelativeLayout
+            android:id="@+id/gallery_item_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="@dimen/padding_0">
+
+            <ImageView
+                android:id="@+id/ivImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerCrop"
+                android:src="@drawable/round_5_bg_gray_light"
+                app:imageUrlRect="@{model.url}" />
+
+            <ImageView
+                android:id="@+id/ivVideo"
+                android:layout_width="@dimen/padding_22"
+                android:layout_height="@dimen/padding_22"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="@dimen/padding_7"
+                android:layout_marginTop="@dimen/padding_7"
+                android:layout_marginEnd="@dimen/padding_7"
+                android:layout_marginBottom="@dimen/padding_7"
+                android:adjustViewBounds="true"
+                android:background="@drawable/circle_bg_graylight"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerCrop"
+                android:src="@drawable/play_white_icon"
+                android:visibility="@{model.video?View.VISIBLE:View.GONE}"
+                app:tint="@color/white" />
+
+            <ImageView
+                android:id="@+id/imgviewPreview"
+                android:layout_width="@dimen/padding_25"
+                android:layout_height="@dimen/padding_25"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_margin="@dimen/padding_5"
+                android:background="@drawable/circle_bg_graylight_with_transparent_gray_selector"
+                android:gravity="center"
+                android:padding="@dimen/padding_6"
+                android:src="@drawable/expand_white_icon"
+                app:tint="@color/white" />
+
+            <ImageView
+                android:id="@+id/imgviewSelect"
+                android:layout_width="@dimen/padding_22"
+                android:layout_height="@dimen/padding_22"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/padding_7"
+                android:background="@{model.selected?@drawable/circle_bg_color_primary:@drawable/circle_bg_graylight_strok_white}"
+                android:gravity="center"
+                android:padding="@dimen/padding_4"
+                android:src="@{model.selected?@drawable/done_white_icon:@drawable/transparent}"
+                android:visibility="@{showCounter?View.GONE:View.VISIBLE}"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/tvCounter"
+                android:layout_width="@dimen/padding_22"
+                android:layout_height="@dimen/padding_22"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/padding_7"
+                android:background="@{model.selected?@drawable/circle_bg_color_primary:@drawable/circle_bg_graylight_strok_white}"
+                android:gravity="center"
+                android:padding="@dimen/padding_1"
+                android:text="@{String.valueOf(model.index_when_selected)}"
+                android:textColor="@{model.selected?@color/white:@color/transparent}"
+                android:textSize="@dimen/font_size_12"
+                android:visibility="@{showCounter?View.VISIBLE:View.GONE}" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+</layout>

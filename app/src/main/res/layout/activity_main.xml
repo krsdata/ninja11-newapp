@@ -7,7 +7,7 @@
 
         <variable
             name="contentviews"
-            type="fancode.cricks.MainActivity" />
+            type="ninja.cricks.MainActivity" />
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout
@@ -95,35 +95,21 @@
                 android:layout_above="@+id/navigation"
                 android:layout_below="@+id/headerLayout" />
 
-<!--            <com.google.android.material.bottomnavigation.BottomNavigationView-->
-<!--                android:id="@+id/navigation"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_alignParentBottom="true"-->
-<!--                android:layout_gravity="bottom"-->
-<!--                app:itemIconTint="@color/bottom_nav_color"-->
-<!--                app:itemTextColor="@color/bottom_nav_color"-->
-<!--                app:labelVisibilityMode="labeled"-->
-<!--                app:menu="@menu/bottom_nav_menu" />-->
-            <com.etebarian.meowbottomnavigation.MeowBottomNavigation
+            <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/navigation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="bottom"
-                app:mbn_backgroundBottomColor="@color/colorSecond"
-                app:mbn_circleColor="@color/colorSecond"
-                app:mbn_countBackgroundColor="@color/white"
-                app:mbn_countTextColor="@color/white"
-                app:mbn_defaultIconColor="@color/white"
-                app:mbn_rippleColor="@color/white"
-                app:mbn_selectedIconColor="@color/white"
-                app:mbn_shadowColor="@color/white" />
+                app:itemIconTint="@color/bottom_nav_color"
+                app:itemTextColor="@color/bottom_nav_color"
+                app:labelVisibilityMode="labeled"
+                app:menu="@menu/bottom_nav_menu" />
         </RelativeLayout>
 
         <fragment
             android:id="@+id/fragment_navigation_drawer"
-            android:name="fancode.cricks.ui.dashboard.FragmentDrawer"
+            android:name="ninja.cricks.ui.dashboard.FragmentDrawer"
             android:layout_width="@dimen/_240sdp"
             android:layout_height="match_parent"
             android:layout_gravity="start"

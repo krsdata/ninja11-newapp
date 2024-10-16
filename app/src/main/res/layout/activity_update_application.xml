@@ -7,7 +7,7 @@
 
         <variable
             name="contentviews"
-            type="fancode.cricks.UpdateApplicationActivity" />
+            type="ninja.cricks.UpdateApplicationActivity" />
     </data>
 
     <LinearLayout
@@ -69,6 +69,16 @@
                         android:layout_gravity="center"
                         android:visibility="visible" />
 
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/updateTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="open_sans"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:textSize="@dimen/_14sdp" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -92,6 +102,14 @@
                 </LinearLayout>
             </ScrollView>
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/closeImage"
+                android:layout_width="@dimen/_45sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_alignParentEnd="true"
+                android:padding="@dimen/_15sdp"
+                android:src="@drawable/close_black_icon"/>
+            
             <TextView
                 android:id="@+id/add_cash"
                 android:layout_width="match_parent"

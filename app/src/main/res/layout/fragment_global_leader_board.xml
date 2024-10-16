@@ -6,7 +6,7 @@
 
         <variable
             name="contentviews"
-            type="fancode.cricks.ui.dashboard.GlobalLeaderBoardFragment" />
+            type="ninja.cricks.ui.dashboard.GlobalLeaderBoardFragment" />
     </data>
 
     <RelativeLayout

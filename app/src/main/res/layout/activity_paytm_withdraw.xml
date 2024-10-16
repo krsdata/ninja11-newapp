@@ -6,7 +6,7 @@
 
         <variable
             name="contentviews"
-            type="fancode.cricks.PaytmWithdrawActivity" />
+            type="ninja.cricks.PaytmWithdrawActivity" />
     </data>
 
     <LinearLayout
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_2sdp"
                     android:fontFamily="open_sans"
-                    android:text="Paytm number"
+                    android:text="UPI ID/Paytm number"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_14sdp"
                     android:visibility="gone" />
@@ -84,7 +84,7 @@
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:background="@drawable/et_style"
                     android:fontFamily="open_sans"
-                    android:hint="Your Paytm Number"
+                    android:hint="UPI ID/Your Paytm Number"
                     android:inputType="text"
                     android:paddingStart="@dimen/_15sdp"
                     android:paddingEnd="@dimen/_15sdp"
