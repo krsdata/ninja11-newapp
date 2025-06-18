@@ -54,7 +54,8 @@ class PaytmWithdrawActivity : AppCompatActivity() {
 
         mBinding!!.winningAmount.text = String.format("₹%s", walletInfo!!.prizeAmount)
 
-        mBinding!!.editWithdrawalAmount.hint = String.format("₹%s", MyPreferences.getMinWithdrawal(mContext!!))
+        mBinding!!.editWithdrawalAmount.hint =
+            String.format("₹%s", MyPreferences.getMinWithdrawal(mContext!!))
 
         mBinding!!.submitBtnWithdrawal.setOnClickListener {
             val amount = mBinding!!.editWithdrawalAmount.text.toString().trim()
@@ -77,7 +78,7 @@ class PaytmWithdrawActivity : AppCompatActivity() {
                             if (mBinding!!.paytmEditText.text.toString().isEmpty()) {
                                 MyUtils.showMessage(
                                     mContext!!,
-                                    "Please add your Paytm number"
+                                    "Please add your UPI number"
                                 )
                             } else {
                                 showWithdrawalAlert(amount.toInt(), pageType)

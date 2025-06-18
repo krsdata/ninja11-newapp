@@ -40,8 +40,8 @@ class JoinedMatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<
         viewHolder.totalTeamCreated?.text = String.format("%d", objectVal.totalTeams)
         viewHolder.totalContestJoined?.text = String.format("%d", objectVal.totalJoinContests)
 
-        viewHolder.teamAColorView?.setBackgroundColor(getRandomColor())
-        viewHolder.teamBColorView?.setBackgroundColor(getRandomColor())
+//        viewHolder.teamAColorView?.setBackgroundColor(getRandomColor())
+//        viewHolder.teamBColorView?.setBackgroundColor(getRandomColor())
 
         if (!TextUtils.isEmpty(objectVal.prizeAmount)) {
             val prize = objectVal.prizeAmount.toDouble()
@@ -120,7 +120,7 @@ class JoinedMatchesAdapter(val context: Context, val tradeinfoModels: ArrayList<
 
         val matchProgress = itemView.findViewById<TextView>(R.id.completed_match_date)
 
-        val teamAColorView = itemView.findViewById<View>(R.id.countrycolorview)
-        val teamBColorView = itemView.findViewById<View>(R.id.countrybcolorview)
+//        val teamAColorView = itemView.findViewById<View>(R.id.countrycolorview)
+//        val teamBColorView = itemView.findViewById<View>(R.id.countrybcolorview)
     }
 }

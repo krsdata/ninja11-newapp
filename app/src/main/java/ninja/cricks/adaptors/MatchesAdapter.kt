@@ -48,7 +48,7 @@ class MatchesAdapter(val context: Context, val tradeInfoModels: ArrayList<Matche
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.matches_row_banners_matches, parent, false)
             return BannersViewHolder(view)
-        } else /*if (viewType == TYPE_UPCOMING_MATCHES)*/ {
+        } else {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.matches_row_upcoming_matches, parent, false)
             return UpcomingMatchesViewHolder(view)
@@ -59,8 +59,7 @@ class MatchesAdapter(val context: Context, val tradeInfoModels: ArrayList<Matche
         val objectVal = matchesListObject[position]
         if (objectVal.viewType == TYPE_JOINED) {
             val viewJoinedMatches: ViewHolderJoinedMatches = parent as ViewHolderJoinedMatches
-            viewJoinedMatches.recyclerView.layoutManager =
-                LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false)
+            viewJoinedMatches.recyclerView.layoutManager = LinearLayoutManager(mContext, RecyclerView.HORIZONTAL, false)
             if (objectVal.joinedMatchModel != null) {
                 val adapter = JoinedMatchesAdapter(
                     mContext!!,
@@ -108,7 +107,7 @@ class MatchesAdapter(val context: Context, val tradeInfoModels: ArrayList<Matche
                     mContext!!,
                     objectVal.upcomingMatches!!
                 )
-//                viewUpcomingMatches.recyclerView.setHasFixedSize(true)
+                viewUpcomingMatches.recyclerView.setHasFixedSize(true)
                 viewUpcomingMatches.recyclerView.adapter = adapter
                 adapter.onItemClick = { objects ->
 

@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -33,7 +32,6 @@ class MyBalanceActivity : AppCompatActivity() {
 
     companion object {
         val REQUEST_CODE_ADD_MONEY: Int = 9001
-        val TAG: String = MyBalanceActivity::class.java.simpleName
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -100,6 +98,16 @@ class MyBalanceActivity : AppCompatActivity() {
 
     private fun updateAccountVerification(accountStatus: AccountDocumentStatus?) {
         if (accountStatus != null) {
+            /*if (accountStatus.documentsVerified == BindingUtils.BANK_DOCUMENTS_STATUS_REJECTED) {
+                mBinding!!.verifyAccountMessage.visibility = View.GONE
+                mBinding!!.verifyAccount.text = "REJECTED"
+                mBinding!!.verifyAccount.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10.0f)
+                mBinding!!.verifyAccount.setBackgroundResource(R.drawable.button_selector_red)
+                mBinding!!.verifyAccount.setTextColor(Color.WHITE)
+                mBinding!!.verifyAccount.setOnClickListener(View.OnClickListener {
+                    gotoDocumentsListActivity()
+                })
+            } else*/
             if (accountStatus.documentsVerified == BindingUtils.BANK_DOCUMENTS_STATUS_VERIFIED) {
                 mBinding!!.verifyAccountMessage.visibility = View.GONE
                 mBinding!!.verifyAccount.text = "Account Verified"
@@ -115,7 +123,7 @@ class MyBalanceActivity : AppCompatActivity() {
                 mBinding!!.verifyAccount.setBackgroundResource(R.drawable.button_selector_white)
                 mBinding!!.verifyAccount.setTextColor(Color.BLACK)
                 mBinding!!.verifyAccount.setOnClickListener {
-                    gotoDocumentsListActivity()
+                    //gotoDocumentsListActivity()
                 }
             } else {
                 mBinding!!.verifyAccountMessage.visibility = View.VISIBLE
@@ -139,12 +147,7 @@ class MyBalanceActivity : AppCompatActivity() {
 
     private fun initWalletInfo() {
         val walletInfo = (application as NinjaApplication).walletInfo
-
-        Log.e(TAG, "token =======> ${MyPreferences.getToken(this@MyBalanceActivity)}")
-
-
-        val totalBalance =
-            walletInfo.depositAmount + walletInfo.prizeAmount + walletInfo.bonusAmount
+        val totalBalance = walletInfo.depositAmount + walletInfo.prizeAmount + walletInfo.bonusAmount
         mBinding!!.walletTotalAmount.text = String.format("₹%.2f", totalBalance)
         mBinding!!.amountAdded.text = String.format("₹%.2f", walletInfo.prizeAmount)
         mBinding!!.depositAmount.text = String.format("₹%.2f", walletInfo.depositAmount)
@@ -158,10 +161,8 @@ class MyBalanceActivity : AppCompatActivity() {
             mBinding!!.verifyAccountMessage.visibility = View.VISIBLE
             mBinding!!.verifyAccount.setOnClickListener {
                 // need to show message
-                Toast.makeText(this@MyBalanceActivity, "Coming soon", Toast.LENGTH_LONG).show()
-
-//                val intent = Intent(mContext!!, VerifyDocumentsActivity::class.java)
-//                startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
+                val intent = Intent(mContext!!, VerifyDocumentsActivity::class.java)
+                startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
             }
         }
 

@@ -280,8 +280,8 @@ class MyUpcomingMatchesFragment : Fragment() {
             } else {
                 viewHolder.freeView?.visibility = View.GONE
             }
-            viewHolder.teamAColorView?.setBackgroundColor(getRandomColor())
-            viewHolder.teamBColorView?.setBackgroundColor(getRandomColor())
+//            viewHolder.teamAColorView?.setBackgroundColor(getRandomColor())
+//            viewHolder.teamBColorView?.setBackgroundColor(getRandomColor())
 
             BindingUtils.countDownStartForAdaptors(objectVal.timestampStart,
                 object : OnMatchTimerStarted {
@@ -332,8 +332,8 @@ class MyUpcomingMatchesFragment : Fragment() {
             val teamBLogo = itemView.findViewById<ImageView>(R.id.teamb_logo)
             val matchTitle = itemView.findViewById<TextView>(R.id.upcoming_match_title)
             val tournamentTitle = itemView.findViewById<TextView>(R.id.tournament_title)
-            val teamAColorView = itemView.findViewById<View>(R.id.countrycolorview)
-            val teamBColorView = itemView.findViewById<View>(R.id.countrybcolorview)
+//            val teamAColorView = itemView.findViewById<View>(R.id.countrycolorview)
+//            val teamBColorView = itemView.findViewById<View>(R.id.countrybcolorview)
             val opponent1 = itemView.findViewById<TextView>(R.id.upcoming_opponent1)
             val opponent2 = itemView.findViewById<TextView>(R.id.upcoming_opponent2)
             val matchtime = itemView.findViewById<TextView>(R.id.match_time)

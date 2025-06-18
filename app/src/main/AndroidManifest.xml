@@ -9,24 +9,14 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission
-        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
-    <uses-permission
-        android:name="android.permission.INSTALL_PACKAGES"
+    <uses-permission android:name="android.permission.INSTALL_PACKAGES"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-
-    <queries>
-        <package android:name="com.phonepe.app" />
-        <package android:name="com.phonepe.app.preprod" />
-        <package android:name="com.google.android.apps.nbu.paisa.user" />
-        <package android:name="net.one97.paytm" />
-        <package android:name="in.org.npci.upiapp" />
-        <package android:name="in.amazon.mShop.android.shopping" />
-    </queries>
+    <!--<uses-permission android:name="android.permission.READ_SMS" />-->
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -50,14 +40,8 @@
         tools:ignore="GoogleAppIndexingWarning,MissingDefaultResource"
         tools:replace="android:icon,android:theme,android:allowBackup,android:hardwareAccelerated">
 
-        <activity android:name=".ui.login.PhoneLoginActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/screen_name_register"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".ui.login.PhoneNumberActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/screen_name_register"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.login.PhoneLoginActivity" />
+        <activity android:name=".ui.login.PhoneNumberActivity" />
         <activity
             android:name="ninja.cricks.SplashScreenActivity"
             android:configChanges="uiMode"
@@ -74,6 +58,7 @@
                     android:host="open"
                     android:scheme="ninja11" />
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
@@ -81,6 +66,7 @@
             <!-- Branch App Links -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
@@ -92,6 +78,7 @@
             <!-- Branch App Links -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
@@ -100,20 +87,24 @@
                     android:scheme="https" />
             </intent-filter>
         </activity>
+
         <activity
             android:name="ninja.cricks.ui.login.LoginScreenActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/screen_name_login"
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.ui.login.RegisterScreenActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/screen_name_register"
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/dashboard_theme" />
+
         <activity
             android:name="ninja.cricks.ContestActivity"
             android:label="@string/activity_type_contest"
@@ -122,87 +113,108 @@
             android:name="ninja.cricks.MaintainanceActivity"
             android:label="@string/activity_type_contest"
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.QuizContestActivity"
             android:label="@string/activity_type_contest"
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.CreateTeamActivity"
             android:label="@string/activity_type_create_team"
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.TeamPreviewActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.NotificationListActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.SaveTeamActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.SelectTeamActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.MyBalanceActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.AddMoneyActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.UpdateApplicationActivity"
             android:label=""
             android:screenOrientation="portrait"
             android:theme="@style/Translucent" />
+
         <activity
             android:name="ninja.cricks.WebActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.LeadersBoardActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.MoreContestActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.InviteFriendsActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.SupportActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.FullScreenImageViewActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.VerifyDocumentsActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.WithdrawAmountsActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.DocumentsListActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.MyTransactionHistoryActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.EditProfileActivity"
             android:label="Update Profile"
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.ChangePasswordActivity"
             android:label="Change Password"
@@ -211,22 +223,27 @@
             android:name="ninja.cricks.RefferalFriendsListActivity"
             android:label="Update Profile"
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.OtpVerifyActivity"
             android:label="Update Profile"
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.ui.JoinContestActivity"
             android:label="Join Contest"
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.OfferActivity"
             android:label="Latest Offers"
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.ContestLeaderBoardActivity"
             android:label="Contest LeaderBoard"
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.ViewUserDetailActivity"
             android:label="User Info"
@@ -243,28 +260,31 @@
             android:name=".PaytmWithdrawActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
             android:name="ninja.cricks.PlayerStatsInfoActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".HaodaPaymentActivity"
             android:label=""
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".PhonePeWebViewActivity"
             android:label=""
             android:screenOrientation="portrait" />
 
-        <!--        <provider-->
-        <!--            android:name="androidx.core.content.FileProvider"-->
-        <!--            android:authorities="${applicationId}.provider"-->
-        <!--            android:exported="false"-->
-        <!--            android:grantUriPermissions="true">-->
-        <!--            <meta-data-->
-        <!--                android:name="android.support.FILE_PROVIDER_PATHS"-->
-        <!--                android:resource="@xml/file_provider_paths" />-->
-        <!--        </provider>-->
+<!--        <provider-->
+<!--            android:name="androidx.core.content.FileProvider"-->
+<!--            android:authorities="${applicationId}.provider"-->
+<!--            android:exported="false"-->
+<!--            android:grantUriPermissions="true">-->
+<!--            <meta-data-->
+<!--                android:name="android.support.FILE_PROVIDER_PATHS"-->
+<!--                android:resource="@xml/file_provider_paths" />-->
+<!--        </provider>-->
 
         <service
             android:name="ninja.cricks.fcm.MyFirebaseMessagingService"
@@ -311,24 +331,23 @@
             android:value="false" />
 
         <!-- Keep it true in UAT environment for both the flags-->
-        <!--<meta-data
+        <meta-data
             android:name="com.phonepe.android.sdk.isUAT"
-            android:value="false" />
+            android:value="false"/>
         <meta-data
             android:name="com.phonepe.android.sdk.isSimulator"
-            android:value="false" />-->
-        <!-- The value will be the MID-->
+            android:value="false"/>
 
+        <!-- The value will be the MID-->
         <meta-data
             android:name="com.phonepe.android.sdk.MerchantId"
-            android:value="NINJA11ONLINE" />
+            android:value="NINJA11ONLINE"/>
 
-        <!-- For UAT, App Id is not required. Make sure to add the following and you get the APP Id for Production after UAT Sign-off -->
+        <!-- For UAT, App Id is not required.
+        Make sure to add the following and you get the APP Id for Production after UAT Sign-off -->
         <meta-data
             android:name="com.phonepe.android.sdk.AppId"
-            android:value="c246fadd-6523-4def-be15-685fc96aa160" />
-
-
+            android:value="c246fadd-6523-4def-be15-685fc96aa160"/>
     </application>
 
 </manifest>

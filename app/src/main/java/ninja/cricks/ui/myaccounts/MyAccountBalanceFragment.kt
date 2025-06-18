@@ -25,6 +25,7 @@ import ninja.cricks.utils.MyUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Locale
 
 class MyAccountBalanceFragment : BaseFragment() {
 
@@ -41,7 +42,11 @@ class MyAccountBalanceFragment : BaseFragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         mBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_my_account_balance,
@@ -144,6 +149,9 @@ class MyAccountBalanceFragment : BaseFragment() {
                     }
                 } else {
                     mBinding!!.btnVerifyAccount.setOnClickListener {
+                        // need to show message
+//                        Toast.makeText(requireContext(), "Coming soon", Toast.LENGTH_LONG).show()
+
                         val intent = Intent(requireActivity(), VerifyDocumentsActivity::class.java)
                         startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
                     }
@@ -151,6 +159,8 @@ class MyAccountBalanceFragment : BaseFragment() {
             }
         } else {
             mBinding!!.btnVerifyAccount.setOnClickListener {
+                // need to show message
+//                Toast.makeText(requireContext(), "Coming soon", Toast.LENGTH_LONG).show()
                 val intent = Intent(requireActivity(), VerifyDocumentsActivity::class.java)
                 startActivityForResult(intent, VerifyDocumentsActivity.REQUESTCODE_VERIFY_DOC)
             }
@@ -163,10 +173,10 @@ class MyAccountBalanceFragment : BaseFragment() {
     }
 
     private fun initWalletViews(responseModel: WalletInfo) {
-        mBinding!!.addedAmount.text = String.format("₹%.2f", responseModel.depositAmount)
-        mBinding!!.winningAmount.text = String.format("₹%.2f", responseModel.prizeAmount)
-        mBinding!!.cashBonus.text = String.format("₹%.2f", responseModel.bonusAmount)
-        mBinding!!.extraCashBonus.text = String.format("₹%.2f", responseModel.extraCash)
+        mBinding!!.addedAmount.text = String.format(Locale.ENGLISH, "₹%.2f", responseModel.depositAmount)
+        mBinding!!.winningAmount.text = String.format(Locale.ENGLISH,"₹%.2f", responseModel.prizeAmount)
+        mBinding!!.cashBonus.text = String.format(Locale.ENGLISH,"₹%.2f", responseModel.bonusAmount)
+        mBinding!!.extraCashBonus.text = String.format(Locale.ENGLISH,"₹%.2f", responseModel.extraCash)
 
         mBinding!!.earnedPoints.text = String.format(
             "My Reward points: %s",
@@ -175,8 +185,8 @@ class MyAccountBalanceFragment : BaseFragment() {
 
         val totalBalance =
             responseModel.depositAmount + responseModel.prizeAmount + responseModel.bonusAmount
-        mBinding!!.totalBalance.text = String.format("₹%.2f", totalBalance)
-        mBinding!!.friendsCounts.text = String.format("%d", responseModel.refferalCounts)
+        mBinding!!.totalBalance.text = String.format(Locale.ENGLISH,"₹%.2f", totalBalance)
+        mBinding!!.friendsCounts.text = String.format(Locale.ENGLISH,"%d", responseModel.refferalCounts)
 
         if (MyPreferences.getPaytmWithdrawBtn(requireActivity())) {
             mBinding!!.btnPaytmWithdraw.visibility = View.VISIBLE
@@ -216,17 +226,17 @@ class MyAccountBalanceFragment : BaseFragment() {
         WebServiceClient(requireActivity()).client.create(IApiMethod::class.java)
             .getWallet(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
-                override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
+                override fun onFailure(call: Call<UsersPostDBResponse?>, t: Throwable) {
                     mBinding!!.progressBar.visibility = View.GONE
                 }
 
                 override fun onResponse(
-                    call: Call<UsersPostDBResponse?>?,
-                    response: Response<UsersPostDBResponse?>?
+                    call: Call<UsersPostDBResponse?>,
+                    response: Response<UsersPostDBResponse?>
                 ) {
                     mBinding!!.progressBar.visibility = View.GONE
                     if (isVisible) {
-                        val res = response!!.body()
+                        val res = response.body()
                         if (res != null) {
                             if (res.status) {
                                 val responseModel = res.walletObjects

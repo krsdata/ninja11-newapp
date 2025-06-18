@@ -3,7 +3,6 @@ package ninja.cricks
 import android.Manifest
 import android.app.ActivityManager
 import android.app.ActivityOptions
-import android.app.ProgressDialog.show
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -17,21 +16,14 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.JsonObject
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import ninja.cricks.customviews.CircleImageView
 import ninja.cricks.databinding.ActivityMainBinding
 import ninja.cricks.models.JoinedMatchModel
@@ -40,9 +32,11 @@ import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.RetrofitClient
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.roomDatabase.ResponseDatabase
 import ninja.cricks.ui.BaseActivity
-import ninja.cricks.ui.dashboard.*
+import ninja.cricks.ui.dashboard.FragmentDrawer
+import ninja.cricks.ui.dashboard.MoreOptionsFragment
+import ninja.cricks.ui.dashboard.MyAccountFragment
+import ninja.cricks.ui.dashboard.MyMatchesFragment
 import ninja.cricks.ui.home.HomeFragment
 import ninja.cricks.utils.BindingUtils
 import ninja.cricks.utils.MyPreferences
@@ -51,8 +45,6 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
-import kotlin.collections.ArrayList
 
 class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener,
     FragmentDrawer.FragmentDrawerListener {
@@ -74,7 +66,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         var updatedApkUrl: String = ""
         var releaseNote: String = ""
         var CHECK_APK_UPDATE_API: Boolean = false
-        var CHECK_FORCE_UPDATE: Boolean = false
+        var CHECK_FORCE_UPDATE: Boolean = true
 
         const val ID_HOME = 1
         const val ID_DASHBOARD = 2
@@ -117,8 +109,13 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         fragment = HomeFragment()
         loadFragment()
 
-        drawerFragment = supportFragmentManager.findFragmentById(R.id.fragment_navigation_drawer) as FragmentDrawer?
-        drawerFragment!!.setUp(R.id.fragment_navigation_drawer, mBinding!!.drawerLayout, mBinding!!.toolbar)
+        drawerFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment_navigation_drawer) as FragmentDrawer?
+        drawerFragment!!.setUp(
+            R.id.fragment_navigation_drawer,
+            mBinding!!.drawerLayout,
+            mBinding!!.toolbar
+        )
         drawerFragment!!.setDrawerListener(this)
 
         mBinding!!.profileImage.setOnClickListener {
@@ -126,7 +123,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             mBinding!!.drawerLayout.openDrawer(Gravity.LEFT)
         }
         initBottomNavigation()
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             checkStoragePermission()
         }
     }
@@ -134,107 +131,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     private fun initBottomNavigation() {
         mBinding?.navigation?.apply {
 
-            /*add(
-                MeowBottomNavigation.Model(
-                    ID_HOME,
-                    R.drawable.ic_home_black_24dp,
-                )
-            )
-
-            add(
-                MeowBottomNavigation.Model(
-                    ID_DASHBOARD,
-                    R.drawable.ic_dashboard_black_24dp
-                )
-            )
-            add(
-                MeowBottomNavigation.Model(
-                    ID_MY_ACCOUNT,
-                    R.drawable.ic_wallet_new
-                )
-            )
-            add(
-                MeowBottomNavigation.Model(
-                    ID_NOTIFICATIONS,
-                    R.drawable.ic_more_horiz_black_24dp
-                )
-            )*/
-/*
-            add(
-                MeowBottomNavigation.Model(
-                    temp_leaderboard,
-                    R.drawable.king
-                )
-            )
-*/
-
-            //setCount(ID_NOTIFICATION, "115")
-
-/*
-            setOnShowListener {
-                val name = when (it.id) {
-                    ID_HOME -> {
-                        fragment = HomeFragment()
-                        loadFragment()
-                    }
-                    ID_DASHBOARD -> {
-                        fragment = MyMatchesFragment()
-                        loadFragment()
-                    }
-                    ID_MY_ACCOUNT -> {
-                        fragment = MyAccountFragment()
-                        loadFragment()
-                    }
-                    ID_NOTIFICATIONS -> {
-                        fragment = MoreOptionsFragment()
-                        loadFragment()
-                    }
-*/
-/*
-                    temp_leaderboard -> {
-                        startActivity(Intent(this@MainActivity,ContestLeaderBoardActivity::class.java))
-                    }
-*//*
-
-                    else -> ""
-                }
-
-                //xxtvSelected.text = getString(R.string.main_page_selected, name)
-            }
-*/
-
-            /*setOnClickMenuListener {
-                val name = when (it.id) {
-                    ID_HOME -> {
-                        "HOME"
-                        fragment = HomeFragment()
-                        loadFragment()
-                    }
-                    ID_DASHBOARD -> {
-                        "EXPLORE"
-                        fragment = MyMatchesFragment()
-                        loadFragment()
-                    }
-                    ID_PREDICT_WIN -> "MESSAGE"
-                    ID_NOTIFICATIONS -> {
-                        "NOTIFICATION"
-                        fragment = MoreOptionsFragment()
-                        loadFragment()
-                    }
-                    ID_MY_ACCOUNT -> {
-                        "ACCOUNT"
-                        fragment = MyAccountFragment()
-                        loadFragment()
-                    }
-                    else -> ""
-                }
-            }
-
-            setOnReselectListener {
-                //  Toast.makeText(this@MainActivity, "item ${it.id} is reselected.", Toast.LENGTH_LONG).show()
-            }
-
-            show(ID_HOME)*/
         }
     }
 
@@ -257,7 +153,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
     }
 
     fun viewAllMatches() {
-         mBinding!!.navigation.selectedItemId = R.id.navigation_dashboard
+        mBinding!!.navigation.selectedItemId = R.id.navigation_dashboard
         /*mBinding!!.navigation.show(ID_DASHBOARD,true)
         fragment = MyMatchesFragment()
         loadFragment()*/
@@ -284,7 +180,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
             val intent = Intent(this@MainActivity, UpdateApplicationActivity::class.java)
             intent.putExtra(UpdateApplicationActivity.REQUEST_CODE_APK_UPDATE, updatedApkUrl)
             intent.putExtra(UpdateApplicationActivity.REQUEST_RELEASE_NOTE, releaseNote)
-            intent.putExtra(UpdateApplicationActivity.REQUEST_TITLE, CHECK_FORCE_UPDATE)
             startActivity(intent)
         }
     }
@@ -351,6 +246,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                 loadFragment()
                 return true
             }
+
             R.id.navigation_dashboard -> {
                 fragment = MyMatchesFragment()
                 loadFragment()
@@ -362,6 +258,7 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                 loadFragment()
                 return true
             }
+
             R.id.navigation_notifications -> {
                 fragment = MoreOptionsFragment()
                 loadFragment()
@@ -388,22 +285,28 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
         RetrofitClient(mContext).client.create(IApiMethod::class.java).apkUpdate(jsonRequest)
             .enqueue(object : Callback<JsonObject?> {
-                override fun onFailure(call: Call<JsonObject?>, t: Throwable) {
+                override fun onFailure(call: Call<JsonObject?>?, t: Throwable?) {
                     CHECK_APK_UPDATE_API = false
                 }
 
-                override fun onResponse(call: Call<JsonObject?>, response: Response<JsonObject?>) {
+                override fun onResponse(
+                    call: Call<JsonObject?>?,
+                    response: Response<JsonObject?>?
+                ) {
                     if (!isFinishing) {
                         Log.e(TAG, "onResponse")
-                        if (response.body() != null) {
+                        if (response!!.body() != null) {
                             val res = JSONObject(response.body().toString())
-                            showScore = res.getBoolean("show_scoreboard")
+                            if(res.has("show_scoreboard")) {
+                                showScore = res.getBoolean("show_scoreboard")
+                            }
                             menuArrayList.clear()
 
-                            for (i in 0 until res.getJSONArray("menu").length()) {
-                                menuArrayList.add(res.getJSONArray("menu").getJSONObject(i))
+                            if(res.has("menu")) {
+                                for (i in 0 until res.getJSONArray("menu").length()) {
+                                    menuArrayList.add(res.getJSONArray("menu").getJSONObject(i))
+                                }
                             }
-
                             MyPreferences.setSplashScreen(mContext, res.getString("splashScreen"))
                             if (res.getBoolean("status")) {
                                 CHECK_APK_UPDATE_API = true
@@ -421,7 +324,6 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
                                         val intent = Intent(this@MainActivity, UpdateApplicationActivity::class.java)
                                         intent.putExtra(UpdateApplicationActivity.REQUEST_CODE_APK_UPDATE, updatedApkUrl)
                                         intent.putExtra(UpdateApplicationActivity.REQUEST_RELEASE_NOTE, releaseNote)
-                                        intent.putExtra(UpdateApplicationActivity.REQUEST_TITLE, CHECK_FORCE_UPDATE)
                                         startActivity(intent)
                                     }
                                 }
@@ -504,9 +406,11 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun requestPermissions() {
-        val permissions = arrayOf(Manifest.permission.POST_NOTIFICATIONS,)
+        val permissions = arrayOf(
+            Manifest.permission.POST_NOTIFICATIONS,
+        )
 
-        if(shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+        if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
             ActivityCompat.requestPermissions(this, permissions, UpdateApplicationActivity.PERMISSION_REQUEST_STORAGE)
         } else {
             ActivityCompat.requestPermissions(this, permissions, UpdateApplicationActivity.PERMISSION_REQUEST_STORAGE)

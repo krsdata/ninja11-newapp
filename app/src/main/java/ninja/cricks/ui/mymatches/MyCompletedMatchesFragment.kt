@@ -16,7 +16,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.gson.Gson
 import com.google.gson.JsonObject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,20 +26,18 @@ import ninja.cricks.ContestActivity
 import ninja.cricks.MainActivity
 import ninja.cricks.R
 import ninja.cricks.databinding.FragmentMyCompletedBinding
-import ninja.cricks.models.ContestPreferenceModel
 import ninja.cricks.models.JoinedMatchModel
+import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.network.IApiMethod
 import ninja.cricks.network.WebServiceClient
-import ninja.cricks.models.UsersPostDBResponse
 import ninja.cricks.roomDatabase.ResponseDatabase
+import ninja.cricks.utils.CustomProgressDialog2
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
-import ninja.cricks.utils.CustomProgressDialog2
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Random
 
 
 class MyCompletedMatchesFragment : Fragment() {
@@ -97,8 +94,7 @@ class MyCompletedMatchesFragment : Fragment() {
             checkinArrayList.clear()
             checkinArrayList.addAll((activity as MainActivity).resCompletedMatchesCheckinArraylist)
             adapter.notifyDataSetChanged()
-        }
-        else {
+        } else {
             if (mBinding != null) {
                 mBinding!!.linearEmptyContest.visibility = View.VISIBLE
             }
@@ -106,23 +102,22 @@ class MyCompletedMatchesFragment : Fragment() {
     }
 
     private fun getMatchHistory() {
-        val lastTimeApiCall: Long? = MyPreferences.getLastTimeForApiCall(requireContext(),
+        val lastTimeApiCall: Long = MyPreferences.getLastTimeForApiCall(
+            requireContext(),
             (Constant.myCompletedMatchesFragmentDatabaseId)
         )
-        if (lastTimeApiCall!!+ Constant.delayApiSeconds < System.currentTimeMillis()) {
+        if (lastTimeApiCall!! + Constant.delayApiSeconds < System.currentTimeMillis()) {
             getMatchHistoryApiCall()
-        }
-        else {
+        } else {
             CoroutineScope(Dispatchers.IO).launch {
                 val value = ResponseDatabase.getInstance(requireContext()).responseDao().getResponse(
                     (Constant.myCompletedMatchesFragmentDatabaseId)
                 )
 
-                if (value != null && value.type == (Constant.myCompletedMatchesFragmentDatabaseId)){
-                    withContext(Dispatchers.Main){getMatchHistory2(value.res)}
-                }
-                else {
-                    withContext(Dispatchers.Main){getMatchHistoryApiCall()}
+                if (value != null && value.type == (Constant.myCompletedMatchesFragmentDatabaseId)) {
+                    withContext(Dispatchers.Main) { getMatchHistory2(value.res) }
+                } else {
+                    withContext(Dispatchers.Main) { getMatchHistoryApiCall() }
                 }
             }
         }
@@ -165,7 +160,7 @@ class MyCompletedMatchesFragment : Fragment() {
                     call: Call<UsersPostDBResponse?>?,
                     response: Response<UsersPostDBResponse?>?
                 ) {
-                    if (!isVisible){
+                    if (!isVisible) {
                         return
                     }
                     //mBinding!!.progressBar.visibility = View.GONE
@@ -176,11 +171,14 @@ class MyCompletedMatchesFragment : Fragment() {
                             val responseModel = res.responseObject
                             if (responseModel != null) {
                                 viewLifecycleOwner.lifecycleScope.launch {
-                                    withContext(Dispatchers.Main){getMatchHistory2(res)}
-                                    withContext(Dispatchers.IO){
-                                        MyPreferences.saveLastTimeForApiCall(context!!,Constant.myCompletedMatchesFragmentDatabaseId, System.currentTimeMillis())
-                                        ResponseDatabase.getInstance(context!!).responseDao().saveResponse(ninja.cricks.roomDatabase.Response(
-                                            Constant.myCompletedMatchesFragmentDatabaseId, System.currentTimeMillis(), res))
+                                    withContext(Dispatchers.Main) { getMatchHistory2(res) }
+                                    withContext(Dispatchers.IO) {
+                                        MyPreferences.saveLastTimeForApiCall(context!!, Constant.myCompletedMatchesFragmentDatabaseId, System.currentTimeMillis())
+                                        ResponseDatabase.getInstance(context!!).responseDao().saveResponse(
+                                            ninja.cricks.roomDatabase.Response(
+                                                Constant.myCompletedMatchesFragmentDatabaseId, System.currentTimeMillis(), res
+                                            )
+                                        )
                                     }
                                 }
                             }
@@ -253,8 +251,8 @@ class MyCompletedMatchesFragment : Fragment() {
             viewHolder.totalTeamCreated?.text = String.format("%d", objectVal.totalTeams)
             viewHolder.totalContestJoined?.text = String.format("%d", objectVal.totalJoinContests)
 
-            viewHolder.teamAColorView?.setBackgroundColor(getRandomColor())
-            viewHolder.teamBColorView?.setBackgroundColor(getRandomColor())
+//            viewHolder.teamAColorView?.setBackgroundColor(getRandomColor())
+//            viewHolder.teamBColorView?.setBackgroundColor(getRandomColor())
 
             Glide.with(context)
                 .load(objectVal.teamAInfo!!.logoUrl)
@@ -282,8 +280,8 @@ class MyCompletedMatchesFragment : Fragment() {
             val teamBLogo = itemView.findViewById<ImageView>(R.id.teamb_logo)
             val matchTitle = itemView.findViewById<TextView>(R.id.completed_match_title)
             val matchStatus = itemView.findViewById<TextView>(R.id.completed_match_status)
-            val teamAColorView = itemView.findViewById<View>(R.id.countrycolorview)
-            val teamBColorView = itemView.findViewById<View>(R.id.countrybcolorview)
+//            val teamAColorView = itemView.findViewById<View>(R.id.countrycolorview)
+//            val teamBColorView = itemView.findViewById<View>(R.id.countrybcolorview)
             val opponent1 = itemView.findViewById<TextView>(R.id.upcoming_opponent1)
             val opponent2 = itemView.findViewById<TextView>(R.id.upcoming_opponent2)
             val matchProgress = itemView.findViewById<TextView>(R.id.completed_match_date)

@@ -110,7 +110,7 @@ class WithdrawAmountsActivity : BaseActivity() {
                             if (mBinding!!.paytmEditText.text.toString().length < 0) {
                                 MyUtils.showMessage(
                                     mContext!!,
-                                    "Please add your Paytm number"
+                                    "Please add your UPI number"
                                 )
                             } else {
                                 showWithdrawalAlert(amount.toInt(), pageType)
@@ -129,7 +129,7 @@ class WithdrawAmountsActivity : BaseActivity() {
                         amount.toInt() < 1001 -> {
                             MyUtils.showMessage(
                                 mContext!!,
-                                "Please try Paytm or UPI"
+                                "Please try UPI"
                             )
                         }
                         amount.toInt() <= 10000 -> {

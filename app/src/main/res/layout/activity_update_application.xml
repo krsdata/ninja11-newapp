@@ -52,6 +52,7 @@
             android:background="@color/white"
             android:orientation="vertical">
 
+
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -65,28 +66,21 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_60sdp"
-                        android:src="@drawable/new_update"
                         android:layout_gravity="center"
+                        android:src="@drawable/new_update"
                         android:visibility="visible" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/updateTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="open_sans"
-                        android:textColor="@color/black"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginBottom="@dimen/_10sdp"
-                        android:textSize="@dimen/_14sdp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="open_sans"
-                        android:text="Whats New"
-                        android:textColor="@color/black"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:layout_marginBottom="@dimen/_10sdp"
+                        android:autoLink="all"
+                        android:fontFamily="open_sans"
+                        android:linksClickable="true"
+                        android:text="Whats New"
+                        android:textColor="@color/black"
+                        android:textColorLink="@color/palatinateblue"
                         android:textSize="@dimen/_14sdp" />
 
                     <TextView
@@ -94,22 +88,25 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_10sdp"
+                        android:autoLink="all"
                         android:fontFamily="open_sans"
                         android:lineSpacingExtra="@dimen/_4sdp"
+                        android:linksClickable="true"
                         android:text="Release Note"
                         android:textColor="@color/black"
+                        android:textColorLink="@color/palatinateblue"
                         android:textSize="@dimen/_12sdp" />
                 </LinearLayout>
             </ScrollView>
+            <ImageView
+                android:id="@+id/close_button"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:layout_margin="@dimen/_8sdp"
+                android:padding="@dimen/_10sdp"
+                android:background="@drawable/circle_red"
+                android:src="@drawable/close_white_icon" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/closeImage"
-                android:layout_width="@dimen/_45sdp"
-                android:layout_height="@dimen/_45sdp"
-                android:layout_alignParentEnd="true"
-                android:padding="@dimen/_15sdp"
-                android:src="@drawable/close_black_icon"/>
-            
             <TextView
                 android:id="@+id/add_cash"
                 android:layout_width="match_parent"

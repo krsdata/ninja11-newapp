@@ -17,10 +17,8 @@ import ninja.cricks.databinding.ActivityHaodaPaymentBinding
 import ninja.cricks.utils.BindingUtils
 
 class PhonePeWebViewActivity : AppCompatActivity() {
-
     var mBinding: ActivityHaodaPaymentBinding? = null
     var mContext: Context? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_haoda_payment)
@@ -31,12 +29,16 @@ class PhonePeWebViewActivity : AppCompatActivity() {
             toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
             setSupportActionBar(toolbar)
             toolbar.setNavigationOnClickListener { v: View? ->
-                finish()
+                if (webBody.canGoBack()) {
+                    webBody.goBack()
+                } else {
+                    finish()
+                }
             }
             progressBar.visibility = View.VISIBLE
 
             webBody.settings.javaScriptEnabled = true
-            webBody.setBackgroundColor(0x00ffffff)
+            webBody.setBackgroundColor(0x00000000)
             webBody.settings.cacheMode = WebSettings.LOAD_NO_CACHE
             webBody.clearCache(true)
         }
@@ -52,11 +54,22 @@ class PhonePeWebViewActivity : AppCompatActivity() {
                     mBinding!!.progressBar.visibility = View.GONE
                 }
                 // Handle page finished loading
-                if (url.startsWith("https://rest.ninja11.in/api/v3/paytmCallback")) {
+                // https://rest.krsdata.net/api/v2/redirectURLPhonePe
+                if (url.startsWith("https://rest.krsdata.net/api/v3/redirectURLPhonePe")) {
                     Log.e(TAG, "Response from phone pay: $url")
                     finish() // Close the activity when the desired URL is reached
                 }
             }
+
+//            override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceError) {
+//                super.onReceivedError(view, request, error)
+//                // Handle page resource error
+//                Log.e(
+//                    TAG, "Page resource error code: " + error.errorCode +
+//                            " description: " + error.description +
+//                            " errorCode: " + error.errorCode
+//                )
+//            }
 
             override fun doUpdateVisitedHistory(view: WebView, url: String, isReload: Boolean) {
                 super.doUpdateVisitedHistory(view, url, isReload)

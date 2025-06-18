@@ -199,10 +199,7 @@ interface IApiMethod {
 
     @Multipart
     @POST("uploadbase64Image")
-    fun saveDocumentImage(
-        @PartMap() partMap: Map<String, @JvmSuppressWildcards RequestBody>,
-        @Part bankImage: MultipartBody.Part?
-    ): Call<ResponseModel>
+    fun saveDocumentImage(@PartMap() partMap: Map<String, @JvmSuppressWildcards RequestBody>, @Part bankImage: MultipartBody.Part?): Call<ResponseModel>
 
     @Headers("Content-Type: application/json")
     @POST("globalLeaderBoard")

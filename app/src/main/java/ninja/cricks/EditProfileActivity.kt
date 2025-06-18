@@ -19,6 +19,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -28,6 +29,7 @@ import hashim.gallerylib.model.GalleryModel
 import hashim.gallerylib.observer.OnResultCallback
 import hashim.gallerylib.util.GalleryConstants
 import hashim.gallerylib.view.galleryActivity.GalleryLib
+import ninja.cricks.VerifyDocumentsActivity.Companion
 import ninja.cricks.databinding.ActivityEditProfileBinding
 import ninja.cricks.models.ResponseModel
 import ninja.cricks.models.UserInfo
@@ -39,6 +41,7 @@ import ninja.cricks.utils.CustomeProgressDialog
 import ninja.cricks.utils.MyPreferences
 import ninja.cricks.utils.MyUtils
 import ninja.cricks.utils.setLocalImage
+import ninja.cricks.utils.setServerImage
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -95,11 +98,16 @@ class EditProfileActivity : AppCompatActivity() {
         updateUserOtherInfo()
 
         mBinding!!.profileImage.setOnClickListener {
-            Log.e(TAG, "clicked")
-            if(createPermission()){
-                openGallery()
+            if (!TextUtils.isEmpty(photoUrl)) {
+                val intent = Intent(this@EditProfileActivity, FullScreenImageViewActivity::class.java)
+                intent.putExtra(FullScreenImageViewActivity.KEY_IMAGE_URL, photoUrl)
+                startActivity(intent)
             } else {
-                requestPermissions(PERMISSIONS.toTypedArray(), GalleryConstants.REQUEST_Permission_Gallery)
+                if(createPermission()){
+                    openGallery()
+                } else {
+                    requestPermissions(PERMISSIONS.toTypedArray(), GalleryConstants.REQUEST_Permission_Gallery)
+                }
             }
         }
 
@@ -155,48 +163,48 @@ class EditProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun selectImage() {
-        val options: Array<CharSequence> = arrayOf("Take Photo", "Choose from Gallery", "Cancel")
+//    private fun selectImage() {
+//        val options: Array<CharSequence> = arrayOf("Take Photo", "Choose from Gallery", "Cancel")
+//
+//        val builder: AlertDialog.Builder = AlertDialog.Builder(mContext)
+//        builder.setTitle("Add Photo")
+//        builder.setItems(options) { dialog, items ->
+//            if (options[items] == "Take Photo") {
+//                getImageCamera()
+//            } else if (options[items] == "Choose from Gallery") {
+//                getImageGallery()
+//            } else if (options[items] == "Cancel") {
+//                dialog!!.dismiss()
+//            }
+//        }
+//        builder.show()
+//    }
 
-        val builder: AlertDialog.Builder = AlertDialog.Builder(mContext)
-        builder.setTitle("Add Photo")
-        builder.setItems(options) { dialog, items ->
-            if (options[items] == "Take Photo") {
-                getImageCamera()
-            } else if (options[items] == "Choose from Gallery") {
-                getImageGallery()
-            } else if (options[items] == "Cancel") {
-                dialog!!.dismiss()
-            }
-        }
-        builder.show()
-    }
-
-    private fun getImageCamera() {
-        ImagePicker.with(this)
-            .cameraOnly()
-            .crop()
-            .compress(2048)
-            .saveDir(File(cacheDir, "Ninja11"))
-            .start(CAMERA_IMAGE_REQ_CODE)
-    }
-
-    private fun getImageGallery() {
-        ImagePicker.with(this)
-            .galleryOnly()
-            .crop()
-            .compress(2048)
-            .saveDir(File(cacheDir, "Ninja11"))
-            .galleryMimeTypes(
-                mimeTypes = arrayOf(
-                    "image/png",
-                    "image/jpg",
-                    "image/jpeg"
-                )
-            )
-            .maxResultSize(1080, 1920)
-            .start(GALLERY_IMAGE_REQ_CODE)
-    }
+//    private fun getImageCamera() {
+//        ImagePicker.with(this)
+//            .cameraOnly()
+//            .crop()
+//            .compress(2048)
+//            .saveDir(File(cacheDir, "Ninja11"))
+//            .start(CAMERA_IMAGE_REQ_CODE)
+//    }
+//
+//    private fun getImageGallery() {
+//        ImagePicker.with(this)
+//            .galleryOnly()
+//            .crop()
+//            .compress(2048)
+//            .saveDir(File(cacheDir, "Ninja11"))
+//            .galleryMimeTypes(
+//                mimeTypes = arrayOf(
+//                    "image/png",
+//                    "image/jpg",
+//                    "image/jpeg"
+//                )
+//            )
+//            .maxResultSize(1080, 1920)
+//            .start(GALLERY_IMAGE_REQ_CODE)
+//    }
 
 //    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 //        super.onActivityResult(requestCode, resultCode, data)
@@ -400,8 +408,7 @@ class EditProfileActivity : AppCompatActivity() {
 
         val userId: RequestBody = createPartFromString(MyPreferences.getUserID(mContext)!!)
         val documentType: RequestBody = createPartFromString(BaseActivity.DOCUMENTS_TYPE_PROFILES)
-        val systemToken: RequestBody =
-            createPartFromString(MyPreferences.getSystemToken(mContext)!!)
+        val systemToken: RequestBody = createPartFromString(MyPreferences.getSystemToken(mContext)!!)
 
         val map: HashMap<String, RequestBody> = HashMap<String, RequestBody>()
         map["user_id"] = userId
@@ -414,6 +421,7 @@ class EditProfileActivity : AppCompatActivity() {
             .enqueue(object : Callback<ResponseModel?> {
                 override fun onFailure(call: Call<ResponseModel?>, t: Throwable) {
                     customeProgressDialog.dismiss()
+                    Log.e(TAG, "error from server after image upload ==========> ${t.localizedMessage!!}")
                     MyUtils.showToast(this@EditProfileActivity, t.localizedMessage!!)
                 }
 
@@ -421,10 +429,15 @@ class EditProfileActivity : AppCompatActivity() {
                     if (!isFinishing) {
                         customeProgressDialog.dismiss()
                         val res = response.body()
+
+                        Log.e(TAG, "response from server after image upload ==========> ${res.toString()}")
                         if (res != null) {
                             if (res.status) {
                                 photoUrl = res.image_url
                                 userInfo.profileImage = res.image_url
+
+                                mBinding!!.profileImage.setServerImage(res.image_url, true)
+
                                 MyUtils.showMessage(mContext, res.message)
                             } else {
                                 MyUtils.showMessage(mContext, res.message)
@@ -454,8 +467,8 @@ class EditProfileActivity : AppCompatActivity() {
                 }
 
                 override fun onResult(list: ArrayList<GalleryModel>) {
-                    Log.e(TAG, "galleryModels from result call back =======> ${galleryModels[0].toString()}")
                     galleryModels = list
+//                    uploadImageToServer(File(galleryModels[0].url))
                 }
             },
             galleryResultLauncher = galleryResultLauncher,
@@ -463,31 +476,29 @@ class EditProfileActivity : AppCompatActivity() {
     }
 
     private val galleryResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK
-        ) {
+        if (result.resultCode == Activity.RESULT_OK) {
             //back from gallery activity
             val dataList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    result.data?.extras?.getParcelableArrayList(
-                        GalleryConstants.selected,
-                        GalleryModel::class.java
-                    ) as ArrayList<GalleryModel>
-                } else {
-                    result.data?.extras?.get(GalleryConstants.selected) as ArrayList<*>
-                }
+                result.data?.extras?.getParcelableArrayList(
+                    GalleryConstants.selected,
+                    GalleryModel::class.java
+                ) as java.util.ArrayList<GalleryModel>
+            } else {
+                result.data?.extras?.get(GalleryConstants.selected) as java.util.ArrayList<*>
+            }
             if (dataList.isNotEmpty()) {
                 galleryModels = dataList as ArrayList<GalleryModel>
+                Log.e(EditProfileActivity.TAG, "galleryModels from activity result =======> ${galleryModels[0].toString()}")
 
-                mImageFile = File(galleryModels[0].sdcardPath)
-                mBinding!!.profileImage.setLocalImage(mImageFile!!, true)
-                uploadImageToServer(mImageFile!!)
+                val file: File = File(galleryModels[0].sdcardPath)
 
-                Log.e(TAG, "galleryModels from activity result =======> ${galleryModels[0].toString()}")
-
+                uploadImageToServer(file)
             }
         }
     }
 
-    fun createPermission(): Boolean {
+    private fun createPermission(): Boolean {
+
         PERMISSIONS.add(Manifest.permission.CAMERA)
         PERMISSIONS.add(Manifest.permission.RECORD_AUDIO)
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)

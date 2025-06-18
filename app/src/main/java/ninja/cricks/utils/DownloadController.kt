@@ -27,8 +27,7 @@ class DownloadController(private val context: Context, private val url: String, 
     }
     fun enqueueDownload() {
         customProgressDialog.show()
-        var destination =
-            context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).toString() + "/"
+        var destination = context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS).toString() + "/"
         destination += FILE_NAME
         val uri = Uri.parse("$FILE_BASE_PATH$destination")
         val file = File(destination)
@@ -42,8 +41,7 @@ class DownloadController(private val context: Context, private val url: String, 
         request.setDestinationUri(uri)
         showInstallOption(destination, uri)
         downloadManager.enqueue(request)
-        Toast.makeText(context, context.getString(R.string.downloading), Toast.LENGTH_LONG)
-            .show()
+        Toast.makeText(context, context.getString(R.string.downloading), Toast.LENGTH_LONG).show()
     }
     private fun showInstallOption(
         destination: String,

@@ -28,7 +28,8 @@ class PlayersContestAdapter(
     private var matchObject = matchModel
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.createteam_row_players, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.createteam_row_players, parent, false)
         return DataViewHolder(view)
     }
 
@@ -36,17 +37,20 @@ class PlayersContestAdapter(
         val objectVal = playerListObject[viewType]
         val viewHolder: DataViewHolder = parent as DataViewHolder
         if (objectVal.analyticsModel != null) {
-            viewHolder.playerSelectionPercentage.text = "Sel by ${objectVal.analyticsModel!!.selectionPc}%"
+            viewHolder.playerSelectionPercentage.text =
+                "Sel by ${objectVal.analyticsModel!!.selectionPc}%"
         } else {
             viewHolder.playerSelectionPercentage.text = ""
         }
         viewHolder.playerName.text = objectVal.shortName
         viewHolder.teamName.text = objectVal.teamShortName
         if (matchObject.teamAInfo!!.teamId == objectVal.teamId) {
-            viewHolder.teamName.background = context.resources.getDrawable(R.drawable.ract_white_background)
+            viewHolder.teamName.background =
+                context.resources.getDrawable(R.drawable.ract_white_background)
             viewHolder.teamName.setTextColor(context.resources.getColor(R.color.black))
         } else {
-            viewHolder.teamName.background = context.resources.getDrawable(R.drawable.ract_black_background)
+            viewHolder.teamName.background =
+                context.resources.getDrawable(R.drawable.ract_black_background)
             viewHolder.teamName.setTextColor(context.resources.getColor(R.color.white))
         }
         viewHolder.fantasyPoints.text = "${objectVal.fantasyPlayerRating}"

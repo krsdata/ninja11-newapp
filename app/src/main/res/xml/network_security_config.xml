@@ -6,6 +6,7 @@
         </trust-anchors>
     </base-config>
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">rest.fancode11.com</domain>
+        <domain includeSubdomains="true">rest.ninja11.in</domain>
+        <domain includeSubdomains="true">ninja11.in</domain>
     </domain-config>
 </network-security-config>

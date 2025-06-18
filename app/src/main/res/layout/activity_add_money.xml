@@ -275,7 +275,7 @@
                         android:drawableStart="@drawable/icon_phonepay"
                         android:drawablePadding="10dp"
                         android:fontFamily="open_sans"
-                        android:text="UPI/ PhonePe"
+                        android:text="Phonepe/ UPI"
                         android:textSize="@dimen/_12sdp"
                         android:visibility="visible" />
 
@@ -286,7 +286,7 @@
                         android:background="@color/greyish"
                         android:visibility="gone" />
 
-                    <RadioButton
+                    <!--<RadioButton
                         android:id="@+id/use_wallet_upi"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_45sdp"
@@ -297,7 +297,7 @@
                         android:fontFamily="open_sans"
                         android:text="UPI"
                         android:textSize="@dimen/_12sdp"
-                        android:visibility="visible" />
+                        android:visibility="visible" />-->
 
                     <View
                         android:id="@+id/view4"

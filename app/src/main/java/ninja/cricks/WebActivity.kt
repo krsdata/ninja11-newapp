@@ -3,7 +3,6 @@ package ninja.cricks
 import android.content.Context
 import android.os.Bundle
 import android.transition.Slide
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.animation.DecelerateInterpolator
@@ -65,9 +64,6 @@ class WebActivity : AppCompatActivity(), SwipeRefreshLayout.OnRefreshListener {
 
         URL = intent.getStringExtra(KEY_URL)
         userId = intent.getStringExtra(USER_ID)
-
-        Log.e(TAG, "web url =========> $URL")
-
         loadURL()
     }
 

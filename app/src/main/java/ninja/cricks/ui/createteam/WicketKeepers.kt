@@ -26,13 +26,11 @@ import ninja.cricks.CreateTeamActivity.Companion.TEAMB
 import ninja.cricks.CreateTeamActivity.Companion.isAllPlayersSelected
 import ninja.cricks.R
 import ninja.cricks.databinding.FragmentCreateTeamListBinding
-import ninja.cricks.models.PlayersInfoModel
 import ninja.cricks.models.UpcomingMatchesModel
 import ninja.cricks.ui.createteam.adaptors.PlayersContestAdapter
-import ninja.cricks.utils.BindingUtils.Companion.playerStatsList
+import ninja.cricks.models.PlayersInfoModel
 import ninja.cricks.utils.CricketPlayersFilters
 import ninja.cricks.utils.MyUtils
-import java.util.Locale
 
 
 class WicketKeepers : Fragment() {
@@ -88,7 +86,10 @@ class WicketKeepers : Fragment() {
             matchObject!!,
             CREATE_TEAM_WICKET_KEEPER
         )
-        mBinding!!.labelPlayersCounts.text = String.format(Locale.ENGLISH, "Select %d - %d Wicket Keeper", MAX_WICKET_KEEPER[0], MAX_WICKET_KEEPER[1])
+        mBinding!!.labelPlayersCounts.text = String.format(
+            "Select %d - %d Wicket Keeper",
+            MAX_WICKET_KEEPER[0], MAX_WICKET_KEEPER[1]
+        )
         resetSorting()
         mBinding!!.recyclerCreatePlayersList.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
@@ -98,10 +99,6 @@ class WicketKeepers : Fragment() {
             RecyclerView.VERTICAL
         )
         mBinding!!.recyclerCreatePlayersList.addItemDecoration(dividerItemDecoration)
-
-        filteredWicketKeepers!!.sortWith { lhs, rhs ->
-            rhs.isPlaying11.compareTo(lhs.isPlaying11)
-        }
 
         adapter = PlayersContestAdapter(
             requireActivity(),

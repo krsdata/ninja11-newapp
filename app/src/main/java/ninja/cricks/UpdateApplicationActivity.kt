@@ -1,21 +1,172 @@
 package ninja.cricks
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
-import android.view.View
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import hashim.gallerylib.util.GalleryConstants
+import ninja.cricks.databinding.ActivityUpdateApplicationBinding
+import ninja.cricks.ui.BaseActivity
+import ninja.cricks.utils.CustomeProgressDialog
+import ninja.cricks.utils.DownloadController
+
+class UpdateApplicationActivity : BaseActivity() {
+
+    private var mBinding: ActivityUpdateApplicationBinding? = null
+    private lateinit var downloadController: DownloadController
+    lateinit var customProgress: CustomeProgressDialog
+
+    companion object {
+        val TAG: String = UpdateApplicationActivity::class.java.simpleName
+        const val REQUEST_CODE_APK_UPDATE = "apkupdateurl"
+        const val REQUEST_RELEASE_NOTE = "release_note"
+        const val PERMISSION_REQUEST_STORAGE = 100
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_update_application)
+        customeProgressDialog = CustomeProgressDialog(this)
+
+        val apkUrl = intent.getStringExtra(REQUEST_CODE_APK_UPDATE)
+        val releaseNote = intent.getStringExtra(REQUEST_RELEASE_NOTE)
+
+        Log.e(TAG, "Release Notes: $releaseNote")
+        if (!TextUtils.isEmpty(releaseNote)) {
+            mBinding?.releaseNote?.text = releaseNote
+        }
+
+        if (!apkUrl.isNullOrEmpty()) {
+            downloadController = DownloadController(this, apkUrl, customeProgressDialog)
+        } else {
+            Log.e(TAG, "APK URL is null or empty")
+        }
+
+        mBinding?.toolbar?.apply {
+            title = getString(R.string.label_update)
+            setTitleTextColor(resources.getColor(R.color.white, theme))
+            setNavigationIcon(R.drawable.ic_arrow_back_black_24dp)
+            setSupportActionBar(this)
+            setNavigationOnClickListener { finish() }
+        }
+
+        mBinding?.addCash?.setOnClickListener {
+            Log.e(TAG, "Download button clicked")
+            checkStoragePermission()
+        }
+
+        mBinding?.closeButton?.setOnClickListener {
+            onBackPressed()
+        }
+    }
+
+    override fun onBitmapSelected(bitmap: Bitmap) {}
+
+    override fun onUploadedImageUrl(url: String) {}
+
+    /**
+     * Checks and requests necessary permissions before downloading.
+     */
+    private fun checkStoragePermission() {
+        if (arePermissionsGranted()) {
+            Log.e(TAG, "Permissions already granted. Proceeding with download.")
+            downloadController.enqueueDownload()
+        } else {
+            Log.e(TAG, "Requesting permissions")
+            requestPermissions()
+        }
+    }
+
+    /**
+     * Requests storage permissions dynamically.
+     */
+    private fun requestPermissions() {
+        val permissions = mutableListOf<String>()
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) { // Android 9 and below
+            permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) { // Android 11 and above
+            if (!android.provider.Settings.canDrawOverlays(this)) {
+                val intent = Intent(
+                    Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
+                    Uri.parse("package:$packageName")
+                )
+                startActivity(intent)
+            }
+        }
+
+        if (permissions.isNotEmpty()) {
+            ActivityCompat.requestPermissions(this, permissions.toTypedArray(), PERMISSION_REQUEST_STORAGE)
+        }
+    }
+
+    /**
+     * Checks if necessary permissions are granted.
+     */
+    private fun arePermissionsGranted(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            true
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            Environment.isExternalStorageManager()
+        } else {
+            ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+//            return Settings.canDrawOverlays(this@UpdateApplicationActivity)
+//        } else {
+//            return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+//        }
+    }
+
+    /**
+     * Handles the permission request result.
+     */
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == PERMISSION_REQUEST_STORAGE) {
+            if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                Log.e(TAG, "All permissions granted. Proceeding with download.")
+                downloadController.enqueueDownload()
+            } else {
+                Log.e(TAG, "Permission denied. Cannot proceed with download.")
+            }
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+}
+
+
+/*
+package ninja.cricks
+
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.os.Bundle
+import android.text.TextUtils
+import android.util.Log
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import ninja.cricks.databinding.ActivityUpdateApplicationBinding
 import ninja.cricks.ui.BaseActivity
 import ninja.cricks.utils.CustomeProgressDialog
@@ -26,24 +177,24 @@ class UpdateApplicationActivity : BaseActivity() {
 
     private var mBinding: ActivityUpdateApplicationBinding? = null
     lateinit var downloadController: DownloadController
-    var PERMISSIONS: ArrayList<String> = ArrayList()
 
     companion object {
         val TAG: String = UpdateApplicationActivity::class.java.simpleName
         val REQUEST_CODE_APK_UPDATE: String = "apkupdateurl"
         val REQUEST_RELEASE_NOTE: String = "release_note"
-        val REQUEST_TITLE: String = "title"
         const val PERMISSION_REQUEST_STORAGE = 0
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_update_application)
+        mBinding = DataBindingUtil.setContentView(
+            this,
+            R.layout.activity_update_application
+        )
         customeProgressDialog = CustomeProgressDialog(this)
 
         val apkUrl = intent.getStringExtra(REQUEST_CODE_APK_UPDATE)
         val releaseNote = intent.getStringExtra(REQUEST_RELEASE_NOTE)
-        val forceUpdate = intent!!.getBooleanExtra(REQUEST_TITLE, false)
         Log.e(TAG, "releaseNotes ======> $releaseNote")
         if (!TextUtils.isEmpty(releaseNote)) {
             mBinding!!.releaseNote.text = releaseNote
@@ -58,105 +209,88 @@ class UpdateApplicationActivity : BaseActivity() {
             finish()
         }
 
-        mBinding!!.closeImage.setOnClickListener {
-            Log.e(TAG, "close image clicked")
-            finish()
-        }
-
         mBinding!!.addCash.setOnClickListener {
-            if (createPermission()) {
-                downloadController.enqueueDownload()
-            } else {
-                requestPermissions(PERMISSIONS.toTypedArray(), GalleryConstants.REQUEST_Permission_Gallery)
-            }
+            Log.e(TAG, "Button clicked")
+            checkStoragePermission()
         }
 
-        if (forceUpdate) {
-            mBinding!!.updateTitle.text = "Mandatory update"
-            mBinding!!.closeImage.visibility = View.GONE
-        } else {
-            mBinding!!.updateTitle.text = "New update available"
-            mBinding!!.closeImage.visibility = View.VISIBLE
+        mBinding!!.closeButton.setOnClickListener{
+            onBackPressed()
         }
     }
 
     override fun onBitmapSelected(bitmap: Bitmap) {
-        TODO("Not yet implemented")
     }
 
     override fun onUploadedImageUrl(url: String) {
-        TODO("Not yet implemented")
     }
 
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        super.onBackPressed()
-        val intent = Intent(Intent.ACTION_MAIN)
-        intent.addCategory(Intent.CATEGORY_HOME)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(intent)
-    }
-
-    private fun createPermission(): Boolean {
-        PERMISSIONS.add(Manifest.permission.CAMERA)
-        PERMISSIONS.add(Manifest.permission.RECORD_AUDIO)
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q)
-            PERMISSIONS.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            PERMISSIONS.add(Manifest.permission.READ_MEDIA_IMAGES)
-            PERMISSIONS.add(Manifest.permission.READ_MEDIA_VIDEO)
-            PERMISSIONS.add(Manifest.permission.READ_MEDIA_AUDIO)
-        } else {
-            PERMISSIONS.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (areAllPermissionsGranted(grantResults)) {
+            downloadController.enqueueDownload()
         }
-
-        if (!hasPermissions(this@UpdateApplicationActivity, PERMISSIONS.toTypedArray())) {
-            requestPermissions(PERMISSIONS.toTypedArray(), GalleryConstants.REQUEST_Permission_Gallery)
-            return false
-        }
-        return true
     }
 
-    private fun hasPermissions(context: Context, permissions: Array<String>): Boolean {
-        for (p in permissions) {
-            if (ActivityCompat.checkSelfPermission(context, p) != PackageManager.PERMISSION_GRANTED) {
+    private fun areAllPermissionsGranted(grantResults: IntArray): Boolean {
+        for (result in grantResults) {
+            if (result != PackageManager.PERMISSION_GRANTED) {
                 return false
             }
         }
         return true
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            GalleryConstants.REQUEST_Permission_Gallery ->
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    downloadController.enqueueDownload()
-                } else {
-                    MaterialAlertDialogBuilder(this@UpdateApplicationActivity)
-                        .setMessage("you should allow all permissions to update the application")
-                        .setPositiveButton(getString(hashim.gallerylib.R.string.settings)) { dialog, which ->
-                            val intent = Intent()
-                            intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                            val uri = Uri.fromParts("package", this@UpdateApplicationActivity.packageName, null)
-                            intent.data = uri
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                            startActivity(intent)
-                        }
-                        .setNegativeButton(getString(hashim.gallerylib.R.string.cancel)) { dialog, which ->
-                            // Respond to negative positive button press
-                            val intent = Intent()
-                            intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                            val uri = Uri.fromParts("package", this@UpdateApplicationActivity.packageName, null)
-                            intent.data = uri
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                            startActivity(intent)
-                        }
-                        .show()
-                }
-
-            else -> {
-            }
+    private fun checkStoragePermission() {
+        if (arePermissionsGranted()) {
+            downloadController.enqueueDownload()
+        } else {
+            Log.e(TAG, "request permission")
+            requestPermissions()
         }
     }
-}
+
+    private fun requestPermissions() {
+        // Define an array of permissions to request
+        val permissions = arrayOf(
+            Manifest.permission.CAMERA,
+            Manifest.permission.REQUEST_INSTALL_PACKAGES,
+            Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+
+        if(shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+            ActivityCompat.requestPermissions(this, permissions, PERMISSION_REQUEST_STORAGE)
+        } else {
+            ActivityCompat.requestPermissions(this, permissions, PERMISSION_REQUEST_STORAGE)
+        }
+
+    }
+
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+//        val intent = Intent(Intent.ACTION_MAIN)
+//        intent.addCategory(Intent.CATEGORY_HOME)
+//        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//        startActivity(intent)
+    }
+
+    private fun arePermissionsGranted(): Boolean {
+        val permissions = arrayOf(
+            Manifest.permission.CAMERA,
+            Manifest.permission.REQUEST_INSTALL_PACKAGES,
+            Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        )
+
+        for (permission in permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                return false
+            }
+        }
+        return true
+    }
+}*/

@@ -62,12 +62,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <View
+                    <!--<View
                         android:id="@+id/countrycolorview"
                         android:layout_width="45dp"
                         android:layout_height="25dp"
                         android:layout_centerVertical="true"
-                        android:background="@color/red" />
+                        android:background="@color/red" />-->
 
                     <com.mikhaellopez.circularimageview.CircularImageView
                         android:id="@+id/teama_logo"
@@ -209,13 +209,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <View
+                    <!--<View
                         android:id="@+id/countrybcolorview"
                         android:layout_width="45dp"
                         android:layout_height="25dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:background="@color/red" />
+                        android:background="@color/red" />-->
 
                     <com.mikhaellopez.circularimageview.CircularImageView
                         android:id="@+id/teamb_logo"

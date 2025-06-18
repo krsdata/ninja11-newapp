@@ -17,13 +17,4 @@ data class MatchBannersModel(
     @SerializedName("description")
     @Expose
     val descriptions: String = ""
-) : Serializable, Cloneable {
-
-    public override fun clone(): MatchBannersModel {
-        return super.clone() as MatchBannersModel
-    }
-
-    override fun toString(): String {
-        return "bannerUrl(Id='$bannerUrl')"
-    }
-}
+) : Serializable, Cloneable

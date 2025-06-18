@@ -27,8 +27,4 @@ data class DocumentsModel(
     var upi_id: String = "",
     var system_token: String = ""
 
-) : Serializable, Cloneable {
-    public override fun clone(): DocumentsModel {
-        return super.clone() as DocumentsModel
-    }
-}
+) : Serializable, Cloneable

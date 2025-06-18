@@ -67,4 +67,4 @@ data class ResponseModel(
     var passcode: Boolean
 
 
-) : Serializable
+) : Serializable, Cloneable

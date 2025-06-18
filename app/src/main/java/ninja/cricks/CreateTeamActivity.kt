@@ -1,6 +1,5 @@
 package ninja.cricks
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Intent
@@ -40,6 +39,10 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
+// "selected_by_me": true/false
+// "vc_selection":
+// "c_selection":
+// 1-4 wicket keepers, 3-6 batsman, 1-4 all rounder, 3-6 bowler
 class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
     private var playersList: PlayerModels? = null
@@ -163,6 +166,9 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
         mBinding!!.clearAllPlayer.setOnClickListener(View.OnClickListener {
             val builder = AlertDialog.Builder(this@CreateTeamActivity)
+            //set title for alert dialog
+            // builder.setTitle("Warning")
+            //set message for alert dialog
             builder.setMessage("Do You want to clear all selected players ?")
             builder.setIcon(android.R.drawable.ic_dialog_alert)
 
@@ -904,7 +910,6 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         pauseCountDown()
     }
 
-    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (CREATETEAM_REQUESTCODE == requestCode && resultCode == Activity.RESULT_OK) {
@@ -965,13 +970,16 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
 
         WebServiceClient(this).client.create(IApiMethod::class.java).getPlayer(jsonRequest)
             .enqueue(object : Callback<UsersPostDBResponse?> {
-                override fun onFailure(call: Call<UsersPostDBResponse?>, t: Throwable) {
-                    t.localizedMessage?.let { MyUtils.showToast(this@CreateTeamActivity, it) }
+                override fun onFailure(call: Call<UsersPostDBResponse?>?, t: Throwable?) {
+                    MyUtils.showToast(this@CreateTeamActivity, t!!.localizedMessage)
                 }
 
-                override fun onResponse(call: Call<UsersPostDBResponse?>, response: Response<UsersPostDBResponse?>) {
+                override fun onResponse(
+                    call: Call<UsersPostDBResponse?>?,
+                    response: Response<UsersPostDBResponse?>?
+                ) {
                     hideLoading()
-                    val res = response.body()
+                    val res = response!!.body()
                     if (res != null) {
                         if (res.status) {
                             val responseModel = res.responseObject
@@ -1034,7 +1042,9 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         })
     }
 
-    private fun setupViewPager(viewPager: ViewPager) {
+    private fun setupViewPager(
+        viewPager: ViewPager
+    ) {
 
         val wkList = parseEditTeamModel(playersList!!.wicketKeepers!!, 1)
 
@@ -1100,6 +1110,8 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         viewPagerAdapter.addFragment(Bowlers.newInstance(bundleBowlers), titleTabs)
 
         viewPager.adapter = viewPagerAdapter
+
+
     }
 
     private fun updateEditTEam() {
@@ -1183,7 +1195,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         countPlayers(1)
         addTeamPlayers(objects)
         // if (!isEditMode && !isCopyTeam) {
-        mBinding!!.tabs.getTabAt(0)!!.text = String.format(Locale.ENGLISH,"WK(%d)", playerListObject.size)
+        mBinding!!.tabs.getTabAt(0)!!.text = String.format("WK(%d)", playerListObject.size)
         // }
     }
 
@@ -1201,7 +1213,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         countPlayers(-1)
         removeTeamPlayers(objects)
         //if (!isEditMode && !isCopyTeam) {
-        mBinding!!.tabs.getTabAt(0)!!.text = String.format(Locale.ENGLISH, "WK(%d)", playerListObject.size)
+        mBinding!!.tabs.getTabAt(0)!!.text = String.format("WK(%d)", playerListObject.size)
         //}
     }
 
@@ -1219,7 +1231,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         countPlayers(1)
         addTeamPlayers(objects)
         //if (!isEditMode && !isCopyTeam) {
-        mBinding!!.tabs.getTabAt(1)!!.text = String.format(Locale.ENGLISH,"BAT(%d)", playerListObject.size)
+        mBinding!!.tabs.getTabAt(1)!!.text = String.format("BAT(%d)", playerListObject.size)
         //}
     }
 
@@ -1237,7 +1249,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         countPlayers(-1)
         removeTeamPlayers(objects)
         // if (!isEditMode && !isCopyTeam) {
-        mBinding!!.tabs.getTabAt(1)!!.text = String.format(Locale.ENGLISH,"BAT(%d)", playerListObject.size)
+        mBinding!!.tabs.getTabAt(1)!!.text = String.format("BAT(%d)", playerListObject.size)
         //}
     }
 
@@ -1255,7 +1267,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         countPlayers(1)
         addTeamPlayers(objects)
         //if (!isEditMode && !isCopyTeam) {
-        mBinding!!.tabs.getTabAt(2)!!.text = String.format(Locale.ENGLISH,"AR(%d)", playerListObject.size)
+        mBinding!!.tabs.getTabAt(2)!!.text = String.format("AR(%d)", playerListObject.size)
         //}
     }
 
@@ -1273,7 +1285,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         countPlayers(-1)
         removeTeamPlayers(objects)
         // if (!isEditMode && !isCopyTeam) {
-        mBinding!!.tabs.getTabAt(2)!!.text = String.format(Locale.ENGLISH,"AR(%d)", playerListObject.size)
+        mBinding!!.tabs.getTabAt(2)!!.text = String.format("AR(%d)", playerListObject.size)
         ///}
     }
 
@@ -1291,7 +1303,7 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         countPlayers(1)
         addTeamPlayers(objects)
         // if (!isEditMode && !isCopyTeam) {
-        mBinding!!.tabs.getTabAt(3)!!.text = String.format(Locale.ENGLISH,"BOWL(%d)", playerListObject.size)
+        mBinding!!.tabs.getTabAt(3)!!.text = String.format("BOWL(%d)", playerListObject.size)
         // }
     }
 
@@ -1309,13 +1321,13 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         countPlayers(-1)
         removeTeamPlayers(objects)
         //  if (!isEditMode && !isCopyTeam) {
-        mBinding!!.tabs.getTabAt(3)!!.text = String.format(Locale.ENGLISH,"BOWL(%d)", playerListObject.size)
+        mBinding!!.tabs.getTabAt(3)!!.text = String.format("BOWL(%d)", playerListObject.size)
         //  }
     }
 
     override fun countPlayers(obj: Int) {
         totalPlayers += obj
-        mBinding!!.totalplayerSelected.text = String.format(Locale.ENGLISH,"%d", totalPlayers)
+        mBinding!!.totalplayerSelected.text = String.format("%d", totalPlayers)
         updatePlayersCountBar(totalPlayers)
         if (totalPlayers == MAX_PLAYERS_CRICKET) {
             isAllPlayersSelected = true
@@ -1335,8 +1347,8 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
         } else if (objects.teamId == teamBId) {
             TEAMB++
         }
-        mBinding!!.teamaCounts.text = String.format(Locale.ENGLISH,"%d", TEAMA)
-        mBinding!!.teambCounts.text = String.format(Locale.ENGLISH,"%d", TEAMB)
+        mBinding!!.teamaCounts.text = String.format("%d", TEAMA)
+        mBinding!!.teambCounts.text = String.format("%d", TEAMB)
     }
 
     override fun removeTeamPlayers(objects: PlayersInfoModel) {
@@ -1347,8 +1359,8 @@ class CreateTeamActivity : BaseActivity(), OnTeamCreateListener {
             TEAMB--
         }
 
-        mBinding!!.teamaCounts.text = String.format(Locale.ENGLISH,"%d", TEAMA)
-        mBinding!!.teambCounts.text = String.format(Locale.ENGLISH,"%d", TEAMB)
+        mBinding!!.teamaCounts.text = String.format("%d", TEAMA)
+        mBinding!!.teambCounts.text = String.format("%d", TEAMB)
     }
 
     fun isSpotAvailable(wantPlayerFrom: Int): Boolean {

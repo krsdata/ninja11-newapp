@@ -23,7 +23,6 @@ import ninja.cricks.ui.createteam.adaptors.PlayersContestAdapter
 import ninja.cricks.models.PlayersInfoModel
 import ninja.cricks.utils.CricketPlayersFilters
 import ninja.cricks.utils.MyUtils
-import java.util.Locale
 
 
 class Batsman : Fragment() {
@@ -73,8 +72,8 @@ class Batsman : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mBinding!!.labelPlayersCounts.text = String.format(Locale.ENGLISH, "Select %d - %d Batsmen", MAX_BATSMAN[0], MAX_BATSMAN[1])
-
+        mBinding!!.labelPlayersCounts.text =
+            String.format("Select %d - %d Batsmen", MAX_BATSMAN[0], MAX_BATSMAN[1])
         batsmenListFilter = CricketPlayersFilters.getPlayersbyOddEvenPositions(
             batsmenListFilter!!,
             matchObject!!,
@@ -88,10 +87,6 @@ class Batsman : Fragment() {
             RecyclerView.VERTICAL
         )
         mBinding!!.recyclerCreatePlayersList.addItemDecoration(dividerItemDecoration)
-
-        batsmenListFilter!!.sortWith { lhs, rhs ->
-            rhs.isPlaying11.compareTo(lhs.isPlaying11)
-        }
 
         adapter = PlayersContestAdapter(
             requireActivity(),

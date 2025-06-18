@@ -69,6 +69,7 @@ class VerifyDocumentsActivity : AppCompatActivity() {
 
     var type: Int = 1
 
+
     companion object {
         private var TAG: String = VerifyDocumentsActivity::class.java.simpleName
         var REQUESTCODE_VERIFY_DOC = 1008
@@ -295,7 +296,7 @@ class VerifyDocumentsActivity : AppCompatActivity() {
                 )
                 return@OnClickListener
             } else if (TextUtils.isEmpty(paytmNumber)) {
-                MyUtils.showToast(this@VerifyDocumentsActivity, "Please enter your Paytm number")
+                MyUtils.showToast(this@VerifyDocumentsActivity, "Please enter your UPI number")
                 return@OnClickListener
             } else if (TextUtils.isEmpty(UPI_Id)) {
                 MyUtils.showToast(this@VerifyDocumentsActivity, "Please enter your UPI Id")
@@ -405,15 +406,12 @@ class VerifyDocumentsActivity : AppCompatActivity() {
     private fun uploadImageToServer(file: File, docType: String) {
 
         var multipartImage: MultipartBody.Part? = null
-        val requestPanImage: RequestBody = file
-            .asRequestBody("multipart/jpg".toMediaTypeOrNull())
-        multipartImage =
-            MultipartBody.Part.createFormData("image_bytes", file.name, requestPanImage)
+        val requestPanImage: RequestBody = file.asRequestBody("multipart/jpg".toMediaTypeOrNull())
+        multipartImage = MultipartBody.Part.createFormData("image_bytes", file.name, requestPanImage)
 
         val userId: RequestBody = createPartFromString(MyPreferences.getUserID(mContext)!!)
         val documentType: RequestBody = createPartFromString(docType)
-        val systemToken: RequestBody =
-            createPartFromString(MyPreferences.getSystemToken(mContext)!!)
+        val systemToken: RequestBody = createPartFromString(MyPreferences.getSystemToken(mContext)!!)
 
         val map: HashMap<String, RequestBody> = HashMap<String, RequestBody>()
         map["user_id"] = userId
@@ -476,12 +474,12 @@ class VerifyDocumentsActivity : AppCompatActivity() {
                     galleryModels = list
                     when (type) {
                         1 -> {
-                            mPanImageFile = File(galleryModels[0].sdcardPath)
+                            mPanImageFile = File(galleryModels[0].url)
                             mBinding!!.imgPancard.setLocalImage(mPanImageFile!!, false)
                             uploadImageToServer(mPanImageFile!!, BaseActivity.DOCUMENT_TYPE_PANCARD)
                         }
                         2 -> {
-                            mPassbookImageFile = File(galleryModels[0].sdcardPath)
+                            mPassbookImageFile = File(galleryModels[0].url)
                             mBinding!!.imgBankPassbook.setLocalImage(mPassbookImageFile!!, false)
                             uploadImageToServer(mPassbookImageFile!!, BaseActivity.DOCUMENT_TYPE_BANK_PASSBOOK)
                         }
@@ -493,8 +491,7 @@ class VerifyDocumentsActivity : AppCompatActivity() {
     }
 
     private val galleryResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK
-        ) {
+        if (result.resultCode == Activity.RESULT_OK) {
             //back from gallery activity
             val dataList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 result.data?.extras?.getParcelableArrayList(

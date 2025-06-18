@@ -125,7 +125,7 @@
                             android:layout_marginTop="@dimen/_5sdp"
                             android:fontFamily="open_sans"
                             android:visibility="gone"
-                            android:text="UPI/Paytm Instant payment will be charge ₹10"
+                            android:text="UPI Instant payment will be charge ₹10"
                             android:textColor="@color/red2"
                             android:textSize="@dimen/_10sdp"/>
                     </RadioGroup>
@@ -178,7 +178,7 @@
                             android:id="@+id/paytm_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Paytm number"
+                            android:text="UPI number"
                             android:visibility="gone"
                             android:layout_marginBottom="@dimen/_2sdp"
                             android:textColor="@color/black"
@@ -190,7 +190,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_35sdp"
                             android:background="@drawable/et_style"
-                            android:hint="Your Paytm Number"
+                            android:hint="Your UPI Number"
                             android:inputType="text"
                             android:layout_marginBottom="@dimen/_5sdp"
                             android:fontFamily="open_sans"

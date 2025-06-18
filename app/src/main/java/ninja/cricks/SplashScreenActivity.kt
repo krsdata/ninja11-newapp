@@ -1,5 +1,6 @@
 package ninja.cricks
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -126,6 +127,7 @@ class SplashScreenActivity : BaseActivity() {
             }, intent.data, this)
     }
 
+    @SuppressLint("MissingSuperCall")
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         Branch.getInstance()

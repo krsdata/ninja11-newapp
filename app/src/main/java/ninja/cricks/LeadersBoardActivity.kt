@@ -140,12 +140,9 @@ class LeadersBoardActivity : BaseActivity() {
     }
 
     private fun initContestDetails() {
-        mBinding!!.includeLiveMatchRow.contestPrizePool.text =
-            String.format("%s%s", "₹", contestObject!!.totalWinningPrize)
-        mBinding!!.includeLiveMatchRow.contestSpots.text =
-            String.format("%d", contestObject!!.totalSpots)
-        mBinding!!.includeLiveMatchRow.contestEntryPrize.text =
-            String.format("%s%s", "₹", contestObject!!.entryFees)
+        mBinding!!.includeLiveMatchRow.contestPrizePool.text = String.format("%s%s", "₹", contestObject!!.totalWinningPrize)
+        mBinding!!.includeLiveMatchRow.contestSpots.text = String.format(Locale.ENGLISH,"%d", contestObject!!.totalSpots)
+        mBinding!!.includeLiveMatchRow.contestEntryPrize.text = String.format("%s%s", "₹", contestObject!!.entryFees)
     }
 
     private fun initScoreCard() {
@@ -453,8 +450,7 @@ class LeadersBoardActivity : BaseActivity() {
         viewPager.adapter = viewPagerAdapter
     }
 
-    internal inner class ViewPagerAdapter(manager: FragmentManager) :
-        FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+    internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         private val mFragmentList = ArrayList<Fragment>()
         private val mFragmentTitleList = ArrayList<String>()
 

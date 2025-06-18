@@ -15,8 +15,8 @@ android {
         applicationId "ninja.cricks"
         minSdk 23
         targetSdk 34
-        versionCode 4700
-        versionName "4.7"
+        versionCode 6004
+        versionName "6.0.4"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
         setProperty("archivesBaseName", "Ninja11-$versionName")
@@ -24,20 +24,20 @@ android {
 
     buildFeatures {
         dataBinding true
-        buildConfig true
     }
 
     buildTypes {
         debug {
             buildConfigField "boolean", "MLOG", "true"
             debuggable true
-            shrinkResources false
-            minifyEnabled false
+            shrinkResources true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         release {
             buildConfigField "boolean", "MLOG", "false"
+            debuggable false
             shrinkResources true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -50,10 +50,10 @@ android {
     kotlinOptions {
         jvmTarget = '17'
     }
-    lint {
-        abortOnError false
-    }
 
+    lint {
+        baseline = file("lint-baseline.xml")
+    }
 }
 
 dependencies {
@@ -80,11 +80,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging-ktx'
     implementation 'com.google.firebase:firebase-core'
 
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.8.2'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.8.2'
 
-    implementation 'com.mikhaellopez:circularimageview:4.3.0'
+    implementation 'com.mikhaellopez:circularimageview:4.3.1'
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
     implementation 'com.github.bumptech.glide:glide:4.13.2'
 
@@ -126,4 +126,7 @@ dependencies {
 //    implementation 'com.github.mostafahashim:GalleryLibrary:1.2.7'
     // auto scroll view pager
     implementation project(path: ':gallerylib')
+
+
+
 }

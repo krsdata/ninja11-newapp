@@ -188,7 +188,7 @@
                                 android:fontFamily="open_sans"
                                 android:gravity="center"
                                 android:padding="10dp"
-                                android:text="Paytm Withdraw"
+                                android:text="UPI Withdraw"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_12sdp" />
                         </RelativeLayout>

@@ -37,8 +37,7 @@
                 <RelativeLayout
                     android:id="@+id/top_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_90sdp"
-                    android:background="@color/bottom_nav_color">
+                    android:layout_height="@dimen/_90sdp">
 
                    <ImageView
                         android:id="@+id/player_in_lineup"

@@ -15,8 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.edify.atrist.listener.OnTeamCreateListener
 import ninja.cricks.ContestActivity
 import ninja.cricks.CreateTeamActivity
-import ninja.cricks.CreateTeamActivity.Companion.CREATE_TEAM_ALLROUNDER
-import ninja.cricks.CreateTeamActivity.Companion.MAX_ALL_ROUNDER
 import ninja.cricks.R
 import ninja.cricks.databinding.FragmentCreateTeamListBinding
 import ninja.cricks.models.UpcomingMatchesModel
@@ -24,7 +22,6 @@ import ninja.cricks.ui.createteam.adaptors.PlayersContestAdapter
 import ninja.cricks.models.PlayersInfoModel
 import ninja.cricks.utils.CricketPlayersFilters
 import ninja.cricks.utils.MyUtils
-import java.util.Locale
 
 class AllRounder : Fragment() {
     var allRounders: ArrayList<PlayersInfoModel>? = null
@@ -77,21 +74,27 @@ class AllRounder : Fragment() {
         allRounders = CricketPlayersFilters.getPlayersbyOddEvenPositions(
             allRounders!!,
             matchObject!!,
-            CREATE_TEAM_ALLROUNDER
+            CreateTeamActivity.CREATE_TEAM_ALLROUNDER
         )
         resetSorting()
-        mBinding!!.labelPlayersCounts.text = String.format(Locale.ENGLISH, "Select %d - %d All Rounder", MAX_ALL_ROUNDER[0], MAX_ALL_ROUNDER[1])
-
-        mBinding!!.recyclerCreatePlayersList.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        val dividerItemDecoration = DividerItemDecoration(mBinding!!.recyclerCreatePlayersList.context, RecyclerView.VERTICAL)
+        mBinding!!.labelPlayersCounts.text = String.format(
+            "Select %d - %d All Rounder",
+            CreateTeamActivity.MAX_ALL_ROUNDER[0],
+            CreateTeamActivity.MAX_ALL_ROUNDER[1]
+        )
+        mBinding!!.recyclerCreatePlayersList.layoutManager =
+            LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        val dividerItemDecoration = DividerItemDecoration(
+            mBinding!!.recyclerCreatePlayersList.context,
+            RecyclerView.VERTICAL
+        )
         mBinding!!.recyclerCreatePlayersList.addItemDecoration(dividerItemDecoration)
 
-        allRounders!!.sortWith { lhs, rhs ->
-            rhs.isPlaying11.compareTo(lhs.isPlaying11)
-        }
-
-        adapter = PlayersContestAdapter(requireActivity(), allRounders!!, matchObject!!)
-
+        adapter = PlayersContestAdapter(
+            requireActivity(),
+            allRounders!!,
+            matchObject!!
+        )
         mBinding!!.recyclerCreatePlayersList.adapter = adapter
 
         adapter.onItemClick = { objects ->

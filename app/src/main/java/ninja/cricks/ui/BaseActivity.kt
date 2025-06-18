@@ -412,7 +412,7 @@ abstract class BaseActivity : AppCompatActivity() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener {
             val deviceToken = it.result
             Log.e(TAG, "notification Token ============> $deviceToken")
-            if (deviceToken != null) {
+            if (!TextUtils.isEmpty(deviceToken)) {
                 notificationToken = deviceToken
                 MyPreferences.setDeviceToken(this@BaseActivity, deviceToken)
             }
@@ -423,7 +423,7 @@ abstract class BaseActivity : AppCompatActivity() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener {
             val deviceToken = it.result
             Log.e(TAG, "notification Token ============> $deviceToken")
-            if (deviceToken != null) {
+            if (!TextUtils.isEmpty(deviceToken)) {
                 notificationToken = deviceToken
                 MyPreferences.setDeviceToken(this@BaseActivity, deviceToken)
             }
@@ -448,10 +448,16 @@ abstract class BaseActivity : AppCompatActivity() {
                 WebServiceClient(this@BaseActivity).client.create(IApiMethod::class.java)
                     .deviceNotification(jsonRequest)
                     .enqueue(object : Callback<UsersPostDBResponse?> {
-                        override fun onFailure(call: Call<UsersPostDBResponse?>, t: Throwable) {
+                        override fun onFailure(
+                            call: Call<UsersPostDBResponse?>?,
+                            t: Throwable?
+                        ) {
                         }
 
-                        override fun onResponse(call: Call<UsersPostDBResponse?>, response: Response<UsersPostDBResponse?>) {
+                        override fun onResponse(
+                            call: Call<UsersPostDBResponse?>?,
+                            response: Response<UsersPostDBResponse?>?
+                        ) {
                             MyUtils.logd("deviceId", "Posted successfully")
                         }
                     })

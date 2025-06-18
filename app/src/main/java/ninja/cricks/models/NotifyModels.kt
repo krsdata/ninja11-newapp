@@ -18,10 +18,4 @@ data class NotifyModels(
     @SerializedName("created_date")
     @Expose
     val activationDate: String = ""
-) : Serializable, Cloneable {
-    public override fun clone(): NotifyModels {
-        return super.clone() as NotifyModels
-    }
-
-
-}
+) : Serializable, Cloneable

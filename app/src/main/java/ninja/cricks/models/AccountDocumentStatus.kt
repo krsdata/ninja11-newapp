@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-
 data class AccountDocumentStatus(
 
     @SerializedName("email_verified")
@@ -22,10 +21,4 @@ data class AccountDocumentStatus(
     @SerializedName("paytm_verified")
     @Expose
     val paytmVerified: Int = 0
-)
-
-    : Serializable, Cloneable {
-    public override fun clone(): AccountDocumentStatus {
-        return super.clone() as AccountDocumentStatus
-    }
-}
+) : Serializable, Cloneable

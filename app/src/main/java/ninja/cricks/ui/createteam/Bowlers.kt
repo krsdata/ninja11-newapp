@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.edify.atrist.listener.OnTeamCreateListener
 import ninja.cricks.ContestActivity
 import ninja.cricks.CreateTeamActivity
-import ninja.cricks.CreateTeamActivity.Companion.MAX_BOWLER
 import ninja.cricks.R
 import ninja.cricks.databinding.FragmentCreateTeamListBinding
 import ninja.cricks.models.UpcomingMatchesModel
@@ -23,7 +22,6 @@ import ninja.cricks.ui.createteam.adaptors.PlayersContestAdapter
 import ninja.cricks.models.PlayersInfoModel
 import ninja.cricks.utils.CricketPlayersFilters
 import ninja.cricks.utils.MyUtils
-import java.util.Locale
 
 class Bowlers : Fragment() {
     var bowlers: ArrayList<PlayersInfoModel>? = null
@@ -79,7 +77,11 @@ class Bowlers : Fragment() {
             CreateTeamActivity.CREATE_TEAM_BOWLER
         )
         resetSorting()
-        mBinding!!.labelPlayersCounts.text = String.format(Locale.ENGLISH, "Select %d - %d Bowler", MAX_BOWLER[0], MAX_BOWLER[1])
+        mBinding!!.labelPlayersCounts.text = String.format(
+            "Select %d - %d Bowler",
+            CreateTeamActivity.MAX_BOWLER[0],
+            CreateTeamActivity.MAX_BOWLER[1]
+        )
         mBinding!!.recyclerCreatePlayersList.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         val dividerItemDecoration = DividerItemDecoration(
@@ -87,10 +89,6 @@ class Bowlers : Fragment() {
             RecyclerView.VERTICAL
         )
         mBinding!!.recyclerCreatePlayersList.addItemDecoration(dividerItemDecoration)
-
-        bowlers!!.sortWith { lhs, rhs ->
-            rhs.isPlaying11.compareTo(lhs.isPlaying11)
-        }
 
         adapter = PlayersContestAdapter(
             requireActivity(),

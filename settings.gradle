@@ -1,10 +1,9 @@
 pluginManagement {
     repositories {
+        gradlePluginPortal()
         google()
         mavenCentral()
-        gradlePluginPortal()
         maven { url "https://jitpack.io" }
-        jcenter()
         maven {
             url "https://artifactory.paytm.in/libs-release-local"
         }
@@ -19,7 +18,6 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven { url "https://jitpack.io" }
-        jcenter()
         maven {
             url "https://artifactory.paytm.in/libs-release-local"
         }
@@ -28,7 +26,6 @@ dependencyResolutionManagement {
         }
     }
 }
-
 rootProject.name = "Ninja11"
 include ':app'
 include ':ultraviewpager'

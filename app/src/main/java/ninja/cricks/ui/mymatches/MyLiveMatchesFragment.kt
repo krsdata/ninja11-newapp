@@ -246,8 +246,8 @@ class MyLiveMatchesFragment : Fragment() {
             viewHolder.freeView.visibility = View.GONE
             viewHolder.matchTime.visibility = View.VISIBLE
 
-            viewHolder.teamAColorView.setBackgroundColor(getRandomColor())
-            viewHolder.teamBColorView.setBackgroundColor(getRandomColor())
+//            viewHolder.teamAColorView.setBackgroundColor(getRandomColor())
+//            viewHolder.teamBColorView.setBackgroundColor(getRandomColor())
 
             viewHolder.matchProgress.text = objectVal.statusString
             viewHolder.upcomingLinearContestView.visibility = View.INVISIBLE
@@ -281,8 +281,8 @@ class MyLiveMatchesFragment : Fragment() {
             val teamBLogo: ImageView = itemView.findViewById(R.id.teamb_logo)
             val matchTitle: TextView = itemView.findViewById(R.id.upcoming_match_title)
             val tournamentTitle: TextView = itemView.findViewById(R.id.tournament_title)
-            val teamAColorView: View = itemView.findViewById(R.id.countrycolorview)
-            val teamBColorView: View = itemView.findViewById(R.id.countrybcolorview)
+//            val teamAColorView: View = itemView.findViewById(R.id.countrycolorview)
+//            val teamBColorView: View = itemView.findViewById(R.id.countrybcolorview)
             val opponent1: TextView = itemView.findViewById(R.id.upcoming_opponent1)
             val opponent2: TextView = itemView.findViewById(R.id.upcoming_opponent2)
             val freeView: TextView = itemView.findViewById(R.id.free_view)

@@ -35,7 +35,7 @@ class BindingUtils {
         const val BANNERS_KEY_SUPPORT: String = "support"
         const val BANNERS_KEY_BROWSERS: String = "browser"
         const val EMAIL: String = "support@ninja11.in"
-        const val PHONE_NUMBER: String = "=+917898194076"
+        const val PHONE_NUMBER: String = "=+919243055792"
         const val GOOGLE_TEZ_PACKAGE_NAME = "com.google.android.apps.nbu.paisa.user"
         const val PAYMENT_GOOGLEPAY_UPI = "7974343960@okbizaxis"
         const val PAYMENT_RAZOR_PAY_KEY = "rzp_live_SiMilNQfyJNzJe"

@@ -84,8 +84,4 @@ data class PlayersInfoModel(
     fun getPlayerIcon(): Int {
         return this.playerIcon
     }
-
-    public override fun clone(): PlayersInfoModel {
-        return super.clone() as PlayersInfoModel
-    }
 }

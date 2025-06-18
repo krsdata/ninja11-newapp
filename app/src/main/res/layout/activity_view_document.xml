@@ -87,7 +87,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="open_sans"
-                        android:text="PAYTM"
+                        android:text="UPI Number"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="@dimen/_15sdp" />
 
